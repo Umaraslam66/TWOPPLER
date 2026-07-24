@@ -145,3 +145,14 @@ Baseline arm cost: **zero** — 5000 completions reused from `gate_v2_k48_202607
 - Baseline records: copied from `results/gate_v2_k48_20260724-182324_leonardo-batch/records.jsonl` (arm=baseline).
 - Task builder: `experiments/probe_known_answer.py`; report builder: `experiments/probe_report.py`; tests: `tests/test_probe_known_answer.py`.
 - Gate numbers quoted in section 2 are frozen from `results/stage1_gate_report.md`.
+
+## Addendum (2026-07-24, post-hoc): decoding sensitivity
+
+Re-scoring the same records (results/rescore_ev_vs_argmax.md) shows this
+probe's headline is decoding-dependent: under argmax decoding of the same
+stated distributions, the seeded twin is significantly WORSE than the
+demographics-only baseline (lift −0.0684, p=0.042). The probe twin is the
+only over-dispersed arm in the project (predicted sd 2.12 vs true 1.98),
+so expected-value decoding — a variance shrinker — partially masks its
+miscalibration. This strengthens the section-5b over-extrapolation
+reading. Both decodings are exploratory beyond the pre-declared diagnostic.
