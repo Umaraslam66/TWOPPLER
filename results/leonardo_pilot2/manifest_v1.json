@@ -1,0 +1,11 @@
+{
+  "split": "pilot2",
+  "k": 48,
+  "seed": 42,
+  "variant": "v1",
+  "backend": "batchfile",
+  "n_prompts": 1000,
+  "n_persons": 50,
+  "max_output_tokens": 100,
+  "prompts_file": "/Users/umaraslam/Projects/DOPPLER/results/leonardo_pilot2/prompts_v1.jsonl"
+}
