@@ -33,7 +33,7 @@ from pathlib import Path
 _ROOT = Path(__file__).resolve().parents[1]
 RESULTS = _ROOT / "results"
 OUT = RESULTS / "pilot2_comparison.md"
-VARIANTS = ("v0", "v1", "v2")
+VARIANTS = ("v0", "v1", "v2", "v3")
 K = 48
 EXPECTED = 1000
 

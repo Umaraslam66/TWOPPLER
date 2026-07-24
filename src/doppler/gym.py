@@ -97,7 +97,7 @@ def _assert_no_tipi_leak(profile: str, codebook: Codebook) -> None:
 
 
 def _assert_no_interest_leak(profile: str, record: dict, codebook: Codebook) -> None:
-    if "HOW I RATED" in profile:
+    if "HOW I RATED" in profile or "HOW I FEEL" in profile:
         raise AssertionError("interest block present in a baseline profile")
     for code in RIASEC_ITEMS:
         text = record["interests"][code]["text"]
@@ -137,7 +137,8 @@ def build_tasks(
         raise ValueError(f"arm must be one of {ARMS}, got {arm!r}")
 
     include_interests = arm == "twin"
-    profile = build_profile(record, codebook, include_interests, k=k, seed=seed)
+    profile = build_profile(record, codebook, include_interests, k=k, seed=seed,
+                            variant=variant)
 
     _assert_no_tipi_leak(profile, codebook)
     if arm == "baseline":

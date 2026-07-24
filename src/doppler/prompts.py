@@ -26,7 +26,7 @@ INTRO = (
 # Twin variants (applied identically to both arms). v0 = original behaviour.
 # ---------------------------------------------------------------------------
 
-VARIANTS = ("v0", "v1", "v2")
+VARIANTS = ("v0", "v1", "v2", "v3")
 
 #: The final instruction line(s), chosen by variant. Everything above it (intro,
 #: profile, question, scale) is identical across variants and across arms.
@@ -59,6 +59,14 @@ VARIANT_RETRY_REMINDER = {
         "this format: 1:0.05 2:0.10 3:0.15 4:0.30 5:0.20 6:0.15 7:0.05"
     ),
 }
+
+# v3 = v0 with the scale-anchoring fix: the interests block renders WORDS instead
+# of the raw 1-5 integers (see _interests_block), which stops a model from
+# dragging its 1-7 TIPI answers toward the 1-5 interest digits. Everything else
+# (final instruction, token budget, retry reminder, parser) is identical to v0.
+VARIANT_FINAL_INSTRUCTION["v3"] = VARIANT_FINAL_INSTRUCTION["v0"]
+VARIANT_MAX_OUTPUT_TOKENS["v3"] = VARIANT_MAX_OUTPUT_TOKENS["v0"]
+VARIANT_RETRY_REMINDER["v3"] = VARIANT_RETRY_REMINDER["v0"]
 
 
 # ---------------------------------------------------------------------------
@@ -155,14 +163,48 @@ def _demographics_block(demo: dict) -> str:
     return "MY PROFILE\n" + " ".join(frags)
 
 
-def _interests_block(record: dict, codebook: Codebook, k: int, seed: int) -> str:
-    """The 'HOW I RATED...' block, only ever present in the twin arm."""
+def _interest_words(codebook: Codebook) -> dict[int, str]:
+    """Map interest ratings 1-5 to WORDS with no digits (used by variant v3).
+
+    The codebook only anchors 1/3/5 (Dislike/Neutral/Enjoy). 2 and 4 are
+    INTERPOLATED deterministically as "Slightly <dislike>" / "Slightly <enjoy>"
+    from those anchors, so the mapping is 1->Dislike, 2->Slightly dislike,
+    3->Neutral, 4->Slightly enjoy, 5->Enjoy.
+    """
+    anchors = codebook.scales["riasec"]["anchors"]
+    return {
+        1: anchors[1],
+        2: f"Slightly {anchors[1].lower()}",
+        3: anchors[3],
+        4: f"Slightly {anchors[5].lower()}",
+        5: anchors[5],
+    }
+
+
+def _interests_block(
+    record: dict, codebook: Codebook, k: int, seed: int, variant: str = "v0"
+) -> str:
+    """The interests block, only ever present in the twin arm.
+
+    v0/v1/v2 render the numeric 1-5 ratings with a scale line. v3 renders WORDS
+    with a digit-free header and no scale line, so nothing in the block is a
+    number the model can anchor its 1-7 answer to.
+    """
+    codes = select_interest_items(record["person_id"], k, seed)
+    if variant == "v3":
+        words = _interest_words(codebook)
+        lines = ["HOW I FEEL ABOUT VARIOUS ACTIVITIES"]
+        for code in codes:
+            entry = record["interests"][code]
+            lines.append(f"- {entry['text']}: {words[entry['answer']]}")
+        return "\n".join(lines)
+
     anchors = _format_anchors(codebook.scales["riasec"]["anchors"])
     lines = [
         "HOW I RATED MY INTEREST IN VARIOUS ACTIVITIES",
         f"(Scale: {anchors})",
     ]
-    for code in select_interest_items(record["person_id"], k, seed):
+    for code in codes:
         entry = record["interests"][code]
         lines.append(f"- {entry['text']}: {entry['answer']}")
     return "\n".join(lines)
@@ -179,12 +221,18 @@ def build_profile(
     include_interests: bool,
     k: int = 48,
     seed: int = 42,
+    variant: str = "v0",
 ) -> str:
-    """Build a person's profile text. Single function shared by both arms."""
+    """Build a person's profile text. Single function shared by both arms.
+
+    ``variant`` only affects the interests block (v3 renders words, not digits);
+    the demographics block is variant-independent, so a baseline profile
+    (``include_interests=False``) is byte-identical across all variants.
+    """
     demo = _demographics_block(record["demographics"])
     if not include_interests:
         return demo
-    return demo + "\n\n" + _interests_block(record, codebook, k, seed)
+    return demo + "\n\n" + _interests_block(record, codebook, k, seed, variant)
 
 
 def build_prompt(

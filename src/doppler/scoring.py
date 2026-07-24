@@ -104,7 +104,7 @@ def parse_response(text: str | None, variant: str) -> dict:
         "parse_failure": True,
     }
 
-    if variant == "v0":
+    if variant in ("v0", "v3"):
         d = parse_answer(text)
     elif variant == "v1":
         d = parse_v1(text)
