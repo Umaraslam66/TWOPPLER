@@ -95,3 +95,18 @@ such download happens until the owner approves a concrete plan.
   initial_label / label_artifact / wiki_status; clean candidates sorted first).
 - Raw corpus: `experiments/extract_deflate64.py`; zip sha256 `9a723737...cb82bb`,
   json sha256 `b0b79d3f...72aeef3`, 463,596 records verified.
+
+## Corrections (2026-07-24, from Phase B curation — results/stage2_curation_report.md)
+
+Two claims above are wrong and are corrected here rather than silently edited:
+
+1. **CNN dates are not missing.** "Half of CNN rows have missing or
+   placeholder dates" was an artifact of the Phase A index parser requiring
+   zero-padded months/days; it silently discarded 41.8% of the corpus's
+   dates. A tolerant parser recovers 100.0% of dates. "2000-1-1" is genuine
+   New Year's Day 2000 coverage (55 records, confirmed via CNN URL paths),
+   not a placeholder.
+2. **The staff cross-reference was not the final fix.** Staff who are
+   always bare-labelled (no role marker anywhere) pass any label filter;
+   a summary-text filter now catches them (all 6 audit-identified staff
+   excluded, at the cost of an over-exclusion reserve needing review).
