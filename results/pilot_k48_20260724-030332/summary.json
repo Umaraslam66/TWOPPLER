@@ -1,0 +1,77 @@
+{
+  "config": {
+    "split": "pilot",
+    "k": 48,
+    "seed": 42,
+    "n_persons": 20,
+    "model": "gemini-3.5-flash-lite"
+  },
+  "scoring": {
+    "n_persons": 20,
+    "exact": {
+      "twin_accuracy": {
+        "mean": 0.205,
+        "ci_low": 0.1472294229885404,
+        "ci_high": 0.2627705770114596,
+        "n": 20
+      },
+      "baseline_accuracy": {
+        "mean": 0.19499999999999998,
+        "ci_low": 0.1392606620513271,
+        "ci_high": 0.25073933794867287,
+        "n": 20
+      },
+      "lift": {
+        "mean": 0.010000000000000005,
+        "ci_low": -0.040131496374622266,
+        "ci_high": 0.060131496374622284,
+        "n": 20
+      },
+      "tests": {
+        "t_stat": 0.4175067982745967,
+        "t_p": 0.6809877848731871,
+        "wilcoxon_stat": 35.0,
+        "wilcoxon_p": 0.4604581626866364
+      }
+    },
+    "within1": {
+      "twin_accuracy": {
+        "mean": 0.59,
+        "ci_low": 0.4893926570919435,
+        "ci_high": 0.6906073429080564,
+        "n": 20
+      },
+      "baseline_accuracy": {
+        "mean": 0.5899999999999999,
+        "ci_low": 0.5002963462979702,
+        "ci_high": 0.6797036537020296,
+        "n": 20
+      },
+      "lift": {
+        "mean": 4.163336342344337e-18,
+        "ci_low": -0.05681479407626759,
+        "ci_high": 0.056814794076267605,
+        "n": 20
+      },
+      "tests": {
+        "t_stat": 1.533748956199941e-16,
+        "t_p": 0.9999999999999999,
+        "wilcoxon_stat": 51.5,
+        "wilcoxon_p": 0.9488507657426928
+      }
+    }
+  },
+  "totals": {
+    "n_records": 400,
+    "n_parse_failures": 0,
+    "tokens_in": 195980,
+    "tokens_out": 400,
+    "resumed": true,
+    "resume_n_new_records": 149,
+    "resume_n_calls": 149,
+    "resume_n_backoff_retries": 0,
+    "resume_n_parse_retries": 0,
+    "resume_n_retries_total": 0
+  },
+  "aborted": null
+}

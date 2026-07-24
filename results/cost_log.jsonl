@@ -1,0 +1,2 @@
+{"run_id": "pilot_k48_20260724-030332", "timestamp": "2026-07-24T01:41:03.972913+00:00", "model": "gemini-3.5-flash-lite", "split": "pilot", "n_persons": 20, "n_calls": 253, "n_retries": 0, "n_parse_failures": 0, "tokens_in": 124955, "tokens_out": 251}
+{"run_id": "pilot_k48_20260724-030332", "timestamp": "2026-07-24T11:56:59.051358+00:00", "model": "gemini-3.5-flash-lite", "split": "pilot", "resumed": true, "n_persons": 20, "n_calls": 149, "n_retries": 0, "n_parse_failures": 0, "tokens_in": 71025, "tokens_out": 149}
