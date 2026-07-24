@@ -30,6 +30,7 @@ def build_cost_entry(
     n_parse_failures: int,
     tokens_in: int,
     tokens_out: int,
+    variant: str = "v0",
     resumed: bool = False,
 ) -> dict:
     """Assemble one cost-log record with an ISO-8601 UTC timestamp.
@@ -43,6 +44,7 @@ def build_cost_entry(
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "model": model,
         "split": split,
+        "variant": variant,
         "resumed": bool(resumed),
         "n_persons": int(n_persons),
         "n_calls": int(n_calls),

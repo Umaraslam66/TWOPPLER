@@ -2,27 +2,31 @@
 
 Predicts each of a person's 10 held-out TIPI items from (a) demographics +
 interests (twin) and (b) demographics only (baseline), one API call per
-(person, item, arm), then scores lift = twin - baseline per person.
+(person, item, arm). A run-level ``variant`` (v0/v1/v2) changes only the final
+instruction and the answer format; it is applied identically to both arms.
+
+Records are appended to records.jsonl as each call completes, so a hard kill
+loses at most the in-flight call and the run can be resumed.
 
 Usage:
-    uv run python experiments/run_replay.py --split pilot            # real pilot
-    uv run python experiments/run_replay.py --split pilot --dry-run  # zero calls
-    uv run python experiments/run_replay.py --resume results/<run_id>  # finish it
+    uv run python experiments/run_replay.py --split pilot2 --variant v1
+    uv run python experiments/run_replay.py --split pilot2 --variant v2 --dry-run
+    uv run python experiments/run_replay.py --resume results/<run_id>
 
-Writes everything to ``results/<run_id>/`` where
-``run_id = {split}_k{k}_{YYYYMMDD-HHMMSS}``. ``--resume`` re-opens an existing
-run directory, runs only the (person, arm, item) calls missing from its
-records.jsonl, appends them, and regenerates the summary and human-review from
-all records in the file.
+Writes to ``results/<run_id>/`` where ``run_id`` is
+``{split}_k{k}_{ts}`` for v0 pilot/gate, else ``{split}_{variant}_k{k}_{ts}``.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
+import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
@@ -39,39 +43,76 @@ from doppler.data import (  # noqa: E402
     person_record,
 )
 from doppler.gemini import CallCapExceeded, GeminiClient  # noqa: E402
-from doppler.gym import build_tasks, pilot_and_gate_ids  # noqa: E402
-from doppler.scoring import parse_answer, score, summarize  # noqa: E402
+from doppler.gym import build_tasks, pilot2_ids, pilot_and_gate_ids  # noqa: E402
+from doppler.prompts import (  # noqa: E402
+    VARIANT_MAX_OUTPUT_TOKENS,
+    VARIANT_RETRY_REMINDER,
+    VARIANTS,
+)
+from doppler.scoring import parse_response, summarize  # noqa: E402
 
 DATA_DIR = _ROOT / "data"
 RESULTS_DIR = _ROOT / "results"
 # One worker: the key is on a ~15 requests/minute free tier, so throughput is
-# gated entirely by the client's request pacer. Extra threads would only race to
-# hit the shared RPM cap and trigger 429 storms; they buy no speed.
+# gated entirely by the client's request pacer. Extra threads only cause 429s.
 MAX_CALLS = 600
 MAX_WORKERS = 1
 DEFAULT_SEED = 42
-RETRY_SENTENCE = "Respond with only a single digit from 1 to 7."
+
+
+@dataclass
+class RunOutcome:
+    """Result of a fresh or resumed run, for the driver to sequence on."""
+
+    exit_code: int          # 0 ok, 2 fatal setup, 3 aborted (quota/cap/error)
+    run_dir: Path | None
+    n_calls: int
+    complete: bool          # all tasks attempted (no abort)
 
 
 # ---------------------------------------------------------------------------
-# Setup
+# Setup / run-id
 # ---------------------------------------------------------------------------
 
 
-def _build_all_tasks(split: str, k: int, seed: int):
+def make_run_id(split: str, k: int, variant: str, timestamp: str) -> str:
+    """v0 pilot/gate keep the legacy name; everything else carries the variant."""
+    if split != "pilot2" and variant == "v0":
+        return f"{split}_k{k}_{timestamp}"
+    return f"{split}_{variant}_k{k}_{timestamp}"
+
+
+def _person_ids(df, split: str) -> list[int]:
+    pilot_ids, gate_ids = pilot_and_gate_ids(df)
+    if split == "pilot":
+        return pilot_ids
+    if split == "gate":
+        return gate_ids
+    if split == "pilot2":
+        return pilot2_ids(df)
+    raise ValueError(f"unknown split {split!r}")
+
+
+def _build_all_tasks(split: str, k: int, seed: int, variant: str):
     """Load data and build both-arm tasks for every person in the split."""
     df = clean_riasec(load_riasec(DATA_DIR))
     codebook = load_codebook(DATA_DIR)
-    pilot_ids, gate_ids = pilot_and_gate_ids(df)
-    ids = pilot_ids if split == "pilot" else gate_ids
+    ids = _person_ids(df, split)
 
     by_id = df.set_index("person_id", drop=False)
     tasks = []
     for pid in ids:
         record = person_record(by_id.loc[pid], codebook)
-        tasks.extend(build_tasks(record, codebook, "twin", k=k, seed=seed))
-        tasks.extend(build_tasks(record, codebook, "baseline", k=k, seed=seed))
+        tasks.extend(build_tasks(record, codebook, "twin", k=k, seed=seed,
+                                 variant=variant))
+        tasks.extend(build_tasks(record, codebook, "baseline", k=k, seed=seed,
+                                 variant=variant))
     return tasks, ids, codebook
+
+
+# ---------------------------------------------------------------------------
+# Records I/O
+# ---------------------------------------------------------------------------
 
 
 def read_records(records_path: Path) -> list[dict]:
@@ -95,36 +136,28 @@ def completed_keys(records_path: Path) -> set[tuple[int, str, str]]:
 
 def filter_missing(tasks, completed: set[tuple[int, str, str]]) -> list:
     """Tasks whose (person_id, arm, item) is not yet in ``completed``."""
-    return [
-        t for t in tasks
-        if (t.person_id, t.arm, t.tipi_code) not in completed
-    ]
+    return [t for t in tasks if (t.person_id, t.arm, t.tipi_code) not in completed]
 
 
-def _append_records(records_path: Path, records: list[dict]) -> None:
-    """Append records as JSON lines to an existing records.jsonl."""
-    with Path(records_path).open("a", encoding="utf-8") as fh:
-        for r in records:
-            fh.write(json.dumps(r) + "\n")
-
-
-def _resume_config(outdir: Path, run_id: str) -> tuple[str, int, int]:
-    """Recover (split, k, seed) for a resume, from summary.json then run_id."""
+def _resume_config(outdir: Path, run_id: str) -> tuple[str, int, int, str]:
+    """Recover (split, k, seed, variant) for a resume, from summary.json then run_id."""
     summary_path = outdir / "summary.json"
     if summary_path.exists():
         try:
             cfg = json.loads(summary_path.read_text(encoding="utf-8")).get("config", {})
-            if cfg.get("split") and cfg.get("k") is not None and cfg.get("seed") is not None:
-                return cfg["split"], int(cfg["k"]), int(cfg["seed"])
+            if (cfg.get("split") and cfg.get("k") is not None
+                    and cfg.get("seed") is not None):
+                return (cfg["split"], int(cfg["k"]), int(cfg["seed"]),
+                        cfg.get("variant", "v0"))
         except (json.JSONDecodeError, OSError, KeyError, TypeError, ValueError):
             pass
-    m = re.match(r"(pilot|gate)_k(\d+)_", run_id)
+    m = re.match(r"(pilot2|pilot|gate)_(?:(v\d)_)?k(\d+)_", run_id)
     if not m:
         raise SystemExit(
             f"[fatal] cannot infer split/k from run_id {run_id!r} and no usable "
             "summary.json; cannot resume."
         )
-    return m.group(1), int(m.group(2)), DEFAULT_SEED
+    return m.group(1), int(m.group(3)), DEFAULT_SEED, (m.group(2) or "v0")
 
 
 def _write_example_prompts(outdir: Path, tasks) -> None:
@@ -143,52 +176,60 @@ def _write_example_prompts(outdir: Path, tasks) -> None:
 # ---------------------------------------------------------------------------
 
 
-def _run_one(client: GeminiClient, task) -> dict:
-    """Execute one prediction task: generate, parse, one parse-retry if needed."""
+def _run_one(client, task, variant: str, retry_reminder: str) -> dict:
+    """One prediction: generate, parse per variant, one parse-retry if needed."""
     text, t_in, t_out = client.generate(task.prompt)
-    parsed = parse_answer(text)
+    pr = parse_response(text, variant)
     raw = text
     parse_retry = False
 
-    if parsed is None:
+    if pr["parse_failure"]:
         parse_retry = True
-        retry_prompt = task.prompt + "\n\n" + RETRY_SENTENCE
-        text2, t_in2, t_out2 = client.generate(retry_prompt)
+        text2, t_in2, t_out2 = client.generate(task.prompt + "\n\n" + retry_reminder)
         t_in += t_in2
         t_out += t_out2
         raw = text2
-        parsed = parse_answer(text2)
+        pr = parse_response(text2, variant)
 
-    parse_failure = parsed is None
-    sc = score(parsed, task.true_answer)
+    true = task.true_answer
+    disc = pr["prediction_argmax"]
+    mae_pt = pr["mae_point"]
     return {
         "person_id": task.person_id,
         "arm": task.arm,
         "item": task.tipi_code,
+        "variant": variant,
         "prompt": task.prompt,
         "raw_response": raw,
-        "parsed": parsed,
-        "true_answer": task.true_answer,
-        "correct": sc["correct"],
-        "abs_error": sc["abs_error"],
-        "within1": sc["within1"],
-        "parse_failure": parse_failure,
+        "parsed": pr["parsed"],
+        "prediction_ev": pr["prediction_ev"],
+        "prediction_argmax": pr["prediction_argmax"],
+        "renorm_offset": pr["renorm_offset"],
+        "true_answer": true,
+        "correct": None if disc is None else (disc == true),
+        "within1": None if disc is None else (abs(disc - true) <= 1),
+        "abs_error": None if mae_pt is None else abs(mae_pt - true),
+        "parse_failure": pr["parse_failure"],
         "parse_retry": parse_retry,
         "tokens_in": t_in,
         "tokens_out": t_out,
     }
 
 
-def _execute(client: GeminiClient, tasks) -> tuple[list[dict], str | None]:
-    """Run all tasks in a small thread pool. Returns (records, abort_reason)."""
+def _execute(client, tasks, variant: str, sink) -> tuple[list[dict], str | None]:
+    """Run tasks; ``sink(record)`` is called (and durably persists) per result."""
+    reminder = VARIANT_RETRY_REMINDER[variant]
     records: list[dict] = []
     abort_reason: str | None = None
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
-        futures = {pool.submit(_run_one, client, t): t for t in tasks}
+        futures = {pool.submit(_run_one, client, t, variant, reminder): t
+                   for t in tasks}
         try:
             for fut in tqdm(as_completed(futures), total=len(futures), desc="calls"):
-                records.append(fut.result())
+                rec = fut.result()
+                records.append(rec)
+                sink(rec)
         except CallCapExceeded as exc:
             abort_reason = f"CallCapExceeded: {exc}"
         except Exception as exc:  # noqa: BLE001 - fatal API error; stop cleanly
@@ -201,10 +242,21 @@ def _execute(client: GeminiClient, tasks) -> tuple[list[dict], str | None]:
     return records, abort_reason
 
 
+def _record_sink(records_path: Path):
+    """Return (file_handle, sink) that appends+flushes each record durably."""
+    fh = Path(records_path).open("a", encoding="utf-8")
+    lock = threading.Lock()
+
+    def sink(rec: dict) -> None:
+        with lock:
+            fh.write(json.dumps(rec) + "\n")
+            fh.flush()
+
+    return fh, sink
+
+
 def _redact(message: str) -> str:
     """Strip the API key from any message before it is printed/written."""
-    import os
-
     key = os.environ.get("GOOGLE_AI_STUDIO")
     if key and key in message:
         message = message.replace(key, "<REDACTED_API_KEY>")
@@ -216,30 +268,25 @@ def _redact(message: str) -> str:
 # ---------------------------------------------------------------------------
 
 
-def _write_records(outdir: Path, records: list[dict]) -> None:
-    with (outdir / "records.jsonl").open("w", encoding="utf-8") as fh:
-        for r in records:
-            fh.write(json.dumps(r) + "\n")
-
-
 def _write_human_review(outdir: Path, records: list[dict], codebook) -> None:
-    """10 distinct persons, twin arm: profile, question, parsed, true, baseline."""
+    """10 distinct persons, twin arm: profile, question, prediction, true, baseline."""
     lookup = {(r["person_id"], r["arm"], r["item"]): r for r in records}
-    twins = [r for r in records if r["arm"] == "twin"]
-
     seen: dict[int, dict] = {}
-    for r in twins:  # first record per person (records are unordered; that's fine)
-        seen.setdefault(r["person_id"], r)
+    for r in records:
+        if r["arm"] == "twin":
+            seen.setdefault(r["person_id"], r)
     examples = list(seen.values())[:10]
 
-    lines = ["# Human review — 10 twin-arm examples", ""]
+    lines = ["# Human review - 10 twin-arm examples", ""]
     for i, r in enumerate(examples, 1):
         pid, item = r["person_id"], r["item"]
         base = lookup.get((pid, "baseline", item))
         tipi_text = codebook.tipi_items.get(item, item)
         profile = r["prompt"].split("\n\nYOUR TASK")[0]
+        ev = r.get("prediction_ev")
+        ev_str = f" (EV {ev:.2f})" if ev is not None else ""
         lines += [
-            f"## Example {i} — person {pid}, item {item}",
+            f"## Example {i} - person {pid}, item {item} (variant {r.get('variant','v0')})",
             "",
             "**Seed profile (twin):**",
             "",
@@ -249,29 +296,19 @@ def _write_human_review(outdir: Path, records: list[dict], codebook) -> None:
             "",
             f'**Held-out question:** "I see myself as: {tipi_text}"',
             "",
-            f"- Twin parsed answer: {r['parsed']}"
+            f"- Twin prediction: {r['parsed']}{ev_str}"
             + (" (parse failure)" if r["parse_failure"] else ""),
             f"- True answer: {r['true_answer']}",
-            f"- Baseline parsed answer for same item: "
+            f"- Baseline prediction for same item: "
             f"{base['parsed'] if base else 'n/a'}",
             "",
         ]
     (outdir / "human_review.md").write_text("\n".join(lines), encoding="utf-8")
 
 
-def _write_summary(
-    outdir: Path,
-    records: list[dict],
-    config: dict,
-    process_totals: dict,
-    abort_reason: str | None,
-) -> dict:
-    """Score ALL ``records`` and write summary.json.
-
-    Content totals (records, tokens, parse failures) are cumulative over the
-    file; ``process_totals`` carries the call/retry counts for the process that
-    just ran (a fresh run, or the resuming process).
-    """
+def _write_summary(outdir: Path, records: list[dict], config: dict,
+                   process_totals: dict, abort_reason: str | None) -> dict:
+    """Score ALL ``records`` and write summary.json (scoring over the full file)."""
     totals = {
         "n_records": len(records),
         "n_parse_failures": sum(1 for r in records if r["parse_failure"]),
@@ -279,25 +316,118 @@ def _write_summary(
         "tokens_out": sum(r["tokens_out"] for r in records),
     }
     totals.update(process_totals)
-
     summary = {
         "config": config,
         "scoring": summarize(records),
         "totals": totals,
         "aborted": abort_reason,
     }
-    (outdir / "summary.json").write_text(
-        json.dumps(summary, indent=2), encoding="utf-8"
-    )
+    (outdir / "summary.json").write_text(json.dumps(summary, indent=2),
+                                         encoding="utf-8")
     return summary
 
 
+def _print_scores(prefix: str, run_id: str, summary: dict, n_calls: int) -> None:
+    sc = summary["scoring"]
+    mae, w1, ex = sc["mae"], sc["within1"], sc["exact"]
+    print(f"{prefix} {run_id}: {n_calls} calls, "
+          f"{summary['totals']['n_parse_failures']} parse failures, "
+          f"{sc['n_excluded_pairs']} excluded pairs")
+    print(f"{prefix} MAE twin={mae['twin']['mean']:.3f} "
+          f"base={mae['baseline']['mean']:.3f} "
+          f"MAE-lift={mae['lift']['mean']:+.3f} (t p={mae['tests']['t_p']:.4g})")
+    print(f"{prefix} within1-lift={w1['lift']['mean']:+.3f} "
+          f"exact-lift={ex['lift']['mean']:+.3f}")
+
+
 # ---------------------------------------------------------------------------
-# Main
+# Fresh / resume runs
 # ---------------------------------------------------------------------------
 
 
-def run_resume(resume_dir: str) -> int:
+def _make_client(max_calls: int, variant: str) -> GeminiClient:
+    return GeminiClient(max_calls=max_calls,
+                        max_output_tokens=VARIANT_MAX_OUTPUT_TOKENS[variant])
+
+
+def run_fresh(split: str, k: int, seed: int, variant: str,
+              dry_run: bool = False, max_calls: int = MAX_CALLS) -> RunOutcome:
+    """Start a brand-new run for (split, k, seed, variant)."""
+    if variant not in VARIANTS:
+        raise ValueError(f"variant must be one of {VARIANTS}, got {variant!r}")
+
+    tasks, ids, codebook = _build_all_tasks(split, k, seed, variant)
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    run_id = make_run_id(split, k, variant, timestamp)
+    outdir = RESULTS_DIR / run_id
+    outdir.mkdir(parents=True, exist_ok=True)
+
+    _write_example_prompts(outdir, tasks)
+    mean_chars = sum(len(t.prompt) for t in tasks) / len(tasks)
+    config = {"split": split, "k": k, "seed": seed, "variant": variant,
+              "n_persons": len(ids), "model": None}
+
+    if dry_run:
+        manifest = {"run_id": run_id, "split": split, "k": k, "seed": seed,
+                    "variant": variant, "n_persons": len(ids),
+                    "planned_calls": len(tasks),
+                    "mean_prompt_chars": round(mean_chars, 1)}
+        (outdir / "dry_run_manifest.json").write_text(
+            json.dumps(manifest, indent=2), encoding="utf-8")
+        print(f"[dry-run] {run_id}: {len(tasks)} planned calls, "
+              f"mean prompt {mean_chars:.0f} chars. No API calls made.")
+        print(f"[dry-run] wrote example prompts + manifest to {outdir}")
+        return RunOutcome(0, outdir, 0, True)
+
+    try:
+        client = _make_client(max_calls, variant)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[fatal] could not init client: {type(exc).__name__}: "
+              f"{_redact(str(exc))}", file=sys.stderr)
+        return RunOutcome(2, outdir, 0, False)
+
+    config["model"] = client.model_name
+    print(f"[run] {run_id}: {len(tasks)} planned calls (cap {max_calls}), "
+          f"model={client.model_name}, variant={variant}, workers={MAX_WORKERS}")
+
+    fh, sink = _record_sink(outdir / "records.jsonl")
+    try:
+        records, abort_reason = _execute(client, tasks, variant, sink)
+    finally:
+        fh.close()
+
+    all_records = read_records(outdir / "records.jsonl")
+    n_parse_retries = sum(1 for r in records if r["parse_retry"])
+    process_totals = {
+        "n_calls": client.n_calls,
+        "n_backoff_retries": client.n_retries,
+        "n_parse_retries": n_parse_retries,
+        "n_retries_total": client.n_retries + n_parse_retries,
+    }
+    summary = _write_summary(outdir, all_records, config, process_totals, abort_reason)
+    _write_human_review(outdir, all_records, codebook)
+
+    append_cost_log(build_cost_entry(
+        run_id=run_id, model=client.model_name, split=split, variant=variant,
+        n_persons=len(ids), n_calls=client.n_calls,
+        n_retries=process_totals["n_retries_total"],
+        n_parse_failures=summary["totals"]["n_parse_failures"],
+        tokens_in=summary["totals"]["tokens_in"],
+        tokens_out=summary["totals"]["tokens_out"],
+    ), RESULTS_DIR / "cost_log.jsonl")
+
+    if abort_reason:
+        print(f"[aborted] {abort_reason}", file=sys.stderr)
+        print(f"[aborted] partial results ({len(all_records)} records) in {outdir}",
+              file=sys.stderr)
+        return RunOutcome(3, outdir, client.n_calls, False)
+
+    _print_scores("[done]", run_id, summary, client.n_calls)
+    print(f"[done] results in {outdir}")
+    return RunOutcome(0, outdir, client.n_calls, True)
+
+
+def run_resume(resume_dir: str, max_calls: int = MAX_CALLS) -> RunOutcome:
     """Finish an existing run: execute only the missing (person, arm, item) calls."""
     outdir = Path(resume_dir).resolve()
     records_path = outdir / "records.jsonl"
@@ -305,43 +435,45 @@ def run_resume(resume_dir: str) -> int:
     if not records_path.exists():
         print(f"[fatal] no records.jsonl in {outdir}; nothing to resume.",
               file=sys.stderr)
-        return 2
+        return RunOutcome(2, outdir, 0, False)
 
-    split, k, seed = _resume_config(outdir, run_id)
-    tasks, ids, codebook = _build_all_tasks(split, k, seed)
+    split, k, seed, variant = _resume_config(outdir, run_id)
+    tasks, ids, codebook = _build_all_tasks(split, k, seed, variant)
     done = completed_keys(records_path)
     missing = filter_missing(tasks, done)
+    print(f"[resume] {run_id}: split={split} k={k} seed={seed} variant={variant} | "
+          f"{len(tasks)} total, {len(done)} done, {len(missing)} missing")
 
-    print(f"[resume] {run_id}: split={split} k={k} seed={seed} | "
-          f"{len(tasks)} total tasks, {len(done)} done, {len(missing)} missing")
+    config = {"split": split, "k": k, "seed": seed, "variant": variant,
+              "n_persons": len(ids), "model": None}
 
     if not missing:
-        # Nothing to call: just regenerate the derived files from all records.
         all_records = read_records(records_path)
-        config = {"split": split, "k": k, "seed": seed, "n_persons": len(ids),
-                  "model": None}
         _write_summary(outdir, all_records, config,
                        {"resumed": True, "resume_n_calls": 0}, None)
         _write_human_review(outdir, all_records, codebook)
         print("[resume] already complete; regenerated summary + human_review.")
-        return 0
+        return RunOutcome(0, outdir, 0, True)
 
     try:
-        client = GeminiClient(max_calls=MAX_CALLS)
+        client = _make_client(max_calls, variant)
     except Exception as exc:  # noqa: BLE001
         print(f"[fatal] could not init client: {type(exc).__name__}: "
               f"{_redact(str(exc))}", file=sys.stderr)
-        return 2
+        return RunOutcome(2, outdir, 0, False)
 
-    print(f"[resume] running {len(missing)} calls (cap {MAX_CALLS}), "
-          f"model={client.model_name}, workers={MAX_WORKERS}")
-    new_records, abort_reason = _execute(client, missing)
-    _append_records(records_path, new_records)
+    config["model"] = client.model_name
+    print(f"[resume] running {len(missing)} calls (cap {max_calls}), "
+          f"model={client.model_name}, variant={variant}, workers={MAX_WORKERS}")
+
+    fh, sink = _record_sink(records_path)
+    try:
+        new_records, abort_reason = _execute(client, missing, variant, sink)
+    finally:
+        fh.close()
 
     all_records = read_records(records_path)
     n_parse_retries = sum(1 for r in new_records if r["parse_retry"])
-    config = {"split": split, "k": k, "seed": seed, "n_persons": len(ids),
-              "model": client.model_name}
     process_totals = {
         "resumed": True,
         "resume_n_new_records": len(new_records),
@@ -353,139 +485,48 @@ def run_resume(resume_dir: str) -> int:
     summary = _write_summary(outdir, all_records, config, process_totals, abort_reason)
     _write_human_review(outdir, all_records, codebook)
 
-    # Cost log: a new line, resumed=True, counting only THIS process's spend.
-    entry = build_cost_entry(
-        run_id=run_id,
-        model=client.model_name,
-        split=split,
-        n_persons=len(ids),
-        n_calls=client.n_calls,
+    append_cost_log(build_cost_entry(
+        run_id=run_id, model=client.model_name, split=split, variant=variant,
+        n_persons=len(ids), n_calls=client.n_calls,
         n_retries=client.n_retries + n_parse_retries,
         n_parse_failures=sum(1 for r in new_records if r["parse_failure"]),
         tokens_in=sum(r["tokens_in"] for r in new_records),
         tokens_out=sum(r["tokens_out"] for r in new_records),
         resumed=True,
-    )
-    append_cost_log(entry, RESULTS_DIR / "cost_log.jsonl")
+    ), RESULTS_DIR / "cost_log.jsonl")
 
     if abort_reason:
         print(f"[aborted] {abort_reason}", file=sys.stderr)
         print(f"[aborted] appended {len(new_records)} records; "
               f"{len(all_records)} total now in {records_path}", file=sys.stderr)
-        return 3
+        return RunOutcome(3, outdir, client.n_calls, False)
 
-    ex = summary["scoring"]["exact"]
-    print(f"[done] {run_id}: appended {len(new_records)} records "
-          f"({client.n_calls} calls); {len(all_records)} total")
-    print(f"[done] twin={ex['twin_accuracy']['mean']:.3f} "
-          f"baseline={ex['baseline_accuracy']['mean']:.3f} "
-          f"lift={ex['lift']['mean']:+.3f} (t p={ex['tests']['t_p']:.4g})")
-    print(f"[done] results in {outdir}")
-    return 0
+    _print_scores("[done]", run_id, summary, client.n_calls)
+    print(f"[done] appended {len(new_records)} records; {len(all_records)} total "
+          f"in {outdir}")
+    return RunOutcome(0, outdir, client.n_calls, True)
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="DOPPLER Stage-1 replay gym runner.")
-    ap.add_argument("--split", choices=["pilot", "gate"], default="pilot")
+    ap.add_argument("--split", choices=["pilot", "gate", "pilot2"], default="pilot")
     ap.add_argument("--k", type=int, default=48, help="interest items per twin (<=48)")
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--variant", choices=list(VARIANTS), default="v0")
     ap.add_argument("--dry-run", action="store_true", help="build prompts, no API calls")
     ap.add_argument("--resume", metavar="RUN_DIR", default=None,
                     help="finish an existing run dir: run only its missing calls")
     args = ap.parse_args()
 
     if args.resume:
-        return run_resume(args.resume)
-
-    tasks, ids, codebook = _build_all_tasks(args.split, args.k, args.seed)
-
-    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    run_id = f"{args.split}_k{args.k}_{timestamp}"
-    outdir = RESULTS_DIR / run_id
-    outdir.mkdir(parents=True, exist_ok=True)
-
-    _write_example_prompts(outdir, tasks)
-    mean_chars = sum(len(t.prompt) for t in tasks) / len(tasks)
-
-    config = {
-        "split": args.split,
-        "k": args.k,
-        "seed": args.seed,
-        "n_persons": len(ids),
-        "model": None,  # filled below for real runs
-    }
-
-    if args.dry_run:
-        manifest = {
-            "run_id": run_id,
-            "split": args.split,
-            "k": args.k,
-            "seed": args.seed,
-            "n_persons": len(ids),
-            "planned_calls": len(tasks),
-            "mean_prompt_chars": round(mean_chars, 1),
-        }
-        (outdir / "dry_run_manifest.json").write_text(
-            json.dumps(manifest, indent=2), encoding="utf-8"
-        )
-        print(f"[dry-run] {run_id}: {len(tasks)} planned calls, "
-              f"mean prompt {mean_chars:.0f} chars. No API calls made.")
-        print(f"[dry-run] wrote example prompts + manifest to {outdir}")
-        return 0
-
-    # ---- real run --------------------------------------------------------
-    try:
-        client = GeminiClient(max_calls=MAX_CALLS)
-    except Exception as exc:  # noqa: BLE001
-        print(f"[fatal] could not init client: {type(exc).__name__}: "
-              f"{_redact(str(exc))}", file=sys.stderr)
-        return 2
-
-    config["model"] = client.model_name
-    print(f"[run] {run_id}: {len(tasks)} planned calls (cap {MAX_CALLS}), "
-          f"model={client.model_name}, workers={MAX_WORKERS}")
-
-    records, abort_reason = _execute(client, tasks)
-    n_parse_retries = sum(1 for r in records if r["parse_retry"])
-
-    _write_records(outdir, records)
-    _write_human_review(outdir, records, codebook)
-    process_totals = {
-        "n_calls": client.n_calls,
-        "n_backoff_retries": client.n_retries,
-        "n_parse_retries": n_parse_retries,
-        "n_retries_total": client.n_retries + n_parse_retries,
-    }
-    summary = _write_summary(outdir, records, config, process_totals, abort_reason)
-
-    entry = build_cost_entry(
-        run_id=run_id,
-        model=client.model_name,
-        split=args.split,
-        n_persons=len(ids),
-        n_calls=client.n_calls,
-        n_retries=process_totals["n_retries_total"],
-        n_parse_failures=summary["totals"]["n_parse_failures"],
-        tokens_in=summary["totals"]["tokens_in"],
-        tokens_out=summary["totals"]["tokens_out"],
-    )
-    append_cost_log(entry, RESULTS_DIR / "cost_log.jsonl")
-
-    if abort_reason:
-        print(f"[aborted] {abort_reason}", file=sys.stderr)
-        print(f"[aborted] partial results ({len(records)} records) written to {outdir}",
-              file=sys.stderr)
-        return 3
-
-    ex = summary["scoring"]["exact"]
-    print(f"[done] {run_id}: {client.n_calls} calls, "
-          f"{summary['totals']['n_parse_failures']} parse failures")
-    print(f"[done] twin={ex['twin_accuracy']['mean']:.3f} "
-          f"baseline={ex['baseline_accuracy']['mean']:.3f} "
-          f"lift={ex['lift']['mean']:+.3f} "
-          f"(t p={ex['tests']['t_p']:.4g})")
-    print(f"[done] results in {outdir}")
-    return 0
+        return run_resume(args.resume).exit_code
+    return run_fresh(args.split, args.k, args.seed, args.variant,
+                     dry_run=args.dry_run).exit_code
 
 
 if __name__ == "__main__":
