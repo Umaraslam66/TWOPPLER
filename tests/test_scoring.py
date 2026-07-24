@@ -148,6 +148,21 @@ def test_summarize_key_order_mae_first():
     assert keys == ["mae", "within1", "exact", "spearman"]
 
 
+def test_summarize_is_record_order_independent():
+    # Concurrency writes records in completion order; scoring keys on
+    # (person, arm, item) so the result must not depend on record order.
+    import random
+    recs = _example_records()
+    shuffled = recs[:]
+    random.Random(0).shuffle(shuffled)
+    a = summarize(recs)
+    b = summarize(shuffled)
+    assert a["mae"]["lift"]["mean"] == b["mae"]["lift"]["mean"]
+    assert a["n_persons"] == b["n_persons"]
+    assert a["histograms"] == b["histograms"]
+    assert a["per_item"] == b["per_item"]
+
+
 def test_exclusion_rule_drops_pair_from_both_arms():
     r = _example_records()
     # Make person 1's TIPI2 baseline a parse failure -> that pair excluded

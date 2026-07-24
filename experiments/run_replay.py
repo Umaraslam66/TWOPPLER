@@ -43,7 +43,11 @@ from doppler.data import (  # noqa: E402
     load_riasec,
     person_record,
 )
-from doppler.gemini import CallCapExceeded, GeminiClient  # noqa: E402
+from doppler.gemini import (  # noqa: E402
+    OFFICIAL_LIMITS,
+    CallCapExceeded,
+    GeminiClient,
+)
 from doppler.gym import build_tasks, pilot2_ids, pilot_and_gate_ids  # noqa: E402
 from doppler.prompts import (  # noqa: E402
     VARIANT_MAX_OUTPUT_TOKENS,
@@ -54,18 +58,20 @@ from doppler.scoring import parse_response, summarize  # noqa: E402
 
 DATA_DIR = _ROOT / "data"
 RESULTS_DIR = _ROOT / "results"
-# One worker: the key is on a ~15 requests/minute free tier, so throughput is
-# gated entirely by the client's request pacer. Extra threads only cause 429s.
-MAX_WORKERS = 1
+# Paid Tier 1: fan out across many workers. The client's token-bucket RPM guard
+# and the 429 global throttle keep the shared request rate safe.
+DEFAULT_WORKERS = 50
 DEFAULT_SEED = 42
-# Retry headroom above the number of planned calls, for the self-sizing cap used
-# by standalone runs (the pilot2 driver passes its own shared budget instead).
-DEFAULT_HEADROOM = 400
 
 
 def _default_cap(n_planned: int) -> int:
-    """A hard call cap that comfortably covers ``n_planned`` calls plus retries."""
-    return n_planned + max(DEFAULT_HEADROOM, n_planned // 2)
+    """A hard call cap that comfortably covers ``n_planned`` calls plus retries.
+
+    Generous headroom so a many-worker run that hits some 429 retries still
+    finishes without tripping the cap. The pilot2 driver passes its own shared
+    budget instead of this.
+    """
+    return 2 * n_planned + 500
 
 
 @dataclass
@@ -252,14 +258,20 @@ def _score_from_completion(task, variant: str, res) -> dict:
                               res.tokens_in, res.tokens_out)
 
 
-def _execute(backend, tasks, variant: str, sink) -> tuple[list[dict], str | None]:
-    """Run tasks; ``sink(record)`` is called (and durably persists) per result."""
+def _execute(backend, tasks, variant: str, sink,
+             workers: int = DEFAULT_WORKERS) -> tuple[list[dict], str | None]:
+    """Run tasks; ``sink(record)`` is called (and durably persists) per result.
+
+    Records arrive in completion order across ``workers`` threads. Every
+    downstream consumer keys on (person, arm, item), so that ordering is
+    irrelevant to scoring and resume.
+    """
     reminder = VARIANT_RETRY_REMINDER[variant]
     max_tok = VARIANT_MAX_OUTPUT_TOKENS[variant]
     records: list[dict] = []
     abort_reason: str | None = None
 
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
+    with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {pool.submit(_run_one, backend, t, variant, reminder, max_tok): t
                    for t in tasks}
         try:
@@ -388,7 +400,8 @@ def _make_client(max_calls: int, variant: str) -> GeminiClient:
 
 
 def run_fresh(split: str, k: int, seed: int, variant: str,
-              dry_run: bool = False, max_calls: int | None = None) -> RunOutcome:
+              dry_run: bool = False, max_calls: int | None = None,
+              workers: int = DEFAULT_WORKERS) -> RunOutcome:
     """Start a brand-new run for (split, k, seed, variant).
 
     ``max_calls`` caps total API requests; when None it self-sizes to the
@@ -430,11 +443,14 @@ def run_fresh(split: str, k: int, seed: int, variant: str,
 
     config["model"] = client.model_name
     print(f"[run] {run_id}: {len(tasks)} planned calls (cap {cap}), "
-          f"model={client.model_name}, variant={variant}, workers={MAX_WORKERS}")
+          f"model={client.model_name}, variant={variant}, workers={workers}")
+    print(f"[run] rate limits: {OFFICIAL_LIMITS}; "
+          f"client RPM guard {client.rpm_guard}/min")
 
     fh, sink = _record_sink(outdir / "records.jsonl")
     try:
-        records, abort_reason = _execute(GeminiBackend(client), tasks, variant, sink)
+        records, abort_reason = _execute(GeminiBackend(client), tasks, variant, sink,
+                                         workers=workers)
     finally:
         fh.close()
 
@@ -469,7 +485,8 @@ def run_fresh(split: str, k: int, seed: int, variant: str,
     return RunOutcome(0, outdir, client.n_calls, True)
 
 
-def run_resume(resume_dir: str, max_calls: int | None = None) -> RunOutcome:
+def run_resume(resume_dir: str, max_calls: int | None = None,
+               workers: int = DEFAULT_WORKERS) -> RunOutcome:
     """Finish an existing run: execute only the missing (person, arm, item) calls."""
     outdir = Path(resume_dir).resolve()
     records_path = outdir / "records.jsonl"
@@ -507,12 +524,14 @@ def run_resume(resume_dir: str, max_calls: int | None = None) -> RunOutcome:
 
     config["model"] = client.model_name
     print(f"[resume] running {len(missing)} calls (cap {cap}), "
-          f"model={client.model_name}, variant={variant}, workers={MAX_WORKERS}")
+          f"model={client.model_name}, variant={variant}, workers={workers}")
+    print(f"[resume] rate limits: {OFFICIAL_LIMITS}; "
+          f"client RPM guard {client.rpm_guard}/min")
 
     fh, sink = _record_sink(records_path)
     try:
         new_records, abort_reason = _execute(GeminiBackend(client), missing,
-                                             variant, sink)
+                                             variant, sink, workers=workers)
     finally:
         fh.close()
 
@@ -642,6 +661,8 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--variant", choices=list(VARIANTS), default="v0")
     ap.add_argument("--backend", choices=["gemini", "batchfile"], default="gemini")
+    ap.add_argument("--workers", type=int, default=DEFAULT_WORKERS,
+                    help="gemini backend: concurrent request workers")
     ap.add_argument("--dry-run", action="store_true", help="build prompts, no API calls")
     ap.add_argument("--resume", metavar="RUN_DIR", default=None,
                     help="finish an existing run dir: run only its missing calls")
@@ -681,9 +702,9 @@ def main() -> int:
                  "--ingest-completions")
 
     if args.resume:
-        return run_resume(args.resume).exit_code
+        return run_resume(args.resume, workers=args.workers).exit_code
     return run_fresh(args.split, args.k, args.seed, args.variant,
-                     dry_run=args.dry_run).exit_code
+                     dry_run=args.dry_run, workers=args.workers).exit_code
 
 
 if __name__ == "__main__":

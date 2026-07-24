@@ -22,7 +22,7 @@ from doppler.backends import (  # noqa: E402
 )
 from doppler.gym import build_tasks  # noqa: E402
 from doppler.prompts import VARIANT_MAX_OUTPUT_TOKENS, VARIANT_RETRY_REMINDER  # noqa: E402
-from doppler.scoring import parse_response  # noqa: E402
+from doppler.scoring import parse_response, summarize  # noqa: E402
 
 
 class _ScriptClient:
@@ -219,6 +219,48 @@ def test_run_ingest_end_to_end(tmp_path, monkeypatch):
     assert entry["backend"] == "batchfile"
     assert entry["node_hours"] == 2.5
     assert entry["n_calls"] == 0
+    assert entry["cost_usd"] is None  # batch model has no token price
+
+
+class _FixedBackend:
+    """Order-preserving fake backend that answers every prompt with '4'."""
+
+    def batch_generate(self, prompts, *, max_output_tokens):
+        return [BackendResult("4", 5, 1, None) for _ in prompts]
+
+
+def test_execute_concurrent_resume_flow_order_independent(
+    tmp_path, fake_codebook, record_factory, full_demographics
+):
+    tasks = _tasks(fake_codebook, record_factory, full_demographics)  # 40 tasks
+    backend = _FixedBackend()
+    records_path = tmp_path / "records.jsonl"
+
+    # Partial run across several workers (records land in completion order).
+    fh, sink = run_replay._record_sink(records_path)
+    try:
+        _recs, abort = run_replay._execute(backend, tasks[:15], "v0", sink, workers=4)
+    finally:
+        fh.close()
+    assert abort is None
+
+    # Resume the remainder concurrently; keying is on (person, arm, item).
+    done = run_replay.completed_keys(records_path)
+    missing = run_replay.filter_missing(tasks, done)
+    assert len(missing) == 25
+    fh, sink = run_replay._record_sink(records_path)
+    try:
+        _recs2, abort2 = run_replay._execute(backend, missing, "v0", sink, workers=8)
+    finally:
+        fh.close()
+    assert abort2 is None
+
+    all_records = run_replay.read_records(records_path)
+    keys = [(r["person_id"], r["arm"], r["item"]) for r in all_records]
+    assert len(keys) == len(set(keys)) == 40
+    assert set(keys) == {(t.person_id, t.arm, t.tipi_code) for t in tasks}
+    # Completed file scores cleanly regardless of the (completion) order.
+    assert summarize(all_records)["n_persons"] == 2
 
 
 # Variant-distinguishing completion text: each parses under its OWN variant
