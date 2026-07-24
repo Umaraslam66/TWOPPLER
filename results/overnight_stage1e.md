@@ -2,7 +2,7 @@
 
 **Label: TRAINING/DERIVATION SPLIT ONLY — for bar-setting and go/no-go judgement. No confirmatory claims. The confirm split has not been built or touched.**
 
-Date: 2026-07-24. Spec: PREREGISTRATION_AMENDMENT_1.md A6, extending results/adaptive_pilot_train.md. Model: Gemma-4-31B-it (vLLM, TP=4, temperature 0), twin variant v2, same parser and scoring as the Stage 1 gate.
+Date: 2026-07-25. Spec: PREREGISTRATION_AMENDMENT_1.md A6, extending results/adaptive_pilot_train.md. Model: Gemma-4-31B-it (vLLM, TP=4, temperature 0), twin variant v2, same parser and scoring as the Stage 1 gate.
 
 Lift = demographics-only baseline MAE − arm MAE, averaged over persons, 95% t interval and paired t-test. Higher is better.
 
@@ -10,11 +10,20 @@ Lift = demographics-only baseline MAE − arm MAE, averaged over persons, 95% t 
 
 | experiment | status | reused from the pilot |
 |---|---|---|
-| EXP1a | submitted | nothing |
-| EXP1b | submitted | nothing |
-| EXP1c | submitted | nothing |
-| EXP2 + EXP4 + EXP5 (shared static job) | submitted | results/adaptive_train_20260724-210916/baseline (k=0); results/adaptive_train_20260724-210916/random (k in 1,2,4,8,12,16,20); results/adaptive_train_20260724-210916/imposter (random imposter, k=12,20) |
-| EXP3 | submitted | EXP1a and EXP1b curves restricted to the first 100 persons of the train split |
+| EXP1a | queued | nothing |
+| EXP1b | queued | nothing |
+| EXP1c | queued | nothing |
+| EXP2 + EXP4 + EXP5 (shared static job) | ingested | results/adaptive_train_20260724-210916/baseline (k=0); results/adaptive_train_20260724-210916/random (k in 1,2,4,8,12,16,20); results/adaptive_train_20260724-210916/imposter (random imposter, k=12,20) |
+| EXP3 | queued | EXP1a and EXP1b curves restricted to the first 100 persons of the train split |
+
+## Headlines (computed from the ingested arms)
+
+- **EXP2.** The order frozen on 2,000 disjoint people gives +0.074 at k=20 and peaks at +0.081 (k=36). It reaches 90% of that peak by **k=16**, and the whole stretch from k=16 to k=48 moves the number by +0.006 — past ~16 questions extra items buy almost nothing.
+- **EXP2 selection bias.** The pilot's fixed order, picked on the same 150 people it was scored on, read +0.088 at k=20. The honest order reads +0.074. The gap, +0.014, is roughly what the selection bias was worth.
+- **EXP4.** Random reveals climb from +0.049 at k=20 to +0.079 at k=48 (all 48 items, i.e. full information). The Stage 1 gate's all-48 number on 500 people was +0.095, so this lands in the right place. **k=20 already recovers 62% of the full-information lift** on a random order — the budget question is about the last third, not the first two.
+- **Consistency check.** At k=48 both static arms reveal the same 48 items and differ only in the order of the lines. Their difference is +0.000 [-0.013, +0.014] p=0.97 — order stops mattering once everything is on the table, so the order effects at low k are real, not a rendering artifact.
+- **EXP5.** A much more similar wrong person does **not** mislead differently. NN-imposter minus random-imposter is k=12: -0.003 [-0.054, +0.048] p=0.92; k=20: +0.006 [-0.049, +0.061] p=0.83. Both stay below the demographics-only baseline (NN is -0.039 at k=12), so a coherent profile belonging to the wrong person is harmful regardless of how well it matches. Reassuring for A1: the imposter baseline looks insensitive to how the donor is chosen.
+
 
 ## EXP1 — tie-break, scorer and elicitation grid
 
@@ -76,18 +85,18 @@ These 150 people had no say in picking this order, so this column is not inflate
 
 | k | fixed_deriv lift | pilot fixed (selection-biased) |
 |---|---|---|
-| 1 | not ingested | +0.014 [-0.007, +0.035] p=0.18 |
-| 2 | not ingested | +0.027 [+0.004, +0.050] p=0.024 |
-| 3 | not ingested | — |
-| 4 | not ingested | +0.060 [+0.032, +0.088] p=4.3e-05 |
-| 5 | not ingested | — |
-| 8 | not ingested | +0.070 [+0.040, +0.100] p=1.1e-05 |
-| 12 | not ingested | +0.079 [+0.047, +0.112] p=2.9e-06 |
-| 16 | not ingested | +0.080 [+0.047, +0.112] p=3.4e-06 |
-| 20 | not ingested | +0.088 [+0.053, +0.122] p=1.4e-06 |
-| 28 | not ingested | — |
-| 36 | not ingested | — |
-| 48 | not ingested | — |
+| 1 | +0.011 [-0.009, +0.031] p=0.28 | +0.014 [-0.007, +0.035] p=0.18 |
+| 2 | +0.038 [+0.010, +0.066] p=0.0089 | +0.027 [+0.004, +0.050] p=0.024 |
+| 3 | +0.039 [+0.010, +0.068] p=0.0086 | — |
+| 4 | +0.041 [+0.011, +0.071] p=0.0079 | +0.060 [+0.032, +0.088] p=4.3e-05 |
+| 5 | +0.032 [+0.000, +0.064] p=0.047 | — |
+| 8 | +0.041 [+0.008, +0.074] p=0.015 | +0.070 [+0.040, +0.100] p=1.1e-05 |
+| 12 | +0.060 [+0.024, +0.095] p=0.001 | +0.079 [+0.047, +0.112] p=2.9e-06 |
+| 16 | +0.075 [+0.038, +0.111] p=8.8e-05 | +0.080 [+0.047, +0.112] p=3.4e-06 |
+| 20 | +0.074 [+0.036, +0.112] p=0.00018 | +0.088 [+0.053, +0.122] p=1.4e-06 |
+| 28 | +0.075 [+0.038, +0.112] p=0.00011 | — |
+| 36 | +0.081 [+0.043, +0.120] p=4.8e-05 | — |
+| 48 | +0.079 [+0.041, +0.117] p=6.9e-05 | — |
 
 ## EXP3 — selection ladder: does target-aware selection beat self-uncertainty?
 
@@ -115,16 +124,16 @@ The random arm reuses the pilot's completions at k in {1, 2, 4, 8, 12, 16, 20} a
 |---|---|---|---|
 | 1 | -0.005 [-0.022, +0.012] p=0.57 | not ingested | n/a |
 | 2 | -0.001 [-0.021, +0.019] p=0.92 | not ingested | n/a |
-| 3 | not ingested | not ingested | n/a |
+| 3 | +0.006 [-0.015, +0.028] p=0.57 | not ingested | n/a |
 | 4 | +0.001 [-0.020, +0.023] p=0.92 | not ingested | n/a |
-| 5 | not ingested | not ingested | n/a |
+| 5 | +0.009 [-0.013, +0.032] p=0.41 | not ingested | n/a |
 | 8 | +0.006 [-0.020, +0.033] p=0.64 | not ingested | n/a |
 | 12 | +0.027 [+0.000, +0.053] p=0.047 | not ingested | n/a |
 | 16 | +0.040 [+0.012, +0.068] p=0.0056 | not ingested | n/a |
 | 20 | +0.049 [+0.018, +0.079] p=0.0019 | not ingested | n/a |
-| 28 | not ingested | not ingested | n/a |
-| 36 | not ingested | not ingested | n/a |
-| 48 | not ingested | not ingested | n/a |
+| 28 | +0.063 [+0.030, +0.096] p=0.0002 | not ingested | n/a |
+| 36 | +0.067 [+0.035, +0.100] p=7.4e-05 | not ingested | n/a |
+| 48 | +0.079 [+0.041, +0.116] p=5.3e-05 | not ingested | n/a |
 
 Reference: the Stage 1 gate's all-48-item lift on 500 people was +0.095.
 
@@ -136,8 +145,8 @@ The gradient is real: the random imposter's mean cosine is 0.8378, so the neares
 
 | k | own (random arm) | NN imposter | random imposter | own − NN | own − random imp | NN − random imp |
 |---|---|---|---|---|---|---|
-| 12 | +0.027 [+0.000, +0.053] p=0.047 | not ingested | -0.037 [-0.079, +0.006] p=0.091 | n/a | +0.063 [+0.019, +0.107] p=0.005 | n/a |
-| 20 | +0.049 [+0.018, +0.079] p=0.0019 | not ingested | -0.048 [-0.095, -0.001] p=0.046 | n/a | +0.096 [+0.050, +0.143] p=6.5e-05 | n/a |
+| 12 | +0.027 [+0.000, +0.053] p=0.047 | -0.039 [-0.086, +0.007] p=0.099 | -0.037 [-0.079, +0.006] p=0.091 | +0.066 [+0.024, +0.108] p=0.0024 | +0.063 [+0.019, +0.107] p=0.005 | -0.003 [-0.054, +0.048] p=0.92 |
+| 20 | +0.049 [+0.018, +0.079] p=0.0019 | -0.042 [-0.094, +0.009] p=0.11 | -0.048 [-0.095, -0.001] p=0.046 | +0.091 [+0.046, +0.135] p=0.0001 | +0.096 [+0.050, +0.143] p=6.5e-05 | +0.006 [-0.049, +0.061] p=0.83 |
 
 Read: the pilot found a random stranger's profile is *worse than knowing nothing* (lift −0.04 to −0.055 over baseline). If the nearest neighbour is less harmful, similarity buys back some generic signal; if it is more harmful, a plausible-but-wrong profile is the more dangerous failure — which is the case Stage 2's same-domain imposter has to survive.
 
@@ -145,12 +154,12 @@ Read: the pilot found a random stranger's profile is *worse than knowing nothing
 
 | experiment | projected node-hours | actual | slurm job(s) | status |
 |---|---|---|---|---|
-| overnight_exp1a | 1.265 | — | 50191885 | submitted |
-| overnight_exp1b | 0.656 | — | 50191886 | submitted |
-| overnight_exp1c | 0.656 | — | 50191887 | submitted |
-| overnight_exp245 | 0.300 | — | 50191888 | submitted |
-| overnight_exp3 | 1.881 | — | 50191936 | submitted |
-| **TOTAL** | **4.760** | **0.000** | | caps: 4.0/job, 12.0/batch |
+| overnight_exp1a | 1.265 | — | 50191885 | queued |
+| overnight_exp1b | 0.656 | — | 50191886 | queued |
+| overnight_exp1c | 0.656 | — | 50191887 | queued |
+| overnight_exp245 | 0.300 | 0.227 | 50191888 | ingested |
+| overnight_exp3 | 1.881 | — | 50191936 | queued |
+| **TOTAL** | **4.760** | **0.227** | | caps: 4.0/job, 12.0/batch |
 
 ## Provenance
 

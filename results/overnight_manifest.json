@@ -115,7 +115,7 @@
       "experiment": "EXP2 + EXP4 + EXP5 (shared static job)",
       "title": "frozen derivation order, extended random checkpoints, nearest-neighbour imposter",
       "kind": "static",
-      "status": "queued",
+      "status": "ingested",
       "run_dir": "results/overnight_exp245",
       "config": "results/overnight_exp245/config.json",
       "sbatch_local": "results/overnight_exp245/overnight_exp245.sbatch",
@@ -125,14 +125,15 @@
         "50191888"
       ],
       "projected_node_hours": 0.3005,
-      "actual_node_hours": null,
+      "actual_node_hours": 0.2267,
       "reuses": [
         "results/adaptive_train_20260724-210916/baseline (k=0)",
         "results/adaptive_train_20260724-210916/random (k in 1,2,4,8,12,16,20)",
         "results/adaptive_train_20260724-210916/imposter (random imposter, k=12,20)"
       ],
       "notes": [
-        "2026-07-24T21:22:22Z: EXP2 fixed_deriv + EXP4 random_ext + EXP5 nn_imposter, 28500 prompts"
+        "2026-07-24T21:22:22Z: EXP2 fixed_deriv + EXP4 random_ext + EXP5 nn_imposter, 28500 prompts",
+        "2026-07-24T22:29:08Z: COMPLETED 16:54, exit 0:0. 28,500/28,500 completions, 0 missing. 0.2267 node-hours actual vs 0.3005 projected."
       ],
       "node_output_files": [
         "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp245/completions_static.jsonl",
@@ -144,7 +145,9 @@
         "step_3_ingest": "uv run python experiments/overnight.py ingest --name overnight_exp245 --nodedir results/overnight_exp245/node_output",
         "step_4_report": "uv run python experiments/overnight.py report",
         "node_log": "/leonardo_work/AIFAC_P02_548/DOPPLER/logs/dop-exp245-<jobid>.out"
-      }
+      },
+      "n_scored_predictions": 28500,
+      "n_side_calls": 0
     },
     "overnight_exp3": {
       "experiment": "EXP3",
@@ -192,9 +195,11 @@
     "EXP3(c) one-step lookahead: NOT run. It multiplies the (b) cost by the shortlist size again and does not fit the 3.0 node-hour EXP3 cap alongside (b).",
     "All five jobs use Gemma-4-31B-it, vLLM TP=4, temperature 0, variant v2 - identical to the gate and the pilot.",
     "HOUSEKEEPING for the morning (no commits were made tonight, per instruction): results/overnight_exp245/prompts_static.jsonl (50M) and tasks_static.jsonl (53M) are large regenerable artifacts - both are rebuilt byte-identically by 'uv run python experiments/overnight.py export'. Consider gitignoring them or the run-dir prompt files generally before any commit. The per-arm records.jsonl files ARE the provenance and should be kept.",
-    "Verification done tonight: the ingest path was run against the pilot's own raw node output and reproduced the published pilot report exactly (10,500 records, 0 prompt-rebuild mismatches, lift -0.006/+0.030/+0.070 at k=1/8/20, tie rate 51.53%). Test artefacts were deleted afterwards. Full suite: 281 passed."
+    "Verification done tonight: the ingest path was run against the pilot's own raw node output and reproduced the published pilot report exactly (10,500 records, 0 prompt-rebuild mismatches, lift -0.006/+0.030/+0.070 at k=1/8/20, tie rate 51.53%). Test artefacts were deleted afterwards. Full suite: 281 passed.",
+    "INTERNAL CONSISTENCY CHECK (EXP2/EXP4): at k=48 the fixed_deriv and random_ext arms reveal exactly the same 48 items, differing only in the ORDER of the revealed lines. Their lifts are +0.0790 and +0.0787; the paired difference is +0.0002 [-0.0132,+0.0137] p=0.97. So line order has no effect once all information is present - which means the order effects seen at low k are real information-ordering effects, not a rendering artifact.",
+    "EXP5 HEADLINE (both checkpoints): making the imposter ~0.10 cosine more similar changed nothing. NN-imposter minus random-imposter is -0.003 (p=0.92) at k=12 and +0.006 (p=0.83) at k=20. Both imposters stay BELOW the demographics-only baseline. For Stage 2 this is reassuring: the A1 imposter baseline looks insensitive to how the wrong person is chosen."
   ],
-  "updated_utc": "2026-07-24T21:29:16Z",
+  "updated_utc": "2026-07-24T22:29:08Z",
   "morning_ingestion": {
     "summary": "Five independent Slurm jobs. Each is ingested the same way: check state, rsync the node dir down, run ingest, then run report once at the end.",
     "order": [
@@ -227,6 +232,11 @@
     "checked_utc": "2026-07-24T21:34:42Z",
     "state": "all 5 jobs PENDING, reason (Priority), no START_TIME estimate from Slurm",
     "partition": "boost_usr_prod heavily loaded (256 nodes alloc, 759 mix) at submission time",
-    "meaning": "The batch is fully submitted and will run without any further action from a live SSH session. Slurm keeps queued jobs regardless of whether the laptop socket survives."
+    "meaning": "The batch is fully submitted and will run without any further action from a live SSH session. Slurm keeps queued jobs regardless of whether the laptop socket survives.",
+    "rechecked_utc": "2026-07-24T22:30:36Z",
+    "exp245": "COMPLETED 16:54, ingested, 0.2267 node-hours actual vs 0.3005 projected",
+    "exp1a_exp1b_exp1c": "PENDING, Slurm estimated START_TIME 2026-07-25T02:33:59 local (~2h out)",
+    "exp3": "PENDING, no START_TIME estimate yet",
+    "expectation": "The three EXP1 jobs run 1.5-2.5h once started, so they finish roughly 04:00-05:00 local. EXP3 is behind them. The laptop socket is unlikely to survive that long; morning ingestion should expect to do exp1a, exp1b, exp1c and exp3."
   }
 }
