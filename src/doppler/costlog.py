@@ -30,13 +30,20 @@ def build_cost_entry(
     n_parse_failures: int,
     tokens_in: int,
     tokens_out: int,
+    resumed: bool = False,
 ) -> dict:
-    """Assemble one cost-log record with an ISO-8601 UTC timestamp."""
+    """Assemble one cost-log record with an ISO-8601 UTC timestamp.
+
+    A resume writes its own line (same ``run_id``, ``resumed=True``) counting
+    only the calls/tokens spent by the resuming process; summing all lines with
+    a given ``run_id`` gives that run's true totals.
+    """
     return {
         "run_id": run_id,
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "model": model,
         "split": split,
+        "resumed": bool(resumed),
         "n_persons": int(n_persons),
         "n_calls": int(n_calls),
         "n_retries": int(n_retries),
