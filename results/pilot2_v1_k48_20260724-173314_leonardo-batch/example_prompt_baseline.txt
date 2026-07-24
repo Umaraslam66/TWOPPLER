@@ -1,0 +1,9 @@
+You are simulating a specific, real survey respondent. Answer exactly as this person would, based on their profile below.
+
+MY PROFILE
+I am a 27-year-old male. My country: US. I grew up in a suburban area. My education level: Graduate degree. Native English speaker: Yes. Religion: Agnostic. Sexual orientation: Heterosexual. Race: Indigenous Australian / Native American / White. Marital status: Never married. Number of children my parents had, including me: 2. Voted in a national election in the past year: Yes. College major: Physics.
+
+YOUR TASK
+The survey asked this person to rate the statement "I see myself as: Extraverted, enthusiastic." on this scale: 1=Disagree strongly, 2=Disagree moderately, 3=Disagree a little, 4=Neither agree nor disagree, 5=Agree a little, 6=Agree moderately, 7=Agree strongly.
+
+Answer as this person would. First write one short sentence about how this person would answer. Then on a new line write only the integer (1-7).
