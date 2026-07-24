@@ -576,15 +576,21 @@ def run_export(split: str, k: int, seed: int, variant: str,
 
 
 def run_ingest(split: str, k: int, seed: int, variant: str,
-               completions_path: str, node_hours: float | None = None) -> RunOutcome:
-    """Score an exported run from a completions.jsonl. No API calls."""
+               completions_path: str, node_hours: float | None = None,
+               backend_name: str = "batchfile") -> RunOutcome:
+    """Score an exported run from a completions.jsonl. No API calls.
+
+    ``backend_name`` labels the generation backend in the summary config and the
+    cost log (e.g. "leonardo-batch" for the Qwen HPC batch job); it also names
+    the run directory suffix so gemini and batch runs are easy to tell apart.
+    """
     tasks, ids, codebook = _build_all_tasks(split, k, seed, variant)
     backend = BatchFileBackend.from_completions(completions_path)
     results = backend.batch_generate([t.prompt for t in tasks],
                                      max_output_tokens=VARIANT_MAX_OUTPUT_TOKENS[variant])
 
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    run_id = make_run_id(split, k, variant, timestamp) + "_batchfile"
+    run_id = f"{make_run_id(split, k, variant, timestamp)}_{backend_name}"
     outdir = RESULTS_DIR / run_id
     outdir.mkdir(parents=True, exist_ok=True)
     _write_example_prompts(outdir, tasks)
@@ -599,19 +605,19 @@ def run_ingest(split: str, k: int, seed: int, variant: str,
     all_records = read_records(outdir / "records.jsonl")
     n_missing = sum(1 for r in results if r.error is not None)
     config = {"split": split, "k": k, "seed": seed, "variant": variant,
-              "n_persons": len(ids), "model": None, "backend": "batchfile"}
-    process_totals = {"backend": "batchfile", "n_completions": len(results),
+              "n_persons": len(ids), "model": backend_name, "backend": backend_name}
+    process_totals = {"backend": backend_name, "n_completions": len(results),
                       "n_missing_completions": n_missing, "node_hours": node_hours}
     summary = _write_summary(outdir, all_records, config, process_totals, None)
     _write_human_review(outdir, all_records, codebook)
 
     append_cost_log(build_cost_entry(
-        run_id=run_id, model="batchfile", split=split, variant=variant,
+        run_id=run_id, model=backend_name, split=split, variant=variant,
         n_persons=len(ids), n_calls=0, n_retries=0,
         n_parse_failures=summary["totals"]["n_parse_failures"],
         tokens_in=summary["totals"]["tokens_in"],
         tokens_out=summary["totals"]["tokens_out"],
-        backend="batchfile", node_hours=node_hours,
+        backend=backend_name, node_hours=node_hours,
     ), RESULTS_DIR / "cost_log.jsonl")
 
     _print_scores("[ingest]", run_id, summary, 0)
@@ -641,15 +647,28 @@ def main() -> int:
                     help="batchfile: score an exported run from a completions file")
     ap.add_argument("--node-hours", type=float, default=None,
                     help="batchfile ingest: GPU node-hours to record in the cost log")
+    ap.add_argument("--backend-name", default="batchfile",
+                    help="batchfile ingest: backend label for summary/cost log "
+                         "(e.g. leonardo-batch)")
+    ap.add_argument("--manifest", metavar="PATH", default=None,
+                    help="batchfile ingest: read split/k/seed/variant from an "
+                         "export manifest instead of the CLI flags")
     args = ap.parse_args()
 
     if args.backend == "batchfile":
+        split, k, seed, variant = args.split, args.k, args.seed, args.variant
+        if args.manifest:
+            m = json.loads(Path(args.manifest).read_text(encoding="utf-8"))
+            split = m.get("split", split)
+            k = int(m.get("k", k))
+            seed = int(m.get("seed", seed))
+            variant = m.get("variant", variant)
         if args.export_prompts:
-            return run_export(args.split, args.k, args.seed, args.variant,
+            return run_export(split, k, seed, variant,
                               args.export_prompts).exit_code
         if args.ingest_completions:
-            return run_ingest(args.split, args.k, args.seed, args.variant,
-                              args.ingest_completions, args.node_hours).exit_code
+            return run_ingest(split, k, seed, variant, args.ingest_completions,
+                              args.node_hours, args.backend_name).exit_code
         ap.error("--backend batchfile requires --export-prompts or "
                  "--ingest-completions")
 

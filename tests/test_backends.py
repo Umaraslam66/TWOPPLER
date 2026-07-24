@@ -219,3 +219,57 @@ def test_run_ingest_end_to_end(tmp_path, monkeypatch):
     assert entry["backend"] == "batchfile"
     assert entry["node_hours"] == 2.5
     assert entry["n_calls"] == 0
+
+
+# Variant-distinguishing completion text: each parses under its OWN variant
+# parser but NOT (to the same answer) under the others, proving variant-correct
+# parsing is applied. idx 0 is deliberately malformed to exercise the exclusion.
+_INGEST_TEXT = {
+    "v0": ("4", ""),                                   # single int / fail
+    "v1": ("Around 3 or 4, so 5", "no digit here"),    # last standalone -> 5
+    "v2": ("1:0.0 2:0.0 3:0.0 4:1.0 5:0.0 6:0.0 7:0.0", "garbage"),  # argmax 4
+}
+_INGEST_EXPECT = {"v0": 4, "v1": 5, "v2": 4}
+
+
+@pytest.mark.skipif(not _DATA.exists(), reason="RIASEC data.csv not present")
+@pytest.mark.parametrize("variant", ["v0", "v1", "v2"])
+def test_run_ingest_pilot2_variant_end_to_end(tmp_path, monkeypatch, variant):
+    monkeypatch.setattr(run_replay, "RESULTS_DIR", tmp_path)
+    tasks, _ids, _cb = run_replay._build_all_tasks("pilot2", 48, 42, variant)
+    assert len(tasks) == 1000
+
+    good, bad = _INGEST_TEXT[variant]
+    comp = tmp_path / "completions.jsonl"
+    with comp.open("w") as fh:
+        for i in range(len(tasks)):
+            fh.write(json.dumps({"idx": i, "text": bad if i == 0 else good}) + "\n")
+
+    outcome = run_replay.run_ingest("pilot2", 48, 42, variant, str(comp),
+                                    node_hours=3.0, backend_name="leonardo-batch")
+    assert outcome.exit_code == 0 and outcome.n_calls == 0
+
+    recs = run_replay.read_records(outcome.run_dir / "records.jsonl")
+    assert len(recs) == 1000
+
+    # Variant-correct parsing on a well-formed record (idx 1).
+    r1 = next(r for r in recs if r["prompt"] == tasks[1].prompt)
+    assert r1["parsed"] == _INGEST_EXPECT[variant]
+    if variant == "v2":
+        assert r1["prediction_ev"] is not None
+        assert r1["prediction_argmax"] == r1["parsed"]
+
+    summ = json.loads((outcome.run_dir / "summary.json").read_text())
+    assert summ["config"]["backend"] == "leonardo-batch"
+    sc = summ["scoring"]
+    assert list(k for k in sc if k in ("mae", "within1", "exact", "spearman")) == \
+        ["mae", "within1", "exact", "spearman"]
+    assert "histograms" in sc and "per_item" in sc
+    # idx 0 malformed -> that (person, item) pair excluded from both arms.
+    assert summ["totals"]["n_parse_failures"] == 1
+    assert sc["n_excluded_pairs"] == 1
+
+    entry = json.loads((tmp_path / "cost_log.jsonl").read_text().strip().splitlines()[-1])
+    assert entry["backend"] == "leonardo-batch"
+    assert entry["node_hours"] == 3.0
+    assert entry["variant"] == variant
