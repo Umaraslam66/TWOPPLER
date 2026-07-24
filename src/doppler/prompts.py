@@ -104,9 +104,10 @@ def _demographics_block(demo: dict) -> str:
         frags.append(f"Race: {demo['race']}.")
     if _has(demo.get("married")):
         frags.append(f"Marital status: {demo['married']}.")
-    if _has(demo.get("familysize")):
+    familysize = demo.get("familysize")
+    if _has(familysize) and familysize >= 1:
         frags.append(
-            f"Number of children my parents had, including me: {demo['familysize']}."
+            f"Number of children my parents had, including me: {familysize}."
         )
     if _has(demo.get("voted")):
         frags.append(f"Voted in a national election in the past year: {demo['voted']}.")

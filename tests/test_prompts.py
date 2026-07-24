@@ -64,12 +64,12 @@ def test_missing_values_are_omitted_no_none_artifacts(record_factory, fake_codeb
     assert "My country: US." in prompt
 
 
-def test_familysize_zero_is_kept(record_factory, fake_codebook, full_demographics):
+def test_familysize_zero_is_omitted(record_factory, fake_codebook, full_demographics):
     demo = dict(full_demographics)
     demo["familysize"] = 0
     rec = record_factory(9, demo)
     prompt = build_profile(rec, fake_codebook, include_interests=False)
-    assert "Number of children my parents had, including me: 0." in prompt
+    assert "Number of children my parents had" not in prompt
 
 
 def test_arms_differ_only_by_interests_block(synthetic_record, fake_codebook):
