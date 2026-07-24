@@ -96,11 +96,27 @@ def _verify(variant: str, tasks, records: list[dict]) -> tuple[int, int]:
     return checked, matches
 
 
+def _baseline_prompts(tasks) -> dict:
+    return {(t.person_id, t.arm, t.tipi_code): t.prompt
+            for t in tasks if t.arm == "baseline"}
+
+
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    tasks = {v: _export(v) for v in ("v0", "v1", "v2")}
+    tasks = {v: _export(v) for v in ("v0", "v1", "v2", "v3")}
 
     ok = True
+
+    # v3's fix only touches the interests block, so its baseline must be
+    # byte-identical to v0's baseline. Assert across all baseline tasks.
+    v0_base = _baseline_prompts(tasks["v0"])
+    v3_base = _baseline_prompts(tasks["v3"])
+    assert set(v0_base) == set(v3_base), "v0/v3 baseline task keys differ"
+    n_base = len(v0_base)
+    base_matches = sum(1 for key in v0_base if v0_base[key] == v3_base[key])
+    print(f"[verify:v3] {base_matches}/{n_base} baseline prompts byte-match v0")
+    if base_matches != n_base:
+        ok = False
 
     # v0: full byte-match against the completed run.
     v0_dir = _gemini_run_dir("v0")

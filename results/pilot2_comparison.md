@@ -1,6 +1,6 @@
 # pilot2 comparison across models
 
-Generated 2026-07-24 15:02 UTC
+Generated 2026-07-24 15:23 UTC
 
 ## Runs discovered
 
@@ -9,9 +9,11 @@ Generated 2026-07-24 15:02 UTC
 | gemini | v0 | pilot2_v0_k48_20260724-142949 | 1000 | complete |
 | gemini | v1 | pilot2_v1_k48_20260724-162018 | ? | in flight (no summary) |
 | gemini | v2 | - | - | PENDING |
+| gemini | v3 | - | - | PENDING |
 | leonardo-qwen3.6-27b | v0 | pilot2_v0_k48_20260724-165228_leonardo-batch | 1000 | complete |
 | leonardo-qwen3.6-27b | v1 | pilot2_v1_k48_20260724-165231_leonardo-batch | 1000 | complete |
 | leonardo-qwen3.6-27b | v2 | pilot2_v2_k48_20260724-165234_leonardo-batch | 1000 | complete |
+| leonardo-qwen3.6-27b | v3 | - | - | PENDING |
 
 ## Metrics (lift = twin better)
 
@@ -20,9 +22,11 @@ Generated 2026-07-24 15:02 UTC
 | gemini | v0 | +0.072 [-0.005, +0.149] | 0.0663 | 0.173 | -0.006 [-0.044, +0.032] | +0.042 [+0.001, +0.083] | 0 | 0 |
 | gemini | v1 | PENDING | - | - | - | - | - | - |
 | gemini | v2 | PENDING | - | - | - | - | - | - |
+| gemini | v3 | PENDING | - | - | - | - | - | - |
 | leonardo-qwen3.6-27b | v0 | -0.088 [-0.205, +0.029] | 0.136 | 0.199 | -0.030 [-0.077, +0.017] | +0.048 [+0.002, +0.094] | 0 | 0 |
 | leonardo-qwen3.6-27b | v1 | -0.118 [-0.237, +0.001] | 0.0519 | 0.0865 | -0.030 [-0.079, +0.019] | +0.016 [-0.020, +0.052] | 0 | 0 |
 | leonardo-qwen3.6-27b | v2 | +0.003 [-0.049, +0.055] | 0.899 | 0.904 | -0.008 [-0.044, +0.028] | +0.020 [-0.011, +0.051] | 0 | 0 |
+| leonardo-qwen3.6-27b | v3 | PENDING | - | - | - | - | - | - |
 
 ## Predicted-vs-true histograms
 
