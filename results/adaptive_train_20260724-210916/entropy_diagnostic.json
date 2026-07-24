@@ -1,0 +1,10 @@
+{
+  "n_decisions": 3000,
+  "n_decisions_with_tie_at_top": 1546,
+  "pct_rounds_with_tie": 51.53333333333333,
+  "mean_tied_at_top": 2.9916666666666667,
+  "max_tied_at_top": 37,
+  "mean_top_entropy": 1.4653791568137031,
+  "mean_entropy_spread": 0.8086363149667912,
+  "max_possible_entropy_nats": 1.6094379124341003
+}

@@ -1,0 +1,33 @@
+{
+  "static_completions": 33000,
+  "static_missing": 0,
+  "adaptive_predictions": 10500,
+  "adaptive_uncertainty_calls": 115500,
+  "adaptive_uncertainty_parse_failures": 10,
+  "total_completions": 159000,
+  "smoke_node_hours": 0.1106,
+  "static_node_hours": 0.3014,
+  "adaptive_node_hours": 0.6667,
+  "total_node_hours": 1.0787,
+  "projected_node_hours": 1.176,
+  "node_summary_adaptive": {
+    "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+    "tp": 4,
+    "max_model_len": 2048,
+    "gpu_mem_util": 0.92,
+    "temperature": 0.0,
+    "seed": 0,
+    "n_persons": 150,
+    "rounds": 20,
+    "resumed": false,
+    "engine_init_seconds": 224.46,
+    "generation_wall_seconds": 1997.33,
+    "total_tokens_in": 46888455,
+    "total_tokens_out": 4557000,
+    "output_tokens_per_second": 2281.5,
+    "timestamp_utc": "2026-07-24T20:28:48Z",
+    "n_uncertainty_calls": 115500,
+    "n_prediction_calls": 10500,
+    "uncertainty_parse_failures": 10
+  }
+}

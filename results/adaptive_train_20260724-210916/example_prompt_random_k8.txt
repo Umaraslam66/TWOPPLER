@@ -1,0 +1,21 @@
+You are simulating a specific, real survey respondent. Answer exactly as this person would, based on their profile below.
+
+MY PROFILE
+I am a 31-year-old female. My country: US. I grew up in a suburban area. My education level: University degree. Native English speaker: Yes. Religion: Christian (Protestant). Sexual orientation: Heterosexual. Race: Indigenous Australian / Native American / White. Marital status: Currently married. Number of children my parents had, including me: 4. Voted in a national election in the past year: Yes. College major: Special Educaiton.
+
+HOW I RATED MY INTEREST IN VARIOUS ACTIVITIES
+(Scale: 1=Dislike, 3=Neutral, 5=Enjoy)
+- Work on an offshore oil-drilling rig: 3
+- Inventory supplies using a hand-held computer: 3
+- Help people who have problems with drugs or alcohol: 5
+- Help people with family-related problems: 5
+- Teach an individual an exercise routine: 3
+- Study animal behavior: 5
+- Manage a department within a large company: 2
+- Maintain employee records: 4
+
+YOUR TASK
+The survey asked this person to rate the statement "I see myself as: Extraverted, enthusiastic." on this scale: 1=Disagree strongly, 2=Disagree moderately, 3=Disagree a little, 4=Neither agree nor disagree, 5=Agree a little, 6=Agree moderately, 7=Agree strongly.
+
+Answer as this person would. Output a probability for each of the 7 answers on a single line, in exactly this format:
+1:0.05 2:0.10 3:0.15 4:0.30 5:0.20 6:0.15 7:0.05
