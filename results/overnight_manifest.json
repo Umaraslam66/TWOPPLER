@@ -47,7 +47,7 @@
       "experiment": "EXP1b",
       "title": "adaptive, EV-variance scorer, seeded random tie-break, k to 20",
       "kind": "adaptive",
-      "status": "queued",
+      "status": "ingested",
       "run_dir": "results/overnight_exp1b",
       "config": "results/overnight_exp1b/config.json",
       "sbatch_local": "results/overnight_exp1b/overnight_exp1b.sbatch",
@@ -57,10 +57,12 @@
         "50191886"
       ],
       "projected_node_hours": 0.6564,
-      "actual_node_hours": null,
+      "actual_node_hours": 0.6304,
       "reuses": [],
       "notes": [
-        "2026-07-24T21:22:21Z: EV-variance scorer + random tiebreak, k to 20"
+        "2026-07-24T21:22:21Z: EV-variance scorer + random tiebreak, k to 20",
+        "2026-07-24T23:15:11Z: RUNNING on lrdn3232 from 23:14:02Z; config confirmed scorer=ev_variance tiebreak=random(71) grid=standard k->20",
+        "2026-07-24T23:55:47Z: COMPLETED 40:41 exit 0:0. 13,500 predictions + 115,500 uncertainty calls (11 unparseable). 0 prompt mismatches. 0.6304 node-hours vs 0.6564 projected. Tie rate 40.37% (pilot 51.5%)."
       ],
       "node_output_files": [
         "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1b/completions_adaptive.jsonl",
@@ -75,13 +77,15 @@
         "step_3_ingest": "uv run python experiments/overnight.py ingest --name overnight_exp1b --nodedir results/overnight_exp1b/node_output",
         "step_4_report": "uv run python experiments/overnight.py report",
         "node_log": "/leonardo_work/AIFAC_P02_548/DOPPLER/logs/dop-exp1b-<jobid>.out"
-      }
+      },
+      "n_scored_predictions": 13500,
+      "n_side_calls": 115500
     },
     "overnight_exp1c": {
       "experiment": "EXP1c",
       "title": "adaptive, entropy scorer, random tie-break, 0.05 probability grid, k to 20",
       "kind": "adaptive",
-      "status": "queued",
+      "status": "running",
       "run_dir": "results/overnight_exp1c",
       "config": "results/overnight_exp1c/config.json",
       "sbatch_local": "results/overnight_exp1c/overnight_exp1c.sbatch",
@@ -94,7 +98,8 @@
       "actual_node_hours": null,
       "reuses": [],
       "notes": [
-        "2026-07-24T21:22:22Z: entropy + random tiebreak + 0.05 grid, k to 20"
+        "2026-07-24T21:22:22Z: entropy + random tiebreak + 0.05 grid, k to 20",
+        "2026-07-24T23:15:11Z: RUNNING on lrdn2739 from 23:14:37Z; config confirmed scorer=entropy tiebreak=random(71) grid=fine k->20"
       ],
       "node_output_files": [
         "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1c/completions_adaptive.jsonl",
@@ -168,7 +173,8 @@
         "EXP1a and EXP1b curves restricted to the first 100 persons of the train split"
       ],
       "notes": [
-        "2026-07-24T21:27:27Z: EIG ladder rung (b); node-side parse smoke gates multi-target vs per-target fallback; rung (c) not run (budget)"
+        "2026-07-24T21:27:27Z: EIG ladder rung (b); node-side parse smoke gates multi-target vs per-target fallback; rung (c) not run (budget)",
+        "Ingest path dry-run against a synthetic node output: 9,000 predictions, 0 prompt-rebuild mismatches, report section rendered. Synthetic artefacts removed."
       ],
       "node_output_files": [
         "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3/completions_eig.jsonl",
@@ -199,7 +205,7 @@
     "INTERNAL CONSISTENCY CHECK (EXP2/EXP4): at k=48 the fixed_deriv and random_ext arms reveal exactly the same 48 items, differing only in the ORDER of the revealed lines. Their lifts are +0.0790 and +0.0787; the paired difference is +0.0002 [-0.0132,+0.0137] p=0.97. So line order has no effect once all information is present - which means the order effects seen at low k are real information-ordering effects, not a rendering artifact.",
     "EXP5 HEADLINE (both checkpoints): making the imposter ~0.10 cosine more similar changed nothing. NN-imposter minus random-imposter is -0.003 (p=0.92) at k=12 and +0.006 (p=0.83) at k=20. Both imposters stay BELOW the demographics-only baseline. For Stage 2 this is reassuring: the A1 imposter baseline looks insensitive to how the wrong person is chosen."
   ],
-  "updated_utc": "2026-07-24T22:29:08Z",
+  "updated_utc": "2026-07-24T23:55:47Z",
   "morning_ingestion": {
     "summary": "Five independent Slurm jobs. Each is ingested the same way: check state, rsync the node dir down, run ingest, then run report once at the end.",
     "order": [

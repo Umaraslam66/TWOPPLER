@@ -11,8 +11,8 @@ Lift = demographics-only baseline MAE − arm MAE, averaged over persons, 95% t 
 | experiment | status | reused from the pilot |
 |---|---|---|
 | EXP1a | queued | nothing |
-| EXP1b | queued | nothing |
-| EXP1c | queued | nothing |
+| EXP1b | ingested | nothing |
+| EXP1c | running | nothing |
 | EXP2 + EXP4 + EXP5 (shared static job) | ingested | results/adaptive_train_20260724-210916/baseline (k=0); results/adaptive_train_20260724-210916/random (k in 1,2,4,8,12,16,20); results/adaptive_train_20260724-210916/imposter (random imposter, k=12,20) |
 | EXP3 | queued | EXP1a and EXP1b curves restricted to the first 100 persons of the train split |
 
@@ -35,22 +35,22 @@ All three variants replace the pilot's lowest-item-index tie-break with a seeded
 |---|---|---|---|---|
 | pilot (entropy, index tie-break) | 3,000 | 51.5% | 3.0 | 37 |
 | EXP1a entropy + random | not ingested | | | |
-| EXP1b EV-variance + random | not ingested | | | |
+| EXP1b EV-variance + random | 3,000 | 40.4% | 2.1 | 36 |
 | EXP1c entropy + random + 0.05 grid | not ingested | | | |
 
 ### Lift over baseline, by variant
 
 | k | pilot adaptive | EXP1a entropy+rand | EXP1b EV-var | EXP1c fine grid |
 |---|---|---|---|---|
-| 1 | -0.006 [-0.023, +0.010] p=0.45 | not ingested | not ingested | not ingested |
-| 2 | +0.004 [-0.015, +0.024] p=0.65 | not ingested | not ingested | not ingested |
-| 3 | n/a | not ingested | not ingested | not ingested |
-| 4 | +0.016 [-0.008, +0.040] p=0.19 | not ingested | not ingested | not ingested |
-| 5 | n/a | not ingested | not ingested | not ingested |
-| 8 | +0.030 [+0.002, +0.057] p=0.035 | not ingested | not ingested | not ingested |
-| 12 | +0.052 [+0.023, +0.081] p=0.00047 | not ingested | not ingested | not ingested |
-| 16 | +0.061 [+0.030, +0.093] p=0.00018 | not ingested | not ingested | not ingested |
-| 20 | +0.070 [+0.038, +0.102] p=2.5e-05 | not ingested | not ingested | not ingested |
+| 1 | -0.006 [-0.023, +0.010] p=0.45 | not ingested | -0.011 [-0.029, +0.006] p=0.19 | not ingested |
+| 2 | +0.004 [-0.015, +0.024] p=0.65 | not ingested | -0.006 [-0.028, +0.016] p=0.6 | not ingested |
+| 3 | n/a | not ingested | +0.019 [-0.007, +0.044] p=0.15 | not ingested |
+| 4 | +0.016 [-0.008, +0.040] p=0.19 | not ingested | +0.024 [-0.002, +0.050] p=0.071 | not ingested |
+| 5 | n/a | not ingested | +0.026 [-0.000, +0.052] p=0.052 | not ingested |
+| 8 | +0.030 [+0.002, +0.057] p=0.035 | not ingested | +0.031 [+0.003, +0.059] p=0.032 | not ingested |
+| 12 | +0.052 [+0.023, +0.081] p=0.00047 | not ingested | +0.047 [+0.018, +0.076] p=0.0017 | not ingested |
+| 16 | +0.061 [+0.030, +0.093] p=0.00018 | not ingested | +0.065 [+0.034, +0.097] p=6.3e-05 | not ingested |
+| 20 | +0.070 [+0.038, +0.102] p=2.5e-05 | not ingested | +0.070 [+0.038, +0.102] p=2.4e-05 | not ingested |
 
 ### Delta vs the pilot adaptive curve at matched k
 
@@ -58,13 +58,13 @@ Positive = the change helped.
 
 | k | EXP1a − pilot | EXP1b − pilot | EXP1c − pilot |
 |---|---|---|---|
-| 1 | n/a | n/a | n/a |
-| 2 | n/a | n/a | n/a |
-| 4 | n/a | n/a | n/a |
-| 8 | n/a | n/a | n/a |
-| 12 | n/a | n/a | n/a |
-| 16 | n/a | n/a | n/a |
-| 20 | n/a | n/a | n/a |
+| 1 | n/a | -0.005 [-0.021, +0.011] p=0.53 | n/a |
+| 2 | n/a | -0.010 [-0.029, +0.009] p=0.28 | n/a |
+| 4 | n/a | +0.008 [-0.013, +0.029] p=0.45 | n/a |
+| 8 | n/a | +0.001 [-0.019, +0.021] p=0.92 | n/a |
+| 12 | n/a | -0.005 [-0.026, +0.015] p=0.6 | n/a |
+| 16 | n/a | +0.004 [-0.016, +0.024] p=0.69 | n/a |
+| 20 | n/a | +0.000 [-0.016, +0.016] p=1 | n/a |
 
 ## EXP2 — best fixed order, derived on a disjoint split
 
@@ -155,11 +155,11 @@ Read: the pilot found a random stranger's profile is *worse than knowing nothing
 | experiment | projected node-hours | actual | slurm job(s) | status |
 |---|---|---|---|---|
 | overnight_exp1a | 1.265 | — | 50191885 | queued |
-| overnight_exp1b | 0.656 | — | 50191886 | queued |
-| overnight_exp1c | 0.656 | — | 50191887 | queued |
+| overnight_exp1b | 0.656 | 0.630 | 50191886 | ingested |
+| overnight_exp1c | 0.656 | — | 50191887 | running |
 | overnight_exp245 | 0.300 | 0.227 | 50191888 | ingested |
 | overnight_exp3 | 1.881 | — | 50191936 | queued |
-| **TOTAL** | **4.760** | **0.227** | | caps: 4.0/job, 12.0/batch |
+| **TOTAL** | **4.760** | **0.857** | | caps: 4.0/job, 12.0/batch |
 
 ## Provenance
 
