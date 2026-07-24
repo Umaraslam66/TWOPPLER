@@ -85,7 +85,7 @@
       "experiment": "EXP1c",
       "title": "adaptive, entropy scorer, random tie-break, 0.05 probability grid, k to 20",
       "kind": "adaptive",
-      "status": "running",
+      "status": "ingested",
       "run_dir": "results/overnight_exp1c",
       "config": "results/overnight_exp1c/config.json",
       "sbatch_local": "results/overnight_exp1c/overnight_exp1c.sbatch",
@@ -95,11 +95,12 @@
         "50191887"
       ],
       "projected_node_hours": 0.6564,
-      "actual_node_hours": null,
+      "actual_node_hours": 0.6485,
       "reuses": [],
       "notes": [
         "2026-07-24T21:22:22Z: entropy + random tiebreak + 0.05 grid, k to 20",
-        "2026-07-24T23:15:11Z: RUNNING on lrdn2739 from 23:14:37Z; config confirmed scorer=entropy tiebreak=random(71) grid=fine k->20"
+        "2026-07-24T23:15:11Z: RUNNING on lrdn2739 from 23:14:37Z; config confirmed scorer=entropy tiebreak=random(71) grid=fine k->20",
+        "2026-07-24T23:57:13Z: COMPLETED 41:51 exit 0:0. 13,500 predictions + 115,500 uncertainty calls, ZERO unparseable (pilot had 10, exp1b 11). 0 prompt mismatches. 0.6485 node-hours vs 0.6564 projected. Tie rate 47.87% (pilot 51.5%)."
       ],
       "node_output_files": [
         "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1c/completions_adaptive.jsonl",
@@ -114,7 +115,9 @@
         "step_3_ingest": "uv run python experiments/overnight.py ingest --name overnight_exp1c --nodedir results/overnight_exp1c/node_output",
         "step_4_report": "uv run python experiments/overnight.py report",
         "node_log": "/leonardo_work/AIFAC_P02_548/DOPPLER/logs/dop-exp1c-<jobid>.out"
-      }
+      },
+      "n_scored_predictions": 13500,
+      "n_side_calls": 115500
     },
     "overnight_exp245": {
       "experiment": "EXP2 + EXP4 + EXP5 (shared static job)",
@@ -203,9 +206,11 @@
     "HOUSEKEEPING for the morning (no commits were made tonight, per instruction): results/overnight_exp245/prompts_static.jsonl (50M) and tasks_static.jsonl (53M) are large regenerable artifacts - both are rebuilt byte-identically by 'uv run python experiments/overnight.py export'. Consider gitignoring them or the run-dir prompt files generally before any commit. The per-arm records.jsonl files ARE the provenance and should be kept.",
     "Verification done tonight: the ingest path was run against the pilot's own raw node output and reproduced the published pilot report exactly (10,500 records, 0 prompt-rebuild mismatches, lift -0.006/+0.030/+0.070 at k=1/8/20, tie rate 51.53%). Test artefacts were deleted afterwards. Full suite: 281 passed.",
     "INTERNAL CONSISTENCY CHECK (EXP2/EXP4): at k=48 the fixed_deriv and random_ext arms reveal exactly the same 48 items, differing only in the ORDER of the revealed lines. Their lifts are +0.0790 and +0.0787; the paired difference is +0.0002 [-0.0132,+0.0137] p=0.97. So line order has no effect once all information is present - which means the order effects seen at low k are real information-ordering effects, not a rendering artifact.",
-    "EXP5 HEADLINE (both checkpoints): making the imposter ~0.10 cosine more similar changed nothing. NN-imposter minus random-imposter is -0.003 (p=0.92) at k=12 and +0.006 (p=0.83) at k=20. Both imposters stay BELOW the demographics-only baseline. For Stage 2 this is reassuring: the A1 imposter baseline looks insensitive to how the wrong person is chosen."
+    "EXP5 HEADLINE (both checkpoints): making the imposter ~0.10 cosine more similar changed nothing. NN-imposter minus random-imposter is -0.003 (p=0.92) at k=12 and +0.006 (p=0.83) at k=20. Both imposters stay BELOW the demographics-only baseline. For Stage 2 this is reassuring: the A1 imposter baseline looks insensitive to how the wrong person is chosen.",
+    "EXP1 HEADLINE (1b and 1c ingested; 1a pending): none of the three interventions improved the adaptive policy. Tie rates fell (pilot entropy+index 51.5% -> ev_variance 40.4% -> entropy+0.05grid 47.9%) but lift did not move. EXP1b matches the pilot at every k (k=20 difference exactly +0.000, p=1.0). EXP1c is flat-to-slightly-worse and at k=20 reads -0.018 (p=0.033) - NOT convincing after 18 comparisons, read as 'no better'. Conclusion: the 51.5% tie rate was NOT the bottleneck, and entropy is not the wrong uncertainty measure. The limitation is the policy's premise that self-uncertainty proxies informativeness - which is exactly what EXP3 tests.",
+    "SIDE FINDING (EXP1c): asking for probabilities in multiples of 0.05 eliminated parse failures entirely (0 of 115,500 uncertainty calls, vs 10 in the pilot and 11 in EXP1b). If a future run wants cleaner elicitation output, the 0.05 wording is free on that axis - it just does not help selection."
   ],
-  "updated_utc": "2026-07-24T23:55:47Z",
+  "updated_utc": "2026-07-24T23:57:13Z",
   "morning_ingestion": {
     "summary": "Five independent Slurm jobs. Each is ingested the same way: check state, rsync the node dir down, run ingest, then run report once at the end.",
     "order": [
