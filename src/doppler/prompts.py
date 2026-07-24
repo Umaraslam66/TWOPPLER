@@ -22,6 +22,44 @@ INTRO = (
     "this person would, based on their profile below."
 )
 
+# ---------------------------------------------------------------------------
+# Twin variants (applied identically to both arms). v0 = original behaviour.
+# ---------------------------------------------------------------------------
+
+VARIANTS = ("v0", "v1", "v2")
+
+#: The final instruction line(s), chosen by variant. Everything above it (intro,
+#: profile, question, scale) is identical across variants and across arms.
+VARIANT_FINAL_INSTRUCTION = {
+    "v0": (
+        "Answer as this person would. Respond with a single integer from 1 to 7 "
+        "and nothing else."
+    ),
+    "v1": (
+        "Answer as this person would. First write one short sentence about how "
+        "this person would answer. Then on a new line write only the integer "
+        "(1-7)."
+    ),
+    "v2": (
+        "Answer as this person would. Output a probability for each of the 7 "
+        "answers on a single line, in exactly this format:\n"
+        "1:0.05 2:0.10 3:0.15 4:0.30 5:0.20 6:0.15 7:0.05"
+    ),
+}
+
+#: Output-token budget per variant (v1/v2 need room for a sentence / 7 pairs).
+VARIANT_MAX_OUTPUT_TOKENS = {"v0": 16, "v1": 100, "v2": 120}
+
+#: Extra reminder appended for the single parse-failure retry, per variant.
+VARIANT_RETRY_REMINDER = {
+    "v0": "Respond with only a single digit from 1 to 7.",
+    "v1": "On the final line, write only a single integer from 1 to 7.",
+    "v2": (
+        "Reply with only the seven probabilities, one per answer, in exactly "
+        "this format: 1:0.05 2:0.10 3:0.15 4:0.30 5:0.20 6:0.15 7:0.05"
+    ),
+}
+
 
 # ---------------------------------------------------------------------------
 # Small helpers
@@ -149,15 +187,22 @@ def build_profile(
     return demo + "\n\n" + _interests_block(record, codebook, k, seed)
 
 
-def build_prompt(profile: str, tipi_code: str, codebook: Codebook) -> str:
-    """Wrap a profile with the intro line and the held-out TIPI question."""
+def build_prompt(
+    profile: str, tipi_code: str, codebook: Codebook, variant: str = "v0"
+) -> str:
+    """Wrap a profile with the intro line and the held-out TIPI question.
+
+    The only thing ``variant`` changes is the final instruction line; the intro,
+    profile, question, and scale are identical across all variants and both arms.
+    """
+    if variant not in VARIANTS:
+        raise ValueError(f"variant must be one of {VARIANTS}, got {variant!r}")
     tipi_text = codebook.tipi_items[tipi_code]
     tipi_anchors = _format_anchors(codebook.scales["tipi"]["anchors"])
     task = (
         "YOUR TASK\n"
         f'The survey asked this person to rate the statement "I see myself as: '
         f'{tipi_text}" on this scale: {tipi_anchors}.\n\n'
-        "Answer as this person would. Respond with a single integer from 1 to 7 "
-        "and nothing else."
+        f"{VARIANT_FINAL_INSTRUCTION[variant]}"
     )
     return f"{INTRO}\n\n{profile}\n\n{task}"

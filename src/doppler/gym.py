@@ -15,6 +15,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+import numpy as np
 import pandas as pd
 
 from .data import (
@@ -31,6 +32,10 @@ GATE_N = 500
 TOTAL_N = PILOT_N + GATE_N  # 520
 SAMPLE_SEED = 42
 
+# Second development set, disjoint from the 520 above.
+PILOT2_N = 50
+PILOT2_SEED = 43
+
 ARMS = ("twin", "baseline")
 
 
@@ -42,6 +47,27 @@ def pilot_and_gate_ids(df: pd.DataFrame) -> tuple[list[int], list[int]]:
     """
     ids = sample_eval_persons(df, n=TOTAL_N, seed=SAMPLE_SEED)
     return ids[:PILOT_N], ids[PILOT_N:]
+
+
+def pilot2_ids(df: pd.DataFrame) -> list[int]:
+    """50 persons drawn with rng(43) from cleaned persons EXCLUDING the 520.
+
+    The original 520-draw is untouched; this samples from everyone else, so the
+    result is disjoint from both the pilot and the gate set and is deterministic.
+    """
+    existing = set(sample_eval_persons(df, n=TOTAL_N, seed=SAMPLE_SEED))
+    pool = np.array(
+        [pid for pid in df["person_id"].tolist() if pid not in existing],
+        dtype=np.int64,
+    )
+    if PILOT2_N > pool.size:
+        raise ValueError(
+            f"Requested {PILOT2_N} pilot2 persons but only {pool.size} remain "
+            "after excluding the 520."
+        )
+    rng = np.random.default_rng(PILOT2_SEED)
+    chosen = rng.choice(pool, size=PILOT2_N, replace=False)
+    return [int(x) for x in chosen]
 
 
 @dataclass(frozen=True)
@@ -99,8 +125,14 @@ def build_tasks(
     arm: str,
     k: int = 48,
     seed: int = 42,
+    variant: str = "v0",
 ) -> list[Task]:
-    """Build all 10 TIPI prediction tasks for one person under one arm."""
+    """Build all 10 TIPI prediction tasks for one person under one arm.
+
+    ``variant`` only changes the final instruction line and is applied
+    identically to both arms; the profile (and thus the leakage guards) is
+    unaffected by it.
+    """
     if arm not in ARMS:
         raise ValueError(f"arm must be one of {ARMS}, got {arm!r}")
 
@@ -113,7 +145,7 @@ def build_tasks(
 
     tasks: list[Task] = []
     for code in TIPI_ITEMS:
-        prompt = build_prompt(profile, code, codebook)
+        prompt = build_prompt(profile, code, codebook, variant=variant)
         tipi_text = codebook.tipi_items[code]
         true_answer = int(record["tipi"][code]["answer"])
         _assert_answer_not_leaked(prompt, tipi_text, true_answer)
