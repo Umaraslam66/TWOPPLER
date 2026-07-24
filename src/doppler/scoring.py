@@ -87,6 +87,31 @@ def parse_v2(text: str | None) -> dict | None:
     return {"ev": ev, "argmax": argmax, "renorm_offset": renorm_offset}
 
 
+def v2_probabilities(text: str | None) -> dict[int, float] | None:
+    """Return the normalized ``{1..7: prob}`` vector from a v2 distribution string.
+
+    Same validation as :func:`parse_v2` (malformed -> None). Used for the
+    exploratory calibration diagnostic, which needs the full probability vector
+    rather than just the expected value / argmax.
+    """
+    if not text:
+        return None
+    probs: dict[int, float] = {}
+    for key_str, val_str in _PAIR.findall(text):
+        key = int(key_str)
+        if key in probs:
+            return None
+        probs[key] = float(val_str)
+    if set(probs) != set(range(1, 8)):
+        return None
+    if any(p < 0 for p in probs.values()):
+        return None
+    total = sum(probs.values())
+    if total <= 0:
+        return None
+    return {k: probs[k] / total for k in range(1, 8)}
+
+
 def parse_response(text: str | None, variant: str) -> dict:
     """Unified parse -> discrete prediction, MAE point, EV, argmax, failure flag.
 

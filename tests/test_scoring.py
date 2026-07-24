@@ -12,6 +12,7 @@ from doppler.scoring import (
     parse_v1,
     parse_v2,
     summarize,
+    v2_probabilities,
 )
 
 
@@ -85,6 +86,14 @@ def test_v2_unnormalized_renormalizes():
 ])
 def test_v2_malformed(text):
     assert parse_v2(text) is None
+
+
+def test_v2_probabilities_normalizes():
+    probs = v2_probabilities("1:0.1 2:0.1 3:0.1 4:0.1 5:0.1 6:0.1 7:0.1")
+    assert set(probs) == set(range(1, 8))
+    assert sum(probs.values()) == pytest.approx(1.0)
+    assert probs[1] == pytest.approx(1 / 7)
+    assert v2_probabilities("1:0.5 2:0.5") is None  # malformed -> None
 
 
 def test_parse_response_dispatch():
