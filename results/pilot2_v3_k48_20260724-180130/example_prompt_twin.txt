@@ -1,0 +1,59 @@
+You are simulating a specific, real survey respondent. Answer exactly as this person would, based on their profile below.
+
+MY PROFILE
+I am a 27-year-old male. My country: US. I grew up in a suburban area. My education level: Graduate degree. Native English speaker: Yes. Religion: Agnostic. Sexual orientation: Heterosexual. Race: Indigenous Australian / Native American / White. Marital status: Never married. Number of children my parents had, including me: 2. Voted in a national election in the past year: Yes. College major: Physics.
+
+HOW I FEEL ABOUT VARIOUS ACTIVITIES
+- Test the quality of parts before shipment: Neutral
+- Lay brick or tile: Dislike
+- Work on an offshore oil-drilling rig: Dislike
+- Assemble electronic parts: Slightly enjoy
+- Operate a grinding machine in a factory: Neutral
+- Fix a broken faucet: Slightly enjoy
+- Assemble products in a factory: Neutral
+- Install flooring in houses: Slightly dislike
+- Study the structure of the human body: Neutral
+- Study animal behavior: Slightly dislike
+- Do research on plants or animals: Slightly dislike
+- Develop a new medical treatment or procedure: Neutral
+- Conduct biological research: Slightly dislike
+- Study whales and other types of marine life: Neutral
+- Work in a biology lab: Slightly dislike
+- Make a map of the bottom of an ocean: Neutral
+- Conduct a musical choir: Dislike
+- Direct a play: Dislike
+- Design artwork for magazines: Dislike
+- Write a song: Dislike
+- Write books or plays: Dislike
+- Play a musical instrument: Neutral
+- Perform stunts for a movie or television show: Dislike
+- Design sets for plays: Enjoy
+- Give career guidance to people: Neutral
+- Do volunteer work at a non-profit organization: Neutral
+- Help people who have problems with drugs or alcohol: Dislike
+- Teach an individual an exercise routine: Dislike
+- Help people with family-related problems: Dislike
+- Supervise the activities of children at a camp: Slightly dislike
+- Teach children how to read: Dislike
+- Help elderly people with their daily activities: Dislike
+- Sell restaurant franchises to individuals: Slightly dislike
+- Sell merchandise at a department store: Neutral
+- Manage the operations of a hotel: Slightly enjoy
+- Operate a beauty salon or barber shop: Neutral
+- Manage a department within a large company: Slightly dislike
+- Manage a clothing store: Slightly dislike
+- Sell houses: Dislike
+- Run a toy store: Slightly enjoy
+- Generate the monthly payroll checks for an office: Slightly enjoy
+- Inventory supplies using a hand-held computer: Slightly enjoy
+- Use a computer program to generate customer bills: Enjoy
+- Maintain employee records: Slightly enjoy
+- Compute and record statistical and other numerical data: Enjoy
+- Operate a calculator: Enjoy
+- Handle customers' bank transactions: Slightly enjoy
+- Keep shipping and receiving records: Slightly enjoy
+
+YOUR TASK
+The survey asked this person to rate the statement "I see myself as: Extraverted, enthusiastic." on this scale: 1=Disagree strongly, 2=Disagree moderately, 3=Disagree a little, 4=Neither agree nor disagree, 5=Agree a little, 6=Agree moderately, 7=Agree strongly.
+
+Answer as this person would. Respond with a single integer from 1 to 7 and nothing else.
