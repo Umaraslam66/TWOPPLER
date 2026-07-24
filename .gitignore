@@ -2,8 +2,8 @@
 .env
 data/
 
-# Personal / planning docs (repo hygiene: the generic README is the only committed prose)
-PREREGISTRATION.md
+# Personal / planning docs
+# (PREREGISTRATION.md and its amendments are committed as of Amendment 1 — owner decision 2026-07-24)
 leonardo.md
 
 # Python
