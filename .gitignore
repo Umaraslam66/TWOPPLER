@@ -1,0 +1,18 @@
+# Secrets and raw data (never commit)
+.env
+data/
+
+# Personal / planning docs (repo hygiene: the generic README is the only committed prose)
+PREREGISTRATION.md
+leonardo.md
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# macOS
+.DS_Store
+
+# NOTE: uv.lock is intentionally NOT ignored — the lock file is committed.
