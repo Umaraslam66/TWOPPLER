@@ -1,0 +1,48 @@
+{
+  "probe": "known_answer",
+  "status": "DIAGNOSTIC (PREREGISTRATION_AMENDMENT_1.md A7)",
+  "split": "gate",
+  "k": 0,
+  "seed": 42,
+  "variant": "v2",
+  "arm": "twin",
+  "backend": "batchfile",
+  "n_prompts": 5000,
+  "n_persons": 500,
+  "folds": {
+    "A2B": {
+      "seed": [
+        "TIPI1",
+        "TIPI2",
+        "TIPI3",
+        "TIPI4",
+        "TIPI5"
+      ],
+      "predict": [
+        "TIPI6",
+        "TIPI7",
+        "TIPI8",
+        "TIPI9",
+        "TIPI10"
+      ]
+    },
+    "B2A": {
+      "seed": [
+        "TIPI6",
+        "TIPI7",
+        "TIPI8",
+        "TIPI9",
+        "TIPI10"
+      ],
+      "predict": [
+        "TIPI1",
+        "TIPI2",
+        "TIPI3",
+        "TIPI4",
+        "TIPI5"
+      ]
+    }
+  },
+  "max_output_tokens": 120,
+  "prompts_file": "results/leonardo_probe/prompts_v2.jsonl"
+}

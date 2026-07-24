@@ -1,0 +1,18 @@
+You are simulating a specific, real survey respondent. Answer exactly as this person would, based on their profile below.
+
+MY PROFILE
+I am a 25-year-old female. My country: MY. I grew up in a rural (country side) area. My education level: Graduate degree. Native English speaker: No. Religion: Muslim. Sexual orientation: Other. Race: Other (There was a coding error in the survey, and three different options were given the same value). Marital status: Never married. Number of children my parents had, including me: 3. Voted in a national election in the past year: No. College major: Business banking.
+
+HOW I RATED MYSELF ON SOME PERSONALITY STATEMENTS
+(Scale: 1=Disagree strongly, 2=Disagree moderately, 3=Disagree a little, 4=Neither agree nor disagree, 5=Agree a little, 6=Agree moderately, 7=Agree strongly)
+- "I see myself as: Extraverted, enthusiastic." -> 4
+- "I see myself as: Critical, quarrelsome." -> 4
+- "I see myself as: Dependable, self-disciplined." -> 7
+- "I see myself as: Anxious, easily upset." -> 2
+- "I see myself as: Open to new experiences, complex." -> 6
+
+YOUR TASK
+The survey asked this person to rate the statement "I see myself as: Reserved, quiet." on this scale: 1=Disagree strongly, 2=Disagree moderately, 3=Disagree a little, 4=Neither agree nor disagree, 5=Agree a little, 6=Agree moderately, 7=Agree strongly.
+
+Answer as this person would. Output a probability for each of the 7 answers on a single line, in exactly this format:
+1:0.05 2:0.10 3:0.15 4:0.30 5:0.20 6:0.15 7:0.05
