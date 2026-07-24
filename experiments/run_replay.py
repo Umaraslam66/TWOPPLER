@@ -55,9 +55,16 @@ DATA_DIR = _ROOT / "data"
 RESULTS_DIR = _ROOT / "results"
 # One worker: the key is on a ~15 requests/minute free tier, so throughput is
 # gated entirely by the client's request pacer. Extra threads only cause 429s.
-MAX_CALLS = 600
 MAX_WORKERS = 1
 DEFAULT_SEED = 42
+# Retry headroom above the number of planned calls, for the self-sizing cap used
+# by standalone runs (the pilot2 driver passes its own shared budget instead).
+DEFAULT_HEADROOM = 400
+
+
+def _default_cap(n_planned: int) -> int:
+    """A hard call cap that comfortably covers ``n_planned`` calls plus retries."""
+    return n_planned + max(DEFAULT_HEADROOM, n_planned // 2)
 
 
 @dataclass
@@ -351,12 +358,17 @@ def _make_client(max_calls: int, variant: str) -> GeminiClient:
 
 
 def run_fresh(split: str, k: int, seed: int, variant: str,
-              dry_run: bool = False, max_calls: int = MAX_CALLS) -> RunOutcome:
-    """Start a brand-new run for (split, k, seed, variant)."""
+              dry_run: bool = False, max_calls: int | None = None) -> RunOutcome:
+    """Start a brand-new run for (split, k, seed, variant).
+
+    ``max_calls`` caps total API requests; when None it self-sizes to the
+    planned call count plus retry headroom. The driver passes its shared budget.
+    """
     if variant not in VARIANTS:
         raise ValueError(f"variant must be one of {VARIANTS}, got {variant!r}")
 
     tasks, ids, codebook = _build_all_tasks(split, k, seed, variant)
+    cap = max_calls if max_calls is not None else _default_cap(len(tasks))
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     run_id = make_run_id(split, k, variant, timestamp)
     outdir = RESULTS_DIR / run_id
@@ -380,14 +392,14 @@ def run_fresh(split: str, k: int, seed: int, variant: str,
         return RunOutcome(0, outdir, 0, True)
 
     try:
-        client = _make_client(max_calls, variant)
+        client = _make_client(cap, variant)
     except Exception as exc:  # noqa: BLE001
         print(f"[fatal] could not init client: {type(exc).__name__}: "
               f"{_redact(str(exc))}", file=sys.stderr)
         return RunOutcome(2, outdir, 0, False)
 
     config["model"] = client.model_name
-    print(f"[run] {run_id}: {len(tasks)} planned calls (cap {max_calls}), "
+    print(f"[run] {run_id}: {len(tasks)} planned calls (cap {cap}), "
           f"model={client.model_name}, variant={variant}, workers={MAX_WORKERS}")
 
     fh, sink = _record_sink(outdir / "records.jsonl")
@@ -427,7 +439,7 @@ def run_fresh(split: str, k: int, seed: int, variant: str,
     return RunOutcome(0, outdir, client.n_calls, True)
 
 
-def run_resume(resume_dir: str, max_calls: int = MAX_CALLS) -> RunOutcome:
+def run_resume(resume_dir: str, max_calls: int | None = None) -> RunOutcome:
     """Finish an existing run: execute only the missing (person, arm, item) calls."""
     outdir = Path(resume_dir).resolve()
     records_path = outdir / "records.jsonl"
@@ -455,15 +467,16 @@ def run_resume(resume_dir: str, max_calls: int = MAX_CALLS) -> RunOutcome:
         print("[resume] already complete; regenerated summary + human_review.")
         return RunOutcome(0, outdir, 0, True)
 
+    cap = max_calls if max_calls is not None else _default_cap(len(missing))
     try:
-        client = _make_client(max_calls, variant)
+        client = _make_client(cap, variant)
     except Exception as exc:  # noqa: BLE001
         print(f"[fatal] could not init client: {type(exc).__name__}: "
               f"{_redact(str(exc))}", file=sys.stderr)
         return RunOutcome(2, outdir, 0, False)
 
     config["model"] = client.model_name
-    print(f"[resume] running {len(missing)} calls (cap {max_calls}), "
+    print(f"[resume] running {len(missing)} calls (cap {cap}), "
           f"model={client.model_name}, variant={variant}, workers={MAX_WORKERS}")
 
     fh, sink = _record_sink(records_path)
