@@ -7,7 +7,14 @@ import pandas as pd
 import pytest
 
 from doppler.data import RIASEC_ITEMS, TIPI_ITEMS
-from doppler.gym import GATE_N, PILOT_N, build_tasks, pilot_and_gate_ids
+from doppler.gym import (
+    GATE_N,
+    PILOT2_N,
+    PILOT_N,
+    build_tasks,
+    pilot2_ids,
+    pilot_and_gate_ids,
+)
 
 
 # --- leakage --------------------------------------------------------------
@@ -73,3 +80,24 @@ def test_pilot_gate_deterministic(big_df):
     p2, g2 = pilot_and_gate_ids(big_df)
     assert p1 == p2
     assert g1 == g2
+
+
+def test_pilot2_size_disjoint_deterministic(big_df):
+    pilot, gate = pilot_and_gate_ids(big_df)
+    p2a = pilot2_ids(big_df)
+    p2b = pilot2_ids(big_df)
+    assert len(p2a) == PILOT2_N == 50
+    assert len(set(p2a)) == 50
+    assert set(p2a).isdisjoint(set(pilot))
+    assert set(p2a).isdisjoint(set(gate))
+    assert p2a == p2b  # deterministic
+
+
+def test_build_tasks_variant_threads_into_prompt(synthetic_record, fake_codebook):
+    for variant, needle in [
+        ("v0", "Respond with a single integer from 1 to 7 and nothing else."),
+        ("v1", "Then on a new line write only the integer (1-7)."),
+        ("v2", "1:0.05 2:0.10 3:0.15 4:0.30 5:0.20 6:0.15 7:0.05"),
+    ]:
+        tasks = build_tasks(synthetic_record, fake_codebook, "twin", variant=variant)
+        assert all(needle in t.prompt for t in tasks)

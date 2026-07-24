@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import pytest
+
 from doppler.prompts import (
+    VARIANT_FINAL_INSTRUCTION,
     build_profile,
     build_prompt,
     select_interest_items,
@@ -104,3 +107,40 @@ def test_select_interest_items_deterministic_and_ordered():
     # k >= 48 returns all in canonical order
     assert select_interest_items(1, 48, 42) == list(RIASEC_ITEMS)
     assert select_interest_items(1, 99, 42) == list(RIASEC_ITEMS)
+
+
+# --- variants -------------------------------------------------------------
+
+
+@pytest.mark.parametrize("variant", ["v0", "v1", "v2"])
+def test_variant_final_instruction_present(synthetic_record, fake_codebook, variant):
+    profile = build_profile(synthetic_record, fake_codebook, include_interests=True)
+    prompt = build_prompt(profile, "TIPI1", fake_codebook, variant=variant)
+    assert prompt.endswith(VARIANT_FINAL_INSTRUCTION[variant])
+    # The intro, profile and question are shared across variants.
+    assert "MY PROFILE" in prompt and "YOUR TASK" in prompt
+
+
+def test_v1_and_v2_instruction_text(synthetic_record, fake_codebook):
+    profile = build_profile(synthetic_record, fake_codebook, include_interests=True)
+    v1 = build_prompt(profile, "TIPI1", fake_codebook, variant="v1")
+    v2 = build_prompt(profile, "TIPI1", fake_codebook, variant="v2")
+    assert "First write one short sentence about how this person would answer." in v1
+    assert "Then on a new line write only the integer (1-7)." in v1
+    assert "1:0.05 2:0.10 3:0.15 4:0.30 5:0.20 6:0.15 7:0.05" in v2
+
+
+def test_variant_changes_only_the_final_instruction(synthetic_record, fake_codebook):
+    profile = build_profile(synthetic_record, fake_codebook, include_interests=True)
+    v0 = build_prompt(profile, "TIPI2", fake_codebook, variant="v0")
+    v1 = build_prompt(profile, "TIPI2", fake_codebook, variant="v1")
+    # Everything up to the final instruction is byte-identical across variants.
+    head_v0 = v0[: v0.rindex(VARIANT_FINAL_INSTRUCTION["v0"])]
+    head_v1 = v1[: v1.rindex(VARIANT_FINAL_INSTRUCTION["v1"])]
+    assert head_v0 == head_v1
+
+
+def test_bad_variant_raises(synthetic_record, fake_codebook):
+    profile = build_profile(synthetic_record, fake_codebook, include_interests=True)
+    with pytest.raises(ValueError):
+        build_prompt(profile, "TIPI1", fake_codebook, variant="v9")

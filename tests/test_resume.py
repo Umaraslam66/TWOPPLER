@@ -11,6 +11,7 @@ sys.path.insert(0, str(_ROOT / "src"))
 
 import run_replay  # noqa: E402
 from doppler.gym import build_tasks  # noqa: E402
+from doppler.prompts import VARIANT_RETRY_REMINDER  # noqa: E402
 from doppler.scoring import summarize  # noqa: E402
 
 
@@ -25,6 +26,19 @@ class _FakeClient:
     def generate(self, prompt: str):
         self.n_calls += 1
         return self.answer, 10, 1
+
+
+def _run(fake, task, variant="v0"):
+    return run_replay._run_one(fake, task, variant, VARIANT_RETRY_REMINDER[variant])
+
+
+def _write(records_path, records):
+    fh, sink = run_replay._record_sink(records_path)
+    try:
+        for r in records:
+            sink(r)
+    finally:
+        fh.close()
 
 
 def _all_tasks(fake_codebook, record_factory, full_demographics):
@@ -43,9 +57,8 @@ def test_filter_missing_returns_only_the_gap(
     assert len(tasks) == 40  # 2 persons x 10 items x 2 arms
 
     fake = _FakeClient("5")
-    partial = [run_replay._run_one(fake, t) for t in tasks[:15]]
-    run_replay._write_records(tmp_path, partial)
     records_path = tmp_path / "records.jsonl"
+    _write(records_path, [_run(fake, t) for t in tasks[:15]])
 
     done = run_replay.completed_keys(records_path)
     assert len(done) == 15
@@ -64,17 +77,15 @@ def test_resume_appends_and_scores(
 ):
     tasks = _all_tasks(fake_codebook, record_factory, full_demographics)
     fake = _FakeClient("4")
-
-    # Partial run: first 15 tasks completed and written.
-    partial = [run_replay._run_one(fake, t) for t in tasks[:15]]
-    run_replay._write_records(tmp_path, partial)
     records_path = tmp_path / "records.jsonl"
 
-    # Resume: plan the missing tasks, run them, append.
+    # Partial run: first 15 tasks completed and written.
+    _write(records_path, [_run(fake, t) for t in tasks[:15]])
+
+    # Resume: plan the missing tasks, run them, append to the SAME file.
     done = run_replay.completed_keys(records_path)
     missing = run_replay.filter_missing(tasks, done)
-    new = [run_replay._run_one(fake, t) for t in missing]
-    run_replay._append_records(records_path, new)
+    _write(records_path, [_run(fake, t) for t in missing])
 
     all_records = run_replay.read_records(records_path)
     assert len(all_records) == 40
@@ -91,9 +102,16 @@ def test_resume_appends_and_scores(
     assert fake.n_calls == 40
 
 
-def test_resume_config_from_run_id_fallback(tmp_path):
-    # No summary.json -> split/k recovered from the directory name.
+def test_resume_config_recovers_variant_from_run_id(tmp_path):
+    # No summary.json -> split/k/variant recovered from the directory name.
+    run_dir = tmp_path / "pilot2_v2_k48_20260101-000000"
+    run_dir.mkdir()
+    split, k, seed, variant = run_replay._resume_config(run_dir, run_dir.name)
+    assert (split, k, seed, variant) == ("pilot2", 48, run_replay.DEFAULT_SEED, "v2")
+
+
+def test_resume_config_legacy_v0_name(tmp_path):
     run_dir = tmp_path / "gate_k12_20260101-000000"
     run_dir.mkdir()
-    split, k, seed = run_replay._resume_config(run_dir, run_dir.name)
-    assert (split, k, seed) == ("gate", 12, run_replay.DEFAULT_SEED)
+    split, k, seed, variant = run_replay._resume_config(run_dir, run_dir.name)
+    assert (split, k, seed, variant) == ("gate", 12, run_replay.DEFAULT_SEED, "v0")
