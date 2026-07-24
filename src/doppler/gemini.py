@@ -22,6 +22,7 @@ import threading
 import time
 from pathlib import Path
 
+import httpx
 from dotenv import load_dotenv
 from google import genai
 from google.genai import errors as genai_errors
@@ -30,6 +31,19 @@ from google.genai import types
 DEFAULT_MAX_CALLS = 600
 DEFAULT_MAX_OUTPUT_TOKENS = 16
 MAX_ATTEMPTS = 5
+
+# Per-request timeout so a hung/half-open connection fails fast into the retry
+# path instead of hanging for many minutes. google-genai's HttpOptions.timeout
+# is in MILLISECONDS (verified against google-genai 2.14.0).
+DEFAULT_TIMEOUT_MS = 90_000
+
+# Connection/transport-level failures that escape the SDK unwrapped (i.e. NOT as
+# an APIError): the SDK only wraps HTTP *status* responses in APIError, so a
+# dropped socket, read timeout, or protocol error surfaces as a raw httpx error.
+# All of RemoteProtocolError / ConnectError / ReadError / ReadTimeout subclass
+# httpx.HTTPError; builtin ConnectionError is OSError-based and separate. These
+# are always transient -> retry with the same backoff as a 5xx.
+_RETRYABLE_CONN_ERRORS = (httpx.HTTPError, ConnectionError)
 
 # Proactive client-side pacing. The free tier caps this model at ~15 requests
 # per minute; one request every 5s (~12/min) stays comfortably under it so we
@@ -90,6 +104,7 @@ class GeminiClient:
         temperature: float = 0.0,
         max_output_tokens: int = DEFAULT_MAX_OUTPUT_TOKENS,
         min_interval_s: float = DEFAULT_MIN_INTERVAL_S,
+        timeout_ms: int = DEFAULT_TIMEOUT_MS,
     ) -> None:
         load_dotenv(dotenv_path=_PROJECT_ROOT / ".env")
         api_key = os.environ.get("GOOGLE_AI_STUDIO")
@@ -99,7 +114,11 @@ class GeminiClient:
         if not self.model_name:
             raise RuntimeError("MODEL_NAME is not set (checked env and .env).")
 
-        self._client = genai.Client(api_key=api_key)
+        self.timeout_ms = int(timeout_ms)
+        self._client = genai.Client(
+            api_key=api_key,
+            http_options=types.HttpOptions(timeout=self.timeout_ms),
+        )
         self.max_calls = int(max_calls)
         self.temperature = float(temperature)
         self.max_output_tokens = int(max_output_tokens)
@@ -188,6 +207,14 @@ class GeminiClient:
                 )
             except genai_errors.APIError as err:
                 if _is_retryable(err) and attempt < MAX_ATTEMPTS:
+                    self._bump_retries()
+                    self._sleep_backoff(attempt, err)
+                    last_exc = err
+                    continue
+                raise
+            except _RETRYABLE_CONN_ERRORS as err:
+                # Dropped socket / read timeout / protocol error: always transient.
+                if attempt < MAX_ATTEMPTS:
                     self._bump_retries()
                     self._sleep_backoff(attempt, err)
                     last_exc = err
