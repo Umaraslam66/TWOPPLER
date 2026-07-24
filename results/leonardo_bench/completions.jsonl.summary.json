@@ -1,0 +1,15 @@
+{
+  "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Qwen3.6-27B",
+  "tp": 4,
+  "max_model_len": 2048,
+  "gpu_mem_util": 0.92,
+  "temperature": 0.0,
+  "seed": 0,
+  "num_prompts": 400,
+  "engine_init_seconds": 469.93,
+  "generation_wall_seconds": 13.98,
+  "total_tokens_in": 203620,
+  "total_tokens_out": 800,
+  "output_tokens_per_second": 57.2,
+  "timestamp_utc": "2026-07-24T14:20:03Z"
+}
