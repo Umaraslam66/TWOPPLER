@@ -44,6 +44,30 @@ def test_existing_run_none_when_absent(tmp_path, monkeypatch):
     assert run_dir is None and count == 0
 
 
+def _add_summary(d, config):
+    (d / "summary.json").write_text(json.dumps({"config": config}), encoding="utf-8")
+
+
+def test_existing_run_ignores_batch_ingest_decoy(tmp_path, monkeypatch):
+    # A COMPLETE leonardo-batch ingest dir matches the variant glob but is NOT a
+    # Gemini run, so it must not be mistaken for "Gemini v2 already complete".
+    monkeypatch.setattr(run_pilot2, "RESULTS_DIR", tmp_path)
+    decoy = _write_dir(tmp_path, "pilot2_v2_k48_20260101-000000_leonardo-batch", 4)
+    _add_summary(decoy, {"backend": "leonardo-batch", "model_label": None})
+    run_dir, count = run_pilot2._existing_run("v2")
+    assert run_dir is None and count == 0
+
+
+def test_existing_run_prefers_gemini_over_batch(tmp_path, monkeypatch):
+    monkeypatch.setattr(run_pilot2, "RESULTS_DIR", tmp_path)
+    gem = _write_dir(tmp_path, "pilot2_v2_k48_20260101-000001", 4)
+    _add_summary(gem, {"backend": None, "model_label": None})
+    batch = _write_dir(tmp_path, "pilot2_v2_k48_20260101-000002_leonardo-batch", 4)
+    _add_summary(batch, {"backend": "leonardo-batch"})
+    run_dir, count = run_pilot2._existing_run("v2")
+    assert run_dir == gem and count == 4
+
+
 def test_driver_skips_complete_resumes_partial_starts_fresh(tmp_path, monkeypatch):
     monkeypatch.setattr(run_pilot2, "RESULTS_DIR", tmp_path)
     monkeypatch.setattr(run_pilot2, "EXPECTED_RECORDS", 4)

@@ -18,6 +18,8 @@ Usage:
 
 from __future__ import annotations
 
+import json
+import re
 import sys
 from pathlib import Path
 
@@ -40,13 +42,33 @@ EXPECTED_RECORDS = 1000  # 50 persons x 10 items x 2 arms
 BUDGET = 3500            # in-code call cap for this driver invocation
 
 
+def _is_gemini_run(d: Path) -> bool:
+    """True only for a Gemini run dir.
+
+    Identity comes from summary.json config, NOT the dir name: a batch-ingested
+    run (e.g. ``pilot2_v2_k48_..._leonardo-batch`` from a Gemma/Qwen sweep)
+    matches the variant glob but carries backend != gemini / a model_label, so it
+    must not be mistaken for the Gemini run and cause the driver to skip it.
+    """
+    summ = d / "summary.json"
+    if summ.exists():
+        try:
+            cfg = json.loads(summ.read_text(encoding="utf-8")).get("config", {})
+        except (json.JSONDecodeError, OSError):
+            return False
+        return cfg.get("backend") in (None, "gemini") and not cfg.get("model_label")
+    # No summary yet: only a Gemini fresh/partial run has a pure-timestamp name
+    # (a batch ingest always writes summary.json and carries a backend suffix).
+    return bool(re.match(rf"{SPLIT}_[a-z0-9]+_k{K}_\d{{8}}-\d{{6}}$", d.name))
+
+
 def _existing_run(variant: str) -> tuple[Path | None, int]:
-    """The most-progressed existing run dir for this variant, and its record count."""
+    """The most-progressed existing GEMINI run dir for this variant + its count."""
     dirs = sorted(RESULTS_DIR.glob(f"{SPLIT}_{variant}_k{K}_*"))
     candidates = [
         (len(completed_keys(d / "records.jsonl")), d)
         for d in dirs
-        if (d / "records.jsonl").exists()
+        if (d / "records.jsonl").exists() and _is_gemini_run(d)
     ]
     if not candidates:
         return None, 0
