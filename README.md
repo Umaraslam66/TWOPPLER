@@ -16,3 +16,22 @@ Requires [uv](https://docs.astral.sh/uv/):
 ## Run tests
 
     uv run pytest
+
+## Replay gym (Stage 1)
+
+The Stage-1 gym replays real survey respondents: each person is seeded with
+their demographics (and, in the twin arm, their interest ratings), and the
+model predicts each of their 10 held-out personality items. The primary metric
+is *lift* — twin accuracy minus the demographics-only baseline, per person.
+
+Build every prompt without making any API call:
+
+    uv run python experiments/run_replay.py --split pilot --dry-run
+
+Run the pilot for real (needs `GOOGLE_AI_STUDIO` and `MODEL_NAME` in a local
+`.env`):
+
+    uv run python experiments/run_replay.py --split pilot
+
+Each run writes its records, summary, example prompts, and a human-review file
+to `results/<run_id>/`, and appends one line to `results/cost_log.jsonl`.
