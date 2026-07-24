@@ -32,12 +32,16 @@ def build_cost_entry(
     tokens_out: int,
     variant: str = "v0",
     resumed: bool = False,
+    backend: str = "gemini",
+    node_hours: float | None = None,
 ) -> dict:
     """Assemble one cost-log record with an ISO-8601 UTC timestamp.
 
     A resume writes its own line (same ``run_id``, ``resumed=True``) counting
     only the calls/tokens spent by the resuming process; summing all lines with
-    a given ``run_id`` gives that run's true totals.
+    a given ``run_id`` gives that run's true totals. ``backend`` names the
+    generation backend; ``node_hours`` records batch-job GPU cost (None for the
+    live Gemini backend, which has no GPU cost).
     """
     return {
         "run_id": run_id,
@@ -45,6 +49,7 @@ def build_cost_entry(
         "model": model,
         "split": split,
         "variant": variant,
+        "backend": backend,
         "resumed": bool(resumed),
         "n_persons": int(n_persons),
         "n_calls": int(n_calls),
@@ -52,6 +57,7 @@ def build_cost_entry(
         "n_parse_failures": int(n_parse_failures),
         "tokens_in": int(tokens_in),
         "tokens_out": int(tokens_out),
+        "node_hours": (None if node_hours is None else float(node_hours)),
     }
 
 

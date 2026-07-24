@@ -10,8 +10,9 @@ sys.path.insert(0, str(_ROOT / "experiments"))
 sys.path.insert(0, str(_ROOT / "src"))
 
 import run_replay  # noqa: E402
+from doppler.backends import GeminiBackend  # noqa: E402
 from doppler.gym import build_tasks  # noqa: E402
-from doppler.prompts import VARIANT_RETRY_REMINDER  # noqa: E402
+from doppler.prompts import VARIANT_MAX_OUTPUT_TOKENS, VARIANT_RETRY_REMINDER  # noqa: E402
 from doppler.scoring import summarize  # noqa: E402
 
 
@@ -29,7 +30,10 @@ class _FakeClient:
 
 
 def _run(fake, task, variant="v0"):
-    return run_replay._run_one(fake, task, variant, VARIANT_RETRY_REMINDER[variant])
+    return run_replay._run_one(
+        GeminiBackend(fake), task, variant,
+        VARIANT_RETRY_REMINDER[variant], VARIANT_MAX_OUTPUT_TOKENS[variant],
+    )
 
 
 def _write(records_path, records):

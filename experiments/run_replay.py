@@ -35,6 +35,7 @@ from tqdm import tqdm
 _ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_ROOT / "src"))
 
+from doppler.backends import BatchFileBackend, GeminiBackend  # noqa: E402
 from doppler.costlog import append_cost_log, build_cost_entry  # noqa: E402
 from doppler.data import (  # noqa: E402
     clean_riasec,
@@ -183,21 +184,9 @@ def _write_example_prompts(outdir: Path, tasks) -> None:
 # ---------------------------------------------------------------------------
 
 
-def _run_one(client, task, variant: str, retry_reminder: str) -> dict:
-    """One prediction: generate, parse per variant, one parse-retry if needed."""
-    text, t_in, t_out = client.generate(task.prompt)
-    pr = parse_response(text, variant)
-    raw = text
-    parse_retry = False
-
-    if pr["parse_failure"]:
-        parse_retry = True
-        text2, t_in2, t_out2 = client.generate(task.prompt + "\n\n" + retry_reminder)
-        t_in += t_in2
-        t_out += t_out2
-        raw = text2
-        pr = parse_response(text2, variant)
-
+def _record_from_parse(task, variant, prompt, raw, pr, parse_retry,
+                        t_in, t_out) -> dict:
+    """Assemble one record dict from a parse result (shared by live/ingest)."""
     true = task.true_answer
     disc = pr["prediction_argmax"]
     mae_pt = pr["mae_point"]
@@ -206,7 +195,7 @@ def _run_one(client, task, variant: str, retry_reminder: str) -> dict:
         "arm": task.arm,
         "item": task.tipi_code,
         "variant": variant,
-        "prompt": task.prompt,
+        "prompt": prompt,
         "raw_response": raw,
         "parsed": pr["parsed"],
         "prediction_ev": pr["prediction_ev"],
@@ -223,14 +212,55 @@ def _run_one(client, task, variant: str, retry_reminder: str) -> dict:
     }
 
 
-def _execute(client, tasks, variant: str, sink) -> tuple[list[dict], str | None]:
+def _run_one(backend, task, variant: str, retry_reminder: str,
+             max_output_tokens: int) -> dict:
+    """One prediction: generate, parse per variant, one parse-retry if needed.
+
+    Routed through ``backend.batch_generate`` (single-prompt batches). For the
+    Gemini backend this is exactly the previous two-``generate`` sequence, so
+    the produced record is byte-identical.
+    """
+    res = backend.batch_generate([task.prompt], max_output_tokens=max_output_tokens)[0]
+    text, t_in, t_out = res.text, res.tokens_in, res.tokens_out
+    pr = parse_response(text, variant)
+    raw = text
+    parse_retry = False
+
+    if pr["parse_failure"]:
+        parse_retry = True
+        retry_prompt = task.prompt + "\n\n" + retry_reminder
+        res2 = backend.batch_generate([retry_prompt],
+                                      max_output_tokens=max_output_tokens)[0]
+        t_in += res2.tokens_in
+        t_out += res2.tokens_out
+        raw = res2.text
+        pr = parse_response(res2.text, variant)
+
+    return _record_from_parse(task, variant, task.prompt, raw, pr, parse_retry,
+                              t_in, t_out)
+
+
+def _score_from_completion(task, variant: str, res) -> dict:
+    """Build a record from a pre-computed completion (ingest path, no retry)."""
+    if res.error is not None:
+        pr = parse_response("", variant)  # -> parse_failure
+        raw = f"<no completion: {res.error}>"
+    else:
+        pr = parse_response(res.text, variant)
+        raw = res.text
+    return _record_from_parse(task, variant, task.prompt, raw, pr, False,
+                              res.tokens_in, res.tokens_out)
+
+
+def _execute(backend, tasks, variant: str, sink) -> tuple[list[dict], str | None]:
     """Run tasks; ``sink(record)`` is called (and durably persists) per result."""
     reminder = VARIANT_RETRY_REMINDER[variant]
+    max_tok = VARIANT_MAX_OUTPUT_TOKENS[variant]
     records: list[dict] = []
     abort_reason: str | None = None
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
-        futures = {pool.submit(_run_one, client, t, variant, reminder): t
+        futures = {pool.submit(_run_one, backend, t, variant, reminder, max_tok): t
                    for t in tasks}
         try:
             for fut in tqdm(as_completed(futures), total=len(futures), desc="calls"):
@@ -404,7 +434,7 @@ def run_fresh(split: str, k: int, seed: int, variant: str,
 
     fh, sink = _record_sink(outdir / "records.jsonl")
     try:
-        records, abort_reason = _execute(client, tasks, variant, sink)
+        records, abort_reason = _execute(GeminiBackend(client), tasks, variant, sink)
     finally:
         fh.close()
 
@@ -481,7 +511,8 @@ def run_resume(resume_dir: str, max_calls: int | None = None) -> RunOutcome:
 
     fh, sink = _record_sink(records_path)
     try:
-        new_records, abort_reason = _execute(client, missing, variant, sink)
+        new_records, abort_reason = _execute(GeminiBackend(client), missing,
+                                             variant, sink)
     finally:
         fh.close()
 
@@ -521,6 +552,75 @@ def run_resume(resume_dir: str, max_calls: int | None = None) -> RunOutcome:
 
 
 # ---------------------------------------------------------------------------
+# Batch-file backend: export prompts / ingest completions
+# ---------------------------------------------------------------------------
+
+
+def run_export(split: str, k: int, seed: int, variant: str,
+               out_path: str) -> RunOutcome:
+    """Export the deterministic prompt set to prompts.jsonl + a manifest. No API."""
+    tasks, ids, _ = _build_all_tasks(split, k, seed, variant)
+    out = Path(out_path)
+    n = BatchFileBackend.export(tasks, variant, VARIANT_MAX_OUTPUT_TOKENS[variant], out)
+    manifest = {
+        "split": split, "k": k, "seed": seed, "variant": variant,
+        "backend": "batchfile", "n_prompts": n, "n_persons": len(ids),
+        "max_output_tokens": VARIANT_MAX_OUTPUT_TOKENS[variant],
+        "prompts_file": str(out),
+    }
+    (out.parent / "export_manifest.json").write_text(
+        json.dumps(manifest, indent=2), encoding="utf-8")
+    print(f"[export] wrote {n} prompts to {out} (+ export_manifest.json). "
+          f"split={split} k={k} seed={seed} variant={variant}. No API calls.")
+    return RunOutcome(0, out.parent, 0, True)
+
+
+def run_ingest(split: str, k: int, seed: int, variant: str,
+               completions_path: str, node_hours: float | None = None) -> RunOutcome:
+    """Score an exported run from a completions.jsonl. No API calls."""
+    tasks, ids, codebook = _build_all_tasks(split, k, seed, variant)
+    backend = BatchFileBackend.from_completions(completions_path)
+    results = backend.batch_generate([t.prompt for t in tasks],
+                                     max_output_tokens=VARIANT_MAX_OUTPUT_TOKENS[variant])
+
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    run_id = make_run_id(split, k, variant, timestamp) + "_batchfile"
+    outdir = RESULTS_DIR / run_id
+    outdir.mkdir(parents=True, exist_ok=True)
+    _write_example_prompts(outdir, tasks)
+
+    fh, sink = _record_sink(outdir / "records.jsonl")
+    try:
+        for task, res in zip(tasks, results):
+            sink(_score_from_completion(task, variant, res))
+    finally:
+        fh.close()
+
+    all_records = read_records(outdir / "records.jsonl")
+    n_missing = sum(1 for r in results if r.error is not None)
+    config = {"split": split, "k": k, "seed": seed, "variant": variant,
+              "n_persons": len(ids), "model": None, "backend": "batchfile"}
+    process_totals = {"backend": "batchfile", "n_completions": len(results),
+                      "n_missing_completions": n_missing, "node_hours": node_hours}
+    summary = _write_summary(outdir, all_records, config, process_totals, None)
+    _write_human_review(outdir, all_records, codebook)
+
+    append_cost_log(build_cost_entry(
+        run_id=run_id, model="batchfile", split=split, variant=variant,
+        n_persons=len(ids), n_calls=0, n_retries=0,
+        n_parse_failures=summary["totals"]["n_parse_failures"],
+        tokens_in=summary["totals"]["tokens_in"],
+        tokens_out=summary["totals"]["tokens_out"],
+        backend="batchfile", node_hours=node_hours,
+    ), RESULTS_DIR / "cost_log.jsonl")
+
+    _print_scores("[ingest]", run_id, summary, 0)
+    print(f"[ingest] {len(all_records)} records ({n_missing} missing completions) "
+          f"in {outdir}")
+    return RunOutcome(0, outdir, 0, True)
+
+
+# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -531,10 +631,27 @@ def main() -> int:
     ap.add_argument("--k", type=int, default=48, help="interest items per twin (<=48)")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--variant", choices=list(VARIANTS), default="v0")
+    ap.add_argument("--backend", choices=["gemini", "batchfile"], default="gemini")
     ap.add_argument("--dry-run", action="store_true", help="build prompts, no API calls")
     ap.add_argument("--resume", metavar="RUN_DIR", default=None,
                     help="finish an existing run dir: run only its missing calls")
+    ap.add_argument("--export-prompts", metavar="PATH", default=None,
+                    help="batchfile: write prompts.jsonl + manifest and exit")
+    ap.add_argument("--ingest-completions", metavar="PATH", default=None,
+                    help="batchfile: score an exported run from a completions file")
+    ap.add_argument("--node-hours", type=float, default=None,
+                    help="batchfile ingest: GPU node-hours to record in the cost log")
     args = ap.parse_args()
+
+    if args.backend == "batchfile":
+        if args.export_prompts:
+            return run_export(args.split, args.k, args.seed, args.variant,
+                              args.export_prompts).exit_code
+        if args.ingest_completions:
+            return run_ingest(args.split, args.k, args.seed, args.variant,
+                              args.ingest_completions, args.node_hours).exit_code
+        ap.error("--backend batchfile requires --export-prompts or "
+                 "--ingest-completions")
 
     if args.resume:
         return run_resume(args.resume).exit_code
