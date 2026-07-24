@@ -40,9 +40,11 @@ def patched(monkeypatch):
     """Return a factory that builds a GeminiClient over a scripted fake SDK."""
     monkeypatch.setenv("GOOGLE_AI_STUDIO", "fake-key-not-real")
     monkeypatch.setenv("MODEL_NAME", "fake-model")
-    # No real sleeping in tests: neutralise backoff and pacing.
+    # No real sleeping in tests: neutralise backoff, pacing, RPM bucket, throttle.
     monkeypatch.setattr(gm.GeminiClient, "_sleep_backoff", lambda *a, **k: None)
     monkeypatch.setattr(gm.GeminiClient, "_pace", lambda self: None)
+    monkeypatch.setattr(gm.GeminiClient, "_rpm_acquire", lambda self: None)
+    monkeypatch.setattr(gm.GeminiClient, "_await_throttle", lambda self: None)
 
     def factory(script, **kwargs):
         kwargs.setdefault("min_interval_s", 0.0)
@@ -118,3 +120,30 @@ def test_server_retry_delay_parsing(message, expected):
         assert got is None
     else:
         assert got == pytest.approx(expected)
+
+
+def test_rate_limit_trips_global_throttle(patched):
+    # A 429 opens the pool-wide backoff window (then the retry succeeds).
+    client, _ = patched([_FakeAPIError(429), "6"])
+    text, _, _ = client.generate("x")
+    assert text == "6"
+    assert client.n_retries == 1
+    assert client._throttle_until > 0.0  # global throttle opened
+
+
+def test_is_rate_limit_predicate():
+    assert gm._is_rate_limit(_FakeAPIError(429))
+    assert gm._is_rate_limit(_FakeAPIError(400, status="RESOURCE_EXHAUSTED"))
+    assert not gm._is_rate_limit(_FakeAPIError(503))
+
+
+def test_token_bucket_bursts_then_rate_limits():
+    import time
+    bucket = gm._TokenBucket(rate_per_sec=20.0, capacity=2)
+    t0 = time.monotonic()
+    bucket.acquire()
+    bucket.acquire()          # 2-token burst is ~instant
+    assert time.monotonic() - t0 < 0.03
+    t1 = time.monotonic()
+    bucket.acquire()          # 3rd waits ~1/20s for a refill
+    assert time.monotonic() - t1 >= 0.03
