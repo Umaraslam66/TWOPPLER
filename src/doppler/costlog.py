@@ -19,6 +19,29 @@ COST_LOG_FIELDS = (
     "tokens_out",
 )
 
+# Token prices in USD per 1,000,000 tokens, keyed by model. Trivially editable
+# per model; a model absent from this table gets cost_usd = null.
+#   gemini-3.5-flash-lite: input 0.30, output 2.50
+#   (source: openrouter.ai/google/gemini-3.5-flash-lite and pricepertoken.com,
+#    fetched 2026-07-24)
+PRICE_IN = 0.30
+PRICE_OUT = 2.50
+MODEL_PRICES = {
+    "gemini-3.5-flash-lite": {"in": PRICE_IN, "out": PRICE_OUT},
+}
+
+
+def cost_usd_for(model: str, tokens_in: int, tokens_out: int) -> float | None:
+    """USD cost from tokens, or None if the model has no price (e.g. batch runs).
+
+    Batch/HPC runs (backend leonardo-batch) name a non-priced model, so their
+    cost_usd stays null -- node_hours records their GPU cost instead.
+    """
+    price = MODEL_PRICES.get(model)
+    if price is None:
+        return None
+    return round(tokens_in / 1e6 * price["in"] + tokens_out / 1e6 * price["out"], 6)
+
 
 def build_cost_entry(
     run_id: str,
@@ -57,6 +80,7 @@ def build_cost_entry(
         "n_parse_failures": int(n_parse_failures),
         "tokens_in": int(tokens_in),
         "tokens_out": int(tokens_out),
+        "cost_usd": cost_usd_for(model, int(tokens_in), int(tokens_out)),
         "node_hours": (None if node_hours is None else float(node_hours)),
     }
 
