@@ -1,0 +1,11 @@
+{
+  "split": "gate",
+  "k": 48,
+  "seed": 42,
+  "variant": "v2",
+  "backend": "batchfile",
+  "n_prompts": 10000,
+  "n_persons": 500,
+  "max_output_tokens": 120,
+  "prompts_file": "results/leonardo_gate/prompts_v2.jsonl"
+}

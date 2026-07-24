@@ -1,0 +1,61 @@
+You are simulating a specific, real survey respondent. Answer exactly as this person would, based on their profile below.
+
+MY PROFILE
+I am a 25-year-old female. My country: MY. I grew up in a rural (country side) area. My education level: Graduate degree. Native English speaker: No. Religion: Muslim. Sexual orientation: Other. Race: Other (There was a coding error in the survey, and three different options were given the same value). Marital status: Never married. Number of children my parents had, including me: 3. Voted in a national election in the past year: No. College major: Business banking.
+
+HOW I RATED MY INTEREST IN VARIOUS ACTIVITIES
+(Scale: 1=Dislike, 3=Neutral, 5=Enjoy)
+- Test the quality of parts before shipment: 5
+- Lay brick or tile: 3
+- Work on an offshore oil-drilling rig: 3
+- Assemble electronic parts: 2
+- Operate a grinding machine in a factory: 3
+- Fix a broken faucet: 3
+- Assemble products in a factory: 1
+- Install flooring in houses: 2
+- Study the structure of the human body: 1
+- Study animal behavior: 1
+- Do research on plants or animals: 1
+- Develop a new medical treatment or procedure: 1
+- Conduct biological research: 1
+- Study whales and other types of marine life: 1
+- Work in a biology lab: 1
+- Make a map of the bottom of an ocean: 1
+- Conduct a musical choir: 3
+- Direct a play: 1
+- Design artwork for magazines: 1
+- Write a song: 1
+- Write books or plays: 4
+- Play a musical instrument: 3
+- Perform stunts for a movie or television show: 3
+- Design sets for plays: 3
+- Give career guidance to people: 5
+- Do volunteer work at a non-profit organization: 3
+- Help people who have problems with drugs or alcohol: 5
+- Teach an individual an exercise routine: 4
+- Help people with family-related problems: 5
+- Supervise the activities of children at a camp: 5
+- Teach children how to read: 5
+- Help elderly people with their daily activities: 5
+- Sell restaurant franchises to individuals: 3
+- Sell merchandise at a department store: 3
+- Manage the operations of a hotel: 4
+- Operate a beauty salon or barber shop: 3
+- Manage a department within a large company: 4
+- Manage a clothing store: 3
+- Sell houses: 3
+- Run a toy store: 4
+- Generate the monthly payroll checks for an office: 3
+- Inventory supplies using a hand-held computer: 3
+- Use a computer program to generate customer bills: 3
+- Maintain employee records: 4
+- Compute and record statistical and other numerical data: 4
+- Operate a calculator: 4
+- Handle customers' bank transactions: 4
+- Keep shipping and receiving records: 4
+
+YOUR TASK
+The survey asked this person to rate the statement "I see myself as: Extraverted, enthusiastic." on this scale: 1=Disagree strongly, 2=Disagree moderately, 3=Disagree a little, 4=Neither agree nor disagree, 5=Agree a little, 6=Agree moderately, 7=Agree strongly.
+
+Answer as this person would. Output a probability for each of the 7 answers on a single line, in exactly this format:
+1:0.05 2:0.10 3:0.15 4:0.30 5:0.20 6:0.15 7:0.05

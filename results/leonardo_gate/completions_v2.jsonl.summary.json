@@ -1,0 +1,17 @@
+{
+  "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+  "tp": 4,
+  "max_model_len": 2048,
+  "gpu_mem_util": 0.92,
+  "temperature": 0.0,
+  "seed": 0,
+  "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/gate_v2/prompts_v2.jsonl",
+  "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/gate_v2/completions_v2.jsonl",
+  "num_prompts": 10000,
+  "engine_init_seconds": 181.53,
+  "generation_wall_seconds": 243.08,
+  "total_tokens_in": 5595780,
+  "total_tokens_out": 490216,
+  "output_tokens_per_second": 2016.6,
+  "timestamp_utc": "2026-07-24T16:22:32Z"
+}
