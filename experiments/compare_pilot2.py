@@ -1,18 +1,24 @@
-"""Compare pilot2 runs across variants (v0/v1/v2) and models (gemini, qwen).
+"""Compare pilot2 runs across variants (v0/v1/v2) and N models.
 
-Auto-discovers pilot2 run dirs, reads their summary.json, and writes
-``results/pilot2_comparison.md`` with, per variant x model: MAE lift [CI] with
-t/Wilcoxon p-values, within-1 lift [CI], exact lift, parse failures and
-exclusions, predicted-vs-true histograms per arm, and the per-item MAE-lift
-table for both models side by side.
+Each run's model identity is a label:
+  * Gemini runs (no backend, or backend "gemini") -> ``gemini``.
+  * Batch-ingested runs -> the summary config's ``model_label`` if set, else the
+    ``backend`` name mapped through an explicit alias table (so the three
+    existing runs stored as backend "leonardo-batch" read as the Qwen model
+    without rewriting their files).
 
-Graceful with missing runs: anything without a summary.json is marked PENDING
-(the Gemini v1/v2 runs may still be in flight; Qwen may not be ingested yet).
-Read-only; makes no API calls and writes only the comparison file.
+Auto-discovers pilot2 run dirs and writes ``results/pilot2_comparison.md``:
+  * one main table, rows = model x variant: MAE lift [CI], t/Wilcoxon p,
+    within-1 lift, exact lift, parse-fails/exclusions;
+  * a histograms section per model x variant x arm;
+  * a wide per-item MAE-lift table (items as rows, model x variant as columns),
+    for the models actually present.
+
+Missing runs are marked PENDING. Read-only; writes only the comparison file.
 
 Usage:
     uv run python experiments/compare_pilot2.py
-    uv run python experiments/compare_pilot2.py --runs gemini:v0=results/DIR qwen:v1=results/DIR
+    uv run python experiments/compare_pilot2.py --runs leonardo-llama70b:v0=results/DIR
 """
 
 from __future__ import annotations
@@ -28,9 +34,11 @@ _ROOT = Path(__file__).resolve().parents[1]
 RESULTS = _ROOT / "results"
 OUT = RESULTS / "pilot2_comparison.md"
 VARIANTS = ("v0", "v1", "v2")
-MODELS = ("gemini", "qwen")
 K = 48
 EXPECTED = 1000
+
+#: Legacy backend names -> per-model labels (files are not rewritten).
+BACKEND_LABEL_ALIASES = {"leonardo-batch": "leonardo-qwen3.6-27b"}
 
 
 def _summary(run_dir: Path) -> dict | None:
@@ -43,13 +51,19 @@ def _summary(run_dir: Path) -> dict | None:
         return None
 
 
-def _model_of(summary: dict) -> str:
-    backend = (summary.get("config") or {}).get("backend")
-    return "gemini" if backend in (None, "gemini") else "qwen"
+def label_of(summary: dict) -> str:
+    """Resolve a run's model label from its summary config."""
+    cfg = summary.get("config") or {}
+    backend = cfg.get("backend")
+    if backend in (None, "gemini"):
+        return "gemini"
+    if cfg.get("model_label"):
+        return cfg["model_label"]
+    return BACKEND_LABEL_ALIASES.get(backend, backend)
 
 
 def discover() -> dict[tuple[str, str], Path]:
-    """Map (variant, model) -> run dir, choosing the most-progressed per slot."""
+    """Map (variant, label) -> most-progressed run dir."""
     found: dict[tuple[str, str], tuple[int, Path]] = {}
     for variant in VARIANTS:
         for d in RESULTS.glob(f"pilot2_{variant}_k{K}_*"):
@@ -57,17 +71,29 @@ def discover() -> dict[tuple[str, str], Path]:
                 continue
             summ = _summary(d)
             if summ is None:
-                # No summary yet (e.g. in-flight Gemini). Classify by dir name.
-                model = "gemini" if re.match(
-                    rf"pilot2_{variant}_k{K}_\d{{8}}-\d{{6}}$", d.name) else "qwen"
-                n = 0
+                # In-flight run with no summary yet: only a pure-timestamp name
+                # is unambiguously a Gemini run; skip summaryless batch dirs.
+                if re.match(rf"pilot2_{variant}_k{K}_\d{{8}}-\d{{6}}$", d.name):
+                    label, n = "gemini", 0
+                else:
+                    continue
             else:
-                model = _model_of(summ)
+                label = label_of(summ)
                 n = (summ.get("totals") or {}).get("n_records", 0)
-            key = (variant, model)
+            key = (variant, label)
             if key not in found or n > found[key][0]:
                 found[key] = (n, d)
     return {k: v[1] for k, v in found.items()}
+
+
+def _ordered_models(runs: dict[tuple[str, str], Path]) -> list[str]:
+    labels = {label for (_v, label) in runs}
+    labels.add("gemini")
+    others = sorted(labels - {"gemini"})
+    return ["gemini", *others]
+
+
+# --- formatting helpers ---------------------------------------------------
 
 
 def _fmt_lift(block: dict | None) -> str:
@@ -91,10 +117,9 @@ def _fmt_p(block: dict | None, key: str) -> str:
     return f"{p:.3g}"
 
 
-def _hist_table(hist: dict) -> list[str]:
+def _hist_rows(hist: dict) -> list[str]:
     header = "| arm/series | " + " | ".join(str(i) for i in range(1, 8)) + " |"
-    sep = "|" + "---|" * 8
-    rows = [header, sep]
+    rows = [header, "|" + "---|" * 8]
     for arm in ("twin", "baseline"):
         for series in ("predicted", "true"):
             counts = (hist.get(arm) or {}).get(series, {})
@@ -104,47 +129,55 @@ def _hist_table(hist: dict) -> list[str]:
     return rows
 
 
+# --- report ---------------------------------------------------------------
+
+
 def build_report(runs: dict[tuple[str, str], Path]) -> str:
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    out = [f"# pilot2 comparison: Gemini vs Qwen\n\nGenerated {now}\n"]
-
-    # Availability.
-    out.append("## Runs discovered\n")
-    out.append("| variant | model | dir | records | status |")
-    out.append("|---|---|---|---|---|")
+    models = _ordered_models(runs)
     summaries: dict[tuple[str, str], dict] = {}
-    for variant in VARIANTS:
-        for model in MODELS:
+    for (variant, label), d in runs.items():
+        summ = _summary(d)
+        if summ is not None:
+            summaries[(label, variant)] = summ
+
+    out = [f"# pilot2 comparison across models\n\nGenerated {now}\n"]
+
+    # Runs discovered.
+    out += ["## Runs discovered\n",
+            "| model | variant | dir | records | status |",
+            "|---|---|---|---|---|"]
+    for model in models:
+        for variant in VARIANTS:
             d = runs.get((variant, model))
             if d is None:
-                out.append(f"| {variant} | {model} | - | - | PENDING |")
+                out.append(f"| {model} | {variant} | - | - | PENDING |")
                 continue
             summ = _summary(d)
             if summ is None:
-                out.append(f"| {variant} | {model} | {d.name} | ? | "
+                out.append(f"| {model} | {variant} | {d.name} | ? | "
                            "in flight (no summary) |")
                 continue
-            summaries[(variant, model)] = summ
             n = (summ.get("totals") or {}).get("n_records", 0)
             status = "complete" if n >= EXPECTED else f"partial {n}/{EXPECTED}"
-            out.append(f"| {variant} | {model} | {d.name} | {n} | {status} |")
+            out.append(f"| {model} | {variant} | {d.name} | {n} | {status} |")
     out.append("")
 
-    # Metrics table.
-    out.append("## Metrics (lift = twin better)\n")
-    out.append("| variant | model | MAE lift [95% CI] | p(t) | p(Wilcoxon) | "
-               "within-1 lift [CI] | exact lift | parse fails | exclusions |")
-    out.append("|---|---|---|---|---|---|---|---|---|")
-    for variant in VARIANTS:
-        for model in MODELS:
-            summ = summaries.get((variant, model))
+    # Main metrics table.
+    out += ["## Metrics (lift = twin better)\n",
+            "| model | variant | MAE lift [95% CI] | p(t) | p(Wilcoxon) | "
+            "within-1 lift [CI] | exact lift | parse fails | exclusions |",
+            "|---|---|---|---|---|---|---|---|---|"]
+    for model in models:
+        for variant in VARIANTS:
+            summ = summaries.get((model, variant))
             if summ is None:
-                out.append(f"| {variant} | {model} | PENDING | - | - | - | - | - | - |")
+                out.append(f"| {model} | {variant} | PENDING | - | - | - | - | - | - |")
                 continue
             sc = summ.get("scoring", {})
             totals = summ.get("totals", {})
             out.append(
-                f"| {variant} | {model} | {_fmt_lift(sc.get('mae'))} | "
+                f"| {model} | {variant} | {_fmt_lift(sc.get('mae'))} | "
                 f"{_fmt_p(sc.get('mae'), 't_p')} | "
                 f"{_fmt_p(sc.get('mae'), 'wilcoxon_p')} | "
                 f"{_fmt_lift(sc.get('within1'))} | {_fmt_lift(sc.get('exact'))} | "
@@ -152,47 +185,49 @@ def build_report(runs: dict[tuple[str, str], Path]) -> str:
                 f"{sc.get('n_excluded_pairs', '-')} |")
     out.append("")
 
-    # Per-variant detail: histograms + per-item MAE-lift.
-    for variant in VARIANTS:
-        out.append(f"## {variant} detail\n")
-        any_model = False
-        for model in MODELS:
-            summ = summaries.get((variant, model))
+    # Histograms per model x variant x arm.
+    out.append("## Predicted-vs-true histograms\n")
+    for model in models:
+        for variant in VARIANTS:
+            summ = summaries.get((model, variant))
             if summ is None:
-                out.append(f"### {model}: PENDING\n")
                 continue
-            any_model = True
-            out.append(f"### {model} — predicted vs true histogram\n")
-            out += _hist_table((summ.get("scoring") or {}).get("histograms", {}))
+            out.append(f"### {model} {variant}\n")
+            out += _hist_rows((summ.get("scoring") or {}).get("histograms", {}))
             out.append("")
 
-        # Per-item MAE-lift, gemini vs qwen side by side.
-        g = summaries.get((variant, "gemini"))
-        q = summaries.get((variant, "qwen"))
-        if g or q:
-            out.append(f"### {variant} per-item MAE lift (gemini | qwen)\n")
-            out.append("| item | gemini MAE lift | qwen MAE lift |")
-            out.append("|---|---|---|")
-            gmap = {r["item"]: r["mae_lift"]
-                    for r in ((g or {}).get("scoring", {}) or {}).get("per_item", [])}
-            qmap = {r["item"]: r["mae_lift"]
-                    for r in ((q or {}).get("scoring", {}) or {}).get("per_item", [])}
-            items = sorted(set(gmap) | set(qmap)) or [f"TIPI{i}" for i in range(1, 11)]
-            for it in items:
-                gv = f"{gmap[it]:+.3f}" if it in gmap else "-"
-                qv = f"{qmap[it]:+.3f}" if it in qmap else "-"
-                out.append(f"| {it} | {gv} | {qv} |")
-            out.append("")
-        if not any_model:
-            out.append("_No runs available for this variant yet._\n")
+    # Wide per-item MAE-lift table.
+    present = [(model, variant) for model in models for variant in VARIANTS
+               if summaries.get((model, variant))
+               and (summaries[(model, variant)].get("scoring") or {}).get("per_item")]
+    out.append("## Per-item MAE lift (wide)\n")
+    if not present:
+        out.append("_No scored runs with a per-item table yet._\n")
+    else:
+        cols = [f"{m} {v}" for (m, v) in present]
+        out.append("| item | " + " | ".join(cols) + " |")
+        out.append("|" + "---|" * (len(cols) + 1))
+        maps = {
+            (m, v): {r["item"]: r["mae_lift"]
+                     for r in summaries[(m, v)]["scoring"]["per_item"]}
+            for (m, v) in present
+        }
+        items = sorted({it for mp in maps.values() for it in mp},
+                       key=lambda s: (len(s), s)) or [f"TIPI{i}" for i in range(1, 11)]
+        for it in items:
+            cells = " | ".join(
+                (f"{maps[(m, v)][it]:+.3f}" if it in maps[(m, v)] else "-")
+                for (m, v) in present)
+            out.append(f"| {it} | {cells} |")
+        out.append("")
 
     return "\n".join(out)
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Compare pilot2 Gemini vs Qwen runs.")
+    ap = argparse.ArgumentParser(description="Compare pilot2 runs across models.")
     ap.add_argument("--runs", nargs="*", default=[],
-                    help="explicit overrides like gemini:v0=results/DIR")
+                    help="explicit overrides like leonardo-llama70b:v0=results/DIR")
     ap.add_argument("--out", default=str(OUT))
     args = ap.parse_args()
 
@@ -207,12 +242,10 @@ def main() -> int:
             continue
         runs[(variant, model)] = Path(path)
 
-    report = build_report(runs)
-    Path(args.out).write_text(report, encoding="utf-8")
-    n = len(runs)
-    print(f"[compare] wrote {args.out} ({n} run dir(s) discovered)")
+    Path(args.out).write_text(build_report(runs), encoding="utf-8")
+    print(f"[compare] wrote {args.out} ({len(runs)} run dir(s) discovered)")
     for (variant, model), d in sorted(runs.items()):
-        print(f"[compare]   {variant} {model}: {d.name}")
+        print(f"[compare]   {model} {variant}: {d.name}")
     return 0
 
 
