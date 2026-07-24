@@ -89,6 +89,8 @@ def test_v2_malformed(text):
 
 def test_parse_response_dispatch():
     assert parse_response("5", "v0")["parsed"] == 5
+    assert parse_response("5", "v3")["parsed"] == 5           # v3 uses the v0 parser
+    assert parse_response("5 or 6", "v3")["parse_failure"]    # strict, like v0
     assert parse_response("sentence\n6", "v1")["parsed"] == 6
     v2 = parse_response("1:0.05 2:0.10 3:0.15 4:0.30 5:0.20 6:0.15 7:0.05", "v2")
     assert v2["prediction_argmax"] == 4

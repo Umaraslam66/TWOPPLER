@@ -2,14 +2,25 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
+from doppler.data import (
+    clean_riasec,
+    load_codebook,
+    load_riasec,
+    person_record,
+)
 from doppler.prompts import (
     VARIANT_FINAL_INSTRUCTION,
+    _interest_words,
     build_profile,
     build_prompt,
     select_interest_items,
 )
+
+_DATA = Path(__file__).resolve().parents[1] / "data"
 
 
 def test_twin_profile_has_interests_baseline_does_not(synthetic_record, fake_codebook):
@@ -144,3 +155,61 @@ def test_bad_variant_raises(synthetic_record, fake_codebook):
     profile = build_profile(synthetic_record, fake_codebook, include_interests=True)
     with pytest.raises(ValueError):
         build_prompt(profile, "TIPI1", fake_codebook, variant="v9")
+
+
+# --- variant v3 (scale-anchoring fix: words, no digits) -------------------
+
+
+def test_v3_interest_words_mapping(fake_codebook):
+    # 1/3/5 come from the codebook anchors; 2/4 are interpolated.
+    assert _interest_words(fake_codebook) == {
+        1: "Dislike", 2: "Slightly dislike", 3: "Neutral",
+        4: "Slightly enjoy", 5: "Enjoy",
+    }
+
+
+def test_v3_final_instruction_equals_v0():
+    assert VARIANT_FINAL_INSTRUCTION["v3"] == VARIANT_FINAL_INSTRUCTION["v0"]
+
+
+def test_v3_twin_block_words_header_no_scale(synthetic_record, fake_codebook):
+    profile = build_profile(synthetic_record, fake_codebook, include_interests=True,
+                            variant="v3")
+    block = profile.split("\n\n", 1)[1]
+    assert block.startswith("HOW I FEEL ABOUT VARIOUS ACTIVITIES")
+    assert "HOW I RATED" not in block
+    assert "(Scale:" not in block
+    # R1 is item index 0; synthetic answer (0 % 5) + 1 = 1 -> "Dislike".
+    assert "- INTERESTTEXT_R1_activity: Dislike" in block
+
+
+def test_v3_baseline_byte_identical_to_v0(synthetic_record, fake_codebook):
+    for tipi in ("TIPI1", "TIPI7"):
+        v0 = build_prompt(
+            build_profile(synthetic_record, fake_codebook, include_interests=False,
+                          variant="v0"), tipi, fake_codebook, variant="v0")
+        v3 = build_prompt(
+            build_profile(synthetic_record, fake_codebook, include_interests=False,
+                          variant="v3"), tipi, fake_codebook, variant="v3")
+        assert v0 == v3
+
+
+def test_v3_twin_deterministic(synthetic_record, fake_codebook):
+    a = build_profile(synthetic_record, fake_codebook, include_interests=True,
+                      variant="v3")
+    b = build_profile(synthetic_record, fake_codebook, include_interests=True,
+                      variant="v3")
+    assert a == b
+
+
+@pytest.mark.skipif(not (_DATA / "riasec" / "data.csv").exists(),
+                    reason="RIASEC data.csv not present")
+def test_v3_twin_block_has_zero_digits_on_real_data():
+    df = clean_riasec(load_riasec(_DATA))
+    cb = load_codebook(_DATA)
+    rec = person_record(df.iloc[0], cb)
+    profile = build_profile(rec, cb, include_interests=True, variant="v3")
+    block = profile.split("\n\n", 1)[1]
+    assert block.startswith("HOW I FEEL ABOUT VARIOUS ACTIVITIES")
+    assert not any(ch.isdigit() for ch in block), \
+        "v3 interests block must contain no digit characters"

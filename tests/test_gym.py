@@ -98,6 +98,14 @@ def test_build_tasks_variant_threads_into_prompt(synthetic_record, fake_codebook
         ("v0", "Respond with a single integer from 1 to 7 and nothing else."),
         ("v1", "Then on a new line write only the integer (1-7)."),
         ("v2", "1:0.05 2:0.10 3:0.15 4:0.30 5:0.20 6:0.15 7:0.05"),
+        ("v3", "HOW I FEEL ABOUT VARIOUS ACTIVITIES"),
     ]:
         tasks = build_tasks(synthetic_record, fake_codebook, "twin", variant=variant)
         assert all(needle in t.prompt for t in tasks)
+
+
+def test_v3_twin_uses_words_not_scale(synthetic_record, fake_codebook):
+    tasks = build_tasks(synthetic_record, fake_codebook, "twin", variant="v3")
+    prof = tasks[0].prompt.split("\n\nYOUR TASK")[0]
+    assert "HOW I FEEL ABOUT VARIOUS ACTIVITIES" in prof
+    assert "HOW I RATED" not in prof and "(Scale:" not in prof
