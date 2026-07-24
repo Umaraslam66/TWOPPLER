@@ -61,7 +61,34 @@ def build_args(argv=None):
                    help="smoke mode: use only the first N persons")
     p.add_argument("--limit-rounds", type=int, default=0,
                    help="smoke mode: stop after N reveal rounds")
+    # --- policy knobs (EXP1: tie-break, scorer and elicitation grid) --------
+    p.add_argument("--scorer", default="entropy", choices=sorted(R.SCORERS),
+                   help="what 'most uncertain' means: entropy of the stated "
+                        "1-5 distribution, or its variance (ev_variance)")
+    p.add_argument("--tiebreak", default="index", choices=("index", "random"),
+                   help="'index' is the pilot's lowest-canonical-index rule; "
+                        "'random' picks uniformly among tied maxima using "
+                        "--tiebreak-seed (reproducible)")
+    p.add_argument("--tiebreak-seed", type=int, default=71)
+    p.add_argument("--interest-grid", default="standard",
+                   choices=sorted(R.INTEREST_INSTRUCTIONS),
+                   help="'fine' asks for probabilities in multiples of 0.05")
+    p.add_argument("--checkpoints", default="",
+                   help="comma list overriding the pack's checkpoints, "
+                        "e.g. 1,2,3,4,5,8,12,16,20,28,36,48")
+    p.add_argument("--max-reveals", type=int, default=0,
+                   help="override the pack's max_reveals")
     return p.parse_args(argv)
+
+
+def parse_checkpoints(text):
+    """``"1,2,4"`` -> ``[1, 2, 4]``. Empty string -> ``None`` (use the pack's)."""
+    if not text:
+        return None
+    ks = sorted({int(x) for x in text.replace(" ", "").split(",") if x})
+    if not ks or ks[0] < 1:
+        raise ValueError(f"bad checkpoint list: {text!r}")
+    return ks
 
 
 # ---------------------------------------------------------------------------
@@ -143,11 +170,27 @@ def check_no_tipi_in_demographics(persons, tipi_codes):
 
 
 def run_rounds(persons, meta, generate, pred_sink, unc_sink, max_reveals,
-               log=print, revealed=None, done_ks=(), start_idx=0):
+               log=print, revealed=None, done_ks=(), start_idx=0,
+               scorer="entropy", tiebreak="index", tiebreak_seed=71,
+               grid="standard", checkpoints=None):
     """Run the adaptive reveal loop. Returns ``(reveal_orders, stats)``.
 
     ``generate(prompts, max_tokens)`` must return one dict per prompt with
     ``text``/``tokens_in``/``tokens_out``, in order.
+
+    Policy knobs (all default to the pilot's behaviour, so an unchanged call
+    reproduces the pilot exactly):
+
+    ``scorer``    ``"entropy"`` or ``"ev_variance"`` -- what "most uncertain"
+                  means. Both use the same parse-failure sentinel, so an
+                  unparseable answer can never win.
+    ``tiebreak``  ``"index"`` (pilot: lowest canonical item index) or
+                  ``"random"`` (seeded, reproducible). The pilot found the top
+                  score tied in 51.5% of decisions, so this choice was quietly
+                  picking half the questions -- and lowest-index is biased
+                  towards R-items over C-items.
+    ``grid``      ``"standard"`` or ``"fine"`` (asks for multiples of 0.05).
+    ``checkpoints`` overrides ``meta["checkpoints"]``.
 
     Resume: pass ``revealed`` (a complete, equal-length reveal prefix for every
     person), the set of checkpoints already fully predicted as ``done_ks``, and
@@ -159,7 +202,9 @@ def run_rounds(persons, meta, generate, pred_sink, unc_sink, max_reveals,
     tipi_codes = meta["tipi_codes"]
     r_anchors = meta["riasec_anchors"]
     t_anchors = meta["tipi_anchors"]
-    checkpoints = set(meta["checkpoints"])
+    checkpoints = set(checkpoints if checkpoints is not None
+                      else meta["checkpoints"])
+    score_fn = R.SCORERS[scorer]
 
     check_no_tipi_in_demographics(persons, tipi_codes)
 
@@ -170,7 +215,9 @@ def run_rounds(persons, meta, generate, pred_sink, unc_sink, max_reveals,
         raise AssertionError(f"reveal prefixes are not in lockstep: {sorted(depths)}")
     done_ks = set(done_ks)
     stats = {"n_uncertainty_calls": 0, "n_prediction_calls": 0,
-             "uncertainty_parse_failures": 0, "tokens_in": 0, "tokens_out": 0}
+             "uncertainty_parse_failures": 0, "tokens_in": 0, "tokens_out": 0,
+             "n_decisions": 0, "n_decisions_with_tie_at_top": 0,
+             "sum_tied_at_top": 0, "max_tied_at_top": 0}
     idx = start_idx
 
     def predict_at(k):
@@ -221,7 +268,7 @@ def run_rounds(persons, meta, generate, pred_sink, unc_sink, max_reveals,
                     continue
                 text = person["interests"][code]["text"]
                 prompts.append(R.interest_prompt(person["demographics_block"],
-                                                 pairs, r_anchors, text))
+                                                 pairs, r_anchors, text, grid))
                 keys.append((pid, code))
 
         t0 = time.time()
@@ -233,29 +280,35 @@ def run_rounds(persons, meta, generate, pred_sink, unc_sink, max_reveals,
         rows = []
         for (pid, code), r, prompt in zip(keys, res, prompts):
             dist = R.parse_interest_distribution(r["text"])
-            ent = R.entropy(dist)
+            score = score_fn(dist)
             failed = dist is None
             stats["uncertainty_parse_failures"] += int(failed)
             stats["tokens_in"] += r["tokens_in"]
             stats["tokens_out"] += r["tokens_out"]
-            by_person[pid].append((code, ent))
+            by_person[pid].append((code, score))
             rows.append({"person_id": pid, "round": rnd, "item": code,
-                         "entropy": ent, "selected": False,
+                         "score": score, "scorer": scorer, "selected": False,
                          "parse_failure": failed,
                          "prompt_sha256": R.sha256(prompt),
                          "tokens_in": r["tokens_in"],
                          "tokens_out": r["tokens_out"]})
 
-        # ---- 2. reveal the max-entropy item --------------------------------
-        chosen = {}
+        # ---- 2. reveal the top-scoring item --------------------------------
+        # ``by_person`` is built by iterating riasec_codes in canonical order,
+        # so tiebreak="index" reproduces the pilot's lowest-index rule exactly.
+        chosen, tied_counts = {}, {}
         for pid, cands in by_person.items():
-            best_code, best_ent = None, None
-            for code, ent in cands:
-                if best_ent is None or ent > best_ent:  # strict '>' keeps first
-                    best_code, best_ent = code, ent
+            best_code, _best, n_tied = R.select_best(
+                cands, tiebreak, tiebreak_seed, pid, rnd)
             chosen[pid] = best_code
+            tied_counts[pid] = n_tied
             revealed[pid].append(best_code)
+            stats["n_decisions"] += 1
+            stats["n_decisions_with_tie_at_top"] += int(n_tied > 1)
+            stats["sum_tied_at_top"] += n_tied
+            stats["max_tied_at_top"] = max(stats["max_tied_at_top"], n_tied)
         for row in rows:
+            row["n_tied_at_top"] = tied_counts[row["person_id"]]
             if chosen[row["person_id"]] == row["item"]:
                 row["selected"] = True
         unc_sink(rows)
@@ -334,7 +387,19 @@ def main():
     persons = pack["persons"]
     if args.limit_persons:
         persons = persons[: args.limit_persons]
-    max_reveals = args.limit_rounds or meta["max_reveals"]
+    checkpoints = parse_checkpoints(args.checkpoints) or list(meta["checkpoints"])
+    max_reveals = (args.limit_rounds or args.max_reveals
+                   or meta["max_reveals"])
+    # A checkpoint deeper than the run can reach would never fire and would
+    # make the "already complete" test below unsatisfiable -> drop it loudly.
+    over = [k for k in checkpoints if k > max_reveals]
+    if over:
+        raise SystemExit(f"[fatal] checkpoints {over} exceed max_reveals "
+                         f"{max_reveals}")
+    print(f"[config] scorer={args.scorer} tiebreak={args.tiebreak} "
+          f"(seed {args.tiebreak_seed}) grid={args.interest_grid} "
+          f"max_reveals={max_reveals} checkpoints={checkpoints} "
+          f"n_persons={len(persons)}", flush=True)
 
     # Recover whatever a previous job left behind (complete units only).
     ids = [p["person_id"] for p in persons]
@@ -348,7 +413,7 @@ def main():
     # Nothing left to do -> exit BEFORE paying a ~3 min engine init. This is
     # what makes a chain of short jobs cheap: the tail jobs cost seconds.
     if (len(revealed[ids[0]]) >= max_reveals
-            and set(meta["checkpoints"]) <= done_ks):
+            and set(checkpoints) <= done_ks):
         print("[done] already complete; no engine init needed.", flush=True)
         with open(os.path.join(args.outdir, "reveal_orders.json"), "w") as fh:
             json.dump({str(k): v for k, v in revealed.items()}, fh, indent=2)
@@ -371,7 +436,11 @@ def main():
     try:
         revealed, stats = run_rounds(persons, meta, generate, pred_sink, unc_sink,
                                      max_reveals, revealed=revealed,
-                                     done_ks=done_ks, start_idx=next_idx)
+                                     done_ks=done_ks, start_idx=next_idx,
+                                     scorer=args.scorer, tiebreak=args.tiebreak,
+                                     tiebreak_seed=args.tiebreak_seed,
+                                     grid=args.interest_grid,
+                                     checkpoints=checkpoints)
     finally:
         pred_sink.close()
         unc_sink.close()
@@ -384,6 +453,9 @@ def main():
         "max_model_len": args.max_model_len, "gpu_mem_util": args.gpu_mem_util,
         "temperature": args.temperature, "seed": args.seed,
         "n_persons": len(persons), "rounds": max_reveals, "resumed": resumed,
+        "scorer": args.scorer, "tiebreak": args.tiebreak,
+        "tiebreak_seed": args.tiebreak_seed, "interest_grid": args.interest_grid,
+        "checkpoints": checkpoints,
         "engine_init_seconds": round(init_s, 2),
         "generation_wall_seconds": round(wall, 2),
         "total_tokens_in": stats["tokens_in"],
@@ -394,7 +466,15 @@ def main():
     }
     summary.update({k: stats[k] for k in
                     ("n_uncertainty_calls", "n_prediction_calls",
-                     "uncertainty_parse_failures")})
+                     "uncertainty_parse_failures", "n_decisions",
+                     "n_decisions_with_tie_at_top", "max_tied_at_top")})
+    # The headline diagnostic for EXP1: how often the tie-break, not the
+    # scorer, actually chose the question (the pilot's figure was 51.5%).
+    if stats["n_decisions"]:
+        summary["pct_decisions_with_tie_at_top"] = round(
+            100.0 * stats["n_decisions_with_tie_at_top"] / stats["n_decisions"], 2)
+        summary["mean_tied_at_top"] = round(
+            stats["sum_tied_at_top"] / stats["n_decisions"], 3)
     with open(os.path.join(args.outdir, "node_summary.json"), "w") as fh:
         json.dump(summary, fh, indent=2)
     # One line per job, so a chained run keeps every leg's cost visible.

@@ -1,0 +1,232 @@
+{
+  "created_utc": "2026-07-24T21:21:09Z",
+  "batch": "Stage-1E overnight EXP1..EXP5",
+  "caps": {
+    "per_job_node_hours": 4.0,
+    "batch_node_hours": 12.0,
+    "exp3_node_hours": 3.0
+  },
+  "socket_lost_at": null,
+  "experiments": {
+    "overnight_exp1a": {
+      "experiment": "EXP1a",
+      "title": "adaptive, entropy scorer, seeded random tie-break, k to 48",
+      "kind": "adaptive",
+      "status": "queued",
+      "run_dir": "results/overnight_exp1a",
+      "config": "results/overnight_exp1a/config.json",
+      "sbatch_local": "results/overnight_exp1a/overnight_exp1a.sbatch",
+      "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/overnight_exp1a.sbatch",
+      "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1a",
+      "slurm_job_ids": [
+        "50191885"
+      ],
+      "projected_node_hours": 1.2652,
+      "actual_node_hours": null,
+      "reuses": [],
+      "notes": [
+        "2026-07-24T21:22:21Z: entropy + random tiebreak, k to 48; doubles as EXP4 adaptive arm",
+        "2026-07-24T21:29:16Z: Ingest path validated against the pilot's raw node output: 10,500 records, 0 prompt-rebuild mismatches, lifts identical to the published pilot report at k=1/8/20, tie rate 51.53%. Test artefacts removed."
+      ],
+      "node_output_files": [
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1a/completions_adaptive.jsonl",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1a/uncertainty.jsonl",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1a/reveal_orders.json",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1a/node_summary.json",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1a/node_runs.jsonl"
+      ],
+      "ingestion": {
+        "step_1_check_job": "ssh leonardo 'sacct -j 50191885 -X --format=JobID,JobName,State,Elapsed,ExitCode'",
+        "step_2_pull": "mkdir -p results/overnight_exp1a/node_output && rsync -az leonardo:/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1a/ results/overnight_exp1a/node_output/",
+        "step_3_ingest": "uv run python experiments/overnight.py ingest --name overnight_exp1a --nodedir results/overnight_exp1a/node_output",
+        "step_4_report": "uv run python experiments/overnight.py report",
+        "node_log": "/leonardo_work/AIFAC_P02_548/DOPPLER/logs/dop-exp1a-<jobid>.out"
+      }
+    },
+    "overnight_exp1b": {
+      "experiment": "EXP1b",
+      "title": "adaptive, EV-variance scorer, seeded random tie-break, k to 20",
+      "kind": "adaptive",
+      "status": "queued",
+      "run_dir": "results/overnight_exp1b",
+      "config": "results/overnight_exp1b/config.json",
+      "sbatch_local": "results/overnight_exp1b/overnight_exp1b.sbatch",
+      "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/overnight_exp1b.sbatch",
+      "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1b",
+      "slurm_job_ids": [
+        "50191886"
+      ],
+      "projected_node_hours": 0.6564,
+      "actual_node_hours": null,
+      "reuses": [],
+      "notes": [
+        "2026-07-24T21:22:21Z: EV-variance scorer + random tiebreak, k to 20"
+      ],
+      "node_output_files": [
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1b/completions_adaptive.jsonl",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1b/uncertainty.jsonl",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1b/reveal_orders.json",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1b/node_summary.json",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1b/node_runs.jsonl"
+      ],
+      "ingestion": {
+        "step_1_check_job": "ssh leonardo 'sacct -j 50191886 -X --format=JobID,JobName,State,Elapsed,ExitCode'",
+        "step_2_pull": "mkdir -p results/overnight_exp1b/node_output && rsync -az leonardo:/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1b/ results/overnight_exp1b/node_output/",
+        "step_3_ingest": "uv run python experiments/overnight.py ingest --name overnight_exp1b --nodedir results/overnight_exp1b/node_output",
+        "step_4_report": "uv run python experiments/overnight.py report",
+        "node_log": "/leonardo_work/AIFAC_P02_548/DOPPLER/logs/dop-exp1b-<jobid>.out"
+      }
+    },
+    "overnight_exp1c": {
+      "experiment": "EXP1c",
+      "title": "adaptive, entropy scorer, random tie-break, 0.05 probability grid, k to 20",
+      "kind": "adaptive",
+      "status": "queued",
+      "run_dir": "results/overnight_exp1c",
+      "config": "results/overnight_exp1c/config.json",
+      "sbatch_local": "results/overnight_exp1c/overnight_exp1c.sbatch",
+      "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/overnight_exp1c.sbatch",
+      "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1c",
+      "slurm_job_ids": [
+        "50191887"
+      ],
+      "projected_node_hours": 0.6564,
+      "actual_node_hours": null,
+      "reuses": [],
+      "notes": [
+        "2026-07-24T21:22:22Z: entropy + random tiebreak + 0.05 grid, k to 20"
+      ],
+      "node_output_files": [
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1c/completions_adaptive.jsonl",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1c/uncertainty.jsonl",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1c/reveal_orders.json",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1c/node_summary.json",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1c/node_runs.jsonl"
+      ],
+      "ingestion": {
+        "step_1_check_job": "ssh leonardo 'sacct -j 50191887 -X --format=JobID,JobName,State,Elapsed,ExitCode'",
+        "step_2_pull": "mkdir -p results/overnight_exp1c/node_output && rsync -az leonardo:/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1c/ results/overnight_exp1c/node_output/",
+        "step_3_ingest": "uv run python experiments/overnight.py ingest --name overnight_exp1c --nodedir results/overnight_exp1c/node_output",
+        "step_4_report": "uv run python experiments/overnight.py report",
+        "node_log": "/leonardo_work/AIFAC_P02_548/DOPPLER/logs/dop-exp1c-<jobid>.out"
+      }
+    },
+    "overnight_exp245": {
+      "experiment": "EXP2 + EXP4 + EXP5 (shared static job)",
+      "title": "frozen derivation order, extended random checkpoints, nearest-neighbour imposter",
+      "kind": "static",
+      "status": "queued",
+      "run_dir": "results/overnight_exp245",
+      "config": "results/overnight_exp245/config.json",
+      "sbatch_local": "results/overnight_exp245/overnight_exp245.sbatch",
+      "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/overnight_exp245.sbatch",
+      "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp245",
+      "slurm_job_ids": [
+        "50191888"
+      ],
+      "projected_node_hours": 0.3005,
+      "actual_node_hours": null,
+      "reuses": [
+        "results/adaptive_train_20260724-210916/baseline (k=0)",
+        "results/adaptive_train_20260724-210916/random (k in 1,2,4,8,12,16,20)",
+        "results/adaptive_train_20260724-210916/imposter (random imposter, k=12,20)"
+      ],
+      "notes": [
+        "2026-07-24T21:22:22Z: EXP2 fixed_deriv + EXP4 random_ext + EXP5 nn_imposter, 28500 prompts"
+      ],
+      "node_output_files": [
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp245/completions_static.jsonl",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp245/completions_static.jsonl.summary.json"
+      ],
+      "ingestion": {
+        "step_1_check_job": "ssh leonardo 'sacct -j 50191888 -X --format=JobID,JobName,State,Elapsed,ExitCode'",
+        "step_2_pull": "mkdir -p results/overnight_exp245/node_output && rsync -az leonardo:/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp245/ results/overnight_exp245/node_output/",
+        "step_3_ingest": "uv run python experiments/overnight.py ingest --name overnight_exp245 --nodedir results/overnight_exp245/node_output",
+        "step_4_report": "uv run python experiments/overnight.py report",
+        "node_log": "/leonardo_work/AIFAC_P02_548/DOPPLER/logs/dop-exp245-<jobid>.out"
+      }
+    },
+    "overnight_exp3": {
+      "experiment": "EXP3",
+      "title": "selection ladder: expected information gain on TIPI targets vs self-uncertainty",
+      "kind": "eig",
+      "status": "queued",
+      "run_dir": "results/overnight_exp3",
+      "config": "results/overnight_exp3/config.json",
+      "sbatch_local": "results/overnight_exp3/overnight_exp3.sbatch",
+      "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/overnight_exp3.sbatch",
+      "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3",
+      "slurm_job_ids": [
+        "50191936"
+      ],
+      "projected_node_hours": 1.8814,
+      "actual_node_hours": null,
+      "reuses": [
+        "EXP1a and EXP1b curves restricted to the first 100 persons of the train split"
+      ],
+      "notes": [
+        "2026-07-24T21:27:27Z: EIG ladder rung (b); node-side parse smoke gates multi-target vs per-target fallback; rung (c) not run (budget)"
+      ],
+      "node_output_files": [
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3/completions_eig.jsonl",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3/eig_scores.jsonl",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3/reveal_orders.json",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3/multi_target_smoke.json",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3/node_summary.json",
+        "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3/node_runs.jsonl"
+      ],
+      "ingestion": {
+        "step_1_check_job": "ssh leonardo 'sacct -j 50191936 -X --format=JobID,JobName,State,Elapsed,ExitCode'",
+        "step_2_pull": "mkdir -p results/overnight_exp3/node_output && rsync -az leonardo:/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3/ results/overnight_exp3/node_output/",
+        "step_3_ingest": "uv run python experiments/overnight.py ingest --name overnight_exp3 --nodedir results/overnight_exp3/node_output",
+        "step_4_report": "uv run python experiments/overnight.py report",
+        "node_log": "/leonardo_work/AIFAC_P02_548/DOPPLER/logs/dop-exp3-<jobid>.out"
+      }
+    }
+  },
+  "notes": [
+    "Splits used tonight: train150 (seed 44) and derivation n=2000 (seed 45). The CONFIRM split was NOT drawn or touched.",
+    "CRITICAL: results/overnight_exp2/derivation_ids.json holds 2000 person ids that scan_used_person_ids() CANNOT see (no records.jsonl there). Any future split must subtract them by hand.",
+    "Reuse: pilot run results/adaptive_train_20260724-210916 supplies baseline (k=0), random arm k in {1,2,4,8,12,16,20}, and the random-imposter arm k in {12,20}. Those were not re-bought.",
+    "EXP4 random_ext only buys k in {3,5,28,36,48}; random_order() returns all 48 codes so k>20 extends the pilot prefix (locked by test_extended_checkpoints_extend_the_pilot_prefix_exactly).",
+    "EXP3(c) one-step lookahead: NOT run. It multiplies the (b) cost by the shortlist size again and does not fit the 3.0 node-hour EXP3 cap alongside (b).",
+    "All five jobs use Gemma-4-31B-it, vLLM TP=4, temperature 0, variant v2 - identical to the gate and the pilot.",
+    "HOUSEKEEPING for the morning (no commits were made tonight, per instruction): results/overnight_exp245/prompts_static.jsonl (50M) and tasks_static.jsonl (53M) are large regenerable artifacts - both are rebuilt byte-identically by 'uv run python experiments/overnight.py export'. Consider gitignoring them or the run-dir prompt files generally before any commit. The per-arm records.jsonl files ARE the provenance and should be kept.",
+    "Verification done tonight: the ingest path was run against the pilot's own raw node output and reproduced the published pilot report exactly (10,500 records, 0 prompt-rebuild mismatches, lift -0.006/+0.030/+0.070 at k=1/8/20, tie rate 51.53%). Test artefacts were deleted afterwards. Full suite: 281 passed."
+  ],
+  "updated_utc": "2026-07-24T21:29:16Z",
+  "morning_ingestion": {
+    "summary": "Five independent Slurm jobs. Each is ingested the same way: check state, rsync the node dir down, run ingest, then run report once at the end.",
+    "order": [
+      "overnight_exp245",
+      "overnight_exp1a",
+      "overnight_exp1b",
+      "overnight_exp1c",
+      "overnight_exp3"
+    ],
+    "step_0_check_all": "ssh leonardo 'sacct -j 50191885,50191886,50191887,50191888,50191936 -X --format=JobID,JobName%20,State,Elapsed,ExitCode'",
+    "step_1_per_experiment": "See experiments.<name>.ingestion for the exact rsync + ingest commands (already filled in).",
+    "step_2_report": "uv run python experiments/overnight.py report   # writes results/overnight_stage1e.md",
+    "step_3_status": "uv run python experiments/overnight.py status",
+    "node_hours_from": "Each job's node_summary.json (engine_init_seconds + generation_wall_seconds) / 3600; the static job uses completions_static.jsonl.summary.json. Record with `record --name <n> --status ingested`.",
+    "if_a_job_failed": "Read the node log at /leonardo_work/AIFAC_P02_548/DOPPLER/logs/dop-<short>-<jobid>.out. The adaptive and EIG drivers RESUME from partial output: resubmit the same sbatch and it picks up from the last complete round/checkpoint. The static job is a plain batch file and must be rerun whole.",
+    "partial_data_is_fine": "The report degrades gracefully - any arm not yet ingested shows as 'not ingested' and every other table still renders."
+  },
+  "reuse_ledger": {
+    "pilot_run": "results/adaptive_train_20260724-210916",
+    "reused_without_recompute": {
+      "baseline k=0 (n=150)": "1,500 completions",
+      "random arm k in {1,2,4,8,12,16,20}": "10,500 completions",
+      "random-imposter arm k in {12,20}": "3,000 completions (of its 10,500)",
+      "pilot adaptive arm k in {1,2,4,8,12,16,20}": "10,500 completions, used as the EXP1 comparison baseline"
+    },
+    "savings_estimate_node_hours": 0.55,
+    "note": "EXP4 buys only k in {3,5,28,36,48} for the random arm and EXP5 only k in {12,20} for the NN imposter, because everything else already exists at matched k."
+  },
+  "queue_observation": {
+    "checked_utc": "2026-07-24T21:34:42Z",
+    "state": "all 5 jobs PENDING, reason (Priority), no START_TIME estimate from Slurm",
+    "partition": "boost_usr_prod heavily loaded (256 nodes alloc, 759 mix) at submission time",
+    "meaning": "The batch is fully submitted and will run without any further action from a live SSH session. Slurm keeps queued jobs regardless of whether the laptop socket survives."
+  }
+}

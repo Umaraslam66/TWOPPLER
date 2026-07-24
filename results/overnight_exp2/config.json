@@ -1,0 +1,67 @@
+{
+  "name": "overnight_exp2",
+  "one_line": "Derive project DOPPLER's frozen 48-item reveal order on 2000 fresh people, so the order is never scored on the people who chose it.",
+  "split": {
+    "name": "derivation2000",
+    "n": 2000,
+    "seed": 45,
+    "drawn_from": "cleaned RIASEC respondents",
+    "excludes": [
+      "every person_id in any records.jsonl under results/",
+      "the 150-person train split (doppler.adaptive.train_ids, seed 44)"
+    ],
+    "ids_file": "/Users/umaraslam/Projects/DOPPLER/results/overnight_exp2/derivation_ids.json"
+  },
+  "seeds": {
+    "derivation_draw": 45,
+    "half_split": 4243,
+    "ridge_cv": 47,
+    "train150_draw": 44
+  },
+  "selection_method": {
+    "algorithm": "greedy forward selection, one item at a time",
+    "criterion": "5-fold out-of-fold mean absolute error on the 10 TIPI items",
+    "model": "ridge regression on raw answers plus demographics",
+    "lambda_grid": [
+      0.1,
+      1.0,
+      10.0,
+      100.0
+    ],
+    "folds": 5,
+    "tie_break": "lowest canonical item index",
+    "code": "doppler.adaptive.greedy_fixed_order (imported, not copied)"
+  },
+  "checkpoints": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    12,
+    16,
+    20,
+    28,
+    36,
+    48
+  ],
+  "derives": [
+    "the derivation split's person ids",
+    "the frozen 48-item reveal order",
+    "how stable that order is (split-half overlap and rank correlation)"
+  ],
+  "does_not_do": [
+    "no model calls of any kind -- this is CPU ridge regression",
+    "no GPU, no Leonardo, no network",
+    "does not score the frozen order; a separate static Leonardo job evaluates it on the train-150 people",
+    "does not draw, name, or reserve a confirm split"
+  ],
+  "outputs": {
+    "derivation_ids": "/Users/umaraslam/Projects/DOPPLER/results/overnight_exp2/derivation_ids.json",
+    "fixed_order": "/Users/umaraslam/Projects/DOPPLER/results/overnight_exp2/fixed_order_derivation.json",
+    "stability": "/Users/umaraslam/Projects/DOPPLER/results/overnight_exp2/stability_derivation.json",
+    "config": "/Users/umaraslam/Projects/DOPPLER/results/overnight_exp2/config.json"
+  },
+  "determinism": "Every seed is explicit and the code has no wall-clock dependence, so reruns produce identical files apart from the 'generated_utc' timestamp in derivation_ids.json. One caveat: the exclusion set is read live from results/, so if a new run directory appears the free pool changes and the draw would change with it. The ids file is the record of what was actually drawn."
+}

@@ -1,0 +1,71 @@
+{
+  "experiment": "EXP2 + EXP4 + EXP5 (shared static job)",
+  "title": "frozen derivation order, extended random checkpoints, nearest-neighbour imposter",
+  "kind": "static",
+  "split": "train150",
+  "n_persons": 150,
+  "arms": {
+    "fixed_deriv": {
+      "experiment": "EXP2",
+      "checkpoints": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        12,
+        16,
+        20,
+        28,
+        36,
+        48
+      ],
+      "order_from": "results/overnight_exp2/fixed_order_derivation.json",
+      "note": "order frozen on the 2,000-person derivation split; these 150 people had no say in picking it"
+    },
+    "random_ext": {
+      "experiment": "EXP4",
+      "checkpoints": [
+        3,
+        5,
+        28,
+        36,
+        48
+      ],
+      "note": "continues each person's pilot permutation past k=20; pilot k in {1,2,4,8,12,16,20} reused verbatim"
+    },
+    "nn_imposter": {
+      "experiment": "EXP5",
+      "checkpoints": [
+        12,
+        20
+      ],
+      "note": "profile of the most cosine-similar OTHER person in train-150, on the 48 interest ratings; reveal positions mirror the random arm"
+    }
+  },
+  "walltime": "01:00:00",
+  "reuses": [
+    "results/adaptive_train_20260724-210916/baseline (k=0)",
+    "results/adaptive_train_20260724-210916/random (k in 1,2,4,8,12,16,20)",
+    "results/adaptive_train_20260724-210916/imposter (random imposter, k=12,20)"
+  ],
+  "projection": {
+    "n_interest_calls": 0,
+    "n_tipi_calls": 28500,
+    "n_multi_tipi_calls": 0,
+    "total_calls": 28500,
+    "projected_output_tokens": 1396500,
+    "long_prompt_factor_applied": 1.35,
+    "generation_hours": 0.238,
+    "engine_init_hours": 0.0625,
+    "projected_node_hours": 0.3005
+  },
+  "run_dir": "results/overnight_exp245",
+  "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp245",
+  "model": "Gemma-4-31B-it",
+  "variant": "v2",
+  "temperature": 0.0,
+  "tp": 4,
+  "generated_utc": "2026-07-24T21:21:09Z"
+}

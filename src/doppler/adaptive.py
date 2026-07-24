@@ -57,6 +57,40 @@ TRAIN_SEED = 44
 CHECKPOINTS: tuple[int, ...] = (1, 2, 4, 8, 12, 16, 20)
 MAX_REVEALS = max(CHECKPOINTS)
 
+# --- Overnight Stage-1E batch (EXP1..EXP5) ---------------------------------
+#
+# The pilot's grid stopped at k=20. The overnight batch adds the low-k detail
+# the curve was missing (3, 5) and pushes past 20 towards the all-48 gate
+# reference, so "where does the adaptive edge peak and where does everything
+# saturate" becomes answerable. CHECKPOINTS is a subset of both, so every
+# pilot number can be reused at matched k instead of re-bought.
+
+#: Union grid to k=48 (EXP1a, EXP2, EXP4).
+CHECKPOINTS_EXT: tuple[int, ...] = (1, 2, 3, 4, 5, 8, 12, 16, 20, 28, 36, 48)
+#: Same grid truncated at the pilot's budget (EXP1b, EXP1c, EXP3).
+CHECKPOINTS_K20: tuple[int, ...] = (1, 2, 3, 4, 5, 8, 12, 16, 20)
+#: EXP5 imposter gradient: k=12 primary, k=20 for the shape.
+CHECKPOINTS_IMPOSTER: tuple[int, ...] = (12, 20)
+#: Checkpoints in CHECKPOINTS_EXT that the pilot did NOT already buy for the
+#: random arm; the rest are reused verbatim (EXP4).
+CHECKPOINTS_RANDOM_NEW: tuple[int, ...] = tuple(
+    k for k in CHECKPOINTS_EXT if k not in CHECKPOINTS)
+
+#: EXP3's selection-ladder subset: the first 100 persons of the train split, in
+#: split order, so EXP1's curves restrict onto exactly these people for free.
+EXP3_N = 100
+
+#: Seed for the EXP1 random tie-break. One seed for all three variants, so the
+#: variants differ only in scorer/grid, never in tie-break luck.
+TIEBREAK_SEED = 71
+
+#: EXP2 derivation split: large enough that the greedy order is a real
+#: selection rather than noise (the pilot's n=150 order was mostly noise).
+#: Disjoint from every person used anywhere before it. NOT the confirm split --
+#: the confirm split still does not exist and is not drawn here.
+DERIV_N = 2000
+DERIV_SEED = 45
+
 RANDOM_ORDER_SEED = 45
 IMPOSTER_SEED = 46
 
@@ -217,6 +251,55 @@ def random_order(person_id: int, seed: int = RANDOM_ORDER_SEED) -> list[str]:
     """A per-person seeded permutation of all 48 interest item codes."""
     rng = np.random.default_rng(seed * 1000003 + person_id)
     return [RIASEC_ITEMS[i] for i in rng.permutation(len(RIASEC_ITEMS))]
+
+
+def nn_imposter_pairs(df: pd.DataFrame, ids: list[int]) -> dict:
+    """``{person_id: donor_id}`` = the most similar OTHER person in the split.
+
+    EXP5's question: does a *more similar* wrong person mislead the twin less,
+    or more? The pilot's random imposter was a stranger picked by a seeded
+    derangement; this one is the closest match available, by cosine similarity
+    on the 48 raw interest ratings.
+
+    Deterministic and never self-paired: the diagonal is masked before the
+    argmax, and ties break to the lowest ``person_id``. No seed is involved --
+    the pairing is a pure function of the data, which is what makes it the
+    "hardest available imposter" rather than a lucky draw.
+
+    Returns the pairing plus the similarity actually achieved, so the report
+    can say how close the nearest neighbour really was.
+    """
+    if len(ids) < 2:
+        raise ValueError("need at least 2 persons to build a nearest-neighbour "
+                         "pairing")
+    sub = df[df["person_id"].isin(ids)].set_index("person_id", drop=False)
+    order = list(ids)  # split order, not sorted -- keeps outputs reproducible
+    X = np.array([[float(sub.loc[pid, c]) for c in RIASEC_ITEMS] for pid in order])
+
+    norms = np.linalg.norm(X, axis=1)
+    norms[norms < 1e-12] = 1.0
+    sim = (X / norms[:, None]) @ (X / norms[:, None]).T
+    np.fill_diagonal(sim, -np.inf)  # never self-pair
+
+    pairs: dict[int, int] = {}
+    sims: dict[int, float] = {}
+    for i, pid in enumerate(order):
+        row = sim[i]
+        best = float(row.max())
+        # Lowest person_id among the exact maxima -> deterministic tie-break.
+        tied = [order[j] for j in np.flatnonzero(row >= best - 1e-12)]
+        donor = min(tied)
+        if donor == pid:
+            raise AssertionError("nearest-neighbour pairing produced a self-pair")
+        pairs[pid] = donor
+        sims[pid] = best
+    return {
+        "pairs": pairs,
+        "similarity": sims,
+        "mean_similarity": float(np.mean(list(sims.values()))),
+        "min_similarity": float(np.min(list(sims.values()))),
+        "n": len(order),
+    }
 
 
 def imposter_pairs(ids: list[int], seed: int = IMPOSTER_SEED) -> dict[int, int]:
@@ -456,6 +539,107 @@ def build_static_tasks(pack: list[dict], meta: dict, fixed_order: list[str],
     return tasks
 
 
+#: The three overnight static arms, all scored with the same parser and
+#: baseline as the pilot so they drop straight into the existing tables.
+OVERNIGHT_STATIC_POLICIES = ("fixed_deriv", "random_ext", "nn_imposter")
+
+
+def overnight_static_schedule(policy: str) -> tuple[int, ...]:
+    """Which checkpoints each overnight static arm actually buys.
+
+    ``random_ext`` deliberately buys only the checkpoints the pilot did not
+    already have; the pilot's k in {1,2,4,8,12,16,20} completions are reused
+    verbatim at ingest. ``nn_imposter`` buys only k in {12,20} because that is
+    where EXP5 makes its comparison.
+    """
+    return {
+        "fixed_deriv": CHECKPOINTS_EXT,
+        "random_ext": CHECKPOINTS_RANDOM_NEW,
+        "nn_imposter": CHECKPOINTS_IMPOSTER,
+    }[policy]
+
+
+def build_overnight_static_tasks(pack: list[dict], meta: dict,
+                                 deriv_order: list[str],
+                                 nn_donors: dict[int, int]) -> list[dict]:
+    """Every prompt for EXP2 + EXP4 + EXP5, as one deterministic batch.
+
+    Three arms share a single Leonardo job because they are all pre-determined
+    prompts -- one engine init instead of three.
+
+    ``fixed_deriv``  EXP2: the order frozen on the 2,000-person derivation
+                     split, applied to train-150. These people had no say in
+                     picking it, which is the honest test the pilot's `fixed`
+                     arm could not give.
+    ``random_ext``   EXP4: the pilot's own per-person permutation, continued
+                     past k=20. ``random_order`` returns all 48 codes, so
+                     ``order[:k]`` for a larger k extends the pilot's prefix
+                     rather than replacing it.
+    ``nn_imposter``  EXP5: the same reveal positions as the random arm, but the
+                     profile belongs to the *most similar* other person instead
+                     of a random stranger.
+
+    Order is policy -> person -> k -> TIPI item, so ``idx`` is reproducible
+    from code alone, exactly like :func:`build_static_tasks`.
+    """
+    by_id = {p["person_id"]: p for p in pack}
+    tipi_texts = [meta["tipi_texts"][c] for c in TIPI_ITEMS]
+    r_anchors = meta["riasec_anchors"]
+    t_anchors = meta["tipi_anchors"]
+    if len(set(deriv_order)) != len(deriv_order):
+        raise ValueError("derivation order contains a repeated item")
+    if len(deriv_order) < max(CHECKPOINTS_EXT):
+        raise ValueError(f"derivation order has {len(deriv_order)} items but "
+                         f"checkpoints go to {max(CHECKPOINTS_EXT)}")
+
+    tasks: list[dict] = []
+    for policy in OVERNIGHT_STATIC_POLICIES:
+        for person in pack:
+            pid = person["person_id"]
+            if policy == "fixed_deriv":
+                source, codes = person, deriv_order
+            elif policy == "random_ext":
+                source, codes = person, random_order(pid)
+            else:
+                donor = by_id[nn_donors[pid]]
+                if donor["person_id"] == pid:
+                    raise AssertionError("nn imposter donor is the person "
+                                         "themselves")
+                source, codes = donor, random_order(pid)
+
+            for k in overnight_static_schedule(policy):
+                revealed = _pairs(source, codes[:k])
+                demo_block = source["demographics_block"]
+                for code in TIPI_ITEMS:
+                    text = meta["tipi_texts"][code]
+                    prompt = R.tipi_prompt(demo_block, revealed, r_anchors,
+                                           text, t_anchors)
+                    true = person["tipi"][code]["answer"]
+                    assert_prompt_clean(prompt, text, true, tipi_texts, revealed)
+                    tasks.append({
+                        "idx": len(tasks),
+                        "prompt": prompt,
+                        "max_output_tokens": R.MAX_OUTPUT_TOKENS_TIPI,
+                        "person_id": pid,
+                        "policy": policy,
+                        "arm": "twin",
+                        "k": k,
+                        "item": code,
+                        "variant": VARIANT,
+                        "donor_id": nn_donors[pid] if policy == "nn_imposter"
+                        else None,
+                    })
+    return tasks
+
+
+def overnight_static_counts(n_persons: int = TRAIN_N) -> dict[str, int]:
+    """Planned completions for the combined EXP2+EXP4+EXP5 static job."""
+    counts = {p: n_persons * len(overnight_static_schedule(p)) * len(TIPI_ITEMS)
+              for p in OVERNIGHT_STATIC_POLICIES}
+    counts["TOTAL"] = sum(counts.values())
+    return counts
+
+
 def static_meta(pack: list[dict], codebook: Codebook) -> dict:
     return {
         "riasec_anchors": _format_anchors(codebook.scales["riasec"]["anchors"]),
@@ -531,6 +715,89 @@ def call_counts(n_persons: int = TRAIN_N) -> dict[str, int]:
         "adaptive_predictions": n_persons * n_ck * len(TIPI_ITEMS),
         "adaptive_uncertainty": n_persons * per_person_uncertainty,
     }
+
+
+# --- Overnight batch projection ---------------------------------------------
+#
+# Measured on the pilot's own two jobs rather than assumed:
+#   adaptive job  4,557,000 output tokens / 1997.3 s = 2281.5 tok/s
+#                 (126,000 completions; TIPI ones are 49 tok, so the interest
+#                  calls average (4,557,000 - 10,500*49) / 115,500 = 35.0)
+#   static job    1,616,918 output tokens / 690.9 s = 2340.5 tok/s at 49.0
+#                 tok per completion
+#   engine init   218-224 s on both
+
+TOK_INTEREST = 35.0
+TOK_TIPI = 49.0
+TOK_MULTI_TIPI = 350.0
+#: Deliberately below both measured figures (2281 / 2340) -- projections that
+#: come in under budget are useful; ones that come in over are not.
+TOKENS_PER_SECOND = 2200.0
+ENGINE_INIT_SECONDS = 225.0
+#: Prompts grow with k (48 revealed items is roughly double the pilot's mean
+#: depth), and prefill is not free. Applied to any job that runs past k=20.
+LONG_PROMPT_FACTOR = 1.35
+
+
+def project_job(n_interest: int = 0, n_tipi: int = 0, n_multi: int = 0,
+                long_prompts: bool = False, n_inits: int = 1) -> dict:
+    """Node-hours for one Leonardo job, from measured per-call token counts."""
+    tokens = (n_interest * TOK_INTEREST + n_tipi * TOK_TIPI
+              + n_multi * TOK_MULTI_TIPI)
+    gen_s = tokens / TOKENS_PER_SECOND
+    if long_prompts:
+        gen_s *= LONG_PROMPT_FACTOR
+    seconds = gen_s + ENGINE_INIT_SECONDS * n_inits
+    return {
+        "n_interest_calls": n_interest,
+        "n_tipi_calls": n_tipi,
+        "n_multi_tipi_calls": n_multi,
+        "total_calls": n_interest + n_tipi + n_multi,
+        "projected_output_tokens": int(tokens),
+        "long_prompt_factor_applied": LONG_PROMPT_FACTOR if long_prompts else 1.0,
+        "generation_hours": round(gen_s / 3600, 4),
+        "engine_init_hours": round(ENGINE_INIT_SECONDS * n_inits / 3600, 4),
+        "projected_node_hours": round(seconds / 3600, 4),
+    }
+
+
+def adaptive_call_counts(n_persons: int, max_reveals: int,
+                         checkpoints: tuple[int, ...]) -> tuple[int, int]:
+    """``(uncertainty_calls, prediction_calls)`` for one adaptive variant."""
+    n_items = len(RIASEC_ITEMS)
+    per_person = sum(n_items - r for r in range(max_reveals))
+    return (n_persons * per_person,
+            n_persons * len(checkpoints) * len(TIPI_ITEMS))
+
+
+def project_overnight() -> dict:
+    """Per-experiment and total node-hour projection for tonight's batch.
+
+    Printed before every submission. Any single job over 4.0 node-hours is a
+    hard abort; the batch total is capped at 12.0.
+    """
+    jobs: dict[str, dict] = {}
+
+    unc, pred = adaptive_call_counts(TRAIN_N, 48, CHECKPOINTS_EXT)
+    jobs["exp1a_entropy_random_k48"] = project_job(
+        n_interest=unc, n_tipi=pred, long_prompts=True)
+
+    for name in ("exp1b_evvariance_k20", "exp1c_finegrid_k20"):
+        unc, pred = adaptive_call_counts(TRAIN_N, 20, CHECKPOINTS_K20)
+        jobs[name] = project_job(n_interest=unc, n_tipi=pred)
+
+    jobs["exp245_static"] = project_job(
+        n_tipi=overnight_static_counts(TRAIN_N)["TOTAL"], long_prompts=True)
+
+    unc, pred = adaptive_call_counts(EXP3_N, 20, CHECKPOINTS_K20)
+    # per round per person: 1 reference + top_n(5) * len({1,3,5}) hypotheticals
+    n_multi = EXP3_N * 20 * (1 + 5 * 3) + 200  # + the node-side parse smoke
+    jobs["exp3_eig_ladder"] = project_job(
+        n_interest=unc, n_tipi=pred, n_multi=n_multi)
+
+    total = round(sum(j["projected_node_hours"] for j in jobs.values()), 4)
+    return {"jobs": jobs, "total_projected_node_hours": total,
+            "per_job_cap": 4.0, "batch_cap": 12.0}
 
 
 def project_node_hours(n_persons: int = TRAIN_N,

@@ -16,3 +16,7 @@ __pycache__/
 .DS_Store
 
 # NOTE: uv.lock is intentionally NOT ignored — the lock file is committed.
+
+# Regenerable overnight export artifacts (rebuild via overnight.py export)
+results/overnight_exp245/prompts_static.jsonl
+results/overnight_exp245/tasks_static.jsonl
