@@ -577,12 +577,15 @@ def run_export(split: str, k: int, seed: int, variant: str,
 
 def run_ingest(split: str, k: int, seed: int, variant: str,
                completions_path: str, node_hours: float | None = None,
-               backend_name: str = "batchfile") -> RunOutcome:
+               backend_name: str = "batchfile",
+               model_label: str | None = None) -> RunOutcome:
     """Score an exported run from a completions.jsonl. No API calls.
 
     ``backend_name`` labels the generation backend in the summary config and the
     cost log (e.g. "leonardo-batch" for the Qwen HPC batch job); it also names
     the run directory suffix so gemini and batch runs are easy to tell apart.
+    ``model_label`` is a per-model identity (e.g. "leonardo-qwen3.6-27b") used to
+    tell several batch models apart when the backend name alone is shared.
     """
     tasks, ids, codebook = _build_all_tasks(split, k, seed, variant)
     backend = BatchFileBackend.from_completions(completions_path)
@@ -605,7 +608,8 @@ def run_ingest(split: str, k: int, seed: int, variant: str,
     all_records = read_records(outdir / "records.jsonl")
     n_missing = sum(1 for r in results if r.error is not None)
     config = {"split": split, "k": k, "seed": seed, "variant": variant,
-              "n_persons": len(ids), "model": backend_name, "backend": backend_name}
+              "n_persons": len(ids), "model": backend_name, "backend": backend_name,
+              "model_label": model_label}
     process_totals = {"backend": backend_name, "n_completions": len(results),
                       "n_missing_completions": n_missing, "node_hours": node_hours}
     summary = _write_summary(outdir, all_records, config, process_totals, None)
@@ -650,6 +654,9 @@ def main() -> int:
     ap.add_argument("--backend-name", default="batchfile",
                     help="batchfile ingest: backend label for summary/cost log "
                          "(e.g. leonardo-batch)")
+    ap.add_argument("--label", default=None,
+                    help="batchfile ingest: per-model identity stored as "
+                         "model_label (e.g. leonardo-qwen3.6-27b)")
     ap.add_argument("--manifest", metavar="PATH", default=None,
                     help="batchfile ingest: read split/k/seed/variant from an "
                          "export manifest instead of the CLI flags")
@@ -668,7 +675,8 @@ def main() -> int:
                               args.export_prompts).exit_code
         if args.ingest_completions:
             return run_ingest(split, k, seed, variant, args.ingest_completions,
-                              args.node_hours, args.backend_name).exit_code
+                              args.node_hours, args.backend_name,
+                              args.label).exit_code
         ap.error("--backend batchfile requires --export-prompts or "
                  "--ingest-completions")
 
