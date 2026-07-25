@@ -1,0 +1,1036 @@
+{
+  "config": {
+    "policy": "imposter",
+    "split": "stage1e_confirm",
+    "variant": "v2",
+    "model": "leonardo-gemma4-31b-it",
+    "backend": "leonardo-batch",
+    "temperature": 0.0
+  },
+  "totals": {
+    "n_records": 70000,
+    "n_parse_failures": 0,
+    "parse_rate": 1.0,
+    "tokens_in": 29039720,
+    "tokens_out": 3430002,
+    "n_persons": 1000,
+    "checkpoints": [
+      1,
+      2,
+      4,
+      8,
+      12,
+      16,
+      20
+    ]
+  },
+  "per_k_scoring": {
+    "1": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    },
+    "2": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    },
+    "4": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    },
+    "8": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    },
+    "12": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    },
+    "16": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    },
+    "20": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    }
+  },
+  "extra": {
+    "n_missing_completions": 0,
+    "job": "confirm_static",
+    "job_node_hours_total": 1.338,
+    "node_hours_apportioned_by": "share of output tokens in the shared static job",
+    "chunk_summaries": [
+      {
+        "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+        "tp": 4,
+        "max_model_len": 2048,
+        "gpu_mem_util": 0.92,
+        "temperature": 0.0,
+        "seed": 0,
+        "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm/prompts_static_0.jsonl",
+        "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm/completions_static_0.jsonl",
+        "num_prompts": 55000,
+        "engine_init_seconds": 198.77,
+        "generation_wall_seconds": 1153.59,
+        "total_tokens_in": 21547730,
+        "total_tokens_out": 2695006,
+        "output_tokens_per_second": 2336.2,
+        "timestamp_utc": "2026-07-25T19:10:16Z"
+      },
+      {
+        "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+        "tp": 4,
+        "max_model_len": 2048,
+        "gpu_mem_util": 0.92,
+        "temperature": 0.0,
+        "seed": 0,
+        "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm/prompts_static_1.jsonl",
+        "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm/completions_static_1.jsonl",
+        "num_prompts": 55000,
+        "engine_init_seconds": 198.77,
+        "generation_wall_seconds": 1153.97,
+        "total_tokens_in": 22856840,
+        "total_tokens_out": 2695002,
+        "output_tokens_per_second": 2335.4,
+        "timestamp_utc": "2026-07-25T19:29:30Z"
+      },
+      {
+        "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+        "tp": 4,
+        "max_model_len": 2048,
+        "gpu_mem_util": 0.92,
+        "temperature": 0.0,
+        "seed": 0,
+        "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm/prompts_static_2.jsonl",
+        "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm/completions_static_2.jsonl",
+        "num_prompts": 55000,
+        "engine_init_seconds": 198.77,
+        "generation_wall_seconds": 1154.31,
+        "total_tokens_in": 22855390,
+        "total_tokens_out": 2695000,
+        "output_tokens_per_second": 2334.7,
+        "timestamp_utc": "2026-07-25T19:48:45Z"
+      },
+      {
+        "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+        "tp": 4,
+        "max_model_len": 2048,
+        "gpu_mem_util": 0.92,
+        "temperature": 0.0,
+        "seed": 0,
+        "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm/prompts_static_3.jsonl",
+        "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm/completions_static_3.jsonl",
+        "num_prompts": 55000,
+        "engine_init_seconds": 198.77,
+        "generation_wall_seconds": 1156.33,
+        "total_tokens_in": 22835400,
+        "total_tokens_out": 2695002,
+        "output_tokens_per_second": 2330.6,
+        "timestamp_utc": "2026-07-25T20:08:02Z"
+      }
+    ]
+  }
+}

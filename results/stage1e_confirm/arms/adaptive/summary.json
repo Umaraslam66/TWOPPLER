@@ -1,0 +1,1145 @@
+{
+  "config": {
+    "policy": "adaptive",
+    "split": "stage1e_confirm",
+    "variant": "v2",
+    "model": "leonardo-gemma4-31b-it",
+    "backend": "leonardo-batch",
+    "temperature": 0.0
+  },
+  "totals": {
+    "n_records": 70000,
+    "n_parse_failures": 3,
+    "parse_rate": 0.999957,
+    "tokens_in": 29122400,
+    "tokens_out": 3429994,
+    "n_persons": 1000,
+    "checkpoints": [
+      1,
+      2,
+      4,
+      8,
+      12,
+      16,
+      20
+    ]
+  },
+  "per_k_scoring": {
+    "1": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    },
+    "2": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    },
+    "4": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    },
+    "8": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    },
+    "12": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    },
+    "16": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    },
+    "20": {
+      "n_persons": 0,
+      "n_excluded_pairs": 0,
+      "mae": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "within1": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "exact": {
+        "twin": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "baseline": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "lift": {
+          "mean": NaN,
+          "ci_low": NaN,
+          "ci_high": NaN,
+          "n": 0
+        },
+        "tests": {
+          "t_stat": NaN,
+          "t_p": NaN,
+          "wilcoxon_stat": NaN,
+          "wilcoxon_p": NaN
+        }
+      },
+      "spearman": {
+        "twin_mean": null,
+        "baseline_mean": null,
+        "twin_n_valid": 0,
+        "baseline_n_valid": 0,
+        "twin_n_none": 0,
+        "baseline_n_none": 0
+      },
+      "histograms": {
+        "twin": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        },
+        "baseline": {
+          "predicted": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          },
+          "true": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0
+          }
+        }
+      },
+      "per_item": []
+    }
+  },
+  "extra": {
+    "job": [
+      "confirm_adaptive_s0",
+      "confirm_adaptive_s1",
+      "confirm_adaptive_s2",
+      "confirm_adaptive_s3"
+    ],
+    "shards_ingested": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "n_prompt_rebuild_mismatches": 0,
+    "n_uncertainty_calls": 770000,
+    "n_uncertainty_parse_failures": 75,
+    "tie_diagnostic": {
+      "n_decisions": 20000,
+      "n_decisions_with_tie_at_top": 7775,
+      "pct_rounds_with_tie": 38.88,
+      "mean_tied_at_top": 1.987,
+      "max_tied_at_top": 31,
+      "mean_top_score": 1.3483,
+      "mean_score_spread": 0.9665
+    },
+    "shard_summaries": [
+      {
+        "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+        "tp": 4,
+        "max_model_len": 2048,
+        "gpu_mem_util": 0.92,
+        "temperature": 0.0,
+        "seed": 0,
+        "n_persons": 250,
+        "rounds": 20,
+        "resumed": false,
+        "scorer": "ev_variance",
+        "tiebreak": "random",
+        "tiebreak_seed": 71,
+        "interest_grid": "standard",
+        "checkpoints": [
+          1,
+          2,
+          4,
+          8,
+          12,
+          16,
+          20
+        ],
+        "engine_init_seconds": 198.75,
+        "generation_wall_seconds": 3346.74,
+        "total_tokens_in": 78149325,
+        "total_tokens_out": 7595000,
+        "output_tokens_per_second": 2269.4,
+        "timestamp_utc": "2026-07-25T19:46:48Z",
+        "n_uncertainty_calls": 192500,
+        "n_prediction_calls": 17500,
+        "uncertainty_parse_failures": 16,
+        "n_decisions": 5000,
+        "n_decisions_with_tie_at_top": 1970,
+        "max_tied_at_top": 23,
+        "pct_decisions_with_tie_at_top": 39.4,
+        "mean_tied_at_top": 1.98,
+        "shard": 0
+      },
+      {
+        "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+        "tp": 4,
+        "max_model_len": 2048,
+        "gpu_mem_util": 0.92,
+        "temperature": 0.0,
+        "seed": 0,
+        "n_persons": 250,
+        "rounds": 20,
+        "resumed": false,
+        "scorer": "ev_variance",
+        "tiebreak": "random",
+        "tiebreak_seed": 71,
+        "interest_grid": "standard",
+        "checkpoints": [
+          1,
+          2,
+          4,
+          8,
+          12,
+          16,
+          20
+        ],
+        "engine_init_seconds": 198.75,
+        "generation_wall_seconds": 3335.1,
+        "total_tokens_in": 78224589,
+        "total_tokens_out": 7595000,
+        "output_tokens_per_second": 2277.3,
+        "timestamp_utc": "2026-07-25T19:46:36Z",
+        "n_uncertainty_calls": 192500,
+        "n_prediction_calls": 17500,
+        "uncertainty_parse_failures": 26,
+        "n_decisions": 5000,
+        "n_decisions_with_tie_at_top": 1935,
+        "max_tied_at_top": 31,
+        "pct_decisions_with_tie_at_top": 38.7,
+        "mean_tied_at_top": 1.979,
+        "shard": 1
+      },
+      {
+        "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+        "tp": 4,
+        "max_model_len": 2048,
+        "gpu_mem_util": 0.92,
+        "temperature": 0.0,
+        "seed": 0,
+        "n_persons": 250,
+        "rounds": 20,
+        "resumed": false,
+        "scorer": "ev_variance",
+        "tiebreak": "random",
+        "tiebreak_seed": 71,
+        "interest_grid": "standard",
+        "checkpoints": [
+          1,
+          2,
+          4,
+          8,
+          12,
+          16,
+          20
+        ],
+        "engine_init_seconds": 198.74,
+        "generation_wall_seconds": 3338.33,
+        "total_tokens_in": 78231508,
+        "total_tokens_out": 7595054,
+        "output_tokens_per_second": 2275.1,
+        "timestamp_utc": "2026-07-25T19:46:40Z",
+        "n_uncertainty_calls": 192500,
+        "n_prediction_calls": 17500,
+        "uncertainty_parse_failures": 22,
+        "n_decisions": 5000,
+        "n_decisions_with_tie_at_top": 1975,
+        "max_tied_at_top": 31,
+        "pct_decisions_with_tie_at_top": 39.5,
+        "mean_tied_at_top": 2.016,
+        "shard": 2
+      },
+      {
+        "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+        "tp": 4,
+        "max_model_len": 2048,
+        "gpu_mem_util": 0.92,
+        "temperature": 0.0,
+        "seed": 0,
+        "n_persons": 250,
+        "rounds": 20,
+        "resumed": false,
+        "scorer": "ev_variance",
+        "tiebreak": "random",
+        "tiebreak_seed": 71,
+        "interest_grid": "standard",
+        "checkpoints": [
+          1,
+          2,
+          4,
+          8,
+          12,
+          16,
+          20
+        ],
+        "engine_init_seconds": 198.75,
+        "generation_wall_seconds": 3325.64,
+        "total_tokens_in": 78327425,
+        "total_tokens_out": 7594994,
+        "output_tokens_per_second": 2283.8,
+        "timestamp_utc": "2026-07-25T19:46:27Z",
+        "n_uncertainty_calls": 192500,
+        "n_prediction_calls": 17500,
+        "uncertainty_parse_failures": 11,
+        "n_decisions": 5000,
+        "n_decisions_with_tie_at_top": 1895,
+        "max_tied_at_top": 25,
+        "pct_decisions_with_tie_at_top": 37.9,
+        "mean_tied_at_top": 1.972,
+        "shard": 3
+      }
+    ],
+    "node_hours_total": 3.928
+  }
+}

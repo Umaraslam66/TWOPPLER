@@ -29,3 +29,4 @@ results/stage1e_confirm/tasks_static.jsonl
 results/stage1e_confirm/pack_local.json
 results/stage1e_confirm/pack_node_s*.json
 results/stage1e_confirm/arms/*/records.jsonl
+results/stage1e_confirm/node/
