@@ -1,0 +1,236 @@
+{
+  "run": "stage1e_confirm",
+  "confirmatory": true,
+  "contract": "PREREGISTRATION_AMENDMENT_1_ADDENDUM_A.md section A (commit 3b8dd57)",
+  "split": {
+    "name": "stage1e_confirm",
+    "n": 1000,
+    "seed": 46,
+    "ids_file": "results/stage1e_confirm/confirm_ids.json"
+  },
+  "model": "Gemma-4-31B-it",
+  "model_label": "leonardo-gemma4-31b-it",
+  "variant": "v2",
+  "temperature": 0.0,
+  "tp": 4,
+  "max_model_len": 2048,
+  "checkpoints": [
+    1,
+    2,
+    4,
+    8,
+    12,
+    16,
+    20
+  ],
+  "arms": {
+    "baseline": {
+      "policy": "baseline",
+      "k": [
+        0
+      ],
+      "note": "demographics only"
+    },
+    "random": {
+      "policy": "random",
+      "k": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        16,
+        20
+      ],
+      "seed": 45,
+      "note": "per-person seeded reveal order"
+    },
+    "fixed": {
+      "policy": "fixed",
+      "k": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        16,
+        20
+      ],
+      "order_source": "results/overnight_exp2/fixed_order_derivation.json",
+      "order_first_20": [
+        "A3",
+        "E5",
+        "S5",
+        "A5",
+        "A2",
+        "C1",
+        "C2",
+        "S7",
+        "E7",
+        "A6",
+        "A7",
+        "I1",
+        "I8",
+        "S6",
+        "E1",
+        "S2",
+        "I2",
+        "S4",
+        "R2",
+        "C4"
+      ],
+      "note": "frozen derivation order (greedy ridge, n=2,000, seed 45); no LLM in the selection"
+    },
+    "adaptive": {
+      "policy": "adaptive",
+      "k": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        16,
+        20
+      ],
+      "scorer": "ev_variance",
+      "tiebreak": "random",
+      "tiebreak_seed": 71,
+      "interest_grid": "standard",
+      "max_reveals": 20,
+      "shards": 4,
+      "note": "exactly the EXP1b configuration; elicitation wording unchanged from the pilot"
+    },
+    "imposter": {
+      "policy": "imposter",
+      "k": [
+        1,
+        2,
+        4,
+        8,
+        12,
+        16,
+        20
+      ],
+      "seed": 46,
+      "note": "random-person donor mirroring the random arm's reveal positions (Amendment A1); measures generic-profile harm, NOT Stage 2's same-domain imposter"
+    }
+  },
+  "frozen_contrasts": [
+    {
+      "label": "C1_primary_adaptive_vs_random_k12",
+      "better": "adaptive",
+      "worse": "random",
+      "k": 12,
+      "tier": "PRIMARY"
+    },
+    {
+      "label": "C1_secondary_adaptive_vs_random_k20",
+      "better": "adaptive",
+      "worse": "random",
+      "k": 20,
+      "tier": "SECONDARY"
+    },
+    {
+      "label": "C2_adaptive_vs_fixed_k12",
+      "better": "adaptive",
+      "worse": "fixed",
+      "k": 12,
+      "tier": "SECONDARY"
+    },
+    {
+      "label": "C2_adaptive_vs_fixed_k20",
+      "better": "adaptive",
+      "worse": "fixed",
+      "k": 20,
+      "tier": "SECONDARY"
+    },
+    {
+      "label": "C3_own_vs_baseline_k20",
+      "better": "random",
+      "worse": "baseline",
+      "k": 20,
+      "tier": "CONFIRMATORY"
+    },
+    {
+      "label": "C3_own_vs_imposter_k20",
+      "better": "random",
+      "worse": "imposter",
+      "k": 20,
+      "tier": "CONFIRMATORY"
+    }
+  ],
+  "decoding": {
+    "primary": "expected_value",
+    "robustness": "argmax",
+    "rule": "every confirmatory contrast must hold in direction under argmax decoding of the same distributions (Addendum A section B)"
+  },
+  "projection": {
+    "jobs": {
+      "confirm_static": {
+        "n_interest_calls": 0,
+        "n_tipi_calls": 220000,
+        "n_multi_tipi_calls": 0,
+        "total_calls": 220000,
+        "projected_output_tokens": 10780000,
+        "long_prompt_factor_applied": 1.0,
+        "generation_hours": 1.3611,
+        "engine_init_hours": 0.0625,
+        "projected_node_hours": 1.4236
+      },
+      "confirm_adaptive_s0": {
+        "n_interest_calls": 192500,
+        "n_tipi_calls": 17500,
+        "n_multi_tipi_calls": 0,
+        "total_calls": 210000,
+        "projected_output_tokens": 7595000,
+        "long_prompt_factor_applied": 1.0,
+        "generation_hours": 0.959,
+        "engine_init_hours": 0.0625,
+        "projected_node_hours": 1.0215
+      },
+      "confirm_adaptive_s1": {
+        "n_interest_calls": 192500,
+        "n_tipi_calls": 17500,
+        "n_multi_tipi_calls": 0,
+        "total_calls": 210000,
+        "projected_output_tokens": 7595000,
+        "long_prompt_factor_applied": 1.0,
+        "generation_hours": 0.959,
+        "engine_init_hours": 0.0625,
+        "projected_node_hours": 1.0215
+      },
+      "confirm_adaptive_s2": {
+        "n_interest_calls": 192500,
+        "n_tipi_calls": 17500,
+        "n_multi_tipi_calls": 0,
+        "total_calls": 210000,
+        "projected_output_tokens": 7595000,
+        "long_prompt_factor_applied": 1.0,
+        "generation_hours": 0.959,
+        "engine_init_hours": 0.0625,
+        "projected_node_hours": 1.0215
+      },
+      "confirm_adaptive_s3": {
+        "n_interest_calls": 192500,
+        "n_tipi_calls": 17500,
+        "n_multi_tipi_calls": 0,
+        "total_calls": 210000,
+        "projected_output_tokens": 7595000,
+        "long_prompt_factor_applied": 1.0,
+        "generation_hours": 0.959,
+        "engine_init_hours": 0.0625,
+        "projected_node_hours": 1.0215
+      }
+    },
+    "n_persons": 1000,
+    "adaptive_shards": 4,
+    "persons_per_shard": 250,
+    "total_projected_node_hours": 5.5096,
+    "addendum_estimate_node_hours": [
+      11,
+      14
+    ],
+    "note": "Addendum A estimated 11-14 node-hours by scaling the pilot's per-person cost. This projection uses the pilot's measured tokens-per-second and comes in lower; the addendum figure is an estimate, not a cap. Actuals are logged per arm."
+  },
+  "generated_utc": "2026-07-25T18:42:26Z"
+}

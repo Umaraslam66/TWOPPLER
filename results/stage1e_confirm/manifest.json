@@ -1,0 +1,105 @@
+{
+  "created_utc": "2026-07-25T18:42:26Z",
+  "run": "Stage 1E confirm (Addendum A section A)",
+  "confirmatory": true,
+  "contract": "PREREGISTRATION_AMENDMENT_1_ADDENDUM_A.md (commit 3b8dd57)",
+  "jobs": {
+    "confirm_static": {
+      "kind": "static",
+      "arms": [
+        "baseline",
+        "random",
+        "fixed",
+        "imposter"
+      ],
+      "walltime": "04:00:00",
+      "sbatch_local": "results/stage1e_confirm/confirm_static.sbatch",
+      "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/confirm_static.sbatch",
+      "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm",
+      "projected_node_hours": 1.4236,
+      "status": "submitted",
+      "slurm_job_ids": [
+        "50223982"
+      ],
+      "actual_node_hours": null,
+      "chunks": 4,
+      "notes": [
+        {
+          "utc": "2026-07-25T18:44:31Z",
+          "note": "production queue boost_usr_prod QOS normal; 4 chunks, skip-completed logic"
+        }
+      ]
+    },
+    "confirm_adaptive_s0": {
+      "kind": "adaptive",
+      "arms": [
+        "adaptive"
+      ],
+      "walltime": "03:30:00",
+      "sbatch_local": "results/stage1e_confirm/confirm_adaptive_s0.sbatch",
+      "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/confirm_adaptive_s0.sbatch",
+      "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm/adaptive_s0",
+      "projected_node_hours": 1.0215,
+      "status": "submitted",
+      "slurm_job_ids": [
+        "50223978"
+      ],
+      "actual_node_hours": null,
+      "shard": 0
+    },
+    "confirm_adaptive_s1": {
+      "kind": "adaptive",
+      "arms": [
+        "adaptive"
+      ],
+      "walltime": "03:30:00",
+      "sbatch_local": "results/stage1e_confirm/confirm_adaptive_s1.sbatch",
+      "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/confirm_adaptive_s1.sbatch",
+      "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm/adaptive_s1",
+      "projected_node_hours": 1.0215,
+      "status": "submitted",
+      "slurm_job_ids": [
+        "50223979"
+      ],
+      "actual_node_hours": null,
+      "shard": 1
+    },
+    "confirm_adaptive_s2": {
+      "kind": "adaptive",
+      "arms": [
+        "adaptive"
+      ],
+      "walltime": "03:30:00",
+      "sbatch_local": "results/stage1e_confirm/confirm_adaptive_s2.sbatch",
+      "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/confirm_adaptive_s2.sbatch",
+      "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm/adaptive_s2",
+      "projected_node_hours": 1.0215,
+      "status": "submitted",
+      "slurm_job_ids": [
+        "50223980"
+      ],
+      "actual_node_hours": null,
+      "shard": 2
+    },
+    "confirm_adaptive_s3": {
+      "kind": "adaptive",
+      "arms": [
+        "adaptive"
+      ],
+      "walltime": "03:30:00",
+      "sbatch_local": "results/stage1e_confirm/confirm_adaptive_s3.sbatch",
+      "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/confirm_adaptive_s3.sbatch",
+      "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage1e_confirm/adaptive_s3",
+      "projected_node_hours": 1.0215,
+      "status": "submitted",
+      "slurm_job_ids": [
+        "50223981"
+      ],
+      "actual_node_hours": null,
+      "shard": 3
+    }
+  },
+  "anomalies": [],
+  "notes": [],
+  "updated_utc": "2026-07-25T18:44:31Z"
+}

@@ -20,3 +20,12 @@ __pycache__/
 # Regenerable overnight export artifacts (rebuild via overnight.py export)
 results/overnight_exp245/prompts_static.jsonl
 results/overnight_exp245/tasks_static.jsonl
+
+# Stage 1E confirm run: regenerable exports (rebuild via confirm_run.py export;
+# every file's sha256 is recorded in stage1e_confirm/export_manifest.json) and
+# the raw per-arm completion records (GB-scale; summaries are committed).
+results/stage1e_confirm/prompts_static_*.jsonl
+results/stage1e_confirm/tasks_static.jsonl
+results/stage1e_confirm/pack_local.json
+results/stage1e_confirm/pack_node_s*.json
+results/stage1e_confirm/arms/*/records.jsonl
