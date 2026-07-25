@@ -391,12 +391,14 @@ Three consequences the owner should decide on:
    sorted so the next rows can simply be taken.
 2. **If all 80 must be long-tail, budget for reviewing all 137** and accept
    that a bad run of collisions could land at 82.
-3. **If it comes up short, there is a known reserve** — see caveat 3: 84
-   long-tail candidates are blocked purely by a role word in a speaker label
-   with no supporting summary evidence. Some are genuine NPR staff, some are
-   wrongly-excluded outside journalists like Dexter Filkins. Per-name review
-   would recover part of that, at the cost of the guarantee the label filter
-   currently gives.
+3. **If it comes up short, there is a known reserve** — see caveat 3: of the
+   292 candidates blocked purely by a role word in a speaker label, **76 are
+   confirmed long-tail** (a further 6 have an article only under a variant
+   spelling). Some are genuine NPR staff, some are wrongly-excluded outside
+   journalists like Dexter Filkins. Per-name review would recover part of
+   that, at the cost of the guarantee the label filter currently gives.
+   Narrowing to the 198 whose summaries are also silent (tier-2 "review" rows
+   excluded) leaves **52 confirmed long-tail**.
 
 Under Amendment A5 this puts H2 in the confirmatory branch (>= 80 delivered),
 with the caveat that the branch is decided by *delivered* subject count after
@@ -417,7 +419,10 @@ human review, not by this pool count.
    matches the word "correspondent" anywhere in a label, so **Brian Bennett**
    (LA Times) and **Dexter Filkins** (New Yorker) — both named model subjects
    by the audit — are dropped as staff. 292 subjects are blocked by a label
-   role word alone with no summary evidence, 84 of them long-tail. That is a
+   role word alone without tier-1 summary evidence; **76 are confirmed
+   long-tail**, plus 6 whose article exists only under a variant spelling.
+   (198 of the 292 also have a silent summary — tier-2 "review" excluded —
+   and 52 of those are confirmed long-tail.) That is a
    reserve, but not a free one: it is a mix of genuine NPR staff whose
    summaries stayed silent (Cheryl Corley, Celeste Headlee, Alex Cohen) and
    wrongly-excluded outsiders (Joe Nocera, Kim Masters). It would need
