@@ -1,0 +1,9 @@
+{
+  "n_decisions": 7200,
+  "n_decisions_with_tie_at_top": 3239,
+  "pct_rounds_with_tie": 44.99,
+  "mean_tied_at_top": 2.372,
+  "max_tied_at_top": 39,
+  "mean_top_score": 1.2178,
+  "mean_score_spread": 0.6516
+}

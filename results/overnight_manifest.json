@@ -12,7 +12,7 @@
       "experiment": "EXP1a",
       "title": "adaptive, entropy scorer, seeded random tie-break, k to 48",
       "kind": "adaptive",
-      "status": "queued",
+      "status": "ingested",
       "run_dir": "results/overnight_exp1a",
       "config": "results/overnight_exp1a/config.json",
       "sbatch_local": "results/overnight_exp1a/overnight_exp1a.sbatch",
@@ -22,11 +22,13 @@
         "50191885"
       ],
       "projected_node_hours": 1.2652,
-      "actual_node_hours": null,
+      "actual_node_hours": 0.9698,
       "reuses": [],
       "notes": [
         "2026-07-24T21:22:21Z: entropy + random tiebreak, k to 48; doubles as EXP4 adaptive arm",
-        "2026-07-24T21:29:16Z: Ingest path validated against the pilot's raw node output: 10,500 records, 0 prompt-rebuild mismatches, lifts identical to the published pilot report at k=1/8/20, tie rate 51.53%. Test artefacts removed."
+        "2026-07-24T21:29:16Z: Ingest path validated against the pilot's raw node output: 10,500 records, 0 prompt-rebuild mismatches, lifts identical to the published pilot report at k=1/8/20, tie rate 51.53%. Test artefacts removed.",
+        "2026-07-25T00:27:56Z: RUNNING on lrdn0284 from 00:17:02Z; config confirmed scorer=entropy tiebreak=random(71) grid=standard max_reveals=48 checkpoints to 48, n=150",
+        "2026-07-25T01:18:50Z: COMPLETED 01:00:54 exit 0:0. 18,000 predictions + 176,400 uncertainty calls (9 unparseable). 0 prompt mismatches. 0.9698 node-hours vs 1.2652 projected (the 1.35x long-prompt factor was too conservative). Tie rate 44.99%."
       ],
       "node_output_files": [
         "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp1a/completions_adaptive.jsonl",
@@ -41,7 +43,9 @@
         "step_3_ingest": "uv run python experiments/overnight.py ingest --name overnight_exp1a --nodedir results/overnight_exp1a/node_output",
         "step_4_report": "uv run python experiments/overnight.py report",
         "node_log": "/leonardo_work/AIFAC_P02_548/DOPPLER/logs/dop-exp1a-<jobid>.out"
-      }
+      },
+      "n_scored_predictions": 18000,
+      "n_side_calls": 176400
     },
     "overnight_exp1b": {
       "experiment": "EXP1b",
@@ -168,16 +172,18 @@
       "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/overnight_exp3.sbatch",
       "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3",
       "slurm_job_ids": [
-        "50191936"
+        "50191936",
+        "50197711"
       ],
-      "projected_node_hours": 1.8814,
+      "projected_node_hours": 2.8165,
       "actual_node_hours": null,
       "reuses": [
         "EXP1a and EXP1b curves restricted to the first 100 persons of the train split"
       ],
       "notes": [
         "2026-07-24T21:27:27Z: EIG ladder rung (b); node-side parse smoke gates multi-target vs per-target fallback; rung (c) not run (budget)",
-        "Ingest path dry-run against a synthetic node output: 9,000 predictions, 0 prompt-rebuild mismatches, report section rendered. Synthetic artefacts removed."
+        "Ingest path dry-run against a synthetic node output: 9,000 predictions, 0 prompt-rebuild mismatches, report section rendered. Synthetic artefacts removed.",
+        "2026-07-25T00:27:56Z: Attempt 2 submitted as 50197711 with the corrected 700-token output cap."
       ],
       "node_output_files": [
         "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3/completions_eig.jsonl",
@@ -188,11 +194,23 @@
         "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3/node_runs.jsonl"
       ],
       "ingestion": {
-        "step_1_check_job": "ssh leonardo 'sacct -j 50191936 -X --format=JobID,JobName,State,Elapsed,ExitCode'",
+        "step_1_check_job": "ssh leonardo 'sacct -j 50191936,50197711 -X --format=JobID,JobName,State,Elapsed,ExitCode'",
         "step_2_pull": "mkdir -p results/overnight_exp3/node_output && rsync -az leonardo:/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3/ results/overnight_exp3/node_output/",
         "step_3_ingest": "uv run python experiments/overnight.py ingest --name overnight_exp3 --nodedir results/overnight_exp3/node_output",
         "step_4_report": "uv run python experiments/overnight.py report",
         "node_log": "/leonardo_work/AIFAC_P02_548/DOPPLER/logs/dop-exp3-<jobid>.out"
+      },
+      "attempt_1_cancelled": {
+        "job_id": "50191936",
+        "elapsed": "00:09:01",
+        "outcome": "CANCELLED BY ME, deliberately - not a crash",
+        "what_happened": "The node-side parse gate returned 0/200. The cause was NOT the parser or the model: every completion had a flawless format and was simply cut off part-way through TIPI8. The 420-token output cap was too small - a 10-target answer line costs ~57 tokens, so ten lines need ~570, and 420 bought 7.4 lines.",
+        "driver_behaviour": "Correct. The gate caught it and the driver automatically fell back to per-target calls with the person budget cut to 40, exactly as designed. It would have produced a usable but weaker ladder.",
+        "why_i_overrode_the_fallback": "The fallback exists to survive a model/parser failure. This was an arithmetic error in my own token budget. Accepting n=40 per-target would have thrown away 60% of the sample for no scientific reason, when a one-constant fix restores the experiment exactly as pre-specified (n=100, top-5 shortlist, hypotheticals {1,3,5}, multi-target).",
+        "not_a_design_change": "Nothing about the experiment changed - same policy, same n, same shortlist, same hypotheticals, same scoring. Only the generation cap moved, 420 -> 700, plus walltime 03:30 -> 04:00.",
+        "stale_output_archived_to": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/overnight/overnight_exp3/attempt1_truncated/",
+        "why_archiving_mattered": "The driver reads the previous node_summary.json to decide whether it is resuming a fallback run. Leaving mode=per_target_fallback in place would have silently cut the resubmit back to 40 persons.",
+        "cost_of_the_mistake": "~0.13 node-hours, almost all of it engine init that a rerun pays anyway."
       }
     }
   },
@@ -208,9 +226,12 @@
     "INTERNAL CONSISTENCY CHECK (EXP2/EXP4): at k=48 the fixed_deriv and random_ext arms reveal exactly the same 48 items, differing only in the ORDER of the revealed lines. Their lifts are +0.0790 and +0.0787; the paired difference is +0.0002 [-0.0132,+0.0137] p=0.97. So line order has no effect once all information is present - which means the order effects seen at low k are real information-ordering effects, not a rendering artifact.",
     "EXP5 HEADLINE (both checkpoints): making the imposter ~0.10 cosine more similar changed nothing. NN-imposter minus random-imposter is -0.003 (p=0.92) at k=12 and +0.006 (p=0.83) at k=20. Both imposters stay BELOW the demographics-only baseline. For Stage 2 this is reassuring: the A1 imposter baseline looks insensitive to how the wrong person is chosen.",
     "EXP1 HEADLINE (1b and 1c ingested; 1a pending): none of the three interventions improved the adaptive policy. Tie rates fell (pilot entropy+index 51.5% -> ev_variance 40.4% -> entropy+0.05grid 47.9%) but lift did not move. EXP1b matches the pilot at every k (k=20 difference exactly +0.000, p=1.0). EXP1c is flat-to-slightly-worse and at k=20 reads -0.018 (p=0.033) - NOT convincing after 18 comparisons, read as 'no better'. Conclusion: the 51.5% tie rate was NOT the bottleneck, and entropy is not the wrong uncertainty measure. The limitation is the policy's premise that self-uncertainty proxies informativeness - which is exactly what EXP3 tests.",
-    "SIDE FINDING (EXP1c): asking for probabilities in multiples of 0.05 eliminated parse failures entirely (0 of 115,500 uncertainty calls, vs 10 in the pilot and 11 in EXP1b). If a future run wants cleaner elicitation output, the 0.05 wording is free on that axis - it just does not help selection."
+    "SIDE FINDING (EXP1c): asking for probabilities in multiples of 0.05 eliminated parse failures entirely (0 of 115,500 uncertainty calls, vs 10 in the pilot and 11 in EXP1b). If a future run wants cleaner elicitation output, the 0.05 wording is free on that axis - it just does not help selection.",
+    "EXP3 was submitted twice. Attempt 1 (50191936) hit a 0/200 parse gate caused by MY output-token cap being too low (420 vs the ~570 a 10-line answer needs); the format was perfect. The driver's automatic fallback worked, but I cancelled and fixed the cap to 700 rather than accept a degraded n=40 per-target run. Attempt 2 is 50197711, projected 2.817 node-hours against EXP3's 3.0 cap. Total cost of the error ~0.13 node-hours.",
+    "GENERAL LESSON worth carrying into Stage 2: an all-or-nothing multi-target parser converts a truncation into a 0% parse rate, which is indistinguishable at a glance from 'the model cannot do this'. Always check whether failed completions are well-formed-but-cut-off before concluding a format is beyond the model. The smoke gate saved the run precisely because it dumped example raw completions alongside the rate.",
+    "EXP1 COMPLETE (1a, 1b, 1c all ingested). See exp1_factorial in this manifest. Headline: the pilot's adaptive-over-random edge was carried by the lowest-index tie-break, not by uncertainty. Swap in an unbiased random tie-break and entropy's edge collapses to +0.003 (p=0.76); EV-variance keeps it at +0.022 (p=0.029). The tested explanation - that the index rule created a quasi-fixed order - is REJECTED; the supported one is a shift in which RIASEC domains get asked early."
   ],
-  "updated_utc": "2026-07-24T23:57:13Z",
+  "updated_utc": "2026-07-25T01:18:50Z",
   "morning_ingestion": {
     "summary": "Five independent Slurm jobs. Each is ingested the same way: check state, rsync the node dir down, run ingest, then run report once at the end.",
     "order": [
@@ -249,5 +270,27 @@
     "exp1a_exp1b_exp1c": "PENDING, Slurm estimated START_TIME 2026-07-25T02:33:59 local (~2h out)",
     "exp3": "PENDING, no START_TIME estimate yet",
     "expectation": "The three EXP1 jobs run 1.5-2.5h once started, so they finish roughly 04:00-05:00 local. EXP3 is behind them. The laptop socket is unlikely to survive that long; morning ingestion should expect to do exp1a, exp1b, exp1c and exp3."
+  },
+  "exp1_factorial": {
+    "label": "TRAINING SPLIT, bar-setting only. 16+ contrasts computed; treat individual p-values as descriptive.",
+    "design": "Scorer x tie-break, with the pilot supplying the entropy+index cell.",
+    "lift_over_baseline_at_k20": {
+      "entropy + index tie-break (pilot)": "+0.070",
+      "entropy + random tie-break (EXP1a)": "+0.052",
+      "ev_variance + random tie-break (EXP1b)": "+0.070",
+      "entropy + random + 0.05 grid (EXP1c)": "+0.052",
+      "random policy": "+0.049"
+    },
+    "tie_break_effect_scorer_fixed_entropy": "random minus index = -0.018 [-0.033,-0.004] p=0.014 at k=20. The lowest-index tie-break was WORTH +0.018; it was helping, not just breaking symmetry.",
+    "scorer_effect_tiebreak_fixed_random": "ev_variance minus entropy = +0.018 [+0.002,+0.034] p=0.027 at k=20. EV-variance recovers exactly what the index crutch was providing.",
+    "a6_primary_contrast_adaptive_minus_random": {
+      "pilot (entropy+index)": "+0.021 p=0.047 at k=20 (nominally significant)",
+      "EXP1a (entropy+random)": "+0.003 p=0.76 at k=20 - the edge DISAPPEARS",
+      "EXP1b (ev_var+random)": "+0.022 p=0.029 at k=20, +0.025 p=0.021 at k=16, +0.024 p=0.045 at k=8 - the only variant that beats random without tie-break luck",
+      "EXP1c (entropy+random+fine)": "+0.004 p=0.72 at k=20 - independently confirms EXP1a"
+    },
+    "mechanism_tested_and_REJECTED": "Hypothesis: with ~50% ties, the index tie-break turns the policy partway into a fixed order, and fixed orders beat random. REJECTED - cross-person overlap of the first 20 reveals is 10.1 for both the pilot and EXP1a (chance 8.3), i.e. identical. The index rule did NOT make people's interviews more alike.",
+    "mechanism_supported": "A domain-composition shift. Share of the first 8 reveals by RIASEC domain: pilot R 10.7 / I 23.8 / A 32.1 / S 20.6 / E 9.9 / C 2.9 versus EXP1a R 7.0 / I 17.9 / A 29.8 / S 22.9 / E 16.4 / C 6.0. Lowest-index resolution pulled early questions toward R/I/A and away from E/C, and that composition happened to predict TIPI better. Accidental, not principled.",
+    "read": "Entropy is a weak selection signal here: about half its decisions are exact ties, and the pilot's apparent edge over random came from how those ties were resolved rather than from uncertainty. Variance of the stated distribution ties less often (40.4% vs 51.5%) and earns the same edge on its own. Any future adaptive policy should use a scorer that discriminates, and should never rely on an index tie-break."
   }
 }

@@ -10,7 +10,7 @@ Lift = demographics-only baseline MAE − arm MAE, averaged over persons, 95% t 
 
 | experiment | status | reused from the pilot |
 |---|---|---|
-| EXP1a | queued | nothing |
+| EXP1a | ingested | nothing |
 | EXP1b | ingested | nothing |
 | EXP1c | ingested | nothing |
 | EXP2 + EXP4 + EXP5 (shared static job) | ingested | results/adaptive_train_20260724-210916/baseline (k=0); results/adaptive_train_20260724-210916/random (k in 1,2,4,8,12,16,20); results/adaptive_train_20260724-210916/imposter (random imposter, k=12,20) |
@@ -22,6 +22,9 @@ Lift = demographics-only baseline MAE − arm MAE, averaged over persons, 95% t 
 - **EXP2 selection bias.** The pilot's fixed order, picked on the same 150 people it was scored on, read +0.088 at k=20. The honest order reads +0.074. The gap, +0.014, is roughly what the selection bias was worth.
 - **EXP4.** Random reveals climb from +0.049 at k=20 to +0.079 at k=48 (all 48 items, i.e. full information). The Stage 1 gate's all-48 number on 500 people was +0.095, so this lands in the right place. **k=20 already recovers 62% of the full-information lift** on a random order — the budget question is about the last third, not the first two.
 - **Consistency check.** At k=48 both static arms reveal the same 48 items and differ only in the order of the lines. Their difference is +0.000 [-0.013, +0.014] p=0.97 — order stops mattering once everything is on the table, so the order effects at low k are real, not a rendering artifact.
+- **EXP1 tie-break.** Holding the scorer at entropy and swapping the pilot's lowest-index tie-break for a seeded random one costs -0.018 [-0.033, -0.004] p=0.014 at k=20. The index rule was *helping* — it was worth about +0.018, and roughly half of entropy's decisions are exact ties, so it was deciding half the questions.
+- **EXP1 scorer.** Holding the tie-break at random, variance of the stated distribution beats entropy by +0.018 [+0.002, +0.034] p=0.027 at k=20 — it recovers exactly what the index crutch was providing, and it ties far less often.
+- **EXP1 vs the A6 primary contrast (adaptive − random at k=20).** pilot entropy+index +0.021 [+0.000, +0.043] p=0.047; entropy+random +0.003 [-0.018, +0.024] p=0.76; EV-variance+random +0.022 [+0.002, +0.041] p=0.029; entropy+random+0.05 grid +0.004 [-0.017, +0.025] p=0.72. The pilot's edge does not survive an unbiased tie-break with entropy, but it does with EV-variance. Read as: use a scorer that discriminates, and never lean on an index tie-break.
 - **EXP5.** A much more similar wrong person does **not** mislead differently. NN-imposter minus random-imposter is k=12: -0.003 [-0.054, +0.048] p=0.92; k=20: +0.006 [-0.049, +0.061] p=0.83. Both stay below the demographics-only baseline (NN is -0.039 at k=12), so a coherent profile belonging to the wrong person is harmful regardless of how well it matches. Reassuring for A1: the imposter baseline looks insensitive to how the donor is chosen.
 
 
@@ -34,7 +37,7 @@ All three variants replace the pilot's lowest-item-index tie-break with a seeded
 | variant | decisions | tied at top | mean tied | max tied |
 |---|---|---|---|---|
 | pilot (entropy, index tie-break) | 3,000 | 51.5% | 3.0 | 37 |
-| EXP1a entropy + random | not ingested | | | |
+| EXP1a entropy + random | 7,200 | 45.0% | 2.4 | 39 |
 | EXP1b EV-variance + random | 3,000 | 40.4% | 2.1 | 36 |
 | EXP1c entropy + random + 0.05 grid | 3,000 | 47.9% | 2.8 | 40 |
 
@@ -42,15 +45,15 @@ All three variants replace the pilot's lowest-item-index tie-break with a seeded
 
 | k | pilot adaptive | EXP1a entropy+rand | EXP1b EV-var | EXP1c fine grid |
 |---|---|---|---|---|
-| 1 | -0.006 [-0.023, +0.010] p=0.45 | not ingested | -0.011 [-0.029, +0.006] p=0.19 | -0.016 [-0.037, +0.004] p=0.12 |
-| 2 | +0.004 [-0.015, +0.024] p=0.65 | not ingested | -0.006 [-0.028, +0.016] p=0.6 | -0.002 [-0.024, +0.021] p=0.89 |
-| 3 | n/a | not ingested | +0.019 [-0.007, +0.044] p=0.15 | -0.000 [-0.023, +0.023] p=1 |
-| 4 | +0.016 [-0.008, +0.040] p=0.19 | not ingested | +0.024 [-0.002, +0.050] p=0.071 | +0.008 [-0.016, +0.033] p=0.49 |
-| 5 | n/a | not ingested | +0.026 [-0.000, +0.052] p=0.052 | +0.013 [-0.012, +0.038] p=0.31 |
-| 8 | +0.030 [+0.002, +0.057] p=0.035 | not ingested | +0.031 [+0.003, +0.059] p=0.032 | +0.020 [-0.008, +0.047] p=0.16 |
-| 12 | +0.052 [+0.023, +0.081] p=0.00047 | not ingested | +0.047 [+0.018, +0.076] p=0.0017 | +0.038 [+0.008, +0.068] p=0.012 |
-| 16 | +0.061 [+0.030, +0.093] p=0.00018 | not ingested | +0.065 [+0.034, +0.097] p=6.3e-05 | +0.060 [+0.030, +0.089] p=0.0001 |
-| 20 | +0.070 [+0.038, +0.102] p=2.5e-05 | not ingested | +0.070 [+0.038, +0.102] p=2.4e-05 | +0.052 [+0.020, +0.085] p=0.0016 |
+| 1 | -0.006 [-0.023, +0.010] p=0.45 | -0.005 [-0.024, +0.014] p=0.62 | -0.011 [-0.029, +0.006] p=0.19 | -0.016 [-0.037, +0.004] p=0.12 |
+| 2 | +0.004 [-0.015, +0.024] p=0.65 | -0.011 [-0.033, +0.011] p=0.31 | -0.006 [-0.028, +0.016] p=0.6 | -0.002 [-0.024, +0.021] p=0.89 |
+| 3 | n/a | +0.006 [-0.017, +0.029] p=0.62 | +0.019 [-0.007, +0.044] p=0.15 | -0.000 [-0.023, +0.023] p=1 |
+| 4 | +0.016 [-0.008, +0.040] p=0.19 | +0.017 [-0.008, +0.041] p=0.19 | +0.024 [-0.002, +0.050] p=0.071 | +0.008 [-0.016, +0.033] p=0.49 |
+| 5 | n/a | +0.014 [-0.011, +0.039] p=0.28 | +0.026 [-0.000, +0.052] p=0.052 | +0.013 [-0.012, +0.038] p=0.31 |
+| 8 | +0.030 [+0.002, +0.057] p=0.035 | +0.020 [-0.006, +0.046] p=0.13 | +0.031 [+0.003, +0.059] p=0.032 | +0.020 [-0.008, +0.047] p=0.16 |
+| 12 | +0.052 [+0.023, +0.081] p=0.00047 | +0.036 [+0.008, +0.064] p=0.011 | +0.047 [+0.018, +0.076] p=0.0017 | +0.038 [+0.008, +0.068] p=0.012 |
+| 16 | +0.061 [+0.030, +0.093] p=0.00018 | +0.048 [+0.019, +0.078] p=0.0013 | +0.065 [+0.034, +0.097] p=6.3e-05 | +0.060 [+0.030, +0.089] p=0.0001 |
+| 20 | +0.070 [+0.038, +0.102] p=2.5e-05 | +0.052 [+0.021, +0.083] p=0.0013 | +0.070 [+0.038, +0.102] p=2.4e-05 | +0.052 [+0.020, +0.085] p=0.0016 |
 
 ### Delta vs the pilot adaptive curve at matched k
 
@@ -58,13 +61,13 @@ Positive = the change helped.
 
 | k | EXP1a − pilot | EXP1b − pilot | EXP1c − pilot |
 |---|---|---|---|
-| 1 | n/a | -0.005 [-0.021, +0.011] p=0.53 | -0.010 [-0.028, +0.008] p=0.28 |
-| 2 | n/a | -0.010 [-0.029, +0.009] p=0.28 | -0.006 [-0.026, +0.014] p=0.55 |
-| 4 | n/a | +0.008 [-0.013, +0.029] p=0.45 | -0.007 [-0.030, +0.015] p=0.51 |
-| 8 | n/a | +0.001 [-0.019, +0.021] p=0.92 | -0.010 [-0.031, +0.011] p=0.35 |
-| 12 | n/a | -0.005 [-0.026, +0.015] p=0.6 | -0.014 [-0.033, +0.004] p=0.13 |
-| 16 | n/a | +0.004 [-0.016, +0.024] p=0.69 | -0.002 [-0.019, +0.015] p=0.83 |
-| 20 | n/a | +0.000 [-0.016, +0.016] p=1 | -0.018 [-0.034, -0.001] p=0.033 |
+| 1 | +0.002 [-0.013, +0.016] p=0.83 | -0.005 [-0.021, +0.011] p=0.53 | -0.010 [-0.028, +0.008] p=0.28 |
+| 2 | -0.016 [-0.033, +0.002] p=0.091 | -0.010 [-0.029, +0.009] p=0.28 | -0.006 [-0.026, +0.014] p=0.55 |
+| 4 | +0.001 [-0.018, +0.019] p=0.95 | +0.008 [-0.013, +0.029] p=0.45 | -0.007 [-0.030, +0.015] p=0.51 |
+| 8 | -0.010 [-0.030, +0.010] p=0.34 | +0.001 [-0.019, +0.021] p=0.92 | -0.010 [-0.031, +0.011] p=0.35 |
+| 12 | -0.016 [-0.034, +0.003] p=0.091 | -0.005 [-0.026, +0.015] p=0.6 | -0.014 [-0.033, +0.004] p=0.13 |
+| 16 | -0.013 [-0.030, +0.004] p=0.14 | +0.004 [-0.016, +0.024] p=0.69 | -0.002 [-0.019, +0.015] p=0.83 |
+| 20 | -0.018 [-0.033, -0.004] p=0.014 | +0.000 [-0.016, +0.016] p=1 | -0.018 [-0.034, -0.001] p=0.033 |
 
 ## EXP2 — best fixed order, derived on a disjoint split
 
@@ -104,15 +107,15 @@ n=100 (first 100 of the train split). Ladder rung (a) is EXP1's self-uncertainty
 
 | k | (a) self-uncertainty (EXP1a) | (b) expected info gain | (b) − (a) |
 |---|---|---|---|
-| 1 | not ingested | not ingested | n/a |
-| 2 | not ingested | not ingested | n/a |
-| 3 | not ingested | not ingested | n/a |
-| 4 | not ingested | not ingested | n/a |
-| 5 | not ingested | not ingested | n/a |
-| 8 | not ingested | not ingested | n/a |
-| 12 | not ingested | not ingested | n/a |
-| 16 | not ingested | not ingested | n/a |
-| 20 | not ingested | not ingested | n/a |
+| 1 | -0.005 [-0.028, +0.019] p=0.68 | not ingested | n/a |
+| 2 | -0.011 [-0.039, +0.017] p=0.43 | not ingested | n/a |
+| 3 | +0.005 [-0.025, +0.035] p=0.73 | not ingested | n/a |
+| 4 | +0.019 [-0.011, +0.049] p=0.21 | not ingested | n/a |
+| 5 | +0.016 [-0.015, +0.047] p=0.3 | not ingested | n/a |
+| 8 | +0.017 [-0.015, +0.048] p=0.29 | not ingested | n/a |
+| 12 | +0.035 [+0.001, +0.069] p=0.043 | not ingested | n/a |
+| 16 | +0.045 [+0.012, +0.079] p=0.0087 | not ingested | n/a |
+| 20 | +0.049 [+0.013, +0.085] p=0.0087 | not ingested | n/a |
 
 Rung (c), one-step lookahead, was **not run**: it multiplies rung (b)'s cost by the shortlist size again and does not fit inside EXP3's 3.0 node-hour cap alongside (b).
 
@@ -122,18 +125,18 @@ The random arm reuses the pilot's completions at k in {1, 2, 4, 8, 12, 16, 20} a
 
 | k | random | adaptive (EXP1a) | adaptive − random |
 |---|---|---|---|
-| 1 | -0.005 [-0.022, +0.012] p=0.57 | not ingested | n/a |
-| 2 | -0.001 [-0.021, +0.019] p=0.92 | not ingested | n/a |
-| 3 | +0.006 [-0.015, +0.028] p=0.57 | not ingested | n/a |
-| 4 | +0.001 [-0.020, +0.023] p=0.92 | not ingested | n/a |
-| 5 | +0.009 [-0.013, +0.032] p=0.41 | not ingested | n/a |
-| 8 | +0.006 [-0.020, +0.033] p=0.64 | not ingested | n/a |
-| 12 | +0.027 [+0.000, +0.053] p=0.047 | not ingested | n/a |
-| 16 | +0.040 [+0.012, +0.068] p=0.0056 | not ingested | n/a |
-| 20 | +0.049 [+0.018, +0.079] p=0.0019 | not ingested | n/a |
-| 28 | +0.063 [+0.030, +0.096] p=0.0002 | not ingested | n/a |
-| 36 | +0.067 [+0.035, +0.100] p=7.4e-05 | not ingested | n/a |
-| 48 | +0.079 [+0.041, +0.116] p=5.3e-05 | not ingested | n/a |
+| 1 | -0.005 [-0.022, +0.012] p=0.57 | -0.005 [-0.024, +0.014] p=0.62 | +0.000 [-0.020, +0.020] p=0.98 |
+| 2 | -0.001 [-0.021, +0.019] p=0.92 | -0.011 [-0.033, +0.011] p=0.31 | -0.010 [-0.032, +0.012] p=0.37 |
+| 3 | +0.006 [-0.015, +0.028] p=0.57 | +0.006 [-0.017, +0.029] p=0.62 | -0.000 [-0.021, +0.021] p=0.98 |
+| 4 | +0.001 [-0.020, +0.023] p=0.92 | +0.017 [-0.008, +0.041] p=0.19 | +0.015 [-0.008, +0.039] p=0.19 |
+| 5 | +0.009 [-0.013, +0.032] p=0.41 | +0.014 [-0.011, +0.039] p=0.28 | +0.004 [-0.020, +0.029] p=0.72 |
+| 8 | +0.006 [-0.020, +0.033] p=0.64 | +0.020 [-0.006, +0.046] p=0.13 | +0.014 [-0.010, +0.037] p=0.25 |
+| 12 | +0.027 [+0.000, +0.053] p=0.047 | +0.036 [+0.008, +0.064] p=0.011 | +0.010 [-0.012, +0.032] p=0.38 |
+| 16 | +0.040 [+0.012, +0.068] p=0.0056 | +0.048 [+0.019, +0.078] p=0.0013 | +0.008 [-0.016, +0.032] p=0.5 |
+| 20 | +0.049 [+0.018, +0.079] p=0.0019 | +0.052 [+0.021, +0.083] p=0.0013 | +0.003 [-0.018, +0.024] p=0.76 |
+| 28 | +0.063 [+0.030, +0.096] p=0.0002 | +0.067 [+0.035, +0.098] p=5.5e-05 | +0.003 [-0.016, +0.023] p=0.74 |
+| 36 | +0.067 [+0.035, +0.100] p=7.4e-05 | +0.074 [+0.038, +0.109] p=6.5e-05 | +0.006 [-0.011, +0.024] p=0.49 |
+| 48 | +0.079 [+0.041, +0.116] p=5.3e-05 | +0.075 [+0.037, +0.113] p=0.00014 | -0.003 [-0.017, +0.011] p=0.66 |
 
 Reference: the Stage 1 gate's all-48-item lift on 500 people was +0.095.
 
@@ -154,12 +157,12 @@ Read: the pilot found a random stranger's profile is *worse than knowing nothing
 
 | experiment | projected node-hours | actual | slurm job(s) | status |
 |---|---|---|---|---|
-| overnight_exp1a | 1.265 | — | 50191885 | queued |
+| overnight_exp1a | 1.265 | 0.970 | 50191885 | ingested |
 | overnight_exp1b | 0.656 | 0.630 | 50191886 | ingested |
 | overnight_exp1c | 0.656 | 0.648 | 50191887 | ingested |
 | overnight_exp245 | 0.300 | 0.227 | 50191888 | ingested |
-| overnight_exp3 | 1.881 | — | 50191936 | queued |
-| **TOTAL** | **4.760** | **1.506** | | caps: 4.0/job, 12.0/batch |
+| overnight_exp3 | 2.817 | — | 50191936, 50197711 | queued |
+| **TOTAL** | **5.695** | **2.475** | | caps: 4.0/job, 12.0/batch |
 
 ## Provenance
 
