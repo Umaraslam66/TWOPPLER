@@ -14,7 +14,7 @@ Lift = demographics-only baseline MAE − arm MAE, averaged over persons, 95% t 
 | EXP1b | ingested | nothing |
 | EXP1c | ingested | nothing |
 | EXP2 + EXP4 + EXP5 (shared static job) | ingested | results/adaptive_train_20260724-210916/baseline (k=0); results/adaptive_train_20260724-210916/random (k in 1,2,4,8,12,16,20); results/adaptive_train_20260724-210916/imposter (random imposter, k=12,20) |
-| EXP3 | queued | EXP1a and EXP1b curves restricted to the first 100 persons of the train split |
+| EXP3 | ingested | EXP1a and EXP1b curves restricted to the first 100 persons of the train split |
 
 ## Headlines (computed from the ingested arms)
 
@@ -105,17 +105,19 @@ These 150 people had no say in picking this order, so this column is not inflate
 
 n=100 (first 100 of the train split). Ladder rung (a) is EXP1's self-uncertainty policy restricted to these people — not rerun. Rung (b) scores each shortlisted item by how much the 10 TIPI target distributions are expected to move.
 
+Node-side parse check before committing the run: 200/200 multi-target completions parsed (100.0%), bar was 95% — PASSED.
+
 | k | (a) self-uncertainty (EXP1a) | (b) expected info gain | (b) − (a) |
 |---|---|---|---|
-| 1 | -0.005 [-0.028, +0.019] p=0.68 | not ingested | n/a |
-| 2 | -0.011 [-0.039, +0.017] p=0.43 | not ingested | n/a |
-| 3 | +0.005 [-0.025, +0.035] p=0.73 | not ingested | n/a |
-| 4 | +0.019 [-0.011, +0.049] p=0.21 | not ingested | n/a |
-| 5 | +0.016 [-0.015, +0.047] p=0.3 | not ingested | n/a |
-| 8 | +0.017 [-0.015, +0.048] p=0.29 | not ingested | n/a |
-| 12 | +0.035 [+0.001, +0.069] p=0.043 | not ingested | n/a |
-| 16 | +0.045 [+0.012, +0.079] p=0.0087 | not ingested | n/a |
-| 20 | +0.049 [+0.013, +0.085] p=0.0087 | not ingested | n/a |
+| 1 | -0.005 [-0.028, +0.019] p=0.68 | -0.001 [-0.029, +0.027] p=0.95 | +0.004 [-0.020, +0.028] p=0.75 |
+| 2 | -0.011 [-0.039, +0.017] p=0.43 | +0.002 [-0.027, +0.032] p=0.87 | +0.014 [-0.013, +0.040] p=0.32 |
+| 3 | +0.005 [-0.025, +0.035] p=0.73 | +0.019 [-0.009, +0.048] p=0.18 | +0.014 [-0.014, +0.043] p=0.33 |
+| 4 | +0.019 [-0.011, +0.049] p=0.21 | +0.026 [-0.004, +0.056] p=0.091 | +0.007 [-0.019, +0.032] p=0.6 |
+| 5 | +0.016 [-0.015, +0.047] p=0.3 | +0.020 [-0.012, +0.051] p=0.22 | +0.003 [-0.023, +0.030] p=0.8 |
+| 8 | +0.017 [-0.015, +0.048] p=0.29 | +0.024 [-0.011, +0.058] p=0.18 | +0.007 [-0.018, +0.032] p=0.59 |
+| 12 | +0.035 [+0.001, +0.069] p=0.043 | +0.047 [+0.012, +0.083] p=0.0098 | +0.013 [-0.011, +0.036] p=0.3 |
+| 16 | +0.045 [+0.012, +0.079] p=0.0087 | +0.064 [+0.026, +0.102] p=0.0012 | +0.019 [-0.005, +0.042] p=0.12 |
+| 20 | +0.049 [+0.013, +0.085] p=0.0087 | +0.066 [+0.026, +0.106] p=0.0016 | +0.017 [-0.003, +0.037] p=0.091 |
 
 Rung (c), one-step lookahead, was **not run**: it multiplies rung (b)'s cost by the shortlist size again and does not fit inside EXP3's 3.0 node-hour cap alongside (b).
 
@@ -161,8 +163,8 @@ Read: the pilot found a random stranger's profile is *worse than knowing nothing
 | overnight_exp1b | 0.656 | 0.630 | 50191886 | ingested |
 | overnight_exp1c | 0.656 | 0.648 | 50191887 | ingested |
 | overnight_exp245 | 0.300 | 0.227 | 50191888 | ingested |
-| overnight_exp3 | 2.817 | — | 50191936, 50197711 | queued |
-| **TOTAL** | **5.695** | **2.475** | | caps: 4.0/job, 12.0/batch |
+| overnight_exp3 | 2.817 | 2.089 | 50191936, 50197711 | ingested |
+| **TOTAL** | **5.695** | **4.565** | | caps: 4.0/job, 12.0/batch |
 
 ## Provenance
 

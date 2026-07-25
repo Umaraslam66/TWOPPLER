@@ -6,11 +6,11 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=4
 #SBATCH --cpus-per-task=32
-#SBATCH --time=03:30:00
+#SBATCH --time=04:00:00
 #SBATCH --output=/leonardo_work/AIFAC_P02_548/DOPPLER/logs/%x-%j.out
 #
 # selection ladder: expected information gain on TIPI targets vs self-uncertainty
-# Projected 1.881 node-hours (per-job cap 4.0).
+# Projected 2.817 node-hours (per-job cap 4.0).
 set -euo pipefail
 D=/leonardo_work/AIFAC_P02_548/DOPPLER
 cd "$D"

@@ -1,0 +1,7 @@
+{
+  "n_decisions": 2000,
+  "n_decisions_with_tie_at_top": 17,
+  "pct_rounds_with_tie": 0.85,
+  "n_shortlist_rows": 10000,
+  "n_score_parse_failures": 4
+}
