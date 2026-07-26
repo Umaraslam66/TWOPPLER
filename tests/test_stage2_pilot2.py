@@ -78,6 +78,18 @@ def test_the_gate_scores_an_argmax_hit_and_the_mass_on_the_true_option():
     assert got["parsed"] is True
     assert got["argmax_correct"] is True
     assert got["p_correct"] == pytest.approx(0.85)
+    # margin = true option minus the best rival, which is what the gate turned on
+    assert got["margin"] == pytest.approx(0.80)
+
+
+def test_a_gate_miss_has_a_negative_margin():
+    got = P2.score_gate(_meta(correct=1),
+                        "A: 0.85 B: 0.05 C: 0.05 D: 0.05")
+    assert got["margin"] == pytest.approx(-0.80)
+
+
+def test_an_unparsed_gate_reply_has_no_margin():
+    assert P2.score_gate(_meta(), "nothing here")["margin"] is None
 
 
 def test_the_gate_scores_an_argmax_miss():
@@ -416,8 +428,9 @@ def _run_gate(rig, solved_idxs):
             c = (c + 1) % int(meta["n_options"])
         dist = [0.05] * 4
         dist[c] = 0.85
-        lines.append(json.dumps({"idx": meta["idx"], "completion":
-                                 "A: %.2f B: %.2f C: %.2f D: %.2f" % tuple(dist)}))
+        lines.append(json.dumps({
+            "idx": meta["idx"], "tokens_in": 400, "tokens_out": 40,
+            "text": "A: %.2f B: %.2f C: %.2f D: %.2f" % tuple(dist)}))
     (node / "completions_gate.jsonl").write_text("\n".join(lines) + "\n",
                                                  encoding="utf-8")
     rig.nodedir = node
@@ -513,3 +526,210 @@ def test_round_two_never_writes_into_round_ones_directory(rig):
     P2.cmd_export_gate(rig)
     P2.cmd_bootstrap(rig)
     assert sorted(p.name for p in rig.pilot1_dir.rglob("*")) == before
+
+
+# ---------------------------------------------------------------------------
+# Billing from sacct, and the phase-2 ingest
+# ---------------------------------------------------------------------------
+
+
+SACCT_LINE = "50378388|COMPLETED|00:05:12|1|0:0\n"
+
+
+def test_bill_takes_node_hours_from_sacct_not_from_a_wall_clock(rig,
+                                                                monkeypatch):
+    _build(rig)
+    P2.cmd_bootstrap(rig)
+    monkeypatch.setattr(P1, "run", lambda argv, check=True: SACCT_LINE)
+    assert P2.cmd_bill(Args(out_dir=rig.out_dir, name="stage2_pilot2_gate",
+                            job_id="50378388")) == 0
+    man = json.loads((rig.out_dir / "manifest.json").read_text())
+    entry = man["jobs"]["stage2_pilot2_gate"]
+    # 00:05:12 = 312 s on 1 node -> 0.0867 node-hours.
+    assert entry["actual_node_hours"] == pytest.approx(0.0867, abs=1e-4)
+    assert entry["status"] == "completed"
+    assert entry["sacct"][0]["alloc_nodes"] == 1
+    assert P2.billed_node_hours(rig.out_dir, "stage2_pilot2_gate") == \
+        pytest.approx(0.0867, abs=1e-4)
+
+
+def test_bill_refuses_an_empty_sacct_reply(rig, monkeypatch):
+    _build(rig)
+    monkeypatch.setattr(P1, "run", lambda argv, check=True: "")
+    with pytest.raises(SystemExit, match="sacct returned nothing"):
+        P2.cmd_bill(Args(out_dir=rig.out_dir, name="stage2_pilot2_gate",
+                         job_id="1"))
+
+
+def test_the_sacct_number_wins_over_the_in_process_one_in_the_gate_ingest(
+        rig, monkeypatch):
+    _build(rig)
+    P2.cmd_bootstrap(rig)
+    monkeypatch.setattr(P1, "run", lambda argv, check=True: SACCT_LINE)
+    P2.cmd_bill(Args(out_dir=rig.out_dir, name="stage2_pilot2_gate",
+                     job_id="50378388"))
+    _run_gate(rig, solved_idxs={0})
+    node = rig.nodedir
+    (node / "completions_gate.jsonl.summary.json").write_text(json.dumps({
+        "engine_init_seconds": 10.0, "generation_wall_seconds": 2.0}),
+        encoding="utf-8")
+    P2.cmd_ingest_gate(rig)
+    gate = json.loads((rig.out_dir / "gate_results.json").read_text())
+    assert gate["node_hours_source"] == "sacct"
+    assert gate["node_hours"] == pytest.approx(0.0867, abs=1e-4)
+    assert gate["node_hours_in_process"] == pytest.approx(0.0033, abs=1e-4)
+
+
+def _run_pred(rig, correct_arms=("twin_redacted",)):
+    """Fake a phase-2 run: the named arms answer correctly, the rest do not."""
+    node = rig.nodedir or (rig.out_dir.parent / "node")
+    node.mkdir(parents=True, exist_ok=True)
+    rig.nodedir = node
+    for arm in P2.ARMS:
+        for variant in P2.VARIANTS:
+            name = P2.set_name(arm, variant)
+            metas = [json.loads(l) for l in (rig.out_dir / "exports"
+                     / f"meta_{name}.jsonl").read_text().splitlines()]
+            lines = []
+            for meta in metas:
+                c = int(meta["correct_index"])
+                if arm not in correct_arms:
+                    c = (c + 1) % int(meta["n_options"])
+                dist = [0.05] * 4
+                dist[c] = 0.85
+                lines.append(json.dumps({
+                    "idx": meta["idx"], "tokens_in": 900, "tokens_out": 60,
+                    "text": "A: %.2f B: %.2f C: %.2f D: %.2f" % tuple(dist)}))
+            (node / f"completions_{name}.jsonl").write_text(
+                "\n".join(lines) + "\n", encoding="utf-8")
+            (node / f"completions_{name}.jsonl.summary.json").write_text(
+                json.dumps({"engine_init_seconds": 200.0,
+                            "generation_wall_seconds": 3.0}), encoding="utf-8")
+    assert P2.cmd_ingest_pred(rig) == 0
+
+
+def test_the_phase_two_ingest_scores_every_arm_and_writes_records(rig):
+    _build(rig)
+    _run_gate(rig, solved_idxs={0})
+    P2.cmd_finalize(rig)
+    P2.cmd_export_pred(rig)
+    _run_pred(rig)
+    analysis = json.loads((rig.out_dir / "analysis.json").read_text())
+    assert analysis["n_records"] == 9 * len(P2.ARMS) * len(P2.VARIANTS)
+    assert analysis["accuracy"]["standard"]["twin_redacted"]["n"] == 9
+    assert analysis["accuracy"]["standard"]["twin_redacted"][
+        "argmax_accuracy"] == 1.0
+    assert analysis["accuracy"]["standard"]["imposter_redacted"][
+        "argmax_accuracy"] == 0.0
+    for arm in P2.ARMS:
+        for variant in P2.VARIANTS:
+            assert (rig.out_dir / "records"
+                    / f"{P2.set_name(arm, variant)}.jsonl").exists()
+
+
+def test_the_analysis_carries_the_pre_gate_number_and_the_by_construction_note(
+        rig):
+    _build(rig)
+    _run_gate(rig, solved_idxs={0, 3})
+    P2.cmd_finalize(rig)
+    P2.cmd_export_pred(rig)
+    _run_pred(rig)
+    analysis = json.loads((rig.out_dir / "analysis.json").read_text())
+    assert analysis["gate"]["pre_gate_zeroinfo_argmax_accuracy"] == \
+        pytest.approx(0.2)
+    assert analysis["gate"]["n_rejected"] == 2
+    assert "BY CONSTRUCTION" in analysis["gate"]["note"]
+
+
+def test_the_ingest_reports_lift_against_both_baselines_per_variant(rig):
+    _build(rig)
+    _run_gate(rig, solved_idxs={0})
+    P2.cmd_finalize(rig)
+    P2.cmd_export_pred(rig)
+    _run_pred(rig)
+    lift = json.loads((rig.out_dir / "analysis.json").read_text())["lift"]
+    for variant in P2.VARIANTS:
+        assert lift[variant]["twin_redacted_minus_zeroinfo_redacted"][
+            "mean_argmax_delta"] == 1.0
+        assert lift[variant]["twin_redacted_minus_imposter_redacted"][
+            "mean_argmax_delta"] == 1.0
+
+
+def test_a_missing_completion_file_is_recorded_not_silently_scored(rig):
+    _build(rig)
+    _run_gate(rig, solved_idxs={0})
+    P2.cmd_finalize(rig)
+    P2.cmd_export_pred(rig)
+    _run_pred(rig)
+    (rig.nodedir / "completions_pred_twin_named_stripped.jsonl").unlink()
+    P2.cmd_ingest_pred(rig)
+    analysis = json.loads((rig.out_dir / "analysis.json").read_text())
+    assert analysis["n_missing_completions"] == 9
+    assert analysis["accuracy"]["stripped"]["twin_named"]["n"] == 0
+
+
+def test_skip_cost_writes_no_ledger_line(rig, monkeypatch):
+    written = []
+    monkeypatch.setattr(P2, "append_cost_log",
+                        lambda entry, path: written.append(entry))
+    _build(rig)
+    _run_gate(rig, solved_idxs={0})          # rig.skip_cost is True
+    P2.cmd_finalize(rig)
+    P2.cmd_export_pred(rig)
+    _run_pred(rig)
+    assert written == []
+
+
+def test_a_ledger_line_states_a_measured_zero_api_cost(rig, monkeypatch):
+    written = []
+    monkeypatch.setattr(P2, "append_cost_log",
+                        lambda entry, path: written.append(entry))
+    monkeypatch.setattr(P1, "run", lambda argv, check=True: SACCT_LINE)
+    _build(rig)
+    P2.cmd_bootstrap(rig)
+    P2.cmd_bill(Args(out_dir=rig.out_dir, name="stage2_pilot2_gate",
+                     job_id="50378388"))
+    rig.skip_cost = False
+    _run_gate(rig, solved_idxs={0})
+    assert len(written) == 1
+    entry = written[0]
+    assert entry["cost_usd"] == 0.0          # measured, not unknown
+    assert entry["backend"] == "leonardo-batch"
+    assert entry["run_id"] == "stage2_pilot2/gate"
+    assert entry["node_hours"] == pytest.approx(0.0867, abs=1e-4)
+
+
+def test_a_failed_attempt_is_billed_too_and_attempts_accumulate(rig,
+                                                                monkeypatch):
+    _build(rig)
+    P2.cmd_bootstrap(rig)
+    # A node-level failure still costs the whole allocation.
+    monkeypatch.setattr(P1, "run",
+                        lambda argv, check=True: "111|FAILED|00:03:21|1|1:0\n")
+    P2.cmd_bill(Args(out_dir=rig.out_dir, name="stage2_pilot2_gate",
+                     job_id="111"))
+    monkeypatch.setattr(P1, "run",
+                        lambda argv, check=True: "222|COMPLETED|00:05:12|1|0:0\n")
+    P2.cmd_bill(Args(out_dir=rig.out_dir, name="stage2_pilot2_gate",
+                     job_id="222"))
+    entry = json.loads((rig.out_dir / "manifest.json").read_text())[
+        "jobs"]["stage2_pilot2_gate"]
+    assert entry["slurm_job_ids"] == ["111", "222"]
+    assert len(entry["sacct"]) == 2
+    assert entry["status"] == "completed"
+    # 0.0558 wasted + 0.0867 useful, not 0.0867.
+    assert entry["actual_node_hours"] == pytest.approx(0.1425, abs=1e-4)
+
+
+def test_re_billing_the_same_job_id_does_not_double_count_it(rig, monkeypatch):
+    _build(rig)
+    P2.cmd_bootstrap(rig)
+    monkeypatch.setattr(P1, "run", lambda argv, check=True: SACCT_LINE)
+    P2.cmd_bill(Args(out_dir=rig.out_dir, name="stage2_pilot2_gate",
+                     job_id="50378388"))
+    P2.cmd_bill(Args(out_dir=rig.out_dir, name="stage2_pilot2_gate",
+                     job_id="50378388"))
+    entry = json.loads((rig.out_dir / "manifest.json").read_text())[
+        "jobs"]["stage2_pilot2_gate"]
+    assert len(entry["sacct"]) == 1
+    assert entry["actual_node_hours"] == pytest.approx(0.0867, abs=1e-4)

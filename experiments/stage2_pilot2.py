@@ -751,18 +751,44 @@ def cmd_export_pred(args) -> int:
 
 
 def score_gate(meta: dict, completion: str | None) -> dict:
-    """One gate completion -> argmax + probability mass on the true option."""
+    """One gate completion -> argmax + probability mass on the true option.
+
+    ``margin`` is what the gate decision actually turned on: the true option's
+    probability minus the best rival's. Positive means the zero-information arm
+    picked the right answer, and by how much it was not a close call.
+    """
     n = int(meta.get("n_options") or 4)
     dist = R.parse_distribution(completion, n) if completion else None
     correct = int(meta["correct_index"])
+    base = {"item_id": meta["item_id"], "canonical_id": meta["canonical_id"],
+            "correct_index": correct,
+            "raw_response": (completion or "")[:600]}
     if dist is None:
-        return {"item_id": meta["item_id"], "canonical_id": meta["canonical_id"],
-                "parsed": False, "argmax_correct": None, "p_correct": None}
-    argmax = max(range(n), key=lambda i: (dist[i], -i))
-    return {"item_id": meta["item_id"], "canonical_id": meta["canonical_id"],
-            "parsed": True, "argmax_correct": bool(argmax == correct),
+        return {**base, "parsed": False, "argmax_correct": None,
+                "p_correct": None, "margin": None}
+    argmax = max(range(n), key=lambda i: dist[i])
+    rival = max((dist[i] for i in range(n) if i != correct), default=0.0)
+    return {**base, "parsed": True, "argmax_correct": bool(argmax == correct),
             "p_correct": float(dist[correct]), "argmax_index": argmax,
+            "margin": round(float(dist[correct]) - float(rival), 6),
             "distribution": [float(p) for p in dist]}
+
+
+def billed_node_hours(out_dir: Path, job: str) -> float | None:
+    """sacct-billed node-hours for a job, as recorded by ``bill``/``record``.
+
+    A Booster node is billed whole (leonardo.md), so elapsed x allocated nodes
+    from sacct is the truth. batch_generate's own wall clock misses queue-side
+    overhead and teardown, and is only ever a cross-check.
+    """
+    man = load_manifest(out_dir / "manifest.json")
+    got = man.get("jobs", {}).get(job, {}).get("actual_node_hours")
+    return None if got is None else float(got)
+
+
+def _completion_text(row: dict | None) -> str | None:
+    """``batch_generate.py`` writes the reply under ``text``."""
+    return None if row is None else row.get("text")
 
 
 def cmd_ingest_gate(args) -> int:
@@ -770,23 +796,30 @@ def cmd_ingest_gate(args) -> int:
     export_dir = out_dir / "exports"
     nodedir = Path(args.nodedir)
     metas = S.read_jsonl(export_dir / "meta_gate.jsonl")
-    prompts = S.read_jsonl(export_dir / "prompts_gate.jsonl")
     completions = S.read_jsonl(nodedir / "completions_gate.jsonl")
     by_idx = {int(r["idx"]): r for r in completions}
     if len(by_idx) != len(completions):
         raise fatal("duplicate idx in completions_gate.jsonl")
 
-    records = []
+    records, tokens_in, tokens_out, missing = [], 0, 0, 0
     for meta in metas:
         row = by_idx.get(int(meta["idx"]))
-        records.append(score_gate(meta, (row or {}).get("completion")))
+        if row is None:
+            missing += 1
+        tokens_in += int((row or {}).get("tokens_in", 0) or 0)
+        tokens_out += int((row or {}).get("tokens_out", 0) or 0)
+        rec = score_gate(meta, _completion_text(row))
+        rec["missing_completion"] = row is None
+        records.append(rec)
     parsed = [r for r in records if r["parsed"]]
     solved = [r for r in parsed if r["argmax_correct"]]
 
     summary_path = nodedir / "completions_gate.jsonl.summary.json"
     summary = json.loads(summary_path.read_text(encoding="utf-8")) \
         if summary_path.exists() else {}
-    node_hours = P1._node_hours(summary)
+    in_process = P1._node_hours(summary)
+    billed = billed_node_hours(out_dir, "stage2_pilot2_gate")
+    node_hours = billed if billed is not None else in_process
 
     doc = {
         "pilot": PILOT_BANNER, "phase": "gate", "ingested_utc": now(),
@@ -794,35 +827,207 @@ def cmd_ingest_gate(args) -> int:
         "n_candidates": len(records),
         "n_parsed": len(parsed),
         "n_parse_failures": len(records) - len(parsed),
+        "n_missing_completions": missing,
         "pre_gate_zeroinfo_argmax_accuracy":
             round(len(solved) / len(parsed), 4) if parsed else None,
+        "pre_gate_mean_prob_mass_correct":
+            round(sum(r["p_correct"] for r in parsed) / len(parsed), 4)
+            if parsed else None,
         "pre_gate_note": "This is the instrument-difficulty number. Post-gate "
-                         "zero-info accuracy is ~0 by construction.",
+                         "zero-info accuracy is ~0 by construction (same model, "
+                         "temperature 0, same prompt).",
         "n_rejected": len(solved),
         "rejected_item_ids": sorted(r["item_id"] for r in solved),
         "records": records,
         "node_hours": node_hours,
-        "n_prompts": len(prompts),
+        "node_hours_source": "sacct" if billed is not None else "batch_generate",
+        "node_hours_in_process": in_process,
+        "tokens_in": tokens_in, "tokens_out": tokens_out,
     }
     S.write_json(out_dir / "gate_results.json", doc)
 
-    if not args.skip_cost:
-        tokens_in = sum(int(round(m["prompt_words"] * TOKENS_PER_WORD))
-                        for m in metas)
-        append_cost_log(build_cost_entry(
-            run_id="stage2_pilot2_gate", model=MODEL_LABEL, split=SPLIT_LABEL,
+    if args.skip_cost:
+        print("[cost] --skip-cost: no ledger entry")
+    elif node_hours:
+        append_cost_log(P1._zero_api_cost(build_cost_entry(
+            run_id="stage2_pilot2/gate", model=MODEL_LABEL, split=SPLIT_LABEL,
+            variant="stage2_d6v2_gate",
             n_persons=len({m["canonical_id"] for m in metas}),
             n_calls=len(records), n_retries=0,
             n_parse_failures=len(records) - len(parsed),
-            tokens_in=tokens_in,
-            tokens_out=len(records) * PREDICTION_MAX_OUTPUT_TOKENS,
-            variant="v2", backend="leonardo-batch",
-            node_hours=node_hours), COST_LOG)
+            tokens_in=tokens_in, tokens_out=tokens_out,
+            backend="leonardo-batch", node_hours=node_hours)), COST_LOG)
+        print(f"[cost] gate: {node_hours} node-hours "
+              f"({doc['node_hours_source']}), {len(records)} calls, $0.00 API")
 
-    print(f"[ingest-gate] {len(records)} candidates, {len(parsed)} parsed")
+    print(f"[ingest-gate] {len(records)} candidates, {len(parsed)} parsed, "
+          f"{missing} missing")
     print(f"[ingest-gate] PRE-gate zero-info argmax accuracy "
           f"{doc['pre_gate_zeroinfo_argmax_accuracy']}")
     print(f"[ingest-gate] {len(solved)} items rejected by the gate")
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# Phase-2 ingest
+# ---------------------------------------------------------------------------
+
+
+def cmd_ingest_pred(args) -> int:
+    out_dir = Path(getattr(args, "out_dir", None) or PILOT2_DIR)
+    export_dir = out_dir / "exports"
+    nodedir = Path(args.nodedir)
+    doc = json.loads((export_dir / "export_manifest_pred.json").read_text(
+        encoding="utf-8"))
+
+    all_records: list[dict] = []
+    summaries: list[dict] = []
+    missing_total = 0
+    for arm in ARMS:
+        for variant in VARIANTS:
+            name = set_name(arm, variant)
+            metas = S.read_jsonl(export_dir / f"meta_{name}.jsonl")
+            comp_path = nodedir / f"completions_{name}.jsonl"
+            comps = {}
+            if comp_path.exists():
+                comps = {int(r["idx"]): r for r in S.read_jsonl(comp_path)}
+                side = nodedir / f"completions_{name}.jsonl.summary.json"
+                if side.exists():
+                    summaries.append(json.loads(side.read_text(encoding="utf-8")))
+            else:
+                print(f"[warn] no completions for {name}", file=sys.stderr)
+            rows = []
+            for meta in metas:
+                comp = comps.get(int(meta["idx"]))
+                if comp is None:
+                    missing_total += 1
+                rec = P1.score_record(meta, _completion_text(comp))
+                rec.update({
+                    "idx": int(meta["idx"]),
+                    "tokens_in": int((comp or {}).get("tokens_in", 0) or 0),
+                    "tokens_out": int((comp or {}).get("tokens_out", 0) or 0),
+                    "missing_completion": comp is None,
+                })
+                rows.append(rec)
+            S.write_jsonl(out_dir / "records" / f"{name}.jsonl", rows)
+            all_records += rows
+            print(f"[ingest-pred] {name}: {len(rows)} records, "
+                  f"{sum(1 for r in rows if r['parse_failure'])} parse failures")
+
+    in_process = P1._sum_node_hours(summaries)
+    billed = billed_node_hours(out_dir, "stage2_pilot2_pred")
+    node_hours = billed if billed is not None else in_process
+
+    gate_path = out_dir / "gate_results.json"
+    gate = json.loads(gate_path.read_text(encoding="utf-8")) \
+        if gate_path.exists() else {}
+
+    analysis = {
+        "pilot": PILOT_BANNER, "confirmatory": False, "contract": CONTRACT,
+        "analysed_utc": now(),
+        "model": MODEL_LABEL, "temperature": TEMPERATURE,
+        "n_items": doc["n_items"], "item_source": doc["item_source"],
+        "arms": list(ARMS), "option_variants": list(VARIANTS),
+        "n_records": len(all_records),
+        "n_missing_completions": missing_total,
+        "gate": {
+            "pre_gate_zeroinfo_argmax_accuracy":
+                gate.get("pre_gate_zeroinfo_argmax_accuracy"),
+            "n_candidates": gate.get("n_candidates"),
+            "n_rejected": gate.get("n_rejected"),
+            "rejected_item_ids": gate.get("rejected_item_ids", []),
+            "note": "Post-gate zeroinfo_redacted accuracy below is ~0 BY "
+                    "CONSTRUCTION -- the gate removed every item this same "
+                    "model solved at temperature 0. Read the pre-gate number "
+                    "as the instrument-difficulty measure.",
+        },
+        "accuracy": {
+            variant: {arm: P1.accuracy(
+                [r for r in all_records
+                 if r["arm"] == arm and r["variant"] == variant])
+                for arm in ARMS} for variant in VARIANTS},
+        "per_subject": {
+            cid: {variant: {arm: P1.accuracy(
+                [r for r in all_records if r["canonical_id"] == cid
+                 and r["arm"] == arm and r["variant"] == variant])
+                for arm in ARMS} for variant in VARIANTS}
+            for cid in sorted({r["canonical_id"] for r in all_records})},
+        "lift": {
+            variant: {
+                "twin_redacted_minus_zeroinfo_redacted": P1.paired_lift(
+                    all_records, "twin_redacted", "zeroinfo_redacted", variant),
+                "twin_redacted_minus_imposter_redacted": P1.paired_lift(
+                    all_records, "twin_redacted", "imposter_redacted", variant),
+            } for variant in VARIANTS},
+        "contamination_meter": P1.contamination_meter(all_records),
+        "parse_failures": {
+            set_name(arm, variant): sum(
+                1 for r in all_records
+                if r["arm"] == arm and r["variant"] == variant
+                and r["parse_failure"])
+            for arm in ARMS for variant in VARIANTS},
+        "node_hours": node_hours,
+        "node_hours_source": "sacct" if billed is not None else "batch_generate",
+        "node_hours_in_process": in_process,
+        "node_hours_gate": gate.get("node_hours"),
+        "jobs": {k: {kk: vv for kk, vv in v.items() if kk != "text"}
+                 for k, v in load_manifest(
+                     out_dir / "manifest.json").get("jobs", {}).items()},
+    }
+    S.write_json(out_dir / "analysis.json", analysis)
+    print(f"[ingest-pred] analysis -> {rel(out_dir / 'analysis.json')}")
+
+    if args.skip_cost:
+        print("[cost] --skip-cost: no ledger entry")
+    elif node_hours:
+        append_cost_log(P1._zero_api_cost(build_cost_entry(
+            run_id="stage2_pilot2/prediction", model=MODEL_LABEL,
+            split=SPLIT_LABEL, variant="stage2_d6v2_pred",
+            n_persons=len({r["canonical_id"] for r in all_records}),
+            n_calls=len(all_records), n_retries=0,
+            n_parse_failures=sum(1 for r in all_records if r["parse_failure"]),
+            tokens_in=sum(r["tokens_in"] for r in all_records),
+            tokens_out=sum(r["tokens_out"] for r in all_records),
+            backend="leonardo-batch", node_hours=node_hours)), COST_LOG)
+        print(f"[cost] prediction: {node_hours} node-hours "
+              f"({analysis['node_hours_source']}), "
+              f"{len(all_records)} calls, $0.00 API")
+    return 0
+
+
+def cmd_bill(args) -> int:
+    """Ask sacct what the job actually cost and write it into the manifest."""
+    text = P1.run(P1.sacct_argv(args.job_id), check=False)
+    got = P1.parse_sacct(text)
+    if got is None:
+        raise fatal(f"sacct returned nothing usable for {args.job_id}: "
+                    f"{text.strip()[:200]}")
+    out_dir = Path(getattr(args, "out_dir", None) or PILOT2_DIR)
+    path = out_dir / "manifest.json"
+    man = load_manifest(path)
+    entry = man["jobs"].setdefault(args.name, {})
+    # A Booster node is billed whole from the moment it is allocated, so a
+    # FAILED attempt costs exactly what a successful one of the same length
+    # costs. Attempts therefore ACCUMULATE -- billing only the last one would
+    # quietly write off a wasted allocation. Re-billing the same job id
+    # replaces that attempt's line rather than adding a second copy.
+    attempts = [a for a in entry.get("sacct", [])
+                if a.get("job_id") != got["job_id"]]
+    attempts.append(got)
+    entry["sacct"] = attempts
+    entry["actual_node_hours"] = round(
+        sum(a["node_hours"] for a in attempts), 4)
+    entry["status"] = got["state"].lower()
+    if args.job_id not in entry.setdefault("slurm_job_ids", []):
+        entry["slurm_job_ids"].append(args.job_id)
+    man["updated_utc"] = now()
+    S.write_json(path, man)
+    print(f"[bill] {args.name} job {got['job_id']}: {got['state']}, "
+          f"elapsed {got['elapsed']} x {got['alloc_nodes']} node(s) = "
+          f"{got['node_hours']} node-hours (sacct)")
+    if len(attempts) > 1:
+        print(f"[bill] {len(attempts)} attempts, "
+              f"{entry['actual_node_hours']} node-hours billed in total")
     return 0
 
 
@@ -1248,6 +1453,18 @@ def main(argv=None) -> int:
     p_ing.add_argument("--nodedir", required=True)
     p_ing.add_argument("--skip-cost", action="store_true")
     p_ing.set_defaults(fn=cmd_ingest_gate)
+
+    p_inp = sub.add_parser("ingest-pred")
+    p_inp.add_argument("--nodedir", required=True)
+    p_inp.add_argument("--skip-cost", action="store_true",
+                       help="re-analyse without writing cost-log entries (the "
+                            "ledger is append-only; a re-run would double-bill)")
+    p_inp.set_defaults(fn=cmd_ingest_pred)
+
+    p_bill = sub.add_parser("bill")
+    p_bill.add_argument("--name", required=True)
+    p_bill.add_argument("--job-id", required=True)
+    p_bill.set_defaults(fn=cmd_bill)
 
     sub.add_parser("finalize").set_defaults(fn=cmd_finalize)
     sub.add_parser("verify").set_defaults(fn=cmd_verify)
