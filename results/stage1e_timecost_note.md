@@ -93,7 +93,7 @@ against the primary one:
 | 750 ms – 45 s | 97.79% | 6.76 s | 6.89 s | 139.0 s |
 | 1 s – 30 s | 95.60% | 6.71 s | 6.80 s | 137.1 s |
 
-The headline figure moves by **0.11 s (1.6%)** across rules that discard between
+The headline figure moves by **0.10 s (1.5%)** across rules that discard between
 0% and 4.4% of the data. Medians are doing the work; the trim rule is almost
 decorative. Anyone who prefers a different cutoff gets the same answer.
 
@@ -403,6 +403,7 @@ second, and once thinking time is included it wins by more.**
 
 | item | where |
 |---|---|
+| **script reproducing every number and the figure** | **`experiments/timecost_note.py`** |
 | lift values (unchanged) | `results/stage1e_confirm/analysis.json`, key `lift_over_baseline` |
 | closed findings | `results/stage1e_findings.md` |
 | frozen bars | `PREREGISTRATION_AMENDMENT_1_ADDENDUM_A.md` (commit `3b8dd57`) |
@@ -414,8 +415,27 @@ second, and once thinking time is included it wins by more.**
 | figure | `results/stage1e_timecost_curves.png` |
 | dataset named for this purpose in advance | `PREREGISTRATION.md` section 3 |
 
-**Reproducing the cost model** (no repo code was added; the recipe is the
-specification):
+**Reproducing this note.** Every number above, and the figure, come from
+`experiments/timecost_note.py`:
+
+```
+uv run --no-project python experiments/timecost_note.py --check
+uv run --no-project --with matplotlib python experiments/timecost_note.py --figure
+```
+
+`--check` re-derives the headline figures and aborts if they no longer match the
+ones written into this note, so the prose and the code cannot drift apart
+silently. It also verifies all 68 item texts verbatim against
+`data/mach/MACH_data/codebook.txt` and `data/riasec/codebook.txt`, and
+spot-checks three lift values against the frozen artifact. No lift number is
+typed into the script; all are read from `analysis.json`, whose arms and
+checkpoints are validated against the frozen grid on load.
+
+matplotlib is deliberately **not** added to `pyproject.toml` — it is needed only
+for the figure, is imported lazily, and `--no-project --with matplotlib` supplies
+it without touching the project environment. Every table reproduces without it.
+
+The method, for anyone reading rather than running it:
 
 1. Read `data/mach/MACH_data/data.csv` (tab-separated). For items n = 1…20, take
    `QnE` (elapsed ms) and `QnI` (presentation position).
