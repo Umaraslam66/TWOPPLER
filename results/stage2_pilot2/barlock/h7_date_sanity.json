@@ -1,0 +1,2609 @@
+{
+ "generated_utc": "2026-07-26T21:58:06Z",
+ "seed": 81,
+ "rule": "30 subjects drawn with random.Random(81) from the 262 H7-eligible candidates (>= 4 dated substantive clusters spanning >= 2 years), sorted by canonical_id; then up to 3 of each subject's substantive transcripts drawn from the same generator.",
+ "n_subjects": 30,
+ "n_transcripts_checked": 90,
+ "n_records_missing": 0,
+ "same_calendar_day": 90,
+ "different_calendar_day": 0,
+ "same_day_but_different_string_padding": 9,
+ "exact_string_match": 81,
+ "calendar_day_match_rate": 1.0,
+ "exact_string_match_rate": 0.9,
+ "max_delta_days": 0,
+ "internal_evidence": {
+  "of": 90,
+  "transcripts_with_matching_full_date_or_month_day": 1,
+  "transcripts_mentioning_the_recorded_year": 8,
+  "transcripts_with_a_relative_self_reference": 70,
+  "transcripts_with_an_anachronism": 4,
+  "anachronism_examples": [
+   {
+    "transcript_id": "CNN-314270",
+    "csv_date": "2017-06-12",
+    "newest_year_mentioned": 2022
+   },
+   {
+    "transcript_id": "NPR-16943",
+    "csv_date": "2017-07-24",
+    "newest_year_mentioned": 2021
+   },
+   {
+    "transcript_id": "NPR-12649",
+    "csv_date": "2012-03-29",
+    "newest_year_mentioned": 2015
+   },
+   {
+    "transcript_id": "NPR-8282",
+    "csv_date": "2013-06-20",
+    "newest_year_mentioned": 2015
+   }
+  ],
+  "note": "this corpus almost never states its own broadcast date, so low corroboration is expected; the anachronism count is the falsification test and it is the informative one"
+ },
+ "bin_risk": {
+  "bin_edges_days": [
+   183,
+   366,
+   731,
+   1096
+  ],
+  "max_observed_date_error_days": 0,
+  "eligible_subjects_that_could_change_bin": 0,
+  "of_eligible": 578,
+  "hypothetical_at_risk_by_error": {
+   "0d": 0,
+   "1d": 18,
+   "3d": 48,
+   "7d": 73,
+   "30d": 203
+  },
+  "note": "at 0 days of error nothing shifts, so nothing can cross a bin edge; the ladder prices errors that were NOT observed"
+ },
+ "per_subject": [
+  {
+   "canonical_id": "C00060",
+   "canonical_name": "Ahmed Rashid",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00075",
+   "canonical_name": "Al Baker",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 1,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00144",
+   "canonical_name": "Amy Dickinson",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00169",
+   "canonical_name": "Andrew Roth",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00218",
+   "canonical_name": "Anthony Cordesman",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00238",
+   "canonical_name": "Ariel Dorfman",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00322",
+   "canonical_name": "Bill Adair",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00457",
+   "canonical_name": "Charles Fishman",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00522",
+   "canonical_name": "Courtney Nguyen",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00623",
+   "canonical_name": "De Hoop Scheffer",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 3,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00644",
+   "canonical_name": "Deborah Blum",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00655",
+   "canonical_name": "Del Grande",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 1,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00694",
+   "canonical_name": "Douglas Holtz-Eakin",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00810",
+   "canonical_name": "Gary Sick",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C00892",
+   "canonical_name": "Holmes Norton",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 1,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C01679",
+   "canonical_name": "Matthew Yglesias",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C01732",
+   "canonical_name": "Michael Mcdonald",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C01747",
+   "canonical_name": "Michele Flournoy",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C01824",
+   "canonical_name": "Neal Katyal",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C01837",
+   "canonical_name": "Nikky Finney",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C01848",
+   "canonical_name": "Omer Taspinar",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C01853",
+   "canonical_name": "Ozzy Osbourne",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 2,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C01904",
+   "canonical_name": "Puneet Ahluwalia",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C01944",
+   "canonical_name": "Ray Takeyh",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C02024",
+   "canonical_name": "Robin Givhan",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C02088",
+   "canonical_name": "Russell Moore",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C02150",
+   "canonical_name": "Scott Mccartney",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C02407",
+   "canonical_name": "Tipper Gore",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 1,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C02431",
+   "canonical_name": "Tom Udall",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  },
+  {
+   "canonical_id": "C02520",
+   "canonical_name": "William Rhoden",
+   "n_checked": 3,
+   "n_mismatch": 0,
+   "n_padding_only": 0,
+   "max_delta_days": 0
+  }
+ ],
+ "per_transcript": [
+  {
+   "transcript_id": "NPR-44940",
+   "csv_date": "2010-05-05",
+   "mediasum_date": "2010-05-05",
+   "mediasum_date_normalised": "2010-05-05",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2007,
+    "anachronism": false,
+    "anachronism_years": -3,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2001,
+     2006,
+     2007
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-47073",
+   "csv_date": "2018-04-22",
+   "mediasum_date": "2018-04-22",
+   "mediasum_date_normalised": "2018-04-22",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2001,
+    "anachronism": false,
+    "anachronism_years": -17,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2001
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-42016",
+   "csv_date": "2006-08-11",
+   "mediasum_date": "2006-08-11",
+   "mediasum_date_normalised": "2006-08-11",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-227885",
+   "csv_date": "2014-04-04",
+   "mediasum_date": "2014-4-4",
+   "mediasum_date_normalised": "2014-04-04",
+   "exact_string_match": false,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "QUEST MEANS BUSINESS",
+   "program_mediasum": "QUEST MEANS BUSINESS",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-314270",
+   "csv_date": "2017-06-12",
+   "mediasum_date": "2017-06-12",
+   "mediasum_date_normalised": "2017-06-12",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "QUEST MEANS BUSINESS",
+   "program_mediasum": "QUEST MEANS BUSINESS",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2022,
+    "anachronism": true,
+    "anachronism_years": 5,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1944,
+     2022
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-345523",
+   "csv_date": "2018-07-19",
+   "mediasum_date": "2018-07-19",
+   "mediasum_date_normalised": "2018-07-19",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "QUEST MEANS BUSINESS",
+   "program_mediasum": "QUEST MEANS BUSINESS",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2019,
+    "anachronism": false,
+    "anachronism_years": 1,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [
+     2019
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-704",
+   "csv_date": "2011-11-23",
+   "mediasum_date": "2011-11-23",
+   "mediasum_date_normalised": "2011-11-23",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2012,
+    "anachronism": false,
+    "anachronism_years": 1,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2004,
+     2012
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-41455",
+   "csv_date": "2007-01-11",
+   "mediasum_date": "2007-01-11",
+   "mediasum_date_normalised": "2007-01-11",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-45046",
+   "csv_date": "2010-04-21",
+   "mediasum_date": "2010-04-21",
+   "mediasum_date_normalised": "2010-04-21",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-7849",
+   "csv_date": "2019-06-09",
+   "mediasum_date": "2019-06-09",
+   "mediasum_date_normalised": "2019-06-09",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Weekend Edition Sunday",
+   "program_mediasum": "Weekend Edition Sunday",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-28203",
+   "csv_date": "2013-12-03",
+   "mediasum_date": "2013-12-03",
+   "mediasum_date_normalised": "2013-12-03",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-18953",
+   "csv_date": "2017-04-03",
+   "mediasum_date": "2017-04-03",
+   "mediasum_date_normalised": "2017-04-03",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2013,
+    "anachronism": false,
+    "anachronism_years": -4,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2010,
+     2013
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-48614",
+   "csv_date": "2011-03-05",
+   "mediasum_date": "2011-03-05",
+   "mediasum_date_normalised": "2011-03-05",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Weekend Edition Saturday",
+   "program_mediasum": "Weekend Edition Saturday",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-3064",
+   "csv_date": "2018-10-20",
+   "mediasum_date": "2018-10-20",
+   "mediasum_date_normalised": "2018-10-20",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-42110",
+   "csv_date": "2006-07-21",
+   "mediasum_date": "2006-07-21",
+   "mediasum_date_normalised": "2006-07-21",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-4369",
+   "csv_date": "2010-09-13",
+   "mediasum_date": "2010-09-13",
+   "mediasum_date_normalised": "2010-09-13",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1954,
+    "anachronism": false,
+    "anachronism_years": -56,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1904,
+     1954
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-18074",
+   "csv_date": "2006-06-22",
+   "mediasum_date": "2006-06-22",
+   "mediasum_date_normalised": "2006-06-22",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1973,
+    "anachronism": false,
+    "anachronism_years": -33,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1936,
+     1937,
+     1944,
+     1973
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-46430",
+   "csv_date": "2018-06-09",
+   "mediasum_date": "2018-06-09",
+   "mediasum_date_normalised": "2018-06-09",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1990,
+    "anachronism": false,
+    "anachronism_years": -28,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1990
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-16725",
+   "csv_date": "2008-04-27",
+   "mediasum_date": "2008-04-27",
+   "mediasum_date_normalised": "2008-04-27",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Weekend Edition Sunday",
+   "program_mediasum": "Weekend Edition Sunday",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 1,
+    "month_day_match": false,
+    "year_mentioned": true,
+    "newest_year_mentioned": 2008,
+    "anachronism": false,
+    "anachronism_years": 0,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2000,
+     2008
+    ],
+    "example_full_dates": [
+     "February 2, 2008"
+    ]
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-30359",
+   "csv_date": "2010-12-17",
+   "mediasum_date": "2010-12-17",
+   "mediasum_date_normalised": "2010-12-17",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Morning Edition",
+   "program_mediasum": "Morning Edition",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-39030",
+   "csv_date": "2008-09-04",
+   "mediasum_date": "2008-09-04",
+   "mediasum_date_normalised": "2008-09-04",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-18005",
+   "csv_date": "2006-07-10",
+   "mediasum_date": "2006-07-10",
+   "mediasum_date_normalised": "2006-07-10",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-6333",
+   "csv_date": "2010-12-01",
+   "mediasum_date": "2010-12-01",
+   "mediasum_date_normalised": "2010-12-01",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2007,
+    "anachronism": false,
+    "anachronism_years": -3,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2004,
+     2007
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-26989",
+   "csv_date": "2012-11-22",
+   "mediasum_date": "2012-11-22",
+   "mediasum_date_normalised": "2012-11-22",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Morning Edition",
+   "program_mediasum": "Morning Edition",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-5584",
+   "csv_date": "2017-01-28",
+   "mediasum_date": "2017-01-28",
+   "mediasum_date_normalised": "2017-01-28",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2009,
+    "anachronism": false,
+    "anachronism_years": -8,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2004,
+     2009
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-19344",
+   "csv_date": "2016-06-06",
+   "mediasum_date": "2016-06-06",
+   "mediasum_date_normalised": "2016-06-06",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Morning Edition",
+   "program_mediasum": "Morning Edition",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1969,
+    "anachronism": false,
+    "anachronism_years": -47,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1969
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-19193",
+   "csv_date": "2016-07-06",
+   "mediasum_date": "2016-07-06",
+   "mediasum_date_normalised": "2016-07-06",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Morning Edition",
+   "program_mediasum": "Morning Edition",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2010,
+    "anachronism": false,
+    "anachronism_years": -6,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2009,
+     2010
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-110494",
+   "csv_date": "2006-09-20",
+   "mediasum_date": "2006-9-20",
+   "mediasum_date_normalised": "2006-09-20",
+   "exact_string_match": false,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "CNN NEWSROOM",
+   "program_mediasum": "CNN NEWSROOM",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-95071",
+   "csv_date": "2005-06-03",
+   "mediasum_date": "2005-6-3",
+   "mediasum_date_normalised": "2005-06-03",
+   "exact_string_match": false,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "NEWS FROM CNN",
+   "program_mediasum": "NEWS FROM CNN",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-104099",
+   "csv_date": "2006-03-21",
+   "mediasum_date": "2006-3-21",
+   "mediasum_date_normalised": "2006-03-21",
+   "exact_string_match": false,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "YOUR WORLD TODAY",
+   "program_mediasum": "YOUR WORLD TODAY",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2001,
+    "anachronism": false,
+    "anachronism_years": -5,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2001
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-30213",
+   "csv_date": "2012-12-23",
+   "mediasum_date": "2012-12-23",
+   "mediasum_date_normalised": "2012-12-23",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2004,
+    "anachronism": false,
+    "anachronism_years": -8,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [
+     2004
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-45258",
+   "csv_date": "2010-04-02",
+   "mediasum_date": "2010-04-02",
+   "mediasum_date_normalised": "2010-04-02",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1926,
+    "anachronism": false,
+    "anachronism_years": -84,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1918,
+     1920,
+     1926
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-8481",
+   "csv_date": "2013-05-31",
+   "mediasum_date": "2013-05-31",
+   "mediasum_date_normalised": "2013-05-31",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1998,
+    "anachronism": false,
+    "anachronism_years": -15,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1998
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-80164",
+   "csv_date": "2003-12-13",
+   "mediasum_date": "2003-12-13",
+   "mediasum_date_normalised": "2003-12-13",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "CNN LIVE SATURDAY",
+   "program_mediasum": "CNN LIVE SATURDAY",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-116258",
+   "csv_date": "2007-04-21",
+   "mediasum_date": "2007-4-21",
+   "mediasum_date_normalised": "2007-04-21",
+   "exact_string_match": false,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "OPEN HOUSE",
+   "program_mediasum": "OPEN HOUSE",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": true,
+    "newest_year_mentioned": 2007,
+    "anachronism": false,
+    "anachronism_years": 0,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2005,
+     2007
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-122158",
+   "csv_date": "2007-12-15",
+   "mediasum_date": "2007-12-15",
+   "mediasum_date_normalised": "2007-12-15",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "OPEN HOUSE",
+   "program_mediasum": "OPEN HOUSE",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-16943",
+   "csv_date": "2017-07-24",
+   "mediasum_date": "2017-07-24",
+   "mediasum_date_normalised": "2017-07-24",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2021,
+    "anachronism": true,
+    "anachronism_years": 4,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [
+     1975,
+     2003,
+     2005,
+     2021
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-14270",
+   "csv_date": "2017-12-17",
+   "mediasum_date": "2017-12-17",
+   "mediasum_date_normalised": "2017-12-17",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2016,
+    "anachronism": false,
+    "anachronism_years": -1,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [
+     2016
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-18432",
+   "csv_date": "2006-12-10",
+   "mediasum_date": "2006-12-10",
+   "mediasum_date_normalised": "2006-12-10",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Weekend Edition Sunday",
+   "program_mediasum": "Weekend Edition Sunday",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": true,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1974,
+    "anachronism": false,
+    "anachronism_years": -32,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [
+     1974
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-11032",
+   "csv_date": "2012-05-22",
+   "mediasum_date": "2012-05-22",
+   "mediasum_date_normalised": "2012-05-22",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2004,
+    "anachronism": false,
+    "anachronism_years": -8,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2003,
+     2004
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-40915",
+   "csv_date": "2005-07-01",
+   "mediasum_date": "2005-07-01",
+   "mediasum_date_normalised": "2005-07-01",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Morning Edition",
+   "program_mediasum": "Morning Edition",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1980,
+    "anachronism": false,
+    "anachronism_years": -25,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [
+     1979,
+     1980
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-10183",
+   "csv_date": "2019-06-15",
+   "mediasum_date": "2019-06-15",
+   "mediasum_date_normalised": "2019-06-15",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-367663",
+   "csv_date": "2019-04-22",
+   "mediasum_date": "2019-04-22",
+   "mediasum_date_normalised": "2019-04-22",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "AT THIS HOUR",
+   "program_mediasum": "AT THIS HOUR",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2020,
+    "anachronism": false,
+    "anachronism_years": 1,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2020
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-40888",
+   "csv_date": "2001-10-02",
+   "mediasum_date": "2001-10-2",
+   "mediasum_date_normalised": "2001-10-02",
+   "exact_string_match": false,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "CNN LIVE AT DAYBREAK",
+   "program_mediasum": "CNN LIVE AT DAYBREAK",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-351358",
+   "csv_date": "2018-10-03",
+   "mediasum_date": "2018-10-03",
+   "mediasum_date_normalised": "2018-10-03",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "AT THIS HOUR",
+   "program_mediasum": "AT THIS HOUR",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1998,
+    "anachronism": false,
+    "anachronism_years": -20,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1991,
+     1998
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-17945",
+   "csv_date": "2017-06-09",
+   "mediasum_date": "2017-06-09",
+   "mediasum_date_normalised": "2017-06-09",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-46056",
+   "csv_date": "2018-06-29",
+   "mediasum_date": "2018-06-29",
+   "mediasum_date_normalised": "2018-06-29",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2016,
+    "anachronism": false,
+    "anachronism_years": -2,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [
+     2016
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-13451",
+   "csv_date": "2018-01-19",
+   "mediasum_date": "2018-01-19",
+   "mediasum_date_normalised": "2018-01-19",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-20499",
+   "csv_date": "2016-10-16",
+   "mediasum_date": "2016-10-16",
+   "mediasum_date_normalised": "2016-10-16",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": true,
+    "newest_year_mentioned": 2016,
+    "anachronism": false,
+    "anachronism_years": 0,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [
+     2008,
+     2012,
+     2016
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-20030",
+   "csv_date": "2016-12-04",
+   "mediasum_date": "2016-12-04",
+   "mediasum_date_normalised": "2016-12-04",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-22779",
+   "csv_date": "2016-02-23",
+   "mediasum_date": "2016-02-23",
+   "mediasum_date_normalised": "2016-02-23",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-9511",
+   "csv_date": "2013-02-12",
+   "mediasum_date": "2013-02-12",
+   "mediasum_date_normalised": "2013-02-12",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-7107",
+   "csv_date": "2014-05-28",
+   "mediasum_date": "2014-05-28",
+   "mediasum_date_normalised": "2014-05-28",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-10781",
+   "csv_date": "2012-06-12",
+   "mediasum_date": "2012-06-12",
+   "mediasum_date_normalised": "2012-06-12",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": true,
+    "newest_year_mentioned": 2012,
+    "anachronism": false,
+    "anachronism_years": 0,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2009,
+     2012
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-12649",
+   "csv_date": "2012-03-29",
+   "mediasum_date": "2012-03-29",
+   "mediasum_date_normalised": "2012-03-29",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": true,
+    "newest_year_mentioned": 2015,
+    "anachronism": true,
+    "anachronism_years": 3,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1965,
+     1972,
+     1989,
+     2012,
+     2015
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-41902",
+   "csv_date": "2006-09-06",
+   "mediasum_date": "2006-09-06",
+   "mediasum_date_normalised": "2006-09-06",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1955,
+    "anachronism": false,
+    "anachronism_years": -51,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1955
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-12823",
+   "csv_date": "2019-03-25",
+   "mediasum_date": "2019-03-25",
+   "mediasum_date_normalised": "2019-03-25",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-8282",
+   "csv_date": "2013-06-20",
+   "mediasum_date": "2013-06-20",
+   "mediasum_date_normalised": "2013-06-20",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": true,
+    "newest_year_mentioned": 2015,
+    "anachronism": true,
+    "anachronism_years": 2,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2013,
+     2015
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-150",
+   "csv_date": "2012-02-02",
+   "mediasum_date": "2012-02-02",
+   "mediasum_date_normalised": "2012-02-02",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2011,
+    "anachronism": false,
+    "anachronism_years": -1,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1932,
+     1955,
+     1967,
+     1968,
+     1973,
+     2011
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-14696",
+   "csv_date": "2017-06-27",
+   "mediasum_date": "2017-06-27",
+   "mediasum_date_normalised": "2017-06-27",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Morning Edition",
+   "program_mediasum": "Morning Edition",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-1685",
+   "csv_date": "2018-12-18",
+   "mediasum_date": "2018-12-18",
+   "mediasum_date_normalised": "2018-12-18",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2016,
+    "anachronism": false,
+    "anachronism_years": -2,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2016
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-19719",
+   "csv_date": "2017-01-02",
+   "mediasum_date": "2017-01-02",
+   "mediasum_date_normalised": "2017-01-02",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-19092",
+   "csv_date": "2016-07-22",
+   "mediasum_date": "2016-07-22",
+   "mediasum_date_normalised": "2016-07-22",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Morning Edition",
+   "program_mediasum": "Morning Edition",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-223496",
+   "csv_date": "2014-01-22",
+   "mediasum_date": "2014-1-22",
+   "mediasum_date_normalised": "2014-01-22",
+   "exact_string_match": false,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "PIERS MORGAN LIVE",
+   "program_mediasum": "PIERS MORGAN LIVE",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1982,
+    "anachronism": false,
+    "anachronism_years": -32,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1973,
+     1982
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-67697",
+   "csv_date": "2003-03-08",
+   "mediasum_date": "2003-3-8",
+   "mediasum_date_normalised": "2003-03-08",
+   "exact_string_match": false,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "CNN LARRY KING WEEKEND",
+   "program_mediasum": "CNN LARRY KING WEEKEND",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-174179",
+   "csv_date": "2011-10-16",
+   "mediasum_date": "2011-10-16",
+   "mediasum_date_normalised": "2011-10-16",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "PIERS MORGAN TONIGHT",
+   "program_mediasum": "PIERS MORGAN TONIGHT",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2004,
+    "anachronism": false,
+    "anachronism_years": -7,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2002,
+     2004
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-23058",
+   "csv_date": "2016-01-16",
+   "mediasum_date": "2016-01-16",
+   "mediasum_date_normalised": "2016-01-16",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-48459",
+   "csv_date": "2018-03-10",
+   "mediasum_date": "2018-03-10",
+   "mediasum_date_normalised": "2018-03-10",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2014,
+    "anachronism": false,
+    "anachronism_years": -4,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2002,
+     2014
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-20048",
+   "csv_date": "2016-12-03",
+   "mediasum_date": "2016-12-03",
+   "mediasum_date_normalised": "2016-12-03",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-10712",
+   "csv_date": "2012-06-20",
+   "mediasum_date": "2012-06-20",
+   "mediasum_date_normalised": "2012-06-20",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2003,
+    "anachronism": false,
+    "anachronism_years": -9,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1980,
+     1988,
+     2003
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-33331",
+   "csv_date": "2011-04-24",
+   "mediasum_date": "2011-04-24",
+   "mediasum_date_normalised": "2011-04-24",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-858",
+   "csv_date": "2011-11-07",
+   "mediasum_date": "2011-11-07",
+   "mediasum_date_normalised": "2011-11-07",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2007,
+    "anachronism": false,
+    "anachronism_years": -4,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2005,
+     2006,
+     2007
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-8140",
+   "csv_date": "2013-06-24",
+   "mediasum_date": "2013-06-24",
+   "mediasum_date_normalised": "2013-06-24",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Talk of the Nation",
+   "program_mediasum": "Talk of the Nation",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": true,
+    "newest_year_mentioned": 2013,
+    "anachronism": false,
+    "anachronism_years": 0,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2013
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-21624",
+   "csv_date": "2015-07-02",
+   "mediasum_date": "2015-07-02",
+   "mediasum_date_normalised": "2015-07-02",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Morning Edition",
+   "program_mediasum": "Morning Edition",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-3123",
+   "csv_date": "2015-02-22",
+   "mediasum_date": "2015-02-22",
+   "mediasum_date_normalised": "2015-02-22",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Weekend Edition Sunday",
+   "program_mediasum": "Weekend Edition Sunday",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-127",
+   "csv_date": "2019-02-12",
+   "mediasum_date": "2019-02-12",
+   "mediasum_date_normalised": "2019-02-12",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Morning Edition",
+   "program_mediasum": "Morning Edition",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-23554",
+   "csv_date": "2015-11-21",
+   "mediasum_date": "2015-11-21",
+   "mediasum_date_normalised": "2015-11-21",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-11699",
+   "csv_date": "2016-05-07",
+   "mediasum_date": "2016-05-07",
+   "mediasum_date_normalised": "2016-05-07",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Weekend Edition Saturday",
+   "program_mediasum": "Weekend Edition Saturday",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-11282",
+   "csv_date": "2017-05-07",
+   "mediasum_date": "2017-05-07",
+   "mediasum_date_normalised": "2017-05-07",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Weekend Edition Sunday",
+   "program_mediasum": "Weekend Edition Sunday",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-48047",
+   "csv_date": "2006-08-18",
+   "mediasum_date": "2006-08-18",
+   "mediasum_date_normalised": "2006-08-18",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Day to Day",
+   "program_mediasum": "Day to Day",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-28884",
+   "csv_date": "2011-09-05",
+   "mediasum_date": "2011-09-05",
+   "mediasum_date_normalised": "2011-09-05",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Morning Edition",
+   "program_mediasum": "Morning Edition",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-16729",
+   "csv_date": "2000-09-28",
+   "mediasum_date": "2000-9-28",
+   "mediasum_date_normalised": "2000-09-28",
+   "exact_string_match": false,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Larry King Live",
+   "program_mediasum": "Larry King Live",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1976,
+    "anachronism": false,
+    "anachronism_years": -24,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1976
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-63185",
+   "csv_date": "2002-11-19",
+   "mediasum_date": "2002-11-19",
+   "mediasum_date_normalised": "2002-11-19",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "CNN LARRY KING LIVE",
+   "program_mediasum": "CNN LARRY KING LIVE",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2000,
+    "anachronism": false,
+    "anachronism_years": -2,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1989,
+     2000
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "CNN-64559",
+   "csv_date": "2002-12-22",
+   "mediasum_date": "2002-12-22",
+   "mediasum_date_normalised": "2002-12-22",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "CNN LARRY KING WEEKEND",
+   "program_mediasum": "CNN LARRY KING WEEKEND",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2000,
+    "anachronism": false,
+    "anachronism_years": -2,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     1989,
+     2000
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-34083",
+   "csv_date": "2011-01-03",
+   "mediasum_date": "2011-01-03",
+   "mediasum_date_normalised": "2011-01-03",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 1961,
+    "anachronism": false,
+    "anachronism_years": -50,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [
+     1954,
+     1961
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-45407",
+   "csv_date": "2013-08-04",
+   "mediasum_date": "2013-08-04",
+   "mediasum_date_normalised": "2013-08-04",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "Weekend Edition Sunday",
+   "program_mediasum": "Weekend Edition Sunday",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-30369",
+   "csv_date": "2012-12-02",
+   "mediasum_date": "2012-12-02",
+   "mediasum_date_normalised": "2012-12-02",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "All Things Considered",
+   "program_mediasum": "All Things Considered",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": false,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-2723",
+   "csv_date": "2007-01-05",
+   "mediasum_date": "2007-01-05",
+   "mediasum_date_normalised": "2007-01-05",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "News & Notes",
+   "program_mediasum": "News & Notes",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": null,
+    "anachronism": false,
+    "anachronism_years": null,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-10356",
+   "csv_date": "2008-06-12",
+   "mediasum_date": "2008-06-12",
+   "mediasum_date_normalised": "2008-06-12",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "News & Notes",
+   "program_mediasum": "News & Notes",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": false,
+    "newest_year_mentioned": 2004,
+    "anachronism": false,
+    "anachronism_years": -4,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2002,
+     2004
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  },
+  {
+   "transcript_id": "NPR-2555",
+   "csv_date": "2007-01-19",
+   "mediasum_date": "2007-01-19",
+   "mediasum_date_normalised": "2007-01-19",
+   "exact_string_match": true,
+   "match": true,
+   "delta_days": null,
+   "program_csv": "News & Notes",
+   "program_mediasum": "News & Notes",
+   "internal": {
+    "full_date_match": false,
+    "full_dates_found": 0,
+    "month_day_match": false,
+    "year_mentioned": true,
+    "newest_year_mentioned": 2007,
+    "anachronism": false,
+    "anachronism_years": 0,
+    "has_relative_self_reference": true,
+    "years_mentioned_sample": [
+     2007
+    ],
+    "example_full_dates": []
+   },
+   "status": "ok"
+  }
+ ],
+ "runtime_secs": 0.1
+}
