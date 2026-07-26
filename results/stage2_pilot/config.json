@@ -39,9 +39,9 @@
  "projection": {
   "prediction": {
    "n_calls": 170,
-   "tokens_in_est": 567050,
+   "tokens_in_est": 567042,
    "tokens_out_cap": 20400,
-   "seconds": 83.92142857142858
+   "seconds": 83.92028571428571
   },
   "classifier": {
    "n_calls": 469,
@@ -83,5 +83,5 @@
   "budget_node_hours": 3.0,
   "note": "Output tokens are counted at their per-prompt CAP (120 for a prediction prompt, 80 for a classifier case), so the generation term is an upper bound. Throughput is Stage 1E's measured 21,015 combined tokens/s on one 4xA100 node, de-rated by 3.0x because Stage 2's prompts are roughly ten times longer and shift the job from decode-bound to prefill-bound."
  },
- "generated_utc": "2026-07-26T18:00:12Z"
+ "generated_utc": "2026-07-26T18:05:22Z"
 }

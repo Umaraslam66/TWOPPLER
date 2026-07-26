@@ -1,6 +1,6 @@
 {
  "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
- "exported_utc": "2026-07-26T18:00:12Z",
+ "exported_utc": "2026-07-26T18:04:05Z",
  "contract": "SPEC.md v1.7 (D1-D10)",
  "n_qa_subjects": 5,
  "n_items": 17,
@@ -51,9 +51,13 @@
    "donor_grounding_words_rendered": 2045,
    "grounding_budget_words": 2000,
    "variants_used": [
+    "Fred Hof",
+    "Freddie Hof",
+    "Freddy Hof",
     "Frederic Hof"
    ],
    "donor_variants_used": [
+    "Josh Landis",
     "Joshua Landis"
    ]
   },
@@ -77,6 +81,10 @@
    "donor_grounding_words_rendered": 2050,
    "grounding_budget_words": 2000,
    "variants_used": [
+    "Bob Sampson",
+    "Bobby Sampson",
+    "Rob Sampson",
+    "Robbie Sampson",
     "Robert Sampson"
    ],
    "donor_variants_used": [
@@ -106,7 +114,9 @@
     "Samer Shehata"
    ],
    "donor_variants_used": [
-    "Steven Cook"
+    "Steve Cook",
+    "Steven Cook",
+    "Stevie Cook"
    ]
   },
   "C01677": {
@@ -122,14 +132,17 @@
    "n_grounding_segments": 2,
    "n_grounding_exchanges": 14,
    "grounding_words_available": 2425,
-   "grounding_words_rendered": 1836,
+   "grounding_words_rendered": 1835,
    "donor_grounding_words_rendered": 2059,
    "grounding_budget_words": 2000,
    "variants_used": [
-    "Matthew Kroenig"
+    "Matt Kroenig",
+    "Matthew Kroenig",
+    "Matty Kroenig"
    ],
    "donor_variants_used": [
-    "Martin Indyk"
+    "Martin Indyk",
+    "Marty Indyk"
    ]
   },
   "C02006": {
@@ -151,10 +164,16 @@
    "donor_grounding_words_rendered": 2060,
    "grounding_budget_words": 2000,
    "variants_used": [
+    "Bob Harris",
+    "Bobby Harris",
     "R. Harris",
+    "Rob Harris",
+    "Robbie Harris",
     "Robert Harris"
    ],
    "donor_variants_used": [
+    "Wally Mosley",
+    "Walt Mosley",
     "Walter Mosley"
    ]
   }
@@ -222,9 +241,9 @@
  "projection": {
   "prediction": {
    "n_calls": 170,
-   "tokens_in_est": 567050,
+   "tokens_in_est": 567042,
    "tokens_out_cap": 20400,
-   "seconds": 83.92142857142858
+   "seconds": 83.92028571428571
   },
   "classifier": {
    "n_calls": 469,
@@ -271,36 +290,36 @@
    "prompts_file": "prompts_pred_twin_redacted_standard.jsonl",
    "meta_file": "meta_pred_twin_redacted_standard.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "6c56ad5fdb97d5c7297b3bde90ffc309a993f461da9a6154bef629813ec7f53b",
-   "meta_sha256": "bde1848e18fce768598cb6961b49c64950222b2862746225d8f0ec944eff5481",
-   "total_prompt_words": 42902,
+   "prompts_sha256": "5da833181db8698ff60fcab0f1e0d0d6f065fda52816e8ad55006f1bbeae69b3",
+   "meta_sha256": "e080cfdab50b6a86e94353afd8cb27d9379284c58ba3096cbfcf697173adef3e",
+   "total_prompt_words": 42901,
    "max_prompt_words": 3082
   },
   "pred_twin_redacted_stripped": {
    "prompts_file": "prompts_pred_twin_redacted_stripped.jsonl",
    "meta_file": "meta_pred_twin_redacted_stripped.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "f9dd4661f34ec73c8606b11aa0f401c3edf7ab359b53622d9ff6414ff18b164a",
-   "meta_sha256": "6443e231b91bf6b371f25ddf2229fa8db9accb45242f783c994a4dd8fdb66412",
-   "total_prompt_words": 42784,
+   "prompts_sha256": "239b0a5802a583a19b7cb998e03e9a967455068bc0e1b2e1a58da6644777b2b9",
+   "meta_sha256": "c780bce387cd1c615270a599a94ccbc92e70b96a78cf40746cf3f6e78b0e925f",
+   "total_prompt_words": 42783,
    "max_prompt_words": 3078
   },
   "pred_twin_named_standard": {
    "prompts_file": "prompts_pred_twin_named_standard.jsonl",
    "meta_file": "meta_pred_twin_named_standard.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "ab7182ee56756b2cfd2622219d0e746f2f28a9bca52df586db053d785c15cb70",
-   "meta_sha256": "0d9f1f96220683a7961928e9b1b48da7ff46f9913b9a6d1d1b5de285399c6400",
-   "total_prompt_words": 42970,
+   "prompts_sha256": "f9cb0dae2cfaad9882ba0709a41bcfa67eb81d6efe8b9100a5ddef6a4b9712e4",
+   "meta_sha256": "6cd6aaf93579e7f058aaf3147631d272ec5e3490a0d1ad21a2c44654d5fe8f3a",
+   "total_prompt_words": 42969,
    "max_prompt_words": 3086
   },
   "pred_twin_named_stripped": {
    "prompts_file": "prompts_pred_twin_named_stripped.jsonl",
    "meta_file": "meta_pred_twin_named_stripped.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "f519e12b0dc66d0213bdf98bf47ac645e08edaa8b84de6adb9b832c02b21216c",
-   "meta_sha256": "6f4b94e1c456276cd84095f798ae7098c9e31b7e13cac56f3390a14dd068667e",
-   "total_prompt_words": 42852,
+   "prompts_sha256": "733fe8a31ab9d9588a448e3b0a9206d8659ac4c286dc85b874f707c59b99abb8",
+   "meta_sha256": "6e83250b966d12617af1420d8f0fe2fbb23f88ee5ff2d2fe2f4b993fc2e43586",
+   "total_prompt_words": 42851,
    "max_prompt_words": 3082
   },
   "pred_zeroinfo_redacted_standard": {
@@ -343,8 +362,8 @@
    "prompts_file": "prompts_pred_imposter_redacted_standard.jsonl",
    "meta_file": "meta_pred_imposter_redacted_standard.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "26397ccee7788f2791e0e930bdbdcca291f1b41ecaa2acbad36a5eacb0dfd6eb",
-   "meta_sha256": "ff50cca0226fc19308d70068dbb9f593546df7863ef37c95f4ab5bd2d603af9e",
+   "prompts_sha256": "af2402558d0f20382e8992294afdc5de1b00612ed675abedd03386715f641ece",
+   "meta_sha256": "a32eafb9d4315f01f7826954c6f5f27ef66ae669eb7ed45b17924d010d85984b",
    "total_prompt_words": 44423,
    "max_prompt_words": 3315
   },
@@ -352,8 +371,8 @@
    "prompts_file": "prompts_pred_imposter_redacted_stripped.jsonl",
    "meta_file": "meta_pred_imposter_redacted_stripped.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "02a18c67602c993ceffc961fc3684e0aa86ebe025bac66ff2db61a93f87b08e1",
-   "meta_sha256": "21162f076eb627a54d468a0253c408d0b70f2accbcc18d2532024d51b7c0508e",
+   "prompts_sha256": "a3b934b5c8d7e24f180ad1b23edf8780df39c2d8eb3a142aae701895b3441082",
+   "meta_sha256": "b5151c4ea6c34674997996623830da4b8a87ebe2faefa8a08091013cf9b74e2c",
    "total_prompt_words": 44305,
    "max_prompt_words": 3311
   },
@@ -370,8 +389,8 @@
    "prompts_file": "prompts_smoke.jsonl",
    "meta_file": "meta_smoke.jsonl",
    "n_prompts": 22,
-   "prompts_sha256": "da0dbe7d77299bb7606249cd8c28681ee260da0497528a809fcd655538a2a364",
-   "meta_sha256": "13472dd2064e671d0b2fea167433c337f027c0743beec5cb4638a7928428406e",
+   "prompts_sha256": "6e222a911fc0c4ea04c4ee2d2e8e563fca5157bc88f6d808189faf1eabff9d7a",
+   "meta_sha256": "8fd14e4cd0d5d8f3ead799c66fe5c50d879798d9c6f9feaa654877e362efa1c2",
    "total_prompt_words": 31734,
    "max_prompt_words": 2360
   },

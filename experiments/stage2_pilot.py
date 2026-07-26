@@ -155,6 +155,46 @@ BURNED_FOR_QA = "C00292"
 #: nothing scored depends on it.
 SAMPLE_SEED = 49
 
+# ---------------------------------------------------------------------------
+# Nickname supplement (orchestrator ruling, 2026-07-26)
+# ---------------------------------------------------------------------------
+#
+# The pool's ``variants`` column carries formal names. T4's redactor expands a
+# variant to its bare name tokens, so "Matthew Kroenig" reaches "Matthew" and
+# "Kroenig" but not "Matt" -- and the pilot's own excerpts say "Matt". The guard
+# cannot see that, because it uses the same matcher as the scrubber.
+#
+# This table is the RULE, not a hand-fix for one subject: it is applied to every
+# dev subject and every donor, and it holds standard English hypocorisms only,
+# for first names that actually occur in the pilot. A supplement produces a
+# whole substituted NAME ("Matt Kroenig"), never a bare token, so T4's frozen
+# expansion semantics do the rest and nothing here reimplements matching.
+#
+# It buys deterministic over-redaction, exactly as T4 documented for the base
+# expansion: "Rob" and "Bob" are ordinary English words in some contexts and the
+# matcher is case-insensitive, so a stray one is scrubbed. Measured cost is in
+# the pilot report. Nickname handling at corpus scale is a BAR-LOCK item: a
+# hand-maintained table does not scale to 1,153 subjects and the real answer is
+# a name-normalisation resource, not a longer dict.
+NICKNAME_SUPPLEMENT = {
+    "frederic": ("Fred", "Freddie", "Freddy"),
+    "frederick": ("Fred", "Freddie", "Freddy"),
+    "joshua": ("Josh",),
+    "martin": ("Marty",),
+    "matthew": ("Matt", "Matty"),
+    "robert": ("Bob", "Bobby", "Rob", "Robbie"),
+    "ron": ("Ronnie",),
+    "ronald": ("Ron", "Ronnie"),
+    "stephen": ("Steve", "Stevie"),
+    "steven": ("Steve", "Stevie"),
+    "walter": ("Walt", "Wally"),
+}
+
+#: First names present in this pilot that have NO standard English hypocorism.
+#: Listed so the table's coverage is auditable rather than accidental: a name
+#: missing from both structures is a name nobody checked.
+NICKNAME_NONE = ("bassir", "doris", "samer")
+
 
 def now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -227,17 +267,57 @@ def pool_rows() -> dict:
     return {r["canonical_id"]: r for r in S.load_pool()}
 
 
+def first_name_of(variant: str) -> tuple[str, int] | None:
+    """``(casefolded first name, its token index)`` for a variant, or None.
+
+    The first token that is neither an honorific nor a bare initial. Returns the
+    index so the caller can substitute in place and keep the rest of the name.
+    """
+    tokens = variant.split()
+    for idx, token in enumerate(tokens):
+        bare = token.strip(".,;:'\"").casefold()
+        if not bare or not bare.isalpha():
+            continue                      # "R." -- an initial, not a first name
+        if bare.upper() in S.HONORIFIC:
+            continue                      # "Dr.", "Professor", ...
+        if len(bare) < 2:
+            continue
+        return bare, idx
+    return None
+
+
+def nickname_forms(variants) -> list[str]:
+    """Whole substituted names from :data:`NICKNAME_SUPPLEMENT`.
+
+    "Matthew Kroenig" -> "Matt Kroenig", "Matty Kroenig". Never a bare token:
+    T4's expansion reduces these to "Matt"/"Matty"/"Kroenig" itself, so the
+    matching semantics stay entirely inside the frozen renderer.
+    """
+    out: list[str] = []
+    for variant in variants:
+        found = first_name_of(variant)
+        if found is None:
+            continue
+        first, idx = found
+        for nick in NICKNAME_SUPPLEMENT.get(first, ()):
+            tokens = variant.split()
+            tokens[idx] = nick
+            out.append(" ".join(tokens))
+    return out
+
+
 def name_variants(row: dict) -> list[str]:
     """Every string the redactor must be able to reach for one person.
 
-    The pool's ``variants`` column plus ``canonical_name``. T4's ``redact``
-    expands each of these to its bare name tokens by default, which is what
-    catches the surnames the transcripts actually use.
+    The pool's ``variants`` column, plus ``canonical_name``, plus the nickname
+    supplement. T4's ``redact`` expands each of these to its bare name tokens by
+    default, which is what catches the surnames the transcripts actually use.
     """
     out = list(row.get("variants") or [])
     canonical = (row.get("canonical_name") or "").strip()
     if canonical and canonical not in out:
         out.append(canonical)
+    out += nickname_forms(out)
     variants = sorted({v.strip() for v in out if v and v.strip()})
     if not variants:
         raise fatal(f"{row.get('canonical_id')} has no name variants at all; "

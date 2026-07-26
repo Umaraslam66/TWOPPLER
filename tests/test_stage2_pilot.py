@@ -898,3 +898,93 @@ def test_the_real_draw_has_six_subjects_and_exactly_one_burned_for_qa():
 def test_prediction_subjects_refuses_a_draw_with_nothing_burned():
     with pytest.raises(SystemExit, match="burned_for_qa"):
         P.prediction_subjects([{"canonical_id": "C1"}])
+
+
+# ---------------------------------------------------------------------------
+# Nickname supplement
+# ---------------------------------------------------------------------------
+
+
+def test_nickname_forms_substitute_the_first_name_and_keep_the_surname():
+    assert P.nickname_forms(["Matthew Kroenig"]) == ["Matt Kroenig",
+                                                     "Matty Kroenig"]
+    assert P.nickname_forms(["Joshua Landis"]) == ["Josh Landis"]
+
+
+def test_nickname_forms_emit_whole_names_never_bare_tokens():
+    """T4's frozen expansion turns these into bare tokens; we must not."""
+    for form in P.nickname_forms(["Robert Sampson"]):
+        assert len(form.split()) == 2
+
+
+def test_nickname_forms_see_through_an_honorific():
+    assert P.nickname_forms(["Dr. Matthew Kroenig"]) == ["Dr. Matt Kroenig",
+                                                         "Dr. Matty Kroenig"]
+
+
+def test_nickname_forms_ignore_an_initial_and_a_name_with_no_hypocorism():
+    assert P.nickname_forms(["R. Harris"]) == []
+    assert P.nickname_forms(["Samer Shehata"]) == []
+    assert P.nickname_forms(["Bassir Pour"]) == []
+
+
+def test_first_name_of_skips_honorifics_and_initials():
+    assert P.first_name_of("Dr. Matthew Kroenig") == ("matthew", 1)
+    assert P.first_name_of("Frederic Hof") == ("frederic", 0)
+    # An initials-only variant has no first-name token; the first usable token
+    # is the surname, which is never a key in the table, so nothing fires.
+    assert P.first_name_of("R. Harris") == ("harris", 1)
+
+
+def test_name_variants_carry_the_supplement_and_stay_sorted_and_unique():
+    got = P.name_variants({"canonical_id": "C01677",
+                           "canonical_name": "Matthew Kroenig",
+                           "variants": ["Matthew Kroenig"]})
+    assert got == ["Matt Kroenig", "Matthew Kroenig", "Matty Kroenig"]
+
+
+def test_the_supplement_closes_the_nickname_leak_end_to_end():
+    """The C01677 case, reduced: 'Matt' survived the pool's variant list."""
+    block = ("[Interview, 2013-01-01, PROG]\n"
+             "HOST: It's fair to say, Matt Kroenig, the deal is thin.\n"
+             "GUEST: It is thin, and the verification annex is thinner still.")
+    variants = P.name_variants({"canonical_id": "C01677",
+                                "canonical_name": "Matthew Kroenig",
+                                "variants": ["Matthew Kroenig"]})
+    scrubbed = R.redact(block, variants)
+    assert "Matt" not in scrubbed
+    R.assert_redacted(scrubbed, variants)
+    # Without the supplement the surname goes and the nickname stays.
+    thin = R.redact(block, ["Matthew Kroenig"])
+    assert "Matt GUEST" in thin
+
+
+def test_every_first_name_in_the_pilot_is_in_the_table_or_in_the_none_list():
+    """A name in neither structure is a name nobody checked."""
+    pool = P.pool_rows()
+    subjects = [s["canonical_id"] for s in P.dev_subjects()]
+    donors = list(P.imposter_pairs().values())
+    unchecked = []
+    for cid in subjects + donors:
+        row = pool[cid]
+        for variant in list(row["variants"]) + [row["canonical_name"]]:
+            tokens = variant.split()
+            if len(tokens) < 2:
+                continue
+            found = P.first_name_of(variant)
+            if found is None or found[1] == len(tokens) - 1:
+                continue          # no first-name token (initials only)
+            first = found[0]
+            if (first not in P.NICKNAME_SUPPLEMENT
+                    and first not in P.NICKNAME_NONE):
+                unchecked.append((cid, variant, first))
+    assert unchecked == []
+
+
+def test_the_supplement_holds_hypocorisms_only_not_surnames():
+    for first, nicks in P.NICKNAME_SUPPLEMENT.items():
+        assert first == first.casefold()
+        assert nicks, f"{first} maps to nothing"
+        for nick in nicks:
+            assert nick[0].isupper(), f"{nick} is not written as a name"
+            assert nick.casefold() != first
