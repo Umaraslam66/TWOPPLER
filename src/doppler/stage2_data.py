@@ -55,8 +55,11 @@ DRAW_RULE = (
     "'long-tail' and the first 2 whose wiki_status is 'long-tail' are the dev "
     "subjects. A subject found broken later stays burned (it is a dev subject "
     "forever and is never reused); its replacement is the next id of the same "
-    "stratum in the same shuffled order. shuffle_pos is the 0-based position "
-    "of each pick in that shuffled order."
+    "stratum in the same shuffled order. A subject broken for one purpose only "
+    "is instead retained in place, annotated burned_for_qa, and the next id of "
+    "its stratum is ADDED alongside it, which is why the subject count can "
+    "exceed 5. shuffle_pos is the 0-based position of each pick in that "
+    "shuffled order."
 )
 
 SPLIT_RULE = (
@@ -300,67 +303,105 @@ def shuffled_eligible_ids(pool: list[dict], seed: int = DEV_SEED) -> list[str]:
 
 
 def draw_dev_subjects(pool: list[dict], seed: int = DEV_SEED,
-                      burned=(), drawn_at: str | None = None) -> dict:
+                      burned=(), burned_for_qa=(),
+                      drawn_at: str | None = None) -> dict:
     """SPEC D1. Return the dev_subjects.json document.
 
-    `burned` is the list of canonical_ids that were drawn by an earlier run and
-    later found broken (identity collision etc.). They stay dev subjects
-    forever — they are never re-usable elsewhere — but they are skipped here and
-    replaced by the next id of the same stratum in the same shuffled order.
-    Every such event is recorded in the returned document.
+    Two ways a subject can be found broken after the fact, both of which leave
+    it burned — it is a dev subject forever and can never be reused as a donor,
+    a distractor source or anything else:
+
+    `burned` — dropped from the study entirely. It is skipped here and the next
+    id of the same stratum in the shuffled order takes its slot. The subject
+    count does not change.
+
+    `burned_for_qa` — retired for one purpose but still carried. It stays in
+    `subjects`, annotated `burned_for_qa: true`, and that stratum's quota goes
+    up by one so the next same-stratum id in the shuffled order is ADDED. The
+    subject count grows by one per retirement. Accepts a sequence of ids or a
+    {canonical_id: reason} mapping.
+
+    Every event of either kind is recorded in `replacements`, with `mode`
+    saying which mechanism fired and `replaced_by` naming the id that entered
+    because of it.
     """
     from datetime import date
 
     burned_ids = list(dict.fromkeys(burned))
     burned_set = set(burned_ids)
+    qa_reasons = dict(burned_for_qa) if isinstance(burned_for_qa, dict) else \
+        {cid: None for cid in dict.fromkeys(burned_for_qa)}
+    if burned_set & set(qa_reasons):
+        raise ValueError("a subject cannot be both dropped and retained: "
+                         f"{sorted(burned_set & set(qa_reasons))}")
+
     order = shuffled_eligible_ids(pool, seed)
     by_id = {r["canonical_id"]: r for r in eligible_subjects(pool)}
 
+    def stratum_of(cid: str) -> str:
+        if cid not in by_id:
+            raise ValueError(f"{cid} is not an eligible subject")
+        return "long-tail" if by_id[cid]["wiki_status"] == "long-tail" else "wiki"
+
+    quota = {"long-tail": N_LONGTAIL, "wiki": N_WIKI}
+    for cid in qa_reasons:
+        quota[stratum_of(cid)] += 1
+
     picked: list[dict] = []
     replacements: list[dict] = []
-    n_wiki = n_lt = 0
+    taken = {"long-tail": 0, "wiki": 0}
     for pos, cid in enumerate(order):
         row = by_id[cid]
-        long_tail = row["wiki_status"] == "long-tail"
-        want = (long_tail and n_lt < N_LONGTAIL) or \
-               (not long_tail and n_wiki < N_WIKI)
-        if not want:
+        stratum = "long-tail" if row["wiki_status"] == "long-tail" else "wiki"
+        if taken[stratum] >= quota[stratum]:
             continue
         if cid in burned_set:
             replacements.append({
                 "burned_canonical_id": cid,
                 "burned_shuffle_pos": pos,
-                "stratum": "long-tail" if long_tail else "wiki",
+                "stratum": stratum,
+                "mode": "dropped",
+                "reason": None,
             })
             continue
-        picked.append({
+        entry = {
             "canonical_id": cid,
             "canonical_name": row["canonical_name"],
             "wiki_status": row["wiki_status"],
             "shuffle_pos": pos,
-        })
-        if long_tail:
-            n_lt += 1
-        else:
-            n_wiki += 1
-        if n_wiki == N_WIKI and n_lt == N_LONGTAIL:
+        }
+        if cid in qa_reasons:
+            entry["burned_for_qa"] = True
+            replacements.append({
+                "burned_canonical_id": cid,
+                "burned_shuffle_pos": pos,
+                "stratum": stratum,
+                "mode": "retained_in_place",
+                "reason": qa_reasons[cid],
+            })
+        picked.append(entry)
+        taken[stratum] += 1
+        if all(taken[s] >= quota[s] for s in quota):
             break
 
-    if n_wiki != N_WIKI or n_lt != N_LONGTAIL:
+    if any(taken[s] != quota[s] for s in quota):
         raise ValueError(
-            f"pool exhausted: drew {n_wiki}/{N_WIKI} wiki and "
-            f"{n_lt}/{N_LONGTAIL} long-tail dev subjects")
+            f"pool exhausted: drew {taken['wiki']}/{quota['wiki']} wiki and "
+            f"{taken['long-tail']}/{quota['long-tail']} long-tail dev subjects")
 
-    # Each burn pushes that stratum's picks one slot further down the shuffled
-    # order, so the i-th burn's replacement is the i-th of the extra entrants
-    # at the tail of that stratum's pick list.
+    # A dropped subject pushes its stratum's picks one slot down the shuffled
+    # order; a retained one raises the quota. Either way each event adds
+    # exactly one entrant at the tail of that stratum's pick list, so events
+    # and tail entrants pair up in shuffled order.
+    replacements.sort(key=lambda r: r["burned_shuffle_pos"])
     for stratum, size in (("long-tail", N_LONGTAIL), ("wiki", N_WIKI)):
         in_stratum = [p["canonical_id"] for p in picked
                       if (p["wiki_status"] == "long-tail") == (stratum == "long-tail")]
-        burns = [r for r in replacements if r["stratum"] == stratum]
-        for i, rep in enumerate(burns):
-            k = size - len(burns) + i
-            rep["replaced_by"] = in_stratum[k] if 0 <= k < len(in_stratum) else None
+        events = [r for r in replacements if r["stratum"] == stratum]
+        n_dropped = sum(1 for r in events if r["mode"] == "dropped")
+        tail = in_stratum[size - n_dropped:]
+        for i, rep in enumerate(events):
+            rep["replaced_by"] = tail[i] if i < len(tail) else None
 
     return {
         "seed": seed,
@@ -369,6 +410,7 @@ def draw_dev_subjects(pool: list[dict], seed: int = DEV_SEED,
         "n_eligible": len(order),
         "subjects": picked,
         "burned": burned_ids,
+        "burned_for_qa": sorted(qa_reasons),
         "replacements": replacements,
     }
 
@@ -796,9 +838,13 @@ def load_dev_subjects(pilot_dir=PILOT_DIR) -> dict:
         raise SystemExit(f"[fatal] dev_subjects.json seed is {doc['seed']}, "
                          f"expected {DEV_SEED}")
     n = len(doc["subjects"])
-    if n != N_WIKI + N_LONGTAIL:
+    # One extra subject per retained-in-place retirement, and no other way to
+    # end up with a count other than 5.
+    expected = N_WIKI + N_LONGTAIL + sum(1 for s in doc["subjects"]
+                                         if s.get("burned_for_qa"))
+    if n != expected:
         raise SystemExit(f"[fatal] dev_subjects.json has {n} subjects, "
-                         f"expected {N_WIKI + N_LONGTAIL}")
+                         f"expected {expected}")
     return doc
 
 

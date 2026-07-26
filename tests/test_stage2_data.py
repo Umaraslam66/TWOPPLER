@@ -216,6 +216,128 @@ def test_two_burns_in_one_stratum(tmp_path):
         [s["canonical_id"] for s in doc["subjects"] if s["wiki_status"] == "long-tail"]
 
 
+def test_burned_for_qa_keeps_the_subject_and_adds_one(tmp_path):
+    """Retire-in-place: the subject stays, its stratum's quota goes up by one."""
+    pool = S.load_pool(write_pool(tmp_path, big_pool()))
+    base = S.draw_dev_subjects(pool, drawn_at="x")
+    victim = next(s for s in base["subjects"] if s["wiki_status"] == "long-tail")
+
+    doc = S.draw_dev_subjects(pool, burned_for_qa=[victim["canonical_id"]],
+                              drawn_at="x")
+    ids = [s["canonical_id"] for s in doc["subjects"]]
+    assert len(ids) == 6
+    # Every original pick survives, in the same relative order, at the same
+    # shuffle position. Subjects are listed in shuffled order, so the added one
+    # slots in where it falls rather than at the end.
+    base_ids = [s["canonical_id"] for s in base["subjects"]]
+    assert [c for c in ids if c in base_ids] == base_ids
+    was_pos = {s["canonical_id"]: s["shuffle_pos"] for s in base["subjects"]}
+    for s in doc["subjects"]:
+        if s["canonical_id"] in was_pos:
+            assert s["shuffle_pos"] == was_pos[s["canonical_id"]]
+    assert [s["shuffle_pos"] for s in doc["subjects"]] == \
+        sorted(s["shuffle_pos"] for s in doc["subjects"])
+    assert sum(1 for s in doc["subjects"] if s["wiki_status"] == "long-tail") == 3
+    assert sum(1 for s in doc["subjects"] if s["wiki_status"] != "long-tail") == 3
+
+    kept = next(s for s in doc["subjects"]
+                if s["canonical_id"] == victim["canonical_id"])
+    assert kept["burned_for_qa"] is True
+    assert all("burned_for_qa" not in s for s in doc["subjects"]
+               if s["canonical_id"] != victim["canonical_id"])
+    assert doc["burned_for_qa"] == [victim["canonical_id"]]
+    assert doc["burned"] == []
+
+    rep = doc["replacements"][0]
+    assert rep["mode"] == "retained_in_place"
+    assert rep["burned_canonical_id"] == victim["canonical_id"]
+    assert rep["stratum"] == "long-tail"
+    # The added subject is the next long-tail id further along the same order.
+    added = next(c for c in ids if c not in base_ids)
+    assert rep["replaced_by"] == added
+    order = S.shuffled_eligible_ids(pool)
+    assert order.index(added) > victim["shuffle_pos"]
+    added_row = next(s for s in doc["subjects"] if s["canonical_id"] == added)
+    assert added_row["wiki_status"] == "long-tail"
+    # ...and it is the FIRST such id, i.e. nothing long-tail was skipped.
+    lt_after = [c for c in order[victim["shuffle_pos"] + 1:]
+                if c not in base_ids
+                and next(r for r in pool if r["canonical_id"] == c)["wiki_status"]
+                == "long-tail"]
+    assert added == lt_after[0]
+
+
+def test_burned_for_qa_accepts_a_reason_mapping(tmp_path):
+    pool = S.load_pool(write_pool(tmp_path, big_pool()))
+    base = S.draw_dev_subjects(pool, drawn_at="x")
+    victim = next(s for s in base["subjects"] if s["wiki_status"] != "long-tail")
+    doc = S.draw_dev_subjects(pool, burned_for_qa={victim["canonical_id"]: "why"},
+                              drawn_at="x")
+    assert len(doc["subjects"]) == 6
+    assert sum(1 for s in doc["subjects"] if s["wiki_status"] != "long-tail") == 4
+    assert doc["replacements"][0]["reason"] == "why"
+
+
+def test_burned_for_qa_is_deterministic(tmp_path):
+    pool = S.load_pool(write_pool(tmp_path, big_pool()))
+    cid = S.draw_dev_subjects(pool, drawn_at="x")["subjects"][0]["canonical_id"]
+    a = S.draw_dev_subjects(pool, burned_for_qa=[cid], drawn_at="x")
+    b = S.draw_dev_subjects(pool, burned_for_qa=[cid], drawn_at="x")
+    assert a == b
+
+
+def test_a_subject_cannot_be_both_dropped_and_retained(tmp_path):
+    pool = S.load_pool(write_pool(tmp_path, big_pool()))
+    cid = S.draw_dev_subjects(pool, drawn_at="x")["subjects"][0]["canonical_id"]
+    with pytest.raises(ValueError, match="both dropped and retained"):
+        S.draw_dev_subjects(pool, burned=[cid], burned_for_qa=[cid], drawn_at="x")
+
+
+def test_burned_for_qa_rejects_an_ineligible_id(tmp_path):
+    pool = S.load_pool(write_pool(tmp_path, big_pool()))
+    with pytest.raises(ValueError, match="not an eligible subject"):
+        S.draw_dev_subjects(pool, burned_for_qa=["C99999"], drawn_at="x")
+
+
+def test_drop_and_retain_together(tmp_path):
+    """One stratum losing a subject and another gaining one do not interfere."""
+    pool = S.load_pool(write_pool(tmp_path, big_pool()))
+    base = S.draw_dev_subjects(pool, drawn_at="x")
+    dropped = next(s for s in base["subjects"] if s["wiki_status"] == "long-tail")
+    retained = next(s for s in base["subjects"] if s["wiki_status"] != "long-tail")
+    doc = S.draw_dev_subjects(pool, burned=[dropped["canonical_id"]],
+                              burned_for_qa=[retained["canonical_id"]],
+                              drawn_at="x")
+    ids = [s["canonical_id"] for s in doc["subjects"]]
+    assert dropped["canonical_id"] not in ids
+    assert retained["canonical_id"] in ids
+    assert len(ids) == 6
+    assert sum(1 for s in doc["subjects"] if s["wiki_status"] == "long-tail") == 2
+    assert sum(1 for s in doc["subjects"] if s["wiki_status"] != "long-tail") == 4
+    modes = {r["burned_canonical_id"]: r["mode"] for r in doc["replacements"]}
+    assert modes == {dropped["canonical_id"]: "dropped",
+                     retained["canonical_id"]: "retained_in_place"}
+    for rep in doc["replacements"]:
+        assert rep["replaced_by"] in ids
+        assert rep["replaced_by"] != rep["burned_canonical_id"]
+
+
+def test_load_dev_subjects_accepts_the_extra_subject(tmp_path):
+    doc = {"seed": 47, "drawn_at": "x", "subjects": [
+        {"canonical_id": f"C{i}", "wiki_status": "has-page"} for i in range(5)]}
+    S.write_json(tmp_path / "dev_subjects.json", doc)
+    assert len(S.load_dev_subjects(tmp_path)["subjects"]) == 5
+
+    doc["subjects"].append({"canonical_id": "C9", "wiki_status": "long-tail"})
+    S.write_json(tmp_path / "dev_subjects.json", doc)
+    with pytest.raises(SystemExit):            # 6 with nothing retired
+        S.load_dev_subjects(tmp_path)
+
+    doc["subjects"][0]["burned_for_qa"] = True
+    S.write_json(tmp_path / "dev_subjects.json", doc)
+    assert len(S.load_dev_subjects(tmp_path)["subjects"]) == 6
+
+
 def test_draw_raises_when_a_stratum_is_exhausted(tmp_path):
     rows = [pool_row(f"C{i:05d}", f"P{i}", wiki="has-page") for i in range(10)]
     pool = S.load_pool(write_pool(tmp_path, rows))

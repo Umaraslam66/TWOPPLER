@@ -3,6 +3,7 @@
 Run:    uv run python experiments/stage2_draw_dev.py
 Redraw: uv run python experiments/stage2_draw_dev.py --force         (owner call only)
 Turns:  uv run python experiments/stage2_draw_dev.py --regen-turns
+Extend: uv run python experiments/stage2_draw_dev.py --extend        (owner call only)
 
 --regen-turns is the safe mode for a change to the turn-extraction rules (D3,
 D3.1): it reads the committed draw and the committed splits, re-extracts the
@@ -11,9 +12,14 @@ role assignment changes. It rewrites split.json too, because the guest word
 counts in it come from the extracted turns, and prints whether that file
 actually changed.
 
+--extend is the safe mode for adding a subject after a retirement (SPEC D1,
+BURNED_FOR_QA below): it re-derives the draw from the same seed with the raised
+quota and refuses to write unless every committed subject survives at its
+original shuffle position. It cannot drop or reorder a subject.
+
 What it writes, all under results/stage2_pilot/:
 
-    dev_subjects.json                       the draw: seed, rule, 5 subjects
+    dev_subjects.json                       the draw: seed, rule, subjects
     subjects/<canonical_id>/split.json      grounding clusters + test cluster
     subjects/<canonical_id>/grounding_turns.jsonl
     subjects/<canonical_id>/test_turns.jsonl
@@ -33,6 +39,7 @@ from __future__ import annotations
 import json
 import sys
 import time
+from datetime import date
 from pathlib import Path
 
 from doppler.stage2_data import (
@@ -55,7 +62,20 @@ from doppler.stage2_data import (
     write_jsonl,
 )
 
-BURNED: tuple[str, ...] = ()   # dev subjects retired for cause; see SPEC D1
+# Dev subjects dropped from the study entirely; see SPEC D1. Empty so far.
+BURNED: tuple[str, ...] = ()
+
+# Dev subjects retired for one purpose but still carried, with the reason.
+# Each one raises its stratum's quota by one, so the next same-stratum id in
+# the shuffled order joins the study alongside it.
+BURNED_FOR_QA: dict[str, str] = {
+    "C00292": ("Yields no Q-A items: DIPLOMATIC LICENSE is a roundtable, and "
+               "every host turn before one of its guest turns is a statement, "
+               "so D4's cue filter rejects all of them. Owner decision "
+               "2026-07-26: the cue filter stays, the subject stays for "
+               "classifier sampling and renderer exercise, and a sixth "
+               "subject is added."),
+}
 
 
 def guard(force: bool) -> None:
@@ -72,18 +92,50 @@ def guard(force: bool) -> None:
         print(f"[force] discarding the existing draw at {out}")
 
 
+def check_extension(old: dict, new: dict) -> None:
+    """The extended draw must contain the committed one, unchanged."""
+    old_by = {s["canonical_id"]: s for s in old["subjects"]}
+    new_by = {s["canonical_id"]: s for s in new["subjects"]}
+    missing = sorted(set(old_by) - set(new_by))
+    if missing:
+        raise SystemExit(f"[fatal] extending would drop committed dev "
+                         f"subjects: {missing}. That is a re-draw, not an "
+                         "extension — stop.")
+    for cid, was in old_by.items():
+        now = new_by[cid]
+        if now["shuffle_pos"] != was["shuffle_pos"]:
+            raise SystemExit(f"[fatal] {cid} moved from shuffle position "
+                             f"{was['shuffle_pos']} to {now['shuffle_pos']}")
+    # Subjects are listed in shuffled order, so an added subject slots in at
+    # its own position rather than at the end. What must hold is that the
+    # committed subjects keep their relative order.
+    order_old = [s["canonical_id"] for s in old["subjects"]]
+    kept = [s["canonical_id"] for s in new["subjects"] if s["canonical_id"] in old_by]
+    if kept != order_old:
+        raise SystemExit("[fatal] the committed subjects changed relative order")
+    added = [s["canonical_id"] for s in new["subjects"] if s["canonical_id"]
+             not in old_by]
+    if not added:
+        raise SystemExit("[refused] nothing to add — the draw already matches "
+                         "BURNED_FOR_QA. Use --regen-turns to rebuild turns.")
+    print(f"extending the committed draw: {len(old_by)} -> "
+          f"{len(new_by)} subjects, adding {added}")
+
+
 def main(argv: list[str]) -> int:
     args = argv[1:]
     force = "--force" in args
     regen = "--regen-turns" in args
-    unknown = [a for a in args if a not in ("--force", "--regen-turns")]
+    extend = "--extend" in args
+    modes = [a for a in ("--force", "--regen-turns", "--extend") if a in args]
+    unknown = [a for a in args if a not in
+               ("--force", "--regen-turns", "--extend")]
     if unknown:
-        raise SystemExit(f"unknown argument(s): {unknown}. "
-                         "Only --force and --regen-turns are accepted.")
-    if regen and force:
-        raise SystemExit("--regen-turns and --force are mutually exclusive: "
-                         "one keeps the drawn subjects, the other discards them.")
-    if not regen:
+        raise SystemExit(f"unknown argument(s): {unknown}. Only --force, "
+                         "--regen-turns and --extend are accepted.")
+    if len(modes) > 1:
+        raise SystemExit(f"{modes} are mutually exclusive: pick one.")
+    if not (regen or extend):
         guard(force)
 
     t0 = time.time()
@@ -105,11 +157,18 @@ def main(argv: list[str]) -> int:
         print(f"regenerating turns for the {len(rows)} committed dev subjects "
               f"(seed {draw['seed']}, drawn {draw['drawn_at']}) — no re-draw")
     else:
-        draw = draw_dev_subjects(pool, burned=BURNED)
+        draw = draw_dev_subjects(pool, burned=BURNED,
+                                 burned_for_qa=BURNED_FOR_QA)
+        if extend:
+            committed = load_dev_subjects()
+            check_extension(committed, draw)
+            draw["drawn_at"] = committed["drawn_at"]     # the draw date stands
+            draw["extended_at"] = date.today().isoformat()
         rows = [by_id[s["canonical_id"]] for s in draw["subjects"]]
         before = {}
-        print(f"pool: {len(pool)} rows, {draw['n_eligible']} eligible; "
-              f"drew {len(rows)} dev subjects with seed {draw['seed']}")
+        if not extend:
+            print(f"pool: {len(pool)} rows, {draw['n_eligible']} eligible; "
+                  f"drew {len(rows)} dev subjects with seed {draw['seed']}")
 
         # Cluster representatives need per-transcript guest word counts. They
         # are already in the v2 scan cache: one pickle load, not a scan.
@@ -199,8 +258,11 @@ def main(argv: list[str]) -> int:
     print()
     print(hdr)
     print("-" * len(hdr))
+    qa_burned = {s["canonical_id"] for s in draw["subjects"]
+                 if s.get("burned_for_qa")}
     for s in summary:
-        label = f"{s['canonical_id']} {s['name']}"
+        mark = " *" if s["canonical_id"] in qa_burned else ""
+        label = f"{s['canonical_id']} {s['name']}{mark}"
         print(f"{label:<28}{s['wiki_status']:<16}{s['n_grounding']:>5}"
               f"{s['grounding_words']:>12,}{s['test_date']:>13}"
               f"{s['test_words']:>12,}{s['n_host_turns_test']:>11}"
@@ -209,6 +271,8 @@ def main(argv: list[str]) -> int:
     print("grounding words = guest-role words across the grounding transcripts; "
           "test words = guest-role words in the test transcript; "
           "test host = host-role turns in the test transcript.")
+    if qa_burned:
+        print(f"* retired for Q-A (still a dev subject): {sorted(qa_burned)}")
     print(f"written under {PILOT_DIR} in {runtime}s (0 API calls, $0.00)")
     return 0
 
