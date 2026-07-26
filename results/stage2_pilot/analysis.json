@@ -1,0 +1,1202 @@
+{
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "confirmatory": false,
+ "generated_utc": "2026-07-26T18:34:36Z",
+ "n_items": 17,
+ "n_qa_subjects": 5,
+ "excluded_burned_for_qa": [
+  "C00292"
+ ],
+ "n_missing_completions": 0,
+ "node_hours_total": 0.1264,
+ "node_summaries": [
+  {
+   "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+   "tp": 4,
+   "max_model_len": 8192,
+   "gpu_mem_util": 0.92,
+   "temperature": 0.0,
+   "seed": 0,
+   "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/prompts_pred_twin_redacted_standard.jsonl",
+   "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/completions_pred_twin_redacted_standard.jsonl",
+   "num_prompts": 17,
+   "engine_init_seconds": 201.57,
+   "generation_wall_seconds": 10.33,
+   "total_tokens_in": 55386,
+   "total_tokens_out": 4358,
+   "output_tokens_per_second": 421.9,
+   "timestamp_utc": "2026-07-26T18:29:57Z"
+  },
+  {
+   "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+   "tp": 4,
+   "max_model_len": 8192,
+   "gpu_mem_util": 0.92,
+   "temperature": 0.0,
+   "seed": 0,
+   "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/prompts_pred_twin_redacted_stripped.jsonl",
+   "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/completions_pred_twin_redacted_stripped.jsonl",
+   "num_prompts": 17,
+   "engine_init_seconds": 201.57,
+   "generation_wall_seconds": 8.18,
+   "total_tokens_in": 55605,
+   "total_tokens_out": 4379,
+   "output_tokens_per_second": 535.4,
+   "timestamp_utc": "2026-07-26T18:30:05Z"
+  },
+  {
+   "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+   "tp": 4,
+   "max_model_len": 8192,
+   "gpu_mem_util": 0.92,
+   "temperature": 0.0,
+   "seed": 0,
+   "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/prompts_pred_twin_named_standard.jsonl",
+   "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/completions_pred_twin_named_standard.jsonl",
+   "num_prompts": 17,
+   "engine_init_seconds": 201.57,
+   "generation_wall_seconds": 9.1,
+   "total_tokens_in": 55518,
+   "total_tokens_out": 4124,
+   "output_tokens_per_second": 453.1,
+   "timestamp_utc": "2026-07-26T18:30:15Z"
+  },
+  {
+   "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+   "tp": 4,
+   "max_model_len": 8192,
+   "gpu_mem_util": 0.92,
+   "temperature": 0.0,
+   "seed": 0,
+   "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/prompts_pred_twin_named_stripped.jsonl",
+   "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/completions_pred_twin_named_stripped.jsonl",
+   "num_prompts": 17,
+   "engine_init_seconds": 201.57,
+   "generation_wall_seconds": 7.58,
+   "total_tokens_in": 55737,
+   "total_tokens_out": 4103,
+   "output_tokens_per_second": 541.4,
+   "timestamp_utc": "2026-07-26T18:30:22Z"
+  },
+  {
+   "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+   "tp": 4,
+   "max_model_len": 8192,
+   "gpu_mem_util": 0.92,
+   "temperature": 0.0,
+   "seed": 0,
+   "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/prompts_pred_zeroinfo_redacted_standard.jsonl",
+   "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/completions_pred_zeroinfo_redacted_standard.jsonl",
+   "num_prompts": 17,
+   "engine_init_seconds": 201.57,
+   "generation_wall_seconds": 5.43,
+   "total_tokens_in": 12310,
+   "total_tokens_out": 3062,
+   "output_tokens_per_second": 563.6,
+   "timestamp_utc": "2026-07-26T18:30:28Z"
+  },
+  {
+   "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+   "tp": 4,
+   "max_model_len": 8192,
+   "gpu_mem_util": 0.92,
+   "temperature": 0.0,
+   "seed": 0,
+   "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/prompts_pred_zeroinfo_redacted_stripped.jsonl",
+   "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/completions_pred_zeroinfo_redacted_stripped.jsonl",
+   "num_prompts": 17,
+   "engine_init_seconds": 201.57,
+   "generation_wall_seconds": 5.54,
+   "total_tokens_in": 12529,
+   "total_tokens_out": 3203,
+   "output_tokens_per_second": 578.4,
+   "timestamp_utc": "2026-07-26T18:30:33Z"
+  },
+  {
+   "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+   "tp": 4,
+   "max_model_len": 8192,
+   "gpu_mem_util": 0.92,
+   "temperature": 0.0,
+   "seed": 0,
+   "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/prompts_pred_zeroinfo_named_standard.jsonl",
+   "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/completions_pred_zeroinfo_named_standard.jsonl",
+   "num_prompts": 17,
+   "engine_init_seconds": 201.57,
+   "generation_wall_seconds": 5.31,
+   "total_tokens_in": 12442,
+   "total_tokens_out": 2933,
+   "output_tokens_per_second": 551.8,
+   "timestamp_utc": "2026-07-26T18:30:38Z"
+  },
+  {
+   "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+   "tp": 4,
+   "max_model_len": 8192,
+   "gpu_mem_util": 0.92,
+   "temperature": 0.0,
+   "seed": 0,
+   "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/prompts_pred_zeroinfo_named_stripped.jsonl",
+   "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/completions_pred_zeroinfo_named_stripped.jsonl",
+   "num_prompts": 17,
+   "engine_init_seconds": 201.57,
+   "generation_wall_seconds": 5.41,
+   "total_tokens_in": 12661,
+   "total_tokens_out": 3118,
+   "output_tokens_per_second": 576.2,
+   "timestamp_utc": "2026-07-26T18:30:44Z"
+  },
+  {
+   "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+   "tp": 4,
+   "max_model_len": 8192,
+   "gpu_mem_util": 0.92,
+   "temperature": 0.0,
+   "seed": 0,
+   "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/prompts_pred_imposter_redacted_standard.jsonl",
+   "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/completions_pred_imposter_redacted_standard.jsonl",
+   "num_prompts": 17,
+   "engine_init_seconds": 201.57,
+   "generation_wall_seconds": 10.57,
+   "total_tokens_in": 57402,
+   "total_tokens_out": 4786,
+   "output_tokens_per_second": 452.7,
+   "timestamp_utc": "2026-07-26T18:30:54Z"
+  },
+  {
+   "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+   "tp": 4,
+   "max_model_len": 8192,
+   "gpu_mem_util": 0.92,
+   "temperature": 0.0,
+   "seed": 0,
+   "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/prompts_pred_imposter_redacted_stripped.jsonl",
+   "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/completions_pred_imposter_redacted_stripped.jsonl",
+   "num_prompts": 17,
+   "engine_init_seconds": 201.57,
+   "generation_wall_seconds": 10.19,
+   "total_tokens_in": 57621,
+   "total_tokens_out": 4754,
+   "output_tokens_per_second": 466.6,
+   "timestamp_utc": "2026-07-26T18:31:05Z"
+  },
+  {
+   "model_dir": "/leonardo_work/AIFAC_P02_548/DOPPLER/models/Gemma-4-31B-it",
+   "tp": 4,
+   "max_model_len": 8192,
+   "gpu_mem_util": 0.92,
+   "temperature": 0.0,
+   "seed": 0,
+   "prompts_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/prompts_classify.jsonl",
+   "out_file": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot/completions_classify.jsonl",
+   "num_prompts": 469,
+   "engine_init_seconds": 201.57,
+   "generation_wall_seconds": 10.14,
+   "total_tokens_in": 423148,
+   "total_tokens_out": 13555,
+   "output_tokens_per_second": 1336.6,
+   "timestamp_utc": "2026-07-26T18:31:15Z"
+  }
+ ],
+ "accuracy": {
+  "standard": {
+   "unfiltered": {
+    "twin_redacted": {
+     "n_attempted": 17,
+     "n": 17,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.972353
+    },
+    "twin_named": {
+     "n_attempted": 17,
+     "n": 17,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.984706
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 17,
+     "n": 17,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.982941
+    },
+    "zeroinfo_named": {
+     "n_attempted": 17,
+     "n": 17,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.991176
+    },
+    "imposter_redacted": {
+     "n_attempted": 17,
+     "n": 17,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 0.941176,
+     "prob_mass_correct": 0.884706
+    }
+   },
+   "adversarial_filtered": {
+    "twin_redacted": {
+     "n_attempted": 0,
+     "n": 0,
+     "n_parse_failures": 0,
+     "argmax_accuracy": null,
+     "prob_mass_correct": null
+    },
+    "twin_named": {
+     "n_attempted": 0,
+     "n": 0,
+     "n_parse_failures": 0,
+     "argmax_accuracy": null,
+     "prob_mass_correct": null
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 0,
+     "n": 0,
+     "n_parse_failures": 0,
+     "argmax_accuracy": null,
+     "prob_mass_correct": null
+    },
+    "zeroinfo_named": {
+     "n_attempted": 0,
+     "n": 0,
+     "n_parse_failures": 0,
+     "argmax_accuracy": null,
+     "prob_mass_correct": null
+    },
+    "imposter_redacted": {
+     "n_attempted": 0,
+     "n": 0,
+     "n_parse_failures": 0,
+     "argmax_accuracy": null,
+     "prob_mass_correct": null
+    }
+   },
+   "adversarial_filter": {
+    "rule": "A4.3: drop items zeroinfo_redacted got argmax-correct",
+    "n_items_kept": 0,
+    "items_kept": []
+   }
+  },
+  "stripped": {
+   "unfiltered": {
+    "twin_redacted": {
+     "n_attempted": 17,
+     "n": 17,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.97
+    },
+    "twin_named": {
+     "n_attempted": 17,
+     "n": 16,
+     "n_parse_failures": 1,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.98
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 17,
+     "n": 17,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.958235
+    },
+    "zeroinfo_named": {
+     "n_attempted": 17,
+     "n": 17,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.987647
+    },
+    "imposter_redacted": {
+     "n_attempted": 17,
+     "n": 16,
+     "n_parse_failures": 1,
+     "argmax_accuracy": 0.9375,
+     "prob_mass_correct": 0.90875
+    }
+   },
+   "adversarial_filtered": {
+    "twin_redacted": {
+     "n_attempted": 0,
+     "n": 0,
+     "n_parse_failures": 0,
+     "argmax_accuracy": null,
+     "prob_mass_correct": null
+    },
+    "twin_named": {
+     "n_attempted": 0,
+     "n": 0,
+     "n_parse_failures": 0,
+     "argmax_accuracy": null,
+     "prob_mass_correct": null
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 0,
+     "n": 0,
+     "n_parse_failures": 0,
+     "argmax_accuracy": null,
+     "prob_mass_correct": null
+    },
+    "zeroinfo_named": {
+     "n_attempted": 0,
+     "n": 0,
+     "n_parse_failures": 0,
+     "argmax_accuracy": null,
+     "prob_mass_correct": null
+    },
+    "imposter_redacted": {
+     "n_attempted": 0,
+     "n": 0,
+     "n_parse_failures": 0,
+     "argmax_accuracy": null,
+     "prob_mass_correct": null
+    }
+   },
+   "adversarial_filter": {
+    "rule": "A4.3: drop items zeroinfo_redacted got argmax-correct",
+    "n_items_kept": 0,
+    "items_kept": []
+   }
+  }
+ },
+ "lift": {
+  "standard": {
+   "unfiltered": [
+    {
+     "better_arm": "twin_redacted",
+     "worse_arm": "zeroinfo_redacted",
+     "variant": "standard",
+     "n_subjects": 5,
+     "mean_argmax_delta": 0.0,
+     "mean_prob_mass_delta": -0.006067,
+     "per_subject": [
+      {
+       "canonical_id": "C00792",
+       "n_better": 5,
+       "n_worse": 5,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": -0.002
+      },
+      {
+       "canonical_id": "C01677",
+       "n_better": 1,
+       "n_worse": 1,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.03
+      },
+      {
+       "canonical_id": "C02006",
+       "n_better": 3,
+       "n_worse": 3,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": -0.033333
+      },
+      {
+       "canonical_id": "C02013",
+       "n_better": 4,
+       "n_worse": 4,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": -0.025
+      },
+      {
+       "canonical_id": "C02124",
+       "n_better": 4,
+       "n_worse": 4,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.0
+      }
+     ],
+     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+    },
+    {
+     "better_arm": "twin_redacted",
+     "worse_arm": "imposter_redacted",
+     "variant": "standard",
+     "n_subjects": 5,
+     "mean_argmax_delta": 0.05,
+     "mean_prob_mass_delta": 0.085333,
+     "per_subject": [
+      {
+       "canonical_id": "C00792",
+       "n_better": 5,
+       "n_worse": 5,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.0
+      },
+      {
+       "canonical_id": "C01677",
+       "n_better": 1,
+       "n_worse": 1,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.0
+      },
+      {
+       "canonical_id": "C02006",
+       "n_better": 3,
+       "n_worse": 3,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.216667
+      },
+      {
+       "canonical_id": "C02013",
+       "n_better": 4,
+       "n_worse": 4,
+       "argmax_delta": 0.25,
+       "prob_mass_delta": 0.21
+      },
+      {
+       "canonical_id": "C02124",
+       "n_better": 4,
+       "n_worse": 4,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.0
+      }
+     ],
+     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+    }
+   ],
+   "adversarial_filtered": [
+    {
+     "better_arm": "twin_redacted",
+     "worse_arm": "zeroinfo_redacted",
+     "variant": "standard",
+     "n_subjects": 0,
+     "mean_argmax_delta": null,
+     "mean_prob_mass_delta": null,
+     "per_subject": [],
+     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+    },
+    {
+     "better_arm": "twin_redacted",
+     "worse_arm": "imposter_redacted",
+     "variant": "standard",
+     "n_subjects": 0,
+     "mean_argmax_delta": null,
+     "mean_prob_mass_delta": null,
+     "per_subject": [],
+     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+    }
+   ]
+  },
+  "stripped": {
+   "unfiltered": [
+    {
+     "better_arm": "twin_redacted",
+     "worse_arm": "zeroinfo_redacted",
+     "variant": "stripped",
+     "n_subjects": 5,
+     "mean_argmax_delta": 0.0,
+     "mean_prob_mass_delta": 0.0365,
+     "per_subject": [
+      {
+       "canonical_id": "C00792",
+       "n_better": 5,
+       "n_worse": 5,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": -0.03
+      },
+      {
+       "canonical_id": "C01677",
+       "n_better": 1,
+       "n_worse": 1,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.15
+      },
+      {
+       "canonical_id": "C02006",
+       "n_better": 3,
+       "n_worse": 3,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.05
+      },
+      {
+       "canonical_id": "C02013",
+       "n_better": 4,
+       "n_worse": 4,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.0125
+      },
+      {
+       "canonical_id": "C02124",
+       "n_better": 4,
+       "n_worse": 4,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.0
+      }
+     ],
+     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+    },
+    {
+     "better_arm": "twin_redacted",
+     "worse_arm": "imposter_redacted",
+     "variant": "stripped",
+     "n_subjects": 5,
+     "mean_argmax_delta": 0.05,
+     "mean_prob_mass_delta": 0.0551,
+     "per_subject": [
+      {
+       "canonical_id": "C00792",
+       "n_better": 5,
+       "n_worse": 4,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": -0.0495
+      },
+      {
+       "canonical_id": "C01677",
+       "n_better": 1,
+       "n_worse": 1,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.0
+      },
+      {
+       "canonical_id": "C02006",
+       "n_better": 3,
+       "n_worse": 3,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.1
+      },
+      {
+       "canonical_id": "C02013",
+       "n_better": 4,
+       "n_worse": 4,
+       "argmax_delta": 0.25,
+       "prob_mass_delta": 0.225
+      },
+      {
+       "canonical_id": "C02124",
+       "n_better": 4,
+       "n_worse": 4,
+       "argmax_delta": 0.0,
+       "prob_mass_delta": 0.0
+      }
+     ],
+     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+    }
+   ],
+   "adversarial_filtered": [
+    {
+     "better_arm": "twin_redacted",
+     "worse_arm": "zeroinfo_redacted",
+     "variant": "stripped",
+     "n_subjects": 0,
+     "mean_argmax_delta": null,
+     "mean_prob_mass_delta": null,
+     "per_subject": [],
+     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+    },
+    {
+     "better_arm": "twin_redacted",
+     "worse_arm": "imposter_redacted",
+     "variant": "stripped",
+     "n_subjects": 0,
+     "mean_argmax_delta": null,
+     "mean_prob_mass_delta": null,
+     "per_subject": [],
+     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+    }
+   ]
+  }
+ },
+ "contamination_meter": {
+  "C00792": {
+   "standard": {
+    "zeroinfo_named": {
+     "n_attempted": 5,
+     "n": 5,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.98
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 5,
+     "n": 5,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.98
+    },
+    "delta_argmax": 0.0,
+    "delta_prob_mass": 0.0
+   },
+   "stripped": {
+    "zeroinfo_named": {
+     "n_attempted": 5,
+     "n": 5,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.98
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 5,
+     "n": 5,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.978
+    },
+    "delta_argmax": 0.0,
+    "delta_prob_mass": 0.002
+   }
+  },
+  "C01677": {
+   "standard": {
+    "zeroinfo_named": {
+     "n_attempted": 1,
+     "n": 1,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 1.0
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 1,
+     "n": 1,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.97
+    },
+    "delta_argmax": 0.0,
+    "delta_prob_mass": 0.03
+   },
+   "stripped": {
+    "zeroinfo_named": {
+     "n_attempted": 1,
+     "n": 1,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 1.0
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 1,
+     "n": 1,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.85
+    },
+    "delta_argmax": 0.0,
+    "delta_prob_mass": 0.15
+   }
+  },
+  "C02006": {
+   "standard": {
+    "zeroinfo_named": {
+     "n_attempted": 3,
+     "n": 3,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 1.0
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 3,
+     "n": 3,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.95
+    },
+    "delta_argmax": 0.0,
+    "delta_prob_mass": 0.05
+   },
+   "stripped": {
+    "zeroinfo_named": {
+     "n_attempted": 3,
+     "n": 3,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.966667
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 3,
+     "n": 3,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.883333
+    },
+    "delta_argmax": 0.0,
+    "delta_prob_mass": 0.083334
+   }
+  },
+  "C02013": {
+   "standard": {
+    "zeroinfo_named": {
+     "n_attempted": 4,
+     "n": 4,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.9875
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 4,
+     "n": 4,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.9975
+    },
+    "delta_argmax": 0.0,
+    "delta_prob_mass": -0.01
+   },
+   "stripped": {
+    "zeroinfo_named": {
+     "n_attempted": 4,
+     "n": 4,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.9975
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 4,
+     "n": 4,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 0.975
+    },
+    "delta_argmax": 0.0,
+    "delta_prob_mass": 0.0225
+   }
+  },
+  "C02124": {
+   "standard": {
+    "zeroinfo_named": {
+     "n_attempted": 4,
+     "n": 4,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 1.0
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 4,
+     "n": 4,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 1.0
+    },
+    "delta_argmax": 0.0,
+    "delta_prob_mass": 0.0
+   },
+   "stripped": {
+    "zeroinfo_named": {
+     "n_attempted": 4,
+     "n": 4,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 1.0
+    },
+    "zeroinfo_redacted": {
+     "n_attempted": 4,
+     "n": 4,
+     "n_parse_failures": 0,
+     "argmax_accuracy": 1.0,
+     "prob_mass_correct": 1.0
+    },
+    "delta_argmax": 0.0,
+    "delta_prob_mass": 0.0
+   }
+  }
+ },
+ "classifier": {
+  "rubric_sha256": "053b96cba42ebf03d966db3c22fce2acde3a685d5b4cca9badd556ee248a24da",
+  "n_model_cases": 469,
+  "n_rule_labels": 271,
+  "parse_failures": 0,
+  "parse_failure_rate": 0.0,
+  "per_subject": {
+   "C00792": {
+    "FOLLOW-UP": 27,
+    "NEW-TOPIC": 49,
+    "parse_failures": 0,
+    "rule": 6
+   },
+   "C00292": {
+    "FOLLOW-UP": 67,
+    "NEW-TOPIC": 100,
+    "parse_failures": 0,
+    "rule": 163
+   },
+   "C02013": {
+    "FOLLOW-UP": 11,
+    "NEW-TOPIC": 14,
+    "parse_failures": 0,
+    "rule": 5
+   },
+   "C02124": {
+    "FOLLOW-UP": 39,
+    "NEW-TOPIC": 92,
+    "parse_failures": 0,
+    "rule": 42
+   },
+   "C01677": {
+    "FOLLOW-UP": 19,
+    "NEW-TOPIC": 33,
+    "parse_failures": 0,
+    "rule": 53
+   },
+   "C02006": {
+    "FOLLOW-UP": 10,
+    "NEW-TOPIC": 8,
+    "parse_failures": 0,
+    "rule": 2
+   }
+  },
+  "sample": [
+   {
+    "canonical_id": "C00292",
+    "transcript_id": "CNN-6039",
+    "turn_idx": 48,
+    "label": "FOLLOW-UP",
+    "why": "The target asks for the meaning and implications of the organization plan mentioned in the previous turns.",
+    "target_host": "What does it all mean? Is there like a big pie chart of who's doing what? What's the political implication?",
+    "raw_response": "LABEL: FOLLOW-UP\nWHY: The target asks for the meaning and implications of the organization plan mentioned in the previous turns."
+   },
+   {
+    "canonical_id": "C02006",
+    "transcript_id": "NPR-37430",
+    "turn_idx": 2,
+    "label": "FOLLOW-UP",
+    "why": "The target references the specific language used in the guest's reading to introduce a related quote.",
+    "target_host": "Robert Harris is reading from his book, “Imperium,” which is a novel about the Roman Empire. And if you think this language sounds like a description of a modern war, consider this quote that Mr. Harris attributes to a famous Roman general.",
+    "raw_response": "LABEL: FOLLOW-UP\nWHY: The target references the specific language used in the guest's reading to introduce a related quote."
+   },
+   {
+    "canonical_id": "C02124",
+    "transcript_id": "NPR-32351",
+    "turn_idx": 13,
+    "label": "FOLLOW-UP",
+    "why": "The target probes the consequences of the guest's statement regarding the Muslim Brotherhood's expected success in the elections.",
+    "target_host": "If the Muslim Brotherhood does gain a majority in these in these parliamentary elections, does that then set them up for a confrontation with the military council?",
+    "raw_response": "LABEL: FOLLOW-UP\nWHY: The target probes the consequences of the guest's statement regarding the Muslim Brotherhood's expected success in the elections."
+   },
+   {
+    "canonical_id": "C02013",
+    "transcript_id": "NPR-6056",
+    "turn_idx": 9,
+    "label": "FOLLOW-UP",
+    "why": "The target is a minimal continuer prompting the guest to elaborate on the reasons they began listing.",
+    "target_host": "Mm-hmm.",
+    "raw_response": "LABEL: FOLLOW-UP\nWHY: The target is a minimal continuer prompting the guest to elaborate on the reasons they began listing."
+   },
+   {
+    "canonical_id": "C01677",
+    "transcript_id": "NPR-11032",
+    "turn_idx": 56,
+    "label": "FOLLOW-UP",
+    "why": "The target summarizes and extends the guest's point about buying time for negotiations.",
+    "target_host": "And therefore provide more time for talks.",
+    "raw_response": "LABEL: FOLLOW-UP\nWHY: The target summarizes and extends the guest's point about buying time for negotiations."
+   },
+   {
+    "canonical_id": "C00792",
+    "transcript_id": "NPR-6779",
+    "turn_idx": 39,
+    "label": "FOLLOW-UP",
+    "why": "The target references the deployment of weaponry mentioned in the guest's response.",
+    "target_host": "My understanding is that if it is deployed, there is very little time to respond.",
+    "raw_response": "LABEL: FOLLOW-UP\nWHY: The target references the deployment of weaponry mentioned in the guest's response."
+   },
+   {
+    "canonical_id": "C00292",
+    "transcript_id": "CNN-5214",
+    "turn_idx": 79,
+    "label": "FOLLOW-UP",
+    "why": "The target references the smuggling mentioned by the guest before introducing a new speaker to discuss it.",
+    "target_host": "There's a lot more smuggling. James, the vice admiral was here - big time guy - the coordinator of the forces there in the Gulf.",
+    "raw_response": "LABEL: FOLLOW-UP\nWHY: The target references the smuggling mentioned by the guest before introducing a new speaker to discuss it."
+   },
+   {
+    "canonical_id": "C00292",
+    "transcript_id": "CNN-3812",
+    "turn_idx": 62,
+    "label": "FOLLOW-UP",
+    "why": "The target provides further detail and evidence regarding the \"deplorable conditions\" mentioned in the previous turn.",
+    "target_host": "He says with the ceiling lifted, you can't get the - the parts are not there.",
+    "raw_response": "LABEL: FOLLOW-UP\nWHY: The target provides further detail and evidence regarding the \"deplorable conditions\" mentioned in the previous turn."
+   },
+   {
+    "canonical_id": "C02124",
+    "transcript_id": "NPR-33910",
+    "turn_idx": 4,
+    "label": "FOLLOW-UP",
+    "why": "The target references and clarifies \"Ben Ali,\" whom the guest just mentioned.",
+    "target_host": "The former president of Tunisia, of course.",
+    "raw_response": "LABEL: FOLLOW-UP\nWHY: The target references and clarifies \"Ben Ali,\" whom the guest just mentioned."
+   },
+   {
+    "canonical_id": "C02124",
+    "transcript_id": "NPR-33809",
+    "turn_idx": 6,
+    "label": "FOLLOW-UP",
+    "why": "The target probes the guest's specific claim that liberal democracy is the only kind that matters.",
+    "target_host": "Do you think that is the kind of democracy that people are really talking about?",
+    "raw_response": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's specific claim that liberal democracy is the only kind that matters."
+   },
+   {
+    "canonical_id": "C00792",
+    "transcript_id": "NPR-6779",
+    "turn_idx": 107,
+    "label": "NEW-TOPIC",
+    "why": "The target is a segment transition and a pivot to a new caller.",
+    "target_host": "We're talking about the conflict in Syria, and you're listening to TALK OF THE NATION, from NPR News. Let's go to Malas(ph) in Detroit. Hi, Malas.",
+    "raw_response": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition and a pivot to a new caller."
+   },
+   {
+    "canonical_id": "C02006",
+    "transcript_id": "NPR-37430",
+    "turn_idx": 16,
+    "label": "NEW-TOPIC",
+    "why": "The interviewer pivots from the guest's points about the US to a new topic regarding Edward Gibbon and 18th-century England.",
+    "target_host": "I wonder about an event in your own country, when it was seen as the leading nation in the world in the 1770s. In 1776, as a matter of fact, in England, there was the publication of the first volume of the famous Edward Gibbon's Decline and",
+    "raw_response": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's points about the US to a new topic regarding Edward Gibbon and 18th-century England."
+   },
+   {
+    "canonical_id": "C02124",
+    "transcript_id": "NPR-30384",
+    "turn_idx": 9,
+    "label": "NEW-TOPIC",
+    "why": "The interviewer pivots from the guest's discussion on democracy and minorities to a new question about the timing of a specific decree.",
+    "target_host": "You're Egyptian. I want to also ask you, what do you make of the timing of this? I mean, one day, he's being the peace broker between Israel and Hamas, and then the next day, this decree. Anything we should read there?",
+    "raw_response": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's discussion on democracy and minorities to a new question about the timing of a specific decree."
+   },
+   {
+    "canonical_id": "C00292",
+    "transcript_id": "CNN-21018",
+    "turn_idx": 39,
+    "label": "NEW-TOPIC",
+    "why": "The interviewer explicitly pivots to a new agenda item regarding the observer force in the Middle East.",
+    "target_host": "All right. We have to move on to another very sticky issue on the agenda this week, which is the observer force in the Middle East. And, James, what's your reaction to the secretary-general's effort on that part?",
+    "raw_response": "LABEL: NEW-TOPIC\nWHY: The interviewer explicitly pivots to a new agenda item regarding the observer force in the Middle East."
+   },
+   {
+    "canonical_id": "C01677",
+    "transcript_id": "NPR-12784",
+    "turn_idx": 40,
+    "label": "NEW-TOPIC",
+    "why": "The target is a sign-off and introduction of guests, which is a segment transition.",
+    "target_host": "Our number is 800-989-8255. Our email address is talk@npr.org. And you can also join the conversation at our website. Go to npr.org, and click on TALK OF THE NATION. Our guests today are Suzanne Maloney, she is a former policy advisor to th",
+    "raw_response": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and introduction of guests, which is a segment transition."
+   },
+   {
+    "canonical_id": "C02013",
+    "transcript_id": "NPR-6056",
+    "turn_idx": 34,
+    "label": "NEW-TOPIC",
+    "why": "The interviewer introduces their own hypothesis and new research material regardless of the guest's brief agreement.",
+    "target_host": "Prof. SAMPSON. Yeah, exactly, and that goes to my last hypothesis, which I happen to think is the correct one, namely that we have a rapidly changing population in the United States, increasing diversity, increasing immigration. Research sh",
+    "raw_response": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces their own hypothesis and new research material regardless of the guest's brief agreement."
+   },
+   {
+    "canonical_id": "C00792",
+    "transcript_id": "NPR-6779",
+    "turn_idx": 95,
+    "label": "NEW-TOPIC",
+    "why": "The target is a sign-off/acknowledgment to the caller and does not probe the guest's answer.",
+    "target_host": "Thanks for the call.",
+    "raw_response": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off/acknowledgment to the caller and does not probe the guest's answer."
+   },
+   {
+    "canonical_id": "C02124",
+    "transcript_id": "NPR-2929",
+    "turn_idx": 84,
+    "label": "NEW-TOPIC",
+    "why": "The interviewer introduces their own observation about the movement being leaderless rather than probing the guest's list of specific organizations.",
+    "target_host": "I think what you see in the protests today, in Liberation Square, for instance, is in some ways a leaderless movement that is united around the unanimity of their demands about Mr. Mubarak's fall and, as Samer pointed out, the trial of Mr. ",
+    "raw_response": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces their own observation about the movement being leaderless rather than probing the guest's list of specific organizations."
+   },
+   {
+    "canonical_id": "C00292",
+    "transcript_id": "CNN-85004",
+    "turn_idx": 44,
+    "label": "NEW-TOPIC",
+    "why": "The target pivots from the legal discussion to a comment about the current physical environment.",
+    "target_host": "It's a lot quieter, sitting here at this table than being in the Green Zone in Baghdad, isn't it?",
+    "raw_response": "LABEL: NEW-TOPIC\nWHY: The target pivots from the legal discussion to a comment about the current physical environment."
+   },
+   {
+    "canonical_id": "C00292",
+    "transcript_id": "CNN-6671",
+    "turn_idx": 76,
+    "label": "NEW-TOPIC",
+    "why": "The interviewer pivots to a completely different subject regarding AIDS and the South African president.",
+    "target_host": "The issue of AIDS and the international community - a big controversy this week breaking out involving South African president Thabo Mbeki. James, what's the issue here?",
+    "raw_response": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a completely different subject regarding AIDS and the South African president."
+   }
+  ]
+ },
+ "per_subject_cost": {
+  "C00292": {
+   "n_calls": 167,
+   "tokens_in": 143565,
+   "tokens_out": 4757,
+   "node_seconds_share": 41.3,
+   "cost_usd": 0.0
+  },
+  "C00792": {
+   "n_calls": 126,
+   "tokens_in": 172982,
+   "tokens_out": 13156,
+   "node_seconds_share": 114.3,
+   "cost_usd": 0.0
+  },
+  "C01677": {
+   "n_calls": 62,
+   "tokens_in": 68978,
+   "tokens_out": 3196,
+   "node_seconds_share": 27.8,
+   "cost_usd": 0.0
+  },
+  "C02006": {
+   "n_calls": 48,
+   "tokens_in": 80841,
+   "tokens_out": 7831,
+   "node_seconds_share": 68.0,
+   "cost_usd": 0.0
+  },
+  "C02013": {
+   "n_calls": 65,
+   "tokens_in": 137310,
+   "tokens_out": 11088,
+   "node_seconds_share": 96.3,
+   "cost_usd": 0.0
+  },
+  "C02124": {
+   "n_calls": 171,
+   "tokens_in": 206683,
+   "tokens_out": 12347,
+   "node_seconds_share": 107.3,
+   "cost_usd": 0.0
+  }
+ },
+ "parse_failures": {
+  "pred_twin_redacted_standard": {
+   "n_attempted": 17,
+   "n_parse_failures": 0,
+   "rate": 0.0
+  },
+  "pred_twin_redacted_stripped": {
+   "n_attempted": 17,
+   "n_parse_failures": 0,
+   "rate": 0.0
+  },
+  "pred_twin_named_standard": {
+   "n_attempted": 17,
+   "n_parse_failures": 0,
+   "rate": 0.0
+  },
+  "pred_twin_named_stripped": {
+   "n_attempted": 17,
+   "n_parse_failures": 1,
+   "rate": 0.058824
+  },
+  "pred_zeroinfo_redacted_standard": {
+   "n_attempted": 17,
+   "n_parse_failures": 0,
+   "rate": 0.0
+  },
+  "pred_zeroinfo_redacted_stripped": {
+   "n_attempted": 17,
+   "n_parse_failures": 0,
+   "rate": 0.0
+  },
+  "pred_zeroinfo_named_standard": {
+   "n_attempted": 17,
+   "n_parse_failures": 0,
+   "rate": 0.0
+  },
+  "pred_zeroinfo_named_stripped": {
+   "n_attempted": 17,
+   "n_parse_failures": 0,
+   "rate": 0.0
+  },
+  "pred_imposter_redacted_standard": {
+   "n_attempted": 17,
+   "n_parse_failures": 0,
+   "rate": 0.0
+  },
+  "pred_imposter_redacted_stripped": {
+   "n_attempted": 17,
+   "n_parse_failures": 1,
+   "rate": 0.058824
+  },
+  "classify": {
+   "n_attempted": 469,
+   "n_parse_failures": 0,
+   "rate": 0.0
+  }
+ },
+ "total_cost": {
+  "node_hours": 0.1264,
+  "cost_usd": 0.0,
+  "n_calls": 639,
+  "api_calls": 0
+ },
+ "node_hours_source": "sacct",
+ "node_hours_in_process": 0.0804,
+ "jobs": {
+  "stage2_pilot_smoke": {
+   "kind": "smoke",
+   "walltime": "00:20:00",
+   "qos": "boost_qos_dbg",
+   "prompt_files": [
+    "smoke"
+   ],
+   "sbatch_local": "results/stage2_pilot/stage2_pilot_smoke.sbatch",
+   "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/stage2_pilot_smoke.sbatch",
+   "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot",
+   "projected_node_hours": 0.0653,
+   "status": "completed",
+   "slurm_job_ids": [
+    "50356680",
+    "50358183"
+   ],
+   "actual_node_hours": 0.228,
+   "notes": [
+    {
+     "utc": "2026-07-26T18:06:01Z",
+     "note": "smoke slice, 22 prompts, boost_qos_dbg"
+    },
+    {
+     "utc": "2026-07-26T18:15:51Z",
+     "note": "smoke rerun after raising the prediction output cap 120->512; first run 50356680 truncated 20/20"
+    },
+    {
+     "utc": "2026-07-26T18:22:58Z",
+     "note": "two runs: 50356680 (0.1222 nh, 20/20 truncated at the 120-token cap) + 50358183 (0.1058 nh, 21/22 parsed after raising the cap to 512). sacct-billed."
+    }
+   ]
+  },
+  "stage2_pilot_full": {
+   "kind": "full",
+   "walltime": "01:00:00",
+   "qos": null,
+   "prompt_files": [
+    "pred_twin_redacted_standard",
+    "pred_twin_redacted_stripped",
+    "pred_twin_named_standard",
+    "pred_twin_named_stripped",
+    "pred_zeroinfo_redacted_standard",
+    "pred_zeroinfo_redacted_stripped",
+    "pred_zeroinfo_named_standard",
+    "pred_zeroinfo_named_stripped",
+    "pred_imposter_redacted_standard",
+    "pred_imposter_redacted_stripped",
+    "classify"
+   ],
+   "sbatch_local": "results/stage2_pilot/stage2_pilot_full.sbatch",
+   "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/stage2_pilot_full.sbatch",
+   "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot",
+   "projected_node_hours": 0.1112,
+   "status": "completed",
+   "slurm_job_ids": [
+    "50359261"
+   ],
+   "actual_node_hours": 0.1264,
+   "notes": [
+    {
+     "utc": "2026-07-26T18:23:10Z",
+     "note": "all 10 prediction sets + classifier, 639 prompts, one engine init"
+    },
+    {
+     "utc": "2026-07-26T18:33:58Z",
+     "note": "sacct 00:07:35 x 1 node; 639 completions, one engine init 201.6s, 87.8s generation"
+    }
+   ]
+  }
+ }
+}

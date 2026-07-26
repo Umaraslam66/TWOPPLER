@@ -58,20 +58,24 @@
    "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/stage2_pilot_full.sbatch",
    "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot",
    "projected_node_hours": 0.1112,
-   "status": "submitted",
+   "status": "completed",
    "slurm_job_ids": [
     "50359261"
    ],
-   "actual_node_hours": null,
+   "actual_node_hours": 0.1264,
    "notes": [
     {
      "utc": "2026-07-26T18:23:10Z",
      "note": "all 10 prediction sets + classifier, 639 prompts, one engine init"
+    },
+    {
+     "utc": "2026-07-26T18:33:58Z",
+     "note": "sacct 00:07:35 x 1 node; 639 completions, one engine init 201.6s, 87.8s generation"
     }
    ]
   }
  },
  "anomalies": [],
  "notes": [],
- "updated_utc": "2026-07-26T18:23:10Z"
+ "updated_utc": "2026-07-26T18:33:58Z"
 }

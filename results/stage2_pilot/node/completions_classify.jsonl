@@ -1,0 +1,469 @@
+{"idx": 0, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a new agenda question that does not reference the guest's greeting.", "tokens_in": 847, "tokens_out": 27}
+{"idx": 1, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new material regarding a U.N. panel report and the Obama administration's \"red line.\"", "tokens_in": 859, "tokens_out": 33}
+{"idx": 2, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the risk of the \"protracted delay\" mentioned in the guest's explanation of the administration's caution.", "tokens_in": 905, "tokens_out": 35}
+{"idx": 3, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new material from external assessments rather than probing the guest's specific comments.", "tokens_in": 921, "tokens_out": 28}
+{"idx": 4, "text": "LABEL: NEW-TOPIC\nWHY: The target asks a general question about options that does not reference or probe the guest's points about allies.", "tokens_in": 963, "tokens_out": 32}
+{"idx": 5, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and thank you, which is a segment transition.", "tokens_in": 921, "tokens_out": 27}
+{"idx": 6, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a specific new subject (Assad's speech) that was not mentioned by the guest.", "tokens_in": 819, "tokens_out": 32}
+{"idx": 7, "text": "LABEL: FOLLOW-UP\nWHY: The target asks the guest to explain a specific claim they just made.", "tokens_in": 821, "tokens_out": 23}
+{"idx": 8, "text": "LABEL: FOLLOW-UP\nWHY: The target identifies the specific group mentioned by the guest to confirm or clarify the answer.", "tokens_in": 762, "tokens_out": 26}
+{"idx": 9, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's description of the regime's need to maintain unity and \"rally the troops.\"", "tokens_in": 941, "tokens_out": 32}
+{"idx": 10, "text": "LABEL: FOLLOW-UP\nWHY: The target quotes the guest's phrase \"very significantly\" to probe the meaning behind it.", "tokens_in": 889, "tokens_out": 28}
+{"idx": 11, "text": "LABEL: FOLLOW-UP\nWHY: The target directly addresses the \"plan\" for regime change mentioned by the guest.", "tokens_in": 850, "tokens_out": 25}
+{"idx": 12, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the consequences of the \"defiant\" speech described by the guest.", "tokens_in": 890, "tokens_out": 26}
+{"idx": 13, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer acknowledges the guest but pivots to introduce a new person into the conversation.", "tokens_in": 930, "tokens_out": 26}
+{"idx": 14, "text": "LABEL: NEW-TOPIC\nWHY: The target is a social pleasantry/sign-off that does not reference or probe the guest's answer.", "tokens_in": 865, "tokens_out": 33}
+{"idx": 15, "text": "LABEL: NEW-TOPIC\nWHY: The question introduces new material about the guest's travels rather than probing the specific predictions made in the answer.", "tokens_in": 869, "tokens_out": 32}
+{"idx": 16, "text": "LABEL: FOLLOW-UP\nWHY: The target expands on the guest's specific mention of regime attacks on bread lines.", "tokens_in": 969, "tokens_out": 26}
+{"idx": 17, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about displaced people and weather that was not mentioned in the guest's response.", "tokens_in": 892, "tokens_out": 31}
+{"idx": 18, "text": "LABEL: FOLLOW-UP\nWHY: The target provides specific examples of the \"casualty count mounting\" and \"misery\" mentioned in the guest's response.", "tokens_in": 880, "tokens_out": 35}
+{"idx": 19, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to new material about riots in Jordan and weapon flows through Turkey.", "tokens_in": 968, "tokens_out": 26}
+{"idx": 20, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the \"casualty count\" and \"combat on the ground\" mentioned by the guest by asking about the victims' identities.", "tokens_in": 910, "tokens_out": 37}
+{"idx": 21, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about people leaving the country, which was not mentioned in the guest's response.", "tokens_in": 949, "tokens_out": 32}
+{"idx": 22, "text": "LABEL: NEW-TOPIC\nWHY: The target pivots from the guest's prediction of casualties to a new observation about the president's speech setting and atmosphere.", "tokens_in": 900, "tokens_out": 35}
+{"idx": 23, "text": "LABEL: FOLLOW-UP\nWHY: The target references the \"blood\" and \"horror\" mentioned in the guest's answer to contrast it with the setting.", "tokens_in": 903, "tokens_out": 34}
+{"idx": 24, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about theater and propaganda without referencing the guest's prediction of casualties.", "tokens_in": 913, "tokens_out": 29}
+{"idx": 25, "text": "LABEL: FOLLOW-UP\nWHY: The target quotes the guest's mention of bread lines to probe further into the daily experience of civilians.", "tokens_in": 904, "tokens_out": 30}
+{"idx": 26, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new descriptive details about daily life and displacement that were not mentioned in the guest's response.", "tokens_in": 955, "tokens_out": 32}
+{"idx": 27, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about rebels and alternative governments without referencing or probing the guest's previous answer.", "tokens_in": 938, "tokens_out": 31}
+{"idx": 28, "text": "LABEL: FOLLOW-UP\nWHY: The target directly disputes the guest's claim about mounting casualties by stating \"That really hasn't happened.\"", "tokens_in": 894, "tokens_out": 31}
+{"idx": 29, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new specific subject (chemical weapons) and addresses a different person.", "tokens_in": 904, "tokens_out": 28}
+{"idx": 30, "text": "LABEL: FOLLOW-UP\nWHY: The target references the deployment of weaponry mentioned in the guest's response.", "tokens_in": 842, "tokens_out": 24}
+{"idx": 31, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the \"chemical element\" and \"desperate measure\" mentioned by the guest by asking a different witness about it.", "tokens_in": 931, "tokens_out": 35}
+{"idx": 32, "text": "LABEL: FOLLOW-UP\nWHY: The target explicitly references the guest's point (\"interesting that you say that\") to challenge the guest's analysis of the regime.", "tokens_in": 1006, "tokens_out": 36}
+{"idx": 33, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition and a call for listener questions, introducing new material.", "tokens_in": 993, "tokens_out": 27}
+{"idx": 34, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's point about Assad's contradictions to new statistics regarding death tolls and hunger.", "tokens_in": 970, "tokens_out": 33}
+{"idx": 35, "text": "LABEL: NEW-TOPIC\nWHY: The target is a transition to a new segment or a prepared summary, introducing external facts rather than probing the guest.", "tokens_in": 930, "tokens_out": 33}
+{"idx": 36, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition to listener call-ins and a sign-off/introduction of guests.", "tokens_in": 970, "tokens_out": 31}
+{"idx": 37, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new guest to the program, which is a segment transition.", "tokens_in": 956, "tokens_out": 26}
+{"idx": 38, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a prepared email question from a viewer, introducing new material.", "tokens_in": 920, "tokens_out": 26}
+{"idx": 39, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's analysis of Assad's contradictions and desperate measures.", "tokens_in": 900, "tokens_out": 26}
+{"idx": 40, "text": "LABEL: FOLLOW-UP\nWHY: The target directly references the guest's mention of Assad using chemical weapons.", "tokens_in": 907, "tokens_out": 24}
+{"idx": 41, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's discussion of Assad's claims and the underlying intelligence sources.", "tokens_in": 892, "tokens_out": 28}
+{"idx": 42, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's point about the contradiction and the uncertainty of the situation.", "tokens_in": 893, "tokens_out": 27}
+{"idx": 43, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new segment by taking a call from a listener.", "tokens_in": 913, "tokens_out": 25}
+{"idx": 44, "text": "LABEL: FOLLOW-UP\nWHY: This is a minimal continuer prompting the guest to continue their current line of reasoning.", "tokens_in": 892, "tokens_out": 25}
+{"idx": 45, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new question addressed to a different person.", "tokens_in": 902, "tokens_out": 23}
+{"idx": 46, "text": "LABEL: FOLLOW-UP\nWHY: The target asks the next guest to reflect on the material just discussed by the previous guest.", "tokens_in": 905, "tokens_out": 27}
+{"idx": 47, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a different guest and asks a new question about Assad's current inner circle.", "tokens_in": 949, "tokens_out": 30}
+{"idx": 48, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a different guest and introduces new material about the rebels and the conflict.", "tokens_in": 958, "tokens_out": 28}
+{"idx": 49, "text": "LABEL: NEW-TOPIC\nWHY: The target is a statement of the interviewer's own analysis rather than a probe or response to the guest's words.", "tokens_in": 991, "tokens_out": 35}
+{"idx": 50, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about commerce in Turkey and Dubai that was not mentioned by the guest.", "tokens_in": 978, "tokens_out": 29}
+{"idx": 51, "text": "LABEL: FOLLOW-UP\nWHY: The target adds a qualifying detail to the guest's discussion regarding support for President Bashar al-Assad.", "tokens_in": 929, "tokens_out": 32}
+{"idx": 52, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new caller, which is a segment transition.", "tokens_in": 929, "tokens_out": 24}
+{"idx": 53, "text": "LABEL: FOLLOW-UP\nWHY: \"Sure\" acts as a minimal continuer, prompting the guest to elaborate or continue their line of thought.", "tokens_in": 913, "tokens_out": 30}
+{"idx": 54, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a different person and a new subject regarding weapons.", "tokens_in": 935, "tokens_out": 24}
+{"idx": 55, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about missiles and reports, ignoring the guest's historical summary of the Assad presidency.", "tokens_in": 980, "tokens_out": 32}
+{"idx": 56, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's historical analysis of Assad to a new description of barrel bombs.", "tokens_in": 990, "tokens_out": 30}
+{"idx": 57, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new subject (Turkey) and directs the question to a different person.", "tokens_in": 932, "tokens_out": 29}
+{"idx": 58, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new question from a viewer about a specific geographic region, ignoring the guest's previous points.", "tokens_in": 962, "tokens_out": 33}
+{"idx": 59, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new question from a different person.", "tokens_in": 885, "tokens_out": 22}
+{"idx": 60, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off/acknowledgment to the caller and does not probe the guest's answer.", "tokens_in": 872, "tokens_out": 33}
+{"idx": 61, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new set of questions from a different person regarding conditions on the ground.", "tokens_in": 939, "tokens_out": 29}
+{"idx": 62, "text": "LABEL: FOLLOW-UP\nWHY: The target comments on the nature of the questions and answers provided in the previous turn.", "tokens_in": 883, "tokens_out": 26}
+{"idx": 63, "text": "LABEL: FOLLOW-UP\nWHY: \"Right\" serves as a minimal continuer acknowledging the guest's answer and prompting them to continue.", "tokens_in": 869, "tokens_out": 29}
+{"idx": 64, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces entirely new material about crops and gas that does not reference the guest's answer about Assad.", "tokens_in": 896, "tokens_out": 32}
+{"idx": 65, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a new subject (food) that was not mentioned in the guest's response.", "tokens_in": 874, "tokens_out": 30}
+{"idx": 66, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about humanitarian conditions and salaries without referencing the guest's answer about Assad's movements.", "tokens_in": 981, "tokens_out": 33}
+{"idx": 67, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about salaries and a Sunday speech not mentioned by the guest.", "tokens_in": 972, "tokens_out": 27}
+{"idx": 68, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to new questions from other viewers rather than probing the guest's previous answer.", "tokens_in": 937, "tokens_out": 29}
+{"idx": 69, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition and a pivot to a new caller.", "tokens_in": 996, "tokens_out": 24}
+{"idx": 70, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about chemical weapons that was not mentioned in the guest's response.", "tokens_in": 981, "tokens_out": 29}
+{"idx": 71, "text": "LABEL: FOLLOW-UP\nWHY: \"So...\" is a minimal continuer prompting the guest to elaborate or conclude their current point.", "tokens_in": 953, "tokens_out": 27}
+{"idx": 72, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new question about President Obama's red line and chemical weapons.", "tokens_in": 990, "tokens_out": 28}
+{"idx": 73, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a new subject regarding chemical weapons that was not mentioned in the guest's response.", "tokens_in": 1091, "tokens_out": 30}
+{"idx": 74, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a new question about U.S. intervention that does not reference or probe the guest's answer.", "tokens_in": 1005, "tokens_out": 34}
+{"idx": 75, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition involving guest introductions and a program sign-off.", "tokens_in": 1049, "tokens_out": 26}
+{"idx": 76, "text": "LABEL: FOLLOW-UP\nWHY: \"Right\" serves as a minimal continuer acknowledging the guest's point and prompting further elaboration.", "tokens_in": 809, "tokens_out": 28}
+{"idx": 77, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer explicitly pivots to a new agenda item regarding the observer force in the Middle East.", "tokens_in": 796, "tokens_out": 28}
+{"idx": 78, "text": "LABEL: FOLLOW-UP\nWHY: The interviewer uses the guest's mention of \"opening the door\" (unofficial permission) to pivot to the Jordanian flights.", "tokens_in": 963, "tokens_out": 35}
+{"idx": 79, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer acknowledges the guest's point but pivots to a new subject regarding the U.S. election.", "tokens_in": 916, "tokens_out": 32}
+{"idx": 80, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots away from the guest to introduce a different speaker/segment.", "tokens_in": 895, "tokens_out": 25}
+{"idx": 81, "text": "LABEL: FOLLOW-UP\nWHY: The target summarizes and references the guest's specific praise for Mr. Holbrooke.", "tokens_in": 827, "tokens_out": 26}
+{"idx": 82, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and segment transition.", "tokens_in": 840, "tokens_out": 21}
+{"idx": 83, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and part of the interviewer's closing sequence.", "tokens_in": 779, "tokens_out": 27}
+{"idx": 84, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition to a new speaker and location.", "tokens_in": 803, "tokens_out": 23}
+{"idx": 85, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition to a new story about Sharon Stone and AIDS research.", "tokens_in": 906, "tokens_out": 27}
+{"idx": 86, "text": "LABEL: FOLLOW-UP\nWHY: The target directly responds to the guest's question about who is being discussed.", "tokens_in": 835, "tokens_out": 25}
+{"idx": 87, "text": "LABEL: NEW-TOPIC\nWHY: The target is a fragmented transition moving away from the guest's statement to a new point.", "tokens_in": 764, "tokens_out": 29}
+{"idx": 88, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about the UN and oil states that does not come from the guest's fragmented response.", "tokens_in": 771, "tokens_out": 33}
+{"idx": 89, "text": "LABEL: FOLLOW-UP\nWHY: The interviewer is refining and probing the specific description of conditions mentioned in the previous turn.", "tokens_in": 769, "tokens_out": 26}
+{"idx": 90, "text": "LABEL: FOLLOW-UP\nWHY: The target provides further detail and evidence regarding the \"deplorable conditions\" mentioned in the previous turn.", "tokens_in": 776, "tokens_out": 30}
+{"idx": 91, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a different person, introducing a new participant rather than probing the guest's answer.", "tokens_in": 797, "tokens_out": 31}
+{"idx": 92, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off or transition indicating the end of the segment.", "tokens_in": 778, "tokens_out": 26}
+{"idx": 93, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer ignores the guest's refusal to continue and pivots to other prepared issues.", "tokens_in": 781, "tokens_out": 27}
+{"idx": 94, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's refusal to stop talking by commenting on the time constraint mentioned in the previous turn.", "tokens_in": 791, "tokens_out": 32}
+{"idx": 95, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer acknowledges the guest's comment but pivots to a new subject, Hans Blix.", "tokens_in": 807, "tokens_out": 29}
+{"idx": 96, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's discussion of Hans Blix by using the pronoun \"He\".", "tokens_in": 872, "tokens_out": 28}
+{"idx": 97, "text": "LABEL: FOLLOW-UP\nWHY: The interviewer is repeating and clarifying a point to challenge the guest's denial.", "tokens_in": 765, "tokens_out": 25}
+{"idx": 98, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer is addressing a different person, which constitutes a question to someone else.", "tokens_in": 762, "tokens_out": 26}
+{"idx": 99, "text": "LABEL: NEW-TOPIC\nWHY: The target consists of a sign-off and closing credits, which is a segment transition.", "tokens_in": 900, "tokens_out": 28}
+{"idx": 100, "text": "LABEL: FOLLOW-UP\nWHY: \"All right\" serves as a minimal continuer, acknowledging the guest's answer and prompting them to continue or conclude.", "tokens_in": 974, "tokens_out": 33}
+{"idx": 101, "text": "LABEL: NEW-TOPIC\nWHY: The target is a transition to a different person, introducing a new speaker.", "tokens_in": 758, "tokens_out": 25}
+{"idx": 102, "text": "LABEL: NEW-TOPIC\nWHY: The target is a name or address to a person, introducing a new turn or speaker without referencing the guest's answer.", "tokens_in": 749, "tokens_out": 35}
+{"idx": 103, "text": "LABEL: FOLLOW-UP\nWHY: The target responds directly to the guest's assertion that something is \"true\" by suggesting how to handle it.", "tokens_in": 776, "tokens_out": 32}
+{"idx": 104, "text": "LABEL: FOLLOW-UP\nWHY: \"All right\" acts as a minimal continuer, prompting the guest to elaborate on their statement.", "tokens_in": 753, "tokens_out": 28}
+{"idx": 105, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer acknowledges the guest's point but pivots to a new subject regarding Kofi Annan and Israel.", "tokens_in": 963, "tokens_out": 31}
+{"idx": 106, "text": "LABEL: FOLLOW-UP\nWHY: The interviewer is beginning to respond to or challenge the guest's point about Kofi Annan's use of the word \"illegal.\"", "tokens_in": 909, "tokens_out": 36}
+{"idx": 107, "text": "LABEL: FOLLOW-UP\nWHY: The target continues the discussion about the Secretary-General's image and the specific letter mentioned by the guest.", "tokens_in": 936, "tokens_out": 31}
+{"idx": 108, "text": "LABEL: FOLLOW-UP\nWHY: The target begins a response or challenge to the guest's agreement that the subject has \"slipped.\"", "tokens_in": 802, "tokens_out": 30}
+{"idx": 109, "text": "LABEL: FOLLOW-UP\nWHY: The target references the \"letter\" mentioned in the previous exchange to continue the discussion.", "tokens_in": 809, "tokens_out": 26}
+{"idx": 110, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the previous discussion to a new segment regarding Mary Robinson and human rights.", "tokens_in": 895, "tokens_out": 28}
+{"idx": 111, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer acknowledges the guest and then pivots to a different person as the segment ends.", "tokens_in": 818, "tokens_out": 27}
+{"idx": 112, "text": "LABEL: NEW-TOPIC\nWHY: The target is a prepared question that does not reference or probe the guest's response.", "tokens_in": 772, "tokens_out": 28}
+{"idx": 113, "text": "LABEL: NEW-TOPIC\nWHY: This is a sign-off or transition to end the segment.", "tokens_in": 815, "tokens_out": 23}
+{"idx": 114, "text": "LABEL: FOLLOW-UP\nWHY: This is a minimal continuer acknowledging the guest's lead to prompt further elaboration.", "tokens_in": 756, "tokens_out": 25}
+{"idx": 115, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and segment transition.", "tokens_in": 807, "tokens_out": 21}
+{"idx": 116, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition introducing a completely new story about Kofi Annan.", "tokens_in": 940, "tokens_out": 26}
+{"idx": 117, "text": "LABEL: NEW-TOPIC\nWHY: The target is a transition to a new news segment after the guest has been signed off.", "tokens_in": 907, "tokens_out": 28}
+{"idx": 118, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and closing segment that introduces new material unrelated to the guest's response.", "tokens_in": 898, "tokens_out": 32}
+{"idx": 119, "text": "LABEL: FOLLOW-UP\nWHY: The target references the \"contracts\" mentioned by the guest in the previous turn.", "tokens_in": 901, "tokens_out": 25}
+{"idx": 120, "text": "LABEL: FOLLOW-UP\nWHY: The target references the smuggling mentioned by the guest before introducing a new speaker to discuss it.", "tokens_in": 811, "tokens_out": 27}
+{"idx": 121, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new subject regarding Secretary-General Annan's speech, ignoring the guest's comments on smuggling and oil.", "tokens_in": 826, "tokens_out": 38}
+{"idx": 122, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a different person and asks a new question about Annan.", "tokens_in": 805, "tokens_out": 26}
+{"idx": 123, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off or transition away from the guest.", "tokens_in": 851, "tokens_out": 24}
+{"idx": 124, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer explicitly pivots to a \"second subject\" regarding money and the UN.", "tokens_in": 804, "tokens_out": 26}
+{"idx": 125, "text": "LABEL: FOLLOW-UP\nWHY: The target references the \"moral problem\" mentioned by the guest as the \"key part\" of the upcoming discussions.", "tokens_in": 803, "tokens_out": 32}
+{"idx": 126, "text": "LABEL: FOLLOW-UP\nWHY: The target directly disputes the guest's claim that \"everybody\" thought the invitation was ludicrous.", "tokens_in": 874, "tokens_out": 29}
+{"idx": 127, "text": "LABEL: FOLLOW-UP\nWHY: The target directly responds to and challenges the guest's question about who \"they\" think the group is.", "tokens_in": 770, "tokens_out": 31}
+{"idx": 128, "text": "LABEL: FOLLOW-UP\nWHY: This is a minimal continuer prompting the guest to elaborate on their previous statement.", "tokens_in": 765, "tokens_out": 24}
+{"idx": 129, "text": "LABEL: FOLLOW-UP\nWHY: The target directly responds to and completes the guest's unfinished thought about symbolic needs.", "tokens_in": 759, "tokens_out": 26}
+{"idx": 130, "text": "LABEL: FOLLOW-UP\nWHY: The target acknowledges and validates a specific point just made by the guest.", "tokens_in": 766, "tokens_out": 23}
+{"idx": 131, "text": "LABEL: NEW-TOPIC\nWHY: The target pivots to UN finances and includes a sign-off and transition to other segments.", "tokens_in": 842, "tokens_out": 28}
+{"idx": 132, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest to a different person (Afsane) to ask for their assessment.", "tokens_in": 852, "tokens_out": 31}
+{"idx": 133, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the UN's deployment status to a new subject: the guest's visit to Zimbabwe and President Mugabe.", "tokens_in": 1019, "tokens_out": 36}
+{"idx": 134, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off that pivots to other travel videos and concludes the interview.", "tokens_in": 999, "tokens_out": 28}
+{"idx": 135, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and closing sequence for the program.", "tokens_in": 935, "tokens_out": 24}
+{"idx": 136, "text": "LABEL: FOLLOW-UP\nWHY: The target quotes the guest's mention of the football match before asking the next correspondent for their take.", "tokens_in": 953, "tokens_out": 30}
+{"idx": 137, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about French troops and Mitrovica that was not mentioned by the guest.", "tokens_in": 957, "tokens_out": 30}
+{"idx": 138, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer explicitly states they will \"switch gears\" to discuss a different subject, Iraq.", "tokens_in": 988, "tokens_out": 28}
+{"idx": 139, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer acknowledges the guest's point and then pivots to a completely different subject: Iraq and Hans Blix.", "tokens_in": 986, "tokens_out": 33}
+{"idx": 140, "text": "LABEL: FOLLOW-UP\nWHY: The target asks for the meaning and implications of the organization plan mentioned in the previous turns.", "tokens_in": 840, "tokens_out": 27}
+{"idx": 141, "text": "LABEL: FOLLOW-UP\nWHY: The target asks about the Blix report, which relates to the inspectors mentioned in the guest's response.", "tokens_in": 869, "tokens_out": 31}
+{"idx": 142, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to the U.S. Navy and then transitions to a new subject regarding Lebanon.", "tokens_in": 963, "tokens_out": 30}
+{"idx": 143, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the Blix report and Iraq to a new subject regarding Secretary-General Annan and Israel.", "tokens_in": 867, "tokens_out": 33}
+{"idx": 144, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the UN's worries to a segment transition introducing the mayor of New York City.", "tokens_in": 1058, "tokens_out": 31}
+{"idx": 145, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the UN's worries about Lebanon to Cuba and the Buena Vista Social Club.", "tokens_in": 1071, "tokens_out": 30}
+{"idx": 146, "text": "LABEL: FOLLOW-UP\nWHY: The target begins a comment reacting to the guest's description of the proposals and their acceptance.", "tokens_in": 976, "tokens_out": 28}
+{"idx": 147, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a sign-off and asks a new question to a different person.", "tokens_in": 802, "tokens_out": 28}
+{"idx": 148, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and segment transition, introducing new material and closing the interview.", "tokens_in": 935, "tokens_out": 29}
+{"idx": 149, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer acknowledges the mention of sanctions but pivots to a prepared agenda regarding the UN and Angola.", "tokens_in": 1015, "tokens_out": 29}
+{"idx": 150, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's points by categorizing them under a specific theme or topic.", "tokens_in": 908, "tokens_out": 28}
+{"idx": 151, "text": "LABEL: FOLLOW-UP\nWHY: The target quotes the guest's specific phrase \"smart sanctions\" to confirm or probe the point.", "tokens_in": 768, "tokens_out": 29}
+{"idx": 152, "text": "LABEL: FOLLOW-UP\nWHY: The target references the specific subject (smart sanctions) just confirmed by the guest.", "tokens_in": 760, "tokens_out": 25}
+{"idx": 153, "text": "LABEL: FOLLOW-UP\nWHY: The target asks the guest to elaborate on the topic they just agreed they have talked about.", "tokens_in": 757, "tokens_out": 27}
+{"idx": 154, "text": "LABEL: FOLLOW-UP\nWHY: The target is a reactive response to the guest's immediate challenge and tone.", "tokens_in": 773, "tokens_out": 25}
+{"idx": 155, "text": "LABEL: FOLLOW-UP\nWHY: The interviewer is reacting to and asking for clarification on the guest's immediate statement about Iraq sanctions.", "tokens_in": 790, "tokens_out": 29}
+{"idx": 156, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new subject (Lebanon) and addresses a different person.", "tokens_in": 817, "tokens_out": 27}
+{"idx": 157, "text": "LABEL: FOLLOW-UP\nWHY: The target reacts directly to the guest's specific mention of borders and the map.", "tokens_in": 900, "tokens_out": 26}
+{"idx": 158, "text": "LABEL: FOLLOW-UP\nWHY: \"All right\" serves as a minimal continuer, acknowledging the guest's point and prompting them to continue.", "tokens_in": 774, "tokens_out": 31}
+{"idx": 159, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new segment introducing Former President Amin Gemayel and his plea for intervention.", "tokens_in": 883, "tokens_out": 30}
+{"idx": 160, "text": "LABEL: NEW-TOPIC\nWHY: The target is a transition segment and commentary that introduces new material rather than probing the guest's answer.", "tokens_in": 920, "tokens_out": 31}
+{"idx": 161, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition to a descriptive piece about building interiors, ignoring the guest's comments on UN forces.", "tokens_in": 925, "tokens_out": 34}
+{"idx": 162, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces entirely new material about a library and lounge, ignoring the guest's comments on UN forces.", "tokens_in": 847, "tokens_out": 32}
+{"idx": 163, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a new subject regarding the media and orders, ignoring the guest's points about UN force size.", "tokens_in": 833, "tokens_out": 33}
+{"idx": 164, "text": "LABEL: FOLLOW-UP\nWHY: The interviewer asks for the guest's sense of the story she just described.", "tokens_in": 854, "tokens_out": 25}
+{"idx": 165, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces entirely new material about a book and a different reporter, ignoring the guest's minimal response.", "tokens_in": 846, "tokens_out": 32}
+{"idx": 166, "text": "LABEL: FOLLOW-UP\nWHY: The target repeats the guest's statement to acknowledge or probe the information provided.", "tokens_in": 820, "tokens_out": 25}
+{"idx": 167, "text": "LABEL: FOLLOW-UP\nWHY: The target builds on the guest's mention of the Vatican and the UN to add related anecdotes.", "tokens_in": 843, "tokens_out": 29}
+{"idx": 168, "text": "LABEL: FOLLOW-UP\nWHY: The target continues the description of the Vatican's sleeping conditions initiated in the previous turn.", "tokens_in": 839, "tokens_out": 27}
+{"idx": 169, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and closing segment transition.", "tokens_in": 936, "tokens_out": 22}
+{"idx": 170, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's previous mention of Secretary Albright by asking what he will miss about her.", "tokens_in": 904, "tokens_out": 30}
+{"idx": 171, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a new line of questioning about criticism and sexism, ignoring the guest's question about missing the job.", "tokens_in": 840, "tokens_out": 34}
+{"idx": 172, "text": "LABEL: FOLLOW-UP\nWHY: The target explicitly references the guest's previous turn as \"filling up time\" before pivoting to a related point.", "tokens_in": 852, "tokens_out": 32}
+{"idx": 173, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the outcome of the negotiations mentioned in the guest's turn.", "tokens_in": 793, "tokens_out": 25}
+{"idx": 174, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new material regarding sanctions and refers to previous show debates rather than probing the guest's specific answer.", "tokens_in": 812, "tokens_out": 33}
+{"idx": 175, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from a discussion about Iran to a new subject regarding Libya.", "tokens_in": 858, "tokens_out": 25}
+{"idx": 176, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new specific details (Lockerbie/Pan Am 103) that were not mentioned by the guest.", "tokens_in": 831, "tokens_out": 36}
+{"idx": 177, "text": "LABEL: FOLLOW-UP\nWHY: The target clarifies a specific person mentioned in the guest's question.", "tokens_in": 814, "tokens_out": 23}
+{"idx": 178, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a prepared question about the guest's legacy, ignoring the guest's prompt.", "tokens_in": 793, "tokens_out": 30}
+{"idx": 179, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's invitation to explain \"why\" by offering a specific condition (background) for the answer.", "tokens_in": 778, "tokens_out": 34}
+{"idx": 180, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and a transition to end the interview.", "tokens_in": 813, "tokens_out": 25}
+{"idx": 181, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and closing remark, which constitutes a segment transition.", "tokens_in": 805, "tokens_out": 27}
+{"idx": 182, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a monologue about government spokesmen and a separate anecdote, ignoring the guest's specific answer.", "tokens_in": 831, "tokens_out": 33}
+{"idx": 183, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition involving a scripted monologue and a pivot to a new subject.", "tokens_in": 916, "tokens_out": 28}
+{"idx": 184, "text": "LABEL: FOLLOW-UP\nWHY: The target references the difficulty of the mandate and the need to restore authority mentioned by the guest.", "tokens_in": 994, "tokens_out": 28}
+{"idx": 185, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from Lebanon to the Security Council's trips to Kosovo and addresses a different person.", "tokens_in": 867, "tokens_out": 30}
+{"idx": 186, "text": "LABEL: FOLLOW-UP\nWHY: The target repeats and confirms the specific number provided in the guest's answer.", "tokens_in": 787, "tokens_out": 25}
+{"idx": 187, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the ambassadors' travel to a new subject regarding UN job postings and the UNHCR.", "tokens_in": 990, "tokens_out": 30}
+{"idx": 188, "text": "LABEL: FOLLOW-UP\nWHY: The target references Sadako Ogata, whom the guest just mentioned by name.", "tokens_in": 918, "tokens_out": 25}
+{"idx": 189, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer explicitly moves along to a different subject regarding a UN story.", "tokens_in": 830, "tokens_out": 24}
+{"idx": 190, "text": "LABEL: NEW-TOPIC\nWHY: The target ignores the guest's answer to introduce a prepared biographical segment and a new set of facts.", "tokens_in": 866, "tokens_out": 31}
+{"idx": 191, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a completely different subject regarding AIDS and the South African president.", "tokens_in": 790, "tokens_out": 26}
+{"idx": 192, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and a thank you to the guest.", "tokens_in": 920, "tokens_out": 25}
+{"idx": 193, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and transition to future programming, introducing entirely new material.", "tokens_in": 910, "tokens_out": 28}
+{"idx": 194, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots the question to a different person.", "tokens_in": 970, "tokens_out": 20}
+{"idx": 195, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's description of the change in attitude and the nature of the Security Council meeting.", "tokens_in": 940, "tokens_out": 31}
+{"idx": 196, "text": "LABEL: FOLLOW-UP\nWHY: The target is a minimal continuer responding directly to the guest's mention of the Nigerians.", "tokens_in": 790, "tokens_out": 27}
+{"idx": 197, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new set of facts about defense ministers and asks for a final prediction.", "tokens_in": 838, "tokens_out": 29}
+{"idx": 198, "text": "LABEL: FOLLOW-UP\nWHY: The target summarizes and probes the guest's point about the changing perception of the UN action.", "tokens_in": 859, "tokens_out": 28}
+{"idx": 199, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new material about hostages and pivots the conversation to another person.", "tokens_in": 790, "tokens_out": 25}
+{"idx": 200, "text": "LABEL: NEW-TOPIC\nWHY: The target contains a sign-off and a transition to a new segment about diplomatic visits to Belgrade.", "tokens_in": 904, "tokens_out": 30}
+{"idx": 201, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition involving a news report and a call for listener feedback.", "tokens_in": 920, "tokens_out": 27}
+{"idx": 202, "text": "LABEL: FOLLOW-UP\nWHY: The target continues the discussion about the appointment of Allawi and the role of the UN/CPA mentioned by the guest.", "tokens_in": 874, "tokens_out": 34}
+{"idx": 203, "text": "LABEL: FOLLOW-UP\nWHY: The target quotes the phrase \"waiting for Brahimi\" directly from the guest's response.", "tokens_in": 861, "tokens_out": 28}
+{"idx": 204, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's comment to a new segment regarding the UN Security Council resolution.", "tokens_in": 959, "tokens_out": 30}
+{"idx": 205, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material regarding Security Council members that was not mentioned in the guest's response.", "tokens_in": 864, "tokens_out": 30}
+{"idx": 206, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new subject regarding Algeria, the resolution, and Europe, ignoring the guest's point about the UN.", "tokens_in": 893, "tokens_out": 36}
+{"idx": 207, "text": "LABEL: FOLLOW-UP\nWHY: The target references the \"special force\" in response to the guest's mention of security and troops.", "tokens_in": 949, "tokens_out": 30}
+{"idx": 208, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's mention of \"security\" and the need to be \"sure of security this time.\"", "tokens_in": 970, "tokens_out": 33}
+{"idx": 209, "text": "LABEL: FOLLOW-UP\nWHY: The target provides a specific example of the UN security failures mentioned by the guest.", "tokens_in": 882, "tokens_out": 25}
+{"idx": 210, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's comment on security to a new question about the resolution and the Council.", "tokens_in": 863, "tokens_out": 32}
+{"idx": 211, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer makes a general comment and then pivots to a different person.", "tokens_in": 823, "tokens_out": 24}
+{"idx": 212, "text": "LABEL: FOLLOW-UP\nWHY: The target directly addresses the prisoners mentioned by the guest and asks for clarification on the problem.", "tokens_in": 812, "tokens_out": 27}
+{"idx": 213, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new subject regarding a United Nations report.", "tokens_in": 775, "tokens_out": 23}
+{"idx": 214, "text": "LABEL: FOLLOW-UP\nWHY: The target references the \"abuses at the prisons\" mentioned by the guest to transition to the topic of immunity.", "tokens_in": 971, "tokens_out": 32}
+{"idx": 215, "text": "LABEL: NEW-TOPIC\nWHY: After some banter, the interviewer pivots to a new subject regarding John Negroponte and the Security Council.", "tokens_in": 1011, "tokens_out": 31}
+{"idx": 216, "text": "LABEL: NEW-TOPIC\nWHY: The target pivots from the legal discussion to a comment about the current physical environment.", "tokens_in": 876, "tokens_out": 26}
+{"idx": 217, "text": "LABEL: FOLLOW-UP\nWHY: The target directly responds to the guest's comment about what the interviewer wants to get into.", "tokens_in": 862, "tokens_out": 28}
+{"idx": 218, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the Geneva Conventions to a new subject regarding newspaper favoritism and a forthcoming book.", "tokens_in": 942, "tokens_out": 30}
+{"idx": 219, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a completely different subject and addresses a different person.", "tokens_in": 873, "tokens_out": 24}
+{"idx": 220, "text": "LABEL: FOLLOW-UP\nWHY: The interviewer acknowledges and references the specific story about Kofi Annan mentioned by the guest.", "tokens_in": 846, "tokens_out": 26}
+{"idx": 221, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer interrupts to introduce new material about their own time in the Council.", "tokens_in": 846, "tokens_out": 25}
+{"idx": 222, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about a book and the French ambassador, ignoring the guest's comment about name changes.", "tokens_in": 784, "tokens_out": 33}
+{"idx": 223, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new story about the U.N. in Congo and then transitions to Sudan.", "tokens_in": 882, "tokens_out": 31}
+{"idx": 224, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new material regarding Secretary-General Annan's correspondence rather than probing the guest's comments.", "tokens_in": 935, "tokens_out": 33}
+{"idx": 225, "text": "LABEL: FOLLOW-UP\nWHY: This is a prompt for the guest to continue or conclude their current point.", "tokens_in": 813, "tokens_out": 24}
+{"idx": 226, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and a transition to a new segment about a film and Jan Egeland.", "tokens_in": 959, "tokens_out": 33}
+{"idx": 227, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the Sudan question to a story about a movie being filmed at the UN.", "tokens_in": 934, "tokens_out": 29}
+{"idx": 228, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and transition to a different segment, introducing entirely new material.", "tokens_in": 951, "tokens_out": 29}
+{"idx": 229, "text": "LABEL: FOLLOW-UP\nWHY: The target completes the guest's sentence, directly referencing the person the guest was just introducing.", "tokens_in": 872, "tokens_out": 28}
+{"idx": 230, "text": "LABEL: FOLLOW-UP\nWHY: The target asks for a specific detail regarding the location (\"there\") mentioned by the guest.", "tokens_in": 809, "tokens_out": 27}
+{"idx": 231, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from Liberia to other African countries and asks for a new take on the situation in Kisangani.", "tokens_in": 847, "tokens_out": 32}
+{"idx": 232, "text": "LABEL: FOLLOW-UP\nWHY: The target is a direct response to the guest's question about the Horrigan report.", "tokens_in": 810, "tokens_out": 28}
+{"idx": 233, "text": "LABEL: FOLLOW-UP\nWHY: The target asks for more detail specifically regarding the report mentioned by the guest.", "tokens_in": 784, "tokens_out": 24}
+{"idx": 234, "text": "LABEL: FOLLOW-UP\nWHY: The target references Kagame in direct response to the guest's mention of who killed the president of Rwanda.", "tokens_in": 817, "tokens_out": 31}
+{"idx": 235, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer explicitly pivots to \"another area\" and introduces new material regarding the Kosovo war and Bernard Kouchner.", "tokens_in": 858, "tokens_out": 33}
+{"idx": 236, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's answer about Kosovo to a new subject regarding the Security Council's weekend getaway.", "tokens_in": 945, "tokens_out": 34}
+{"idx": 237, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the Kosovo discussion to new material regarding Congo, Sierra Leone, and future peacekeeping missions.", "tokens_in": 938, "tokens_out": 31}
+{"idx": 238, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off thanking the guest.", "tokens_in": 871, "tokens_out": 21}
+{"idx": 239, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer transitions to a new reporter and introduces a completely different news story.", "tokens_in": 840, "tokens_out": 25}
+{"idx": 240, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces entirely new material about a movie and actress, unrelated to the previous exchange.", "tokens_in": 802, "tokens_out": 28}
+{"idx": 241, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the previous guest to a new subject regarding a United Nations conference and exhibition.", "tokens_in": 805, "tokens_out": 29}
+{"idx": 242, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and closing segment transition.", "tokens_in": 840, "tokens_out": 22}
+{"idx": 243, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a different guest and asks a broad question about pervasive issues.", "tokens_in": 1032, "tokens_out": 26}
+{"idx": 244, "text": "LABEL: FOLLOW-UP\nWHY: The target explicitly references \"what Reverend Rivers just suggested\" to build its line of questioning.", "tokens_in": 1055, "tokens_out": 27}
+{"idx": 245, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a list of new specific factors (drugs, gangs, unemployment) not mentioned in the guest's response.", "tokens_in": 1029, "tokens_out": 35}
+{"idx": 246, "text": "LABEL: FOLLOW-UP\nWHY: \"Yeah\" serves as a minimal continuer, acknowledging the guest's response and prompting them to continue.", "tokens_in": 975, "tokens_out": 30}
+{"idx": 247, "text": "LABEL: FOLLOW-UP\nWHY: The target is a minimal continuer acknowledging the guest's explanation.", "tokens_in": 978, "tokens_out": 22}
+{"idx": 248, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and thank you to the guests.", "tokens_in": 1026, "tokens_out": 24}
+{"idx": 249, "text": "LABEL: NEW-TOPIC\nWHY: The target is a program identification/introduction and does not reference the guest's response.", "tokens_in": 801, "tokens_out": 28}
+{"idx": 250, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new data and a specific question that does not reference the guest's greeting.", "tokens_in": 822, "tokens_out": 29}
+{"idx": 251, "text": "LABEL: FOLLOW-UP\nWHY: The target is a comment referencing the guest's mention of the 1950s and early '60s.", "tokens_in": 904, "tokens_out": 35}
+{"idx": 252, "text": "LABEL: FOLLOW-UP\nWHY: The target directly addresses the guest's claim that crime is down by contrasting it with public perception.", "tokens_in": 909, "tokens_out": 29}
+{"idx": 253, "text": "LABEL: FOLLOW-UP\nWHY: The target is a minimal continuer prompting the guest to elaborate on the reasons they began listing.", "tokens_in": 841, "tokens_out": 27}
+{"idx": 254, "text": "LABEL: FOLLOW-UP\nWHY: The target is a mid-sentence interruption reacting directly to the guest's ongoing explanation.", "tokens_in": 901, "tokens_out": 27}
+{"idx": 255, "text": "LABEL: FOLLOW-UP\nWHY: The target expands on the \"material goods\" point by explaining the argument surrounding it.", "tokens_in": 789, "tokens_out": 26}
+{"idx": 256, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a different theory rather than probing the guest's specific points about incarceration or social problems.", "tokens_in": 969, "tokens_out": 31}
+{"idx": 257, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition and station identification, introducing the guest and the program.", "tokens_in": 973, "tokens_out": 27}
+{"idx": 258, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new segment by bringing a caller onto the line.", "tokens_in": 958, "tokens_out": 25}
+{"idx": 259, "text": "LABEL: FOLLOW-UP\nWHY: A bare prompt to keep talking asks for more of the same answer.", "tokens_in": 769, "tokens_out": 23}
+{"idx": 260, "text": "LABEL: FOLLOW-UP\nWHY: The word \"But\" indicates a challenge or counter-point to the guest's explanation of perceptions versus reality.", "tokens_in": 885, "tokens_out": 32}
+{"idx": 261, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition indicating the interview is ending.", "tokens_in": 765, "tokens_out": 22}
+{"idx": 262, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new subject (immigration in Phoenix) that was not mentioned by the guest.", "tokens_in": 786, "tokens_out": 29}
+{"idx": 263, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces their own hypothesis and new research material regardless of the guest's brief agreement.", "tokens_in": 898, "tokens_out": 29}
+{"idx": 264, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new research and a new subject after a transition, taking nothing from the guest's \"Sure.\"", "tokens_in": 872, "tokens_out": 33}
+{"idx": 265, "text": "LABEL: FOLLOW-UP\nWHY: The target is a continuation of the interviewer's own thought process regarding the remaining time.", "tokens_in": 757, "tokens_out": 27}
+{"idx": 266, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off, which is explicitly defined as a new topic.", "tokens_in": 816, "tokens_out": 27}
+{"idx": 267, "text": "LABEL: NEW-TOPIC\nWHY: The target is an introductory presentation of the guest, which is a segment transition/agenda item.", "tokens_in": 782, "tokens_out": 29}
+{"idx": 268, "text": "LABEL: FOLLOW-UP\nWHY: The target references the \"coup\" mentioned in the interviewer's own introduction to probe the guest's opinion.", "tokens_in": 826, "tokens_out": 32}
+{"idx": 269, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the \"other ruling\" mentioned by the guest regarding the Supreme Constitutional Court.", "tokens_in": 952, "tokens_out": 27}
+{"idx": 270, "text": "LABEL: FOLLOW-UP\nWHY: The target connects the \"dissolved\" parliament mentioned by the guest to the upcoming presidential swearing-in.", "tokens_in": 997, "tokens_out": 30}
+{"idx": 271, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's mention of the constitution and the absence of parliament.", "tokens_in": 900, "tokens_out": 26}
+{"idx": 272, "text": "LABEL: FOLLOW-UP\nWHY: The quote challenges the guest's description of the military's process by calling it a \"soft military coup.\"", "tokens_in": 1015, "tokens_out": 32}
+{"idx": 273, "text": "LABEL: FOLLOW-UP\nWHY: The target explicitly references the guest's point (\"As you pointed out\") to probe further into the regime holdovers.", "tokens_in": 1003, "tokens_out": 33}
+{"idx": 274, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the judiciary to a new subject, the military and civilian authority.", "tokens_in": 952, "tokens_out": 27}
+{"idx": 275, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the general constitutional structure to specific current reports about Tahrir Square and new military decrees.", "tokens_in": 938, "tokens_out": 32}
+{"idx": 276, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new descriptive reports from Cairo rather than probing the guest's comments on civil liberties or elections.", "tokens_in": 1000, "tokens_out": 32}
+{"idx": 277, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new subject regarding secular Egyptians and the election choices, introducing material not mentioned by the guest.", "tokens_in": 997, "tokens_out": 33}
+{"idx": 278, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off, which is explicitly defined as a new topic.", "tokens_in": 962, "tokens_out": 27}
+{"idx": 279, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and a transition to upcoming segments and guests.", "tokens_in": 871, "tokens_out": 26}
+{"idx": 280, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new guest and introduces a new framing of the situation.", "tokens_in": 946, "tokens_out": 26}
+{"idx": 281, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the political paradox and coup discussion to a new subject: basic economic issues.", "tokens_in": 938, "tokens_out": 29}
+{"idx": 282, "text": "LABEL: FOLLOW-UP\nWHY: The phrase \"all of this\" references the economic factors and instability described by the previous guest.", "tokens_in": 865, "tokens_out": 28}
+{"idx": 283, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from Egypt's internal economic issues to the specific role and aid provided by the United States.", "tokens_in": 942, "tokens_out": 32}
+{"idx": 284, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a different guest with a broad question about stability and regional strategy.", "tokens_in": 997, "tokens_out": 27}
+{"idx": 285, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the specific issue of U.S. aid to the broader regional implications and a specific written piece.", "tokens_in": 1012, "tokens_out": 34}
+{"idx": 286, "text": "LABEL: NEW-TOPIC\nWHY: The target is a transition introducing a new speaker.", "tokens_in": 1002, "tokens_out": 20}
+{"idx": 287, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a new person to the conversation, which is a segment transition.", "tokens_in": 809, "tokens_out": 26}
+{"idx": 288, "text": "LABEL: NEW-TOPIC\nWHY: The target is a social pleasantry/sign-off to the introduction and does not probe the guest's response.", "tokens_in": 776, "tokens_out": 34}
+{"idx": 289, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a new agenda question that does not reference the guest's polite greeting.", "tokens_in": 795, "tokens_out": 28}
+{"idx": 290, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces the main subject of the interview after a brief greeting.", "tokens_in": 861, "tokens_out": 24}
+{"idx": 291, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a new subject and does not reference the guest's polite greeting.", "tokens_in": 789, "tokens_out": 27}
+{"idx": 292, "text": "LABEL: NEW-TOPIC\nWHY: The target is a filler phrase that does not probe the guest's thanks and introduces the start of the interview.", "tokens_in": 778, "tokens_out": 33}
+{"idx": 293, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a new line of questioning that does not reference the guest's polite greeting.", "tokens_in": 791, "tokens_out": 29}
+{"idx": 294, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new subject and analysis that does not reference the guest's brief thank you.", "tokens_in": 820, "tokens_out": 30}
+{"idx": 295, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new subject and provides context rather than referencing the guest's brief thank you.", "tokens_in": 828, "tokens_out": 30}
+{"idx": 296, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new subject and analysis, taking nothing from the guest's brief thank you.", "tokens_in": 883, "tokens_out": 30}
+{"idx": 297, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces the first substantive question of the interview, taking nothing from the guest's polite greeting.", "tokens_in": 785, "tokens_out": 31}
+{"idx": 298, "text": "LABEL: FOLLOW-UP\nWHY: The target asks for clarification on \"Tahrir,\" a specific term used by the guest in their response.", "tokens_in": 944, "tokens_out": 31}
+{"idx": 299, "text": "LABEL: NEW-TOPIC\nWHY: The target is a technical check regarding audio quality and does not reference the guest's content.", "tokens_in": 902, "tokens_out": 29}
+{"idx": 300, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new question for a different person about the opposition's ability to coalesce.", "tokens_in": 940, "tokens_out": 30}
+{"idx": 301, "text": "LABEL: FOLLOW-UP\nWHY: This is a minimal continuer that prompts the guest to keep talking.", "tokens_in": 902, "tokens_out": 22}
+{"idx": 302, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's specific claim about what they are \"hearing from people.\"", "tokens_in": 902, "tokens_out": 27}
+{"idx": 303, "text": "LABEL: FOLLOW-UP\nWHY: The interviewer is probing the guest's attention or response to the previous exchange.", "tokens_in": 901, "tokens_out": 25}
+{"idx": 304, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's comments on Mubarak to a new question about the April Sixth Coalition.", "tokens_in": 988, "tokens_out": 31}
+{"idx": 305, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's mention that \"other groups were involved\" by suggesting a specific example.", "tokens_in": 1012, "tokens_out": 30}
+{"idx": 306, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new guest and asks a prepared question about an agenda and spokesman.", "tokens_in": 940, "tokens_out": 27}
+{"idx": 307, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's list of opposition groups to comment on how the uprising outpaced them.", "tokens_in": 958, "tokens_out": 30}
+{"idx": 308, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new material about youthful activists and the dispossessed rather than probing the specific parties mentioned by the guest.", "tokens_in": 935, "tokens_out": 33}
+{"idx": 309, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces their own observation about the movement being leaderless rather than probing the guest's list of specific organizations.", "tokens_in": 955, "tokens_out": 34}
+{"idx": 310, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's list of movements by contrasting them with the lack of a single articulating leader.", "tokens_in": 918, "tokens_out": 31}
+{"idx": 311, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's discussion of parties and leaders by quoting protesters who reject them.", "tokens_in": 931, "tokens_out": 28}
+{"idx": 312, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the specific parties mentioned by the guest to a general analysis of the uprising's nature and demands.", "tokens_in": 1046, "tokens_out": 34}
+{"idx": 313, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the specific opposition groups mentioned by the guest to a new question about Mubarak's supporters.", "tokens_in": 922, "tokens_out": 32}
+{"idx": 314, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer transitions to a listener Q&A segment and introduces a new caller.", "tokens_in": 965, "tokens_out": 26}
+{"idx": 315, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a different person to ask for their input.", "tokens_in": 923, "tokens_out": 23}
+{"idx": 316, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the specific bases of Mubarak's support to the broader regional impact of the revolution.", "tokens_in": 972, "tokens_out": 31}
+{"idx": 317, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to their own observation about Egypt's leadership in the Arab world, introducing new material.", "tokens_in": 962, "tokens_out": 31}
+{"idx": 318, "text": "LABEL: FOLLOW-UP\nWHY: The target expands on the guest's points about the regime's base and its implications for the broader region.", "tokens_in": 999, "tokens_out": 32}
+{"idx": 319, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer thanks the current guest and pivots to a new guest to discuss a different perspective.", "tokens_in": 995, "tokens_out": 28}
+{"idx": 320, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's point about the regime's base and connects it to the sentiment of the protesters.", "tokens_in": 1016, "tokens_out": 33}
+{"idx": 321, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's point about the regime shedding its base and uses the guest's word \"revolution.\"", "tokens_in": 1008, "tokens_out": 33}
+{"idx": 322, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new anecdotal evidence and observations from the protests rather than probing the guest's analysis of the regime's base.", "tokens_in": 984, "tokens_out": 36}
+{"idx": 323, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to their own analysis of popular mobilization and the transition period without referencing the guest's specific points.", "tokens_in": 986, "tokens_out": 33}
+{"idx": 324, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's discussion of the regime's bases and the pressure on Mubarak to step down.", "tokens_in": 971, "tokens_out": 32}
+{"idx": 325, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's analysis of support bases to current reports about a potential speech by Mr. Mubarak.", "tokens_in": 1001, "tokens_out": 34}
+{"idx": 326, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer ignores the guest's analysis of the regime's base to offer their own general commentary on the current moment.", "tokens_in": 982, "tokens_out": 35}
+{"idx": 327, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and a transition to end the guest's appearance.", "tokens_in": 939, "tokens_out": 28}
+{"idx": 328, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off, which is explicitly defined as a new topic.", "tokens_in": 927, "tokens_out": 27}
+{"idx": 329, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new guest and shifts to reporting on President Obama's communication with Mubarak.", "tokens_in": 1024, "tokens_out": 29}
+{"idx": 330, "text": "LABEL: NEW-TOPIC\nWHY: The target is a station identification and program introduction, which is a segment transition.", "tokens_in": 927, "tokens_out": 26}
+{"idx": 331, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer re-introduces the guest and transitions to a new caller, bringing in entirely new material.", "tokens_in": 995, "tokens_out": 31}
+{"idx": 332, "text": "LABEL: FOLLOW-UP\nWHY: \"Sure\" acts as a minimal continuer, acknowledging the guest's point and prompting them to continue their line of reasoning.", "tokens_in": 914, "tokens_out": 34}
+{"idx": 333, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new subject (the Copts) that was not mentioned in the guest's response.", "tokens_in": 968, "tokens_out": 32}
+{"idx": 334, "text": "LABEL: FOLLOW-UP\nWHY: The target asks about the specific group (the Copts) just confirmed by the guest.", "tokens_in": 817, "tokens_out": 27}
+{"idx": 335, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's mention of Coptic suffering by providing a specific example of a bombing.", "tokens_in": 929, "tokens_out": 30}
+{"idx": 336, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer is attempting to recall a specific fact or figure, introducing new material unrelated to the guest's response.", "tokens_in": 918, "tokens_out": 33}
+{"idx": 337, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off, which is explicitly defined as a new topic.", "tokens_in": 865, "tokens_out": 27}
+{"idx": 338, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer is discussing a scheduling change and a different guest, pivoting away from the current conversation.", "tokens_in": 946, "tokens_out": 29}
+{"idx": 339, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition and sign-off for a commercial break.", "tokens_in": 921, "tokens_out": 25}
+{"idx": 340, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's analysis to a series of news reports and external updates.", "tokens_in": 979, "tokens_out": 29}
+{"idx": 341, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new guest and transitions to taking caller questions.", "tokens_in": 909, "tokens_out": 23}
+{"idx": 342, "text": "LABEL: FOLLOW-UP\nWHY: The target asks the guest to address the points just raised in the guest's previous turn.", "tokens_in": 865, "tokens_out": 28}
+{"idx": 343, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's claim that the Muslim Brotherhood is moderate by citing a specific violent figure associated with them.", "tokens_in": 928, "tokens_out": 33}
+{"idx": 344, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer is transitioning to a new speaker.", "tokens_in": 931, "tokens_out": 19}
+{"idx": 345, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off, which is explicitly defined as a new topic.", "tokens_in": 921, "tokens_out": 27}
+{"idx": 346, "text": "LABEL: FOLLOW-UP\nWHY: The target references the Mubarak regime and the desire for change mentioned in the guest's response.", "tokens_in": 947, "tokens_out": 28}
+{"idx": 347, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer is transitioning to a new speaker.", "tokens_in": 961, "tokens_out": 19}
+{"idx": 348, "text": "LABEL: NEW-TOPIC\nWHY: \"Hi\" is a greeting, likely introducing a new speaker or segment, and does not reference the guest's answer.", "tokens_in": 945, "tokens_out": 35}
+{"idx": 349, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the topic of Gamal Mubarak to a new subject regarding the Camp David Accords and funding.", "tokens_in": 997, "tokens_out": 33}
+{"idx": 350, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer is transitioning to a different person to join the conversation.", "tokens_in": 963, "tokens_out": 23}
+{"idx": 351, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off to one guest and a transition to a different speaker.", "tokens_in": 994, "tokens_out": 28}
+{"idx": 352, "text": "LABEL: FOLLOW-UP\nWHY: The target specifically probes the guest's mention of \"over-flight rights.\"", "tokens_in": 942, "tokens_out": 25}
+{"idx": 353, "text": "LABEL: FOLLOW-UP\nWHY: The target is clarifying the guest's specific mention of \"military\" flights.", "tokens_in": 761, "tokens_out": 25}
+{"idx": 354, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off or segment transition introducing the guest and the program.", "tokens_in": 934, "tokens_out": 27}
+{"idx": 355, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer is transitioning to a new speaker, which is a segment transition.", "tokens_in": 912, "tokens_out": 25}
+{"idx": 356, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and a thank you, which constitutes a segment transition.", "tokens_in": 911, "tokens_out": 28}
+{"idx": 357, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's discussion of Gaza and Egypt to a new list of regional protests and Saudi Arabia.", "tokens_in": 965, "tokens_out": 34}
+{"idx": 358, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a news summary of events in Egypt, introducing new material not derived from the guest's answer.", "tokens_in": 1036, "tokens_out": 34}
+{"idx": 359, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the discussion on Saudi Arabia to new reports regarding the U.S. ambassador's arrival in Egypt.", "tokens_in": 1058, "tokens_out": 35}
+{"idx": 360, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the discussion on Saudi Arabia to breaking news regarding Mr. Mubarak in Egypt.", "tokens_in": 1028, "tokens_out": 29}
+{"idx": 361, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and a transition to general coverage, bringing in new material about Tahrir Square.", "tokens_in": 1023, "tokens_out": 34}
+{"idx": 362, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off, which is explicitly defined as a new topic.", "tokens_in": 987, "tokens_out": 27}
+{"idx": 363, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and program identification, which constitutes a segment transition.", "tokens_in": 812, "tokens_out": 27}
+{"idx": 364, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a prepared agenda and new material unrelated to the guest's greeting.", "tokens_in": 833, "tokens_out": 27}
+{"idx": 365, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's specific points about powers to a general question about the broader democracy movement.", "tokens_in": 943, "tokens_out": 32}
+{"idx": 366, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's specific mention of the Muslim Brotherhood's attempt to dominate the political process.", "tokens_in": 930, "tokens_out": 31}
+{"idx": 367, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's discussion on democracy and minorities to a new question about the timing of a specific decree.", "tokens_in": 989, "tokens_out": 35}
+{"idx": 368, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's skepticism by asking for the most worrisome part of the edict just discussed.", "tokens_in": 925, "tokens_out": 31}
+{"idx": 369, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and guest introduction, which is a segment transition.", "tokens_in": 913, "tokens_out": 27}
+{"idx": 370, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a prepared agenda and new material unrelated to the guest's brief greeting.", "tokens_in": 806, "tokens_out": 28}
+{"idx": 371, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's claim about the military's lack of democracy by contrasting it with their previous support.", "tokens_in": 943, "tokens_out": 33}
+{"idx": 372, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new material about the upcoming parliamentary elections rather than probing the guest's specific points.", "tokens_in": 968, "tokens_out": 30}
+{"idx": 373, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's point about the desire to postpone elections by introducing the Muslim Brotherhood's opposing view.", "tokens_in": 980, "tokens_out": 33}
+{"idx": 374, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the consequences of the guest's statement regarding the Muslim Brotherhood's expected success in the elections.", "tokens_in": 865, "tokens_out": 32}
+{"idx": 375, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off identifying the guest, which is a segment transition.", "tokens_in": 908, "tokens_out": 27}
+{"idx": 376, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off, which is explicitly defined as a new topic.", "tokens_in": 884, "tokens_out": 27}
+{"idx": 377, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a prepared question that does not reference the guest's greeting.", "tokens_in": 811, "tokens_out": 26}
+{"idx": 378, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new set of events regarding border attacks and the embassy, pivoting away from the guest's answer.", "tokens_in": 980, "tokens_out": 34}
+{"idx": 379, "text": "LABEL: NEW-TOPIC\nWHY: The question introduces a new, broader subject (Israeli-Egyptian relations) without referencing specific points from the guest's answer.", "tokens_in": 921, "tokens_out": 35}
+{"idx": 380, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a specific new event (border guard killings) not mentioned in the guest's general analysis of relations.", "tokens_in": 901, "tokens_out": 34}
+{"idx": 381, "text": "LABEL: FOLLOW-UP\nWHY: The target synthesizes the guest's points about the apology and swap to draw a conclusion about the Egyptian regime's success.", "tokens_in": 881, "tokens_out": 35}
+{"idx": 382, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off, which is explicitly defined as a new topic.", "tokens_in": 927, "tokens_out": 27}
+{"idx": 383, "text": "LABEL: NEW-TOPIC\nWHY: The target is an introduction of the guest, which is a segment transition and does not reference the guest's previous turn.", "tokens_in": 784, "tokens_out": 35}
+{"idx": 384, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's description of the political spectrum and the types of perspectives represented in the new democracy.", "tokens_in": 949, "tokens_out": 32}
+{"idx": 385, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's specific claim that liberal democracy is the only kind that matters.", "tokens_in": 857, "tokens_out": 28}
+{"idx": 386, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's philosophical discussion on democracy to a new question about the current military leadership.", "tokens_in": 901, "tokens_out": 32}
+{"idx": 387, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's discussion of government structure to a new question about the youth's experience under Mubarak.", "tokens_in": 993, "tokens_out": 35}
+{"idx": 388, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off/identification of the guest, which is a segment transition.", "tokens_in": 985, "tokens_out": 29}
+{"idx": 389, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off, which is explicitly defined as a new topic.", "tokens_in": 970, "tokens_out": 27}
+{"idx": 390, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new subject and a prepared question after the guest's brief greeting.", "tokens_in": 855, "tokens_out": 28}
+{"idx": 391, "text": "LABEL: FOLLOW-UP\nWHY: The target references and clarifies \"Ben Ali,\" whom the guest just mentioned.", "tokens_in": 889, "tokens_out": 24}
+{"idx": 392, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new set of scenarios and a formal process, ignoring the guest's specific points about Omar Suleiman.", "tokens_in": 930, "tokens_out": 36}
+{"idx": 393, "text": "LABEL: FOLLOW-UP\nWHY: The target quotes a specific term from the guest's answer to prompt further elaboration.", "tokens_in": 921, "tokens_out": 26}
+{"idx": 394, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's mention of Mohamed ElBaradei to probe further into potential opposition leaders.", "tokens_in": 959, "tokens_out": 31}
+{"idx": 395, "text": "LABEL: FOLLOW-UP\nWHY: \"Right\" is a minimal continuer acknowledging the guest's point and prompting them to continue their answer.", "tokens_in": 848, "tokens_out": 30}
+{"idx": 396, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off or transition identifying the guest, which does not probe the guest's previous answer.", "tokens_in": 919, "tokens_out": 34}
+{"idx": 397, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off, which is explicitly defined as a new topic.", "tokens_in": 909, "tokens_out": 27}
+{"idx": 398, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition/introduction and does not reference the guest's response.", "tokens_in": 769, "tokens_out": 28}
+{"idx": 399, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new line of questioning that does not reference the guest's greeting.", "tokens_in": 823, "tokens_out": 28}
+{"idx": 400, "text": "LABEL: FOLLOW-UP\nWHY: The target summarizes and extends the guest's point about buying time for negotiations.", "tokens_in": 918, "tokens_out": 25}
+{"idx": 401, "text": "LABEL: FOLLOW-UP\nWHY: The target explicitly references the guest's points about China and the Security Council using phrases like \"as you mentioned.\"", "tokens_in": 978, "tokens_out": 32}
+{"idx": 402, "text": "LABEL: FOLLOW-UP\nWHY: The target provides a specific reason for the Chinese position just mentioned by the guest.", "tokens_in": 965, "tokens_out": 25}
+{"idx": 403, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's mention of Europe and probes the specific dynamics of the sanctions discussed.", "tokens_in": 870, "tokens_out": 29}
+{"idx": 404, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new material about their own trip to Moscow and the Russian position.", "tokens_in": 909, "tokens_out": 26}
+{"idx": 405, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about banking sanctions and Gary Sick without referencing the guest's previous statement.", "tokens_in": 899, "tokens_out": 30}
+{"idx": 406, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new material about Russian pressure and Iranian strategy not mentioned in the guest's response.", "tokens_in": 871, "tokens_out": 30}
+{"idx": 407, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a different guest and introduces new material regarding Matthew Kroenig's timeline.", "tokens_in": 877, "tokens_out": 29}
+{"idx": 408, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition introducing new guests and the program.", "tokens_in": 915, "tokens_out": 23}
+{"idx": 409, "text": "LABEL: NEW-TOPIC\nWHY: The target is a transition to another person, introducing new material.", "tokens_in": 833, "tokens_out": 23}
+{"idx": 410, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new factual material about the Bushehr reactor that was not mentioned in the guest's response.", "tokens_in": 850, "tokens_out": 33}
+{"idx": 411, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a detailed historical account of a reactor deal, introducing material not mentioned by the guest.", "tokens_in": 948, "tokens_out": 31}
+{"idx": 412, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new material about Russia and spent fuel that was not mentioned by the guest.", "tokens_in": 927, "tokens_out": 28}
+{"idx": 413, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a new point about US trust in Iran rather than probing the guest's comments on other countries.", "tokens_in": 852, "tokens_out": 33}
+{"idx": 414, "text": "LABEL: FOLLOW-UP\nWHY: The target expands on the guest's point about Iran wanting nuclear weapons capability.", "tokens_in": 980, "tokens_out": 25}
+{"idx": 415, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer is transitioning to a new caller and signing off from the previous one.", "tokens_in": 909, "tokens_out": 26}
+{"idx": 416, "text": "LABEL: FOLLOW-UP\nWHY: The target is a minimal continuer asking the guest to finish the point they were currently making.", "tokens_in": 906, "tokens_out": 27}
+{"idx": 417, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer signs off from the guest and pivots to a new person to ask a different question.", "tokens_in": 906, "tokens_out": 29}
+{"idx": 418, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces new material about scheduled talks in Baghdad and Istanbul, ignoring the guest's points about nuclear fuel.", "tokens_in": 986, "tokens_out": 33}
+{"idx": 419, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off thanking a participant, which is a segment transition.", "tokens_in": 893, "tokens_out": 27}
+{"idx": 420, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off or transition to another person, bringing in new material.", "tokens_in": 880, "tokens_out": 28}
+{"idx": 421, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and transition to another reporter.", "tokens_in": 904, "tokens_out": 23}
+{"idx": 422, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off thanking the guest for their time.", "tokens_in": 908, "tokens_out": 24}
+{"idx": 423, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition and sign-off introducing a completely different subject.", "tokens_in": 866, "tokens_out": 26}
+{"idx": 424, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a different guest and repeats the original question, ignoring the previous guest's specific answer.", "tokens_in": 1014, "tokens_out": 32}
+{"idx": 425, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment re-introduction and a bare repeat of the original question, ignoring the guest's specific answer.", "tokens_in": 999, "tokens_out": 35}
+{"idx": 426, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and introduction of guests, which is a segment transition.", "tokens_in": 1022, "tokens_out": 28}
+{"idx": 427, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a different guest and references a previous conversation from before the break.", "tokens_in": 968, "tokens_out": 27}
+{"idx": 428, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces a new example (North Korea) to compare with Iran, rather than probing the guest's specific points.", "tokens_in": 1004, "tokens_out": 35}
+{"idx": 429, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's answer to read listener emails.", "tokens_in": 1042, "tokens_out": 24}
+{"idx": 430, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots to a new caller, which is a segment transition.", "tokens_in": 984, "tokens_out": 24}
+{"idx": 431, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer thanks the guest and pivots to a new caller.", "tokens_in": 997, "tokens_out": 22}
+{"idx": 432, "text": "LABEL: NEW-TOPIC\nWHY: The target is a transition to a new caller, introducing a different person to the conversation.", "tokens_in": 965, "tokens_out": 28}
+{"idx": 433, "text": "LABEL: FOLLOW-UP\nWHY: The target summarizes the guest's point about proliferation and asks another guest to respond to it.", "tokens_in": 1000, "tokens_out": 28}
+{"idx": 434, "text": "LABEL: FOLLOW-UP\nWHY: The target is a minimal continuer asking the guest to explain or elaborate on their previous statement.", "tokens_in": 963, "tokens_out": 27}
+{"idx": 435, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the implications of the escalation and risk of war mentioned in the guest's response.", "tokens_in": 1020, "tokens_out": 29}
+{"idx": 436, "text": "LABEL: FOLLOW-UP\nWHY: The target summarizes the guest's argument about risk and escalation to ask for a conclusion.", "tokens_in": 979, "tokens_out": 27}
+{"idx": 437, "text": "LABEL: FOLLOW-UP\nWHY: The target explicitly references and asks for a response to the point the guest just made.", "tokens_in": 1055, "tokens_out": 26}
+{"idx": 438, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots away from the guest to introduce a new caller.", "tokens_in": 989, "tokens_out": 23}
+{"idx": 439, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guests' shared understanding of deterrence and containment mentioned or implied in the preceding discussion.", "tokens_in": 984, "tokens_out": 29}
+{"idx": 440, "text": "LABEL: FOLLOW-UP\nWHY: The question probes the guest's point about the possibility of Iran permanently giving up its nuclear weapons.", "tokens_in": 963, "tokens_out": 29}
+{"idx": 441, "text": "LABEL: FOLLOW-UP\nWHY: A minimal continuer like \"OK\" serves as a prompt for the guest to continue their line of reasoning.", "tokens_in": 962, "tokens_out": 30}
+{"idx": 442, "text": "LABEL: FOLLOW-UP\nWHY: The target references the ongoing debate and probes the guest's response by bringing back Matthew's point.", "tokens_in": 967, "tokens_out": 30}
+{"idx": 443, "text": "LABEL: FOLLOW-UP\nWHY: The target references the ongoing debate and probes the guest's point about the effectiveness of a military strike.", "tokens_in": 992, "tokens_out": 30}
+{"idx": 444, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer is signing off one guest and transitioning to a new caller.", "tokens_in": 998, "tokens_out": 24}
+{"idx": 445, "text": "LABEL: FOLLOW-UP\nWHY: The target references Jay's point about the cost of war to probe Suzanne's previous description of military options.", "tokens_in": 1036, "tokens_out": 32}
+{"idx": 446, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's point about rebuilding (\"taking still the point you make\") to frame the next question.", "tokens_in": 1094, "tokens_out": 33}
+{"idx": 447, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's skepticism about a negotiated settlement by asking him to imagine the opposing side's perspective.", "tokens_in": 950, "tokens_out": 33}
+{"idx": 448, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer asks a new person the same question, ignoring the specific content of the previous guest's answer.", "tokens_in": 888, "tokens_out": 32}
+{"idx": 449, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and thank you to the guests, which is a segment transition.", "tokens_in": 966, "tokens_out": 30}
+{"idx": 450, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition and introduction to a completely different subject.", "tokens_in": 909, "tokens_out": 24}
+{"idx": 451, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer introduces new material regarding Jo Cox and a specific tweet, rather than probing the guest's previous answer.", "tokens_in": 944, "tokens_out": 33}
+{"idx": 452, "text": "LABEL: NEW-TOPIC\nWHY: The target introduces a new line of questioning about the guest's mood that does not reference the guest's previous answer.", "tokens_in": 899, "tokens_out": 35}
+{"idx": 453, "text": "LABEL: FOLLOW-UP\nWHY: The target paraphrases the guest's description of \"scaring voters\" and \"dark undertones\" as \"crossing the line\" and \"extreme.\"", "tokens_in": 902, "tokens_out": 40}
+{"idx": 454, "text": "LABEL: FOLLOW-UP\nWHY: The target explicitly references and probes the \"Donald Trump phenomenon\" mentioned by the guest.", "tokens_in": 1038, "tokens_out": 26}
+{"idx": 455, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off, which is explicitly defined as a new topic.", "tokens_in": 978, "tokens_out": 27}
+{"idx": 456, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off and summary providing new biographical information not mentioned by the guest.", "tokens_in": 798, "tokens_out": 29}
+{"idx": 457, "text": "LABEL: FOLLOW-UP\nWHY: The target references the specific language used in the guest's reading to introduce a related quote.", "tokens_in": 880, "tokens_out": 28}
+{"idx": 458, "text": "LABEL: FOLLOW-UP\nWHY: The target directly references and analyzes the specific quote just read by the guest.", "tokens_in": 837, "tokens_out": 24}
+{"idx": 459, "text": "LABEL: FOLLOW-UP\nWHY: The target quotes a modern parallel to the specific phrase \"with us or against us\" just read by the guest.", "tokens_in": 851, "tokens_out": 32}
+{"idx": 460, "text": "LABEL: FOLLOW-UP\nWHY: The target asks the guest to explain the parallel created by the quote he just read.", "tokens_in": 871, "tokens_out": 26}
+{"idx": 461, "text": "LABEL: FOLLOW-UP\nWHY: The target probes the guest's specific mention of surrendering liberties and the parallel to the response to 9/11.", "tokens_in": 963, "tokens_out": 35}
+{"idx": 462, "text": "LABEL: FOLLOW-UP\nWHY: The target explicitly references the guest's mention of the Roman Senate to build its next point.", "tokens_in": 952, "tokens_out": 28}
+{"idx": 463, "text": "LABEL: NEW-TOPIC\nWHY: The interviewer pivots from the guest's points about the US to a new topic regarding Edward Gibbon and 18th-century England.", "tokens_in": 1007, "tokens_out": 39}
+{"idx": 464, "text": "LABEL: FOLLOW-UP\nWHY: The target references the guest's specific mention of Pompeii to provide a related anecdote.", "tokens_in": 994, "tokens_out": 27}
+{"idx": 465, "text": "LABEL: FOLLOW-UP\nWHY: The target references the \"comparisons\" mentioned by the guest regarding New Orleans and Pompeii.", "tokens_in": 854, "tokens_out": 28}
+{"idx": 466, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off, which is explicitly defined as a new topic.", "tokens_in": 961, "tokens_out": 27}
+{"idx": 467, "text": "LABEL: NEW-TOPIC\nWHY: The target is a segment transition and sign-off introducing future programming.", "tokens_in": 798, "tokens_out": 24}
+{"idx": 468, "text": "LABEL: NEW-TOPIC\nWHY: The target is a sign-off/station identification and does not reference the guest's response.", "tokens_in": 774, "tokens_out": 30}

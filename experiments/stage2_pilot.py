@@ -221,7 +221,61 @@ FINDINGS = """
 Every item here is a PILOT observation or an inherited design limitation. None
 of it is a research conclusion, and none of it clears or fails a bar.
 
-### 8.1 The redacted arms are name-blind, not identity-blind (READ THIS FIRST)
+### 8.0 THE HEADLINE: the item set is at ceiling, so this pilot measures nothing about twins
+
+**The zero-information baseline scored 100% argmax accuracy on all 17 items.**
+
+A prompt with no excerpts, no programme, no date and no name -- a model that
+knows literally nothing about the person -- picked the right answer every single
+time, under both option variants. The twin arms also scored 1.00, so:
+
+* **twin - zeroinfo lift is exactly 0.00 in argmax**, because both arms are
+  pinned at the ceiling and there is no room above the floor;
+* **A4.3's adversarial filter removes ALL 17 items** (its rule is "drop the items
+  the zero-information arm got argmax-correct"), leaving **N = 0** in every
+  filtered cell. Those tables in section 5 are empty, and that is the filter
+  working exactly as designed -- it is telling us the instrument is unusable;
+* the only structure left anywhere is in probability mass and in the imposter
+  arm, which is the one arm that is NOT at ceiling (0.94 argmax, 0.88 mass).
+
+**This is not a twin result, it is a distractor result.** The forced choice is
+solvable by topical coherence alone: the true answer is the guest's real reply to
+*this* question, and all three distractors are answers to unrelated questions
+from other people's interviews. The model's own reasoning in the completions says
+so in as many words -- "Option B directly addresses the host's question about
+American responsibility" -- it is matching topic, not modelling a person.
+
+T2 predicted this precisely (finding 8.5): median distractor question-similarity
+cosine 0.050, one item of eighteen with a distractor above 0.10. The prediction
+was "a model that knows nothing about the person can score above chance". The
+measured answer is worse than above chance: it is perfect.
+
+**What this pilot therefore did and did not establish.** It DID establish that
+the pipeline works end to end -- draw, split, extraction, distractors, imposter
+matching, five-arm rendering, both leakage guards, export, node execution,
+ingest, scoring. Every one of those ran clean on real data. It established
+NOTHING about twin fidelity, and no number in section 5 should be read as
+evidence about one.
+
+**The fix is not in these rules.** It is a materially harder option set. The
+levers, in the order I would try them:
+
+1. **Distractors from the SAME subject's other interviews.** Then topic and
+   speaker are both controlled and only the specific answer differs. This is the
+   single biggest change and it is a D6 amendment.
+2. **A much bigger, stratified bank** so the same-bucket, same-length pool has
+   enough rows for question similarity to bite (finding 8.5).
+3. **A similarity floor as a hard admission rule** -- reject an item whose best
+   distractor cannot clear a stated cosine, rather than accepting whatever the
+   ladder returns.
+4. **Report the zero-information ceiling as a gate**: if the floor arm solves an
+   item, that item carries no information about anybody, and it should never
+   have entered the set. That is A4.3 applied at BUILD time instead of at score
+   time.
+
+All four are bar-lock decisions and none of them is mine.
+
+### 8.1 The redacted arms are name-blind, not identity-blind
 
 SPEC D8 redacts *name variants*. It does not touch affiliations, and the twin
 excerpts are full of them. Real lines from the exported `twin_redacted` set:
@@ -1996,10 +2050,14 @@ def cmd_ingest(args) -> int:
     # whole, so sacct is the truth and batch_generate's own wall-clock is only
     # a cross-check -- it misses queue-side overhead and teardown.
     man = load_manifest(pilot_dir / "manifest.json")
-    billed = [e["actual_node_hours"] for e in man.get("jobs", {}).values()
-              if e.get("actual_node_hours") is not None]
+    # Only the FULL job produced these records. The smoke slice spent real node
+    # time too, but it gets its own ledger line below -- folding it in here as
+    # well would bill it twice.
+    full_billed = (man.get("jobs", {}).get("stage2_pilot_full", {})
+                   .get("actual_node_hours"))
     measured = _sum_node_hours(summaries)
-    node_hours = round(sum(billed), 4) if billed else measured
+    node_hours = float(full_billed) if full_billed is not None else measured
+    billed = full_billed is not None
     if billed and measured:
         print(f"[ingest] node-hours: {node_hours} billed (sacct) vs "
               f"{measured} in-process (batch_generate summaries)")
@@ -2014,6 +2072,20 @@ def cmd_ingest(args) -> int:
 
     if node_hours:
         _log_cost(all_records, clf_rows, node_hours)
+    # The smoke slice spent real node time and produced no scientific output,
+    # so it gets its own ledger line rather than being folded into the arms.
+    smoke = man.get("jobs", {}).get("stage2_pilot_smoke", {})
+    if smoke.get("actual_node_hours"):
+        append_cost_log(build_cost_entry(
+            run_id="stage2_pilot/smoke", model=MODEL_LABEL, split=SPLIT_LABEL,
+            variant="stage2_smoke", n_persons=0,
+            n_calls=SMOKE_PER_SET * len(ARMS) * len(VARIANTS) + SMOKE_CLASSIFY,
+            n_retries=0, n_parse_failures=0, tokens_in=0, tokens_out=0,
+            backend="leonardo-batch",
+            node_hours=float(smoke["actual_node_hours"]),
+        ), RESULTS_DIR / "cost_log.jsonl")
+        print(f"[cost] smoke: {smoke['actual_node_hours']} node-hours "
+              f"(jobs {smoke.get('slurm_job_ids')}), $0.00 API")
     else:
         print("[cost] no node summaries found; no cost-log line written "
               "(entries are only written when node time was actually spent)")
@@ -2329,11 +2401,13 @@ def cmd_report(args) -> int:
               "options — complete and verbatim", "", "```",
               _load_prompt(export_dir, "pred_twin_redacted_standard", ref_idx),
               "```", ""]
+        n = 1
         for arm in ARMS:
             if arm == "twin_redacted":
                 continue
+            n += 1
             name = set_name(arm, "standard")
-            P += [f"### 3.2 `{arm}`, same item — first 40 lines", "", "```",
+            P += [f"### 3.{n} `{arm}`, same item — first 40 lines", "", "```",
                   _first_lines(_load_prompt(export_dir, name, ref_idx), 40),
                   "```", ""]
 
@@ -2370,10 +2444,23 @@ def cmd_report(args) -> int:
               f"{len({s['canonical_id'] for s in sample})}.", ""]
 
     # ---- 5. accuracy --------------------------------------------------------
-    P += ["## 5. Accuracy per arm", "",
-          "**Read every twin number against its zero-information baseline.** "
-          "That is the project's standing rule and on this pilot it is the main "
-          "control, not a formality — see findings 8.1 and 8.5. `N` counts "
+    zi = analysis["accuracy"]["standard"]["unfiltered"]["zeroinfo_redacted"]
+    ceiling = (zi["argmax_accuracy"] is not None
+               and zi["argmax_accuracy"] >= 0.999)
+    P += ["## 5. Accuracy per arm", ""]
+    if ceiling:
+        P += ["> **STOP — read finding 8.0 before reading these tables.** The "
+              "zero-information baseline scored "
+              f"**{_fmt(zi['argmax_accuracy'])} argmax accuracy**: a prompt "
+              "with no excerpts, no name, no programme and no date got every "
+              "item right. The item set is at ceiling, so the twin arms have "
+              "nowhere to go, twin−zeroinfo lift is 0.00 by construction, and "
+              "A4.3's filter empties every filtered cell. **These numbers say "
+              "nothing about twin fidelity — they say the distractors are too "
+              "easy.**", ""]
+    P += ["**Read every twin number against its zero-information baseline.** "
+          "That is the project's standing rule and on this pilot it is the whole "
+          "story, not a formality — see findings 8.0, 8.1 and 8.5. `N` counts "
           "records that PARSED; parse failures are excluded from both "
           "denominators and reported separately in 8.12.", ""]
     for variant in VARIANTS:
@@ -2389,6 +2476,12 @@ def cmd_report(args) -> int:
                 P += [f"Filter: {info['rule']}. "
                       f"**{info['n_items_kept']} of {analysis['n_items']} items "
                       "survive.**", ""]
+                if info["n_items_kept"] == 0:
+                    P += ["The zero-information arm solved every item, so the "
+                          "filter removes every item and there is nothing left "
+                          "to score. The empty table below is the correct "
+                          "output of a filter that is working; see finding "
+                          "8.0.", ""]
             P += [_table(["arm", "N scored", "parse fails", "argmax accuracy",
                           "prob-mass on correct"],
                          [[("**" + arm + "**" if arm == "twin_redacted" else arm),
