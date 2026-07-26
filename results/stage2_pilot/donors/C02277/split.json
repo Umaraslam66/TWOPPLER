@@ -1,0 +1,63 @@
+{
+ "canonical_id": "C02277",
+ "canonical_name": "Steven Cook",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster dated strictly earlier. Any other cluster sharing the test date is excluded entirely (same-event leak guard).",
+ "grounding": [
+  {
+   "cluster_id": "cl19",
+   "transcript_id": "NPR-15240",
+   "date": "2005-10-26",
+   "program": "Day to Day",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 535
+  },
+  {
+   "cluster_id": "cl18",
+   "transcript_id": "NPR-10910",
+   "date": "2012-05-29",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 963
+  },
+  {
+   "cluster_id": "cl23",
+   "transcript_id": "NPR-30849",
+   "date": "2012-09-15",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 418
+  },
+  {
+   "cluster_id": "cl26",
+   "transcript_id": "NPR-9664",
+   "date": "2013-01-29",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 888
+  },
+  {
+   "cluster_id": "cl25",
+   "transcript_id": "NPR-8473",
+   "date": "2013-06-05",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 1931
+  }
+ ],
+ "test": {
+  "cluster_id": "cl21",
+  "transcript_id": "NPR-28765",
+  "date": "2013-07-10",
+  "program": "All Things Considered",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "guest_words": 427
+ },
+ "excluded_same_date": [],
+ "role": "imposter donor (SPEC D7); test cluster is NEVER used"
+}
