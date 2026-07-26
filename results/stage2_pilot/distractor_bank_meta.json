@@ -421,9 +421,9 @@
   "n_rows": 653,
   "n_donor_subjects_with_items": 167,
   "buckets": {
-   "H": 265,
-   "L": 301,
-   "Z": 87
+   "H": 150,
+   "Z": 192,
+   "L": 311
   },
   "answer_words": {
    "min": 30,
@@ -435,26 +435,26 @@
   },
   "entity_density": {
    "min": 0.0,
-   "median": 0.0667,
+   "median": 0.0409,
    "max": 0.2667
   },
   "items_per_donor_max": 20
  },
  "provenance": {
   "source_sha256": {
-   "src/doppler/stage2_data.py": "84ec751d5c071300",
+   "src/doppler/stage2_data.py": "140dd02b5f31c11b",
    "src/doppler/qa_extract.py": "50e0f0e46fa3dabf",
-   "src/doppler/distractors.py": "c0107c55463b21a9"
+   "src/doppler/distractors.py": "9492dac909320d10"
   },
   "test_turns_sha256": {
-   "C00792": "89f90c4146351fa1",
-   "C00292": "5b1285bc11739778",
-   "C02013": "9f7d4aed577849f3",
-   "C02124": "e0a24d552756bee1",
-   "C01677": "8ebe298e4090dd23",
-   "C02006": "d2634bb572f2c000"
+   "C00792": "8db2de6173599f00",
+   "C00292": "954de93f9da08588",
+   "C02013": "383c6ef4c7fc8b43",
+   "C02124": "2ce6704c813712bb",
+   "C01677": "82c6d8226de3f17f",
+   "C02006": "34c2d1ff9f24e7d5"
   }
  },
- "runtime_secs": 5.4,
+ "runtime_secs": 5.0,
  "cost_usd": 0.0
 }
