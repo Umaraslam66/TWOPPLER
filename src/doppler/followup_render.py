@@ -55,9 +55,10 @@ TARGET_HOST_WORDS = 120
 #: auditor mistakes a mid-sentence fragment for a whole turn.
 TRUNCATION_MARK = "..."
 
-#: Rendered in place of a field that is empty after normalisation. Never
-#: produced by :func:`classifiable_turns`; it exists so a degenerate direct
-#: call still yields a well-formed prompt rather than a dangling label.
+#: Rendered in place of a field that is empty after normalisation, so a prompt
+#: never carries a dangling label. :func:`classifiable_turns` produces one only
+#: for PREV, in the transcript that opens on the guest: the first host turn is
+#: then a real case with no interviewer turn behind it.
 EMPTY_FIELD = "(none)"
 
 #: Two short lines of output; a small cap also discourages the model from
@@ -157,6 +158,8 @@ def last_words(text: str, n: int) -> str:
     Also collapses every run of whitespace (including newlines) to one space,
     which is what keeps one turn on one line of the prompt.
     """
+    if n <= 0:
+        raise ValueError(f"word budget must be positive, got {n}")
     words = (text or "").split()
     if len(words) <= n:
         return " ".join(words)
@@ -165,6 +168,8 @@ def last_words(text: str, n: int) -> str:
 
 def first_words(text: str, n: int) -> str:
     """The first ``n`` words, marked if anything was cut. See :func:`last_words`."""
+    if n <= 0:
+        raise ValueError(f"word budget must be positive, got {n}")
     words = (text or "").split()
     if len(words) <= n:
         return " ".join(words)
@@ -239,28 +244,34 @@ def classifiable_turns(turns: list) -> list:
     speaker_label, text}`` -- **in transcript order**. Returns one dict per
     host turn, in that same order, of one of two shapes:
 
-    * ``{turn_idx, label: "NEW-TOPIC", source: "rule"}`` for the transcript's
-      first host turn. It is NEW-TOPIC by definition (D9) and costs no model
-      call. The rule wins even if a guest happened to speak before it.
-    * ``{turn_idx, prev_host, guest_answer, target_host}`` for every later host
-      turn that has a guest answer behind it. Feed the three texts straight to
-      :func:`classify_prompt`.
+    * ``{turn_idx, label: "NEW-TOPIC", source: "rule"}`` when no guest answer
+      precedes the turn anywhere in the transcript. Nothing exists for it to
+      follow up on, so it is NEW-TOPIC by definition (D9) and costs no model
+      call. This covers the opening question and any other scripted turn before
+      the guest first speaks -- there can be several.
+    * ``{turn_idx, prev_host, guest_answer, target_host}`` for every host turn
+      that does have a guest answer behind it, **including the transcript's
+      first host turn** when the guest happened to speak first. Feed the three
+      texts straight to :func:`classify_prompt`.
 
-    A host turn with no guest answer anywhere before it is skipped: there is
-    nothing it could be following up on.
+    Host turns whose text is empty or whitespace-only are dropped entirely:
+    they get no rule label and no model call, and they do not become the
+    ``prev_host`` of a later case.
 
     How the three texts are chosen. ``guest_answer`` is the most recent run of
     consecutive guest turns before the target, joined with spaces; a host or
     "other" speaker ends a run (same rule as D4's answer assembly). Any role
-    that is not "guest" or "host" counts as "other". ``prev_host`` is the host
-    turn that came *before that run* -- the turn the guest was answering, not
-    necessarily the turn immediately before the target. That matters when the
-    interviewer speaks twice in a row: both of those turns get judged against
-    the same guest answer and the same eliciting question, which is exactly
-    what "did this turn go back to the interviewer's own agenda?" needs.
+    that is not "guest" or "host" counts as "other". A guest run with no text
+    in it is not an answer, so a host turn after one is still rule-labelled.
+    ``prev_host`` is the host turn that came *before that run* -- the turn the
+    guest was answering, not necessarily the turn immediately before the
+    target. That matters when the interviewer speaks twice in a row: both of
+    those turns get judged against the same guest answer and the same eliciting
+    question, which is exactly what "did this turn go back to the interviewer's
+    own agenda?" needs. It is ``""`` when the guest spoke before any host did,
+    which :func:`case_block` renders as :data:`EMPTY_FIELD`.
     """
     out: list = []
-    first_host_done = False
     last_host_text = ""       # most recent host turn
     run: list = []            # guest turns since the last boundary
     run_prev_host = ""        # host turn that preceded the current run
@@ -279,13 +290,12 @@ def classifiable_turns(turns: list) -> list:
         if run:
             answer = (run_prev_host, " ".join(run))
             run = []
-        if role != "host":
+        if role != "host" or not text:
             continue
-        if not first_host_done:
-            first_host_done = True
+        if answer is None:
             out.append({"turn_idx": turn["turn_idx"], "label": NEW_TOPIC,
                         "source": "rule"})
-        elif answer is not None:
+        else:
             out.append({"turn_idx": turn["turn_idx"], "prev_host": answer[0],
                         "guest_answer": answer[1], "target_host": text})
         last_host_text = text

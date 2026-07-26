@@ -163,6 +163,14 @@ def test_prompt_applies_the_three_d9_budgets():
     assert target.endswith(f"w119 {F.TRUNCATION_MARK}")
 
 
+@pytest.mark.parametrize("func", [F.last_words, F.first_words])
+@pytest.mark.parametrize("budget", [0, -1])
+def test_a_non_positive_budget_is_an_error_not_a_silent_full_copy(func, budget):
+    """words[-0:] would quietly return the whole turn; that must not happen."""
+    with pytest.raises(ValueError):
+        func("one two three", budget)
+
+
 def test_truncation_of_the_prev_turn_is_shorter_than_the_guest_answer():
     """PREV gets 60 words, GUEST 120 -- a swap would be silent otherwise."""
     assert F.PREV_HOST_WORDS == 60
@@ -251,7 +259,7 @@ ALTERNATING = _turns(
 )
 
 
-def test_first_host_turn_is_rule_labelled_new_topic():
+def test_host_turn_with_no_guest_answer_behind_it_is_rule_labelled():
     items = F.classifiable_turns(ALTERNATING)
     first = items[0]
     assert first == {"turn_idx": 1, "label": F.NEW_TOPIC, "source": "rule"}
@@ -308,8 +316,8 @@ def test_an_other_speaker_ends_the_guest_run():
     assert items[1]["guest_answer"] == "Later part."
 
 
-def test_host_turns_before_any_guest_speaks_are_skipped():
-    """Only the first one is emitted (by rule); the rest have nothing to follow."""
+def test_every_host_turn_before_the_guest_speaks_is_rule_labelled():
+    """Scripted opening turns cost no model call -- and there can be several."""
     items = F.classifiable_turns(_turns(
         ("host", "Welcome."),
         ("host", "Our guest joins us from Chicago."),
@@ -318,34 +326,54 @@ def test_host_turns_before_any_guest_speaks_are_skipped():
         ("guest", "Happy to be here."),
         ("host", "Why now?"),
     ))
-    assert [item["turn_idx"] for item in items] == [0, 5]
-    assert items[0]["source"] == "rule"
-    assert items[1]["prev_host"] == "Thanks for coming."
+    assert [item["turn_idx"] for item in items] == [0, 1, 3, 5]
+    assert all(item["source"] == "rule" for item in items[:3])
+    assert all(item["label"] == F.NEW_TOPIC for item in items[:3])
+    assert items[3]["prev_host"] == "Thanks for coming."
 
 
-def test_the_rule_wins_when_the_guest_speaks_first():
-    """A transcript that opens on the guest still rule-labels host turn one."""
+def test_a_guest_first_transcript_makes_the_opening_host_turn_a_model_case():
+    """The opening turn has an answer behind it, so it is not force-labelled."""
     items = F.classifiable_turns(_turns(
         ("guest", "I never said that."),
         ("host", "You said it on this program last week."),
         ("guest", "That was a different claim."),
         ("host", "Which claim?"),
     ))
-    assert items[0] == {"turn_idx": 1, "label": F.NEW_TOPIC, "source": "rule"}
-    assert items[1]["turn_idx"] == 3
+    assert [item["turn_idx"] for item in items] == [1, 3]
+    assert "source" not in items[0]
+    assert items[0]["guest_answer"] == "I never said that."
+    assert items[0]["prev_host"] == ""      # no interviewer turn behind it
     assert items[1]["prev_host"] == "You said it on this program last week."
+    # The empty PREV still renders as a well-formed prompt.
+    assert f"PREV: {F.EMPTY_FIELD}" in F.classify_prompt(
+        items[0]["prev_host"], items[0]["guest_answer"], items[0]["target_host"])
 
 
-def test_empty_and_whitespace_turns_are_ignored():
+def test_a_whitespace_only_guest_turn_is_not_an_answer():
     items = F.classifiable_turns(_turns(
         ("host", "Q1"),
         ("guest", "   "),
-        ("host", "Q2"),          # no usable answer yet -> skipped
+        ("host", "Q2"),          # still nothing to follow up on -> rule
         ("guest", "A real answer."),
         ("host", "Q3"),
     ))
-    assert [item["turn_idx"] for item in items] == [0, 4]
-    assert items[1]["guest_answer"] == "A real answer."
+    assert [item["turn_idx"] for item in items] == [0, 2, 4]
+    assert items[0]["source"] == "rule" and items[1]["source"] == "rule"
+    assert items[2]["guest_answer"] == "A real answer."
+
+
+def test_empty_host_turns_are_dropped_entirely():
+    """No rule label, no model call, and never the prev_host of a later case."""
+    items = F.classifiable_turns(_turns(
+        ("host", "   "),         # dropped, even though it is first
+        ("guest", "An answer."),
+        ("host", ""),            # dropped, even though an answer precedes it
+        ("host", "Q2"),
+    ))
+    assert [item["turn_idx"] for item in items] == [3]
+    assert items[0]["prev_host"] == ""
+    assert items[0]["guest_answer"] == "An answer."
 
 
 def test_empty_transcript_and_guest_only_transcript():
@@ -357,6 +385,7 @@ def test_items_feed_classify_prompt_directly():
     """The dict keys are the renderer's argument names -- checked, not assumed."""
     cases = [item for item in F.classifiable_turns(ALTERNATING)
              if "target_host" in item]
+    assert len(cases) == 3, "guard against a vacuous loop"
     for case in cases:
         fields = {k: v for k, v in case.items() if k != "turn_idx"}
         prompt = F.classify_prompt(**fields)
