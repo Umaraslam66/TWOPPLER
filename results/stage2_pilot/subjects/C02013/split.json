@@ -1,0 +1,35 @@
+{
+ "canonical_id": "C02013",
+ "canonical_name": "Robert Sampson",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster dated strictly earlier. Any other cluster sharing the test date is excluded entirely (same-event leak guard).",
+ "grounding": [
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-46234",
+   "date": "2005-12-23",
+   "program": "News & Notes",
+   "title": "Examining Causes for Boston's Homicide Jump",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 451
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-6056",
+   "date": "2010-06-02",
+   "program": "Talk of the Nation",
+   "title": "You're (Probably) Wrong About Crime",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 1263
+  }
+ ],
+ "test": {
+  "cluster_id": "cl3",
+  "transcript_id": "NPR-9480",
+  "date": "2013-02-19",
+  "program": "Talk of the Nation",
+  "title": "What's Driving The Violence In Chicago?",
+  "n_transcripts_in_cluster": 1,
+  "guest_words": 1173
+ },
+ "excluded_same_date": []
+}

@@ -1,0 +1,125 @@
+{
+ "canonical_id": "C00292",
+ "canonical_name": "Bassir Pour",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster dated strictly earlier. Any other cluster sharing the test date is excluded entirely (same-event leak guard).",
+ "grounding": [
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "CNN-3812",
+   "date": "2000-03-04",
+   "program": "CNN International Diplomatic Linense",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 391
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "CNN-5214",
+   "date": "2000-03-25",
+   "program": "CNN International Diplomatic Linense",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 449
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "CNN-6039",
+   "date": "2000-04-08",
+   "program": "CNN International Diplomatic Linense",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 501
+  },
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "CNN-6487",
+   "date": "2000-04-15",
+   "program": "CNN International Diplomatic Linense",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 381
+  },
+  {
+   "cluster_id": "cl12",
+   "transcript_id": "CNN-6671",
+   "date": "2000-04-22",
+   "program": "CNN International Diplomatic Linense",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 516
+  },
+  {
+   "cluster_id": "cl14",
+   "transcript_id": "CNN-8047",
+   "date": "2000-05-13",
+   "program": "CNN International Diplomatic Linense",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 350
+  },
+  {
+   "cluster_id": "cl19",
+   "transcript_id": "CNN-9832",
+   "date": "2000-06-10",
+   "program": "CNN International Diplomatic Linense",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 352
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "CNN-21018",
+   "date": "2000-12-02",
+   "program": "CNN International Diplomatic Linense",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 383
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "CNN-51332",
+   "date": "2002-03-23",
+   "program": "CNN DIPLOMATIC LICENSE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 325
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "CNN-55552",
+   "date": "2002-06-08",
+   "program": "CNN DIPLOMATIC LICENSE",
+   "title": "",
+   "n_transcripts_in_cluster": 2,
+   "guest_words": 359
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "CNN-56362",
+   "date": "2002-06-22",
+   "program": "DIPLOMATIC LICENSE",
+   "title": "",
+   "n_transcripts_in_cluster": 2,
+   "guest_words": 389
+  },
+  {
+   "cluster_id": "cl15",
+   "transcript_id": "CNN-85004",
+   "date": "2004-05-28",
+   "program": "DIPLOMATIC LICENSE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 736
+  }
+ ],
+ "test": {
+  "cluster_id": "cl17",
+  "transcript_id": "CNN-90998",
+  "date": "2004-12-31",
+  "program": "DIPLOMATIC LICENSE",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "guest_words": 399
+ },
+ "excluded_same_date": []
+}

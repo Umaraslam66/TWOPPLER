@@ -1,0 +1,35 @@
+{
+ "canonical_id": "C02006",
+ "canonical_name": "Robert Harris",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster dated strictly earlier. Any other cluster sharing the test date is excluded entirely (same-event leak guard).",
+ "grounding": [
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-37430",
+   "date": "2006-11-22",
+   "program": "Morning Edition",
+   "title": "Drawing Parallels Between Ancient Rome and the U.S. Today",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 903
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-19257",
+   "date": "2016-06-22",
+   "program": "Morning Edition",
+   "title": "British Author Robert Harris Finds 'Brexit' Referendum Disturbing",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 494
+  }
+ ],
+ "test": {
+  "cluster_id": "cl7",
+  "transcript_id": "NPR-14829",
+  "date": "2017-06-09",
+  "program": "Morning Edition",
+  "title": "British Prime Minister Theresa May's Election Gamble Fails Dramatically",
+  "n_transcripts_in_cluster": 1,
+  "guest_words": 446
+ },
+ "excluded_same_date": []
+}

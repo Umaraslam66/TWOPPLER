@@ -1,0 +1,43 @@
+{
+ "seed": 47,
+ "rule": "Eligible = qualifies AND clean AND NOT ambiguous_identity in results/stage2_candidate_pool_v2.csv. Eligible canonical_ids are sorted lexicographically, then shuffled once with random.Random(47).shuffle. Walking that shuffled order, the first 3 ids whose wiki_status is not 'long-tail' and the first 2 whose wiki_status is 'long-tail' are the dev subjects. A subject found broken later stays burned (it is a dev subject forever and is never reused); its replacement is the next id of the same stratum in the same shuffled order. shuffle_pos is the 0-based position of each pick in that shuffled order.",
+ "drawn_at": "2026-07-26",
+ "n_eligible": 578,
+ "subjects": [
+  {
+   "canonical_id": "C00792",
+   "canonical_name": "Frederic Hof",
+   "wiki_status": "long-tail",
+   "shuffle_pos": 0
+  },
+  {
+   "canonical_id": "C00292",
+   "canonical_name": "Bassir Pour",
+   "wiki_status": "long-tail",
+   "shuffle_pos": 1
+  },
+  {
+   "canonical_id": "C02013",
+   "canonical_name": "Robert Sampson",
+   "wiki_status": "has-page",
+   "shuffle_pos": 2
+  },
+  {
+   "canonical_id": "C01677",
+   "canonical_name": "Matthew Kroenig",
+   "wiki_status": "has-page",
+   "shuffle_pos": 5
+  },
+  {
+   "canonical_id": "C02006",
+   "canonical_name": "Robert Harris",
+   "wiki_status": "has-page",
+   "shuffle_pos": 6
+  }
+ ],
+ "burned": [],
+ "replacements": [],
+ "runtime_secs": 1.4,
+ "cost_usd": 0.0,
+ "n_transcripts_fetched": 25
+}

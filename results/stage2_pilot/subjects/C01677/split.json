@@ -1,0 +1,35 @@
+{
+ "canonical_id": "C01677",
+ "canonical_name": "Matthew Kroenig",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster dated strictly earlier. Any other cluster sharing the test date is excluded entirely (same-event leak guard).",
+ "grounding": [
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-12784",
+   "date": "2012-03-06",
+   "program": "Talk of the Nation",
+   "title": "Weighing A Policy Of Containment For Iran",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 1058
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-11032",
+   "date": "2012-05-22",
+   "program": "Talk of the Nation",
+   "title": "The Definition Of Success For Talks With Iran",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 729
+  }
+ ],
+ "test": {
+  "cluster_id": "cl12",
+  "transcript_id": "NPR-8791",
+  "date": "2013-04-29",
+  "program": "Talk of the Nation",
+  "title": "Diplomacy, Sanctions And A Nearing Red Line With Iran",
+  "n_transcripts_in_cluster": 1,
+  "guest_words": 904
+ },
+ "excluded_same_date": []
+}

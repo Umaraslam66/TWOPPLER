@@ -1,0 +1,35 @@
+{
+ "canonical_id": "C00792",
+ "canonical_name": "Frederic Hof",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster dated strictly earlier. Any other cluster sharing the test date is excluded entirely (same-event leak guard).",
+ "grounding": [
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-6779",
+   "date": "2013-01-08",
+   "program": "Talk of the Nation",
+   "title": "President Bashar Assad: His Inner Circle And His Options",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 992
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-12324",
+   "date": "2013-06-08",
+   "program": "Weekend Edition Saturday",
+   "title": "Conflict In Syria Continues To Degrade",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 540
+  }
+ ],
+ "test": {
+  "cluster_id": "cl4",
+  "transcript_id": "NPR-19884",
+  "date": "2016-12-14",
+  "program": "All Things Considered",
+  "title": "What's Next For Syrian Rebels As Regime Forces Take Aleppo",
+  "n_transcripts_in_cluster": 1,
+  "guest_words": 377
+ },
+ "excluded_same_date": []
+}
