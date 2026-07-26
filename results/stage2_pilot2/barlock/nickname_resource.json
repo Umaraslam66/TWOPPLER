@@ -1,0 +1,531 @@
+{
+ "generated_utc": "2026-07-26T20:36:16Z",
+ "resource": {
+  "package": "nicknames==1.0.1 (PyPI)",
+  "data": "names.csv, 2,691 pairs, 74 KB",
+  "source": "https://github.com/carltonnorthern/nicknames",
+  "licence": "Apache-2.0",
+  "shippable": "yes \u2014 one CSV, checkable into data/ or src/doppler/",
+  "directions_used": "nicknames_of(first) AND canonicals_of(first)"
+ },
+ "hand_table": {
+  "n_first_names": 11,
+  "entries": {
+   "frederic": [
+    "Fred",
+    "Freddie",
+    "Freddy"
+   ],
+   "frederick": [
+    "Fred",
+    "Freddie",
+    "Freddy"
+   ],
+   "joshua": [
+    "Josh"
+   ],
+   "martin": [
+    "Marty"
+   ],
+   "matthew": [
+    "Matt",
+    "Matty"
+   ],
+   "robert": [
+    "Bob",
+    "Bobby",
+    "Rob",
+    "Robbie"
+   ],
+   "ron": [
+    "Ronnie"
+   ],
+   "ronald": [
+    "Ron",
+    "Ronnie"
+   ],
+   "stephen": [
+    "Steve",
+    "Stevie"
+   ],
+   "steven": [
+    "Steve",
+    "Stevie"
+   ],
+   "walter": [
+    "Walt",
+    "Wally"
+   ]
+  }
+ },
+ "coverage": {
+  "per_person": [
+   {
+    "canonical_id": "C00792",
+    "role": "dev",
+    "canonical_name": "Frederic Hof",
+    "first_name": "frederic",
+    "hand_table": [
+     "fred",
+     "freddie",
+     "freddy"
+    ],
+    "resource": [],
+    "resource_only": [],
+    "hand_only": [
+     "fred",
+     "freddie",
+     "freddy"
+    ]
+   },
+   {
+    "canonical_id": "C00292",
+    "role": "dev",
+    "canonical_name": "Bassir Pour",
+    "first_name": "bassir",
+    "hand_table": [],
+    "resource": [],
+    "resource_only": [],
+    "hand_only": []
+   },
+   {
+    "canonical_id": "C02013",
+    "role": "dev",
+    "canonical_name": "Robert Sampson",
+    "first_name": "robert",
+    "hand_table": [
+     "bob",
+     "bobby",
+     "rob",
+     "robbie"
+    ],
+    "resource": [
+     "bill",
+     "billy",
+     "bob",
+     "bobby",
+     "dob",
+     "dobbin",
+     "hob",
+     "hobkin",
+     "rob",
+     "robby",
+     "rupert"
+    ],
+    "resource_only": [
+     "bill",
+     "billy",
+     "dob",
+     "dobbin",
+     "hob",
+     "hobkin",
+     "robby",
+     "rupert"
+    ],
+    "hand_only": [
+     "robbie"
+    ]
+   },
+   {
+    "canonical_id": "C02124",
+    "role": "dev",
+    "canonical_name": "Samer Shehata",
+    "first_name": "samer",
+    "hand_table": [],
+    "resource": [],
+    "resource_only": [],
+    "hand_only": []
+   },
+   {
+    "canonical_id": "C01677",
+    "role": "dev",
+    "canonical_name": "Matthew Kroenig",
+    "first_name": "matthew",
+    "hand_table": [
+     "matt",
+     "matty"
+    ],
+    "resource": [
+     "matt",
+     "mattie",
+     "matty",
+     "thias",
+     "thys"
+    ],
+    "resource_only": [
+     "mattie",
+     "thias",
+     "thys"
+    ],
+    "hand_only": []
+   },
+   {
+    "canonical_id": "C02006",
+    "role": "dev",
+    "canonical_name": "Robert Harris",
+    "first_name": "robert",
+    "hand_table": [
+     "bob",
+     "bobby",
+     "rob",
+     "robbie"
+    ],
+    "resource": [
+     "bill",
+     "billy",
+     "bob",
+     "bobby",
+     "dob",
+     "dobbin",
+     "hob",
+     "hobkin",
+     "rob",
+     "robby",
+     "rupert"
+    ],
+    "resource_only": [
+     "bill",
+     "billy",
+     "dob",
+     "dobbin",
+     "hob",
+     "hobkin",
+     "robby",
+     "rupert"
+    ],
+    "hand_only": [
+     "robbie"
+    ]
+   },
+   {
+    "canonical_id": "C00690",
+    "role": "donor",
+    "canonical_name": "Doris Meissner",
+    "first_name": "doris",
+    "hand_table": [],
+    "resource": [
+     "dora"
+    ],
+    "resource_only": [
+     "dora"
+    ],
+    "hand_only": []
+   },
+   {
+    "canonical_id": "C01316",
+    "role": "donor",
+    "canonical_name": "Joshua Landis",
+    "first_name": "joshua",
+    "hand_table": [
+     "josh"
+    ],
+    "resource": [
+     "joe",
+     "jos",
+     "josh"
+    ],
+    "resource_only": [
+     "joe",
+     "jos"
+    ],
+    "hand_only": []
+   },
+   {
+    "canonical_id": "C01650",
+    "role": "donor",
+    "canonical_name": "Martin Indyk",
+    "first_name": "martin",
+    "hand_table": [
+     "marty"
+    ],
+    "resource": [
+     "marty"
+    ],
+    "resource_only": [],
+    "hand_only": []
+   },
+   {
+    "canonical_id": "C02040",
+    "role": "donor",
+    "canonical_name": "Ron Christie",
+    "first_name": "ron",
+    "hand_table": [
+     "ronnie"
+    ],
+    "resource": [
+     "aaron",
+     "aron",
+     "cameron",
+     "ronald",
+     "ronnie",
+     "ronny",
+     "veronica"
+    ],
+    "resource_only": [
+     "aaron",
+     "aron",
+     "cameron",
+     "ronald",
+     "ronny",
+     "veronica"
+    ],
+    "hand_only": []
+   },
+   {
+    "canonical_id": "C02277",
+    "role": "donor",
+    "canonical_name": "Steven Cook",
+    "first_name": "steven",
+    "hand_table": [
+     "steve",
+     "stevie"
+    ],
+    "resource": [
+     "steph",
+     "steve",
+     "stevie"
+    ],
+    "resource_only": [
+     "steph"
+    ],
+    "hand_only": []
+   },
+   {
+    "canonical_id": "C02510",
+    "role": "donor",
+    "canonical_name": "Walter Mosley",
+    "first_name": "walter",
+    "hand_table": [
+     "wally",
+     "walt"
+    ],
+    "resource": [
+     "wally",
+     "walt"
+    ],
+    "resource_only": [],
+    "hand_only": []
+   }
+  ],
+  "pilot_12": {
+   "n_with_first_name": 12,
+   "n_rows": 12,
+   "hand_table_hits": 9,
+   "resource_hits": 9,
+   "hand_share": 0.75,
+   "resource_share": 0.75
+  },
+  "bank_donors": {
+   "n_with_first_name": 167,
+   "n_rows": 167,
+   "hand_table_hits": 13,
+   "resource_hits": 118,
+   "hand_share": 0.0778,
+   "resource_share": 0.7066
+  },
+  "eligible_pool_578": {
+   "n_with_first_name": 578,
+   "n_rows": 578,
+   "hand_table_hits": 38,
+   "resource_hits": 404,
+   "hand_share": 0.0657,
+   "resource_share": 0.699
+  },
+  "full_pool_1153": {
+   "n_with_first_name": 1145,
+   "n_rows": 1153,
+   "hand_table_hits": 55,
+   "resource_hits": 765,
+   "hand_share": 0.048,
+   "resource_share": 0.6681
+  }
+ },
+ "variant_comparison": {
+  "hand": {
+   "prompts_new_leaks": 0,
+   "prompts_collateral": 0,
+   "turns_new_leaks": 0,
+   "turns_collateral": 0,
+   "prompt_leak_examples": [],
+   "prompt_collateral_examples": [],
+   "turn_leak_examples": []
+  },
+  "resource_fwd": {
+   "prompts_new_leaks": 0,
+   "prompts_collateral": 3,
+   "turns_new_leaks": 0,
+   "turns_collateral": 1,
+   "prompt_leak_examples": [],
+   "prompt_collateral_examples": [
+    {
+     "where": "twin_redacted/C02013:NPR-9480:45",
+     "person": "C02013",
+     "form": "bill",
+     "context": "o what Reverend Rivers just suggested, we saw the flap that Bill Cosby caused by, some people say, suggested blaming the vic"
+    },
+    {
+     "where": "twin_redacted/C02013:NPR-9480:70",
+     "person": "C02013",
+     "form": "bill",
+     "context": "d Alabama and Louisiana over the last few months about this bill. And so, by and large, blacks who are democratic, you know,"
+    },
+    {
+     "where": "twin_redacted/C02013:NPR-9480:70",
+     "person": "C02013",
+     "form": "bill",
+     "context": "] and [NAME] and [NAME] over the last few months about this bill. And so, by and large, blacks who are democratic, you know,"
+    }
+   ],
+   "turn_leak_examples": []
+  },
+  "resource_both": {
+   "prompts_new_leaks": 0,
+   "prompts_collateral": 3,
+   "turns_new_leaks": 0,
+   "turns_collateral": 1,
+   "prompt_leak_examples": [],
+   "prompt_collateral_examples": [
+    {
+     "where": "twin_redacted/C02013:NPR-9480:45",
+     "person": "C02013",
+     "form": "bill",
+     "context": "o what Reverend Rivers just suggested, we saw the flap that Bill Cosby caused by, some people say, suggested blaming the vic"
+    },
+    {
+     "where": "twin_redacted/C02013:NPR-9480:70",
+     "person": "C02013",
+     "form": "bill",
+     "context": "d Alabama and Louisiana over the last few months about this bill. And so, by and large, blacks who are democratic, you know,"
+    },
+    {
+     "where": "twin_redacted/C02013:NPR-9480:70",
+     "person": "C02013",
+     "form": "bill",
+     "context": "] and [NAME] and [NAME] over the last few months about this bill. And so, by and large, blacks who are democratic, you know,"
+    }
+   ],
+   "turn_leak_examples": []
+  },
+  "hand_union_both": {
+   "prompts_new_leaks": 0,
+   "prompts_collateral": 3,
+   "turns_new_leaks": 0,
+   "turns_collateral": 1,
+   "prompt_leak_examples": [],
+   "prompt_collateral_examples": [
+    {
+     "where": "twin_redacted/C02013:NPR-9480:45",
+     "person": "C02013",
+     "form": "bill",
+     "context": "o what Reverend Rivers just suggested, we saw the flap that Bill Cosby caused by, some people say, suggested blaming the vic"
+    },
+    {
+     "where": "twin_redacted/C02013:NPR-9480:70",
+     "person": "C02013",
+     "form": "bill",
+     "context": "d Alabama and Louisiana over the last few months about this bill. And so, by and large, blacks who are democratic, you know,"
+    },
+    {
+     "where": "twin_redacted/C02013:NPR-9480:70",
+     "person": "C02013",
+     "form": "bill",
+     "context": "] and [NAME] and [NAME] over the last few months about this bill. And so, by and large, blacks who are democratic, you know,"
+    }
+   ],
+   "turn_leak_examples": []
+  }
+ },
+ "scale_risk": {
+  "eligible_578": {
+   "n_rows": 578,
+   "subjects_gaining_at_least_one_form": 404,
+   "total_extra_name_forms": 1661,
+   "forms_that_are_ordinary_english_words": 1169,
+   "subjects_with_an_ordinary_word_form": 369,
+   "commonest_ordinary_word_forms": {
+    "billy": 20,
+    "mick": 17,
+    "micky": 17,
+    "miguel": 17,
+    "day": 17,
+    "dave": 17,
+    "rob": 15,
+    "mickey": 15,
+    "johnathan": 15,
+    "bill": 15,
+    "bobby": 14,
+    "mikey": 14,
+    "mike": 14,
+    "micah": 14,
+    "jon": 12
+   }
+  },
+  "full_1153": {
+   "n_rows": 1153,
+   "subjects_gaining_at_least_one_form": 763,
+   "total_extra_name_forms": 3190,
+   "forms_that_are_ordinary_english_words": 2247,
+   "subjects_with_an_ordinary_word_form": 694,
+   "commonest_ordinary_word_forms": {
+    "johnathan": 39,
+    "day": 35,
+    "dave": 35,
+    "jon": 32,
+    "johannes": 32,
+    "jonathan": 32,
+    "johnny": 31,
+    "billy": 29,
+    "jack": 28,
+    "ivan": 25,
+    "ian": 25,
+    "jock": 25,
+    "johann": 25,
+    "bill": 25,
+    "bobby": 24
+   }
+  },
+  "word_list": "/usr/share/dict/words"
+ },
+ "prompt_scan": {
+  "n_prompts_scanned": 68,
+  "n_new_leaks": 0,
+  "n_collateral_candidates": 3,
+  "collateral_by_form": {
+   "bill": 3
+  },
+  "new_leaks": [],
+  "collateral_candidates": [
+   {
+    "arm": "twin_redacted",
+    "variant": "standard",
+    "item_id": "C02013:NPR-9480:45",
+    "person": "C02013",
+    "person_name": "Robert Sampson",
+    "first_name": "robert",
+    "form": "bill",
+    "context": "o what Reverend Rivers just suggested, we saw the flap that Bill Cosby caused by, some people say, suggested blaming the vic"
+   },
+   {
+    "arm": "twin_redacted",
+    "variant": "standard",
+    "item_id": "C02013:NPR-9480:70",
+    "person": "C02013",
+    "person_name": "Robert Sampson",
+    "first_name": "robert",
+    "form": "bill",
+    "context": "d Alabama and Louisiana over the last few months about this bill. And so, by and large, blacks who are democratic, you know,"
+   },
+   {
+    "arm": "twin_redacted",
+    "variant": "stripped",
+    "item_id": "C02013:NPR-9480:70",
+    "person": "C02013",
+    "person_name": "Robert Sampson",
+    "first_name": "robert",
+    "form": "bill",
+    "context": "] and [NAME] and [NAME] over the last few months about this bill. And so, by and large, blacks who are democratic, you know,"
+   }
+  ]
+ },
+ "runtime_secs": 0.5
+}

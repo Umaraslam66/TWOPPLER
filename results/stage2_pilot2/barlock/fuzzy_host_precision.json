@@ -1,0 +1,461 @@
+{
+ "generated_utc": "2026-07-26T20:53:42Z",
+ "method": "census over every distinct (descriptor, programme) pair the fuzzy arm fires on at ratio >= 0.55; each pair labelled once by hand and applied to all its turns",
+ "labels": "results/stage2_pilot2/barlock/fuzzy_host_labels.tsv",
+ "n_pairs_labelled": 151,
+ "n_label_rows": 498,
+ "label_definitions": {
+  "anchor": "presents this programme (D3.2's stated target)",
+  "staff": "house staff of the show, not the interviewer",
+  "false": "guest, relative of the host, outside network, or noise"
+ },
+ "per_band": {
+  "0.55-0.60": {
+   "label_rows": 301,
+   "turns": 316,
+   "anchor": 13,
+   "staff": 142,
+   "false": 146,
+   "precision_strict": 0.0432,
+   "precision_strict_ci95": [
+    0.0254,
+    0.0725
+   ],
+   "precision_lenient": 0.515,
+   "precision_lenient_ci95": [
+    0.4587,
+    0.5709
+   ],
+   "turns_anchor": 13,
+   "turns_false": 151
+  },
+  "0.60-0.65": {
+   "label_rows": 65,
+   "turns": 66,
+   "anchor": 12,
+   "staff": 4,
+   "false": 49,
+   "precision_strict": 0.1846,
+   "precision_strict_ci95": [
+    0.1089,
+    0.2955
+   ],
+   "precision_lenient": 0.2462,
+   "precision_lenient_ci95": [
+    0.1576,
+    0.3631
+   ],
+   "turns_anchor": 12,
+   "turns_false": 50
+  },
+  "0.65-0.70": {
+   "label_rows": 53,
+   "turns": 53,
+   "anchor": 24,
+   "staff": 7,
+   "false": 22,
+   "precision_strict": 0.4528,
+   "precision_strict_ci95": [
+    0.3266,
+    0.5855
+   ],
+   "precision_lenient": 0.5849,
+   "precision_lenient_ci95": [
+    0.4509,
+    0.7074
+   ],
+   "turns_anchor": 24,
+   "turns_false": 22
+  },
+  "0.70-1.01": {
+   "label_rows": 79,
+   "turns": 83,
+   "anchor": 49,
+   "staff": 15,
+   "false": 15,
+   "precision_strict": 0.6203,
+   "precision_strict_ci95": [
+    0.51,
+    0.7193
+   ],
+   "precision_lenient": 0.8101,
+   "precision_lenient_ci95": [
+    0.7101,
+    0.8814
+   ],
+   "turns_anchor": 53,
+   "turns_false": 15
+  }
+ },
+ "per_threshold": {
+  ">=0.55": {
+   "all_fires": {
+    "label_rows": 498,
+    "turns": 518,
+    "anchor": 98,
+    "staff": 168,
+    "false": 232,
+    "precision_strict": 0.1968,
+    "precision_strict_ci95": [
+     0.1642,
+     0.234
+    ],
+    "precision_lenient": 0.5341,
+    "precision_lenient_ci95": [
+     0.4902,
+     0.5775
+    ],
+    "turns_anchor": 102,
+    "turns_false": 238
+   },
+   "fires_that_change_a_turn": {
+    "label_rows": 302,
+    "turns": 315,
+    "anchor": 18,
+    "staff": 108,
+    "false": 176,
+    "precision_strict": 0.0596,
+    "precision_strict_ci95": [
+     0.038,
+     0.0922
+    ],
+    "precision_lenient": 0.4172,
+    "precision_lenient_ci95": [
+     0.363,
+     0.4735
+    ],
+    "turns_anchor": 18,
+    "turns_false": 181
+   },
+   "transcripts": 401,
+   "transcripts_changed": 254
+  },
+  ">=0.60": {
+   "all_fires": {
+    "label_rows": 197,
+    "turns": 202,
+    "anchor": 85,
+    "staff": 26,
+    "false": 86,
+    "precision_strict": 0.4315,
+    "precision_strict_ci95": [
+     0.3643,
+     0.5013
+    ],
+    "precision_lenient": 0.5635,
+    "precision_lenient_ci95": [
+     0.4936,
+     0.6308
+    ],
+    "turns_anchor": 89,
+    "turns_false": 87
+   },
+   "fires_that_change_a_turn": {
+    "label_rows": 120,
+    "turns": 121,
+    "anchor": 17,
+    "staff": 18,
+    "false": 85,
+    "precision_strict": 0.1417,
+    "precision_strict_ci95": [
+     0.0904,
+     0.2152
+    ],
+    "precision_lenient": 0.2917,
+    "precision_lenient_ci95": [
+     0.2178,
+     0.3784
+    ],
+    "turns_anchor": 17,
+    "turns_false": 86
+   },
+   "transcripts": 159,
+   "transcripts_changed": 94
+  },
+  ">=0.65": {
+   "all_fires": {
+    "label_rows": 132,
+    "turns": 136,
+    "anchor": 73,
+    "staff": 22,
+    "false": 37,
+    "precision_strict": 0.553,
+    "precision_strict_ci95": [
+     0.4679,
+     0.6352
+    ],
+    "precision_lenient": 0.7197,
+    "precision_lenient_ci95": [
+     0.6377,
+     0.7893
+    ],
+    "turns_anchor": 77,
+    "turns_false": 37
+   },
+   "fires_that_change_a_turn": {
+    "label_rows": 68,
+    "turns": 68,
+    "anchor": 14,
+    "staff": 17,
+    "false": 37,
+    "precision_strict": 0.2059,
+    "precision_strict_ci95": [
+     0.1268,
+     0.3164
+    ],
+    "precision_lenient": 0.4559,
+    "precision_lenient_ci95": [
+     0.343,
+     0.5734
+    ],
+    "turns_anchor": 14,
+    "turns_false": 37
+   },
+   "transcripts": 109,
+   "transcripts_changed": 54
+  },
+  ">=0.70": {
+   "all_fires": {
+    "label_rows": 79,
+    "turns": 83,
+    "anchor": 49,
+    "staff": 15,
+    "false": 15,
+    "precision_strict": 0.6203,
+    "precision_strict_ci95": [
+     0.51,
+     0.7193
+    ],
+    "precision_lenient": 0.8101,
+    "precision_lenient_ci95": [
+     0.7101,
+     0.8814
+    ],
+    "turns_anchor": 53,
+    "turns_false": 15
+   },
+   "fires_that_change_a_turn": {
+    "label_rows": 26,
+    "turns": 26,
+    "anchor": 1,
+    "staff": 10,
+    "false": 15,
+    "precision_strict": 0.0385,
+    "precision_strict_ci95": [
+     0.0068,
+     0.1889
+    ],
+    "precision_lenient": 0.4231,
+    "precision_lenient_ci95": [
+     0.2554,
+     0.6105
+    ],
+    "turns_anchor": 1,
+    "turns_false": 15
+   },
+   "transcripts": 64,
+   "transcripts_changed": 18
+  }
+ },
+ "per_threshold_with_guard": {
+  ">=0.55 + guard": {
+   "all_fires": {
+    "label_rows": 167,
+    "turns": 174,
+    "anchor": 94,
+    "staff": 21,
+    "false": 52,
+    "precision_strict": 0.5629,
+    "precision_strict_ci95": [
+     0.4871,
+     0.6359
+    ],
+    "precision_lenient": 0.6886,
+    "precision_lenient_ci95": [
+     0.6148,
+     0.7539
+    ],
+    "turns_anchor": 98,
+    "turns_false": 54
+   },
+   "fires_that_change_a_turn": {
+    "label_rows": 72,
+    "turns": 74,
+    "anchor": 17,
+    "staff": 16,
+    "false": 39,
+    "precision_strict": 0.2361,
+    "precision_strict_ci95": [
+     0.153,
+     0.346
+    ],
+    "precision_lenient": 0.4583,
+    "precision_lenient_ci95": [
+     0.3483,
+     0.5726
+    ],
+    "turns_anchor": 17,
+    "turns_false": 40
+   },
+   "dropped_rows": 331,
+   "dropped_anchor_rows": 4,
+   "dropped_anchor_examples": [
+    "\"PIECE OF ME\") VELEZ-MITCHELL || JANE VELEZ-MITCHELL",
+    "CNN ANCHOR, BIZASIA || EBIZ ASIA",
+    "CNN NEWS ANCHOR || NEW DAY",
+    "CNN NEWS HOST || CNN NEWSROOM"
+   ]
+  },
+  ">=0.60 + guard": {
+   "all_fires": {
+    "label_rows": 119,
+    "turns": 123,
+    "anchor": 83,
+    "staff": 16,
+    "false": 20,
+    "precision_strict": 0.6975,
+    "precision_strict_ci95": [
+     0.6098,
+     0.7728
+    ],
+    "precision_lenient": 0.8319,
+    "precision_lenient_ci95": [
+     0.7546,
+     0.8885
+    ],
+    "turns_anchor": 87,
+    "turns_false": 20
+   },
+   "fires_that_change_a_turn": {
+    "label_rows": 47,
+    "turns": 47,
+    "anchor": 16,
+    "staff": 12,
+    "false": 19,
+    "precision_strict": 0.3404,
+    "precision_strict_ci95": [
+     0.2217,
+     0.4833
+    ],
+    "precision_lenient": 0.5957,
+    "precision_lenient_ci95": [
+     0.4534,
+     0.7236
+    ],
+    "turns_anchor": 16,
+    "turns_false": 19
+   },
+   "dropped_rows": 78,
+   "dropped_anchor_rows": 2,
+   "dropped_anchor_examples": [
+    "\"PIECE OF ME\") VELEZ-MITCHELL || JANE VELEZ-MITCHELL",
+    "CNN ANCHOR, BIZASIA || EBIZ ASIA"
+   ]
+  },
+  ">=0.65 + guard": {
+   "all_fires": {
+    "label_rows": 91,
+    "turns": 95,
+    "anchor": 72,
+    "staff": 15,
+    "false": 4,
+    "precision_strict": 0.7912,
+    "precision_strict_ci95": [
+     0.6968,
+     0.8621
+    ],
+    "precision_lenient": 0.956,
+    "precision_lenient_ci95": [
+     0.8924,
+     0.9828
+    ],
+    "turns_anchor": 76,
+    "turns_false": 4
+   },
+   "fires_that_change_a_turn": {
+    "label_rows": 28,
+    "turns": 28,
+    "anchor": 13,
+    "staff": 11,
+    "false": 4,
+    "precision_strict": 0.4643,
+    "precision_strict_ci95": [
+     0.2953,
+     0.6419
+    ],
+    "precision_lenient": 0.8571,
+    "precision_lenient_ci95": [
+     0.6851,
+     0.943
+    ],
+    "turns_anchor": 13,
+    "turns_false": 4
+   },
+   "dropped_rows": 41,
+   "dropped_anchor_rows": 1,
+   "dropped_anchor_examples": [
+    "\"PIECE OF ME\") VELEZ-MITCHELL || JANE VELEZ-MITCHELL"
+   ]
+  },
+  ">=0.70 + guard": {
+   "all_fires": {
+    "label_rows": 57,
+    "turns": 61,
+    "anchor": 48,
+    "staff": 8,
+    "false": 1,
+    "precision_strict": 0.8421,
+    "precision_strict_ci95": [
+     0.7264,
+     0.9146
+    ],
+    "precision_lenient": 0.9825,
+    "precision_lenient_ci95": [
+     0.9071,
+     0.9969
+    ],
+    "turns_anchor": 52,
+    "turns_false": 1
+   },
+   "fires_that_change_a_turn": {
+    "label_rows": 5,
+    "turns": 5,
+    "anchor": 0,
+    "staff": 4,
+    "false": 1,
+    "precision_strict": 0.0,
+    "precision_strict_ci95": [
+     0.0,
+     0.4345
+    ],
+    "precision_lenient": 0.8,
+    "precision_lenient_ci95": [
+     0.3755,
+     0.9638
+    ],
+    "turns_anchor": 0,
+    "turns_false": 1
+   },
+   "dropped_rows": 22,
+   "dropped_anchor_rows": 1,
+   "dropped_anchor_examples": [
+    "\"PIECE OF ME\") VELEZ-MITCHELL || JANE VELEZ-MITCHELL"
+   ]
+  }
+ },
+ "guard_rule": "reject a descriptor containing a relationship marker ('S / OF / WIFE / SON / DAUGHTER / BROTHER / SISTER / MOTHER / FATHER / FRIEND / WIDOW), and require the normalised descriptor and programme to share at least one word of >= 4 letters",
+ "diplomatic_license_case": {
+  "label_rows": 14,
+  "turns": 14,
+  "ratio": [
+   0.6667,
+   0.68
+  ],
+  "verdicts": [
+   "anchor",
+   "false"
+  ],
+  "note": "the one case v1.5 was written for; it sits at 0.68"
+ },
+ "runtime_secs": 0.01
+}

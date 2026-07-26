@@ -1,0 +1,902 @@
+{
+ "C02532": {
+  "test": {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-11510",
+   "date": "2017-03-04",
+   "program": "Weekend Edition Saturday",
+   "title": "How YouTube Is Changing Our Viewing Habits",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-03-04"
+   ],
+   "guest_words": 310
+  },
+  "n_grounding": 2
+ },
+ "C00793": {
+  "test": {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-21070",
+   "date": "2015-09-22",
+   "program": "Morning Edition",
+   "title": "From 'Brinksmanship' To 'Hope,' Here's What Might Result From U.S.-Iran Deal",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-09-22"
+   ],
+   "guest_words": 461
+  },
+  "n_grounding": 2
+ },
+ "C00060": {
+  "test": {
+   "cluster_id": "cl34",
+   "transcript_id": "NPR-47073",
+   "date": "2018-04-22",
+   "program": "All Things Considered",
+   "title": "ISIS Bombing Targets Afghan Polling Station",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-04-22"
+   ],
+   "guest_words": 589
+  },
+  "n_grounding": 8
+ },
+ "C02475": {
+  "test": {
+   "cluster_id": "cl34",
+   "transcript_id": "CNN-158584",
+   "date": "2010-11-22",
+   "program": "NANCY GRACE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-11-22"
+   ],
+   "guest_words": 321
+  },
+  "n_grounding": 6
+ },
+ "C00752": {
+  "test": {
+   "cluster_id": "cl17",
+   "transcript_id": "NPR-9707",
+   "date": "2008-10-28",
+   "program": "News & Notes",
+   "title": "Africa Update: Zuma On South African Progress",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-10-28"
+   ],
+   "guest_words": 866
+  },
+  "n_grounding": 9
+ },
+ "C01377": {
+  "test": {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-29898",
+   "date": "2013-02-06",
+   "program": "All Things Considered",
+   "title": "Media Reports Reveal CIA's Drone Base In Saudi Arabia",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-02-06"
+   ],
+   "guest_words": 484
+  },
+  "n_grounding": 3
+ },
+ "C01387": {
+  "test": {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-12842",
+   "date": "2019-03-23",
+   "program": "All Things Considered",
+   "title": "What Recent Destructive Cyclones Tell Us About Climate",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-03-23"
+   ],
+   "guest_words": 665
+  },
+  "n_grounding": 3
+ },
+ "C02469": {
+  "test": {
+   "cluster_id": "cl24",
+   "transcript_id": "CNN-393969",
+   "date": "2020-02-28",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2020-02-28"
+   ],
+   "guest_words": 506
+  },
+  "n_grounding": 6
+ },
+ "C02266": {
+  "test": {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-1488",
+   "date": "2011-08-22",
+   "program": "Talk of the Nation",
+   "title": "Op-Ed: A 'Huge Win' For Libyans And Obama",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-08-22"
+   ],
+   "guest_words": 1205
+  },
+  "n_grounding": 2
+ },
+ "C00892": {
+  "test": {
+   "cluster_id": "cl8",
+   "transcript_id": "CNN-368975",
+   "date": "2019-05-07",
+   "program": "CNN RIGHT NOW",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-05-07"
+   ],
+   "guest_words": 536
+  },
+  "n_grounding": 5
+ },
+ "C01848": {
+  "test": {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-1685",
+   "date": "2018-12-18",
+   "program": "All Things Considered",
+   "title": "Brookings Institution Senior Fellow On Michael Flynn's Contacts With Turkey",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-12-18"
+   ],
+   "guest_words": 453
+  },
+  "n_grounding": 4
+ },
+ "C01732": {
+  "test": {
+   "cluster_id": "cl24",
+   "transcript_id": "NPR-20030",
+   "date": "2016-12-04",
+   "program": "All Things Considered",
+   "title": "Supreme Court To Hear Cases Involving Race And Gerrymandering",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-12-04"
+   ],
+   "guest_words": 504
+  },
+  "n_grounding": 3
+ },
+ "C01874": {
+  "test": {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-44511",
+   "date": "2018-08-12",
+   "program": "All Things Considered",
+   "title": "Remembering Nobel Laureate And Author V.S. Naipaul",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-08-12"
+   ],
+   "guest_words": 693
+  },
+  "n_grounding": 2
+ },
+ "C02000": {
+  "test": {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-8967",
+   "date": "2013-04-19",
+   "program": "Talk of the Nation",
+   "title": "Robert Ballard: 50 Years Exploring Deep Waters",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-04-19"
+   ],
+   "guest_words": 4693
+  },
+  "n_grounding": 2
+ },
+ "C01045": {
+  "test": {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-8535",
+   "date": "2019-08-31",
+   "program": "Weekend Edition Saturday",
+   "title": "At Least 11 Journalists Killed This Year In Mexico",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-08-31"
+   ],
+   "guest_words": 601
+  },
+  "n_grounding": 2
+ },
+ "C00836": {
+  "test": {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-3087",
+   "date": "2006-11-28",
+   "program": "News & Notes",
+   "title": "Bebe Moore Campbell's Heart and Mind Live On",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-11-28"
+   ],
+   "guest_words": 561
+  },
+  "n_grounding": 5
+ },
+ "C00617": {
+  "test": {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-6325",
+   "date": "2016-04-26",
+   "program": "Morning Edition",
+   "title": "Ahead Of Rio Games, Olympic Historian Says Terror Attacks Are A Concern",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-04-26"
+   ],
+   "guest_words": 332
+  },
+  "n_grounding": 2
+ },
+ "C02383": {
+  "test": {
+   "cluster_id": "cl55",
+   "transcript_id": "NPR-11525",
+   "date": "2017-02-04",
+   "program": "Weekend Edition Saturday",
+   "title": "Former Ambassador Discusses Trump's Emerging Foreign Policy",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-02-04"
+   ],
+   "guest_words": 546
+  },
+  "n_grounding": 5
+ },
+ "C01715": {
+  "test": {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-11061",
+   "date": "2008-02-26",
+   "program": "News & Notes",
+   "title": "Black Conn. Lawmaker Says He's Gay",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-02-26"
+   ],
+   "guest_words": 543
+  },
+  "n_grounding": 6
+ },
+ "C00385": {
+  "test": {
+   "cluster_id": "cl23",
+   "transcript_id": "NPR-1796",
+   "date": "2018-12-03",
+   "program": "All Things Considered",
+   "title": "Former CIA Officer Discusses Agency's Conclusions On Killing Of Jamal Khashoggi",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-12-03"
+   ],
+   "guest_words": 343
+  },
+  "n_grounding": 3
+ },
+ "C01784": {
+  "test": {
+   "cluster_id": "cl20",
+   "transcript_id": "NPR-15683",
+   "date": "2017-09-17",
+   "program": "All Things Considered",
+   "title": "Doctor Who Discovered Children Had Elevated Lead Levels Talks About What's Changed",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-09-17"
+   ],
+   "guest_words": 427
+  },
+  "n_grounding": 2
+ },
+ "C02003": {
+  "test": {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-9419",
+   "date": "2019-08-06",
+   "program": "All Things Considered",
+   "title": "Rising Tensions Between The U.S. And China Go Beyond Trade Dispute",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-08-06"
+   ],
+   "guest_words": 621
+  },
+  "n_grounding": 4
+ },
+ "C01147": {
+  "test": {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-12060",
+   "date": "2014-08-16",
+   "program": "Weekend Edition Saturday",
+   "title": "Arab Bank On Trial For Allegedly Funding Hamas",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-08-16"
+   ],
+   "guest_words": 414
+  },
+  "n_grounding": 2
+ },
+ "C00824": {
+  "test": {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-12220",
+   "date": "2013-11-23",
+   "program": "Weekend Edition Saturday",
+   "title": "What An Iran Deal Will Do For Nonproliferation",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-11-23"
+   ],
+   "guest_words": 540
+  },
+  "n_grounding": 2
+ },
+ "C00613": {
+  "test": {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-40493",
+   "date": "2008-03-29",
+   "program": "All Things Considered",
+   "title": "A 1940s American Cork Dream",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-03-29"
+   ],
+   "guest_words": 466
+  },
+  "n_grounding": 2
+ },
+ "C00146": {
+  "test": {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-20141",
+   "date": "2016-11-24",
+   "program": "All Things Considered",
+   "title": "Clean Energy Analyst: Renewables Are 'Here To Stay' Under Trump Presidency",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-11-24"
+   ],
+   "guest_words": 458
+  },
+  "n_grounding": 2
+ },
+ "C01778": {
+  "test": {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-15172",
+   "date": "2017-04-18",
+   "program": "Morning Edition",
+   "title": "Anxious Nations React Fearfully To Rapid Influx Of Migrants, Hamid Says",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-04-18"
+   ],
+   "guest_words": 818
+  },
+  "n_grounding": 2
+ },
+ "C00145": {
+  "test": {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-132",
+   "date": "2019-02-08",
+   "program": "Morning Edition",
+   "title": "News Brief: Bezos Accuses 'Enquirer' Of Extortion, Supreme Court, Democrats' Agenda",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-02-08"
+   ],
+   "guest_words": 452
+  },
+  "n_grounding": 4
+ },
+ "C00694": {
+  "test": {
+   "cluster_id": "cl73",
+   "transcript_id": "NPR-45339",
+   "date": "2018-07-25",
+   "program": "All Things Considered",
+   "title": "Economist Discusses How Trump's Trade Policies And Tariffs Are Working",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-07-25"
+   ],
+   "guest_words": 496
+  },
+  "n_grounding": 4
+ },
+ "C02297": {
+  "test": {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-8350",
+   "date": "2013-06-12",
+   "program": "Talk of the Nation",
+   "title": "Life Resumes: Looking Ahead With Suleika Jaouad",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-06-12"
+   ],
+   "guest_words": 1389
+  },
+  "n_grounding": 2
+ },
+ "C02389": {
+  "test": {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-1695",
+   "date": "2015-10-11",
+   "program": "Weekend Edition Sunday",
+   "title": "Weighing The Aftermath Of Ankara Bombing",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-10-11"
+   ],
+   "guest_words": 425
+  },
+  "n_grounding": 2
+ },
+ "C01771": {
+  "test": {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-17904",
+   "date": "2007-07-01",
+   "program": "Weekend Edition Sunday",
+   "title": "Rulings Reveal Divided High Court",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-07-01"
+   ],
+   "guest_words": 879
+  },
+  "n_grounding": 2
+ },
+ "C01211": {
+  "test": {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-42414",
+   "date": "2006-05-08",
+   "program": "All Things Considered",
+   "title": "Remembering the Early Days of 'Gay Cancer'",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-05-08"
+   ],
+   "guest_words": 498
+  },
+  "n_grounding": 2
+ },
+ "C00603": {
+  "test": {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-1256",
+   "date": "2019-01-06",
+   "program": "All Things Considered",
+   "title": "'NYT' Op-Ed Renews Call For Trump Impeachment: 'We Don't Want To Set A Precedent'",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-01-06"
+   ],
+   "guest_words": 533
+  },
+  "n_grounding": 4
+ },
+ "C00737": {
+  "test": {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-41897",
+   "date": "2006-09-08",
+   "program": "All Things Considered",
+   "title": "Tarot vs. Psychiatry in the Hope for Help",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-09-08"
+   ],
+   "guest_words": 371
+  },
+  "n_grounding": 3
+ },
+ "C00084": {
+  "test": {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-796",
+   "date": "2019-02-03",
+   "program": "All Things Considered",
+   "title": "Last-Minute Allegations Lodged Against 'El Chapo' As Case Goes To Jury",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-02-03"
+   ],
+   "guest_words": 410
+  },
+  "n_grounding": 2
+ },
+ "C02521": {
+  "test": {
+   "cluster_id": "cl5",
+   "transcript_id": "CNN-154381",
+   "date": "2010-08-14",
+   "program": "YOUR BOTTOM LINE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-08-14"
+   ],
+   "guest_words": 511
+  },
+  "n_grounding": 3
+ },
+ "C00501": {
+  "test": {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-9751",
+   "date": "2013-01-22",
+   "program": "Talk of the Nation",
+   "title": "Remembering Seneca Falls, Selma And Stonewall",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-01-22"
+   ],
+   "guest_words": 660
+  },
+  "n_grounding": 2
+ },
+ "C00114": {
+  "test": {
+   "cluster_id": "cl27",
+   "transcript_id": "NPR-49342",
+   "date": "2010-12-04",
+   "program": "Weekend Edition Saturday",
+   "title": "A Few Things The Deficit Commission Agreed On",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-12-04"
+   ],
+   "guest_words": 526
+  },
+  "n_grounding": 2
+ },
+ "C02225": {
+  "test": {
+   "cluster_id": "cl19",
+   "transcript_id": "NPR-10207",
+   "date": "2018-08-25",
+   "program": "Weekend Edition Saturday",
+   "title": "Activist Nun Responds To Catholic Sex Abuse Scandal",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-08-25"
+   ],
+   "guest_words": 496
+  },
+  "n_grounding": 3
+ },
+ "C00427": {
+  "test": {
+   "cluster_id": "cl77",
+   "transcript_id": "NPR-9080",
+   "date": "2019-08-24",
+   "program": "All Things Considered",
+   "title": "The U.S.-China Trade War's Blow To American Business Owners",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-08-24"
+   ],
+   "guest_words": 408
+  },
+  "n_grounding": 4
+ },
+ "C00601": {
+  "test": {
+   "cluster_id": "cl53",
+   "transcript_id": "NPR-21515",
+   "date": "2016-07-07",
+   "program": "All Things Considered",
+   "title": "Recent Police Shootings Raise Questions About Proper Protocol",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-07-07"
+   ],
+   "guest_words": 479
+  },
+  "n_grounding": 2
+ },
+ "C02089": {
+  "test": {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-1547",
+   "date": "2011-08-08",
+   "program": "Talk of the Nation",
+   "title": "Untangling What's Next For The U.S. Economy",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-08-08"
+   ],
+   "guest_words": 1066
+  },
+  "n_grounding": 2
+ },
+ "C02387": {
+  "test": {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-5001",
+   "date": "2018-08-16",
+   "program": "All Things Considered",
+   "title": "Honoring And Remembering Singer Aretha Franklin And Her Voice",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-08-16"
+   ],
+   "guest_words": 388
+  },
+  "n_grounding": 2
+ },
+ "C00522": {
+  "test": {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-4597",
+   "date": "2018-09-01",
+   "program": "All Things Considered",
+   "title": "The US Open Accused Of Double Standards For Tennis Players",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-09-01"
+   ],
+   "guest_words": 1026
+  },
+  "n_grounding": 4
+ },
+ "C00789": {
+  "test": {
+   "cluster_id": "cl20",
+   "transcript_id": "CNN-115257",
+   "date": "2007-03-14",
+   "program": "CNN LARRY KING LIVE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-03-14"
+   ],
+   "guest_words": 395
+  },
+  "n_grounding": 4
+ },
+ "C01928": {
+  "test": {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-29307",
+   "date": "2011-06-24",
+   "program": "Morning Edition",
+   "title": "U.S. Troop Drawdown Shouldn't Hurt Aid Work",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-06-24"
+   ],
+   "guest_words": 425
+  },
+  "n_grounding": 2
+ },
+ "C00312": {
+  "test": {
+   "cluster_id": "cl9",
+   "transcript_id": "CNN-203050",
+   "date": "2013-03-14",
+   "program": "SHOWBIZ TONIGHT",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-03-14"
+   ],
+   "guest_words": 336
+  },
+  "n_grounding": 4
+ },
+ "C01724": {
+  "test": {
+   "cluster_id": "cl33",
+   "transcript_id": "NPR-12432",
+   "date": "2012-04-23",
+   "program": "Talk of the Nation",
+   "title": "Gerson: Dieting's A Bore We're Ill-Prepared For",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-04-23"
+   ],
+   "guest_words": 1590
+  },
+  "n_grounding": 5
+ },
+ "C00632": {
+  "test": {
+   "cluster_id": "cl5",
+   "transcript_id": "CNN-156927",
+   "date": "2010-10-14",
+   "program": "QUEST MEANS BUSINESS",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-10-14"
+   ],
+   "guest_words": 496
+  },
+  "n_grounding": 2
+ },
+ "C01890": {
+  "test": {
+   "cluster_id": "cl36",
+   "transcript_id": "NPR-9487",
+   "date": "2013-02-19",
+   "program": "Talk of the Nation",
+   "title": "Op-Ed: It's Time To Recognize The Valor Of Cyber Warriors",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-02-19"
+   ],
+   "guest_words": 1866
+  },
+  "n_grounding": 4
+ },
+ "C01611": {
+  "test": {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-10990",
+   "date": "2008-08-11",
+   "program": "Day to Day",
+   "title": "Reading The Economy In The Local Eatery",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-08-11"
+   ],
+   "guest_words": 384
+  },
+  "n_grounding": 3
+ },
+ "C01307": {
+  "test": {
+   "cluster_id": "cl23",
+   "transcript_id": "NPR-5625",
+   "date": "2019-01-16",
+   "program": "All Things Considered",
+   "title": "Democratic Rep. Josh Gottheimer Discusses Meeting With Trump Over Shutdown",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-01-16"
+   ],
+   "guest_words": 591
+  },
+  "n_grounding": 3
+ },
+ "C00075": {
+  "test": {
+   "cluster_id": "cl10",
+   "transcript_id": "CNN-352722",
+   "date": "2018-10-19",
+   "program": "QUEST MEANS BUSINESS",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-10-19"
+   ],
+   "guest_words": 663
+  },
+  "n_grounding": 4
+ },
+ "C01005": {
+  "test": {
+   "cluster_id": "cl32",
+   "transcript_id": "NPR-12626",
+   "date": "2019-03-12",
+   "program": "Morning Edition",
+   "title": "Ex-Military Leaders Bemoan Trump's Proposed Cuts To Diplomacy",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-03-12"
+   ],
+   "guest_words": 419
+  },
+  "n_grounding": 7
+ },
+ "C00653": {
+  "test": {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-14263",
+   "date": "2006-03-09",
+   "program": "Day to Day",
+   "title": "A Gangsta's Memoir Becomes a Smoking Gun",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-03-09"
+   ],
+   "guest_words": 400
+  },
+  "n_grounding": 6
+ },
+ "C01114": {
+  "test": {
+   "cluster_id": "cl41",
+   "transcript_id": "NPR-9067",
+   "date": "2019-08-25",
+   "program": "All Things Considered",
+   "title": "Conservative Columnist: Spiraling Economy Reflects Trump's Unpredictability",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-08-25"
+   ],
+   "guest_words": 620
+  },
+  "n_grounding": 5
+ },
+ "C01442": {
+  "test": {
+   "cluster_id": "cl23",
+   "transcript_id": "NPR-9945",
+   "date": "2018-12-22",
+   "program": "Weekend Edition Saturday",
+   "title": "What Mattis' Resignation Could Mean For Global Politics",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-12-22"
+   ],
+   "guest_words": 390
+  },
+  "n_grounding": 2
+ },
+ "C02045": {
+  "test": {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-13217",
+   "date": "2007-12-14",
+   "program": "News & Notes",
+   "title": "Democrats Have Final Iowa Debate",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-12-14"
+   ],
+   "guest_words": 695
+  },
+  "n_grounding": 27
+ },
+ "C02305": {
+  "test": {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-8531",
+   "date": "2019-08-17",
+   "program": "Weekend Edition Saturday",
+   "title": "What China Wants In Hong Kong",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-08-17"
+   ],
+   "guest_words": 379
+  },
+  "n_grounding": 2
+ }
+}

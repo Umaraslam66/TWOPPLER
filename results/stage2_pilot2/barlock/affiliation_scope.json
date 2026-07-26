@@ -1,0 +1,840 @@
+{
+ "generated_utc": "2026-07-26T20:39:11Z",
+ "n_prompts": 51,
+ "arms": [
+  "twin_redacted",
+  "zeroinfo_redacted",
+  "zeroinfo_named"
+ ],
+ "detector": {
+  "ORG": "spaCy en_core_web_sm ents with label ORG or FAC",
+  "ROLE": "62 role words, only in a sentence containing GUEST",
+  "TITLE": "quoted string within 40 chars of an authorship cue",
+  "attached_to_guest": "the mention's sentence contains the GUEST placeholder"
+ },
+ "inventory": {
+  "twin_redacted": {
+   "n_prompts": 17,
+   "mentions_total": 294,
+   "mentions_attached_to_guest": 90,
+   "by_class_attached": {
+    "ORG": 48,
+    "ROLE": 36,
+    "TITLE": 6
+   },
+   "by_class_all": {
+    "ORG": 247,
+    "ROLE": 41,
+    "TITLE": 6
+   },
+   "by_attachment": {
+    "guest": 90,
+    "third_party": 10,
+    "topic": 194
+   },
+   "distinct_identity_facts": 32,
+   "distinct_identity_sentences": 18,
+   "distinct_lines_attached": 52,
+   "distinct_lines_any": 179
+  },
+  "zeroinfo_redacted": {
+   "n_prompts": 17,
+   "mentions_total": 4,
+   "mentions_attached_to_guest": 2,
+   "by_class_attached": {
+    "ORG": 0,
+    "ROLE": 2,
+    "TITLE": 0
+   },
+   "by_class_all": {
+    "ORG": 2,
+    "ROLE": 2,
+    "TITLE": 0
+   },
+   "by_attachment": {
+    "guest": 2,
+    "third_party": 0,
+    "topic": 2
+   },
+   "distinct_identity_facts": 2,
+   "distinct_identity_sentences": 2,
+   "distinct_lines_attached": 2,
+   "distinct_lines_any": 4
+  },
+  "zeroinfo_named": {
+   "n_prompts": 17,
+   "mentions_total": 4,
+   "mentions_attached_to_guest": 2,
+   "by_class_attached": {
+    "ORG": 0,
+    "ROLE": 2,
+    "TITLE": 0
+   },
+   "by_class_all": {
+    "ORG": 2,
+    "ROLE": 2,
+    "TITLE": 0
+   },
+   "by_attachment": {
+    "guest": 2,
+    "third_party": 0,
+    "topic": 2
+   },
+   "distinct_identity_facts": 2,
+   "distinct_identity_sentences": 2,
+   "distinct_lines_attached": 2,
+   "distinct_lines_any": 4
+  }
+ },
+ "per_subject": {
+  "C00792": {
+   "ORG": 83,
+   "ROLE": 5,
+   "TITLE": 0,
+   "attached": 15,
+   "total": 88
+  },
+  "C02013": {
+   "ORG": 27,
+   "ROLE": 26,
+   "TITLE": 0,
+   "attached": 34,
+   "total": 53
+  },
+  "C02124": {
+   "ORG": 84,
+   "ROLE": 4,
+   "TITLE": 0,
+   "attached": 20,
+   "total": 88
+  },
+  "C01677": {
+   "ORG": 12,
+   "ROLE": 4,
+   "TITLE": 0,
+   "attached": 10,
+   "total": 16
+  },
+  "C02006": {
+   "ORG": 45,
+   "ROLE": 6,
+   "TITLE": 6,
+   "attached": 15,
+   "total": 57
+  }
+ },
+ "scopes": {
+  "S0": {
+   "mentions_removed": 0,
+   "prompts_changed": 0,
+   "of_prompts": 51,
+   "residual_attached_mentions": 94,
+   "collateral_topical_org_mentions_removed": 0,
+   "examples": []
+  },
+  "S1": {
+   "mentions_removed": 23,
+   "prompts_changed": 17,
+   "of_prompts": 51,
+   "residual_attached_mentions": 38,
+   "collateral_topical_org_mentions_removed": 0,
+   "examples": [
+    {
+     "arm": "twin_redacted",
+     "item_id": "C00792:NPR-19884:2",
+     "before": "HOST: GUEST, as a former State Department official, can you reflect on any of this?",
+     "after": "HOST: GUEST, [DESCRIPTION REMOVED], can you reflect on any of this?"
+    },
+    {
+     "arm": "twin_redacted",
+     "item_id": "C00792:NPR-19884:6",
+     "before": "HOST: GUEST, as a former State Department official, can you reflect on any of this?",
+     "after": "HOST: GUEST, [DESCRIPTION REMOVED], can you reflect on any of this?"
+    },
+    {
+     "arm": "twin_redacted",
+     "item_id": "C00792:NPR-19884:10",
+     "before": "HOST: GUEST, as a former State Department official, can you reflect on any of this?",
+     "after": "HOST: GUEST, [DESCRIPTION REMOVED], can you reflect on any of this?"
+    }
+   ]
+  },
+  "S2": {
+   "mentions_removed": 132,
+   "prompts_changed": 21,
+   "of_prompts": 51,
+   "residual_attached_mentions": 46,
+   "collateral_topical_org_mentions_removed": 84,
+   "examples": [
+    {
+     "arm": "twin_redacted",
+     "item_id": "C00792:NPR-19884:2",
+     "before": "HOST: GUEST, as a former State Department official, can you reflect on any of this?",
+     "after": "HOST: GUEST, as a former [ORG] official, can you reflect on any of this?"
+    },
+    {
+     "arm": "twin_redacted",
+     "item_id": "C00792:NPR-19884:6",
+     "before": "HOST: GUEST, as a former State Department official, can you reflect on any of this?",
+     "after": "HOST: GUEST, as a former [ORG] official, can you reflect on any of this?"
+    },
+    {
+     "arm": "twin_redacted",
+     "item_id": "C00792:NPR-19884:10",
+     "before": "HOST: GUEST, as a former State Department official, can you reflect on any of this?",
+     "after": "HOST: GUEST, as a former [ORG] official, can you reflect on any of this?"
+    }
+   ]
+  },
+  "S3": {
+   "mentions_removed": 251,
+   "prompts_changed": 21,
+   "of_prompts": 51,
+   "residual_attached_mentions": 16,
+   "collateral_topical_org_mentions_removed": 203,
+   "examples": [
+    {
+     "arm": "twin_redacted",
+     "item_id": "C00792:NPR-19884:2",
+     "before": "GUEST: I suspect that people may have been nervous about the comings and goings of the U.N. special envoy Lakhdar Brahimi, who replaced Kofi Annan several months ago. What Brahami has been trying to do is to resurrect an outline for political transition in Syria, an outline that was very significant",
+     "after": "GUEST: I suspect that people may have been nervous about the comings and goings of the [ORG] special envoy Lakhdar Brahimi, who replaced Kofi Annan several months ago. What Brahami has been trying to do is to resurrect an outline for political transition in Syria, an outline that was very significan"
+    },
+    {
+     "arm": "twin_redacted",
+     "item_id": "C00792:NPR-19884:6",
+     "before": "GUEST: I suspect that people may have been nervous about the comings and goings of the U.N. special envoy Lakhdar Brahimi, who replaced Kofi Annan several months ago. What Brahami has been trying to do is to resurrect an outline for political transition in Syria, an outline that was very significant",
+     "after": "GUEST: I suspect that people may have been nervous about the comings and goings of the [ORG] special envoy Lakhdar Brahimi, who replaced Kofi Annan several months ago. What Brahami has been trying to do is to resurrect an outline for political transition in Syria, an outline that was very significan"
+    },
+    {
+     "arm": "twin_redacted",
+     "item_id": "C00792:NPR-19884:10",
+     "before": "GUEST: I suspect that people may have been nervous about the comings and goings of the U.N. special envoy Lakhdar Brahimi, who replaced Kofi Annan several months ago. What Brahami has been trying to do is to resurrect an outline for political transition in Syria, an outline that was very significant",
+     "after": "GUEST: I suspect that people may have been nervous about the comings and goings of the [ORG] special envoy Lakhdar Brahimi, who replaced Kofi Annan several months ago. What Brahami has been trying to do is to resurrect an outline for political transition in Syria, an outline that was very significan"
+    }
+   ]
+  }
+ },
+ "sample_attached_mentions": [
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ORG",
+   "mention": "State Department",
+   "attachment": "guest",
+   "sentence": "GUEST, as a former State Department official, can you reflect on any of this?"
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ROLE",
+   "mention": "official",
+   "attachment": "guest",
+   "sentence": "GUEST, as a former State Department official, can you reflect on any of this?"
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ORG",
+   "mention": "the Atlantic Council",
+   "attachment": "guest",
+   "sentence": "GUEST, who's now with the Atlantic Council."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ORG",
+   "mention": "State Department",
+   "attachment": "guest",
+   "sentence": "GUEST, as a former State Department official, can you reflect on any of this?"
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ROLE",
+   "mention": "official",
+   "attachment": "guest",
+   "sentence": "GUEST, as a former State Department official, can you reflect on any of this?"
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ORG",
+   "mention": "the Atlantic Council",
+   "attachment": "guest",
+   "sentence": "GUEST, who's now with the Atlantic Council."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ORG",
+   "mention": "State Department",
+   "attachment": "guest",
+   "sentence": "GUEST, as a former State Department official, can you reflect on any of this?"
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ROLE",
+   "mention": "official",
+   "attachment": "guest",
+   "sentence": "GUEST, as a former State Department official, can you reflect on any of this?"
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ORG",
+   "mention": "the Atlantic Council",
+   "attachment": "guest",
+   "sentence": "GUEST, who's now with the Atlantic Council."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ORG",
+   "mention": "State Department",
+   "attachment": "guest",
+   "sentence": "GUEST, as a former State Department official, can you reflect on any of this?"
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ROLE",
+   "mention": "official",
+   "attachment": "guest",
+   "sentence": "GUEST, as a former State Department official, can you reflect on any of this?"
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ORG",
+   "mention": "the Atlantic Council",
+   "attachment": "guest",
+   "sentence": "GUEST, who's now with the Atlantic Council."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ORG",
+   "mention": "State Department",
+   "attachment": "guest",
+   "sentence": "GUEST, as a former State Department official, can you reflect on any of this?"
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ROLE",
+   "mention": "official",
+   "attachment": "guest",
+   "sentence": "GUEST, as a former State Department official, can you reflect on any of this?"
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C00792",
+   "cls": "ORG",
+   "mention": "the Atlantic Council",
+   "attachment": "guest",
+   "sentence": "GUEST, who's now with the Atlantic Council."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "Harvard University",
+   "attachment": "guest",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "co-founder",
+   "attachment": "guest",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "professor",
+   "attachment": "guest",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "the Department of Sociology",
+   "attachment": "guest",
+   "sentence": "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "Harvard",
+   "attachment": "guest",
+   "sentence": "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "chairman",
+   "attachment": "guest",
+   "sentence": "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "professor",
+   "attachment": "guest",
+   "sentence": "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "president",
+   "attachment": "guest",
+   "sentence": "So you heard the president's remarks from Chicago on Friday."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "Harvard University",
+   "attachment": "guest",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "co-founder",
+   "attachment": "guest",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "professor",
+   "attachment": "guest",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "the Department of Sociology",
+   "attachment": "guest",
+   "sentence": "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "Harvard",
+   "attachment": "guest",
+   "sentence": "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "chairman",
+   "attachment": "guest",
+   "sentence": "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "professor",
+   "attachment": "guest",
+   "sentence": "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "Harvard University",
+   "attachment": "guest",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "co-founder",
+   "attachment": "guest",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "professor",
+   "attachment": "guest",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "the Department of Sociology",
+   "attachment": "guest",
+   "sentence": "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "Harvard",
+   "attachment": "guest",
+   "sentence": "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "chairman",
+   "attachment": "guest",
+   "sentence": "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "professor",
+   "attachment": "guest",
+   "sentence": "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "professor",
+   "attachment": "guest",
+   "sentence": "You're a professor of social sciences."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "Harvard University",
+   "attachment": "guest",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "co-founder",
+   "attachment": "guest",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  }
+ ],
+ "zeroinfo_attached_mentions": [
+  {
+   "arm": "zeroinfo_redacted",
+   "canonical_id": "C02013",
+   "item_id": "C02013:NPR-9480:45",
+   "cls": "ROLE",
+   "mention": "president",
+   "sentence": "So you heard the president's remarks from Chicago on Friday."
+  },
+  {
+   "arm": "zeroinfo_redacted",
+   "canonical_id": "C02013",
+   "item_id": "C02013:NPR-9480:70",
+   "cls": "ROLE",
+   "mention": "professor",
+   "sentence": "You're a professor of social sciences."
+  },
+  {
+   "arm": "zeroinfo_named",
+   "canonical_id": "C02013",
+   "item_id": "C02013:NPR-9480:45",
+   "cls": "ROLE",
+   "mention": "president",
+   "sentence": "So you heard the president's remarks from Chicago on Friday."
+  },
+  {
+   "arm": "zeroinfo_named",
+   "canonical_id": "C02013",
+   "item_id": "C02013:NPR-9480:70",
+   "cls": "ROLE",
+   "mention": "professor",
+   "sentence": "You're a professor of social sciences."
+  }
+ ],
+ "distinct_identity_facts": [
+  [
+   "C00792",
+   "ORG",
+   "State Department",
+   "GUEST, as a former State Department official, can you reflect on any of this?"
+  ],
+  [
+   "C00792",
+   "ORG",
+   "the Atlantic Council",
+   "GUEST, who's now with the Atlantic Council."
+  ],
+  [
+   "C00792",
+   "ROLE",
+   "official",
+   "GUEST, as a former State Department official, can you reflect on any of this?"
+  ],
+  [
+   "C01677",
+   "ORG",
+   "Stanton",
+   "And GUEST, Stanton nuclear security fellow at the Council on Foreign Relations, kind enough to join us here in Studio 3A."
+  ],
+  [
+   "C01677",
+   "ORG",
+   "Stanton Nuclear Security",
+   "Suzanne Maloney, a senior fellow at the Saban Center for Middle East Policy at the Brooking Institution, and GUEST, Stanton Nuclear Security fellow at"
+  ],
+  [
+   "C01677",
+   "ORG",
+   "the Brooking Institution",
+   "Suzanne Maloney, a senior fellow at the Saban Center for Middle East Policy at the Brooking Institution, and GUEST, Stanton Nuclear Security fellow at"
+  ],
+  [
+   "C01677",
+   "ORG",
+   "the Council on Foreign Relations",
+   "And GUEST, Stanton nuclear security fellow at the Council on Foreign Relations, kind enough to join us here in Studio 3A."
+  ],
+  [
+   "C01677",
+   "ORG",
+   "the Council on Foreign Relations",
+   "GUEST is a senior national security fellow at the Council on Foreign Relations."
+  ],
+  [
+   "C01677",
+   "ORG",
+   "the Council on Foreign Relations",
+   "Suzanne Maloney, a senior fellow at the Saban Center for Middle East Policy at the Brooking Institution, and GUEST, Stanton Nuclear Security fellow at"
+  ],
+  [
+   "C01677",
+   "ORG",
+   "the Security Council - the United States",
+   "There's also, as you mentioned, divisions among this group called P5+1, that's the five permanent members of the Security Council - the United States,"
+  ],
+  [
+   "C01677",
+   "ROLE",
+   "fellow",
+   "And GUEST, Stanton nuclear security fellow at the Council on Foreign Relations, kind enough to join us here in Studio 3A."
+  ],
+  [
+   "C01677",
+   "ROLE",
+   "fellow",
+   "GUEST is a senior national security fellow at the Council on Foreign Relations."
+  ],
+  [
+   "C01677",
+   "ROLE",
+   "fellow",
+   "Suzanne Maloney, a senior fellow at the Saban Center for Middle East Policy at the Brooking Institution, and GUEST, Stanton Nuclear Security fellow at"
+  ],
+  [
+   "C02006",
+   "ORG",
+   "the Roman Senate",
+   "You just alluded to the Roman Senate, which might underline another basic way that people in modern times have looked back on the Roman Empire and tri"
+  ],
+  [
+   "C02006",
+   "ROLE",
+   "author",
+   "GUEST is the author of \u201cImperium\u201d, a novel of ancient Rome."
+  ],
+  [
+   "C02006",
+   "ROLE",
+   "novelist",
+   "Best-selling British novelist GUEST told us he will do so because he remembers life before the U.K."
+  ],
+  [
+   "C02006",
+   "TITLE",
+   "Imperium",
+   "GUEST is the author of \u201cImperium\u201d, a novel of ancient Rome."
+  ],
+  [
+   "C02006",
+   "TITLE",
+   "Imperium,",
+   "GUEST is reading from his book, \u201cImperium,\u201d which is a novel about the Roman Empire."
+  ],
+  [
+   "C02013",
+   "ORG",
+   "Harvard",
+   "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  ],
+  [
+   "C02013",
+   "ORG",
+   "Harvard University",
+   "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social s"
+  ],
+  [
+   "C02013",
+   "ORG",
+   "the Department of Sociology",
+   "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  ],
+  [
+   "C02013",
+   "ROLE",
+   "chairman",
+   "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  ],
+  [
+   "C02013",
+   "ROLE",
+   "co-founder",
+   "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social s"
+  ],
+  [
+   "C02013",
+   "ROLE",
+   "president",
+   "So you heard the president's remarks from Chicago on Friday."
+  ],
+  [
+   "C02013",
+   "ROLE",
+   "professor",
+   "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social s"
+  ],
+  [
+   "C02013",
+   "ROLE",
+   "professor",
+   "GUEST is chairman of the Department of Sociology and professor of the social sciences at Harvard."
+  ],
+  [
+   "C02013",
+   "ROLE",
+   "professor",
+   "You're a professor of social sciences."
+  ],
+  [
+   "C02124",
+   "ORG",
+   "Georgetown University",
+   "GUEST teaches Middle East politics at Georgetown University."
+  ],
+  [
+   "C02124",
+   "ORG",
+   "Georgetown University",
+   "I'm joined now by GUEST, professor of Middle East politics at Georgetown University."
+  ],
+  [
+   "C02124",
+   "ORG",
+   "Tahrir Square",
+   "As you look ahead to the situation just over the next few days, clearly there are already reports of crowds gathering in Tahrir Square, as you might e"
+  ],
+  [
+   "C02124",
+   "ORG",
+   "the Supreme Constitutional Court",
+   "As you pointed out, the Supreme Constitutional Court is a holdover from the Mubarak regime."
+  ],
+  [
+   "C02124",
+   "ROLE",
+   "professor",
+   "I'm joined now by GUEST, professor of Middle East politics at Georgetown University."
+  ]
+ ],
+ "sample_third_party_mentions": [
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "Pentecostal",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "minister",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "Pentecostal",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "minister",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "Pentecostal",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "minister",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ORG",
+   "mention": "Pentecostal",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C02013",
+   "cls": "ROLE",
+   "mention": "minister",
+   "sentence": "All right, Eugene Rivers, a Pentecostal minister, community activist and co-founder of the city's 10-point Coalition, and GUEST, professor of social science at Harvard University."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C01677",
+   "cls": "ORG",
+   "mention": "the Saban Center for Middle East Policy",
+   "sentence": "Suzanne Maloney, a senior fellow at the Saban Center for Middle East Policy at the Brooking Institution, and GUEST, Stanton Nuclear Security fellow at the Council on Foreign Relations."
+  },
+  {
+   "arm": "twin_redacted",
+   "canonical_id": "C01677",
+   "cls": "ROLE",
+   "mention": "fellow",
+   "sentence": "Suzanne Maloney, a senior fellow at the Saban Center for Middle East Policy at the Brooking Institution, and GUEST, Stanton Nuclear Security fellow at the Council on Foreign Relations."
+  }
+ ],
+ "runtime_secs": 3.9
+}

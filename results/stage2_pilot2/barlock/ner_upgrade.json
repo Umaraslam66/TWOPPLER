@@ -1,0 +1,353 @@
+{
+ "generated_utc": "2026-07-26T20:49:11Z",
+ "corpus_wide_limitation_rates": {
+  "available": true,
+  "transcripts": 98,
+  "utterances": 8596,
+  "utterances_with_st_period": 6,
+  "utterances_with_spelled_out_glue": 85,
+  "st_rate": 0.0007,
+  "glue_rate": 0.00989,
+  "source": "data/stage2_cache/barlock_records.json (98 transcripts)"
+ },
+ "ner": {
+  "library": "spaCy 3.8.14",
+  "model": "en_core_web_sm 3.8.0",
+  "install": "uv pip install spacy; uv run python -m spacy download en_core_web_sm (12.2 MiB wheel)",
+  "name_labels": [
+   "EVENT",
+   "FAC",
+   "GPE",
+   "LANGUAGE",
+   "LAW",
+   "LOC",
+   "NORP",
+   "ORG",
+   "PERSON",
+   "PRODUCT",
+   "WORK_OF_ART"
+  ],
+  "number_rule": "unchanged from D5 (>=2 digits, or $/% amount)"
+ },
+ "bank": {
+  "n": 652,
+  "bucket_changed_ner": 54,
+  "bucket_changed_curated": 4,
+  "confusion_d5_to_ner": {
+   "H->H": 126,
+   "H->L": 24,
+   "L->H": 6,
+   "L->L": 285,
+   "L->Z": 20,
+   "Z->L": 4,
+   "Z->Z": 187
+  },
+  "mean_density_d5": 0.0514,
+  "mean_density_ner": 0.0491,
+  "d5_bucket_counts": {
+   "Z": 191,
+   "L": 311,
+   "H": 150
+  },
+  "ner_bucket_counts": {
+   "Z": 207,
+   "L": 313,
+   "H": 132
+  }
+ },
+ "bank_bucket_change_examples": [
+  {
+   "source": "C01488",
+   "d5_bucket": "L",
+   "ner_bucket": "Z",
+   "d5_density": 0.0215,
+   "ner_density": 0.0,
+   "answer_head": "Why do you ask? I mean, I think three million people listen to SCIENCE FRIDAY. People are fascinated by science, and if we could only convince the media of that, people really want - these are the most amazing ideas peop"
+  },
+  {
+   "source": "C02345",
+   "d5_bucket": "L",
+   "ner_bucket": "Z",
+   "d5_density": 0.0323,
+   "ner_density": 0.0,
+   "answer_head": "He is a public official. He is the vice president. But if it is in his personal time, in his personal life I don't see, you know, how that really impacts..."
+  },
+  {
+   "source": "C00832",
+   "d5_bucket": "L",
+   "ner_bucket": "Z",
+   "d5_density": 0.0255,
+   "ner_density": 0.0153,
+   "answer_head": "Well, there's certainly been some really wild, dramatic, gyrations in stock prices, and they're up and down. When you look at what's happened to the stock price of things like Apple, it's astonishing. Now, there seems to"
+  },
+  {
+   "source": "C02292",
+   "d5_bucket": "L",
+   "ner_bucket": "H",
+   "d5_density": 0.0738,
+   "ner_density": 0.082,
+   "answer_head": "Generally speaking, yes. As we point out in \"Learning from Iraq,\" our latest and final lessons learned report, at least eight billion of that 60 was wasted. Let me put it in perspective. Well over 95 percent - 99 percent"
+  },
+  {
+   "source": "C02225",
+   "d5_bucket": "L",
+   "ner_bucket": "Z",
+   "d5_density": 0.04,
+   "ner_density": 0.0,
+   "answer_head": "(Laughter) Well, I actually am kind of worried about that. I mean, unless we change the system - if you just made us cardinals or bishops in the same system, we'd probably get as arrogant as they are. This is what we hav"
+  },
+  {
+   "source": "C00440",
+   "d5_bucket": "H",
+   "ner_bucket": "L",
+   "d5_density": 0.0882,
+   "ner_density": 0.0588,
+   "answer_head": "Well, cyber attacks - I mean, one of the biggest partisan splits obviously is on climate change. Among Republicans, it's the lowest by far. Among liberal Democrats, it's the most serious threat by far."
+  },
+  {
+   "source": "C01982",
+   "d5_bucket": "Z",
+   "ner_bucket": "L",
+   "d5_density": 0.0144,
+   "ner_density": 0.0216,
+   "answer_head": "Yeah, we do. Look. NAFTA isn't broken. It's done exactly what it was meant to. It exploited workers in Mexico. It disrupted lives here. It's taken money out of our pockets, and it's put it in the hands of a few billionai"
+  },
+  {
+   "source": "C01662",
+   "d5_bucket": "H",
+   "ner_bucket": "L",
+   "d5_density": 0.097,
+   "ner_density": 0.0746,
+   "answer_head": "The Nag king chili, for some time had the crown of world's hottest chili. There's now some - there's another chili - super hot chili that has bested the Naga king chili. But there's some sort of a rivalry between the Tri"
+  },
+  {
+   "source": "C02040",
+   "d5_bucket": "Z",
+   "ner_bucket": "L",
+   "d5_density": 0.0106,
+   "ner_density": 0.0213,
+   "answer_head": "Well, they need to grow up. I mean, they actually need to figure out how to govern. And as I said a few moments ago, I mean, we've had the largest governing majority since 1929, and they can't even move forward on a moti"
+  },
+  {
+   "source": "C00783",
+   "d5_bucket": "L",
+   "ner_bucket": "Z",
+   "d5_density": 0.0472,
+   "ner_density": 0.0189,
+   "answer_head": "(Laughter) They should vote. I mean, I do think that fundamentally, you know, a lot of this is a political fight. And I think that if you're - you know, I really do think the upcoming election in November is one of the m"
+  },
+  {
+   "source": "C00169",
+   "d5_bucket": "L",
+   "ner_bucket": "Z",
+   "d5_density": 0.0202,
+   "ner_density": 0.0161,
+   "answer_head": "Right. So Golunov was beaten after he was taken into custody, according to what his lawyer told me. And it appears that that happened for a couple of reasons. The main one was that he refused to sign anything unless he w"
+  },
+  {
+   "source": "C00558",
+   "d5_bucket": "L",
+   "ner_bucket": "H",
+   "d5_density": 0.0556,
+   "ner_density": 0.0889,
+   "answer_head": "Yeah, well, the Toyota i-Road is the most charismatic of these little vehicles, and many of them look pretty dopey, let's face it. But car makers around the world, especially as they consider the Asian market, they reali"
+  }
+ ],
+ "turns": {
+  "n": 2071,
+  "bucket_changed_ner": 195,
+  "bucket_changed_curated": 2,
+  "confusion_d5_to_ner": {
+   "H->H": 826,
+   "H->L": 70,
+   "H->Z": 8,
+   "L->H": 55,
+   "L->L": 453,
+   "L->Z": 37,
+   "Z->H": 17,
+   "Z->L": 8,
+   "Z->Z": 597
+  },
+  "mean_density_d5": 0.0958,
+  "mean_density_ner": 0.0914,
+  "d5_bucket_counts": {
+   "Z": 622,
+   "L": 545,
+   "H": 904
+  },
+  "ner_bucket_counts": {
+   "Z": 642,
+   "L": 531,
+   "H": 898
+  }
+ },
+ "stripped_options": {
+  "option_rows": 72,
+  "options_text_changed": 44,
+  "items_touched": 17,
+  "bank_answers_strip_changed": 344,
+  "bank_answers": 652,
+  "examples": [
+   {
+    "item_id": "C00292:CNN-90998:41",
+    "option": 2,
+    "kind": "distractor",
+    "d5_stripped": "Well, there were some protests here in [NAME] last night, and there's a rally today in [NAME]. And, you know, everyone is angry. [NAME], who were the target of this for the most part, they blame the government. Many blame government directly and say this is a ",
+    "ner_stripped": "Well, there were some protests here in [NAME] last night, and there's a rally today in [NAME]. And, you know, everyone is angry. The [NAME], who were the target of this for the most part, they blame the government. Many blame government directly and say this i"
+   },
+   {
+    "item_id": "C00792:NPR-19884:2",
+    "option": 0,
+    "kind": "distractor",
+    "d5_stripped": "Well, there was a similar attack in the town of [NAME] several months ago against [NAME] activists. And, you know, the [NAME] has been fighting the [NAME] in [NAME] and in [NAME], so many people believe that this is a spillover from that.",
+    "ner_stripped": "Well, there was a similar attack in the town of [NAME] several months ago against [NAME] activists. And, you know, [NAME] has been fighting the [NAME] in [NAME] and in [NAME], so many people believe that this is a spillover from that."
+   },
+   {
+    "item_id": "C00792:NPR-19884:2",
+    "option": 1,
+    "kind": "true",
+    "d5_stripped": "I think that anyone who considers himself a [NAME] nationalist - in essence a [NAME] - would find it very, very, very difficult to sign up with [NAME] because [NAME] of course believes it has a worldwide mission. [NAME] really has not been engaged in fighting ",
+    "ner_stripped": "I think that anyone who considers himself a [NAME] nationalist - in essence a [NAME] - would find it very, very, very difficult to sign up with [NAME] because [NAME] of course believes it has a worldwide mission. And [NAME] really has not been engaged in fight"
+   },
+   {
+    "item_id": "C00792:NPR-19884:2",
+    "option": 3,
+    "kind": "distractor",
+    "d5_stripped": "So what they would do is get paid about [NUMBER] to [NUMBER] an hour for taking care of their sick children, and then these companies would charge the [NAME] [NUMBER]. Allegedly, they would pocket the rest of the money, and then they would kick back [NAME] som",
+    "ner_stripped": "So what they would do is get paid about [NUMBER] to [NUMBER] an hour for taking care of their sick children, and then these companies would charge the VA [NUMBER]. Allegedly, they would pocket the rest of the money, and then they would kick back [NAME] somethi"
+   },
+   {
+    "item_id": "C00792:NPR-19884:6",
+    "option": 0,
+    "kind": "distractor",
+    "d5_stripped": "[NAME] is something that, you know, we're definitely pushing towards because that would basically solidify that the chokehold is illegal. Right not the chokehold is banned in [NAME], and banned and illegal are definitely two different things. And once somethin",
+    "ner_stripped": "The Eric Garner Law is something that, you know, we're definitely pushing towards because that would basically solidify that the chokehold is illegal. Right not the chokehold is banned in [NAME], and banned and illegal are definitely two different things. And "
+   },
+   {
+    "item_id": "C00792:NPR-19884:6",
+    "option": 1,
+    "kind": "true",
+    "d5_stripped": "You know, this is not an [NAME] responsibility. I would say that the failure of the [NAME] to take any steps at all - this has certainly aggravated the problem, and its given the [NAME], the [NAME] regime and [NAME] the sense that they have a - have an absolut",
+    "ner_stripped": "You know, this is not an [NAME] responsibility. I would say that the failure of [NAME] to take any steps at all - this has certainly aggravated the problem, and its given the [NAME], the [NAME] regime and [NAME] the sense that they have a - have an absolutely "
+   }
+  ]
+ },
+ "limitations": {
+  "1_spelled_out_titles": {
+   "texts_with_occurrence": 43,
+   "occurrences": 47,
+   "occurrences_that_glue_a_word": 36,
+   "ner_fixes": 33,
+   "ner_sites_checked": 36,
+   "curated_subset_fixes": 32,
+   "examples": [
+    {
+     "token": "president",
+     "next": "But",
+     "glued": true,
+     "context": "He is the vice president. But if it"
+    },
+    {
+     "token": "chief",
+     "next": "And",
+     "glued": true,
+     "context": "to one day be chief. And lo and"
+    },
+    {
+     "token": "president",
+     "next": "That's",
+     "glued": true,
+     "context": "must somehow eclipse the president. That's unlikely to"
+    },
+    {
+     "token": "justice",
+     "next": "It",
+     "glued": true,
+     "context": "appointing a Supreme Court justice. It also means"
+    },
+    {
+     "token": "father",
+     "next": "We've",
+     "glued": true,
+     "context": "candidate. I know his father. We've all watched"
+    },
+    {
+     "token": "president",
+     "next": "A",
+     "glued": true,
+     "context": "look at running for president. A lot of"
+    }
+   ]
+  },
+  "2_st_period": {
+   "texts_with_occurrence": 2,
+   "occurrences": 2,
+   "ner_fixes": 2,
+   "ner_sites_checked": 2,
+   "curated_subset_fixes": 2,
+   "examples": [
+    {
+     "next": "Louis",
+     "context": "Rockies. And the St. Louis Cardinals"
+    },
+    {
+     "next": "Petersburg",
+     "context": "economic conference in St. Petersburg this"
+    }
+   ]
+  },
+  "3_sentence_initial_proper_noun": {
+   "texts_with_occurrence": 160,
+   "occurrences_ner_calls_a_name": 177,
+   "curated_subset_fixes": 0,
+   "note": "the curated fix cannot touch this one; only NER can",
+   "examples": [
+    {
+     "token": "Republicans",
+     "ner_label": "NORP",
+     "context": "Republicans look out and see a"
+    },
+    {
+     "token": "NAFTA",
+     "ner_label": "ORG",
+     "context": "NAFTA isn't broken. It's done exactly"
+    },
+    {
+     "token": "Germany",
+     "ner_label": "GPE",
+     "context": "Germany is the biggest, the most"
+    },
+    {
+     "token": "Romney's",
+     "ner_label": "PERSON",
+     "context": "Romney's always had a low-grade fever"
+    },
+    {
+     "token": "Republicans",
+     "ner_label": "NORP",
+     "context": "Republicans are helped somewhat by new"
+    },
+    {
+     "token": "Republicans",
+     "ner_label": "NORP",
+     "context": "Republicans need to say, you know"
+    },
+    {
+     "token": "ISIS",
+     "ner_label": "ORG",
+     "context": "ISIS has really tapped into what"
+    },
+    {
+     "token": "Spain",
+     "ner_label": "GPE",
+     "context": "Spain has been in the crosshairs"
+    }
+   ]
+  }
+ },
+ "corpus": {
+  "bank_rows": 652,
+  "dev_turns": 2071
+ },
+ "runtime_secs": 30.8
+}

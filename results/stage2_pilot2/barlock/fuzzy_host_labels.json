@@ -1,0 +1,1059 @@
+[
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN HOST, AMANPOUR",
+  "program": "CNN'S AMANPOUR",
+  "label_rows": 16,
+  "ratio": 0.8696
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN ANCHOR, SATURDAY MORNING",
+  "program": "CNN SATURDAY MORNING NEWS",
+  "label_rows": 14,
+  "ratio": 0.7273
+ },
+ {
+  "verdict": "false",
+  "descriptor": "NEW YORK",
+  "program": "NEW DAY",
+  "label_rows": 14,
+  "ratio": 0.6667
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "DIPLOMATIC LICENSE",
+  "program": "CNN International Diplomatic Linense",
+  "label_rows": 13,
+  "ratio": 0.68
+ },
+ {
+  "verdict": "false",
+  "descriptor": "LARRY KING'S SON",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 8,
+  "ratio": 0.7097
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN STUDENT BUREAU",
+  "program": "CNN STUDENT NEWS",
+  "label_rows": 7,
+  "ratio": 0.6923
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN ANCHOR, CNN SATURDAY MORNING",
+  "program": "CNN SATURDAY MORNING NEWS",
+  "label_rows": 7,
+  "ratio": 0.6667
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "WORLD BEAT",
+  "program": "WorldBeat",
+  "label_rows": 6,
+  "ratio": 0.9474
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN INTERNATIONAL ANCHOR",
+  "program": "INTERNATIONAL CORRESPONDENTS",
+  "label_rows": 4,
+  "ratio": 0.7083
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN SPECIAL REPORT HOST",
+  "program": "CNN SPECIAL REPORTS",
+  "label_rows": 3,
+  "ratio": 0.8824
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "HOST, AMANPOUR",
+  "program": "CNN'S AMANPOUR",
+  "label_rows": 3,
+  "ratio": 0.8696
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "NANCY PRODUCER",
+  "program": "NANCY GRACE",
+  "label_rows": 3,
+  "ratio": 0.72
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "NEWSNIGHT ANCHOR",
+  "program": "CNN NEWSNIGHT AARON BROWN",
+  "label_rows": 3,
+  "ratio": 0.7027
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "AMANPOUR HOST",
+  "program": "CNN'S AMANPOUR",
+  "label_rows": 3,
+  "ratio": 0.6957
+ },
+ {
+  "verdict": "false",
+  "descriptor": "LARRY KING'S WIFE",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 2,
+  "ratio": 0.8125
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "HOST \"INSIDE POLITICS\"",
+  "program": "JUDY WOODRUFF'S INSIDE POLITICS",
+  "label_rows": 2,
+  "ratio": 0.7059
+ },
+ {
+  "verdict": "false",
+  "descriptor": "LARRY'S WIFE",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 2,
+  "ratio": 0.6667
+ },
+ {
+  "verdict": "false",
+  "descriptor": "SPECIAL PROSECUTOR",
+  "program": "CNN SPECIAL REPORTS",
+  "label_rows": 2,
+  "ratio": 0.6667
+ },
+ {
+  "verdict": "false",
+  "descriptor": "LARRY KING'S DAUGHTER",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 2,
+  "ratio": 0.6667
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CAPITOL GANG",
+  "program": "CNN CAPITAL GANG",
+  "label_rows": 1,
+  "ratio": 0.9167
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "HOST \"SITUATION ROOM\"",
+  "program": "THE SITUATION ROOM",
+  "label_rows": 1,
+  "ratio": 0.8649
+ },
+ {
+  "verdict": "false",
+  "descriptor": "STUDENT, NEPAL",
+  "program": "CNN STUDENT NEWS",
+  "label_rows": 1,
+  "ratio": 0.8
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN ANCHOR, \"COUMO PRIME TIME\"",
+  "program": "CUOMO PRIME TIME",
+  "label_rows": 1,
+  "ratio": 0.7692
+ },
+ {
+  "verdict": "false",
+  "descriptor": "LARRY KING'S FRIEND",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 1,
+  "ratio": 0.7647
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "HOST, \"ANDERSON COOPER 360\"",
+  "program": "ANDERSON COOPER 360 DEGREES",
+  "label_rows": 1,
+  "ratio": 0.7451
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "HOST, ANDERSON COOPER 360",
+  "program": "ANDERSON COOPER 360 DEGREES",
+  "label_rows": 1,
+  "ratio": 0.7451
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN HOST, ANDERSON COOPER 360",
+  "program": "ANDERSON COOPER 360 DEGREES",
+  "label_rows": 1,
+  "ratio": 0.7451
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "SHOWBIZ HOST",
+  "program": "SHOWBIZ TONIGHT",
+  "label_rows": 1,
+  "ratio": 0.7407
+ },
+ {
+  "verdict": "false",
+  "descriptor": "MOTHER OF JANE VELEZ-MITCHELL",
+  "program": "ISSUES WITH JANE VELEZ-MITCHELL",
+  "label_rows": 1,
+  "ratio": 0.7333
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "SHOWBIZ CO-HOST",
+  "program": "SHOWBIZ TONIGHT",
+  "label_rows": 1,
+  "ratio": 0.7333
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN ENTERTAINMENT CORRESPONDENT",
+  "program": "INTERNATIONAL CORRESPONDENTS",
+  "label_rows": 1,
+  "ratio": 0.7273
+ },
+ {
+  "verdict": "false",
+  "descriptor": "PRIEST",
+  "program": "CNN PRESENTS",
+  "label_rows": 1,
+  "ratio": 0.7143
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "\"PIECE OF ME\") VELEZ-MITCHELL",
+  "program": "JANE VELEZ-MITCHELL",
+  "label_rows": 1,
+  "ratio": 0.7111
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"USA TODAY\"",
+  "program": "Saturday",
+  "label_rows": 1,
+  "ratio": 0.7059
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN AMANPOUR HOST",
+  "program": "CNN'S AMANPOUR",
+  "label_rows": 1,
+  "ratio": 0.6957
+ },
+ {
+  "verdict": "false",
+  "descriptor": "LARRY KING'S BROTHER",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 1,
+  "ratio": 0.6857
+ },
+ {
+  "verdict": "false",
+  "descriptor": "INTERNATIONAL ALERT",
+  "program": "CNN International Diplomatic Linense",
+  "label_rows": 1,
+  "ratio": 0.6667
+ },
+ {
+  "verdict": "false",
+  "descriptor": "POLITICO",
+  "program": "INSIDE POLITICS",
+  "label_rows": 7,
+  "ratio": 0.6087
+ },
+ {
+  "verdict": "false",
+  "descriptor": "SON OF LARRY KING",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 6,
+  "ratio": 0.625
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"PEOPLE\" MAGAZINE",
+  "program": "CNN PEOPLE IN THE NEWS",
+  "label_rows": 5,
+  "ratio": 0.6061
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"POLITICO\"",
+  "program": "INSIDE POLITICS",
+  "label_rows": 4,
+  "ratio": 0.6087
+ },
+ {
+  "verdict": "false",
+  "descriptor": "WIFE OF LARRY KING",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 4,
+  "ratio": 0.6061
+ },
+ {
+  "verdict": "false",
+  "descriptor": "BLOOMBERG POLITICS",
+  "program": "INSIDE POLITICS",
+  "label_rows": 4,
+  "ratio": 0.6061
+ },
+ {
+  "verdict": "false",
+  "descriptor": "SECRETARY OF STATE",
+  "program": "EARLY START",
+  "label_rows": 3,
+  "ratio": 0.6207
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN SENIOR POLITICAL REPORTER",
+  "program": "CNN SPECIAL REPORTS",
+  "label_rows": 3,
+  "ratio": 0.6
+ },
+ {
+  "verdict": "false",
+  "descriptor": "JR. LARRY KING'S SON",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 2,
+  "ratio": 0.6471
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "\" 1997) LARRY KING, HOST",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 2,
+  "ratio": 0.6286
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN CO-ANCHOR, CNN SATURDAY MORNING",
+  "program": "CNN SATURDAY MORNING NEWS",
+  "label_rows": 2,
+  "ratio": 0.6275
+ },
+ {
+  "verdict": "false",
+  "descriptor": "AMERICARES",
+  "program": "AMERICAN MORNING",
+  "label_rows": 2,
+  "ratio": 0.6154
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"BLOOMBERG POLITICS\"",
+  "program": "INSIDE POLITICS",
+  "label_rows": 2,
+  "ratio": 0.6061
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "LARRY KING LIVE) LARRY KING",
+  "program": "CNN LARRY KING WEEKEND",
+  "label_rows": 1,
+  "ratio": 0.6364
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN CRIME AND JUSTICE EDITORIAL PRODUCER",
+  "program": "CRIME AND JUSTICE WITH ASHLEIGH BANFIELD",
+  "label_rows": 1,
+  "ratio": 0.6316
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "2003) LARRY KING, HOST",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 1,
+  "ratio": 0.6286
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "PRIMETIME JUSTICE SHOW HOST",
+  "program": "PRIMETIME JUSTICE WITH ASHLEIGH BANFIELD",
+  "label_rows": 1,
+  "ratio": 0.6269
+ },
+ {
+  "verdict": "false",
+  "descriptor": "HIV SPECIALIST",
+  "program": "CNN LIVE EVENT/SPECIAL",
+  "label_rows": 1,
+  "ratio": 0.625
+ },
+ {
+  "verdict": "false",
+  "descriptor": "HOST, \"TONIGHT\" SHOW",
+  "program": "SHOWBIZ TONIGHT",
+  "label_rows": 1,
+  "ratio": 0.625
+ },
+ {
+  "verdict": "false",
+  "descriptor": "EAGLETON INSTITUTE OF POLITICS",
+  "program": "CNN INSIDE POLITICS",
+  "label_rows": 1,
+  "ratio": 0.6222
+ },
+ {
+  "verdict": "false",
+  "descriptor": "TREASURY SECRETARY",
+  "program": "EARLY START",
+  "label_rows": 1,
+  "ratio": 0.6207
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CRIME AND JUSTICE SHOW HOST, HLN",
+  "program": "CRIME AND JUSTICE WITH ASHLEIGH BANFIELD",
+  "label_rows": 1,
+  "ratio": 0.6197
+ },
+ {
+  "verdict": "false",
+  "descriptor": "NEVADA",
+  "program": "NEW DAY",
+  "label_rows": 1,
+  "ratio": 0.6154
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "\"LARRY KING LIVE,\" FEBRUARY 6) KING",
+  "program": "CNN LARRY KING WEEKEND",
+  "label_rows": 1,
+  "ratio": 0.6122
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN ZAKARIA FAREED GPS",
+  "program": "FAREED ZAKARIA GPS",
+  "label_rows": 1,
+  "ratio": 0.6111
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN ANCHOR, BIZASIA",
+  "program": "EBIZ ASIA",
+  "label_rows": 1,
+  "ratio": 0.6087
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"PEOPLE\" MAGAZINE",
+  "program": "PEOPLE IN THE NEWS",
+  "label_rows": 1,
+  "ratio": 0.6061
+ },
+ {
+  "verdict": "false",
+  "descriptor": "PEOPLE MAGAZINE",
+  "program": "CNN PEOPLE IN THE NEWS",
+  "label_rows": 1,
+  "ratio": 0.6061
+ },
+ {
+  "verdict": "false",
+  "descriptor": "AIR AMERICA RADIO",
+  "program": "AMERICAN MORNING",
+  "label_rows": 1,
+  "ratio": 0.6061
+ },
+ {
+  "verdict": "false",
+  "descriptor": "IRANIAN-AMERICAN JOURNALIST",
+  "program": "AMERICAN MORNING",
+  "label_rows": 1,
+  "ratio": 0.6047
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN NEWS ANCHOR, CNN SATURDAY MORNING",
+  "program": "CNN SATURDAY MORNING NEWS",
+  "label_rows": 1,
+  "ratio": 0.6038
+ },
+ {
+  "verdict": "false",
+  "descriptor": "NEWS CORP",
+  "program": "NEWS STREAM",
+  "label_rows": 1,
+  "ratio": 0.6
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN CORRESPONDENT",
+  "program": "CNN PRESENTS",
+  "label_rows": 51,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN SENIOR POLITICAL ANALYST",
+  "program": "Inside Politics",
+  "label_rows": 37,
+  "ratio": 0.5641
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN SENIOR POLITICAL ANALYST",
+  "program": "CNN INSIDE POLITICS",
+  "label_rows": 22,
+  "ratio": 0.5641
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN SR. POLITICAL ANALYST",
+  "program": "CNN INSIDE POLITICS",
+  "label_rows": 20,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "false",
+  "descriptor": "FOX NEWS HOST",
+  "program": "CNN NEWSROOM",
+  "label_rows": 19,
+  "ratio": 0.5882
+ },
+ {
+  "verdict": "false",
+  "descriptor": "NEW JERSEY",
+  "program": "NEW DAY",
+  "label_rows": 18,
+  "ratio": 0.5882
+ },
+ {
+  "verdict": "false",
+  "descriptor": "HOST, \"THE TONIGHT SHOW\"",
+  "program": "SHOWBIZ TONIGHT",
+  "label_rows": 7,
+  "ratio": 0.5556
+ },
+ {
+  "verdict": "false",
+  "descriptor": "ABC NEWS HOST",
+  "program": "CNN NEWSROOM",
+  "label_rows": 6,
+  "ratio": 0.5882
+ },
+ {
+  "verdict": "false",
+  "descriptor": "THE BROOKINGS INSTITUTION",
+  "program": "THE SITUATION ROOM",
+  "label_rows": 5,
+  "ratio": 0.5581
+ },
+ {
+  "verdict": "false",
+  "descriptor": "FOX NEWS ANCHOR",
+  "program": "NEW DAY",
+  "label_rows": 5,
+  "ratio": 0.5556
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN THE LEAD ANCHOR",
+  "program": "THE LEAD WITH JAKE TAPPER",
+  "label_rows": 5,
+  "ratio": 0.55
+ },
+ {
+  "verdict": "false",
+  "descriptor": "FRIEND OF LARRY KING",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 4,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "false",
+  "descriptor": "CBS NEWS HOST",
+  "program": "CNN NEWSROOM",
+  "label_rows": 3,
+  "ratio": 0.5882
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"NEWSWEEK\"",
+  "program": "CNN NEWS SITE",
+  "label_rows": 3,
+  "ratio": 0.5882
+ },
+ {
+  "verdict": "false",
+  "descriptor": "NEWS CORP CEO",
+  "program": "NEWS STREAM",
+  "label_rows": 3,
+  "ratio": 0.5833
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CRIME AND JUSTICE PRODUCER",
+  "program": "CRIME AND JUSTICE WITH ASHLEIGH BANFIELD",
+  "label_rows": 3,
+  "ratio": 0.5758
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN SR. POLITICAL ANALYST",
+  "program": "Inside Politics",
+  "label_rows": 3,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"DALLAS MORNING NEWS\"",
+  "program": "AMERICAN MORNING",
+  "label_rows": 3,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "false",
+  "descriptor": "ITN REPORTER",
+  "program": "CNN WOLF BLITZER REPORTS",
+  "label_rows": 3,
+  "ratio": 0.5625
+ },
+ {
+  "verdict": "false",
+  "descriptor": "FMR. U.S. PRESIDENT",
+  "program": "CNN PRESENTS",
+  "label_rows": 3,
+  "ratio": 0.56
+ },
+ {
+  "verdict": "false",
+  "descriptor": "AUTHOR \"AMERICAN GRIT\"",
+  "program": "AMERICAN MORNING",
+  "label_rows": 3,
+  "ratio": 0.5556
+ },
+ {
+  "verdict": "false",
+  "descriptor": "HOST, \"PIERS MORGAN TONIGHT\"",
+  "program": "SHOWBIZ TONIGHT",
+  "label_rows": 3,
+  "ratio": 0.55
+ },
+ {
+  "verdict": "false",
+  "descriptor": "AMERICAN RED CROSS",
+  "program": "AMERICAN MORNING",
+  "label_rows": 2,
+  "ratio": 0.5882
+ },
+ {
+  "verdict": "false",
+  "descriptor": "THE HERITAGE FOUNDATION",
+  "program": "THE SITUATION ROOM",
+  "label_rows": 2,
+  "ratio": 0.5854
+ },
+ {
+  "verdict": "false",
+  "descriptor": "FORMER PRESIDENT",
+  "program": "CNN PRESENTS",
+  "label_rows": 2,
+  "ratio": 0.5833
+ },
+ {
+  "verdict": "false",
+  "descriptor": "FREED AMERICAN HOSTAGE",
+  "program": "AMERICAN MORNING",
+  "label_rows": 2,
+  "ratio": 0.5789
+ },
+ {
+  "verdict": "false",
+  "descriptor": "NEWS CORP CEO",
+  "program": "CNN NEWSROOM",
+  "label_rows": 2,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN'S YOUR BOTTOM LINE",
+  "program": "YOUR MONEY",
+  "label_rows": 2,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "false",
+  "descriptor": "CONNECTICUT",
+  "program": "CONNECT THE WORLD",
+  "label_rows": 2,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "false",
+  "descriptor": "PLAINTIFF",
+  "program": "POINT",
+  "label_rows": 2,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "false",
+  "descriptor": "REPORTER, POLITICO",
+  "program": "INSIDE POLITICS",
+  "label_rows": 2,
+  "ratio": 0.5625
+ },
+ {
+  "verdict": "false",
+  "descriptor": "AOL MONEY COACH",
+  "program": "YOUR MONEY",
+  "label_rows": 2,
+  "ratio": 0.56
+ },
+ {
+  "verdict": "false",
+  "descriptor": "MISSION SPECIALIST",
+  "program": "CNN LIVE EVENT/SPECIAL",
+  "label_rows": 2,
+  "ratio": 0.5556
+ },
+ {
+  "verdict": "false",
+  "descriptor": "PRESIDENT, WORLDVISION",
+  "program": "CNN PRESENTS",
+  "label_rows": 2,
+  "ratio": 0.5517
+ },
+ {
+  "verdict": "false",
+  "descriptor": "HOST, \"LOU DOBBS TONIGHT\"",
+  "program": "SHOWBIZ TONIGHT",
+  "label_rows": 1,
+  "ratio": 0.5946
+ },
+ {
+  "verdict": "false",
+  "descriptor": "AUSTIN BUREAU CHIEF, \"THE DALLAS MORNING NEWS\"",
+  "program": "Saturday Morning News",
+  "label_rows": 1,
+  "ratio": 0.5938
+ },
+ {
+  "verdict": "false",
+  "descriptor": "POLITICS.COM",
+  "program": "Inside Politics",
+  "label_rows": 1,
+  "ratio": 0.5926
+ },
+ {
+  "verdict": "false",
+  "descriptor": "PRESIDENT, AMERICANA MORTGAGE",
+  "program": "AMERICAN MORNING",
+  "label_rows": 1,
+  "ratio": 0.5909
+ },
+ {
+  "verdict": "false",
+  "descriptor": "CO-STAR, \"A PLACE IN THE SUN\"",
+  "program": "PEOPLE IN THE NEWS",
+  "label_rows": 1,
+  "ratio": 0.5909
+ },
+ {
+  "verdict": "false",
+  "descriptor": "PBS NEWS HOUR",
+  "program": "CNN NEWSROOM",
+  "label_rows": 1,
+  "ratio": 0.5882
+ },
+ {
+  "verdict": "false",
+  "descriptor": "NEWS CORP",
+  "program": "CNN NEWSROOM",
+  "label_rows": 1,
+  "ratio": 0.5882
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"THE SUNDAY TIMES\"",
+  "program": "THE SITUATION ROOM",
+  "label_rows": 1,
+  "ratio": 0.5882
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN HOST, OUTFRONT",
+  "program": "ERIN BURNETT OUTFRONT",
+  "label_rows": 1,
+  "ratio": 0.5882
+ },
+ {
+  "verdict": "false",
+  "descriptor": "FOX NEWS, HOST",
+  "program": "CNN NEWSROOM",
+  "label_rows": 1,
+  "ratio": 0.5882
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN NEWS HOST",
+  "program": "CNN NEWSROOM",
+  "label_rows": 1,
+  "ratio": 0.5882
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "\"LARRY KING LIVE,\" JANUARY 8, 1992) KING",
+  "program": "Larry King Live Weekend",
+  "label_rows": 1,
+  "ratio": 0.5862
+ },
+ {
+  "verdict": "false",
+  "descriptor": "AMERICAN FAMILY INSURANCE",
+  "program": "AMERICAN MORNING",
+  "label_rows": 1,
+  "ratio": 0.5854
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"PLACE IN THE SUN\") TAYLOR",
+  "program": "PEOPLE IN THE NEWS",
+  "label_rows": 1,
+  "ratio": 0.5854
+ },
+ {
+  "verdict": "false",
+  "descriptor": "WIFE OF FIGHTER PILOT",
+  "program": "CNN WOLF BLITZER REPORTS",
+  "label_rows": 1,
+  "ratio": 0.5854
+ },
+ {
+  "verdict": "false",
+  "descriptor": "MAYOR, NEW YORK",
+  "program": "YOUR MONEY",
+  "label_rows": 1,
+  "ratio": 0.5833
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"DETROIT NEWS\"",
+  "program": "Morning News",
+  "label_rows": 1,
+  "ratio": 0.5833
+ },
+ {
+  "verdict": "false",
+  "descriptor": "EAGLES SAFETY",
+  "program": "EARLY START",
+  "label_rows": 1,
+  "ratio": 0.5833
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN CORRESPONDENT, CNN SATURDAY MORNING",
+  "program": "CNN SATURDAY MORNING NEWS",
+  "label_rows": 1,
+  "ratio": 0.5818
+ },
+ {
+  "verdict": "false",
+  "descriptor": "STUDENT, AMERICAN SAMOA",
+  "program": "AMERICAN MORNING",
+  "label_rows": 1,
+  "ratio": 0.5789
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN THE LEAD HOST",
+  "program": "THE LEAD WITH JAKE TAPPER",
+  "label_rows": 1,
+  "ratio": 0.5789
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN HOST, WORLD RIGHT NOW",
+  "program": "WORLD RIGHT NOW WITH HALA GORANI",
+  "label_rows": 1,
+  "ratio": 0.5769
+ },
+ {
+  "verdict": "false",
+  "descriptor": "PRESIDENT OF THE U.S",
+  "program": "CNN PRESENTS",
+  "label_rows": 1,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "HOST: GRACE",
+  "program": "NANCY GRACE",
+  "label_rows": 1,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "false",
+  "descriptor": "JR., SON OF LARRY KING",
+  "program": "CNN LARRY KING LIVE",
+  "label_rows": 1,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "false",
+  "descriptor": "CBS NEWS REPORTER",
+  "program": "CNN SPECIAL REPORTS",
+  "label_rows": 1,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "false",
+  "descriptor": "ABC NEWS REPORTER",
+  "program": "CNN SPECIAL REPORTS",
+  "label_rows": 1,
+  "ratio": 0.5714
+ },
+ {
+  "verdict": "false",
+  "descriptor": "NATIONAL BLACK POLICE ASSN",
+  "program": "CNN TALKBACK LIVE",
+  "label_rows": 1,
+  "ratio": 0.5641
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "SENIOR POLITICAL ANALYST",
+  "program": "CNN INSIDE POLITICS",
+  "label_rows": 1,
+  "ratio": 0.5641
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "MARCH 27) LARRY KING, HOST",
+  "program": "Larry King Live",
+  "label_rows": 1,
+  "ratio": 0.5641
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN SENIOR POLITICAL ANALYST",
+  "program": "INSIDE POLITICS",
+  "label_rows": 1,
+  "ratio": 0.5641
+ },
+ {
+  "verdict": "false",
+  "descriptor": "MARINE HISTORIAN",
+  "program": "AMERICAN MORNING",
+  "label_rows": 1,
+  "ratio": 0.5625
+ },
+ {
+  "verdict": "false",
+  "descriptor": "CINCINNATI POLICE",
+  "program": "CNN INSIDE POLITICS",
+  "label_rows": 1,
+  "ratio": 0.5625
+ },
+ {
+  "verdict": "false",
+  "descriptor": "OWNER OF NEW MLS TEAM",
+  "program": "NEWS STREAM",
+  "label_rows": 1,
+  "ratio": 0.5625
+ },
+ {
+  "verdict": "false",
+  "descriptor": "IRANIAN PRESIDENT",
+  "program": "CNN PRESENTS",
+  "label_rows": 1,
+  "ratio": 0.56
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"ROLLING STONE\"",
+  "program": "Morning News",
+  "label_rows": 1,
+  "ratio": 0.56
+ },
+ {
+  "verdict": "false",
+  "descriptor": "HOST, \"WASHINGTON WATCH WITH ROLAND MARTIN\"",
+  "program": "STARTING POINT WITH SOLEDAD O'BRIEN",
+  "label_rows": 1,
+  "ratio": 0.56
+ },
+ {
+  "verdict": "false",
+  "descriptor": "NEW YORKER.COM",
+  "program": "NEWS STREAM",
+  "label_rows": 1,
+  "ratio": 0.56
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"TIME\" INTERNATIONAL EDITOR",
+  "program": "THE SITUATION ROOM",
+  "label_rows": 1,
+  "ratio": 0.5581
+ },
+ {
+  "verdict": "false",
+  "descriptor": "and one thing is clear",
+  "program": "All Things Considered",
+  "label_rows": 1,
+  "ratio": 0.5581
+ },
+ {
+  "verdict": "false",
+  "descriptor": "FREELANCE JOURNALIST",
+  "program": "CNN RELIABLE SOURCES",
+  "label_rows": 1,
+  "ratio": 0.5556
+ },
+ {
+  "verdict": "anchor",
+  "descriptor": "CNN NEWS ANCHOR",
+  "program": "NEW DAY",
+  "label_rows": 1,
+  "ratio": 0.5556
+ },
+ {
+  "verdict": "false",
+  "descriptor": "PROFESSOR",
+  "program": "CROSSFIRE",
+  "label_rows": 1,
+  "ratio": 0.5556
+ },
+ {
+  "verdict": "false",
+  "descriptor": "INSTITUTE FOR JUSTICE",
+  "program": "Inside Politics",
+  "label_rows": 1,
+  "ratio": 0.5556
+ },
+ {
+  "verdict": "false",
+  "descriptor": "TNT SIDELINE REPORTER",
+  "program": "CNN SPECIAL REPORTS",
+  "label_rows": 1,
+  "ratio": 0.5556
+ },
+ {
+  "verdict": "false",
+  "descriptor": "HOST, \"NEWSNIGHT\"",
+  "program": "SHOWBIZ TONIGHT",
+  "label_rows": 1,
+  "ratio": 0.5517
+ },
+ {
+  "verdict": "false",
+  "descriptor": "\"FACE THE NATION\") PELOSI",
+  "program": "THE SITUATION ROOM",
+  "label_rows": 1,
+  "ratio": 0.55
+ },
+ {
+  "verdict": "staff",
+  "descriptor": "CNN ASIA BUSINESS EDITOR",
+  "program": "QUEST MEANS BUSINESS",
+  "label_rows": 1,
+  "ratio": 0.55
+ }
+]

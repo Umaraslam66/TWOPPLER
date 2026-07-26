@@ -1,0 +1,377 @@
+{
+ "generated_utc": "2026-07-26T20:28:08Z",
+ "pool_rows": 1153,
+ "n_eligible": 578,
+ "bins": [
+  {
+   "label": "<6m",
+   "low_days": 0,
+   "high_days": 183
+  },
+  {
+   "label": "6-12m",
+   "low_days": 183,
+   "high_days": 366
+  },
+  {
+   "label": "1-2y",
+   "low_days": 366,
+   "high_days": 731
+  },
+  {
+   "label": "2-3y",
+   "low_days": 731,
+   "high_days": 1096
+  },
+  {
+   "label": ">3y",
+   "low_days": 1096,
+   "high_days": 1000000
+  }
+ ],
+ "draft_rule": {
+  "min_clusters": 4,
+  "min_span_days": 731
+ },
+ "dev_subjects": [
+  {
+   "canonical_id": "C00792",
+   "canonical_name": "Frederic Hof",
+   "wiki_status": "long-tail",
+   "n_clusters": 3,
+   "first_date": "2013-01-08",
+   "test_date": "2016-12-14",
+   "span_days": 1436,
+   "span_years": 3.93,
+   "gaps": [
+    {
+     "cutoff_cluster": "cl6",
+     "cutoff_date": "2013-01-08",
+     "delta_days": 1436,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl3",
+     "cutoff_date": "2013-06-08",
+     "delta_days": 1285,
+     "bin": ">3y"
+    }
+   ],
+   "bins_filled": [
+    ">3y"
+   ],
+   "n_bins": 1,
+   "h7_eligible": false
+  },
+  {
+   "canonical_id": "C00292",
+   "canonical_name": "Bassir Pour",
+   "wiki_status": "long-tail",
+   "n_clusters": 13,
+   "first_date": "2000-03-04",
+   "test_date": "2004-12-31",
+   "span_days": 1763,
+   "span_years": 4.83,
+   "gaps": [
+    {
+     "cutoff_cluster": "cl3",
+     "cutoff_date": "2000-03-04",
+     "delta_days": 1763,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl5",
+     "cutoff_date": "2000-03-25",
+     "delta_days": 1742,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl10",
+     "cutoff_date": "2000-04-08",
+     "delta_days": 1728,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl11",
+     "cutoff_date": "2000-04-15",
+     "delta_days": 1721,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl12",
+     "cutoff_date": "2000-04-22",
+     "delta_days": 1714,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl14",
+     "cutoff_date": "2000-05-13",
+     "delta_days": 1693,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl19",
+     "cutoff_date": "2000-06-10",
+     "delta_days": 1665,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl2",
+     "cutoff_date": "2000-12-02",
+     "delta_days": 1490,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl4",
+     "cutoff_date": "2002-03-23",
+     "delta_days": 1014,
+     "bin": "2-3y"
+    },
+    {
+     "cutoff_cluster": "cl7",
+     "cutoff_date": "2002-06-08",
+     "delta_days": 937,
+     "bin": "2-3y"
+    },
+    {
+     "cutoff_cluster": "cl8",
+     "cutoff_date": "2002-06-22",
+     "delta_days": 923,
+     "bin": "2-3y"
+    },
+    {
+     "cutoff_cluster": "cl15",
+     "cutoff_date": "2004-05-28",
+     "delta_days": 217,
+     "bin": "6-12m"
+    }
+   ],
+   "bins_filled": [
+    "6-12m",
+    "2-3y",
+    ">3y"
+   ],
+   "n_bins": 3,
+   "h7_eligible": true
+  },
+  {
+   "canonical_id": "C02013",
+   "canonical_name": "Robert Sampson",
+   "wiki_status": "has-page",
+   "n_clusters": 3,
+   "first_date": "2005-12-23",
+   "test_date": "2013-02-19",
+   "span_days": 2615,
+   "span_years": 7.16,
+   "gaps": [
+    {
+     "cutoff_cluster": "cl1",
+     "cutoff_date": "2005-12-23",
+     "delta_days": 2615,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl2",
+     "cutoff_date": "2010-06-02",
+     "delta_days": 993,
+     "bin": "2-3y"
+    }
+   ],
+   "bins_filled": [
+    "2-3y",
+    ">3y"
+   ],
+   "n_bins": 2,
+   "h7_eligible": false
+  },
+  {
+   "canonical_id": "C02124",
+   "canonical_name": "Samer Shehata",
+   "wiki_status": "long-tail",
+   "n_clusters": 9,
+   "first_date": "2011-01-29",
+   "test_date": "2014-02-01",
+   "span_days": 1099,
+   "span_years": 3.01,
+   "gaps": [
+    {
+     "cutoff_cluster": "cl24",
+     "cutoff_date": "2011-01-29",
+     "delta_days": 1099,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl17",
+     "cutoff_date": "2011-02-01",
+     "delta_days": 1096,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl23",
+     "cutoff_date": "2011-02-12",
+     "delta_days": 1085,
+     "bin": "2-3y"
+    },
+    {
+     "cutoff_cluster": "cl22",
+     "cutoff_date": "2011-10-13",
+     "delta_days": 842,
+     "bin": "2-3y"
+    },
+    {
+     "cutoff_cluster": "cl21",
+     "cutoff_date": "2011-11-25",
+     "delta_days": 799,
+     "bin": "2-3y"
+    },
+    {
+     "cutoff_cluster": "cl14",
+     "cutoff_date": "2012-06-14",
+     "delta_days": 597,
+     "bin": "1-2y"
+    },
+    {
+     "cutoff_cluster": "cl18",
+     "cutoff_date": "2012-11-24",
+     "delta_days": 434,
+     "bin": "1-2y"
+    },
+    {
+     "cutoff_cluster": "cl16",
+     "cutoff_date": "2013-07-06",
+     "delta_days": 210,
+     "bin": "6-12m"
+    }
+   ],
+   "bins_filled": [
+    "6-12m",
+    "1-2y",
+    "2-3y",
+    ">3y"
+   ],
+   "n_bins": 4,
+   "h7_eligible": true
+  },
+  {
+   "canonical_id": "C01677",
+   "canonical_name": "Matthew Kroenig",
+   "wiki_status": "has-page",
+   "n_clusters": 3,
+   "first_date": "2012-03-06",
+   "test_date": "2013-04-29",
+   "span_days": 419,
+   "span_years": 1.15,
+   "gaps": [
+    {
+     "cutoff_cluster": "cl11",
+     "cutoff_date": "2012-03-06",
+     "delta_days": 419,
+     "bin": "1-2y"
+    },
+    {
+     "cutoff_cluster": "cl10",
+     "cutoff_date": "2012-05-22",
+     "delta_days": 342,
+     "bin": "6-12m"
+    }
+   ],
+   "bins_filled": [
+    "6-12m",
+    "1-2y"
+   ],
+   "n_bins": 2,
+   "h7_eligible": false
+  },
+  {
+   "canonical_id": "C02006",
+   "canonical_name": "Robert Harris",
+   "wiki_status": "has-page",
+   "n_clusters": 3,
+   "first_date": "2006-11-22",
+   "test_date": "2017-06-09",
+   "span_days": 3852,
+   "span_years": 10.55,
+   "gaps": [
+    {
+     "cutoff_cluster": "cl9",
+     "cutoff_date": "2006-11-22",
+     "delta_days": 3852,
+     "bin": ">3y"
+    },
+    {
+     "cutoff_cluster": "cl8",
+     "cutoff_date": "2016-06-22",
+     "delta_days": 352,
+     "bin": "6-12m"
+    }
+   ],
+   "bins_filled": [
+    "6-12m",
+    ">3y"
+   ],
+   "n_bins": 2,
+   "h7_eligible": false
+  }
+ ],
+ "full_pool": {
+  "n_h7_eligible": 262,
+  "share_h7_eligible": 0.4533,
+  "per_bin_candidates_any": {
+   "<6m": 168,
+   "6-12m": 200,
+   "1-2y": 250,
+   "2-3y": 189,
+   ">3y": 364
+  },
+  "per_bin_candidates_h7_eligible": {
+   "<6m": 72,
+   "6-12m": 88,
+   "1-2y": 120,
+   "2-3y": 136,
+   ">3y": 215
+  },
+  "n_bins_histogram": {
+   "1": 153,
+   "2": 291,
+   "3": 101,
+   "4": 32,
+   "5": 1
+  },
+  "n_bins_histogram_h7_eligible": {
+   "1": 48,
+   "2": 93,
+   "3": 88,
+   "4": 32,
+   "5": 1
+  },
+  "candidates_filling_at_least_k_bins": {
+   "1": 578,
+   "2": 425,
+   "3": 134,
+   "4": 33,
+   "5": 1
+  },
+  "candidates_filling_at_least_k_bins_h7_eligible": {
+   "1": 262,
+   "2": 214,
+   "3": 121,
+   "4": 33,
+   "5": 1
+  },
+  "sensitivity_counts": {
+   ">=3 clusters, >=1y span": 532,
+   ">=3 clusters, >=2y span": 438,
+   ">=3 clusters, >=3y span": 364,
+   ">=4 clusters, >=1y span": 304,
+   ">=4 clusters, >=2y span": 262,
+   ">=4 clusters, >=3y span": 215,
+   ">=5 clusters, >=1y span": 196,
+   ">=5 clusters, >=2y span": 173,
+   ">=5 clusters, >=3y span": 146,
+   ">=6 clusters, >=1y span": 131,
+   ">=6 clusters, >=2y span": 115,
+   ">=6 clusters, >=3y span": 96
+  }
+ },
+ "runtime_secs": 0.04
+}
