@@ -14,7 +14,7 @@ Subcommands
             adaptive job.
 ``ingest``  join the returned completions back onto the tasks and write one
             ``records.jsonl`` + ``summary.json`` per arm.
-``report``  write ``results/adaptive_pilot_train.md``.
+``report``  write ``results/archive/adaptive_pilot_train.md``.
 
 Usage:
     uv run python experiments/adaptive_gym.py plan
@@ -696,7 +696,7 @@ def cmd_report(args) -> int:
         "",
     ]
 
-    dest = Path(args.out) if args.out else RESULTS_DIR / "adaptive_pilot_train.md"
+    dest = Path(args.out) if args.out else RESULTS_DIR / "archive" / "adaptive_pilot_train.md"
     dest.write_text("\n".join(lines), encoding="utf-8")
     print(f"[report] wrote {dest}")
     for k in ks:
@@ -736,7 +736,7 @@ def main() -> int:
     p_rep.add_argument("--rundir", required=True)
     p_rep.add_argument("--out", default=None,
                        help="destination markdown path (default: "
-                            "results/adaptive_pilot_train.md)")
+                            "results/archive/adaptive_pilot_train.md)")
 
     args = ap.parse_args()
     return {"plan": cmd_plan, "export": cmd_export, "ingest": cmd_ingest,
