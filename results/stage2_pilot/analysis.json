@@ -1,7 +1,7 @@
 {
  "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
  "confirmatory": false,
- "generated_utc": "2026-07-26T18:34:36Z",
+ "generated_utc": "2026-07-26T19:22:34Z",
  "n_items": 17,
  "n_qa_subjects": 5,
  "excluded_burned_for_qa": [
@@ -370,92 +370,98 @@
      "worse_arm": "zeroinfo_redacted",
      "variant": "standard",
      "n_subjects": 5,
+     "n_pairs": 17,
+     "n_excluded_pairs": 0,
+     "n_incomplete_pairs": 0,
      "mean_argmax_delta": 0.0,
      "mean_prob_mass_delta": -0.006067,
      "per_subject": [
       {
        "canonical_id": "C00792",
-       "n_better": 5,
-       "n_worse": 5,
+       "n_pairs": 5,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": -0.002
       },
       {
        "canonical_id": "C01677",
-       "n_better": 1,
-       "n_worse": 1,
+       "n_pairs": 1,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.03
       },
       {
        "canonical_id": "C02006",
-       "n_better": 3,
-       "n_worse": 3,
+       "n_pairs": 3,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": -0.033333
       },
       {
        "canonical_id": "C02013",
-       "n_better": 4,
-       "n_worse": 4,
+       "n_pairs": 4,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": -0.025
       },
       {
        "canonical_id": "C02124",
-       "n_better": 4,
-       "n_worse": 4,
+       "n_pairs": 4,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.0
       }
      ],
-     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+     "note": "Subject-paired mean over item-paired records. A parse failure in either arm drops the item from BOTH (Stage 1E's frozen exclusion rule, scoring.py). No significance test: the pilot is not powered for one."
     },
     {
      "better_arm": "twin_redacted",
      "worse_arm": "imposter_redacted",
      "variant": "standard",
      "n_subjects": 5,
+     "n_pairs": 17,
+     "n_excluded_pairs": 0,
+     "n_incomplete_pairs": 0,
      "mean_argmax_delta": 0.05,
      "mean_prob_mass_delta": 0.085333,
      "per_subject": [
       {
        "canonical_id": "C00792",
-       "n_better": 5,
-       "n_worse": 5,
+       "n_pairs": 5,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.0
       },
       {
        "canonical_id": "C01677",
-       "n_better": 1,
-       "n_worse": 1,
+       "n_pairs": 1,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.0
       },
       {
        "canonical_id": "C02006",
-       "n_better": 3,
-       "n_worse": 3,
+       "n_pairs": 3,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.216667
       },
       {
        "canonical_id": "C02013",
-       "n_better": 4,
-       "n_worse": 4,
+       "n_pairs": 4,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.25,
        "prob_mass_delta": 0.21
       },
       {
        "canonical_id": "C02124",
-       "n_better": 4,
-       "n_worse": 4,
+       "n_pairs": 4,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.0
       }
      ],
-     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+     "note": "Subject-paired mean over item-paired records. A parse failure in either arm drops the item from BOTH (Stage 1E's frozen exclusion rule, scoring.py). No significance test: the pilot is not powered for one."
     }
    ],
    "adversarial_filtered": [
@@ -464,20 +470,26 @@
      "worse_arm": "zeroinfo_redacted",
      "variant": "standard",
      "n_subjects": 0,
+     "n_pairs": 0,
+     "n_excluded_pairs": 0,
+     "n_incomplete_pairs": 0,
      "mean_argmax_delta": null,
      "mean_prob_mass_delta": null,
      "per_subject": [],
-     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+     "note": "Subject-paired mean over item-paired records. A parse failure in either arm drops the item from BOTH (Stage 1E's frozen exclusion rule, scoring.py). No significance test: the pilot is not powered for one."
     },
     {
      "better_arm": "twin_redacted",
      "worse_arm": "imposter_redacted",
      "variant": "standard",
      "n_subjects": 0,
+     "n_pairs": 0,
+     "n_excluded_pairs": 0,
+     "n_incomplete_pairs": 0,
      "mean_argmax_delta": null,
      "mean_prob_mass_delta": null,
      "per_subject": [],
-     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+     "note": "Subject-paired mean over item-paired records. A parse failure in either arm drops the item from BOTH (Stage 1E's frozen exclusion rule, scoring.py). No significance test: the pilot is not powered for one."
     }
    ]
   },
@@ -488,92 +500,98 @@
      "worse_arm": "zeroinfo_redacted",
      "variant": "stripped",
      "n_subjects": 5,
+     "n_pairs": 17,
+     "n_excluded_pairs": 0,
+     "n_incomplete_pairs": 0,
      "mean_argmax_delta": 0.0,
      "mean_prob_mass_delta": 0.0365,
      "per_subject": [
       {
        "canonical_id": "C00792",
-       "n_better": 5,
-       "n_worse": 5,
+       "n_pairs": 5,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": -0.03
       },
       {
        "canonical_id": "C01677",
-       "n_better": 1,
-       "n_worse": 1,
+       "n_pairs": 1,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.15
       },
       {
        "canonical_id": "C02006",
-       "n_better": 3,
-       "n_worse": 3,
+       "n_pairs": 3,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.05
       },
       {
        "canonical_id": "C02013",
-       "n_better": 4,
-       "n_worse": 4,
+       "n_pairs": 4,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.0125
       },
       {
        "canonical_id": "C02124",
-       "n_better": 4,
-       "n_worse": 4,
+       "n_pairs": 4,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.0
       }
      ],
-     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+     "note": "Subject-paired mean over item-paired records. A parse failure in either arm drops the item from BOTH (Stage 1E's frozen exclusion rule, scoring.py). No significance test: the pilot is not powered for one."
     },
     {
      "better_arm": "twin_redacted",
      "worse_arm": "imposter_redacted",
      "variant": "stripped",
      "n_subjects": 5,
+     "n_pairs": 16,
+     "n_excluded_pairs": 1,
+     "n_incomplete_pairs": 0,
      "mean_argmax_delta": 0.05,
-     "mean_prob_mass_delta": 0.0551,
+     "mean_prob_mass_delta": 0.0575,
      "per_subject": [
       {
        "canonical_id": "C00792",
-       "n_better": 5,
-       "n_worse": 4,
+       "n_pairs": 4,
+       "n_excluded_pairs": 1,
        "argmax_delta": 0.0,
-       "prob_mass_delta": -0.0495
+       "prob_mass_delta": -0.0375
       },
       {
        "canonical_id": "C01677",
-       "n_better": 1,
-       "n_worse": 1,
+       "n_pairs": 1,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.0
       },
       {
        "canonical_id": "C02006",
-       "n_better": 3,
-       "n_worse": 3,
+       "n_pairs": 3,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.1
       },
       {
        "canonical_id": "C02013",
-       "n_better": 4,
-       "n_worse": 4,
+       "n_pairs": 4,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.25,
        "prob_mass_delta": 0.225
       },
       {
        "canonical_id": "C02124",
-       "n_better": 4,
-       "n_worse": 4,
+       "n_pairs": 4,
+       "n_excluded_pairs": 0,
        "argmax_delta": 0.0,
        "prob_mass_delta": 0.0
       }
      ],
-     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+     "note": "Subject-paired mean over item-paired records. A parse failure in either arm drops the item from BOTH (Stage 1E's frozen exclusion rule, scoring.py). No significance test: the pilot is not powered for one."
     }
    ],
    "adversarial_filtered": [
@@ -582,20 +600,26 @@
      "worse_arm": "zeroinfo_redacted",
      "variant": "stripped",
      "n_subjects": 0,
+     "n_pairs": 0,
+     "n_excluded_pairs": 0,
+     "n_incomplete_pairs": 0,
      "mean_argmax_delta": null,
      "mean_prob_mass_delta": null,
      "per_subject": [],
-     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+     "note": "Subject-paired mean over item-paired records. A parse failure in either arm drops the item from BOTH (Stage 1E's frozen exclusion rule, scoring.py). No significance test: the pilot is not powered for one."
     },
     {
      "better_arm": "twin_redacted",
      "worse_arm": "imposter_redacted",
      "variant": "stripped",
      "n_subjects": 0,
+     "n_pairs": 0,
+     "n_excluded_pairs": 0,
+     "n_incomplete_pairs": 0,
      "mean_argmax_delta": null,
      "mean_prob_mass_delta": null,
      "per_subject": [],
-     "note": "Subject-paired mean. No significance test: the pilot is not powered for one."
+     "note": "Subject-paired mean over item-paired records. A parse failure in either arm drops the item from BOTH (Stage 1E's frozen exclusion rule, scoring.py). No significance test: the pilot is not powered for one."
     }
    ]
   }
@@ -1122,8 +1146,11 @@
  },
  "total_cost": {
   "node_hours": 0.1264,
+  "smoke_node_hours": 0.228,
+  "pilot_node_hours": 0.3544,
   "cost_usd": 0.0,
   "n_calls": 639,
+  "smoke_calls": 22,
   "api_calls": 0
  },
  "node_hours_source": "sacct",

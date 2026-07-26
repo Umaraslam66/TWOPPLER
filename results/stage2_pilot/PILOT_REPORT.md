@@ -4,7 +4,7 @@
 
 **PILOT -- pipeline validation on dev subjects; no research conclusions.** Every number below is a pipeline-validation number on six development subjects. Stage 1 and this pilot are for development and tuning only; nothing here answers a pre-registered bar, nothing here is confirmatory, and no result in it should be quoted as a finding about twins.
 
-Generated 2026-07-26T18:34:36Z. Contract: SPEC.md v1.7 (D1-D10). Model leonardo-gemma4-31b-it, temperature 0.0, tp 4, max-model-len 8192. 639 model calls, 0 API calls, $0.00.
+Generated 2026-07-26T19:22:34Z. Contract: SPEC.md v1.7 (D1-D10). Model leonardo-gemma4-31b-it, temperature 0.0, tp 4, max-model-len 8192. 639 model calls, 0 API calls, $0.00.
 
 ## 1. Dev subjects, how they were drawn, and the C00292 story
 
@@ -444,11 +444,11 @@ The zero-information arm solved every item, so the filter removes every item and
 
 | arm | N scored | parse fails | argmax accuracy | prob-mass on correct |
 |---|---|---|---|---|
-| **twin_redacted** | 0 | 0 | — | — |
-| twin_named | 0 | 0 | — | — |
-| zeroinfo_redacted | 0 | 0 | — | — |
-| zeroinfo_named | 0 | 0 | — | — |
-| imposter_redacted | 0 | 0 | — | — |
+| **twin_redacted** | — | — | — | — |
+| twin_named | — | — | — | — |
+| zeroinfo_redacted | — | — | — | — |
+| zeroinfo_named | — | — | — | — |
+| imposter_redacted | — | — | — | — |
 
 #### Lift rows (standard options)
 
@@ -456,17 +456,17 @@ Subject-paired mean differences. **No significance test, deliberately** — with
 
 *unfiltered*
 
-| contrast | subjects paired | mean argmax delta | mean prob-mass delta |
-|---|---|---|---|
-| twin_redacted − zeroinfo_redacted | 5 | 0.000 | -0.006 |
-| twin_redacted − imposter_redacted | 5 | 0.050 | 0.085 |
+| contrast | subjects | item pairs | pairs dropped (parse) | mean argmax delta | mean prob-mass delta |
+|---|---|---|---|---|---|
+| twin_redacted − zeroinfo_redacted | 5 | 17 | 0 | 0.0000 | -0.0061 |
+| twin_redacted − imposter_redacted | 5 | 17 | 0 | 0.0500 | 0.0853 |
 
 *adversarial filtered*
 
-| contrast | subjects paired | mean argmax delta | mean prob-mass delta |
-|---|---|---|---|
-| twin_redacted − zeroinfo_redacted | 0 | — | — |
-| twin_redacted − imposter_redacted | 0 | — | — |
+| contrast | subjects | item pairs | pairs dropped (parse) | mean argmax delta | mean prob-mass delta |
+|---|---|---|---|---|---|
+| twin_redacted − zeroinfo_redacted | 0 | 0 | 0 | — | — |
+| twin_redacted − imposter_redacted | 0 | 0 | 0 | — | — |
 
 ### entity-stripped options (A4.2), unfiltered
 
@@ -486,11 +486,11 @@ The zero-information arm solved every item, so the filter removes every item and
 
 | arm | N scored | parse fails | argmax accuracy | prob-mass on correct |
 |---|---|---|---|---|
-| **twin_redacted** | 0 | 0 | — | — |
-| twin_named | 0 | 0 | — | — |
-| zeroinfo_redacted | 0 | 0 | — | — |
-| zeroinfo_named | 0 | 0 | — | — |
-| imposter_redacted | 0 | 0 | — | — |
+| **twin_redacted** | — | — | — | — |
+| twin_named | — | — | — | — |
+| zeroinfo_redacted | — | — | — | — |
+| zeroinfo_named | — | — | — | — |
+| imposter_redacted | — | — | — | — |
 
 #### Lift rows (entity-stripped options (A4.2))
 
@@ -498,17 +498,17 @@ Subject-paired mean differences. **No significance test, deliberately** — with
 
 *unfiltered*
 
-| contrast | subjects paired | mean argmax delta | mean prob-mass delta |
-|---|---|---|---|
-| twin_redacted − zeroinfo_redacted | 5 | 0.000 | 0.036 |
-| twin_redacted − imposter_redacted | 5 | 0.050 | 0.055 |
+| contrast | subjects | item pairs | pairs dropped (parse) | mean argmax delta | mean prob-mass delta |
+|---|---|---|---|---|---|
+| twin_redacted − zeroinfo_redacted | 5 | 17 | 0 | 0.0000 | 0.0365 |
+| twin_redacted − imposter_redacted | 5 | 16 | 1 | 0.0500 | 0.0575 |
 
 *adversarial filtered*
 
-| contrast | subjects paired | mean argmax delta | mean prob-mass delta |
-|---|---|---|---|
-| twin_redacted − zeroinfo_redacted | 0 | — | — |
-| twin_redacted − imposter_redacted | 0 | — | — |
+| contrast | subjects | item pairs | pairs dropped (parse) | mean argmax delta | mean prob-mass delta |
+|---|---|---|---|---|---|
+| twin_redacted − zeroinfo_redacted | 0 | 0 | 0 | — | — |
+| twin_redacted − imposter_redacted | 0 | 0 | 0 | — | — |
 
 ## 6. Contamination meter
 
@@ -545,7 +545,15 @@ Subject-paired mean differences. **No significance test, deliberately** — with
 | C02013 | 65 | 137,310 | 11,088 | 96.3 | 0.00 |
 | C02124 | 171 | 206,683 | 12,347 | 107.3 | 0.00 |
 
-**Total: 0.1264 node-hours, 639 model calls, 0 API calls, $0.00.** Node-seconds are apportioned by each subject's share of output tokens in the shared job; the jobs shared one engine init.
+**Total pilot spend: 0.3544 node-hours** (smoke 0.2280 + full 0.1264), **639 scored model calls + 22 smoke, 0 API calls, $0.00.**
+
+- full job only (the run these tables come from): 0.1264 node-hours, 639 calls
+- smoke slice (two runs, no scientific output): 0.2280 node-hours
+- billed from sacct (elapsed x allocated nodes); the in-process figure from batch_generate is 0.0804 node-hours for the full job and understates the bill, because a Booster node is billed whole and a ~200 s engine init is most of a short allocation
+
+Per-subject node-seconds are apportioned by each subject's share of output tokens in the shared job; both jobs used one engine init.
+
+**Ledger practice.** `results/cost_log.jsonl` is append-only, and that includes corrections: a wrong line is fixed by appending a correcting entry that names what it supersedes, never by deleting or rewriting it — an append-only log whose entries can be deleted is not append-only. The first ingest of this pilot apportioned the sum of all jobs' hours across the two arms and then wrote a smoke line as well, double-counting the smoke (0.5824 against an actual 0.3544). **Those three lines were caught and removed before they were committed**, which is the only window in which removal is acceptable; anything already committed gets a correcting entry instead. The rule is now stated in `_log_cost` where the entries are written.
 
 | job | slurm id | status | projected node-hours | actual node-hours (sacct) |
 |---|---|---|---|---|
@@ -637,6 +645,21 @@ why two controls in the design are load-bearing rather than decorative:
   measures what the model already knows about the named person with no excerpts
   at all, which bounds how much of a twin score could be identity rather than
   evidence.
+
+**The zero-information arms are not strictly information-free either.** D8
+strips excerpts, programme and date, but the question itself is the host's real
+words, and one of the seventeen states the subject's occupation outright.
+`C02013:NPR-9480:70` renders, in `zeroinfo_redacted`, as:
+
+    HOST: Well, let me bring that back to you, GUEST, then. You're a professor
+    of social sciences. This is something you've studied. ...
+
+The name is redacted; "professor of social sciences" is not, because it is not a
+name. So the floor arm carries an occupation for 1 of 17 items (6%). It did not
+change anything measurable here -- the floor is at ceiling on every item anyway
+(8.0) -- but "zero-information" is the arm's name, not a proven property, and at
+a harder item set it would need either question-level scrubbing or an
+exclusion rule.
 
 Bar-lock question: does a confirmatory Stage 2 need affiliation redaction, or
 does it accept name-only redaction and lean on the meter? Not a pilot decision.
@@ -838,6 +861,48 @@ talking to us").
 Recorded as a decision, not an oversight. Redacting them would cost nothing if a
 later review prefers uniformity.
 
+### 8.13 T2's TF-IDF re-fit moved the recorded similarities in the 4th decimal
+
+SPEC v1.7 dropped one row from the distractor bank (652 rows, from 653), which
+re-fits the TF-IDF vocabulary that ranks candidate distractors by question
+similarity. Every recorded `question_similarity` therefore moved slightly.
+
+**Measured shift: at most 2.21e-04, i.e. the fourth decimal place. Zero items
+changed their selected distractors, and zero option sets moved.** The ranking
+is decided by gaps far larger than that -- the observed cosines run 0.016 to
+0.102 -- so the re-fit is a bookkeeping change, not a selection change.
+
+Recorded because it is the kind of drift that looks alarming in a diff and is
+not, and because the reverse case (a re-fit that DOES flip a selection) is a
+real risk once the bank is enlarged, where more rows means closer competitors.
+The numbers in 8.5 are the post-re-fit ones.
+
+### 8.14 Data quality: MediaSum misattributes some speech to the wrong speaker
+
+Found while auditing the grounding: **NPR-6056 turn 34** is labelled
+`NEAL CONAN, host` but its text opens `"Prof. SAMPSON. Yeah, exactly, and that
+goes to my last hypothesis..."`. That is C02013's own speech, attributed to the
+interviewer in the corpus, with the real speaker's name fused into the body of
+the turn. Turn 35 continues the same answer under the same wrong label and
+carries no name prefix at all, so it is not even detectable by inspection.
+
+**Scale, measured rather than guessed.** Scanning all 2,071 turns across the six
+subjects' committed turn files for a host turn whose text opens with a
+speaker-name prefix gives 8 candidates, of which **7 are the word "OK."**
+matching the all-caps pattern and **1 is genuine** (the one above). So roughly
+0.05% of turns on this evidence, which is small but not zero.
+
+Consequence here is mild and bounded: a guest sentence lands on the HOST side of
+a twin exchange, so the model sees the subject's own words labelled `HOST:`.
+It is not an answer leak -- the test interview is a different transcript, and
+guard (a) covers that separately -- and it does not touch the item set. It is a
+corpus artifact, not a bug in any rule of ours, and no rule we could write on
+speaker labels would fix it: the label is simply wrong upstream.
+
+Bar-lock note: at confirmatory scale this deserves a cheap detector (a host turn
+opening with a known guest name form, which is exactly the scan above) and a
+documented decision about whether such turns are dropped or re-attributed.
+
 ### 8.11 Grounding words vs the 2,000-word budget, per subject
 
 T1's standing concern was that four of six subjects had less grounding text than
@@ -894,14 +959,14 @@ available, which is a draw-time criterion, same family as 8.7.
 | node config | 1 node, 4x A100, tp=4, max-model-len=8192, gpu-mem-util=0.92, temperature=0.0, one engine init per job |
 | grounding budget | 2000 words (SPEC D8 B_pilot) |
 | exported | 2026-07-26T18:15:22Z |
-| driver commit | 4ee33b8 |
+| driver commit | cf58b94 |
 
 ### Export manifest digests
 
-| file | prompts | sha256 |
+| file | rows | sha256 |
 |---|---|---|
 | prompts_classify.jsonl | 469 | `c1130293b16ac3f918f5578f99cc6cbee593cecbafd3b3175449bb71658ae673` |
-| labels_rule.jsonl | 0 | `6be00a2a7987cabe672b9c91a54a3b56ac883edf601375ac3609065cd90bd63a` |
+| labels_rule.jsonl | 271 | `6be00a2a7987cabe672b9c91a54a3b56ac883edf601375ac3609065cd90bd63a` |
 | prompts_pred_imposter_redacted_standard.jsonl | 17 | `4f070158ed6ddffc660f0d2f5cccb960f71b402fd054d3162c09a5241dea17f6` |
 | prompts_pred_imposter_redacted_stripped.jsonl | 17 | `10a6a2783e361c87864277aff6d342a101bc91a9d0e8fce2b1815f5fae89c317` |
 | prompts_pred_twin_named_standard.jsonl | 17 | `cc04bf3b8492a811ee2cbb41f21f687acfcb07ad529e93dcc414b843dfd84680` |
