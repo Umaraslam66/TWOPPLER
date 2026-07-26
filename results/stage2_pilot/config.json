@@ -1,0 +1,87 @@
+{
+ "run": "stage2_pilot",
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "confirmatory": false,
+ "contract": "SPEC.md v1.6 (D1-D10)",
+ "model": "Gemma-4-31B-it",
+ "model_label": "leonardo-gemma4-31b-it",
+ "temperature": 0.0,
+ "tp": 4,
+ "max_model_len": 8192,
+ "max_model_len_note": "Stage 1E ran at 2048 and the T6 brief named 4096. Neither fits: the longest pilot prompt is 3315 words (a 2,000-word grounding block plus C02013's 1,135-word option block), which needs up to 6916 tokens at the measured worst-case 2.05 tokens/word. DEVIATION, flagged for sign-off.",
+ "gpu_mem_util": 0.92,
+ "arms": [
+  "twin_redacted",
+  "twin_named",
+  "zeroinfo_redacted",
+  "zeroinfo_named",
+  "imposter_redacted"
+ ],
+ "option_variants": [
+  "standard",
+  "stripped"
+ ],
+ "grounding_budget_words": 2000,
+ "n_qa_subjects": 5,
+ "n_items": 17,
+ "excluded_burned_for_qa": [
+  "C00292"
+ ],
+ "prediction_prompts_total": 170,
+ "classifier_prompts_total": 469,
+ "retry_policy": "jobs/batch_generate.py has no re-ask mechanism (checked on the node: it is one vLLM pass per prompt file, no parse hook), so a parse failure is RECORDED, not retried. SPEC D9's 'up to 2 re-asks' is unreachable in batch mode; the pilot measures the resulting parse-failure rate instead.",
+ "renderer": {
+  "stage2_render_template_sha256": "26def40977f381e732c757bdb16d1c620db415041af59719319cef5434f652b1",
+  "followup_rubric_sha256": "053b96cba42ebf03d966db3c22fce2acde3a685d5b4cca9badd556ee248a24da",
+  "stage2_render_file_sha256": "25a13febf5ee85cf4ef8b4371ecc8162ed0f1685841f518d3399c62151e0425a",
+  "followup_render_file_sha256": "37adc0f613343f3734f000eac2ab713d90b6588ba93ad846ef7aca0fcab58fab"
+ },
+ "projection": {
+  "prediction": {
+   "n_calls": 170,
+   "tokens_in_est": 567050,
+   "tokens_out_cap": 20400,
+   "seconds": 83.92142857142858
+  },
+  "classifier": {
+   "n_calls": 469,
+   "tokens_in_est": 535824,
+   "tokens_out_cap": 37520,
+   "seconds": 81.90628571428572
+  },
+  "smoke": {
+   "n_calls": 22,
+   "tokens_in_est": 60294,
+   "tokens_out_cap": 2560,
+   "seconds": 8.979142857142858
+  },
+  "effective_tokens_per_second": 7000.0,
+  "measured_tokens_per_second": 21000.0,
+  "long_prompt_derate": 3.0,
+  "tokens_per_word": 1.9,
+  "jobs": {
+   "stage2_pilot_smoke": {
+    "n_calls": 22,
+    "generation_seconds": 9.0,
+    "engine_init_seconds": 225.0,
+    "projected_node_hours": 0.065,
+    "walltime": "00:20:00",
+    "qos": "boost_qos_dbg"
+   },
+   "stage2_pilot_full": {
+    "n_calls": 639,
+    "generation_seconds": 165.8,
+    "engine_init_seconds": 225.0,
+    "projected_node_hours": 0.1086,
+    "walltime": "01:00:00",
+    "qos": "boost_usr_prod (normal)"
+   }
+  },
+  "total_projected_node_hours": 0.1736,
+  "walltime_bounded_worst_case_node_hours": 1.3333,
+  "abort_above_node_hours": 1.5,
+  "budget_node_hours": 3.0,
+  "note": "Output tokens are counted at their per-prompt CAP (120 for a prediction prompt, 80 for a classifier case), so the generation term is an upper bound. Throughput is Stage 1E's measured 21,015 combined tokens/s on one 4xA100 node, de-rated by 3.0x because Stage 2's prompts are roughly ten times longer and shift the job from decode-bound to prefill-bound."
+ },
+ "generated_utc": "2026-07-26T17:53:52Z"
+}

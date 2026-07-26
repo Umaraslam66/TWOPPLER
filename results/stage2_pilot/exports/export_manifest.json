@@ -1,0 +1,386 @@
+{
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "exported_utc": "2026-07-26T17:52:36Z",
+ "contract": "SPEC.md v1.6 (D1-D10)",
+ "n_qa_subjects": 5,
+ "n_items": 17,
+ "arms": [
+  "twin_redacted",
+  "twin_named",
+  "zeroinfo_redacted",
+  "zeroinfo_named",
+  "imposter_redacted"
+ ],
+ "option_variants": [
+  "standard",
+  "stripped"
+ ],
+ "prediction_prompts_total": 170,
+ "classifier_prompts_total": 469,
+ "rule_labels_total": 271,
+ "excluded_burned_for_qa": [
+  "C00292"
+ ],
+ "coverage_warnings": [],
+ "grounding_budget_words": 2000,
+ "renderer": {
+  "stage2_render_template_sha256": "26def40977f381e732c757bdb16d1c620db415041af59719319cef5434f652b1",
+  "followup_rubric_sha256": "053b96cba42ebf03d966db3c22fce2acde3a685d5b4cca9badd556ee248a24da",
+  "stage2_render_file_sha256": "25a13febf5ee85cf4ef8b4371ecc8162ed0f1685841f518d3399c62151e0425a",
+  "followup_render_file_sha256": "37adc0f613343f3734f000eac2ab713d90b6588ba93ad846ef7aca0fcab58fab"
+ },
+ "per_subject": {
+  "C00792": {
+   "canonical_id": "C00792",
+   "canonical_name": "Frederic Hof",
+   "wiki_status": "long-tail",
+   "n_items": 5,
+   "item_ids": [
+    "C00792:NPR-19884:2",
+    "C00792:NPR-19884:6",
+    "C00792:NPR-19884:10",
+    "C00792:NPR-19884:13",
+    "C00792:NPR-19884:15"
+   ],
+   "donor_id": "C01316",
+   "donor_name": "Joshua Landis",
+   "n_grounding_segments": 2,
+   "n_grounding_exchanges": 21,
+   "grounding_words_available": 2177,
+   "grounding_words_rendered": 2036,
+   "donor_grounding_words_rendered": 2045,
+   "grounding_budget_words": 2000,
+   "variants_used": [
+    "Frederic Hof"
+   ],
+   "donor_variants_used": [
+    "Joshua Landis"
+   ]
+  },
+  "C02013": {
+   "canonical_id": "C02013",
+   "canonical_name": "Robert Sampson",
+   "wiki_status": "has-page",
+   "n_items": 4,
+   "item_ids": [
+    "C02013:NPR-9480:45",
+    "C02013:NPR-9480:49",
+    "C02013:NPR-9480:70",
+    "C02013:NPR-9480:82"
+   ],
+   "donor_id": "C00690",
+   "donor_name": "Doris Meissner",
+   "n_grounding_segments": 2,
+   "n_grounding_exchanges": 17,
+   "grounding_words_available": 2081,
+   "grounding_words_rendered": 1817,
+   "donor_grounding_words_rendered": 2050,
+   "grounding_budget_words": 2000,
+   "variants_used": [
+    "Robert Sampson"
+   ],
+   "donor_variants_used": [
+    "Doris Meissner"
+   ]
+  },
+  "C02124": {
+   "canonical_id": "C02124",
+   "canonical_name": "Samer Shehata",
+   "wiki_status": "long-tail",
+   "n_items": 4,
+   "item_ids": [
+    "C02124:NPR-12184:2",
+    "C02124:NPR-12184:4",
+    "C02124:NPR-12184:6",
+    "C02124:NPR-12184:8"
+   ],
+   "donor_id": "C02277",
+   "donor_name": "Steven Cook",
+   "n_grounding_segments": 8,
+   "n_grounding_exchanges": 68,
+   "grounding_words_available": 8630,
+   "grounding_words_rendered": 2038,
+   "donor_grounding_words_rendered": 2026,
+   "grounding_budget_words": 2000,
+   "variants_used": [
+    "Samer Shehata"
+   ],
+   "donor_variants_used": [
+    "Steven Cook"
+   ]
+  },
+  "C01677": {
+   "canonical_id": "C01677",
+   "canonical_name": "Matthew Kroenig",
+   "wiki_status": "has-page",
+   "n_items": 1,
+   "item_ids": [
+    "C01677:NPR-8791:77"
+   ],
+   "donor_id": "C01650",
+   "donor_name": "Martin Indyk",
+   "n_grounding_segments": 2,
+   "n_grounding_exchanges": 14,
+   "grounding_words_available": 2425,
+   "grounding_words_rendered": 1836,
+   "donor_grounding_words_rendered": 2059,
+   "grounding_budget_words": 2000,
+   "variants_used": [
+    "Matthew Kroenig"
+   ],
+   "donor_variants_used": [
+    "Martin Indyk"
+   ]
+  },
+  "C02006": {
+   "canonical_id": "C02006",
+   "canonical_name": "Robert Harris",
+   "wiki_status": "has-page",
+   "n_items": 3,
+   "item_ids": [
+    "C02006:NPR-14829:19",
+    "C02006:NPR-14829:26",
+    "C02006:NPR-14829:29"
+   ],
+   "donor_id": "C02510",
+   "donor_name": "Walter Mosley",
+   "n_grounding_segments": 2,
+   "n_grounding_exchanges": 14,
+   "grounding_words_available": 1907,
+   "grounding_words_rendered": 1937,
+   "donor_grounding_words_rendered": 2060,
+   "grounding_budget_words": 2000,
+   "variants_used": [
+    "R. Harris",
+    "Robert Harris"
+   ],
+   "donor_variants_used": [
+    "Walter Mosley"
+   ]
+  }
+ },
+ "classifier_per_subject": {
+  "C00792": {
+   "canonical_id": "C00792",
+   "canonical_name": "Frederic Hof",
+   "n_transcripts": 2,
+   "n_model_cases": 76,
+   "n_rule_labels": 6,
+   "burned_for_qa": false
+  },
+  "C00292": {
+   "canonical_id": "C00292",
+   "canonical_name": "Bassir Pour",
+   "n_transcripts": 12,
+   "n_model_cases": 167,
+   "n_rule_labels": 163,
+   "burned_for_qa": true
+  },
+  "C02013": {
+   "canonical_id": "C02013",
+   "canonical_name": "Robert Sampson",
+   "n_transcripts": 2,
+   "n_model_cases": 25,
+   "n_rule_labels": 5,
+   "burned_for_qa": false
+  },
+  "C02124": {
+   "canonical_id": "C02124",
+   "canonical_name": "Samer Shehata",
+   "n_transcripts": 8,
+   "n_model_cases": 131,
+   "n_rule_labels": 42,
+   "burned_for_qa": false
+  },
+  "C01677": {
+   "canonical_id": "C01677",
+   "canonical_name": "Matthew Kroenig",
+   "n_transcripts": 2,
+   "n_model_cases": 52,
+   "n_rule_labels": 53,
+   "burned_for_qa": false
+  },
+  "C02006": {
+   "canonical_id": "C02006",
+   "canonical_name": "Robert Harris",
+   "n_transcripts": 2,
+   "n_model_cases": 18,
+   "n_rule_labels": 2,
+   "burned_for_qa": false
+  }
+ },
+ "context": {
+  "longest_prompt_words": 3315,
+  "longest_prompt_sha256": "300fb6708a8a759731ef371f20b9d7ef6797c402b9c84c741f815361350ee07a",
+  "longest_prompt_item": "C02013:NPR-9480:70",
+  "longest_prompt_arm": "imposter_redacted",
+  "tokens_per_word_max": 2.05,
+  "worst_case_tokens_needed": 6916,
+  "max_model_len": 8192,
+  "headroom_tokens": 1276
+ },
+ "projection": {
+  "prediction": {
+   "n_calls": 170,
+   "tokens_in_est": 567050,
+   "tokens_out_cap": 20400,
+   "seconds": 83.92142857142858
+  },
+  "classifier": {
+   "n_calls": 469,
+   "tokens_in_est": 535824,
+   "tokens_out_cap": 37520,
+   "seconds": 81.90628571428572
+  },
+  "smoke": {
+   "n_calls": 22,
+   "tokens_in_est": 60294,
+   "tokens_out_cap": 2560,
+   "seconds": 8.979142857142858
+  },
+  "effective_tokens_per_second": 7000.0,
+  "measured_tokens_per_second": 21000.0,
+  "long_prompt_derate": 3.0,
+  "tokens_per_word": 1.9,
+  "jobs": {
+   "stage2_pilot_smoke": {
+    "n_calls": 22,
+    "generation_seconds": 9.0,
+    "engine_init_seconds": 225.0,
+    "projected_node_hours": 0.065,
+    "walltime": "00:20:00",
+    "qos": "boost_qos_dbg"
+   },
+   "stage2_pilot_full": {
+    "n_calls": 639,
+    "generation_seconds": 165.8,
+    "engine_init_seconds": 225.0,
+    "projected_node_hours": 0.1086,
+    "walltime": "01:00:00",
+    "qos": "boost_usr_prod (normal)"
+   }
+  },
+  "total_projected_node_hours": 0.1736,
+  "walltime_bounded_worst_case_node_hours": 1.3333,
+  "abort_above_node_hours": 1.5,
+  "budget_node_hours": 3.0,
+  "note": "Output tokens are counted at their per-prompt CAP (120 for a prediction prompt, 80 for a classifier case), so the generation term is an upper bound. Throughput is Stage 1E's measured 21,015 combined tokens/s on one 4xA100 node, de-rated by 3.0x because Stage 2's prompts are roughly ten times longer and shift the job from decode-bound to prefill-bound."
+ },
+ "files": {
+  "pred_twin_redacted_standard": {
+   "prompts_file": "prompts_pred_twin_redacted_standard.jsonl",
+   "meta_file": "meta_pred_twin_redacted_standard.jsonl",
+   "n_prompts": 17,
+   "prompts_sha256": "6c56ad5fdb97d5c7297b3bde90ffc309a993f461da9a6154bef629813ec7f53b",
+   "meta_sha256": "bde1848e18fce768598cb6961b49c64950222b2862746225d8f0ec944eff5481",
+   "total_prompt_words": 42902,
+   "max_prompt_words": 3082
+  },
+  "pred_twin_redacted_stripped": {
+   "prompts_file": "prompts_pred_twin_redacted_stripped.jsonl",
+   "meta_file": "meta_pred_twin_redacted_stripped.jsonl",
+   "n_prompts": 17,
+   "prompts_sha256": "f9dd4661f34ec73c8606b11aa0f401c3edf7ab359b53622d9ff6414ff18b164a",
+   "meta_sha256": "6443e231b91bf6b371f25ddf2229fa8db9accb45242f783c994a4dd8fdb66412",
+   "total_prompt_words": 42784,
+   "max_prompt_words": 3078
+  },
+  "pred_twin_named_standard": {
+   "prompts_file": "prompts_pred_twin_named_standard.jsonl",
+   "meta_file": "meta_pred_twin_named_standard.jsonl",
+   "n_prompts": 17,
+   "prompts_sha256": "ab7182ee56756b2cfd2622219d0e746f2f28a9bca52df586db053d785c15cb70",
+   "meta_sha256": "0d9f1f96220683a7961928e9b1b48da7ff46f9913b9a6d1d1b5de285399c6400",
+   "total_prompt_words": 42970,
+   "max_prompt_words": 3086
+  },
+  "pred_twin_named_stripped": {
+   "prompts_file": "prompts_pred_twin_named_stripped.jsonl",
+   "meta_file": "meta_pred_twin_named_stripped.jsonl",
+   "n_prompts": 17,
+   "prompts_sha256": "f519e12b0dc66d0213bdf98bf47ac645e08edaa8b84de6adb9b832c02b21216c",
+   "meta_sha256": "6f4b94e1c456276cd84095f798ae7098c9e31b7e13cac56f3390a14dd068667e",
+   "total_prompt_words": 42852,
+   "max_prompt_words": 3082
+  },
+  "pred_zeroinfo_redacted_standard": {
+   "prompts_file": "prompts_pred_zeroinfo_redacted_standard.jsonl",
+   "meta_file": "meta_pred_zeroinfo_redacted_standard.jsonl",
+   "n_prompts": 17,
+   "prompts_sha256": "27b80a5ebe8642d75385a1d84b69e8502ba6c8a23c9697938aacf37b3c798d32",
+   "meta_sha256": "bae7818959a39edcc5b37b6e9a5e1d469970b0e5522515326bee6032d897fa78",
+   "total_prompt_words": 9570,
+   "max_prompt_words": 1260
+  },
+  "pred_zeroinfo_redacted_stripped": {
+   "prompts_file": "prompts_pred_zeroinfo_redacted_stripped.jsonl",
+   "meta_file": "meta_pred_zeroinfo_redacted_stripped.jsonl",
+   "n_prompts": 17,
+   "prompts_sha256": "26dded15eb099784d51fb8b5cdd915be3bfff147aceefa69631a6089ceaeb020",
+   "meta_sha256": "a32edbd875ccebc41f0303cf1ce503621766b33874f2bb672f1f051f8fcdaf70",
+   "total_prompt_words": 9452,
+   "max_prompt_words": 1256
+  },
+  "pred_zeroinfo_named_standard": {
+   "prompts_file": "prompts_pred_zeroinfo_named_standard.jsonl",
+   "meta_file": "meta_pred_zeroinfo_named_standard.jsonl",
+   "n_prompts": 17,
+   "prompts_sha256": "6a94ec71c16e24179cec24359b5b9877162abecb719f1d73c472b683d370727e",
+   "meta_sha256": "b80812210d26e1a0b6403a7f0cb8b5286f9879bfae00c866006e7aa37f187e94",
+   "total_prompt_words": 9655,
+   "max_prompt_words": 1265
+  },
+  "pred_zeroinfo_named_stripped": {
+   "prompts_file": "prompts_pred_zeroinfo_named_stripped.jsonl",
+   "meta_file": "meta_pred_zeroinfo_named_stripped.jsonl",
+   "n_prompts": 17,
+   "prompts_sha256": "1f73c31722485029605b692e9bdf690c3eaa55ba02ac00a196326a0acd7b54d0",
+   "meta_sha256": "f820d81dc28e143ba1e722e7ee871cf8e1de1128d9229b8f29a46b56f5c425e5",
+   "total_prompt_words": 9537,
+   "max_prompt_words": 1261
+  },
+  "pred_imposter_redacted_standard": {
+   "prompts_file": "prompts_pred_imposter_redacted_standard.jsonl",
+   "meta_file": "meta_pred_imposter_redacted_standard.jsonl",
+   "n_prompts": 17,
+   "prompts_sha256": "26397ccee7788f2791e0e930bdbdcca291f1b41ecaa2acbad36a5eacb0dfd6eb",
+   "meta_sha256": "ff50cca0226fc19308d70068dbb9f593546df7863ef37c95f4ab5bd2d603af9e",
+   "total_prompt_words": 44423,
+   "max_prompt_words": 3315
+  },
+  "pred_imposter_redacted_stripped": {
+   "prompts_file": "prompts_pred_imposter_redacted_stripped.jsonl",
+   "meta_file": "meta_pred_imposter_redacted_stripped.jsonl",
+   "n_prompts": 17,
+   "prompts_sha256": "02a18c67602c993ceffc961fc3684e0aa86ebe025bac66ff2db61a93f87b08e1",
+   "meta_sha256": "21162f076eb627a54d468a0253c408d0b70f2accbcc18d2532024d51b7c0508e",
+   "total_prompt_words": 44305,
+   "max_prompt_words": 3311
+  },
+  "classify": {
+   "prompts_file": "prompts_classify.jsonl",
+   "meta_file": "meta_classify.jsonl",
+   "n_prompts": 469,
+   "prompts_sha256": "c1130293b16ac3f918f5578f99cc6cbee593cecbafd3b3175449bb71658ae673",
+   "meta_sha256": "03cc56f5836d5b4e13ee36e73484db2336ff8991d136f45503c82be3c973f374",
+   "total_prompt_words": 282014,
+   "max_prompt_words": 776
+  },
+  "smoke": {
+   "prompts_file": "prompts_smoke.jsonl",
+   "meta_file": "meta_smoke.jsonl",
+   "n_prompts": 22,
+   "prompts_sha256": "da0dbe7d77299bb7606249cd8c28681ee260da0497528a809fcd655538a2a364",
+   "meta_sha256": "13472dd2064e671d0b2fea167433c337f027c0743beec5cb4638a7928428406e",
+   "total_prompt_words": 31734,
+   "max_prompt_words": 2360
+  },
+  "labels_rule": {
+   "prompts_file": null,
+   "meta_file": "labels_rule.jsonl",
+   "n_prompts": 0,
+   "n_rows": 271,
+   "meta_sha256": "6be00a2a7987cabe672b9c91a54a3b56ac883edf601375ac3609065cd90bd63a"
+  }
+ }
+}

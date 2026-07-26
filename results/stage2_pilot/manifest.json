@@ -1,0 +1,52 @@
+{
+ "created_utc": "2026-07-26T17:53:52Z",
+ "run": "Stage 2 pilot (SPEC D10)",
+ "confirmatory": false,
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "contract": "SPEC.md v1.6",
+ "jobs": {
+  "stage2_pilot_smoke": {
+   "kind": "smoke",
+   "walltime": "00:20:00",
+   "qos": "boost_qos_dbg",
+   "prompt_files": [
+    "smoke"
+   ],
+   "sbatch_local": "results/stage2_pilot/stage2_pilot_smoke.sbatch",
+   "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/stage2_pilot_smoke.sbatch",
+   "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot",
+   "projected_node_hours": 0.065,
+   "status": "bootstrapped",
+   "slurm_job_ids": [],
+   "actual_node_hours": null
+  },
+  "stage2_pilot_full": {
+   "kind": "full",
+   "walltime": "01:00:00",
+   "qos": null,
+   "prompt_files": [
+    "pred_twin_redacted_standard",
+    "pred_twin_redacted_stripped",
+    "pred_twin_named_standard",
+    "pred_twin_named_stripped",
+    "pred_zeroinfo_redacted_standard",
+    "pred_zeroinfo_redacted_stripped",
+    "pred_zeroinfo_named_standard",
+    "pred_zeroinfo_named_stripped",
+    "pred_imposter_redacted_standard",
+    "pred_imposter_redacted_stripped",
+    "classify"
+   ],
+   "sbatch_local": "results/stage2_pilot/stage2_pilot_full.sbatch",
+   "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/stage2_pilot_full.sbatch",
+   "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot",
+   "projected_node_hours": 0.1086,
+   "status": "bootstrapped",
+   "slurm_job_ids": [],
+   "actual_node_hours": null
+  }
+ },
+ "anomalies": [],
+ "notes": [],
+ "updated_utc": "2026-07-26T17:53:52Z"
+}
