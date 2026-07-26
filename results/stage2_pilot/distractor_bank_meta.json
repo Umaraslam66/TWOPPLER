@@ -218,7 +218,7 @@
   "C01488": 5,
   "C00629": 0,
   "C02477": 4,
-  "C01423": 12,
+  "C01423": 11,
   "C02345": 2,
   "C00832": 4,
   "C02030": 3,
@@ -418,11 +418,11 @@
  "skipped": [],
  "n_truncated": 2,
  "stats": {
-  "n_rows": 653,
+  "n_rows": 652,
   "n_donor_subjects_with_items": 167,
   "buckets": {
    "H": 150,
-   "Z": 192,
+   "Z": 191,
    "L": 311
   },
   "answer_words": {
@@ -431,11 +431,11 @@
    "median": 98,
    "p75": 141,
    "max": 345,
-   "mean": 110.2
+   "mean": 110.3
   },
   "entity_density": {
    "min": 0.0,
-   "median": 0.0409,
+   "median": 0.041,
    "max": 0.2667
   },
   "items_per_donor_max": 20
@@ -443,8 +443,8 @@
  "provenance": {
   "source_sha256": {
    "src/doppler/stage2_data.py": "140dd02b5f31c11b",
-   "src/doppler/qa_extract.py": "50e0f0e46fa3dabf",
-   "src/doppler/distractors.py": "9492dac909320d10"
+   "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+   "src/doppler/distractors.py": "61e66bd45940933f"
   },
   "test_turns_sha256": {
    "C00792": "8db2de6173599f00",
@@ -455,6 +455,6 @@
    "C02006": "34c2d1ff9f24e7d5"
   }
  },
- "runtime_secs": 5.0,
+ "runtime_secs": 5.4,
  "cost_usd": 0.0
 }
