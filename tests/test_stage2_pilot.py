@@ -484,7 +484,9 @@ def test_cost_entries_are_written_only_when_node_time_was_spent(tmp_path,
     entry = written[0][0]
     assert entry["run_id"] == "stage2_pilot/prediction"
     assert entry["backend"] == "leonardo-batch"
-    assert entry["cost_usd"] is None          # no price for a batch model
+    # 0.0, not null: costlog's null means "unknown price", but this pilot made
+    # zero API calls by design, so $0.00 is a measured fact.
+    assert entry["cost_usd"] == 0.0
     assert entry["node_hours"] == pytest.approx(0.25 * 40 / 50)
     assert entry["n_calls"] == 1
     assert sum(e["node_hours"] for e, _ in written) == pytest.approx(0.25)
@@ -1019,3 +1021,117 @@ def test_the_context_check_accounts_for_the_larger_reply(pilot):
     ctx = P.context_check(build)
     assert ctx["headroom_tokens"] > 0
     assert ctx["worst_case_tokens_needed"] <= P.MAX_MODEL_LEN
+
+
+# ---------------------------------------------------------------------------
+# The frozen pairwise-exclusion rule (scoring.py)
+# ---------------------------------------------------------------------------
+
+
+def _pair(item_id, cid, arm, completion, correct=0, variant="standard"):
+    return P.score_record(meta(item_id, cid, arm, variant, correct), completion)
+
+
+GOOD = "A: 0.7 B: 0.1 C: 0.1 D: 0.1"     # argmax correct, mass 0.7
+MISS = "A: 0.1 B: 0.7 C: 0.1 D: 0.1"     # argmax wrong, mass 0.1
+JUNK = "I decline to answer."             # parse failure
+
+
+def test_a_parse_failure_in_one_arm_drops_the_item_from_both():
+    """Stage 1E's frozen rule. Without it the arms average different items."""
+    recs = [
+        _pair("i1", "C1", "twin_redacted", GOOD),
+        _pair("i1", "C1", "imposter_redacted", GOOD),
+        _pair("i2", "C1", "twin_redacted", GOOD),
+        _pair("i2", "C1", "imposter_redacted", JUNK),   # kills the i2 PAIR
+    ]
+    a, b, excluded, incomplete = P.pair_records(
+        recs, "twin_redacted", "imposter_redacted", "standard")
+    assert [r["item_id"] for r in a] == ["i1"]
+    assert [r["item_id"] for r in b] == ["i1"]
+    assert excluded == 1 and incomplete == 0
+
+
+def test_the_two_arms_are_always_averaged_over_the_same_items():
+    """The bug the rule prevents: unequal N hiding a denominator change.
+
+    twin answers 2 items correctly at mass 0.7; imposter answers i1 correctly
+    and fails to parse i2. Scoring the arms independently averages twin over
+    {i1,i2} and imposter over {i1} alone, which makes the mass lift 0.0 -- it
+    looks like no difference. Paired, both arms see i1 only and the honest
+    answer is 0.0 as well, but n_better must equal n_worse either way.
+    """
+    recs = [
+        _pair("i1", "C1", "twin_redacted", GOOD),
+        _pair("i1", "C1", "imposter_redacted", GOOD),
+        _pair("i2", "C1", "twin_redacted", GOOD),
+        _pair("i2", "C1", "imposter_redacted", JUNK),
+    ]
+    lift = P.paired_lift(recs, "twin_redacted", "imposter_redacted", "standard")
+    assert lift["n_pairs"] == 1
+    assert lift["n_excluded_pairs"] == 1
+    assert lift["per_subject"][0]["n_pairs"] == 1
+    # Unpaired, twin would be averaged over 2 records and imposter over 1.
+    unpaired_twin = P.accuracy([r for r in recs
+                                if r["arm"] == "twin_redacted"])
+    unpaired_imp = P.accuracy([r for r in recs
+                               if r["arm"] == "imposter_redacted"
+                               and not r["parse_failure"]])
+    assert unpaired_twin["n"] != unpaired_imp["n"]
+
+
+def test_exclusion_changes_the_lift_when_the_dropped_item_is_not_neutral():
+    """The dropped pair carried a real difference; excluding it must move the
+    number, or the rule would be untested cosmetics."""
+    recs = [
+        _pair("i1", "C1", "twin_redacted", GOOD),
+        _pair("i1", "C1", "imposter_redacted", MISS),
+        _pair("i2", "C1", "twin_redacted", MISS),
+        _pair("i2", "C1", "imposter_redacted", JUNK),
+    ]
+    lift = P.paired_lift(recs, "twin_redacted", "imposter_redacted", "standard")
+    # Paired: only i1 survives -> twin 1.0 vs imposter 0.0 -> +1.0
+    assert lift["mean_argmax_delta"] == pytest.approx(1.0)
+    assert lift["n_pairs"] == 1
+    # Unpaired it would have been twin 0.5 vs imposter 0.0 -> +0.5
+    assert lift["mean_argmax_delta"] != pytest.approx(0.5)
+
+
+def test_an_item_missing_from_one_arm_entirely_is_counted_separately():
+    recs = [
+        _pair("i1", "C1", "twin_redacted", GOOD),
+        _pair("i1", "C1", "imposter_redacted", GOOD),
+        _pair("i2", "C1", "twin_redacted", GOOD),          # no imposter row
+    ]
+    _a, _b, excluded, incomplete = P.pair_records(
+        recs, "twin_redacted", "imposter_redacted", "standard")
+    assert excluded == 0 and incomplete == 1
+
+
+def test_pairing_never_crosses_a_subject_or_an_option_variant():
+    recs = [
+        _pair("i1", "C1", "twin_redacted", GOOD),
+        _pair("i1", "C2", "imposter_redacted", GOOD),
+        _pair("i2", "C1", "twin_redacted", GOOD, variant="standard"),
+        _pair("i2", "C1", "imposter_redacted", GOOD, variant="stripped"),
+    ]
+    lift = P.paired_lift(recs, "twin_redacted", "imposter_redacted", "standard")
+    assert lift["n_subjects"] == 0          # nothing pairs within one subject
+    # C1 has i1 and i2 with no standard-variant imposter partner; C2 has an
+    # imposter i1 with no twin partner. Three unpaired items, zero pairs.
+    assert lift["n_incomplete_pairs"] == 3
+    assert lift["n_pairs"] == 0
+
+
+def test_every_stage2_ledger_entry_states_a_measured_zero_api_cost(tmp_path,
+                                                                   monkeypatch):
+    written = []
+    monkeypatch.setattr(P, "append_cost_log",
+                        lambda entry, path: written.append(entry))
+    pred = [dict(P.score_record(meta(), "A: 0.7 B: 0.1 C: 0.1 D: 0.1"),
+                 tokens_in=10, tokens_out=4)]
+    clf = [{"canonical_id": "C1", "parse_failure": False,
+            "tokens_in": 5, "tokens_out": 1}]
+    P._log_cost(pred, clf, 0.5)
+    assert written and all(e["cost_usd"] == 0.0 for e in written)
+    assert all(e["backend"] == "leonardo-batch" for e in written)

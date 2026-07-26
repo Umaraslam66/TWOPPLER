@@ -302,6 +302,21 @@ why two controls in the design are load-bearing rather than decorative:
   at all, which bounds how much of a twin score could be identity rather than
   evidence.
 
+**The zero-information arms are not strictly information-free either.** D8
+strips excerpts, programme and date, but the question itself is the host's real
+words, and one of the seventeen states the subject's occupation outright.
+`C02013:NPR-9480:70` renders, in `zeroinfo_redacted`, as:
+
+    HOST: Well, let me bring that back to you, GUEST, then. You're a professor
+    of social sciences. This is something you've studied. ...
+
+The name is redacted; "professor of social sciences" is not, because it is not a
+name. So the floor arm carries an occupation for 1 of 17 items (6%). It did not
+change anything measurable here -- the floor is at ceiling on every item anyway
+(8.0) -- but "zero-information" is the arm's name, not a proven property, and at
+a harder item set it would need either question-level scrubbing or an
+exclusion rule.
+
 Bar-lock question: does a confirmatory Stage 2 need affiliation redaction, or
 does it accept name-only redaction and lean on the meter? Not a pilot decision.
 
@@ -501,6 +516,48 @@ talking to us").
 
 Recorded as a decision, not an oversight. Redacting them would cost nothing if a
 later review prefers uniformity.
+
+### 8.13 T2's TF-IDF re-fit moved the recorded similarities in the 4th decimal
+
+SPEC v1.7 dropped one row from the distractor bank (652 rows, from 653), which
+re-fits the TF-IDF vocabulary that ranks candidate distractors by question
+similarity. Every recorded `question_similarity` therefore moved slightly.
+
+**Measured shift: at most 2.21e-04, i.e. the fourth decimal place. Zero items
+changed their selected distractors, and zero option sets moved.** The ranking
+is decided by gaps far larger than that -- the observed cosines run 0.016 to
+0.102 -- so the re-fit is a bookkeeping change, not a selection change.
+
+Recorded because it is the kind of drift that looks alarming in a diff and is
+not, and because the reverse case (a re-fit that DOES flip a selection) is a
+real risk once the bank is enlarged, where more rows means closer competitors.
+The numbers in 8.5 are the post-re-fit ones.
+
+### 8.14 Data quality: MediaSum misattributes some speech to the wrong speaker
+
+Found while auditing the grounding: **NPR-6056 turn 34** is labelled
+`NEAL CONAN, host` but its text opens `"Prof. SAMPSON. Yeah, exactly, and that
+goes to my last hypothesis..."`. That is C02013's own speech, attributed to the
+interviewer in the corpus, with the real speaker's name fused into the body of
+the turn. Turn 35 continues the same answer under the same wrong label and
+carries no name prefix at all, so it is not even detectable by inspection.
+
+**Scale, measured rather than guessed.** Scanning all 2,071 turns across the six
+subjects' committed turn files for a host turn whose text opens with a
+speaker-name prefix gives 8 candidates, of which **7 are the word "OK."**
+matching the all-caps pattern and **1 is genuine** (the one above). So roughly
+0.05% of turns on this evidence, which is small but not zero.
+
+Consequence here is mild and bounded: a guest sentence lands on the HOST side of
+a twin exchange, so the model sees the subject's own words labelled `HOST:`.
+It is not an answer leak -- the test interview is a different transcript, and
+guard (a) covers that separately -- and it does not touch the item set. It is a
+corpus artifact, not a bug in any rule of ours, and no rule we could write on
+speaker labels would fix it: the label is simply wrong upstream.
+
+Bar-lock note: at confirmatory scale this deserves a cheap detector (a host turn
+opening with a known guest name form, which is exactly the scan above) and a
+documented decision about whether such turns are dropped or re-attributed.
 
 ### 8.11 Grounding words vs the 2,000-word budget, per subject
 
@@ -1904,26 +1961,63 @@ def _sub(a, b):
     return round(a - b, 6)
 
 
+def pair_records(records: list[dict], better: str, worse: str, variant: str,
+                 keep: set[str] | None = None) -> tuple[list, list, int, int]:
+    """Item-paired records for two arms, under the FROZEN exclusion rule.
+
+    Stage 1E's rule (``src/doppler/scoring.py``, the ``n_excluded_pairs``
+    branch): an item is scored only if BOTH arms answered it and NEITHER arm
+    failed to parse. A parse failure removes the item from **both** arms, not
+    just from the one that failed. Otherwise the two arms are averaged over
+    different item sets and the difference is partly a change of denominator.
+
+    Returns ``(better_rows, worse_rows, n_excluded_parse, n_incomplete)``.
+    """
+    def by_item(arm: str) -> dict:
+        return {r["item_id"]: r for r in records
+                if r["arm"] == arm and r["variant"] == variant
+                and (keep is None or r["item_id"] in keep)}
+    a_map, b_map = by_item(better), by_item(worse)
+    a_rows, b_rows = [], []
+    excluded = incomplete = 0
+    for item_id in sorted(set(a_map) | set(b_map)):
+        a, b = a_map.get(item_id), b_map.get(item_id)
+        if a is None or b is None:
+            incomplete += 1
+            continue
+        if a["parse_failure"] or b["parse_failure"]:
+            excluded += 1
+            continue
+        a_rows.append(a)
+        b_rows.append(b)
+    return a_rows, b_rows, excluded, incomplete
+
+
 def paired_lift(records: list[dict], better: str, worse: str,
                 variant: str, keep: set[str] | None = None) -> dict:
     """Subject-paired mean difference between two arms. NO significance test.
 
     With ~17 items over 5 subjects the pilot is not powered for one, and a
     p-value here would invite exactly the reading the pilot must not support.
+
+    Pairing is per item under :func:`pair_records`, so the two arms are always
+    averaged over the SAME items and ``n_better == n_worse`` by construction.
     """
     per_subject = []
+    excluded_total = incomplete_total = 0
     subjects = sorted({r["canonical_id"] for r in records})
     for cid in subjects:
-        def sel(arm: str) -> list[dict]:
-            return [r for r in records
-                    if r["canonical_id"] == cid and r["arm"] == arm
-                    and r["variant"] == variant
-                    and (keep is None or r["item_id"] in keep)]
-        a, b = accuracy(sel(better)), accuracy(sel(worse))
+        rows = [r for r in records if r["canonical_id"] == cid]
+        a_rows, b_rows, excluded, incomplete = pair_records(
+            rows, better, worse, variant, keep)
+        excluded_total += excluded
+        incomplete_total += incomplete
+        a, b = accuracy(a_rows), accuracy(b_rows)
         if a["n"] == 0 or b["n"] == 0:
             continue
         per_subject.append({
-            "canonical_id": cid, "n_better": a["n"], "n_worse": b["n"],
+            "canonical_id": cid, "n_pairs": a["n"],
+            "n_excluded_pairs": excluded,
             "argmax_delta": _sub(a["argmax_accuracy"], b["argmax_accuracy"]),
             "prob_mass_delta": _sub(a["prob_mass_correct"],
                                     b["prob_mass_correct"]),
@@ -1934,11 +2028,16 @@ def paired_lift(records: list[dict], better: str, worse: str,
     return {
         "better_arm": better, "worse_arm": worse, "variant": variant,
         "n_subjects": len(per_subject),
+        "n_pairs": sum(p["n_pairs"] for p in per_subject),
+        "n_excluded_pairs": excluded_total,
+        "n_incomplete_pairs": incomplete_total,
         "mean_argmax_delta": mean("argmax_delta"),
         "mean_prob_mass_delta": mean("prob_mass_delta"),
         "per_subject": per_subject,
-        "note": "Subject-paired mean. No significance test: the pilot is not "
-                "powered for one.",
+        "note": "Subject-paired mean over item-paired records. A parse failure "
+                "in either arm drops the item from BOTH (Stage 1E's frozen "
+                "exclusion rule, scoring.py). No significance test: the pilot "
+                "is not powered for one.",
     }
 
 
@@ -1957,6 +2056,12 @@ def parse_why(completion: str | None) -> str | None:
         return None
     hits = _WHY_RE.findall(completion.replace("\r\n", "\n"))
     return hits[0].strip() if len(hits) == 1 else None
+
+
+def _zero_api_cost(entry: dict) -> dict:
+    """``cost_usd = 0.0``, not null. See :func:`_log_cost`."""
+    entry["cost_usd"] = 0.0
+    return entry
 
 
 def _node_hours(summary: dict | None) -> float | None:
@@ -2062,7 +2167,7 @@ def cmd_ingest(args) -> int:
         print(f"[ingest] node-hours: {node_hours} billed (sacct) vs "
               f"{measured} in-process (batch_generate summaries)")
     analysis = analyse(all_records, clf_rows, rule_rows, doc, node_hours,
-                       missing_total, summaries)
+                       missing_total, summaries, man)
     analysis["node_hours_source"] = "sacct" if billed else "batch_generate"
     analysis["node_hours_in_process"] = measured
     analysis["jobs"] = {k: {kk: vv for kk, vv in v.items() if kk != "text"}
@@ -2070,23 +2175,28 @@ def cmd_ingest(args) -> int:
     S.write_json(pilot_dir / "analysis.json", analysis)
     print(f"[ingest] analysis -> {pilot_dir / 'analysis.json'}")
 
-    if node_hours:
+    # Re-analysing an already-ledgered run must not write the same spend twice.
+    # The ledger is append-only, so there is no way to undo a duplicate entry
+    # except by appending a correction -- cheaper to not write it.
+    if getattr(args, "skip_cost", False):
+        print("[cost] --skip-cost: re-analysis only, no new ledger entries")
+    elif node_hours:
         _log_cost(all_records, clf_rows, node_hours)
     # The smoke slice spent real node time and produced no scientific output,
     # so it gets its own ledger line rather than being folded into the arms.
     smoke = man.get("jobs", {}).get("stage2_pilot_smoke", {})
-    if smoke.get("actual_node_hours"):
-        append_cost_log(build_cost_entry(
+    if smoke.get("actual_node_hours") and not getattr(args, "skip_cost", False):
+        append_cost_log(_zero_api_cost(build_cost_entry(
             run_id="stage2_pilot/smoke", model=MODEL_LABEL, split=SPLIT_LABEL,
             variant="stage2_smoke", n_persons=0,
             n_calls=SMOKE_PER_SET * len(ARMS) * len(VARIANTS) + SMOKE_CLASSIFY,
             n_retries=0, n_parse_failures=0, tokens_in=0, tokens_out=0,
             backend="leonardo-batch",
             node_hours=float(smoke["actual_node_hours"]),
-        ), RESULTS_DIR / "cost_log.jsonl")
+        )), RESULTS_DIR / "cost_log.jsonl")
         print(f"[cost] smoke: {smoke['actual_node_hours']} node-hours "
               f"(jobs {smoke.get('slurm_job_ids')}), $0.00 API")
-    else:
+    elif not getattr(args, "skip_cost", False):
         print("[cost] no node summaries found; no cost-log line written "
               "(entries are only written when node time was actually spent)")
     return 0
@@ -2103,10 +2213,26 @@ def _sum_node_hours(summaries: list[dict]) -> float | None:
 
 
 def _log_cost(pred: list[dict], clf: list[dict], node_hours: float) -> None:
+    """One ledger line per arm group.
+
+    **results/cost_log.jsonl is APPEND-ONLY, and that includes corrections.**
+    A wrong line is fixed by appending a correcting entry that names what it
+    supersedes, never by deleting or rewriting the original -- an append-only
+    log whose entries can be deleted is not append-only, and a run's history is
+    part of its cost. (This rule was written after the first ingest of this
+    pilot double-counted the smoke hours: those three lines were caught and
+    removed BEFORE they were committed, which is the only window in which
+    removal is acceptable. Anything already committed gets a correcting entry.)
+
+    ``cost_usd`` is set to 0.0 rather than left null. ``costlog`` returns null
+    for a model with no price table, meaning "unknown"; here it is not unknown.
+    This pilot made zero API calls by design, so $0.00 is a measured fact and
+    the GPU cost is carried by ``node_hours``.
+    """
     total_out = sum(r["tokens_out"] for r in pred + clf) or 1
     for label, rows in (("prediction", pred), ("classifier", clf)):
         share = sum(r["tokens_out"] for r in rows) / total_out
-        append_cost_log(build_cost_entry(
+        append_cost_log(_zero_api_cost(build_cost_entry(
             run_id=f"stage2_pilot/{label}", model=MODEL_LABEL,
             split=SPLIT_LABEL, variant="stage2_d8" if label == "prediction"
             else "stage2_d9",
@@ -2117,14 +2243,14 @@ def _log_cost(pred: list[dict], clf: list[dict], node_hours: float) -> None:
             tokens_out=sum(r["tokens_out"] for r in rows),
             backend="leonardo-batch",
             node_hours=round(node_hours * share, 4),
-        ), RESULTS_DIR / "cost_log.jsonl")
+        )), RESULTS_DIR / "cost_log.jsonl")
         print(f"[cost] {label}: {round(node_hours * share, 4)} node-hours, "
               f"{len(rows):,} calls, $0.00 API")
 
 
 def analyse(pred: list[dict], clf: list[dict], rule: list[dict],
             export_doc: dict, node_hours: float | None, missing: int,
-            summaries: list[dict]) -> dict:
+            summaries: list[dict], man: dict | None = None) -> dict:
     out: dict = {
         "pilot": PILOT_BANNER, "confirmatory": False,
         "generated_utc": now(),
@@ -2220,9 +2346,16 @@ def analyse(pred: list[dict], clf: list[dict], rule: list[dict],
             "node_seconds_share": round((node_hours or 0.0) * 3600 * share, 1),
             "cost_usd": 0.0,
         }
+    smoke_hours = (man.get("jobs", {}).get("stage2_pilot_smoke", {})
+                   .get("actual_node_hours")) if man else None
+    smoke_calls = SMOKE_PER_SET * len(ARMS) * len(VARIANTS) + SMOKE_CLASSIFY
     out["total_cost"] = {
-        "node_hours": node_hours, "cost_usd": 0.0,
+        "node_hours": node_hours,               # the full job only
+        "smoke_node_hours": smoke_hours,
+        "pilot_node_hours": round((node_hours or 0.0) + (smoke_hours or 0.0), 4),
+        "cost_usd": 0.0,
         "n_calls": len(pred) + len(clf),
+        "smoke_calls": smoke_calls,
         "api_calls": 0,
     }
     return out
@@ -2485,7 +2618,9 @@ def cmd_report(args) -> int:
             P += [_table(["arm", "N scored", "parse fails", "argmax accuracy",
                           "prob-mass on correct"],
                          [[("**" + arm + "**" if arm == "twin_redacted" else arm),
-                           block[arm]["n"], block[arm]["n_parse_failures"],
+                           block[arm]["n"] or "—",
+                           (block[arm]["n_parse_failures"]
+                            if block[arm]["n_attempted"] else "—"),
                            _fmt(block[arm]["argmax_accuracy"]),
                            _fmt(block[arm]["prob_mass_correct"])]
                           for arm in ARMS]), ""]
@@ -2498,11 +2633,14 @@ def cmd_report(args) -> int:
               "reading this pilot cannot support. See finding 8.8.", ""]
         for filt in ("unfiltered", "adversarial_filtered"):
             P += [f"*{filt.replace('_', ' ')}*", "",
-                  _table(["contrast", "subjects paired", "mean argmax delta",
+                  _table(["contrast", "subjects", "item pairs",
+                          "pairs dropped (parse)", "mean argmax delta",
                           "mean prob-mass delta"],
                          [[f"{l['better_arm']} − {l['worse_arm']}",
-                           l["n_subjects"], _fmt(l["mean_argmax_delta"]),
-                           _fmt(l["mean_prob_mass_delta"])]
+                           l["n_subjects"], l.get("n_pairs", "—"),
+                           l.get("n_excluded_pairs", "—"),
+                           _fmt(l["mean_argmax_delta"], 4),
+                           _fmt(l["mean_prob_mass_delta"], 4)]
                           for l in analysis["lift"][variant][filt]]), ""]
 
     # ---- 6. contamination meter --------------------------------------------
@@ -2535,11 +2673,38 @@ def cmd_report(args) -> int:
                   for cid, v in
                   sorted(analysis["per_subject_cost"].items())]),
           "",
-          f"**Total: {analysis['total_cost']['node_hours']} node-hours, "
-          f"{analysis['total_cost']['n_calls']} model calls, "
-          f"{analysis['total_cost']['api_calls']} API calls, $0.00.** "
-          "Node-seconds are apportioned by each subject's share of output "
-          "tokens in the shared job; the jobs shared one engine init.", ""]
+          f"**Total pilot spend: {_fmt(analysis['total_cost']['pilot_node_hours'], 4)} "
+          "node-hours** "
+          f"(smoke {_fmt(analysis['total_cost']['smoke_node_hours'], 4)} + "
+          f"full {_fmt(analysis['total_cost']['node_hours'], 4)}), "
+          f"**{analysis['total_cost']['n_calls']} scored model calls "
+          f"+ {analysis['total_cost']['smoke_calls']} smoke, "
+          f"{analysis['total_cost']['api_calls']} API calls, $0.00.**", "",
+          f"- full job only (the run these tables come from): "
+          f"{_fmt(analysis['total_cost']['node_hours'], 4)} node-hours, "
+          f"{analysis['total_cost']['n_calls']} calls",
+          f"- smoke slice (two runs, no scientific output): "
+          f"{_fmt(analysis['total_cost']['smoke_node_hours'], 4)} node-hours",
+          f"- billed from sacct (elapsed x allocated nodes); the in-process "
+          f"figure from batch_generate is "
+          f"{_fmt(analysis.get('node_hours_in_process'), 4)} node-hours for "
+          "the full job and understates the bill, because a Booster node is "
+          "billed whole and a ~200 s engine init is most of a short allocation",
+          "",
+          "Per-subject node-seconds are apportioned by each subject's share of "
+          "output tokens in the shared job; both jobs used one engine init.", "",
+          "**Ledger practice.** `results/cost_log.jsonl` is append-only, and "
+          "that includes corrections: a wrong line is fixed by appending a "
+          "correcting entry that names what it supersedes, never by deleting "
+          "or rewriting it — an append-only log whose entries can be deleted is "
+          "not append-only. The first ingest of this pilot apportioned the sum "
+          "of all jobs' hours across the two arms and then wrote a smoke line "
+          "as well, double-counting the smoke (0.5824 against an actual "
+          "0.3544). **Those three lines were caught and removed before they "
+          "were committed**, which is the only window in which removal is "
+          "acceptable; anything already committed gets a correcting entry "
+          "instead. The rule is now stated in `_log_cost` where the entries "
+          "are written.", ""]
     jobs_rows = [[name, e.get("slurm_job_ids"), e.get("status"),
                   e.get("projected_node_hours"), e.get("actual_node_hours")]
                  for name, e in sorted(man.get("jobs", {}).items())]
@@ -2584,9 +2749,9 @@ def cmd_report(args) -> int:
                   ["exported", export_doc["exported_utc"]],
                   ["driver commit", _git_head()]]),
           "", "### Export manifest digests", "",
-          _table(["file", "prompts", "sha256"],
+          _table(["file", "rows", "sha256"],
                  [[info.get("prompts_file") or info["meta_file"],
-                   info.get("n_prompts", "—"),
+                   (info.get("n_prompts") or info.get("n_rows") or "—"),
                    "`" + (info.get("prompts_sha256") or info["meta_sha256"])
                    + "`"]
                   for _, info in sorted(export_doc["files"].items())]),
@@ -2641,6 +2806,9 @@ def main(argv=None) -> int:
 
     p_in = sub.add_parser("ingest")
     p_in.add_argument("--nodedir", required=True)
+    p_in.add_argument("--skip-cost", action="store_true",
+                      help="re-analyse without writing cost-log entries (the "
+                           "ledger is append-only; a re-run would double-bill)")
     p_in.set_defaults(fn=cmd_ingest)
 
     sub.add_parser("report").set_defaults(fn=cmd_report)
