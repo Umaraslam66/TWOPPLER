@@ -175,9 +175,49 @@ def test_expand_variants_adds_single_name_tokens():
                                                    "Hof"]
 
 
-def test_expand_variants_drops_initials_and_short_tokens():
+def test_expand_variants_drops_initials_and_one_character_tokens():
+    assert R.MIN_EXPANDED_TOKEN == 2
     assert "R" not in R.expand_variants(["R. Harris"])
     assert "Harris" in R.expand_variants(["R. Harris"])
+    # The documented residual hole: a real one-character name token.
+    assert R.expand_variants(["Chuck D"]) == ["Chuck D", "Chuck"]
+
+
+def test_two_character_surnames_expand():
+    # Regression: with a 3-character floor this leaked the bare "Ng".
+    text = "Ng told reporters that David Ng was wrong."
+    assert R.redact(text, ["David Ng"]) == (
+        "GUEST told reporters that GUEST was wrong.")
+    with pytest.raises(ValueError, match="redaction failed"):
+        R.assert_redacted(text, ["David Ng"])
+    R.assert_redacted(R.redact(text, ["David Ng"]), ["David Ng"])
+    for surname in ("Ng", "Wu", "Li", "Vo"):
+        assert surname in R.expand_variants([f"David {surname}"])
+
+
+def test_matching_is_blind_to_apostrophe_style():
+    # Variant straight, text curly -- and the other way round.
+    assert R.redact("O’Brien said", ["O'Brien"]) == "GUEST said"
+    assert R.redact("O'Brien said", ["O’Brien"]) == "GUEST said"
+    assert R.redact("O’Brien’s view", ["O'Brien"]) == "GUEST’s view"
+    with pytest.raises(ValueError, match="redaction failed"):
+        R.assert_redacted("O’Brien said", ["O'Brien"])
+    with pytest.raises(ValueError, match="redaction failed"):
+        R.assert_redacted("O'Brien said", ["O’Brien"])
+
+
+def test_redaction_leaves_the_rest_of_the_typography_alone():
+    # Matching is apostrophe-blind; the output is not re-typeset.
+    assert R.redact("O’Brien didn’t know", ["O'Brien"]) == "GUEST didn’t know"
+    assert R.redact("She didn’t know", ["O'Brien"]) == "She didn’t know"
+
+
+def test_inlined_honorifics_match_the_origin_set():
+    # Local-only drift check: the module stays import-free for the node, the
+    # test imports the origin (SPEC D3) and fails if the copy goes stale.
+    from doppler import stage2_data
+
+    assert set(R._HONORIFICS) == {h.lower() for h in stage2_data.HONORIFIC}
 
 
 def test_redact_catches_a_bare_surname_by_default():
@@ -552,6 +592,15 @@ def test_parse_rejects_incomplete_and_malformed_answers():
     assert R.parse_distribution("A B C D") is None
 
 
+def test_parse_rejects_mixed_percent_and_decimal():
+    # Two scales in one answer: no honest reading, so no answer.
+    assert R.parse_distribution("A: 70% B: 0.1 C: 0.1 D: 0.1") is None
+    assert R.parse_distribution("A: 0.7 B: 10% C: 10% D: 10%") is None
+    # All-percent and all-decimal are both fine.
+    assert R.parse_distribution("A: 70% B: 10% C: 10% D: 10%") is not None
+    assert R.parse_distribution("A: 0.7 B: 0.1 C: 0.1 D: 0.1") is not None
+
+
 def test_parse_supports_other_option_counts():
     assert R.parse_distribution("A: 0.5 B: 0.5", n_options=2) == pytest.approx(
         [0.5, 0.5])
@@ -687,6 +736,40 @@ def test_redaction_guard_catches_a_bare_surname_by_default():
     R.assert_redacted(text, variants, expand=False)
     assert R.surviving_variants(text, variants) == ["Hof"]
     assert R.surviving_variants(text, variants, expand=False) == []
+
+
+def test_imposter_arm_has_two_identities_to_scrub():
+    subject = ["Jane Smith"]
+    donor = ["Chidi Okonkwo"]
+    donor_segments = [{"date": "2012-08-11", "program": "TALK OF THE NATION",
+                       "exchanges": [{"host_text": "Mr. Okonkwo, was the "
+                                                   "inspection completed?",
+                                      "guest_text": "It was not."}]}]
+    raw_grounding = R.render_grounding(donor_segments)
+    raw_question = "Ms. Smith, what did that teach you?"
+
+    # Donor's name left in the excerpts: the donor assertion trips.
+    leaky = R.render_prompt("imposter_redacted",
+                            R.redact(raw_question, subject), OPTIONS,
+                            grounding_block=raw_grounding)
+    with pytest.raises(ValueError, match="redaction failed"):
+        R.assert_redacted(leaky, donor)
+
+    # Subject's name left in the question: the donor assertion is happy, so
+    # asserting only the donor list is not enough.
+    half = R.render_prompt("imposter_redacted", raw_question, OPTIONS,
+                           grounding_block=R.redact(raw_grounding, donor))
+    R.assert_redacted(half, donor)
+    with pytest.raises(ValueError, match="redaction failed"):
+        R.assert_redacted(half, subject)
+
+    # Both scrubbed with their own list: both assertions pass.
+    clean = R.render_prompt(
+        "imposter_redacted", R.redact(raw_question, subject),
+        [R.redact(o, subject) for o in OPTIONS],
+        grounding_block=R.redact(raw_grounding, donor))
+    R.assert_redacted(clean, donor)
+    R.assert_redacted(clean, subject)
 
 
 def test_named_arms_are_not_subject_to_the_redaction_guard():

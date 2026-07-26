@@ -81,6 +81,25 @@ over-redaction noise -- a third party who shares the surname turns into "Bill
 GUEST", and a surname that is also an ordinary word takes that word with it --
 beats silent surname leakage in the primary arm. ``expand=False`` is the
 documented opt-out.
+
+The imposter arm has TWO identities to scrub, and neither list covers the
+other. Its excerpts are the donor's, so they are scrubbed with the **donor's**
+variants; its question and options come from the *subject's* test interview and
+the distractor bank, so they are scrubbed with the **subject's** variants. The
+prompt reveals neither name (D8), which means the final rendered string has to
+pass the guard **twice**::
+
+    grounding = redact(render_grounding(donor_segments), donor_variants)
+    question  = redact(raw_question, subject_variants)
+    options   = [redact(o, subject_variants) for o in raw_options]
+    prompt    = render_prompt("imposter_redacted", question, options,
+                              grounding_block=grounding)
+    assert_redacted(prompt, donor_variants)      # donor's name must be gone
+    assert_redacted(prompt, subject_variants)    # and so must the subject's
+
+One assertion is not enough: asserting only the donor list would let the
+subject's name through the question, which is the leak that makes the imposter
+arm look like a twin.
 """
 
 from __future__ import annotations
@@ -128,7 +147,9 @@ MIN_MASS = 0.8
 MAX_MASS = 1.2
 MASS_EPS = 1e-9
 
-#: Enough for a short reason plus the required final line.
+#: Enough for a short reason plus the required final line. Exported for T6:
+#: the pilot driver reads it when it writes the generation config into its
+#: sbatch script, so the cap lives with the prompt that assumes it.
 MAX_OUTPUT_TOKENS = 120
 
 #: Option labels. The pilot always renders 4 (SPEC D6).
@@ -252,42 +273,68 @@ TEMPLATE_SHA256 = sha256(TEMPLATE_TEXT)
 # alternation compiled per variant list, so replacement is a single pass and
 # can never rewrite text it has already replaced.
 
-#: Inlined subset of stage2_data.HONORIFIC (SPEC D3) -- the titles that show up
-#: in front of a guest's name in broadcast transcripts. Copied rather than
-#: imported to keep this file rsync-able on its own.
+#: Inlined copy of stage2_data.HONORIFIC (SPEC D3), lowercased -- the titles
+#: that show up in front of a guest's name in broadcast transcripts. Copied
+#: rather than imported to keep this file rsync-able on its own;
+#: tests/test_stage2_render.py imports the origin and fails on any drift.
+#: Multi-word titles (stage2_data.HONORIFIC_MULTI, "VICE PRESIDENT") are NOT
+#: mirrored: only their last word is swallowed, which costs a stray "Vice " in
+#: front of a GUEST and leaks nothing.
 _HONORIFICS = (
-    "mr", "mrs", "ms", "miss", "mx", "dr", "doctor", "prof", "professor",
-    "sen", "senator", "rep", "representative", "congressman",
-    "congresswoman", "gov", "governor", "pres", "president", "gen",
-    "general", "col", "colonel", "lt", "lieutenant", "sgt", "sergeant",
-    "capt", "captain", "adm", "admiral", "cmdr", "commander", "maj", "major",
-    "rev", "reverend", "fr", "father", "rabbi", "imam", "sheikh", "sheik",
-    "judge", "justice", "mayor", "amb", "ambassador", "secretary", "sec",
-    "sir", "dame", "lord", "lady", "chief", "coach", "pastor",
+    "adm", "admiral", "amb", "ambassador", "archbishop", "assemblyman",
+    "assemblywoman", "ayatollah", "bishop", "brother", "capt", "captain",
+    "cardinal", "chief", "cmdr", "coach", "col", "colonel", "commander",
+    "congressman", "congresswoman", "corporal", "councilman", "councilwoman",
+    "counselor", "cpl", "dame", "dean", "delegate", "det", "detective",
+    "doctor", "dr", "father", "fr", "gen", "general", "gov", "governor",
+    "imam", "judge", "justice", "king", "lady", "lieut", "lieutenant",
+    "lord", "lt", "maj", "major", "mayor", "miss", "mother", "mr", "mrs",
+    "ms", "mx", "officer", "pastor", "pope", "pres", "president", "prince",
+    "princess", "prof", "professor", "queen", "rabbi", "rep",
+    "representative", "rev", "reverend", "sec", "secretary", "sen",
+    "senator", "sergeant", "sgt", "sheik", "sheikh", "sir", "sister",
+    "superintendent",
 )
 
 #: An optional title in front of a matched name, so "Senator Smith" collapses
 #: to one GUEST instead of leaving "Senator GUEST" behind.
 _HONORIFIC_PREFIX = r"(?:(?:" + "|".join(_HONORIFICS) + r")\.?\s+)?"
 
-#: A name token must not start or end inside a longer word. The apostrophe in
-#: the lookbehind keeps "Brien" from matching inside "O'Brien"; the trailing
-#: check deliberately allows an apostrophe, so a possessive redacts as
+#: A name token must not start or end inside a longer word. Both apostrophes in
+#: the lookbehind keep "Brien" from matching inside "O'Brien" / "O’Brien"; the
+#: trailing check deliberately allows an apostrophe, so a possessive redacts as
 #: "GUEST's" rather than being missed.
 _LEFT_EDGE = r"(?<![\w'’])"
 _RIGHT_EDGE = r"(?![\w])"
 
+#: Matching is apostrophe-blind: transcripts and the pool disagree about curly
+#: vs straight, and "O’Brien" must not hide from a variant written "O'Brien".
+#: The swap is 1:1 by character, so match offsets in the normalised copy line
+#: up with the original text and :func:`redact` can return the original
+#: characters everywhere it did not replace.
+_CURLY_APOSTROPHE = "’"
+_STRAIGHT_APOSTROPHE = "'"
+
 #: Single name tokens shorter than this are not treated as name variants by
-#: :func:`expand_variants` -- initials ("R.") and two-letter particles match
-#: far too much ordinary text.
-MIN_EXPANDED_TOKEN = 3
+#: :func:`expand_variants`. Two characters is the floor because "Ng", "Wu",
+#: "Li" and "Vo" are real surnames that a bare-surname mention would otherwise
+#: leak. One-character tokens stay out: an initial ("R." in "R. Harris") would
+#: match every stray letter in the corpus. The residual hole is the person
+#: whose name token really is one character ("Chuck D") -- expansion cannot
+#: reach it, and it needs an explicit variant in the pool row instead.
+MIN_EXPANDED_TOKEN = 2
 
 _TOKEN_RE = re.compile(r"[^\W\d_]+", re.UNICODE)
 
 
+def _straighten(text: str) -> str:
+    """Curly apostrophes to straight ones. Length-preserving by construction."""
+    return (text or "").replace(_CURLY_APOSTROPHE, _STRAIGHT_APOSTROPHE)
+
+
 def _strip_honorifics(variant: str) -> str:
     """Drop leading titles: "Dr. Jane Smith" -> "Jane Smith"."""
-    name = _norm_ws(variant)
+    name = _straighten(_norm_ws(variant))
     while True:
         parts = name.split(None, 1)
         if len(parts) < 2:
@@ -304,10 +351,12 @@ def variant_forms(variants) -> list:
     pool variant of "Dr. Jane Smith" also matches a bare "Jane Smith" in the
     text. Ordering is ``(-length, casefolded)``: longest first is D8's rule,
     and the lexicographic tie-break makes the compiled pattern deterministic.
+    Curly apostrophes are straightened here, so a pool variant written
+    "O’Brien" and one written "O'Brien" produce the same matcher.
     """
     forms: dict = {}
     for variant in variants or ():
-        for form in (_norm_ws(variant), _strip_honorifics(variant)):
+        for form in (_straighten(_norm_ws(variant)), _strip_honorifics(variant)):
             if form:
                 forms.setdefault(form.casefold(), form)
     return sorted(forms.values(), key=lambda f: (-len(f), f.casefold()))
@@ -318,8 +367,8 @@ def expand_variants(variants, min_token: int = MIN_EXPANDED_TOKEN) -> list:
 
     "Frederic Hof" yields "Frederic" and "Hof" as well, which is what stops a
     bare surname in the transcript body from surviving redaction. Tokens
-    shorter than ``min_token`` characters, and tokens containing digits, are
-    left out.
+    shorter than ``min_token`` characters (default 2, see
+    :data:`MIN_EXPANDED_TOKEN`), and tokens containing digits, are left out.
 
     This is the default for :func:`redact` and :func:`assert_redacted`, and it
     over-redacts on purpose: a third party who shares a name token is partly
@@ -335,6 +384,24 @@ def expand_variants(variants, min_token: int = MIN_EXPANDED_TOKEN) -> list:
             if len(token) >= min_token:
                 extra.append(token)
     return variant_forms(forms + extra)
+
+
+def _sub_original(pattern, text: str, replacement: str) -> str:
+    """Match on the apostrophe-normalised copy, splice from the original.
+
+    ``_straighten`` swaps one character for one character, so a span found in
+    the normalised copy is the same span in ``text``. Everything the pattern
+    did not touch therefore keeps its original curly apostrophes: matching is
+    apostrophe-blind without the renderer quietly re-typesetting the corpus.
+    """
+    out = []
+    last = 0
+    for match in pattern.finditer(_straighten(text)):
+        out.append(text[last:match.start()])
+        out.append(replacement)
+        last = match.end()
+    out.append(text[last:])
+    return "".join(out)
 
 
 def _variant_regex(variants, expand: bool = True):
@@ -370,7 +437,7 @@ def redact(text: str, variants, placeholder: str = PLACEHOLDER,
     pattern = _variant_regex(variants, expand=expand)
     if pattern is None:
         return text or ""
-    return pattern.sub(placeholder, text or "")
+    return _sub_original(pattern, text or "", placeholder)
 
 
 # ---------------------------------------------------------------------------
@@ -416,6 +483,10 @@ def render_grounding(segments, budget_words: int = GROUNDING_BUDGET_WORDS) -> st
     The kept exchanges are then rendered chronologically, grouped under their
     interview headers, with a blank line between exchanges so a skipped one in
     the middle cannot read as an uninterrupted conversation.
+
+    A segment with no date sorts as the oldest one (empty string sorts before
+    any ISO date), so it is filled last and rendered first. D2 always supplies
+    a date; this is what happens if one ever goes missing.
 
     Budget counts speech only (host + guest words); headers are on top of it.
     Raises ``ValueError`` if nothing can be selected -- an empty excerpt block
@@ -553,8 +624,16 @@ def render_prompt(arm: str, question: str, options, grounding_block=None,
 # Tolerant about how the model dresses the line -- ":", ")", "=", "-", ".", a
 # missing space, commas between pairs, one pair per line, percent signs, prose
 # before it -- and strict about everything that could change the answer: each
-# label exactly once (adaptive_render.parse_interest_distribution's rule), and
-# a stated mass inside [0.8, 1.2] or the answer is not scored (D8).
+# label exactly once, and a stated mass inside [0.8, 1.2] or the answer is not
+# scored (D8).
+#
+# Parity with adaptive_render.parse_interest_distribution is deliberate but not
+# total. Same: duplicate key -> failure, reordering tolerated, missing key ->
+# failure, normalise at the end. Different: that parser rejects a completion
+# carrying any key outside 1-5, this one *ignores* labels past n_options,
+# because an "E: 0.0" line is a formatting habit rather than a claim about the
+# four options. Different too: it renormalises any positive mass, while D8
+# fixes the [0.8, 1.2] window for this task.
 
 _PAIR_RE = re.compile(
     r"(?<![\w])([A-Za-z])\s*[:=).\]\-]\s*(\d*\.?\d+)\s*(%?)"
@@ -582,13 +661,17 @@ def parse_distribution(completion, n_options: int = 4):
     Returns a list of ``n_options`` probabilities in label order, renormalized
     to sum to 1, or ``None`` on parse failure (D8).
 
-    Strict, on the same rule as ``adaptive_render.parse_interest_distribution``
+    Strict on repeats, like ``adaptive_render.parse_interest_distribution``
     (orchestrator decision): every label must appear **exactly once** in the
     whole completion. A repeated label is ambiguous -- a model that states two
     distributions has not answered -- and is a parse failure even when a
     complete set precedes it. Order inside the answer does not matter, and
     labels past ``n_options`` are ignored. Percentages are divided by 100 per
     value, so "A: 70%" is 0.7.
+
+    The percent sign is all-or-nothing: if any value carries one, every value
+    must, or the completion is mixing two scales ("A: 70% B: 0.1 ...") and
+    there is no honest way to read it. Parse failure, not a guess.
 
     Other failure cases: a missing label, a negative number (the minus sign
     breaks the pair, so the label never registers), and any stated mass outside
@@ -603,11 +686,15 @@ def parse_distribution(completion, n_options: int = 4):
     if not completion:
         return None
     stated: dict = {}
+    percents: list = []
     for label, value, is_percent in _pairs(completion, labels):
         if label in stated:
             return None
         stated[label] = value / 100.0 if is_percent else value
+        percents.append(is_percent)
     if set(stated) != set(labels):
+        return None
+    if any(percents) and not all(percents):
         return None
     values = [stated[label] for label in labels]
     total = sum(values)
@@ -632,11 +719,12 @@ _STRIP = "\"'`.,;:!?()[]{}<>-–—…“”‘’"
 def _norm_tokens(text: str) -> list:
     """Casefolded whitespace tokens with edge punctuation removed.
 
-    Makes the shingle guard insensitive to quoting and sentence punctuation:
-    "the vote, and" and "the vote and" share their words.
+    Makes the shingle guard insensitive to quoting, sentence punctuation and
+    apostrophe style: "the vote, and" and "the vote and" share their words, and
+    so do "don't" and "don’t".
     """
     out = []
-    for token in (text or "").split():
+    for token in _straighten(text).split():
         stripped = token.casefold().strip(_STRIP)
         if stripped:
             out.append(stripped)
@@ -691,8 +779,10 @@ def surviving_variants(rendered: str, variants, expand: bool = True) -> list:
     if pattern is None or not rendered:
         return []
     seen: dict = {}
-    for match in pattern.finditer(rendered):
-        seen.setdefault(match.group(0).casefold(), match.group(0))
+    for match in pattern.finditer(_straighten(rendered)):
+        # Report what is really in the string, not the normalised copy.
+        original = rendered[match.start():match.end()]
+        seen.setdefault(original.casefold(), original)
     return list(seen.values())
 
 
