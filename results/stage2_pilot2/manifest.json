@@ -16,9 +16,38 @@
    "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/stage2_pilot2_gate.sbatch",
    "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot2",
    "projected_node_hours": 0.063,
-   "status": "bootstrapped",
-   "slurm_job_ids": [],
-   "actual_node_hours": null
+   "status": "completed",
+   "slurm_job_ids": [
+    "50378388",
+    "50378706"
+   ],
+   "actual_node_hours": 0.1597,
+   "notes": [
+    {
+     "utc": "2026-07-26T20:45:05Z",
+     "note": "phase 1 gate, 10 zeroinfo_redacted standard prompts, boost_qos_dbg"
+    },
+    {
+     "utc": "2026-07-26T20:50:18Z",
+     "note": "resubmit after the 50378388 node fault"
+    }
+   ],
+   "sacct": [
+    {
+     "job_id": "50378388",
+     "state": "FAILED",
+     "elapsed": "00:03:21",
+     "alloc_nodes": 1,
+     "node_hours": 0.0558
+    },
+    {
+     "job_id": "50378706",
+     "state": "COMPLETED",
+     "elapsed": "00:06:14",
+     "alloc_nodes": 1,
+     "node_hours": 0.1039
+    }
+   ]
   },
   "stage2_pilot2_pred": {
    "kind": "prediction",
@@ -45,7 +74,13 @@
    "actual_node_hours": null
   }
  },
- "anomalies": [],
+ "anomalies": [
+  {
+   "utc": "2026-07-26T20:50:02Z",
+   "job": "stage2_pilot2_gate",
+   "note": "slurm 50378388 on lrdn3356 FAILED at vLLM engine init: worker rank 2 raised torch.AcceleratorError 'CUDA-capable device(s) is/are busy or unavailable' (cudaErrorDevicesUnavailable). Node-level fault, not a prompt/config fault -- identical sbatch, model, tp=4 and max-model-len ran clean in pilot 1 (slurm 50359261). 00:03:21 x 1 node = 0.0558 node-hours billed and wasted. Resubmitting."
+  }
+ ],
  "notes": [],
- "updated_utc": "2026-07-26T20:34:40Z"
+ "updated_utc": "2026-07-26T20:56:58Z"
 }

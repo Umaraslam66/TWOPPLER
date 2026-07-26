@@ -1,0 +1,232 @@
+{
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "phase": "gate",
+ "ingested_utc": "2026-07-26T20:58:49Z",
+ "arm": "zeroinfo_redacted",
+ "variant": "standard",
+ "n_candidates": 10,
+ "n_parsed": 8,
+ "n_parse_failures": 2,
+ "n_missing_completions": 0,
+ "pre_gate_zeroinfo_argmax_accuracy": 1.0,
+ "pre_gate_mean_prob_mass_correct": 0.9375,
+ "pre_gate_note": "This is the instrument-difficulty number. Post-gate zero-info accuracy is ~0 by construction (same model, temperature 0, same prompt).",
+ "n_rejected": 8,
+ "rejected_item_ids": [
+  "C00792:NPR-19884:10",
+  "C00792:NPR-19884:2",
+  "C02006:NPR-14829:26",
+  "C02006:NPR-14829:29",
+  "C02124:NPR-12184:2",
+  "C02124:NPR-12184:4",
+  "C02124:NPR-12184:6",
+  "C02124:NPR-12184:8"
+ ],
+ "records": [
+  {
+   "item_id": "C00792:NPR-19884:2",
+   "canonical_id": "C00792",
+   "correct_index": 1,
+   "raw_response": "The host's question asks specifically about the relationship between the groups that lost Aleppo and the Islamic State (ISIS)—whether they are likely to align or if they are distinct and opposed.\n\nOption A discusses U.S. boots on the ground and rescue missions, which does not answer the question about group alignment.\nOption B directly addresses the ideological and strategic differences between Syrian nationalists and ISIS, explaining why alignment would be difficult. This is a direct answer to the host's question.\nOption C discusses civilian protection and the migration crisis, which is a dif",
+   "parsed": true,
+   "argmax_correct": true,
+   "p_correct": 0.85,
+   "argmax_index": 1,
+   "margin": 0.8,
+   "distribution": [
+    0.05,
+    0.85,
+    0.05,
+    0.05
+   ],
+   "missing_completion": false
+  },
+  {
+   "item_id": "C00792:NPR-19884:6",
+   "canonical_id": "C00792",
+   "correct_index": 1,
+   "raw_response": "The host's question asks \"To what extent\" the situation in Syria is an \"American responsibility\" due to \"things the U.S. didn't do.\" \n\nOption B directly addresses the \"responsibility\" and the \"failure... to take any steps at all\" (the things the U.S. didn't do), making it the most logically consistent and direct answer to the specific phrasing of the question. Option A discusses the reasons for the president's instincts, Option C discusses specific military actions (things the U.S. *did* do), and Option D discusses the reasons why the U.S. *should* act now.\n\nA: 0.10\nB: 0.70\nC: 0.05\nD: 0.15\n\nA:",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C00792:NPR-19884:10",
+   "canonical_id": "C00792",
+   "correct_index": 0,
+   "raw_response": "The host's question asks specifically about the \"opportunity to change course in Syria\" in the context of a transition or a specific political shift (implied by the phrasing \"because of that\"). \n\nOption A directly addresses the \"opportunity\" and mentions \"President-elect Trump,\" which fits the context of a transition period where a change in course would be discussed. Option B focuses on the current President's military strategy. Option C discusses the refugee crisis and British interest. Option D discusses alliances and the humanitarian imperative.\n\nOption A is the most logically consistent r",
+   "parsed": true,
+   "argmax_correct": true,
+   "p_correct": 0.85,
+   "argmax_index": 0,
+   "margin": 0.8,
+   "distribution": [
+    0.85,
+    0.05,
+    0.05,
+    0.05
+   ],
+   "missing_completion": false
+  },
+  {
+   "item_id": "C00792:NPR-19884:13",
+   "canonical_id": "C00792",
+   "correct_index": 2,
+   "raw_response": "The host's question asks specifically whether there is still enough of a \"nationalist movement\" to support. \n\nOption C is the only response that directly answers the \"Yes/No\" nature of the question (\"Yes, I believe there is\") and immediately addresses the premise of supporting a movement, while then pivoting to the specific area of support (civilian protection) and the geopolitical consequences (Brexit and the migrant crisis). Options A, B, and D focus on the migration crisis or military strategy without directly answering the host's specific question about the existence of a supportable natio",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02124:NPR-12184:2",
+   "canonical_id": "C02124",
+   "correct_index": 3,
+   "raw_response": "The host's question asks specifically about the popularity of a field marshal in Egypt. \n\n- Option A discusses a recording/voice-over regarding the Arab League and Ayman Al-Zawahiri, which is unrelated to the popularity of a field marshal.\n- Option B discusses television shows and popular culture in the Arab world, which is unrelated.\n- Option C discusses Colin Powell, Condoleezza Rice, and Ariel Sharon, focusing on diplomatic pressure in the Israeli-Palestinian conflict.\n- Option D directly addresses the popularity of a military general (field marshal) in Egypt, mentioning the opposition to t",
+   "parsed": true,
+   "argmax_correct": true,
+   "p_correct": 1.0,
+   "argmax_index": 3,
+   "margin": 1.0,
+   "distribution": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02124:NPR-12184:4",
+   "canonical_id": "C02124",
+   "correct_index": 2,
+   "raw_response": "The host's question specifically asks about General Sisi's chances of winning an election. \n\n- Option A discusses Ayman Al-Zawahiri and Osama bin Laden, which is unrelated.\n- Option B discusses parliamentary seats and a strategy of \"participation, not domination,\" likely referring to the Muslim Brotherhood, but does not directly answer the question about Sisi's victory.\n- Option C directly answers the question (\"No doubt whatsoever\"), mentions Abdel Fattah el-Sisi by name, and discusses the implications of a military general becoming president of Egypt.\n- Option D discusses a conference delay ",
+   "parsed": true,
+   "argmax_correct": true,
+   "p_correct": 0.95,
+   "argmax_index": 2,
+   "margin": 0.9,
+   "distribution": [
+    0.0,
+    0.05,
+    0.95,
+    0.0
+   ],
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02124:NPR-12184:6",
+   "canonical_id": "C02124",
+   "correct_index": 2,
+   "raw_response": "The host's question asks about the level of concern an Egyptian government would have regarding the American reaction to its rule.\n\n- **Option A** discusses Iraqi elections, Iyad Allawi, and the Iraqi National Accord. It is irrelevant to Egypt.\n- **Option B** discusses the Arab League, the UN Security Council, and Israel. While it mentions the Arab League, it does not answer the specific question about the Egyptian government's concern with the US reaction to its rule.\n- **Option C** directly addresses the relationship between the US and Egypt, mentioning the $1.3 billion in military aid, the ",
+   "parsed": true,
+   "argmax_correct": true,
+   "p_correct": 1.0,
+   "argmax_index": 2,
+   "margin": 1.0,
+   "distribution": [
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02124:NPR-12184:8",
+   "canonical_id": "C02124",
+   "correct_index": 1,
+   "raw_response": "The host's question specifically asks about the trajectory of Egypt, contrasting a previous \"people's uprising\" (referring to the 2011 Arab Spring) with the current state of affairs. \n\nOption A discusses the Arab League and Israel, which does not answer the question.\nOption B directly addresses the nature of the uprising versus a revolution, the role of the military, and the failures of the Muslim Brotherhood/Morsi, providing a direct historical explanation for \"how this happened.\"\nOption C discusses Colin Powell and Ariel Sharon, which is unrelated to the Egyptian uprising.\nOption D discusses",
+   "parsed": true,
+   "argmax_correct": true,
+   "p_correct": 0.85,
+   "argmax_index": 1,
+   "margin": 0.8,
+   "distribution": [
+    0.05,
+    0.85,
+    0.05,
+    0.05
+   ],
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02006:NPR-14829:26",
+   "canonical_id": "C02006",
+   "correct_index": 3,
+   "raw_response": "The host's question is specifically about Brexit, the political process of the United Kingdom leaving the European Union. \n\n- Option A discusses a legal case involving abuse and a tape, which is unrelated to Brexit.\n- Option B is a eulogy for a man named Harry, unrelated to Brexit.\n- Option C discusses the marriage and relationship of Harry and Tina Brown, unrelated to Brexit.\n- Option D directly addresses the House of Commons, the nature of the Brexit vote, and the distinction between a \"hard Brexit\" and a \"soft Brexit.\"\n\nTherefore, Option D is the only logically consistent answer to the ques",
+   "parsed": true,
+   "argmax_correct": true,
+   "p_correct": 1.0,
+   "argmax_index": 3,
+   "margin": 1.0,
+   "distribution": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02006:NPR-14829:29",
+   "canonical_id": "C02006",
+   "correct_index": 2,
+   "raw_response": "The host's question specifically asks about an \"election result\" and whether it could be \"good, better, [or] less bad.\" \n\n- Option A discusses a client, a \"booty call,\" and collecting money (legal/criminal defense context).\n- Option B discusses a \"horrible thing\" caught on tape and cases of abuse (legal/social commentary context).\n- Option C directly addresses the \"election result,\" mentions \"negotiations,\" and discusses the \"path\" the country/entity is on, which logically follows the host's prompt.\n- Option D discusses \"witness statements\" and \"booking reports\" (legal/criminal defense context",
+   "parsed": true,
+   "argmax_correct": true,
+   "p_correct": 1.0,
+   "argmax_index": 2,
+   "margin": 1.0,
+   "distribution": [
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "missing_completion": false
+  }
+ ],
+ "parse_failure_diagnostic": {
+  "note": "DIAGNOSTIC ONLY -- the frozen D8 parser's verdict stands and the gate decision used it. This says what the rejected replies contained.",
+  "n_parse_failures": 2,
+  "n_recoverable": 2,
+  "n_recoverable_argmax_correct": 2,
+  "records": [
+   {
+    "item_id": "C00792:NPR-19884:6",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.7,
+    "distribution": [
+     0.1,
+     0.7,
+     0.05,
+     0.15
+    ]
+   },
+   {
+    "item_id": "C00792:NPR-19884:13",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.8,
+    "distribution": [
+     0.05,
+     0.1,
+     0.8,
+     0.05
+    ]
+   }
+  ]
+ },
+ "node_hours": 0.1597,
+ "node_hours_source": "sacct",
+ "node_hours_in_process": 0.0576,
+ "tokens_in": 5689,
+ "tokens_out": 1912
+}

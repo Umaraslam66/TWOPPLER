@@ -60,6 +60,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 import time
 from datetime import datetime, timezone
@@ -774,6 +775,69 @@ def score_gate(meta: dict, completion: str | None) -> dict:
             "distribution": [float(p) for p in dist]}
 
 
+_DIST_LINE_RE = re.compile(r"^\s*A\s*[::]", re.MULTILINE)
+
+
+def relaxed_reread(completion: str | None, n: int = 4):
+    """DIAGNOSTIC ONLY. Re-read a reply the frozen D8 parser rejected.
+
+    Not a rescore and never used for a gate decision. D8's parser renormalises
+    only when the stated mass lands in [0.8, 1.2], so a reply that prints the
+    SAME distribution twice -- once as four lines, once as one -- sums to ~2.0
+    and is thrown away even though the model answered clearly. That is a
+    measurement artifact, not a refusal, and counting it as a parse failure
+    understates how often the arm actually answered.
+
+    This re-reads the LAST distribution line alone. It exists so a report can
+    say what the discarded replies contained; changing the frozen parser is a
+    bar-lock decision, not this driver's.
+    """
+    if not completion:
+        return None
+    starts = [m.start() for m in _DIST_LINE_RE.finditer(completion)]
+    if not starts:
+        return None
+    return R.parse_distribution(completion[starts[-1]:], n)
+
+
+def diagnose_parse_failures(records: list[dict], metas: list[dict],
+                            texts: dict[int, str | None]) -> dict:
+    """What the frozen parser threw away, so the report can be honest."""
+    by_item = {m["item_id"]: m for m in metas}
+    rows = []
+    for rec in records:
+        if rec["parsed"]:
+            continue
+        meta = by_item[rec["item_id"]]
+        dist = relaxed_reread(texts.get(int(meta["idx"])),
+                              int(meta.get("n_options") or 4))
+        if dist is None:
+            rows.append({"item_id": rec["item_id"], "recoverable": False})
+            continue
+        correct = int(meta["correct_index"])
+        argmax = max(range(len(dist)), key=lambda i: dist[i])
+        rows.append({
+            "item_id": rec["item_id"], "recoverable": True,
+            "reason": "the model printed the distribution twice, so the stated "
+                      "mass is ~2.0 and D8's renormalise window [0.8, 1.2] "
+                      "rejects it",
+            "argmax_correct": bool(argmax == correct),
+            "p_correct": float(dist[correct]),
+            "distribution": [float(p) for p in dist],
+        })
+    recoverable = [r for r in rows if r["recoverable"]]
+    return {
+        "note": "DIAGNOSTIC ONLY -- the frozen D8 parser's verdict stands and "
+                "the gate decision used it. This says what the rejected "
+                "replies contained.",
+        "n_parse_failures": len(rows),
+        "n_recoverable": len(recoverable),
+        "n_recoverable_argmax_correct": sum(1 for r in recoverable
+                                            if r["argmax_correct"]),
+        "records": rows,
+    }
+
+
 def billed_node_hours(out_dir: Path, job: str) -> float | None:
     """sacct-billed node-hours for a job, as recorded by ``bill``/``record``.
 
@@ -802,12 +866,14 @@ def cmd_ingest_gate(args) -> int:
         raise fatal("duplicate idx in completions_gate.jsonl")
 
     records, tokens_in, tokens_out, missing = [], 0, 0, 0
+    texts: dict[int, str | None] = {}
     for meta in metas:
         row = by_idx.get(int(meta["idx"]))
         if row is None:
             missing += 1
         tokens_in += int((row or {}).get("tokens_in", 0) or 0)
         tokens_out += int((row or {}).get("tokens_out", 0) or 0)
+        texts[int(meta["idx"])] = _completion_text(row)
         rec = score_gate(meta, _completion_text(row))
         rec["missing_completion"] = row is None
         records.append(rec)
@@ -839,6 +905,7 @@ def cmd_ingest_gate(args) -> int:
         "n_rejected": len(solved),
         "rejected_item_ids": sorted(r["item_id"] for r in solved),
         "records": records,
+        "parse_failure_diagnostic": diagnose_parse_failures(records, metas, texts),
         "node_hours": node_hours,
         "node_hours_source": "sacct" if billed is not None else "batch_generate",
         "node_hours_in_process": in_process,
@@ -865,6 +932,13 @@ def cmd_ingest_gate(args) -> int:
     print(f"[ingest-gate] PRE-gate zero-info argmax accuracy "
           f"{doc['pre_gate_zeroinfo_argmax_accuracy']}")
     print(f"[ingest-gate] {len(solved)} items rejected by the gate")
+    diag = doc["parse_failure_diagnostic"]
+    if diag["n_recoverable"]:
+        print(f"[ingest-gate] DIAGNOSTIC: {diag['n_recoverable']} of "
+              f"{diag['n_parse_failures']} parse failures are readable after "
+              f"the frozen window rejected a doubled distribution line; "
+              f"{diag['n_recoverable_argmax_correct']} of those are "
+              "argmax-CORRECT and would also have been gate rejections")
     return 0
 
 

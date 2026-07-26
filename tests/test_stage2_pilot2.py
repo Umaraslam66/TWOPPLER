@@ -733,3 +733,59 @@ def test_re_billing_the_same_job_id_does_not_double_count_it(rig, monkeypatch):
         "jobs"]["stage2_pilot2_gate"]
     assert len(entry["sacct"]) == 1
     assert entry["actual_node_hours"] == pytest.approx(0.0867, abs=1e-4)
+
+
+# ---------------------------------------------------------------------------
+# The doubled-distribution parse artifact
+# ---------------------------------------------------------------------------
+
+
+DOUBLED = ("Reasoning about the options.\n\n"
+           "A: 0.10\nB: 0.70\nC: 0.05\nD: 0.15\n\n"
+           "A: 0.10 B: 0.70 C: 0.05 D: 0.15")
+
+
+def test_the_frozen_parser_rejects_a_doubled_distribution(monkeypatch):
+    # Not a bug in this driver -- D8's renormalise window is [0.8, 1.2] and a
+    # doubled line states a mass of ~2.0. Pinned so nobody "fixes" it here.
+    assert R.parse_distribution(DOUBLED, 4) is None
+    assert P2.score_gate(_meta(correct=1), DOUBLED)["parsed"] is False
+
+
+def test_the_diagnostic_recovers_what_the_doubled_reply_actually_said():
+    got = P2.relaxed_reread(DOUBLED)
+    assert got == pytest.approx([0.10, 0.70, 0.05, 0.15])
+
+
+def test_the_diagnostic_returns_nothing_for_a_reply_with_no_distribution():
+    assert P2.relaxed_reread("I refuse to answer.") is None
+    assert P2.relaxed_reread(None) is None
+
+
+def test_the_diagnostic_reports_a_recovered_reply_as_argmax_correct():
+    metas = [{"idx": 0, "item_id": "C1:T:3", "canonical_id": "C1",
+              "correct_index": 1, "n_options": 4}]
+    records = [P2.score_gate(metas[0], DOUBLED)]
+    diag = P2.diagnose_parse_failures(records, metas, {0: DOUBLED})
+    assert diag["n_parse_failures"] == 1
+    assert diag["n_recoverable"] == 1
+    assert diag["n_recoverable_argmax_correct"] == 1
+    assert "DIAGNOSTIC ONLY" in diag["note"]
+
+
+def test_the_diagnostic_marks_an_unreadable_reply_as_unrecoverable():
+    metas = [{"idx": 0, "item_id": "C1:T:3", "canonical_id": "C1",
+              "correct_index": 1, "n_options": 4}]
+    records = [P2.score_gate(metas[0], "no numbers here")]
+    diag = P2.diagnose_parse_failures(records, metas, {0: "no numbers here"})
+    assert diag["n_recoverable"] == 0
+    assert diag["records"][0]["recoverable"] is False
+
+
+def test_a_parsed_record_never_appears_in_the_diagnostic():
+    metas = [{"idx": 0, "item_id": "C1:T:3", "canonical_id": "C1",
+              "correct_index": 1, "n_options": 4}]
+    good = "A: 0.05 B: 0.85 C: 0.05 D: 0.05"
+    diag = P2.diagnose_parse_failures([P2.score_gate(metas[0], good)], metas,
+                                      {0: good})
+    assert diag["n_parse_failures"] == 0
