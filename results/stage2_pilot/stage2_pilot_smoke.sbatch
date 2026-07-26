@@ -12,7 +12,7 @@
 #
 # Stage 2 PILOT -- smoke slice spanning every prompt set (debug QOS)
 # PILOT -- pipeline validation on dev subjects; no research conclusions.
-# Projected 0.0650 node-hours. One engine init; every prompt file runs
+# Projected 0.0653 node-hours. One engine init; every prompt file runs
 # through it in sequence. Re-submitting skips any file that already has output.
 set -euo pipefail
 D=/leonardo_work/AIFAC_P02_548/DOPPLER

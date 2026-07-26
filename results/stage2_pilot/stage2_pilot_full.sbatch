@@ -11,7 +11,7 @@
 #
 # Stage 2 PILOT -- all 10 prediction sets + the follow-up classifier
 # PILOT -- pipeline validation on dev subjects; no research conclusions.
-# Projected 0.1086 node-hours. One engine init; every prompt file runs
+# Projected 0.1112 node-hours. One engine init; every prompt file runs
 # through it in sequence. Re-submitting skips any file that already has output.
 set -euo pipefail
 D=/leonardo_work/AIFAC_P02_548/DOPPLER

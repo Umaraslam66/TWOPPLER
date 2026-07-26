@@ -8,7 +8,7 @@
  "temperature": 0.0,
  "tp": 4,
  "max_model_len": 8192,
- "max_model_len_note": "Stage 1E ran at 2048 and the T6 brief named 4096. Neither fits: the longest pilot prompt is 3315 words (a 2,000-word grounding block plus C02013's 1,135-word option block), which needs up to 6916 tokens at the measured worst-case 2.05 tokens/word. DEVIATION, flagged for sign-off.",
+ "max_model_len_note": "Stage 1E ran at 2048 and the T6 brief named 4096. Neither fits: the longest pilot prompt is 3315 words (a 2,000-word grounding block plus C02013's 1,135-word option block), which needs up to 7308 tokens at the measured worst-case 2.05 tokens/word. DEVIATION, flagged for sign-off.",
  "gpu_mem_util": 0.92,
  "arms": [
   "twin_redacted",
@@ -40,8 +40,8 @@
   "prediction": {
    "n_calls": 170,
    "tokens_in_est": 567042,
-   "tokens_out_cap": 20400,
-   "seconds": 83.92028571428571
+   "tokens_out_cap": 87040,
+   "seconds": 93.44028571428571
   },
   "classifier": {
    "n_calls": 469,
@@ -52,8 +52,8 @@
   "smoke": {
    "n_calls": 22,
    "tokens_in_est": 60294,
-   "tokens_out_cap": 2560,
-   "seconds": 8.979142857142858
+   "tokens_out_cap": 10400,
+   "seconds": 10.099142857142857
   },
   "effective_tokens_per_second": 7000.0,
   "measured_tokens_per_second": 21000.0,
@@ -62,26 +62,26 @@
   "jobs": {
    "stage2_pilot_smoke": {
     "n_calls": 22,
-    "generation_seconds": 9.0,
+    "generation_seconds": 10.1,
     "engine_init_seconds": 225.0,
-    "projected_node_hours": 0.065,
+    "projected_node_hours": 0.0653,
     "walltime": "00:20:00",
     "qos": "boost_qos_dbg"
    },
    "stage2_pilot_full": {
     "n_calls": 639,
-    "generation_seconds": 165.8,
+    "generation_seconds": 175.3,
     "engine_init_seconds": 225.0,
-    "projected_node_hours": 0.1086,
+    "projected_node_hours": 0.1112,
     "walltime": "01:00:00",
     "qos": "boost_usr_prod (normal)"
    }
   },
-  "total_projected_node_hours": 0.1736,
+  "total_projected_node_hours": 0.1765,
   "walltime_bounded_worst_case_node_hours": 1.3333,
   "abort_above_node_hours": 1.5,
   "budget_node_hours": 3.0,
   "note": "Output tokens are counted at their per-prompt CAP (120 for a prediction prompt, 80 for a classifier case), so the generation term is an upper bound. Throughput is Stage 1E's measured 21,015 combined tokens/s on one 4xA100 node, de-rated by 3.0x because Stage 2's prompts are roughly ten times longer and shift the job from decode-bound to prefill-bound."
  },
- "generated_utc": "2026-07-26T18:05:22Z"
+ "generated_utc": "2026-07-26T18:15:33Z"
 }

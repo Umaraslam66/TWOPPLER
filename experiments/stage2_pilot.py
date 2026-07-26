@@ -131,6 +131,23 @@ PROJECTION_ABORT_NODE_HOURS = 1.5
 #: The hard ceiling the brief sets for the whole pilot.
 BUDGET_NODE_HOURS = 3.0
 
+#: Output-token cap for a PREDICTION prompt, overriding the renderer's
+#: ``stage2_render.MAX_OUTPUT_TOKENS`` (120).
+#:
+#: Measured, not guessed. The first smoke slice (slurm 50356680) came back with
+#: **20 of 20 prediction completions truncated at exactly 120 tokens**, none of
+#: them reaching the final "A: <p> B: <p> C: <p> D: <p>" line, so all 20 scored
+#: as parse failures. The two classifier cases parsed fine at 27 and 33 tokens.
+#: D8's instruction says to END the reply with the distribution line, and this
+#: model complies by characterising the speaker and walking the four options
+#: first -- about 300 tokens before it gets to the answer.
+#:
+#: 512 gives that roughly 200 tokens of headroom. This changes NO prompt text:
+#: every prompt string and its sha256 are byte-identical, only the
+#: ``max_output_tokens`` field of the exported line moves. The renderer stays
+#: frozen; T4's constant is its default, not a contract on the job.
+PREDICTION_MAX_OUTPUT_TOKENS = 512
+
 SMOKE_WALLTIME = "00:20:00"
 FULL_WALLTIME = "01:00:00"
 SMOKE_QOS = "boost_qos_dbg"
@@ -847,7 +864,7 @@ def render_and_guard(arm: str, variant: str, item: dict, *,
         "prompt_sha256": R.sha256(rendered),
         "prompt_words": words,
         "prompt_tokens_est": int(round(words * TOKENS_PER_WORD)),
-        "max_output_tokens": R.MAX_OUTPUT_TOKENS,
+        "max_output_tokens": PREDICTION_MAX_OUTPUT_TOKENS,
     }
 
 

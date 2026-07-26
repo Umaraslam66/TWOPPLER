@@ -1,6 +1,6 @@
 {
  "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
- "exported_utc": "2026-07-26T18:11:27Z",
+ "exported_utc": "2026-07-26T18:15:22Z",
  "contract": "SPEC.md v1.7 (D1-D10)",
  "n_qa_subjects": 5,
  "n_items": 17,
@@ -234,16 +234,16 @@
   "longest_prompt_item": "C02013:NPR-9480:70",
   "longest_prompt_arm": "imposter_redacted",
   "tokens_per_word_max": 2.05,
-  "worst_case_tokens_needed": 6916,
+  "worst_case_tokens_needed": 7308,
   "max_model_len": 8192,
-  "headroom_tokens": 1276
+  "headroom_tokens": 884
  },
  "projection": {
   "prediction": {
    "n_calls": 170,
    "tokens_in_est": 567042,
-   "tokens_out_cap": 20400,
-   "seconds": 83.92028571428571
+   "tokens_out_cap": 87040,
+   "seconds": 93.44028571428571
   },
   "classifier": {
    "n_calls": 469,
@@ -254,8 +254,8 @@
   "smoke": {
    "n_calls": 22,
    "tokens_in_est": 60294,
-   "tokens_out_cap": 2560,
-   "seconds": 8.979142857142858
+   "tokens_out_cap": 10400,
+   "seconds": 10.099142857142857
   },
   "effective_tokens_per_second": 7000.0,
   "measured_tokens_per_second": 21000.0,
@@ -264,22 +264,22 @@
   "jobs": {
    "stage2_pilot_smoke": {
     "n_calls": 22,
-    "generation_seconds": 9.0,
+    "generation_seconds": 10.1,
     "engine_init_seconds": 225.0,
-    "projected_node_hours": 0.065,
+    "projected_node_hours": 0.0653,
     "walltime": "00:20:00",
     "qos": "boost_qos_dbg"
    },
    "stage2_pilot_full": {
     "n_calls": 639,
-    "generation_seconds": 165.8,
+    "generation_seconds": 175.3,
     "engine_init_seconds": 225.0,
-    "projected_node_hours": 0.1086,
+    "projected_node_hours": 0.1112,
     "walltime": "01:00:00",
     "qos": "boost_usr_prod (normal)"
    }
   },
-  "total_projected_node_hours": 0.1736,
+  "total_projected_node_hours": 0.1765,
   "walltime_bounded_worst_case_node_hours": 1.3333,
   "abort_above_node_hours": 1.5,
   "budget_node_hours": 3.0,
@@ -290,7 +290,7 @@
    "prompts_file": "prompts_pred_twin_redacted_standard.jsonl",
    "meta_file": "meta_pred_twin_redacted_standard.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "5da833181db8698ff60fcab0f1e0d0d6f065fda52816e8ad55006f1bbeae69b3",
+   "prompts_sha256": "3dba704e1ac5f8dee599cdbd83648fdf6d307a7b789455964c2243c949b0986c",
    "meta_sha256": "e080cfdab50b6a86e94353afd8cb27d9379284c58ba3096cbfcf697173adef3e",
    "total_prompt_words": 42901,
    "max_prompt_words": 3082
@@ -299,7 +299,7 @@
    "prompts_file": "prompts_pred_twin_redacted_stripped.jsonl",
    "meta_file": "meta_pred_twin_redacted_stripped.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "239b0a5802a583a19b7cb998e03e9a967455068bc0e1b2e1a58da6644777b2b9",
+   "prompts_sha256": "0e1de85720634e9363ef04d3dfd5449fdd8188c2c761a0c65a28e0b2d06ed8a2",
    "meta_sha256": "c780bce387cd1c615270a599a94ccbc92e70b96a78cf40746cf3f6e78b0e925f",
    "total_prompt_words": 42783,
    "max_prompt_words": 3078
@@ -308,7 +308,7 @@
    "prompts_file": "prompts_pred_twin_named_standard.jsonl",
    "meta_file": "meta_pred_twin_named_standard.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "f9cb0dae2cfaad9882ba0709a41bcfa67eb81d6efe8b9100a5ddef6a4b9712e4",
+   "prompts_sha256": "cc04bf3b8492a811ee2cbb41f21f687acfcb07ad529e93dcc414b843dfd84680",
    "meta_sha256": "6cd6aaf93579e7f058aaf3147631d272ec5e3490a0d1ad21a2c44654d5fe8f3a",
    "total_prompt_words": 42969,
    "max_prompt_words": 3086
@@ -317,7 +317,7 @@
    "prompts_file": "prompts_pred_twin_named_stripped.jsonl",
    "meta_file": "meta_pred_twin_named_stripped.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "733fe8a31ab9d9588a448e3b0a9206d8659ac4c286dc85b874f707c59b99abb8",
+   "prompts_sha256": "3b3144c21ec7b147b5037c1288b4edc23b943e73363eff87a74649380579a57e",
    "meta_sha256": "6e83250b966d12617af1420d8f0fe2fbb23f88ee5ff2d2fe2f4b993fc2e43586",
    "total_prompt_words": 42851,
    "max_prompt_words": 3082
@@ -326,7 +326,7 @@
    "prompts_file": "prompts_pred_zeroinfo_redacted_standard.jsonl",
    "meta_file": "meta_pred_zeroinfo_redacted_standard.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "27b80a5ebe8642d75385a1d84b69e8502ba6c8a23c9697938aacf37b3c798d32",
+   "prompts_sha256": "579acad2130b07d24f711432f4d73fc3cebfdc92ead51d1535a856c679a33811",
    "meta_sha256": "bae7818959a39edcc5b37b6e9a5e1d469970b0e5522515326bee6032d897fa78",
    "total_prompt_words": 9570,
    "max_prompt_words": 1260
@@ -335,7 +335,7 @@
    "prompts_file": "prompts_pred_zeroinfo_redacted_stripped.jsonl",
    "meta_file": "meta_pred_zeroinfo_redacted_stripped.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "26dded15eb099784d51fb8b5cdd915be3bfff147aceefa69631a6089ceaeb020",
+   "prompts_sha256": "6eb2aa4075ee7cd21f92a1c969632c7ea035d3bb1feb896f13081ffdf28cff7f",
    "meta_sha256": "a32edbd875ccebc41f0303cf1ce503621766b33874f2bb672f1f051f8fcdaf70",
    "total_prompt_words": 9452,
    "max_prompt_words": 1256
@@ -344,7 +344,7 @@
    "prompts_file": "prompts_pred_zeroinfo_named_standard.jsonl",
    "meta_file": "meta_pred_zeroinfo_named_standard.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "6a94ec71c16e24179cec24359b5b9877162abecb719f1d73c472b683d370727e",
+   "prompts_sha256": "4d64338b9708c95bc648e99b4e2b069000a7d2185cc38cd0e5131bd1593b1f12",
    "meta_sha256": "b80812210d26e1a0b6403a7f0cb8b5286f9879bfae00c866006e7aa37f187e94",
    "total_prompt_words": 9655,
    "max_prompt_words": 1265
@@ -353,7 +353,7 @@
    "prompts_file": "prompts_pred_zeroinfo_named_stripped.jsonl",
    "meta_file": "meta_pred_zeroinfo_named_stripped.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "1f73c31722485029605b692e9bdf690c3eaa55ba02ac00a196326a0acd7b54d0",
+   "prompts_sha256": "00da9d58416aaf8d4c79d93640bed545d768bcc04af039b2e269c4a10693acf2",
    "meta_sha256": "f820d81dc28e143ba1e722e7ee871cf8e1de1128d9229b8f29a46b56f5c425e5",
    "total_prompt_words": 9537,
    "max_prompt_words": 1261
@@ -362,7 +362,7 @@
    "prompts_file": "prompts_pred_imposter_redacted_standard.jsonl",
    "meta_file": "meta_pred_imposter_redacted_standard.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "af2402558d0f20382e8992294afdc5de1b00612ed675abedd03386715f641ece",
+   "prompts_sha256": "4f070158ed6ddffc660f0d2f5cccb960f71b402fd054d3162c09a5241dea17f6",
    "meta_sha256": "a32eafb9d4315f01f7826954c6f5f27ef66ae669eb7ed45b17924d010d85984b",
    "total_prompt_words": 44423,
    "max_prompt_words": 3315
@@ -371,7 +371,7 @@
    "prompts_file": "prompts_pred_imposter_redacted_stripped.jsonl",
    "meta_file": "meta_pred_imposter_redacted_stripped.jsonl",
    "n_prompts": 17,
-   "prompts_sha256": "a3b934b5c8d7e24f180ad1b23edf8780df39c2d8eb3a142aae701895b3441082",
+   "prompts_sha256": "10a6a2783e361c87864277aff6d342a101bc91a9d0e8fce2b1815f5fae89c317",
    "meta_sha256": "b5151c4ea6c34674997996623830da4b8a87ebe2faefa8a08091013cf9b74e2c",
    "total_prompt_words": 44305,
    "max_prompt_words": 3311
@@ -389,7 +389,7 @@
    "prompts_file": "prompts_smoke.jsonl",
    "meta_file": "meta_smoke.jsonl",
    "n_prompts": 22,
-   "prompts_sha256": "6e222a911fc0c4ea04c4ee2d2e8e563fca5157bc88f6d808189faf1eabff9d7a",
+   "prompts_sha256": "d9bf22f88bb34a808c92020a11d0f52347dd57ef200a525fad62373a07a250ee",
    "meta_sha256": "8fd14e4cd0d5d8f3ead799c66fe5c50d879798d9c6f9feaa654877e362efa1c2",
    "total_prompt_words": 31734,
    "max_prompt_words": 2360

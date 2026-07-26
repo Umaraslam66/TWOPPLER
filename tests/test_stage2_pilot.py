@@ -760,7 +760,7 @@ def test_projection_is_deterministic_and_counts_output_tokens_at_the_cap(pilot):
     assert a["jobs"] == b["jobs"]
     pred_rows = [r for rows in build["prediction"]["sets"].values() for r in rows]
     assert a["prediction"]["tokens_out_cap"] == \
-        len(pred_rows) * R.MAX_OUTPUT_TOKENS
+        len(pred_rows) * P.PREDICTION_MAX_OUTPUT_TOKENS
     assert a["classifier"]["tokens_out_cap"] == \
         len(build["classifier"]["cases"]) * F.MAX_OUTPUT_TOKENS
 
@@ -988,3 +988,34 @@ def test_the_supplement_holds_hypocorisms_only_not_surnames():
         for nick in nicks:
             assert nick[0].isupper(), f"{nick} is not written as a name"
             assert nick.casefold() != first
+
+
+def test_the_prediction_output_cap_overrides_the_renderer_default():
+    """Smoke slice 50356680: 20/20 truncated at 120 tokens, 0 parsed."""
+    assert P.PREDICTION_MAX_OUTPUT_TOKENS > R.MAX_OUTPUT_TOKENS
+    built = P.render_and_guard(
+        "twin_redacted", "standard", ITEM, subject_name="Jane Smith",
+        subject_variants=["Jane Smith"], grounding_block=GROUNDING)
+    assert built["max_output_tokens"] == P.PREDICTION_MAX_OUTPUT_TOKENS
+
+
+def test_raising_the_output_cap_does_not_move_a_single_prompt_string():
+    """The cap is a job knob; the prompt is the science. They must not mix."""
+    built = P.render_and_guard(
+        "twin_redacted", "standard", ITEM, subject_name="Jane Smith",
+        subject_variants=["Jane Smith"], grounding_block=GROUNDING)
+    expected = R.render_prompt(
+        "twin_redacted",
+        R.redact(ITEM["question"], ["Jane Smith"]),
+        [R.redact(o, ["Jane Smith"]) for o in ITEM["options"]["standard"]],
+        grounding_block=GROUNDING)
+    assert built["prompt"] == expected
+    assert built["prompt_sha256"] == R.sha256(expected)
+
+
+def test_the_context_check_accounts_for_the_larger_reply(pilot):
+    """A 512-token reply still has to fit beside the longest prompt."""
+    build = P.build_all(pilot)
+    ctx = P.context_check(build)
+    assert ctx["headroom_tokens"] > 0
+    assert ctx["worst_case_tokens_needed"] <= P.MAX_MODEL_LEN
