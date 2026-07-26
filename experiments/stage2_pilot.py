@@ -196,6 +196,268 @@ NICKNAME_SUPPLEMENT = {
 NICKNAME_NONE = ("bassir", "doris", "samer")
 
 
+#: Section 8 of the pilot report. These are the findings the whole Stage 2 build
+#: accumulated -- across T1..T5's task reports and this driver -- that the
+#: orchestrator ruled must travel with the pilot numbers rather than sit in five
+#: separate reports. Sourced, numbered, and written for bar-lock review.
+FINDINGS = """
+Every item here is a PILOT observation or an inherited design limitation. None
+of it is a research conclusion, and none of it clears or fails a bar.
+
+### 8.1 The redacted arms are name-blind, not identity-blind (READ THIS FIRST)
+
+SPEC D8 redacts *name variants*. It does not touch affiliations, and the twin
+excerpts are full of them. Real lines from the exported `twin_redacted` set:
+
+    "GUEST is chairman of the Department of Sociology a..."          C02013
+    "I'm joined now by GUEST, professor of Middle East politics
+     at Georgetown U..."                                             C02124
+    "GUEST is the author of "Imperium", a novel of anci..."          C02006
+    "GUEST, as a former State Department official, can..."           C00792
+    "And GUEST, Stanton nuclear security fellow at the Coun..."      C01677
+
+Any model with world knowledge recovers the person from those lines. So
+`twin_redacted` is a name-scrubbed arm, not a de-identified one, and the honest
+reading of a twin number is "the excerpts help", NOT "the excerpts help without
+identity".
+
+This is inherent to D8 as frozen and was accepted as such. It is also exactly
+why two controls in the design are load-bearing rather than decorative:
+
+* the **zero-information arms** are the floor every twin number is reported
+  against -- the project's standing rule, and on this pilot not a formality;
+* the **contamination meter** (`zeroinfo_named - zeroinfo_redacted`, section 6)
+  measures what the model already knows about the named person with no excerpts
+  at all, which bounds how much of a twin score could be identity rather than
+  evidence.
+
+Bar-lock question: does a confirmatory Stage 2 need affiliation redaction, or
+does it accept name-only redaction and lean on the meter? Not a pilot decision.
+
+### 8.2 Nickname handling (new rule this pilot, bar-lock item at scale)
+
+The pool's `variants` column carries formal names, so T4's expansion reached
+"Matthew"/"Kroenig" but not the "Matt" the excerpts say -- and the guard could
+not see it, because the guard and the scrubber share a matcher. A documented
+`NICKNAME_SUPPLEMENT` table (standard English hypocorisms only, applied to every
+dev subject AND every donor, emitting whole substituted names so T4's frozen
+expansion does the matching) now closes it. It caught two leaks:
+
+    C01677  "It's fair to say, Matt GUEST, ..."           twin arms, 1 item
+    C01316  "... the blog Syria Comment. Josh, nice ..."  imposter arm, 5 items
+
+The second is the interesting one: Joshua Landis is C00792's *donor*, so his
+first name was surviving in the imposter excerpts and had not been spotted.
+Zero collateral over-redaction in this corpus slice.
+
+**Bar-lock item:** a hand-maintained table does not scale to 1,153 subjects. The
+real answer is a name-normalisation resource, and it is the same decision as the
+NER item in 8.6.
+
+### 8.3 D3.2's fuzzy host rule: the 0.60 threshold is PROVISIONAL (T1 round 4)
+
+MediaSum misspells a programme name ("CNN International Diplomatic Linense"),
+so D3.2 had to accept a fuzzy descriptor/programme match. The adopted threshold
+is **0.60** and it is explicitly provisional pending bar-lock. The evidence it
+was set from:
+
+* **Separation**: the true anchor descriptor scores **0.680** against that
+  programme string; the best non-anchor descriptor in the same transcripts
+  scores **0.379**. A margin of 0.30 -- and a 0.70 threshold would have missed
+  the true anchor, which is why the bar is this low.
+* **Corpus-wide fire rate** of the adopted predicate: **3.86%** of transcripts
+  (1,112 of 28,804), 1,787 turns; the fuzzy arm alone accounts for 202 of them.
+
+It has not been validated against a labelled sample. Review before any
+confirmatory-scale use. Its effect here was large and local: C00292's grounding
+host turns went 74 -> 330 and its host->guest pairs 18 -> 87, all through one
+descriptor at ratio 0.68, with the guest side unchanged.
+
+### 8.4 The imposter donors: register, not topic (T3, and what fixed it)
+
+D7's first implementation measured **how similarly two people talk on air**, not
+what they talk about. Plain TF-IDF with raw counts over ~74 documents let
+conversational filler dominate the vectors: a British novelist and a US
+political strategist scored 0.75, and one generic donor was in the top three for
+all six subjects. The v1.2 amendment (drop terms with document frequency > 0.9)
+fixed it: six subjects now have six distinct donors, similarities fell to a
+meaningful 0.11-0.48, and a novelist gets a novelist.
+
+Three residuals travel with the imposter arm:
+
+* **C00292's donor is a near-miss the rule got wrong.** A UN correspondent was
+  matched to a US partisan strategist (Ron Christie, 0.2196), **0.0091** ahead of
+  a UN ambassador (Al Hussein, 0.2105) who is the obviously better same-domain
+  donor. Not overridden by hand -- the rule is the rule. Cheapest of the six to
+  be wrong about, since C00292 is burned for Q-A and its imposter arm never runs.
+* **Two margins are near a thousandth of a point**: C02006 -> Walter Mosley by
+  **0.0011** and C02013 -> Doris Meissner by **0.0016**. Both winners are the
+  more sensible candidate, but neither pair is robust; any further change to turn
+  extraction could flip them. That is a consequence of thin grounding text
+  (1,397 and 1,714 guest words), not of the matching rule.
+* **The control is stronger where the topic has its own vocabulary.** Syria, Arab
+  politics and nuclear diplomacy give 0.12-0.13 margins and unambiguous topical
+  agreement. "Urban sociology" and "literary fiction" do not exist as distinct
+  vocabularies in a corpus of broadcast talk, and those pairs are weaker.
+
+One asymmetry this driver measured: C02013's donor grounding renders at 2,050
+words against C02013's own 1,817, so on that subject the imposter arm carries
+slightly MORE excerpt text than the twin arm.
+
+### 8.5 The distractors' topic control is weak, and the zero-info arms are how we know
+
+A4 wants three controls on a wrong option: similar length, similar entity
+density, similar topic. **Length and density held on every item** -- all 18
+matched at relaxation rung 0, the pre-registered control, and the ladder has
+never fired. **Topic did not.**
+
+    distractor bank                                652 rows from 167 donors
+                                                   (SPEC expected ~2k)
+    distractor question-similarity cosine, range   0.016 - 0.102
+    median across the 54 distractors               0.050
+    items whose best distractor cleared 0.10       1 of 18
+
+A cosine of 0.05 on TF-IDF 1-2 grams means the "most similar" donor question is
+about something else entirely: an Egyptian field marshal against Homo sapiens and
+LGBT bishops; Kofi Annan against drone strikes.
+
+**Consequence for reading every table in section 5:** the forced choice is easier
+than A4 intends, and a model that knows nothing about the person can score above
+chance by picking the topically plausible option. The instrument that catches
+this is already in the design -- the zero-information arms and the A4.3
+adversarial filter -- which is why no twin number in this report appears without
+its baseline. The lever for a real topic control is a bigger, stratified bank
+(more donors, donors on one-on-one interview programmes), not a change to the
+extraction rules.
+
+### 8.6 D5's entity heuristic: three known limitations, all deferred to the NER decision
+
+D5 is a documented pilot-grade heuristic and upgrading it to real NER is a
+bar-lock decision. Three limits are pinned by labelled tests so they cannot
+change silently:
+
+1. **Spelled-out titles.** D5-r3's abbreviation clause matches all 83 entries of
+   the HONORIFIC set, including 58 spelled out in full, so "became president. And
+   of course" reads as an abbreviation and glues the next word into a span.
+   Measured: 15 of 652 bank rows (2%), 19 occurrences; **4 rows and 0 items would
+   change bucket if fixed**, so no option set depends on it.
+2. **"St." is not covered.** Not in HONORIFIC, no internal dot, not an initial, so
+   "St. Petersburg" still splits and "Petersburg" survives into the stripped text.
+3. **A single-token proper noun opening a sentence survives entity-stripping**
+   (SPEC v1.7 records this). D5's sentence-initial rule cannot tell it from an
+   ordinary capitalised word.
+
+All three degrade the A4.2 entity-stripped option variant only -- they leave a
+name in text that variant exists to scrub, which makes the stripped condition a
+slightly weaker adversarial re-score than intended. None of them touches the
+standard variant. The proposed fix for 1 and 2 is one curated abbreviation
+subset instead of all of HONORIFIC; 3 needs NER.
+
+### 8.7 Test-interview Q-A eligibility: a floor proposal
+
+The pilot's binding constraint is not answer length and never was: **23 of the 46
+candidate host->guest pairs were dropped for not being questions** (no question
+mark, no interrogative or imperative first word), and 0 answers were dropped for
+being under 30 words. D4's cue filter is doing the work, and it is doing it
+correctly -- those turns are statements and hand-offs.
+
+What actually decides whether a subject can be measured is the shape of its test
+interview. Proposal for bar-lock, to be applied at DRAW time rather than
+discovered afterwards:
+
+* require the test-interview cluster to yield **>= 3** D4-eligible items, and
+* prefer one-on-one interview programmes over roundtables and multi-guest panels.
+
+Evidence from the six: C00292 (a roundtable) yields 0 usable items because every
+host turn before one of its guest turns is a statement; C01677 (a three-guest
+panel) yields 1, because most host questions are answered by somebody else;
+C02124 (a two-person NPR interview, strictly alternating) yields 4 of 6 possible
+and is the shape the design wants. A floor of 3 would have rejected two of six
+subjects at draw time, at the cost of drawing deeper into the shuffled order.
+
+### 8.8 Items per subject vs H1 power
+
+    C00792  5      C02013  4      C02124  4
+    C02006  3      C01677  1      C00292  0 (burned)
+    total  17 scoreable items across 5 subjects
+
+Against D4's cap of 20 items PER SUBJECT. The consequences are structural, not
+fixable by tuning:
+
+* Any subject-paired contrast has **5 pairs**, and one of those pairs rests on a
+  single item, so its per-subject "mean" is one observation.
+* This report therefore prints **N per cell** everywhere and runs **no
+  significance test at all**. That is deliberate. A p-value on 17 items would
+  invite exactly the reading the pilot cannot support.
+* For H1 at confirmatory scale the lever is subject selection (8.7), not the
+  extraction rules. The pilot's job was to prove the pipeline; it did.
+
+### 8.9 The C00292 burn, and what it is still used for
+
+C00292 (Bassir Pour) was drawn second in the frozen order and is the only subject
+retired for Q-A. The story, in order:
+
+1. It first produced **zero** host->guest pairs at all: its CNN transcripts name
+   the anchor in full once ("RICHARD ROTH, CNN ANCHOR") and then say "ROTH" for
+   the next 35 turns, which the speaker classifier read as a guest.
+2. D3.1-r2 (within-transcript surname resolution) and then D3.2 (the programme-
+   name anchor rule, 8.3) recovered the anchor: grounding host turns 1 -> 74 ->
+   330, host->guest pairs 0 -> 18 -> 87.
+3. Its Q-A yield **still did not move off 0**, and no labelling rule can move it:
+   DIPLOMATIC LICENSE is a roundtable and every host turn before one of its guest
+   turns is a statement, which D4's cue filter correctly rejects.
+4. Owner decision: the cue filter stays; C00292 stays a dev subject **forever**
+   (burned, never reused, never replaced-and-forgotten); a sixth subject
+   (C02124) was added alongside it rather than substituted for it.
+5. A later rules change gave it a yield of **1** item with a full option set on
+   disk. **The burn does not flip on yield drift.** That one item and its four
+   options exist in `subjects/C00292/` and are excluded here by filtering on the
+   `burned_for_qa` annotation -- asserted at build, at export, and at verify.
+
+It is a full participant everywhere else, and it is not a passenger: it
+contributes **167 of the 469 classifier cases**, more than any other subject.
+
+### 8.10 Classifier prompts are deliberately NOT redacted
+
+SPEC D9 says nothing about redaction, and the follow-up classifier is a
+measurement instrument over the corpus rather than an evaluation arm: it reads
+three host/guest turns and emits FOLLOW-UP or NEW-TOPIC. Its output is a label on
+an interview turn. It feeds descriptive statistics about interview structure --
+never a prediction prompt, never an option set, never a score. So a name inside a
+classifier prompt cannot leak into anything the twin arms are measured on, and
+the prompts carry the transcript text as written ("Mr. Harris, thanks so much for
+talking to us").
+
+Recorded as a decision, not an oversight. Redacting them would cost nothing if a
+later review prefers uniformity.
+
+### 8.11 Grounding words vs the 2,000-word budget, per subject
+
+T1's standing concern was that four of six subjects had less grounding text than
+SPEC D8's `B_pilot` = 2,000 words, so selection would be a no-op. That was
+measured on **guest** words. An exchange carries its host turn too, and on the
+real segments every subject reaches or nearly reaches the budget:
+
+    subject   segments  exchanges  words available  words rendered
+    C00792       2         21          2,177           2,036
+    C02013       2         17          2,081           1,817
+    C02124       8         68          8,630           2,038
+    C01677       2         14          2,425           1,836
+    C02006       2         14          1,907           1,937
+    C00292      12        177          8,539           (classifier only)
+
+Donor blocks all render at 2,026-2,060 words, so the imposter arm is never
+thinner than the twin arm.
+
+Reading: **C02124 is the only subject where most-recent-first selection discards
+a lot** (8,630 available against a 2,000 budget). C02013, C01677 and C02006 land
+under budget because the skip-and-continue rule declined an oversized exchange,
+not because the material ran out. So this pilot still says almost nothing about
+selection *policy* -- H2's arms need subjects with several times the budget
+available, which is a draw-time criterion, same family as 8.7.
+"""
+
+
 def now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -739,7 +1001,7 @@ def build_classifier(pilot_dir=PILOT_DIR) -> dict:
                     "canonical_id": cid,
                     "transcript_id": tid,
                     "turn_idx": case["turn_idx"],
-                    "target_host": case["target_host"],
+                    "target_host": case["target_host"][:240],
                     "prompt": prompt,
                     "prompt_sha256": F.sha256(prompt),
                     "prompt_words": R.word_count(prompt),
@@ -923,7 +1185,7 @@ PRED_META_FIELDS = ("item_id", "canonical_id", "arm", "variant",
                     "correct_index", "n_options", "donor_id",
                     "prompt_sha256", "prompt_words")
 CLF_META_FIELDS = ("canonical_id", "transcript_id", "turn_idx",
-                   "prompt_sha256", "prompt_words")
+                   "target_host", "prompt_sha256", "prompt_words")
 SMOKE_META_FIELDS = ("source_set", "item_id", "canonical_id", "arm", "variant",
                      "transcript_id", "turn_idx", "prompt_sha256",
                      "prompt_words")
@@ -1614,6 +1876,18 @@ def paired_lift(records: list[dict], better: str, worse: str,
 # ---------------------------------------------------------------------------
 
 
+_WHY_RE = re.compile(r"^[ \t>#*_-]*why[ \t*_]*:[ \t*_`\"']*(.+?)[*_`\"]*[ \t]*$",
+                     re.IGNORECASE | re.MULTILINE)
+
+
+def parse_why(completion: str | None) -> str | None:
+    """The rubric's second output line. Presentation only -- never scored."""
+    if not completion:
+        return None
+    hits = _WHY_RE.findall(completion.replace("\r\n", "\n"))
+    return hits[0].strip() if len(hits) == 1 else None
+
+
 def _node_hours(summary: dict | None) -> float | None:
     if not summary:
         return None
@@ -1685,7 +1959,9 @@ def cmd_ingest(args) -> int:
             "canonical_id": meta["canonical_id"],
             "transcript_id": meta["transcript_id"],
             "turn_idx": meta["turn_idx"],
+            "target_host": meta.get("target_host"),
             "label": label, "source": "model",
+            "why": parse_why(text),
             "parse_failure": label is None,
             "raw_response": (text or "")[:600],
             "tokens_in": int((comp or {}).get("tokens_in", 0) or 0),
@@ -1755,7 +2031,7 @@ def analyse(pred: list[dict], clf: list[dict], rule: list[dict],
         "node_hours_total": node_hours,
         "node_summaries": summaries,
         "accuracy": {}, "lift": {}, "contamination_meter": {},
-        "classifier": {}, "per_subject_cost": {},
+        "classifier": {}, "per_subject_cost": {}, "parse_failures": {},
     }
     for variant in VARIANTS:
         keep = adversarial_keep(pred, variant)
@@ -1786,6 +2062,21 @@ def analyse(pred: list[dict], clf: list[dict], rule: list[dict],
             ],
         }
     out["contamination_meter"] = contamination_meter(pred)
+
+    # Parse-failure rate per prompt set, the number the no-retry policy makes
+    # the pilot responsible for reporting.
+    for arm in ARMS:
+        for variant in VARIANTS:
+            rows = [r for r in pred if r["arm"] == arm
+                    and r["variant"] == variant]
+            fails = sum(1 for r in rows if r["parse_failure"])
+            out["parse_failures"][set_name(arm, variant)] = {
+                "n_attempted": len(rows), "n_parse_failures": fails,
+                "rate": round(fails / len(rows), 6) if rows else None}
+    clf_fails = sum(1 for r in clf if r["parse_failure"])
+    out["parse_failures"]["classify"] = {
+        "n_attempted": len(clf), "n_parse_failures": clf_fails,
+        "rate": round(clf_fails / len(clf), 6) if clf else None}
 
     by_subject: dict[str, dict] = {}
     for row in clf:
@@ -1859,7 +2150,9 @@ def classifier_sample(clf: list[dict], n_each: int = 10) -> list[dict]:
         picked += chosen
     return [{"canonical_id": r["canonical_id"],
              "transcript_id": r["transcript_id"], "turn_idx": r["turn_idx"],
-             "label": r["label"], "raw_response": r["raw_response"][:300]}
+             "label": r["label"], "why": r.get("why"),
+             "target_host": r.get("target_host"),
+             "raw_response": r["raw_response"][:300]}
             for r in picked]
 
 
@@ -1881,142 +2174,312 @@ def _fmt(x, nd=3):
     return "—" if x is None else f"{x:.{nd}f}"
 
 
+def _first_lines(text: str, n: int) -> str:
+    lines = text.split("\n")
+    if len(lines) <= n:
+        return text
+    return "\n".join(lines[:n]) + f"\n\n[... truncated, {len(lines) - n} more lines ...]"
+
+
+def _load_prompt(export_dir: Path, name: str, idx: int) -> str:
+    for row in S.read_jsonl(export_dir / f"prompts_{name}.jsonl"):
+        if int(row["idx"]) == idx:
+            return row["prompt"]
+    raise fatal(f"{name} has no idx {idx}")
+
+
 def cmd_report(args) -> int:
     pilot_dir = Path(getattr(args, "pilot_dir", None) or PILOT_DIR)
+    export_dir = pilot_dir / "exports"
     analysis = json.loads((pilot_dir / "analysis.json").read_text(
         encoding="utf-8"))
     export_doc = json.loads(
-        (pilot_dir / "exports/export_manifest.json").read_text(encoding="utf-8"))
+        (export_dir / "export_manifest.json").read_text(encoding="utf-8"))
     man = load_manifest(pilot_dir / "manifest.json")
     dev = S.load_dev_subjects(pilot_dir)
 
-    parts = [
+    P = []                                     # report parts
+    P += [
         "# Stage 2 pilot report",
         "",
-        f"**{PILOT_BANNER}**",
+        f"# {PILOT_BANNER}",
         "",
-        f"Generated {analysis['generated_utc']}. "
-        f"Contract: SPEC.md v1.7. Not confirmatory; nothing here answers a "
-        "pre-registered bar.",
+        f"**{PILOT_BANNER}** Every number below is a pipeline-validation number "
+        "on six development subjects. Stage 1 and this pilot are for development "
+        "and tuning only; nothing here answers a pre-registered bar, nothing "
+        "here is confirmatory, and no result in it should be quoted as a "
+        "finding about twins.",
         "",
-        "## 1. Dev subjects",
-        "",
-        _table(["canonical_id", "name", "wiki_status", "shuffle_pos",
-                "burned_for_qa", "items", "donor"],
-               [[s["canonical_id"], s["canonical_name"], s["wiki_status"],
-                 s["shuffle_pos"], "yes" if s.get("burned_for_qa") else "",
-                 export_doc["per_subject"].get(s["canonical_id"], {})
-                 .get("n_items", 0),
-                 export_doc["per_subject"].get(s["canonical_id"], {})
-                 .get("donor_name", "")]
-                for s in dev["subjects"]]),
-        "",
-        f"Draw rule (seed {dev['seed']}, drawn {dev['drawn_at']}): "
-        f"{dev['rule']}",
-        "",
-        "### The C00292 burn and replacement",
+        f"Generated {analysis['generated_utc']}. Contract: SPEC.md v1.7 (D1-D10). "
+        f"Model {MODEL_LABEL}, temperature {TEMPERATURE}, tp {TP}, "
+        f"max-model-len {MAX_MODEL_LEN}. "
+        f"{analysis['total_cost']['n_calls']} model calls, "
+        f"{analysis['total_cost']['api_calls']} API calls, $0.00.",
         "",
     ]
-    for rep in dev.get("replacements", []):
-        parts += [f"- **{rep['burned_canonical_id']}** ({rep['mode']}): "
-                  f"{rep['reason']} Replaced by / joined by "
-                  f"**{rep['replaced_by']}**.", ""]
-    parts += ["C00292 is excluded from all "
-              f"{len(ARMS) * len(VARIANTS)} prediction prompt sets by filtering "
-              "on the `burned_for_qa` annotation, and included in the "
-              "classifier prompts.", ""]
 
-    parts += ["## 5. Accuracy per arm", ""]
+    # ---- 1. dev subjects ---------------------------------------------------
+    P += ["## 1. Dev subjects, how they were drawn, and the C00292 story", "",
+          _table(["canonical_id", "name", "wiki_status", "shuffle_pos",
+                  "burned_for_qa", "Q-A items", "imposter donor"],
+                 [[s["canonical_id"], s["canonical_name"], s["wiki_status"],
+                   s["shuffle_pos"], "**yes**" if s.get("burned_for_qa") else "",
+                   export_doc["per_subject"].get(s["canonical_id"], {})
+                   .get("n_items", "— (excluded)"),
+                   export_doc["per_subject"].get(s["canonical_id"], {})
+                   .get("donor_name", "— (unused)")]
+                  for s in dev["subjects"]]),
+          "",
+          "**Draw provenance.** Seed "
+          f"{dev['seed']}, drawn {dev['drawn_at']}, "
+          f"{dev.get('n_eligible')} eligible pool rows. Rule as frozen in D1:",
+          "", f"> {dev['rule']}", ""]
+    for rep in dev.get("replacements", []):
+        P += [f"**Burn / replacement event.** `{rep['burned_canonical_id']}`, "
+              f"mode `{rep['mode']}`, stratum {rep['stratum']}, replaced by / "
+              f"joined by `{rep['replaced_by']}`.", "",
+              f"> {rep['reason']}", ""]
+    P += ["The full burn story — why it produced no Q-A items, what D3.1-r2 and "
+          "D3.2 recovered, and why the burn does not flip now that it yields one "
+          "item — is finding 8.9. Operationally: **C00292 is excluded from all "
+          f"{len(ARMS) * len(VARIANTS)} prediction prompt sets** by filtering on "
+          "the `burned_for_qa` annotation (asserted at build, export and verify) "
+          "and **is included in the classifier prompts**, where it contributes "
+          "more cases than any other subject.", ""]
+
+    # ---- 2. verbatim Q-A items --------------------------------------------
+    P += ["## 2. Three Q-A items, verbatim, with their full option sets", "",
+          "Straight from T2's committed artifacts. The correct option is marked; "
+          "the model never sees the marking, and D6 shuffled the positions with "
+          "a seed derived from the item id.", ""]
+    show = ["C02124:NPR-12184:2", "C02013:NPR-9480:49", "C02006:NPR-14829:19"]
+    items = {}
+    for cid in [s["canonical_id"] for s in dev["subjects"]]:
+        for item in load_items(cid, pilot_dir):
+            items[item["item_id"]] = item
+    for item_id in show:
+        item = items.get(item_id)
+        if item is None:
+            continue
+        P += [f"### `{item_id}`  ({item['answer_words']} words, "
+              f"relaxation rung {item['relax_rung']})", "",
+              "**QUESTION**", "", f"> {item['question']}", ""]
+        for pos, text in enumerate(item["options"]["standard"]):
+            label = OPTION_LABELS_LOCAL[pos]
+            kind = "**TRUE ANSWER**" if pos == item["correct_index"] \
+                else "distractor"
+            P += [f"**{label}.** {kind}", "", f"> {text}", ""]
+        P += ["**Entity-stripped variant of the true option (the A4.2 "
+              "re-score):**", "",
+              f"> {item['options']['stripped'][item['correct_index']]}", ""]
+
+    # ---- 3. rendered prompts ----------------------------------------------
+    P += ["## 3. The rendered prompts", "",
+          "One `twin_redacted` prompt in full — the primary arm, and the owner "
+          "deliverable — then the first 40 lines of one prompt from each other "
+          "arm. All five are the SAME item, so the arms differ only by what "
+          "D8 says they differ by.", ""]
+    ref = "C02124:NPR-12184:2"
+    ref_idx = None
+    for row in S.read_jsonl(export_dir / "meta_pred_twin_redacted_standard.jsonl"):
+        if row["item_id"] == ref:
+            ref_idx = int(row["idx"])
+    if ref_idx is not None:
+        P += [f"### 3.1 `twin_redacted` (PRIMARY), item `{ref}`, standard "
+              "options — complete and verbatim", "", "```",
+              _load_prompt(export_dir, "pred_twin_redacted_standard", ref_idx),
+              "```", ""]
+        for arm in ARMS:
+            if arm == "twin_redacted":
+                continue
+            name = set_name(arm, "standard")
+            P += [f"### 3.2 `{arm}`, same item — first 40 lines", "", "```",
+                  _first_lines(_load_prompt(export_dir, name, ref_idx), 40),
+                  "```", ""]
+
+    # ---- 4. classifier ------------------------------------------------------
+    clf = analysis["classifier"]
+    P += ["## 4. The follow-up classifier", "",
+          f"Rubric `RUBRIC_V1`, sha256 `{clf['rubric_sha256']}`, frozen and "
+          "pinned by a test. **The classifier prompts are deliberately not "
+          "redacted** — rationale in finding 8.10.", "",
+          f"{clf['n_model_cases']} model cases and {clf['n_rule_labels']} "
+          "rule-labelled turns (a host turn with no guest answer anywhere behind "
+          "it is NEW-TOPIC by definition and costs no model call). "
+          f"Parse-failure rate **{_fmt(clf['parse_failure_rate'], 4)}**.", "",
+          "### 4.1 The rubric, verbatim", "", "```", F.RUBRIC_V1, "```", "",
+          "### 4.2 Per-subject label counts", "",
+          _table(["subject", "FOLLOW-UP", "NEW-TOPIC", "parse failures",
+                  "rule labels (NEW-TOPIC)"],
+                 [[cid, v["FOLLOW-UP"], v["NEW-TOPIC"], v["parse_failures"],
+                   v["rule"]]
+                  for cid, v in sorted(clf["per_subject"].items())]), ""]
+    sample = clf.get("sample") or []
+    if sample:
+        P += [f"### 4.3 {len(sample)} sampled classifications "
+              f"(seeded, seed {SAMPLE_SEED}; spread across subjects first)", "",
+              _table(["subject", "transcript", "turn", "label",
+                      "target turn (truncated)", "model's WHY"],
+                     [[s["canonical_id"], s["transcript_id"], s["turn_idx"],
+                       s["label"],
+                       (s.get("target_host") or "")[:150].replace("|", "\\|")
+                       + ("…" if len(s.get("target_host") or "") > 150 else ""),
+                       (s.get("why") or "").replace("|", "\\|")[:160]]
+                      for s in sample]),
+              "",
+              f"Subjects represented: "
+              f"{len({s['canonical_id'] for s in sample})}.", ""]
+
+    # ---- 5. accuracy --------------------------------------------------------
+    P += ["## 5. Accuracy per arm", "",
+          "**Read every twin number against its zero-information baseline.** "
+          "That is the project's standing rule and on this pilot it is the main "
+          "control, not a formality — see findings 8.1 and 8.5. `N` counts "
+          "records that PARSED; parse failures are excluded from both "
+          "denominators and reported separately in 8.12.", ""]
     for variant in VARIANTS:
+        label = ("standard options" if variant == "standard"
+                 else "entity-stripped options (A4.2)")
         for filt in ("unfiltered", "adversarial_filtered"):
             block = analysis["accuracy"][variant][filt]
-            parts += [f"### options: {variant}, {filt.replace('_', ' ')}", "",
-                      _table(["arm", "N scored", "parse fails",
-                              "argmax accuracy", "prob-mass on correct"],
-                             [[arm, block[arm]["n"],
-                               block[arm]["n_parse_failures"],
-                               _fmt(block[arm]["argmax_accuracy"]),
-                               _fmt(block[arm]["prob_mass_correct"])]
-                              for arm in ARMS]),
-                      "",
-                      "Note: N is items x subjects that PARSED. With ~"
-                      f"{analysis['n_items']} items over "
-                      f"{analysis['n_qa_subjects']} subjects this pilot is not "
-                      "powered; lift rows below are subject-paired means with "
-                      "no significance test, deliberately.", ""]
+            filt_label = ("unfiltered" if filt == "unfiltered"
+                          else "adversarial-filtered (A4.3)")
+            P += [f"### {label}, {filt_label}", ""]
+            if filt != "unfiltered":
+                info = analysis["accuracy"][variant]["adversarial_filter"]
+                P += [f"Filter: {info['rule']}. "
+                      f"**{info['n_items_kept']} of {analysis['n_items']} items "
+                      "survive.**", ""]
+            P += [_table(["arm", "N scored", "parse fails", "argmax accuracy",
+                          "prob-mass on correct"],
+                         [[("**" + arm + "**" if arm == "twin_redacted" else arm),
+                           block[arm]["n"], block[arm]["n_parse_failures"],
+                           _fmt(block[arm]["argmax_accuracy"]),
+                           _fmt(block[arm]["prob_mass_correct"])]
+                          for arm in ARMS]), ""]
+        P += [f"#### Lift rows ({label})", "",
+              "Subject-paired mean differences. **No significance test, "
+              "deliberately** — with "
+              f"{analysis['n_items']} items over {analysis['n_qa_subjects']} "
+              "subjects (one of them contributing a single item) the pilot is "
+              "not powered for one, and a p-value here would invite exactly the "
+              "reading this pilot cannot support. See finding 8.8.", ""]
         for filt in ("unfiltered", "adversarial_filtered"):
-            parts += [f"#### lift ({variant}, {filt.replace('_', ' ')})", "",
-                      _table(["contrast", "subjects", "mean argmax delta",
-                              "mean prob-mass delta"],
-                             [[f"{l['better_arm']} - {l['worse_arm']}",
-                               l["n_subjects"], _fmt(l["mean_argmax_delta"]),
-                               _fmt(l["mean_prob_mass_delta"])]
-                              for l in analysis["lift"][variant][filt]]), ""]
+            P += [f"*{filt.replace('_', ' ')}*", "",
+                  _table(["contrast", "subjects paired", "mean argmax delta",
+                          "mean prob-mass delta"],
+                         [[f"{l['better_arm']} − {l['worse_arm']}",
+                           l["n_subjects"], _fmt(l["mean_argmax_delta"]),
+                           _fmt(l["mean_prob_mass_delta"])]
+                          for l in analysis["lift"][variant][filt]]), ""]
 
-    parts += ["## 6. Contamination meter", "",
-              "acc(zeroinfo_named) - acc(zeroinfo_redacted), per subject.", ""]
+    # ---- 6. contamination meter --------------------------------------------
+    P += ["## 6. Contamination meter", "",
+          "`accuracy(zeroinfo_named) − accuracy(zeroinfo_redacted)`, per "
+          "subject. The two prompts differ by exactly one line (the name), so "
+          "this is a one-factor measurement of what the model already knows "
+          "about the named person with no excerpts at all. Given finding 8.1 it "
+          "is the number that bounds how much of any twin score could be "
+          "identity rather than evidence.", ""]
     for variant in VARIANTS:
-        parts += [f"### options: {variant}", "",
-                  _table(["subject", "delta argmax", "delta prob-mass"],
-                         [[cid, _fmt(v[variant]["delta_argmax"]),
-                           _fmt(v[variant]["delta_prob_mass"])]
-                          for cid, v in
-                          sorted(analysis["contamination_meter"].items())]), ""]
-
-    clf = analysis["classifier"]
-    parts += ["## 4. Follow-up classifier", "",
-              f"Rubric sha256 `{clf['rubric_sha256']}`. "
-              f"{clf['n_model_cases']} model cases, {clf['n_rule_labels']} "
-              f"rule-labelled turns, parse-failure rate "
-              f"{_fmt(clf['parse_failure_rate'], 4)}.", "",
-              _table(["subject", "FOLLOW-UP", "NEW-TOPIC", "parse fails",
-                      "rule labels"],
-                     [[cid, v["FOLLOW-UP"], v["NEW-TOPIC"],
-                       v["parse_failures"], v["rule"]]
-                      for cid, v in sorted(clf["per_subject"].items())]), ""]
-
-    parts += ["## 7. Cost", "",
-              _table(["subject", "calls", "tokens in", "tokens out",
-                      "node-seconds share", "$"],
-                     [[cid, v["n_calls"], v["tokens_in"], v["tokens_out"],
-                       v["node_seconds_share"], "0.00"]
+        P += [f"### {variant} options", "",
+              _table(["subject", "zeroinfo_named argmax",
+                      "zeroinfo_redacted argmax", "**delta argmax**",
+                      "delta prob-mass"],
+                     [[cid,
+                       _fmt(v[variant]["zeroinfo_named"]["argmax_accuracy"]),
+                       _fmt(v[variant]["zeroinfo_redacted"]["argmax_accuracy"]),
+                       "**" + _fmt(v[variant]["delta_argmax"]) + "**",
+                       _fmt(v[variant]["delta_prob_mass"])]
                       for cid, v in
-                      sorted(analysis["per_subject_cost"].items())]),
-              "",
-              f"**Total: {analysis['total_cost']['node_hours']} node-hours, "
-              f"{analysis['total_cost']['n_calls']} model calls, "
-              f"{analysis['total_cost']['api_calls']} API calls, $0.00.**", ""]
+                      sorted(analysis["contamination_meter"].items())]), ""]
 
-    parts += ["## 9. Provenance", "",
-              f"- stage2_render template sha256: "
-              f"`{export_doc['renderer']['stage2_render_template_sha256']}`",
-              f"- follow-up rubric sha256: "
-              f"`{export_doc['renderer']['followup_rubric_sha256']}`",
-              f"- max_model_len {MAX_MODEL_LEN}, tp {TP}, temperature "
-              f"{TEMPERATURE}, model {MODEL_LABEL}", ""]
-    for name, entry in sorted(man.get("jobs", {}).items()):
-        parts.append(f"- job `{name}`: slurm "
-                     f"{entry.get('slurm_job_ids')}, status "
-                     f"{entry.get('status')}, "
-                     f"{entry.get('actual_node_hours')} node-hours")
-    parts += ["", "### Export manifest digests", "",
-              _table(["file", "prompts", "sha256"],
-                     [[info.get("prompts_file") or info["meta_file"],
-                       info.get("n_prompts"),
-                       (info.get("prompts_sha256") or info["meta_sha256"])[:16]]
-                      for _, info in sorted(export_doc["files"].items())]), ""]
+    # ---- 7. cost ------------------------------------------------------------
+    P += ["## 7. Cost", "",
+          _table(["subject", "model calls", "tokens in", "tokens out",
+                  "node-seconds (share)", "$"],
+                 [[cid, v["n_calls"], f"{v['tokens_in']:,}",
+                   f"{v['tokens_out']:,}", v["node_seconds_share"], "0.00"]
+                  for cid, v in
+                  sorted(analysis["per_subject_cost"].items())]),
+          "",
+          f"**Total: {analysis['total_cost']['node_hours']} node-hours, "
+          f"{analysis['total_cost']['n_calls']} model calls, "
+          f"{analysis['total_cost']['api_calls']} API calls, $0.00.** "
+          "Node-seconds are apportioned by each subject's share of output "
+          "tokens in the shared job; the jobs shared one engine init.", ""]
+    jobs_rows = [[name, e.get("slurm_job_ids"), e.get("status"),
+                  e.get("projected_node_hours"), e.get("actual_node_hours")]
+                 for name, e in sorted(man.get("jobs", {}).items())]
+    P += [_table(["job", "slurm id", "status", "projected node-hours",
+                  "actual node-hours (sacct)"], jobs_rows), ""]
 
-    parts += ["## 8. Findings for bar-lock (stubs — orchestrator to edit)", "",
-              "- Test-interview Q-A eligibility floor: TODO",
-              "- Items/subject yield vs H1 power: TODO",
-              "- Parse-failure rates: TODO",
-              "- Grounding words vs the 2,000-word budget per subject: TODO",
-              ""]
+    # ---- 8. findings --------------------------------------------------------
+    P += ["## 8. Findings for bar-lock", FINDINGS.rstrip(), "",
+          "### 8.12 Parse-failure rate per prompt set", "",
+          "`jobs/batch_generate.py` has no re-ask path — it is one vLLM pass per "
+          "prompt file with no parse hook — so SPEC D9's 'up to 2 re-asks' is "
+          "unreachable in batch mode and a parse failure is RECORDED, not "
+          "retried. There are no duplicate `idx` rows anywhere in the export. "
+          "These are the rates that policy produced.", "",
+          _table(["prompt set", "attempted", "parse failures", "rate"],
+                 [[name, v["n_attempted"], v["n_parse_failures"],
+                   _fmt(v["rate"], 4)]
+                  for name, v in analysis["parse_failures"].items()]), ""]
 
-    REPORT_PATH = pilot_dir / "PILOT_REPORT.md"
-    REPORT_PATH.write_text("\n".join(parts) + "\n", encoding="utf-8")
-    print(f"[report] -> {REPORT_PATH}")
+    # ---- 9. provenance ------------------------------------------------------
+    P += ["## 9. Provenance", "",
+          _table(["what", "value"],
+                 [["contract", "SPEC.md v1.7 (D1-D10)"],
+                  ["D8 template sha256",
+                   "`" + export_doc["renderer"]["stage2_render_template_sha256"]
+                   + "`"],
+                  ["D9 rubric sha256",
+                   "`" + export_doc["renderer"]["followup_rubric_sha256"] + "`"],
+                  ["stage2_render.py sha256",
+                   "`" + export_doc["renderer"]["stage2_render_file_sha256"]
+                   + "`"],
+                  ["followup_render.py sha256",
+                   "`" + export_doc["renderer"]["followup_render_file_sha256"]
+                   + "`"],
+                  ["model", MODEL_LABEL],
+                  ["node config",
+                   f"1 node, 4x A100, tp={TP}, max-model-len={MAX_MODEL_LEN}, "
+                   f"gpu-mem-util={GPU_MEM_UTIL}, temperature={TEMPERATURE}, "
+                   "one engine init per job"],
+                  ["grounding budget",
+                   f"{GROUNDING_BUDGET_WORDS} words (SPEC D8 B_pilot)"],
+                  ["exported", export_doc["exported_utc"]],
+                  ["driver commit", _git_head()]]),
+          "", "### Export manifest digests", "",
+          _table(["file", "prompts", "sha256"],
+                 [[info.get("prompts_file") or info["meta_file"],
+                   info.get("n_prompts", "—"),
+                   "`" + (info.get("prompts_sha256") or info["meta_sha256"])
+                   + "`"]
+                  for _, info in sorted(export_doc["files"].items())]),
+          "",
+          "Every prompt in this run is reproducible from the committed "
+          "`exports/` files; `uv run python experiments/stage2_pilot.py verify` "
+          "re-checks all of the above against the prompts on disk.", ""]
+
+    path = pilot_dir / "PILOT_REPORT.md"
+    path.write_text("\n".join(P) + "\n", encoding="utf-8")
+    print(f"[report] -> {path}")
     return 0
+
+
+OPTION_LABELS_LOCAL = R.OPTION_LABELS
+
+
+def _git_head() -> str:
+    try:
+        out = subprocess.run(["git", "-C", str(_ROOT), "rev-parse", "--short",
+                              "HEAD"], capture_output=True, text=True)
+        return out.stdout.strip() or "unknown"
+    except Exception:
+        return "unknown"
+
 
 
 # ---------------------------------------------------------------------------

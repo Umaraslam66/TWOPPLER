@@ -1,6 +1,6 @@
 {
  "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
- "exported_utc": "2026-07-26T18:04:05Z",
+ "exported_utc": "2026-07-26T18:11:27Z",
  "contract": "SPEC.md v1.7 (D1-D10)",
  "n_qa_subjects": 5,
  "n_items": 17,
@@ -381,7 +381,7 @@
    "meta_file": "meta_classify.jsonl",
    "n_prompts": 469,
    "prompts_sha256": "c1130293b16ac3f918f5578f99cc6cbee593cecbafd3b3175449bb71658ae673",
-   "meta_sha256": "03cc56f5836d5b4e13ee36e73484db2336ff8991d136f45503c82be3c973f374",
+   "meta_sha256": "15b73975ad1e4c2ef78700b95d35ad221d07ad849813ec126f77752348d2934f",
    "total_prompt_words": 282014,
    "max_prompt_words": 776
   },
