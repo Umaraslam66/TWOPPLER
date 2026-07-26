@@ -683,8 +683,9 @@ def cmd_export_gate(args) -> int:
             "stage2_render_template_sha256": R.TEMPLATE_SHA256,
             "stage2_render_file_sha256": sha256_file(
                 _ROOT / "src/doppler/stage2_render.py"),
-            "distractors_v2_file_sha256": sha256_file(
-                _ROOT / "src/doppler/distractors_v2.py"),
+            **(getattr(args, "extra_renderer", None) or {
+                "distractors_v2_file_sha256": sha256_file(
+                    _ROOT / "src/doppler/distractors_v2.py")}),
         },
         "files": files,
     }
@@ -725,7 +726,9 @@ def cmd_export_pred(args) -> int:
             print(f"[export-pred] {name}: "
                   f"{files[name]['n_prompts']} prompts")
     doc = {
-        "pilot": PILOT_BANNER, "phase": "prediction", "contract": CONTRACT,
+        "pilot": getattr(args, "banner", None) or PILOT_BANNER,
+        "phase": "prediction",
+        "contract": getattr(args, "contract", None) or CONTRACT,
         "exported_utc": now(),
         "item_source": "items_final.jsonl" if final
                        else "candidates.jsonl (PRE-GATE, projection only)",
@@ -885,11 +888,13 @@ def cmd_ingest_gate(args) -> int:
     summary = json.loads(summary_path.read_text(encoding="utf-8")) \
         if summary_path.exists() else {}
     in_process = P1._node_hours(summary)
-    billed = billed_node_hours(out_dir, "stage2_pilot2_gate")
+    billed = billed_node_hours(
+        out_dir, getattr(args, "job_name", None) or "stage2_pilot2_gate")
     node_hours = billed if billed is not None else in_process
 
     doc = {
-        "pilot": PILOT_BANNER, "phase": "gate", "ingested_utc": now(),
+        "pilot": getattr(args, "banner", None) or PILOT_BANNER,
+        "phase": "gate", "ingested_utc": now(),
         "arm": GATE_ARM, "variant": GATE_VARIANT,
         "n_candidates": len(records),
         "n_parsed": len(parsed),
@@ -918,8 +923,10 @@ def cmd_ingest_gate(args) -> int:
         print("[cost] --skip-cost: no ledger entry")
     elif node_hours:
         append_cost_log(P1._zero_api_cost(build_cost_entry(
-            run_id="stage2_pilot2/gate", model=MODEL_LABEL, split=SPLIT_LABEL,
-            variant="stage2_d6v2_gate",
+            run_id=getattr(args, "run_id", None) or "stage2_pilot2/gate",
+            model=MODEL_LABEL,
+            split=getattr(args, "split_label", None) or SPLIT_LABEL,
+            variant=getattr(args, "variant", None) or "stage2_d6v2_gate",
             n_persons=len({m["canonical_id"] for m in metas}),
             n_calls=len(records), n_retries=0,
             n_parse_failures=len(records) - len(parsed),
@@ -990,7 +997,8 @@ def cmd_ingest_pred(args) -> int:
                   f"{sum(1 for r in rows if r['parse_failure'])} parse failures")
 
     in_process = P1._sum_node_hours(summaries)
-    billed = billed_node_hours(out_dir, "stage2_pilot2_pred")
+    billed = billed_node_hours(
+        out_dir, getattr(args, "job_name", None) or "stage2_pilot2_pred")
     node_hours = billed if billed is not None else in_process
 
     gate_path = out_dir / "gate_results.json"
@@ -998,7 +1006,9 @@ def cmd_ingest_pred(args) -> int:
         if gate_path.exists() else {}
 
     analysis = {
-        "pilot": PILOT_BANNER, "confirmatory": False, "contract": CONTRACT,
+        "pilot": getattr(args, "banner", None) or PILOT_BANNER,
+        "confirmatory": False,
+        "contract": getattr(args, "contract", None) or CONTRACT,
         "analysed_utc": now(),
         "model": MODEL_LABEL, "temperature": TEMPERATURE,
         "n_items": doc["n_items"], "item_source": doc["item_source"],
@@ -1056,8 +1066,10 @@ def cmd_ingest_pred(args) -> int:
         print("[cost] --skip-cost: no ledger entry")
     elif node_hours:
         append_cost_log(P1._zero_api_cost(build_cost_entry(
-            run_id="stage2_pilot2/prediction", model=MODEL_LABEL,
-            split=SPLIT_LABEL, variant="stage2_d6v2_pred",
+            run_id=(getattr(args, "run_id", None)
+                    or "stage2_pilot2/prediction"), model=MODEL_LABEL,
+            split=getattr(args, "split_label", None) or SPLIT_LABEL,
+            variant=getattr(args, "variant", None) or "stage2_d6v2_pred",
             n_persons=len({r["canonical_id"] for r in all_records}),
             n_calls=len(all_records), n_retries=0,
             n_parse_failures=sum(1 for r in all_records if r["parse_failure"]),
@@ -1127,7 +1139,8 @@ def cmd_finalize(args) -> int:
                             "gate_rejected": len(d), "parse_failed": len(u)}
     S.write_jsonl(out_dir / "items_final.jsonl", kept)
     S.write_json(out_dir / "finalize_summary.json", {
-        "pilot": PILOT_BANNER, "finalized_utc": now(),
+        "pilot": getattr(args, "banner", None) or PILOT_BANNER,
+        "finalized_utc": now(),
         "rule": "An item the zero-information arm argmax-solved at build time "
                 "never enters the final set. An item whose gate reply did not "
                 "parse is also held out (the gate could not clear it).",

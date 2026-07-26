@@ -1,0 +1,377 @@
+{
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "phase": "gate",
+ "ingested_utc": "2026-07-26T22:56:53Z",
+ "arm": "zeroinfo_redacted",
+ "variant": "standard",
+ "n_candidates": 15,
+ "n_parsed": 3,
+ "n_parse_failures": 12,
+ "n_missing_completions": 0,
+ "pre_gate_zeroinfo_argmax_accuracy": 1.0,
+ "pre_gate_mean_prob_mass_correct": 0.8,
+ "pre_gate_note": "This is the instrument-difficulty number. Post-gate zero-info accuracy is ~0 by construction (same model, temperature 0, same prompt).",
+ "n_rejected": 3,
+ "rejected_item_ids": [
+  "C00792:NPR-19884:10",
+  "C00792:NPR-19884:13",
+  "C02013:NPR-9480:45"
+ ],
+ "records": [
+  {
+   "item_id": "C00792:NPR-19884:10",
+   "canonical_id": "C00792",
+   "correct_index": 0,
+   "raw_response": "The provided text is a transcript from a news interview (likely featuring a foreign policy expert or analyst) discussing the transition to the Trump administration and the conflict in Syria. \n\nOption A reflects a common analytical critique of the time: the tension between Trump's campaign rhetoric regarding Russia/Assad and the reality of the ground war and ISIS recruitment. Options B and C are plausible in tone but contain more specific policy prescriptions or lists of officials that are less characteristic of a direct answer to \"Is there an opportunity to change course?\" Option D is highly u",
+   "parsed": true,
+   "argmax_correct": true,
+   "p_correct": 0.85,
+   "argmax_index": 0,
+   "margin": 0.78,
+   "distribution": [
+    0.85,
+    0.05,
+    0.07,
+    0.03
+   ],
+   "missing_completion": false
+  },
+  {
+   "item_id": "C00792:NPR-19884:13",
+   "canonical_id": "C00792",
+   "correct_index": 2,
+   "raw_response": "The host's question asks whether there is still a nationalist movement worth supporting, likely in the context of the Syrian Civil War. Option C is the only response that provides a nuanced \"Yes\" while pivoting to the broader geopolitical and social consequences (such as the European migrant crisis and Brexit), which is a common pattern in high-level broadcast news interviews where guests connect local conflicts to global political trends. Options A, B, and D are highly specific, detailed military/political analyses that read more like intelligence reports or academic papers than a typical bro",
+   "parsed": true,
+   "argmax_correct": true,
+   "p_correct": 0.7000000000000001,
+   "argmax_index": 2,
+   "margin": 0.6,
+   "distribution": [
+    0.10000000000000002,
+    0.10000000000000002,
+    0.7000000000000001,
+    0.10000000000000002
+   ],
+   "missing_completion": false
+  },
+  {
+   "item_id": "C00792:NPR-19884:15",
+   "canonical_id": "C00792",
+   "correct_index": 2,
+   "raw_response": "The host's question asks which international backer (U.S., Turkey, Saudi Arabia, or Qatar) has lost the most in the context of the Syrian conflict. In typical geopolitical analysis provided on American broadcast news regarding the Syrian civil war, the U.S. is frequently cited as having suffered a significant loss of credibility and strategic influence due to the failure of various policy goals and the persistence of the Assad regime. Option C follows the typical rhetorical style of a guest addressing a host (referring to him as \"Robert\") and provides a broad strategic assessment common in the",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C00792:NPR-19884:2",
+   "canonical_id": "C00792",
+   "correct_index": 1,
+   "raw_response": "The host's question asks whether certain rebel groups (following the fall of Aleppo) are aligned with the Islamic State (ISIS) or are distinct and opposed to them. \n\nIn the context of the Syrian Civil War, most mainstream analysts and guests on American broadcast news during this period emphasized the ideological and strategic divide between the \"mainstream\" Syrian opposition (even the more radical Islamist factions like Ahrar al-Sham or Jabhat Fateh al-Sham) and the Islamic State. ISIS frequently fought against other rebel groups, viewing them as apostates or insufficient in their application",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C00792:NPR-19884:6",
+   "canonical_id": "C00792",
+   "correct_index": 1,
+   "raw_response": "The provided text is a transcript from an interview with former U.S. Ambassador to the UN Samantha Power. In the interview, she addresses the U.S. role in the Syrian conflict by acknowledging that while the U.S. did not cause the war, its failure to act decisively exacerbated the situation and emboldened the regime and its allies.\n\nOption B most accurately reflects the nuanced position typically taken by officials of that administration: denying primary responsibility for the start of the conflict while admitting that inaction aggravated the outcome and signaled a \"free ride\" to the adversarie",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02013:NPR-9480:45",
+   "canonical_id": "C02013",
+   "correct_index": 0,
+   "raw_response": "The host's question refers to a speech given by the president in Chicago. Based on the content of the options, Option A describes a comprehensive, multi-level policy approach (gun laws, early childhood intervention, and community-level supports) that aligns with the typical rhetoric and policy framework of President Obama's addresses regarding urban violence and community investment. Options B, C, and D represent specific ideological critiques (purely economic/libertarian, law-and-order/pro-police, and traditionalist/family-values) that are less likely to be the primary summary given by a gues",
+   "parsed": true,
+   "argmax_correct": true,
+   "p_correct": 0.85,
+   "argmax_index": 0,
+   "margin": 0.8,
+   "distribution": [
+    0.85,
+    0.05,
+    0.05,
+    0.05
+   ],
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02013:NPR-9480:49",
+   "canonical_id": "C02013",
+   "correct_index": 1,
+   "raw_response": "The host's question is framed as a \"chicken and the egg\" dilemma, specifically asking if it is a cycle or if one precedes the other. In American broadcast news interviews, especially those featuring academic or research-based guests (which the phrasing \"Let me ask you about that\" and the nature of the topic suggest), the most common response to such a complex sociological question is to describe it as a \"vicious cycle\" or a \"feedback loop\" rather than attributing it to a single, linear cause.\n\nOption B mirrors this typical expert discourse: it acknowledges the difficulty of disentangling the v",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02013:NPR-9480:70",
+   "canonical_id": "C02013",
+   "correct_index": 3,
+   "raw_response": "The host's question is framed as an inquiry into \"programs that actually work,\" specifically asking a professor of social sciences about early education and community involvement. \n\nOptions A, B, and C are written in a highly argumentative, polemical style that reads more like an op-ed or a political speech than a natural response from an academic guest on a broadcast news program. They are dismissive and lean heavily into specific political ideologies (e.g., the Giuliani administration, \"tough on crime\" rhetoric).\n\nOption D, however, reflects the typical speaking style of a social science pro",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02013:NPR-9480:82",
+   "canonical_id": "C02013",
+   "correct_index": 1,
+   "raw_response": "The host's question focuses on the psychological and developmental impact of witnessing gun violence on a generation of children, specifically asking about the difference in outcomes between those who witness it and those who do not. \n\nOption B provides a comprehensive, evidence-based answer that directly addresses the \"outcomes\" mentioned by the host (schooling, learning, the \"cycle of violence,\" and test scores). It aligns with the typical discourse found in American broadcast news interviews involving experts on community violence, where the focus is on the systemic trauma and the need for ",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02124:NPR-12184:4",
+   "canonical_id": "C02124",
+   "correct_index": 2,
+   "raw_response": "The context of this interview refers to the period leading up to the 2014 Egyptian presidential election. During this time, the prevailing political analysis on American broadcast news (such as CNN or PBS) regarding Abdel Fattah el-Sisi was that his victory was virtually inevitable due to the collapse of the Muslim Brotherhood and widespread public support for the military's role in removing Mohamed Morsi. \n\nOption C reflects the actual political reality of that moment: the lack of viable opposition and the concern among analysts regarding the return to military rule, rather than a prediction ",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02124:NPR-12184:6",
+   "canonical_id": "C02124",
+   "correct_index": 2,
+   "raw_response": "The host's question asks about the level of concern an Egyptian government would have regarding the American reaction to its rule. \n\nOption A and D present extreme views (complete irrelevance of the US) that are rarely expressed by guests on American broadcast news in such a definitive, aggressive manner. Option B presents a state of total desperation and fragility that is unlikely to be the primary narrative of a balanced geopolitical analysis.\n\nOption C provides a nuanced, balanced perspective typical of a political analyst or diplomat. It acknowledges the material importance of US aid (the ",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C01677:NPR-8791:77",
+   "canonical_id": "C01677",
+   "correct_index": 2,
+   "raw_response": "The host's question \"With a much shorter timeline?\" is a clarifying follow-up, likely seeking a confirmation or a nuanced explanation of whether the window for diplomatic action or nuclear breakout has decreased. \n\nOption C is the most characteristic of a broadcast news interview response. It provides a balanced, conditional analysis (\"It depends on...\"), acknowledges conflicting signals (threats vs. actual behavior), and uses the measured tone typical of a policy expert or diplomat. Options A and B are overly assertive and detailed in a way that sounds more like a briefing or a scripted monol",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02006:NPR-14829:19",
+   "canonical_id": "C02006",
+   "correct_index": 2,
+   "raw_response": "The host's framing of the question is key: they describe the guest's tweet as saying the country is \"in a lot of trouble because of that stupid, bloody referendum.\" This indicates that the guest holds a negative view of the referendum and its consequences.\n\nOptions A, B, and D are all arguments in favor of the referendum (Brexit), framing it as an economic necessity, a victory for the working class, or a triumph for democracy. Option C is the only response that aligns with the host's description, characterizing the referendum as a \"mistake\" that has left the country \"in a mess.\"\n\nA: 0.01\nB: 0.",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02006:NPR-14829:26",
+   "canonical_id": "C02006",
+   "correct_index": 3,
+   "raw_response": "The host's question asks whether anyone in power wants to \"get out of Brexit\" (stop it entirely) or \"back away from this\" (change the nature of the exit). \n\nOption A and C suggest active plots to stop Brexit entirely, which was less common as a consensus view among analysts during the peak of the negotiations. Option B suggests a total lack of appetite for any change, which ignores the significant parliamentary struggle over the \"type\" of Brexit. \n\nOption D provides a nuanced, analytical answer typical of a broadcast news guest (likely a political analyst or academic). It distinguishes between",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  },
+  {
+   "item_id": "C02006:NPR-14829:29",
+   "canonical_id": "C02006",
+   "correct_index": 2,
+   "raw_response": "The host's question asks if the election result could be \"good, better, [or] less bad,\" which invites a nuanced or cautiously optimistic perspective. \n\nOption A focuses on the NHS and housing, which are hallmarks of UK political discourse rather than American broadcast news contexts (though the news could be *about* the UK). Option B and D are purely negative and dismissive. Option C provides a reasoned argument for why the result could be \"possible\" or \"legitimize a different approach,\" directly answering the host's specific framing of the question. Furthermore, the phrasing in Option C (\"pho",
+   "parsed": false,
+   "argmax_correct": null,
+   "p_correct": null,
+   "margin": null,
+   "missing_completion": false
+  }
+ ],
+ "parse_failure_diagnostic": {
+  "note": "DIAGNOSTIC ONLY -- the frozen D8 parser's verdict stands and the gate decision used it. This says what the rejected replies contained.",
+  "n_parse_failures": 12,
+  "n_recoverable": 12,
+  "n_recoverable_argmax_correct": 12,
+  "records": [
+   {
+    "item_id": "C00792:NPR-19884:15",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.5,
+    "distribution": [
+     0.2,
+     0.15,
+     0.5,
+     0.15
+    ]
+   },
+   {
+    "item_id": "C00792:NPR-19884:2",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.85,
+    "distribution": [
+     0.05,
+     0.85,
+     0.05,
+     0.05
+    ]
+   },
+   {
+    "item_id": "C00792:NPR-19884:6",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.7000000000000001,
+    "distribution": [
+     0.10000000000000002,
+     0.7000000000000001,
+     0.10000000000000002,
+     0.10000000000000002
+    ]
+   },
+   {
+    "item_id": "C02013:NPR-9480:49",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.85,
+    "distribution": [
+     0.05,
+     0.85,
+     0.05,
+     0.05
+    ]
+   },
+   {
+    "item_id": "C02013:NPR-9480:70",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.97,
+    "distribution": [
+     0.01,
+     0.01,
+     0.01,
+     0.97
+    ]
+   },
+   {
+    "item_id": "C02013:NPR-9480:82",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.85,
+    "distribution": [
+     0.05,
+     0.85,
+     0.05,
+     0.05
+    ]
+   },
+   {
+    "item_id": "C02124:NPR-12184:4",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.85,
+    "distribution": [
+     0.05,
+     0.05,
+     0.85,
+     0.05
+    ]
+   },
+   {
+    "item_id": "C02124:NPR-12184:6",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.8,
+    "distribution": [
+     0.05,
+     0.1,
+     0.8,
+     0.05
+    ]
+   },
+   {
+    "item_id": "C01677:NPR-8791:77",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.6000000000000001,
+    "distribution": [
+     0.15000000000000002,
+     0.15000000000000002,
+     0.6000000000000001,
+     0.10000000000000002
+    ]
+   },
+   {
+    "item_id": "C02006:NPR-14829:19",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.97,
+    "distribution": [
+     0.01,
+     0.01,
+     0.97,
+     0.01
+    ]
+   },
+   {
+    "item_id": "C02006:NPR-14829:26",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.65,
+    "distribution": [
+     0.1,
+     0.15,
+     0.1,
+     0.65
+    ]
+   },
+   {
+    "item_id": "C02006:NPR-14829:29",
+    "recoverable": true,
+    "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+    "argmax_correct": true,
+    "p_correct": 0.65,
+    "distribution": [
+     0.1,
+     0.15,
+     0.65,
+     0.1
+    ]
+   }
+  ]
+ },
+ "node_hours": 0.1156,
+ "node_hours_source": "sacct",
+ "node_hours_in_process": 0.0725,
+ "tokens_in": 8918,
+ "tokens_out": 3289
+}

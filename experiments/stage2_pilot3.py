@@ -1439,6 +1439,40 @@ def main(argv=None) -> int:
     sub.add_parser("plan").set_defaults(fn=cmd_plan)
     sub.add_parser("bootstrap").set_defaults(fn=cmd_bootstrap)
 
+    # Phases 1-2 reuse round 2's scorer, finalizer and analysis verbatim; only
+    # the LABELS differ (job name, cost-ledger run_id, banner, contract), which
+    # round 2 now reads off args. Sharing the code is the point: the gate rule,
+    # the frozen parser and the lift maths must be the same across rounds or the
+    # numbers are not comparable.
+    p_ig = sub.add_parser("ingest-gate")
+    p_ig.add_argument("--nodedir", required=True)
+    p_ig.add_argument("--skip-cost", action="store_true")
+    p_ig.set_defaults(fn=P2.cmd_ingest_gate, job_name="stage2_pilot3_gate",
+                      run_id="stage2_pilot3/gate", variant="stage2_b10_gate",
+                      split_label="stage2_pilot3", banner=PILOT_BANNER,
+                      contract=CONTRACT)
+
+    sub.add_parser("finalize").set_defaults(fn=P2.cmd_finalize,
+                                            banner=PILOT_BANNER)
+
+    p_ep = sub.add_parser("export-pred")
+    p_ep.add_argument("--force", action="store_true")
+    p_ep.add_argument("--pre-gate", action="store_true")
+    p_ep.set_defaults(fn=P2.cmd_export_pred, banner=PILOT_BANNER,
+                      contract=CONTRACT,
+                      extra_renderer={
+                          "counterfactuals_template_sha256": CF.TEMPLATE_SHA256,
+                          "counterfactuals_file_sha256": P2.sha256_file(
+                              _ROOT / "src/doppler/counterfactuals.py")})
+
+    p_ip = sub.add_parser("ingest-pred")
+    p_ip.add_argument("--nodedir", required=True)
+    p_ip.add_argument("--skip-cost", action="store_true")
+    p_ip.set_defaults(fn=P2.cmd_ingest_pred, job_name="stage2_pilot3_pred",
+                      run_id="stage2_pilot3/prediction",
+                      variant="stage2_b10_pred", split_label="stage2_pilot3",
+                      banner=PILOT_BANNER, contract=CONTRACT)
+
     for name, fn in (("bill", P2.cmd_bill), ("record", P2.cmd_record)):
         p = sub.add_parser(name)
         p.add_argument("--name", required=True)
