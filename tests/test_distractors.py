@@ -21,6 +21,7 @@ from doppler.distractors import (
     bucket_of,
     density_bucket,
     entity_density,
+    is_abbreviation,
     latest_cluster,
     sample_donor_ids,
     select_distractors,
@@ -213,18 +214,78 @@ def test_an_i_heavy_passage_no_longer_mis_buckets():
     assert strip_entities(text) == " ".join(text.split())
 
 
-def test_known_d5_r2_limit_an_abbreviation_dot_reads_as_a_sentence_end():
-    """PINS CURRENT BEHAVIOUR, which is not desirable behaviour.
+# ---------------------------------------------------------------------------
+# D5-r3 (SPEC v1.6) — an abbreviation's dot does not end a sentence
+# ---------------------------------------------------------------------------
 
-    SPEC D5-r2(b) defines a sentence boundary as ". ! ?" followed by a space,
-    and an abbreviation's dot is indistinguishable from that. So "Mr. Morsi"
-    splits and the surname survives into the stripped text. Measured cost on
-    the pilot bank: 20 of 653 rows (3%), 10 bucket shifts. Reported to the
-    orchestrator for a decision; if an abbreviation guard is approved, this
-    test is the one to change.
-    """
+def test_is_abbreviation_covers_exactly_the_three_spec_cases():
+    assert is_abbreviation("Mr")                # honorific
+    assert is_abbreviation("Gen")
+    assert is_abbreviation("U.S")               # internal dot
+    assert is_abbreviation("R")                 # single initial
+    assert not is_abbreviation("reasons")
+    assert not is_abbreviation("St")            # see the dedicated test below
+    assert not is_abbreviation("")
+
+
+def test_an_honorific_dot_no_longer_splits_a_name():
+    """The case D5-r3 exists for: A4.2's stripped variant must lose "Morsi"."""
+    assert entity_density("opposed to Mr. Morsi before then") == \
+        pytest.approx(2 / 6)
     assert strip_entities("opposed to Mr. Morsi before then") == \
-        "opposed to [NAME]. Morsi before then"
+        "opposed to [NAME] before then"
+
+
+def test_an_internal_dot_no_longer_splits_a_name():
+    assert strip_entities("the U.S. Government said so") == \
+        "the [NAME] said so"
+
+
+def test_a_military_honorific_no_longer_splits_a_name():
+    assert strip_entities("he served under Gen. Petraeus in Iraq") == \
+        "he served under [NAME] in [NAME]"
+
+
+def test_a_single_initial_no_longer_splits_a_name():
+    assert strip_entities("signed by R. Harris yesterday") == \
+        "signed by [NAME] yesterday"
+
+
+def test_bang_and_question_mark_still_end_a_sentence_after_an_abbreviation():
+    """Only "." is ambiguous. "!" and "?" are not, whatever precedes them."""
+    assert entity_density("ask Mr? Morsi was there") == pytest.approx(1 / 5)
+    assert entity_density("ask Mr! Morsi was there") == pytest.approx(1 / 5)
+
+
+def test_d5_r2_sentence_breaking_still_works_after_r3():
+    assert entity_density("Absolutely. He should have returned") == 0.0
+    assert strip_entities("he left. New York was cold") == \
+        "he left. [NAME] was cold"
+
+
+def test_the_price_of_r3_a_real_sentence_end_after_an_initial_like_word():
+    """PINS THE APPROVED TRADE-OFF, not desirable behaviour in itself.
+
+    A "." after an abbreviation-shaped token is read as an abbreviation even
+    when it really did end the sentence, so the next sentence's opening word
+    is swallowed into the span. The orchestrator accepted this on the record:
+    density noise is cheaper than leaving a real surname in the stripped
+    variant, which is a pre-registered control (A4.2).
+    """
+    assert strip_entities("he got an A. The result was fine") == \
+        "he got an [NAME] result was fine"
+    assert strip_entities("it happened in the U.S. Nobody noticed") == \
+        "it happened in the [NAME] noticed"
+
+
+def test_d5_r3_does_not_cover_st_because_v1_6_does_not_say_so():
+    """PINS A GAP. "ST" is not in HONORIFIC, has no internal dot and is not a
+    single initial, so "St. Petersburg" still splits and "Petersburg" still
+    survives into the stripped text. Covering it means extending HONORIFIC or
+    adding a fourth case; neither is in v1.6. Reported, not patched.
+    """
+    assert strip_entities("in St. Petersburg this week") == \
+        "in [NAME]. Petersburg this week"
 
 
 # ---------------------------------------------------------------------------

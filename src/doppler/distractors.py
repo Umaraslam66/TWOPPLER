@@ -131,6 +131,48 @@ def _is_number(core: str) -> bool:
     return digits >= 1 and ("$" in core or "%" in core)
 
 
+def is_abbreviation(core: str) -> bool:
+    """SPEC D5-r3: would a "." after this token be an abbreviation dot?
+
+    Three cases, exactly as v1.6 lists them: the dotted stem is a known
+    honorific (``Mr``, ``Dr``, ``Gen`` — the same set stage2_data strips off
+    speaker labels), the token already carries an internal dot (``U.S``,
+    ``N.Y``), or it is a single initial (``R.``).
+
+    Not covered, deliberately: ``St.``. "ST" is not in HONORIFIC, has no
+    internal dot and is not a single initial, so ``St. Petersburg`` still
+    splits. Adding it would mean extending HONORIFIC or inventing a fourth
+    case, and neither is in v1.6. Reported, not patched.
+    """
+    from doppler.stage2_data import HONORIFIC
+
+    stem = core.replace(".", "")
+    if not stem:
+        return False
+    return stem.upper() in HONORIFIC or "." in core or len(stem) == 1
+
+
+def _ends_sentence(core: str, trail: str) -> bool:
+    """Does this token close a sentence? (SPEC D5-r2(b) as amended by D5-r3.)
+
+    ``!`` and ``?`` are unambiguous. A ``.`` is not: it ends a sentence or it
+    marks an abbreviation, and D5-r3 rules that an abbreviation wins.
+
+    That ruling has a price, and it is the right way round. "in the U.S.
+    Nobody noticed" now reads as one span and loses "Nobody" to ``[NAME]``,
+    which costs a little density accuracy. The alternative left real surnames
+    sitting in the entity-stripped variant ("Mr. Morsi" -> "[NAME]. Morsi"),
+    which breaks a pre-registered control (A4.2). Density noise is cheaper
+    than a leak.
+    """
+    tail = core[-1:] + trail
+    if any(ch in "!?" for ch in tail):
+        return True
+    if "." not in tail:
+        return False
+    return not is_abbreviation(core)
+
+
 def _analyse(text: str):
     """Tokenise once and mark up entities. Shared by density and stripping.
 
@@ -162,8 +204,7 @@ def _analyse(text: str):
         sentence_start[0] = True
     for i in range(1, len(tokens)):
         _, core, trail = tokens[i - 1]
-        tail = core[-1:] + trail
-        if any(ch in _SENT_END_CHARS for ch in tail):
+        if _ends_sentence(core, trail):
             sentence_start[i] = True
 
     spans = []
