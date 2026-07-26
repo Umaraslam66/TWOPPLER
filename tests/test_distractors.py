@@ -142,9 +142,25 @@ def test_bucket_edges():
     assert density_bucket(1.0) == "H"
 
 
-def test_bucket_of_matches_density_bucket():
-    text = answer_with(100, 12)
-    assert bucket_of(text) == density_bucket(entity_density(text))
+def test_bucket_of_returns_literal_buckets_at_the_boundaries():
+    """Text-to-bucket end to end, against literal expected values.
+
+    Densities are exact by construction: answer_with(1000, k) puts exactly k
+    entity tokens in 1000 words, so k/1000 IS the density. Nothing here is
+    computed by the code under test.
+    """
+    assert entity_density(answer_with(1000, 19)) == 0.019
+    assert bucket_of(answer_with(1000, 19)) == "Z"      # below the Z/L edge
+    assert entity_density(answer_with(1000, 20)) == 0.020
+    assert bucket_of(answer_with(1000, 20)) == "Z"      # ON the edge: Z wins
+    assert entity_density(answer_with(1000, 21)) == 0.021
+    assert bucket_of(answer_with(1000, 21)) == "L"      # just over
+    assert entity_density(answer_with(1000, 80)) == 0.080
+    assert bucket_of(answer_with(1000, 80)) == "L"      # ON the edge: L wins
+    assert entity_density(answer_with(1000, 81)) == 0.081
+    assert bucket_of(answer_with(1000, 81)) == "H"      # just over
+    assert bucket_of(answer_with(1000, 0)) == "Z"
+    assert bucket_of(answer_with(1000, 500)) == "H"
 
 
 def test_adjacency_is_symmetric_and_z_is_not_adjacent_to_h():
@@ -276,6 +292,52 @@ def test_the_price_of_r3_a_real_sentence_end_after_an_initial_like_word():
         "he got an [NAME] result was fine"
     assert strip_entities("it happened in the U.S. Nobody noticed") == \
         "it happened in the [NAME] noticed"
+
+
+def test_known_d5_r3_limit_a_spelled_out_title_reads_as_an_abbreviation():
+    """PINS A KNOWN MISFIRE, not desirable behaviour.
+
+    HONORIFIC holds titles spelled out in full (PRESIDENT, GENERAL, JUSTICE,
+    FATHER, SIR) as well as abbreviations, and 58 of its 83 entries are
+    ordinary English words. A spelled-out title never carries an abbreviation
+    dot -- the abbreviation is "Pres." -- so "became president. And of course"
+    really is a sentence end, but D5-r3 as v1.6 writes it reads the dot as an
+    abbreviation and glues "And" into the span.
+
+    Measured: 15 of 653 bank rows (2%); fixing it would move 4 bank rows and
+    0 items between buckets. Reported to the orchestrator; the fix is to
+    narrow the clause to a curated abbreviation list, which is a new rule.
+    """
+    assert is_abbreviation("president")          # the misfire, at its root
+    assert is_abbreviation("general")
+    assert is_abbreviation("sir")
+    assert strip_entities("he became president. And of course it was") == \
+        "he became president. [NAME] of course it was"
+
+
+def test_honorific_set_has_not_drifted_under_d5_r3():
+    """D5-r3's semantics are a function of stage2_data.HONORIFIC, which is
+    T1's file. If an edit there adds or removes an entry, which dots count as
+    abbreviations changes silently and the bank's buckets move with it.
+
+    This pins the set. A deliberate change to HONORIFIC should update this
+    hash AND trigger a bank rebuild; an accidental one fails here first.
+    """
+    import hashlib
+
+    from doppler.stage2_data import HONORIFIC
+
+    digest = hashlib.sha256(
+        "\n".join(sorted(HONORIFIC)).encode("utf-8")).hexdigest()[:16]
+    assert len(HONORIFIC) == 83, f"HONORIFIC size changed to {len(HONORIFIC)}"
+    assert digest == "4a42d8725c6eaa72", (
+        "stage2_data.HONORIFIC changed. D5-r3 reads it to decide which "
+        "trailing dots are abbreviations, so the entity buckets and the "
+        "distractor bank move with it. Review, then update this hash and "
+        "rebuild the bank.")
+    # The entries D5-r3 actually leans on, named so a removal is legible.
+    for abbrev in ("MR", "MRS", "DR", "GEN", "COL", "SEN", "REV", "CAPT"):
+        assert abbrev in HONORIFIC, abbrev
 
 
 def test_d5_r3_does_not_cover_st_because_v1_6_does_not_say_so():
@@ -578,6 +640,83 @@ def test_z_and_h_never_substitute_for_each_other_even_at_the_last_rung():
     assert len(out["options"]) == 1
 
 
+# ---------------------------------------------------------------------------
+# D6-r2 (SPEC v1.7) — three distinct donors
+# ---------------------------------------------------------------------------
+
+def test_the_three_distractors_come_from_three_different_people():
+    """Even when one donor owns the three most similar questions."""
+    item = mk_item(question="the vote in the assembly")
+    bank = [
+        mk_row("HOG", "the vote in the assembly", 100, 5, tid="T-HOG-1"),
+        mk_row("HOG", "the vote in the assembly today", 100, 5, tid="T-HOG-2"),
+        mk_row("HOG", "the vote in the assembly again", 100, 5, tid="T-HOG-3"),
+        mk_row("D1", "the vote was close", 100, 5),
+        mk_row("D2", "an entirely different matter", 100, 5),
+        mk_row("D3", "another unrelated question here", 100, 5),
+    ]
+    out = select_distractors(item, bank)
+    donors = [o["source_canonical_id"] for o in out["options"]
+              if o["kind"] == "distractor"]
+    assert len(donors) == 3
+    assert len(set(donors)) == 3
+    assert donors.count("HOG") == 1          # its best row, and only that one
+    assert "duplicate_donor" not in out["flags"]
+
+
+def test_the_ladder_is_walked_before_a_duplicate_donor_is_allowed():
+    """Rung 0 has 3 rows but only 2 donors; rung 1 has 3 donors. Rung 1 wins."""
+    item = mk_item(words=100, entities=5)
+    bank = [
+        mk_row("A1", "what about the vote", 100, 5, tid="T-A1-a"),
+        mk_row("A1", "what about the vote later", 100, 5, tid="T-A1-b"),
+        mk_row("A2", "what about the vote again", 100, 5),
+        # +28%: out of reach at rung 0, in reach at rung 1, same L bucket.
+        mk_row("B1", "what about the vote once more", 128, 7),
+        mk_row("B2", "what about the vote finally", 128, 7),
+        mk_row("B3", "what about the vote at last", 128, 7),
+    ]
+    out = select_distractors(item, bank)
+    assert out["relax_rung"] == 1
+    donors = [o["source_canonical_id"] for o in out["options"]
+              if o["kind"] == "distractor"]
+    assert len(set(donors)) == 3
+    assert "duplicate_donor" not in out["flags"]
+
+
+def test_a_duplicate_donor_is_permitted_only_at_the_final_rung_and_flagged():
+    """One donor, three rows, nothing else in the bank at any tolerance."""
+    item = mk_item(words=100, entities=5)
+    bank = [mk_row("ONLY", f"what about topic {i}", 100, 5, tid=f"T-ONLY-{i}")
+            for i in range(3)]
+    out = select_distractors(item, bank)
+    assert out["relax_rung"] == len(RELAX_LADDER) - 1
+    assert "duplicate_donor" in out["flags"]
+    donors = [o["source_canonical_id"] for o in out["options"]
+              if o["kind"] == "distractor"]
+    assert donors == ["ONLY", "ONLY", "ONLY"]
+    assert len(out["options"]) == 4
+
+
+def test_a_duplicated_donor_never_repeats_the_same_bank_row():
+    """A duplicate donor is still three different answers, not one thrice."""
+    item = mk_item(words=100, entities=5)
+    bank = [mk_row("ONLY", f"what about topic {i}", 100, 5, tid=f"T-ONLY-{i}")
+            for i in range(3)]
+    out = select_distractors(item, bank)
+    texts = [o["source_transcript_id"] for o in out["options"]
+             if o["kind"] == "distractor"]
+    assert len(set(texts)) == 3
+
+
+def test_distinct_donors_hold_across_every_pilot_shaped_item():
+    item = mk_item()
+    out = select_distractors(item, big_bank(20))
+    donors = [o["source_canonical_id"] for o in out["options"]
+              if o["kind"] == "distractor"]
+    assert len(set(donors)) == 3
+
+
 def test_a_distractor_never_comes_from_the_subject_itself():
     """The one rule the relaxation ladder may never touch."""
     item = mk_item(subject="C0DEV", words=100, entities=5)
@@ -606,14 +745,32 @@ def test_question_similarity_decides_which_candidates_win():
     assert picked == {"A1", "A2", "A3"}
 
 
-def test_similarity_is_recorded_in_descending_order_of_selection():
-    item = mk_item()
-    bank = big_bank(20)
+def test_the_three_top_ranked_candidates_win_in_a_hand_computed_ranking():
+    """Asserts the actual selection property against a ranking worked out by
+    hand, not against whatever the code happened to produce.
+
+    The query is "the vote in the assembly". Overlap with the query, in words:
+    A1 shares all four content words, A2 three, A3 two, B1 one, B2/B3 none. So
+    the ranking is A1 > A2 > A3 > B1 > {B2, B3}, and the three that must be
+    picked are A1, A2, A3 — in that order, since selection order is recorded
+    before the shuffle.
+    """
+    item = mk_item(question="the vote in the assembly")
+    bank = [
+        mk_row("A1", "the vote in the assembly", 100, 5),
+        mk_row("A2", "the vote in the chamber", 100, 5),
+        mk_row("A3", "the vote today", 100, 5),
+        mk_row("B1", "the sourdough bread recipe", 100, 5),
+        mk_row("B2", "baking rye at altitude", 100, 5),
+        mk_row("B3", "planting onions in spring", 100, 5),
+    ]
     out = select_distractors(item, bank)
-    sims = [o["question_similarity"] for o in out["options"]
-            if o["kind"] == "distractor"]
-    assert len(sims) == 3
-    assert all(0.0 <= s <= 1.0 for s in sims)
+    by_donor = {o["source_canonical_id"]: o for o in out["options"]
+                if o["kind"] == "distractor"}
+    assert set(by_donor) == {"A1", "A2", "A3"}
+    assert by_donor["A1"]["question_similarity"] > \
+        by_donor["A2"]["question_similarity"] > \
+        by_donor["A3"]["question_similarity"] > 0.0
 
 
 # ---------------------------------------------------------------------------
@@ -653,13 +810,40 @@ def test_the_true_answer_does_not_sit_in_one_position():
     assert set(seen) == {0, 1, 2, 3}
 
 
-def test_options_stripped_matches_options_position_for_position():
-    item, bank = mk_item(), big_bank(20)
+def test_options_stripped_holds_the_literal_stripped_text_in_the_same_order():
+    """Literal expected strings, so this cannot mirror the implementation.
+
+    Each option's text is known, so its stripped form is known; the test
+    writes both out and checks the alignment survives the shuffle.
+    """
+    def row(donor: str, question: str, answer: str) -> dict:
+        density = entity_density(answer)
+        return {"question": question, "answer": answer,
+                "answer_words": len(answer.split()),
+                "entity_density": density, "bucket": density_bucket(density),
+                "source_canonical_id": donor,
+                "source_transcript_id": f"T-{donor}"}
+
+    item = mk_item(question="what happened at the meeting")
+    item["answer"] = "we met Rex in 1997 and paid $5"
+    item["answer_words"] = 8
+    bank = [
+        row("D1", "what happened at the meeting", "she met Ada in 2001 and paid $9"),
+        row("D2", "what happened at the hearing", "they met Bob in 1985 and paid $3"),
+        row("D3", "what happened at the trial", "he met Cleo in 1972 and paid $7"),
+    ]
+    expected = {
+        "we met Rex in 1997 and paid $5": "we met [NAME] in [NUMBER] and paid [NUMBER]",
+        "she met Ada in 2001 and paid $9": "she met [NAME] in [NUMBER] and paid [NUMBER]",
+        "they met Bob in 1985 and paid $3": "they met [NAME] in [NUMBER] and paid [NUMBER]",
+        "he met Cleo in 1972 and paid $7": "he met [NAME] in [NUMBER] and paid [NUMBER]",
+    }
     out = select_distractors(item, bank)
-    assert len(out["options_stripped"]) == len(out["options"])
+    assert len(out["options_stripped"]) == len(out["options"]) == 4
     for opt, stripped in zip(out["options"], out["options_stripped"]):
-        assert stripped == strip_entities(opt["text"])
-    assert "[NAME]" in out["options_stripped"][out["correct_index"]]
+        assert stripped == expected[opt["text"]]
+    assert out["options_stripped"][out["correct_index"]] == \
+        "we met [NAME] in [NUMBER] and paid [NUMBER]"
 
 
 def test_selection_output_carries_the_d6_keys():

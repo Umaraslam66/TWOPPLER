@@ -139,10 +139,23 @@ def is_abbreviation(core: str) -> bool:
     speaker labels), the token already carries an internal dot (``U.S``,
     ``N.Y``), or it is a single initial (``R.``).
 
-    Not covered, deliberately: ``St.``. "ST" is not in HONORIFIC, has no
-    internal dot and is not a single initial, so ``St. Petersburg`` still
-    splits. Adding it would mean extending HONORIFIC or inventing a fourth
-    case, and neither is in v1.6. Reported, not patched.
+    Two known limits, both pinned by tests in tests/test_distractors.py rather
+    than left as prose, and both waiting on the same decision:
+
+    1. ``St.`` is not covered. "ST" is not in HONORIFIC, has no internal dot
+       and is not a single initial, so ``St. Petersburg`` still splits.
+    2. HONORIFIC holds spelled-out titles as well as abbreviations —
+       ``PRESIDENT``, ``GENERAL``, ``JUSTICE``, ``FATHER``, ``SIR``: 58 of its
+       83 entries are ordinary words. A spelled-out title never carries an
+       abbreviation dot (the abbreviation is "Pres."), so "became president.
+       And of course" is a real sentence end that this reads as an
+       abbreviation, gluing "And" into the span. Measured: 15 of 653 bank rows
+       (2%), and fixing it would move 4 rows and 0 items between buckets.
+
+    Both close if the honorific clause is narrowed to a curated abbreviation
+    list instead of all of HONORIFIC. That is a new rule, so it needs the
+    orchestrator's sign-off; v1.6 names HONORIFIC explicitly. Do not narrow it
+    here without that sign-off.
     """
     from doppler.stage2_data import HONORIFIC
 
@@ -497,6 +510,28 @@ def rank_by_question_similarity(question: str,
     return scored
 
 
+def _pick_distinct_donors(ranked: list[tuple[float, int, dict]],
+                          n: int) -> list[tuple[float, int, dict]]:
+    """SPEC D6-r2: the best ``n`` candidates, at most one per donor subject.
+
+    Walks the ranking in order and skips a candidate whose donor is already
+    represented, so the three distractors are three different people. Returns
+    fewer than ``n`` when the ranking simply does not hold that many donors;
+    the caller decides what to do about it, and only at the final rung.
+    """
+    out: list[tuple[float, int, dict]] = []
+    used: set[str] = set()
+    for cand in ranked:
+        donor = cand[2]["source_canonical_id"]
+        if donor in used:
+            continue
+        used.add(donor)
+        out.append(cand)
+        if len(out) == n:
+            break
+    return out
+
+
 def shuffle_seed(item_id: str) -> int:
     """SPEC D6: ``int(sha256(item_id)[:8], 16)``. Per item, so it is stable."""
     return int(hashlib.sha256(item_id.encode("utf-8")).hexdigest()[:8], 16)
@@ -506,8 +541,11 @@ def select_distractors(item: dict, bank: list[dict], n: int = 3) -> dict:
     """SPEC D6. One qa item + the bank -> its option set.
 
     Walks the relaxation ladder only as far as it has to: the first rung that
-    yields at least ``n`` candidates is the one used, and the rung is recorded
-    so the report can say how often the pre-registered control actually held.
+    can supply ``n`` distinct donor subjects (SPEC D6-r2) is the one used, and
+    the rung is recorded so the report can say how often the pre-registered
+    control actually held. A duplicate donor is permitted only after the whole
+    ladder has been tried and only at the final rung, and it is flagged
+    ``duplicate_donor`` when it happens.
     The true answer is inserted, the four options are shuffled by a seed
     derived from the item_id, and ``correct_index`` is read off *after* the
     shuffle from the one option marked ``true`` — never assumed.
@@ -519,16 +557,40 @@ def select_distractors(item: dict, bank: list[dict], n: int = 3) -> dict:
 
     chosen: list[tuple[float, int, dict]] = []
     rung = len(RELAX_LADDER) - 1
+    last_rung = len(RELAX_LADDER) - 1
     for k, (tol, adjacent) in enumerate(RELAX_LADDER):
         cands = _eligible(bank, item["canonical_id"], true_words, true_bucket,
                           tol, adjacent)
-        if len(cands) >= n or k == len(RELAX_LADDER) - 1:
+        # SPEC D6-r2: a rung is only good enough if it can supply n DISTINCT
+        # donors. Two options from the same person are one person's voice
+        # wearing two hats, which hands the model a real signal that has
+        # nothing to do with the subject.
+        n_donors = len({r["source_canonical_id"] for _, r in cands})
+        if n_donors >= n or k == last_rung:
             ranked = rank_by_question_similarity(item["question"], cands,
                                                  bank_questions)
-            chosen, rung = ranked[:n], k
+            chosen, rung = _pick_distinct_donors(ranked, n), k
             break
 
     flags = [f"relax_rung_{rung}"]
+    if len(chosen) < n:
+        # Only reachable at the final rung: the ladder is walked first.
+        taken = {idx for _, idx, _ in chosen}
+        for cand in ranked:
+            if len(chosen) >= n:
+                break
+            if cand[1] in taken:
+                continue
+            chosen.append(cand)
+            taken.add(cand[1])
+        chosen.sort(key=lambda s: (-s[0], s[2]["source_canonical_id"],
+                                   s[2]["source_transcript_id"], s[1]))
+        if len(chosen) > len({c[2]["source_canonical_id"] for c in chosen}):
+            flags.append("duplicate_donor")
+            if rung != last_rung:
+                raise AssertionError(
+                    f"{item['item_id']}: duplicate donor permitted at rung "
+                    f"{rung}, which is not the final rung")
     if len(chosen) < n:
         flags.append("insufficient_candidates")
 
@@ -557,11 +619,15 @@ def select_distractors(item: dict, bank: list[dict], n: int = 3) -> dict:
     if len(correct) != 1:
         raise AssertionError(f"{item['item_id']}: {len(correct)} true options")
     # Never-same-subject invariant, asserted rather than trusted.
-    for opt in options:
-        if opt["kind"] == "distractor" and \
-                opt["source_canonical_id"] == item["canonical_id"]:
+    donors = [o["source_canonical_id"] for o in options if o["kind"] == "distractor"]
+    for donor in donors:
+        if donor == item["canonical_id"]:
             raise AssertionError(
                 f"{item['item_id']}: distractor from the subject's own transcripts")
+    # D6-r2 distinct-donor invariant: only a flagged item may repeat a donor.
+    if len(donors) != len(set(donors)) and "duplicate_donor" not in flags:
+        raise AssertionError(
+            f"{item['item_id']}: repeated donor {donors} without the flag")
 
     return {
         "item_id": item["item_id"],

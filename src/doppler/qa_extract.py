@@ -44,9 +44,13 @@ what why how when where who tell describe do did is are was were can could
 would will
 """.split())
 
-_WORD_RE = re.compile(r"[^\W\d_]+", re.UNICODE)     # letters only, no digits
 _SENT_END_RE = re.compile(r"[.!?]+[\"'”’)\]]*\s+")
 _PUNCT_STRIP_RE = re.compile(r"^\W+|\W+$", re.UNICODE)
+
+#: A leading stage direction: "(LAUGHTER)", "[APPLAUSE]". Stripped before the
+#: cue test (SPEC D4 as clarified by v1.7). Applied repeatedly, because turns
+#: occasionally open with two of them.
+_STAGE_DIR_RE = re.compile(r"^\s*(?:\([^)]*\)|\[[^\]]*\])\s*")
 
 
 # ---------------------------------------------------------------------------
@@ -59,15 +63,30 @@ def word_count(text: str) -> int:
 
 
 def first_word(text: str) -> str:
-    """The first *alphabetic* word, lowercased, or "" if there is none.
+    """SPEC D4 as clarified by v1.7: the LITERAL first word, lowercased.
 
-    Leading punctuation and stage directions do not count, so
-    ``"(LAUGHTER) What did you make of that?"`` opens with ``what``. Digits are
-    not letters, so a turn opening with a number has no first word and has to
-    rely on its question mark.
+    Leading parenthetical or bracketed stage directions are stripped first, so
+    ``"(LAUGHTER) What did you make of that?"`` opens with ``what``. After
+    that the *first whitespace token* is the first word — punctuation wrapped
+    around it does not make it a different word (``"...is"`` is ``is``), but
+    nothing is ever skipped over.
+
+    That last part is the whole point of v1.7. The earlier reading searched for
+    the first *alphabetic* run, which skipped straight past a leading number:
+    "1-800-989-8255 is our number. What is interesting..." opened with ``is``,
+    a cue word, and was admitted as a question. It is not one. Under v1.7 its
+    first word is the phone number, no cue, so only a "?" can admit it.
     """
-    m = _WORD_RE.search(text or "")
-    return m.group(0).lower() if m else ""
+    text = text or ""
+    while True:
+        m = _STAGE_DIR_RE.match(text)
+        if m is None:
+            break
+        text = text[m.end():]
+    parts = text.split()
+    if not parts:
+        return ""
+    return _PUNCT_STRIP_RE.sub("", parts[0]).casefold()
 
 
 def has_interrogative_cue(question: str) -> bool:
@@ -114,11 +133,17 @@ def truncate_answer(text: str,
     ``target_words``. Sentence boundaries are ``.``/``!``/``?`` runs followed by
     whitespace (closing quotes and brackets allowed in between).
 
-    Two edge cases the SPEC does not spell out, resolved here and documented:
-    a run-on answer with no interior sentence boundary at all, and one whose
-    nearest boundary is the very end of the text (so cutting there would cut
-    nothing). Both fall back to a hard cut at ``target_words`` whitespace
-    tokens, because the point of the rule is to bound the option length.
+    Three edge cases the SPEC does not spell out, resolved here and
+    documented: a run-on answer with no interior sentence boundary at all; one
+    whose nearest boundary is the very end of the text (so cutting there would
+    cut nothing); and one whose nearest boundary is itself past ``max_words``,
+    where honouring the boundary would leave the option longer than the bound
+    the rule exists to impose. All three fall back to a hard cut at
+    ``target_words`` whitespace tokens.
+
+    The output is therefore never longer than ``max_words``. That is a hard
+    guarantee, not a tendency: an option that dwarfs the other three is a
+    length cue, which is exactly what the A4 length control forbids.
     """
     text = (text or "").strip()
     if word_count(text) <= max_words:
@@ -133,7 +158,8 @@ def truncate_answer(text: str,
             best = (cut, n)
     if best is not None:
         head = text[:best[0]].strip()
-        if head and word_count(head) < word_count(text):
+        n_head = word_count(head)
+        if head and n_head < word_count(text) and n_head <= max_words:
             return head, True
 
     return " ".join(text.split()[:target_words]), True
@@ -144,17 +170,27 @@ def truncate_answer(text: str,
 # ---------------------------------------------------------------------------
 
 def _ordered(turns: list[dict], transcript_id: str | None) -> list[dict]:
-    """Turns in ``turn_idx`` order, checked for the things that would ruin D4."""
+    """Turns in ``turn_idx`` order, checked for the things that would ruin D4.
+
+    The cross-transcript guard runs whether or not a ``transcript_id`` was
+    supplied. Mixing transcripts would let a grounding turn answer a test
+    question — the single worst thing this module could do — so it is a loud
+    failure on every path into the pairing logic, not only the named one.
+    """
     rows = list(turns)
     for t in rows:
         if "turn_idx" not in t or "role" not in t:
             raise ValueError("turn records need turn_idx and role")
-        tid = t.get("transcript_id")
-        if transcript_id is not None and tid is not None and tid != transcript_id:
-            # Mixing transcripts would let a grounding turn answer a test
-            # question. Loud failure, never a silent join.
+    seen = {t.get("transcript_id") for t in rows
+            if t.get("transcript_id") is not None}
+    if transcript_id is not None:
+        stray = sorted(seen - {transcript_id})
+        if stray:
             raise ValueError(
-                f"turn from {tid!r} passed to extract_qa for {transcript_id!r}")
+                f"turn from {stray[0]!r} passed to extract_qa for "
+                f"{transcript_id!r}")
+    elif len(seen) > 1:
+        raise ValueError(f"turns from multiple transcripts: {sorted(seen)}")
     rows.sort(key=lambda t: t["turn_idx"])
     idxs = [t["turn_idx"] for t in rows]
     if len(set(idxs)) != len(idxs):

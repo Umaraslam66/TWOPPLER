@@ -41,13 +41,36 @@ def reasons(drops) -> dict:
 # helpers
 # ---------------------------------------------------------------------------
 
-def test_first_word_skips_leading_punctuation_and_stage_directions():
-    assert first_word("(LAUGHTER) What did you make of that?") == "laughter"
+def test_first_word_strips_stage_directions_then_takes_the_literal_first_word():
+    """SPEC D4 as clarified by v1.7."""
+    assert first_word("(LAUGHTER) What did you make of that?") == "what"
+    assert first_word("[APPLAUSE] Why now?") == "why"
+    assert first_word("(LAUGHTER) (APPLAUSE) Tell me more") == "tell"
     assert first_word("  \"What about it?") == "what"
-    assert first_word("...Why now?") == "why"
-    assert first_word("2016 was a year, no?") == "was"
+    assert first_word("...Why now?") == "why"          # punctuation, not a word
     assert first_word("") == ""
     assert first_word("!!! ???") == ""
+    assert first_word("(LAUGHTER)") == ""
+
+
+def test_first_word_never_skips_a_token_to_find_a_cue():
+    """The v1.7 fix. Nothing is stepped over to reach a nicer-looking word."""
+    assert first_word("1-800-989-8255 is our number. What is interesting") == \
+        "1-800-989-8255"
+    assert first_word("2016 was a year, no?") == "2016"
+    assert first_word("Well, what do you make of it") == "well"
+
+
+def test_a_phone_number_opening_is_not_a_question():
+    """The bank row v1.7 removes: a cue word sat behind a phone number."""
+    q = "1-800-989-8255 is our number. What is interesting is that it is sad"
+    assert not has_interrogative_cue(q)
+    assert not is_question(q)
+
+
+def test_a_stage_direction_does_not_hide_a_real_cue():
+    assert has_interrogative_cue("(LAUGHTER) What did you make of that")
+    assert is_question("(LAUGHTER) What did you make of that")
 
 
 def test_interrogative_cue_is_first_word_only_and_case_insensitive():
@@ -129,6 +152,15 @@ def test_turns_from_another_transcript_are_refused():
     rows[2]["transcript_id"] = "SYN-OTHER"
     with pytest.raises(ValueError, match="SYN-OTHER"):
         extract_qa(rows, "C1", TID)
+
+
+def test_qa_candidates_refuses_mixed_transcripts_too():
+    """The guard is on every path into the pairing logic, not just the named one."""
+    rows = turns(("guest", "hi"), ("host", "What happened next here"),
+                 ("guest", filler(40)))
+    rows[2]["transcript_id"] = "SYN-OTHER"
+    with pytest.raises(ValueError, match="multiple transcripts"):
+        qa_candidates(rows)
 
 
 # ---------------------------------------------------------------------------
@@ -233,6 +265,22 @@ def test_truncate_answer_falls_back_to_a_hard_cut_with_no_sentence_boundary():
     out, was = truncate_answer(text)
     assert was is True
     assert word_count(out) == 300
+
+
+def test_truncated_output_is_never_longer_than_the_400_word_bound():
+    """A boundary past 400 words must not be honoured.
+
+    900 words, first sentence end at word 500. Cutting there would respect
+    "nearest boundary to 300" and still leave a 500-word option towering over
+    its three ~100-word distractors, which is the length cue the A4 control
+    exists to remove. The hard cut wins.
+    """
+    text = filler(500) + ". " + filler(400)
+    assert word_count(text) == 900
+    out, was = truncate_answer(text)
+    assert was is True
+    assert word_count(out) == 300
+    assert word_count(out) <= 400
 
 
 def test_truncate_answer_leaves_short_text_alone():
