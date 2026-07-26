@@ -2,7 +2,7 @@
  "run": "stage2_pilot",
  "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
  "confirmatory": false,
- "contract": "SPEC.md v1.6 (D1-D10)",
+ "contract": "SPEC.md v1.7 (D1-D10)",
  "model": "Gemma-4-31B-it",
  "model_label": "leonardo-gemma4-31b-it",
  "temperature": 0.0,
@@ -83,5 +83,5 @@
   "budget_node_hours": 3.0,
   "note": "Output tokens are counted at their per-prompt CAP (120 for a prediction prompt, 80 for a classifier case), so the generation term is an upper bound. Throughput is Stage 1E's measured 21,015 combined tokens/s on one 4xA100 node, de-rated by 3.0x because Stage 2's prompts are roughly ten times longer and shift the job from decode-bound to prefill-bound."
  },
- "generated_utc": "2026-07-26T17:53:52Z"
+ "generated_utc": "2026-07-26T18:00:12Z"
 }

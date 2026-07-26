@@ -1,7 +1,7 @@
 {
  "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
- "exported_utc": "2026-07-26T17:52:36Z",
- "contract": "SPEC.md v1.6 (D1-D10)",
+ "exported_utc": "2026-07-26T18:00:12Z",
+ "contract": "SPEC.md v1.7 (D1-D10)",
  "n_qa_subjects": 5,
  "n_items": 17,
  "arms": [

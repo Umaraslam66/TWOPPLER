@@ -906,7 +906,7 @@ def cmd_export(args) -> int:
     doc = {
         "pilot": PILOT_BANNER,
         "exported_utc": now(),
-        "contract": "SPEC.md v1.6 (D1-D10)",
+        "contract": "SPEC.md v1.7 (D1-D10)",
         "n_qa_subjects": pred["n_subjects"],
         "n_items": pred["n_items"],
         "arms": list(ARMS),
@@ -1231,7 +1231,7 @@ def load_manifest(path=MANIFEST) -> dict:
         "run": "Stage 2 pilot (SPEC D10)",
         "confirmatory": False,
         "pilot": PILOT_BANNER,
-        "contract": "SPEC.md v1.6",
+        "contract": "SPEC.md v1.7",
         "jobs": {}, "anomalies": [], "notes": [],
     }
 
@@ -1258,7 +1258,7 @@ def cmd_bootstrap(args) -> int:
         "run": SPLIT_LABEL,
         "pilot": PILOT_BANNER,
         "confirmatory": False,
-        "contract": "SPEC.md v1.6 (D1-D10)",
+        "contract": "SPEC.md v1.7 (D1-D10)",
         "model": "Gemma-4-31B-it", "model_label": MODEL_LABEL,
         "temperature": TEMPERATURE, "tp": TP,
         "max_model_len": MAX_MODEL_LEN,
@@ -1816,7 +1816,7 @@ def cmd_report(args) -> int:
         f"**{PILOT_BANNER}**",
         "",
         f"Generated {analysis['generated_utc']}. "
-        f"Contract: SPEC.md v1.6. Not confirmatory; nothing here answers a "
+        f"Contract: SPEC.md v1.7. Not confirmatory; nothing here answers a "
         "pre-registered bar.",
         "",
         "## 1. Dev subjects",
