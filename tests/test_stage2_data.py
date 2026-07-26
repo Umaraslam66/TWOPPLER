@@ -373,6 +373,104 @@ def test_same_named_host_is_host_not_guest():
     assert turns[0]["role"] == "host"
 
 
+# ---------------------------------------------------------------------------
+# D3.1 — within-transcript bare-surname resolution
+# ---------------------------------------------------------------------------
+
+def test_bare_surname_host_resolves():
+    """The real C00292 failure: CNN names the anchor once, then uses 'ROTH'."""
+    row = subject("CNN-1|2004-12-31|P|cl1|S", name="Bassir Pour")
+    rec = record("CNN-1",
+                 speakers=["RICHARD ROTH, CNN ANCHOR", "BASSIR POUR", "ROTH",
+                           "BASSIR POUR", "ROTH"],
+                 utts=["intro", "answer", "follow up", "more", "and then"])
+    turns = S.extract_turns(rec, row)
+    assert [t["role"] for t in turns] == \
+        ["host", "guest", "host", "guest", "host"]
+    assert turns[2]["speaker_label"] == "ROTH"           # raw label preserved
+    assert turns[2]["resolved_label"] == "RICHARD ROTH, CNN ANCHOR"
+    assert turns[0]["resolved_label"] is None            # full labels untouched
+
+
+def test_bare_surname_guest_resolves():
+    row = subject("NPR-1|2001-01-01|P|cl1|S", name="Robert Sampson")
+    rec = record("NPR-1",
+                 speakers=["NEAL CONAN, HOST", "ROBERT SAMPSON", "CONAN",
+                           "SAMPSON"],
+                 utts=["q1", "a1", "q2", "a2"])
+    turns = S.extract_turns(rec, row)
+    assert [t["role"] for t in turns] == ["host", "guest", "host", "guest"]
+    assert turns[3]["resolved_label"] == "ROBERT SAMPSON"
+
+
+def test_ambiguous_surname_stays_other():
+    """Two Harrises in the room: a bare 'HARRIS' resolves to neither."""
+    row = subject("NPR-1|2001-01-01|P|cl1|S", name="Robert Harris")
+    rec = record("NPR-1",
+                 speakers=["ROBERT HARRIS", "Ms. JANE HARRIS (Analyst)",
+                           "HARRIS"],
+                 utts=["a", "b", "c"])
+    turns = S.extract_turns(rec, row)
+    assert [t["role"] for t in turns] == ["guest", "other", "other"]
+    assert turns[2]["resolved_label"] is None
+
+
+def test_ambiguous_surname_does_not_block_an_unambiguous_one():
+    row = subject("NPR-1|2001-01-01|P|cl1|S", name="Ann Lee")
+    rec = record("NPR-1",
+                 speakers=["ANN LEE", "JOHN LEE", "NEAL CONAN, HOST", "LEE",
+                           "CONAN"],
+                 utts=["a", "b", "c", "d", "e"])
+    turns = S.extract_turns(rec, row)
+    assert turns[3]["role"] == "other"      # LEE is ambiguous
+    assert turns[4]["role"] == "host"       # CONAN is not
+
+
+def test_resolution_never_crosses_transcripts():
+    """A name introduced in one interview says nothing about another."""
+    row = subject("CNN-1|2004-01-01|P|cl1|S;CNN-2|2005-01-01|P|cl2|S",
+                  name="Bassir Pour")
+    intro = record("CNN-1", ["RICHARD ROTH, CNN ANCHOR", "ROTH"], ["a", "b"])
+    later = record("CNN-2", ["ROTH", "BASSIR POUR"], ["c", "d"])
+    assert [t["role"] for t in S.extract_turns(intro, row)] == ["host", "host"]
+    # CNN-2 never introduces Roth, so its bare 'ROTH' must stay unresolved.
+    turns = S.extract_turns(later, row)
+    assert [t["role"] for t in turns] == ["other", "guest"]
+    assert turns[0]["resolved_label"] is None
+
+
+def test_registry_registers_role_descriptors_and_multi_token_names():
+    reg = S.surname_registry([
+        "RICHARD ROTH, CNN ANCHOR",       # role descriptor
+        "ANN LEE",                        # multi-token name
+        "Ms. JANE DOE (Author)",          # parenthetical affiliation
+        "SMITH",                          # bare surname: never registered
+        "UNIDENTIFIED MAN",               # anonymous: never registered
+        "MALE VOICE",                     # generic: never registered
+    ])
+    assert set(reg) == {"roth", "lee", "doe"}
+    assert reg["roth"] == "RICHARD ROTH, CNN ANCHOR"
+
+
+def test_registry_single_token_with_role_descriptor_registers():
+    reg = S.surname_registry(["ROTH, CNN ANCHOR"])
+    assert reg == {"roth": "ROTH, CNN ANCHOR"}
+
+
+def test_registry_same_person_two_spellings_is_not_ambiguous():
+    reg = S.surname_registry(["RICHARD ROTH, CNN ANCHOR", "Mr. Richard Roth"])
+    assert reg["roth"] == "RICHARD ROTH, CNN ANCHOR"   # first spelling wins
+
+
+def test_resolution_does_not_touch_labels_that_carry_a_role():
+    """'HARRIS, host' is already a complete label; it is never rewritten."""
+    row = subject("NPR-1|2001-01-01|P|cl1|S", name="Ann Lee")
+    rec = record("NPR-1", ["ANN LEE", "HARRIS, host"], ["a", "b"])
+    turns = S.extract_turns(rec, row)
+    assert [t["role"] for t in turns] == ["guest", "host"]
+    assert turns[1]["resolved_label"] is None
+
+
 def test_extract_turns_rejects_misaligned_records():
     row = subject("NPR-1|2001-01-01|P|cl1|S")
     with pytest.raises(ValueError):

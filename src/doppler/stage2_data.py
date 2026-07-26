@@ -468,15 +468,111 @@ def subject_name_keys(subject_row: dict) -> set[str]:
     return {k for k in (name_key(n) for n in names) if k}
 
 
+def _token_key(token: str) -> str:
+    """Comparison key for a single name token."""
+    return re.sub(r"\s+", " ", _PUNCT_RE.sub(" ", token or "")).strip().casefold()
+
+
+# A label "carries a role descriptor" when it appends an affiliation or a role
+# to the name: a parenthetical/bracketed block, anything after the first comma,
+# a " - "/" : " separator, or one of the staff role words.
+_ROLE_SEP_RE = re.compile(r"[,(\[]")
+
+
+def _name_part(raw: str) -> str:
+    """The name portion of a raw speaker label.
+
+    Mirrors the stripping classify_speaker does — parenthetical affiliation,
+    everything after the first comma or a " - " / " : " separator, then leading
+    honorifics — but WITHOUT its staff/anon short-circuits, because D3.1 has to
+    read a surname out of "RICHARD ROTH, CNN ANCHOR", a label classify_speaker
+    answers with no name at all.
+    """
+    if not raw:
+        return ""
+    name = _PAREN_RE.sub(" ", raw.strip())
+    name = name.split(",")[0]
+    name = _DASH_SPLIT_RE.split(name)[0]
+    name = name.strip().strip(".").strip()
+    changed = True
+    while changed and name:
+        changed = False
+        nu = name.upper()
+        for phrase in HONORIFIC_MULTI:
+            if nu.startswith(phrase + " "):
+                name = name[len(phrase):].strip()
+                changed = True
+                break
+        if changed:
+            continue
+        parts = name.split(None, 1)
+        if not parts:
+            break
+        if parts[0].rstrip(".").upper() in HONORIFIC and len(parts) > 1:
+            name = parts[1].strip()
+            changed = True
+    return re.sub(r"\s+", " ", name).strip(" .,-")
+
+
+def _label_shape(raw: str) -> tuple[list[str], bool]:
+    """(name tokens, carries a role descriptor) for one raw speaker label."""
+    tokens = _name_part(raw).split()
+    up = (raw or "").upper()
+    has_role = bool(STAFF_ROLE_RE.search(up)) or bool(_ROLE_SEP_RE.search(raw or "")) \
+        or bool(_DASH_SPLIT_RE.search(raw or ""))
+    return tokens, has_role
+
+
+def surname_registry(speaker_labels) -> dict[str, str]:
+    """SPEC D3.1. {surname key: the full label that surname belongs to}.
+
+    A label is registered when it carries a role descriptor or a multi-token
+    name — i.e. when it introduces a person properly. Anonymous and generic
+    labels ("UNIDENTIFIED MAN", "MALE VOICE") are never registered.
+
+    A surname is only usable if exactly one distinct person registered it;
+    when two speakers share a surname it is dropped from the registry and the
+    bare label stays unresolved. Where one person registered several spellings,
+    the first one seen in the transcript is the representative.
+
+    The registry is built per transcript and is never shared between
+    transcripts — a name introduced in one interview says nothing about a bare
+    surname in another.
+    """
+    by_surname: dict[str, dict[str, str]] = {}
+    for raw in speaker_labels:
+        if classify_speaker(raw)[0] == "anon":
+            continue
+        tokens, has_role = _label_shape(raw)
+        if not tokens or (len(tokens) < 2 and not has_role):
+            continue
+        surname = _token_key(tokens[-1])
+        if not surname:
+            continue
+        by_surname.setdefault(surname, {}).setdefault(
+            name_key(" ".join(tokens)), raw)
+    return {s: next(iter(v.values()))
+            for s, v in by_surname.items() if len(v) == 1}
+
+
 def extract_turns(record: dict, subject_row: dict) -> list[dict]:
-    """SPEC D3. One dict per utterance: transcript_id, turn_idx, role,
-    speaker_label, text.
+    """SPEC D3 + D3.1. One dict per utterance: transcript_id, turn_idx, role,
+    speaker_label, resolved_label, text.
 
     role is "guest" when the speaker label resolves to the subject
     (canonical_name or any variant, case-insensitive and honorific-tolerant),
     "host" when classify_speaker calls the label staff (host/anchor/
     correspondent/reporter/commentator/byline), "other" otherwise —
     anonymous voices, soundbites and third-party guests.
+
+    D3.1: transcripts routinely introduce a speaker once in full
+    ("RICHARD ROTH, CNN ANCHOR") and then use a bare surname ("ROTH") for
+    every later turn. Before roles are assigned, a bare-surname label is
+    replaced by the full label registered for that surname earlier in the SAME
+    transcript, when exactly one person registered it. This applies to hosts
+    and to the subject's own turns alike. `resolved_label` records the
+    substitution and is None when the raw label was used as-is;
+    `speaker_label` is always the raw label from the corpus.
 
     Note the one place this differs from a literal reading of D3: a label that
     carries a staff marker ("ROBERT HARRIS, host") is classified staff by
@@ -491,10 +587,17 @@ def extract_turns(record: dict, subject_row: dict) -> list[dict]:
     if len(utts) != len(speakers):
         raise ValueError(f"{tid}: {len(utts)} utterances but "
                          f"{len(speakers)} speaker labels")
+    registry = surname_registry(speakers)
 
     turns = []
     for idx, (label, text) in enumerate(zip(speakers, utts)):
-        kind, normalized, _ = classify_speaker(label)
+        effective, resolved = label, None
+        tokens, has_role = _label_shape(label)
+        if len(tokens) == 1 and not has_role:
+            full = registry.get(_token_key(tokens[0]))
+            if full is not None and full != label:
+                effective, resolved = full, full
+        kind, normalized, _ = classify_speaker(effective)
         if normalized is not None and name_key(normalized) in keys:
             role = "guest"
         elif kind == "staff":
@@ -506,6 +609,7 @@ def extract_turns(record: dict, subject_row: dict) -> list[dict]:
             "turn_idx": idx,
             "role": role,
             "speaker_label": label,
+            "resolved_label": resolved,
             "text": text,
         })
     return turns
@@ -708,7 +812,8 @@ __all__ = [
     "DEV_SEED", "DRAW_RULE", "SPLIT_RULE",
     "classify_speaker", "parse_transcripts", "load_pool", "eligible_subjects",
     "shuffled_eligible_ids", "draw_dev_subjects", "chronological_split",
-    "name_key", "subject_name_keys", "extract_turns", "word_count",
+    "name_key", "subject_name_keys", "surname_registry", "extract_turns",
+    "word_count",
     "fetch_records", "iter_wanted_raw", "load_guest_words", "load_titles",
     "subject_dir", "write_jsonl", "read_jsonl", "write_json",
     "load_dev_subjects", "load_split",

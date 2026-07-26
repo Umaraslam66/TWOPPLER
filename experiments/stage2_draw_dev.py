@@ -1,7 +1,15 @@
 """Draw the frozen Stage 2 dev subjects and build their splits (SPEC D1/D2/D3).
 
 Run:    uv run python experiments/stage2_draw_dev.py
-Redraw: uv run python experiments/stage2_draw_dev.py --force   (owner call only)
+Redraw: uv run python experiments/stage2_draw_dev.py --force         (owner call only)
+Turns:  uv run python experiments/stage2_draw_dev.py --regen-turns
+
+--regen-turns is the safe mode for a change to the turn-extraction rules (D3,
+D3.1): it reads the committed draw and the committed splits, re-extracts the
+turn files from the corpus, and never touches the subject ids. Use it whenever
+role assignment changes. It rewrites split.json too, because the guest word
+counts in it come from the extracted turns, and prints whether that file
+actually changed.
 
 What it writes, all under results/stage2_pilot/:
 
@@ -22,6 +30,7 @@ streaming pass over the 4.45 GB corpus to pull the ~27 split transcripts.
 
 from __future__ import annotations
 
+import json
 import sys
 import time
 from pathlib import Path
@@ -35,8 +44,10 @@ from doppler.stage2_data import (
     draw_dev_subjects,
     extract_turns,
     fetch_records,
+    load_dev_subjects,
     load_guest_words,
     load_pool,
+    load_split,
     load_titles,
     subject_dir,
     word_count,
@@ -62,11 +73,18 @@ def guard(force: bool) -> None:
 
 
 def main(argv: list[str]) -> int:
-    force = "--force" in argv[1:]
-    unknown = [a for a in argv[1:] if a != "--force"]
+    args = argv[1:]
+    force = "--force" in args
+    regen = "--regen-turns" in args
+    unknown = [a for a in args if a not in ("--force", "--regen-turns")]
     if unknown:
-        raise SystemExit(f"unknown argument(s): {unknown}. Only --force is accepted.")
-    guard(force)
+        raise SystemExit(f"unknown argument(s): {unknown}. "
+                         "Only --force and --regen-turns are accepted.")
+    if regen and force:
+        raise SystemExit("--regen-turns and --force are mutually exclusive: "
+                         "one keeps the drawn subjects, the other discards them.")
+    if not regen:
+        guard(force)
 
     t0 = time.time()
     for path in (POOL_CSV, RAW_JSON, SCAN_CACHE):
@@ -74,20 +92,33 @@ def main(argv: list[str]) -> int:
             raise SystemExit(f"[fatal] missing input: {path}")
 
     pool = load_pool(POOL_CSV)
-    draw = draw_dev_subjects(pool, burned=BURNED)
     by_id = {r["canonical_id"]: r for r in pool}
-    rows = [by_id[s["canonical_id"]] for s in draw["subjects"]]
-    print(f"pool: {len(pool)} rows, {draw['n_eligible']} eligible; "
-          f"drew {len(rows)} dev subjects with seed {draw['seed']}")
 
-    # Cluster representatives need per-transcript guest word counts. They are
-    # already in the v2 scan cache, so this costs one pickle load, not a scan.
-    guest_words = load_guest_words(rows, SCAN_CACHE)
-    all_tids = [e["transcript_id"] for r in rows for e in r["transcripts"]]
-    titles = load_titles(all_tids, SCAN_CACHE)
+    if regen:
+        # Read the frozen draw and the frozen splits. Nothing is re-drawn and
+        # no cluster is re-chosen; only the turn files are rebuilt.
+        draw = load_dev_subjects()
+        rows = [by_id[s["canonical_id"]] for s in draw["subjects"]]
+        splits = {r["canonical_id"]: load_split(r["canonical_id"]) for r in rows}
+        before = {cid: json.dumps(s, indent=1, ensure_ascii=False) + "\n"
+                  for cid, s in splits.items()}
+        print(f"regenerating turns for the {len(rows)} committed dev subjects "
+              f"(seed {draw['seed']}, drawn {draw['drawn_at']}) — no re-draw")
+    else:
+        draw = draw_dev_subjects(pool, burned=BURNED)
+        rows = [by_id[s["canonical_id"]] for s in draw["subjects"]]
+        before = {}
+        print(f"pool: {len(pool)} rows, {draw['n_eligible']} eligible; "
+              f"drew {len(rows)} dev subjects with seed {draw['seed']}")
 
-    splits = {r["canonical_id"]: chronological_split(r, guest_words[r["canonical_id"]], titles)
-              for r in rows}
+        # Cluster representatives need per-transcript guest word counts. They
+        # are already in the v2 scan cache: one pickle load, not a scan.
+        guest_words = load_guest_words(rows, SCAN_CACHE)
+        all_tids = [e["transcript_id"] for r in rows for e in r["transcripts"]]
+        titles = load_titles(all_tids, SCAN_CACHE)
+        splits = {r["canonical_id"]:
+                  chronological_split(r, guest_words[r["canonical_id"]], titles)
+                  for r in rows}
 
     wanted = set()
     for split in splits.values():
@@ -115,8 +146,9 @@ def main(argv: list[str]) -> int:
                          if t["role"] == "guest")
             entry["guest_words"] = actual
             if cached and abs(actual - cached) > 0.1 * cached:
+                source = "the committed split" if regen else "the scan cache"
                 print(f"  [warn] {cid} {entry['transcript_id']}: guest words "
-                      f"{actual} extracted vs {cached} in the scan cache")
+                      f"{actual} extracted vs {cached} in {source}")
 
         test_tid = split["test"]["transcript_id"]
         ground_tids = [e["transcript_id"] for e in split["grounding"]]
@@ -134,6 +166,11 @@ def main(argv: list[str]) -> int:
         write_json(d / "split.json", split)
         write_jsonl(d / "grounding_turns.jsonl", ground_turns)
         write_jsonl(d / "test_turns.jsonl", test_turns)
+        if regen:
+            now = json.dumps(split, indent=1, ensure_ascii=False) + "\n"
+            if now != before[cid]:
+                print(f"  [changed] {cid} split.json is not byte-stable — "
+                      "the new turn roles moved its guest word counts")
 
         gw = sum(word_count(t["text"]) for t in ground_turns if t["role"] == "guest")
         tw = sum(word_count(t["text"]) for t in test_turns if t["role"] == "guest")
@@ -150,13 +187,15 @@ def main(argv: list[str]) -> int:
             "n_host_turns_test": sum(1 for t in test_turns if t["role"] == "host"),
         })
 
-    draw["runtime_secs"] = round(time.time() - t0, 1)
-    draw["cost_usd"] = 0.0          # CPU only: no API calls, no GPU
-    draw["n_transcripts_fetched"] = len(records)
-    write_json(Path(PILOT_DIR) / "dev_subjects.json", draw)
+    runtime = round(time.time() - t0, 1)
+    if not regen:
+        draw["runtime_secs"] = runtime
+        draw["cost_usd"] = 0.0      # CPU only: no API calls, no GPU
+        draw["n_transcripts_fetched"] = len(records)
+        write_json(Path(PILOT_DIR) / "dev_subjects.json", draw)
 
     hdr = (f"{'subject':<28}{'wiki':<16}{'grnd':>5}{'grnd words':>12}"
-           f"{'test date':>13}{'test words':>12}{'excl':>6}")
+           f"{'test date':>13}{'test words':>12}{'test host':>11}{'excl':>6}")
     print()
     print(hdr)
     print("-" * len(hdr))
@@ -164,12 +203,13 @@ def main(argv: list[str]) -> int:
         label = f"{s['canonical_id']} {s['name']}"
         print(f"{label:<28}{s['wiki_status']:<16}{s['n_grounding']:>5}"
               f"{s['grounding_words']:>12,}{s['test_date']:>13}"
-              f"{s['test_words']:>12,}{s['excluded']:>6}")
+              f"{s['test_words']:>12,}{s['n_host_turns_test']:>11}"
+              f"{s['excluded']:>6}")
     print("-" * len(hdr))
-    print(f"grounding words = guest-role words across the grounding transcripts; "
-          f"test words = guest-role words in the test transcript.")
-    print(f"written under {PILOT_DIR} in {draw['runtime_secs']}s "
-          f"(0 API calls, $0.00)")
+    print("grounding words = guest-role words across the grounding transcripts; "
+          "test words = guest-role words in the test transcript; "
+          "test host = host-role turns in the test transcript.")
+    print(f"written under {PILOT_DIR} in {runtime}s (0 API calls, $0.00)")
     return 0
 
 
