@@ -70,14 +70,17 @@ the question comes from the test interview, where the host says the guest's
 name out loud more often than not. D8 guard (c) is checked against the *final
 rendered string*, so :func:`assert_redacted` catches the omission either way.
 
-Redact and assert with the SAME variant list, or the guard is weaker than the
-scrubber and cannot catch anything. The pool's ``variants`` column is mostly
-just the full name ("Frederic Hof"), so a bare surname in the transcript body
-survives ``redact(text, variants)``; :func:`expand_variants` adds the single
-name tokens and is what the driver should pass to both functions. It is opt-in
-because it over-redacts common-word surnames (dev subject C00292 is "Bassir
-Pour", and every "pour" in the text becomes GUEST) -- a fluency cost paid to
-close a contamination hole.
+Redact and assert with the SAME settings, or the guard is weaker than the
+scrubber and cannot catch anything. Both default to the safe setting:
+:func:`redact` and :func:`assert_redacted` expand each variant to its single
+name tokens (:func:`expand_variants`) unless told not to. The pool's
+``variants`` column is mostly just the full name ("Frederic Hof"), so without
+expansion a bare surname in the transcript body would survive redaction and the
+guard would still pass. Orchestrator decision, on record: deterministic
+over-redaction noise -- a third party who shares the surname turns into "Bill
+GUEST", and a surname that is also an ordinary word takes that word with it --
+beats silent surname leakage in the primary arm. ``expand=False`` is the
+documented opt-out.
 """
 
 from __future__ import annotations
@@ -136,10 +139,15 @@ TWIN_PREAMBLE = (
     "here. Read them, then answer as GUEST would in a later interview."
 )
 
-#: Fixed by D8, word for word.
+#: First sentence is fixed by D8, word for word. The second is an
+#: orchestrator-approved addition: the question is redacted with the same
+#: placeholder in all five arms (one-factor discipline for the contamination
+#: meter), so the zero-information arms have to be told what GUEST means. It is
+#: in BOTH zero-information arms, so the named arm still differs by exactly the
+#: name line.
 ZEROINFO_PREAMBLE = (
     "A person was interviewed on American broadcast news. Predict which "
-    "answer they gave."
+    "answer they gave. The person is called GUEST in the question below."
 )
 
 #: The only line that separates ``twin_named`` from ``twin_redacted`` (D8).
@@ -306,14 +314,19 @@ def variant_forms(variants) -> list:
 
 
 def expand_variants(variants, min_token: int = MIN_EXPANDED_TOKEN) -> list:
-    """Variant forms plus every single name token in them (opt-in, see module
-    docstring).
+    """Variant forms plus every single name token in them.
 
     "Frederic Hof" yields "Frederic" and "Hof" as well, which is what stops a
     bare surname in the transcript body from surviving redaction. Tokens
     shorter than ``min_token`` characters, and tokens containing digits, are
-    left out. Over-redaction is the accepted cost: a surname that is also an
-    ordinary word ("Pour") takes that word with it.
+    left out.
+
+    This is the default for :func:`redact` and :func:`assert_redacted`, and it
+    over-redacts on purpose: a third party who shares a name token is partly
+    redacted too ("Bill Gates" -> "Bill GUEST" when the subject is Robert
+    Gates), and a name that is also an ordinary word takes that word with it
+    ("Pour the coffee" -> "GUEST the coffee"). The noise is deterministic and
+    identical across arms; a leaked surname in the primary arm would not be.
     """
     forms = list(variant_forms(variants))
     extra = []
@@ -324,9 +337,9 @@ def expand_variants(variants, min_token: int = MIN_EXPANDED_TOKEN) -> list:
     return variant_forms(forms + extra)
 
 
-def _variant_regex(variants):
-    """Compiled alternation over :func:`variant_forms`, or ``None`` if empty."""
-    forms = variant_forms(variants)
+def _variant_regex(variants, expand: bool = True):
+    """Compiled alternation over the match forms, or ``None`` if empty."""
+    forms = expand_variants(variants) if expand else variant_forms(variants)
     if not forms:
         return None
     alts = "|".join(
@@ -338,7 +351,8 @@ def _variant_regex(variants):
     )
 
 
-def redact(text: str, variants, placeholder: str = PLACEHOLDER) -> str:
+def redact(text: str, variants, placeholder: str = PLACEHOLDER,
+           expand: bool = True) -> str:
     """Replace every name variant in ``text`` with ``placeholder`` (D8 arm 1).
 
     Case-insensitive; longest variant first, so "Jane Smith" is never left as
@@ -347,10 +361,13 @@ def redact(text: str, variants, placeholder: str = PLACEHOLDER) -> str:
     swallowed by it ("Senator Smith" -> "GUEST"), because a title plus a
     program name is itself an identifying detail.
 
-    Matches the variants it is given and nothing else -- see
-    :func:`expand_variants` for the bare-surname problem.
+    ``expand=True`` (the default) also removes the single name tokens of every
+    variant, which is what closes the bare-surname hole -- see
+    :func:`expand_variants` for the over-redaction that buys. ``expand=False``
+    matches the given variants and nothing else; whatever you choose, pass the
+    same value to :func:`assert_redacted`.
     """
-    pattern = _variant_regex(variants)
+    pattern = _variant_regex(variants, expand=expand)
     if pattern is None:
         return text or ""
     return pattern.sub(placeholder, text or "")
@@ -535,8 +552,9 @@ def render_prompt(arm: str, question: str, options, grounding_block=None,
 #
 # Tolerant about how the model dresses the line -- ":", ")", "=", "-", ".", a
 # missing space, commas between pairs, one pair per line, percent signs, prose
-# before it -- and strict about the arithmetic: the stated mass has to land in
-# [0.8, 1.2] or the answer is not scored (D8).
+# before it -- and strict about everything that could change the answer: each
+# label exactly once (adaptive_render.parse_interest_distribution's rule), and
+# a stated mass inside [0.8, 1.2] or the answer is not scored (D8).
 
 _PAIR_RE = re.compile(
     r"(?<![\w])([A-Za-z])\s*[:=).\]\-]\s*(\d*\.?\d+)\s*(%?)"
@@ -564,34 +582,34 @@ def parse_distribution(completion, n_options: int = 4):
     Returns a list of ``n_options`` probabilities in label order, renormalized
     to sum to 1, or ``None`` on parse failure (D8).
 
-    What counts as an answer: pairs are read left to right and grouped; a label
-    that repeats starts a new group, and the **last complete group** wins. A
-    model that thinks out loud and then restates its distribution is therefore
-    scored on the restatement, which is what the "final line" instruction asks
-    for. Percentages are divided by 100 per value, so "A: 70%" is 0.7.
+    Strict, on the same rule as ``adaptive_render.parse_interest_distribution``
+    (orchestrator decision): every label must appear **exactly once** in the
+    whole completion. A repeated label is ambiguous -- a model that states two
+    distributions has not answered -- and is a parse failure even when a
+    complete set precedes it. Order inside the answer does not matter, and
+    labels past ``n_options`` are ignored. Percentages are divided by 100 per
+    value, so "A: 70%" is 0.7.
 
-    Failure cases: a missing or duplicated label with no later complete group,
-    a negative number (the minus sign breaks the pair, so the group never
-    completes), and any stated mass outside [0.8, 1.2] -- including "70 10 10
-    10" written without percent signs, which is silence about the scale rather
-    than a distribution.
+    Other failure cases: a missing label, a negative number (the minus sign
+    breaks the pair, so the label never registers), and any stated mass outside
+    [0.8, 1.2] -- including "70 10 10 10" written without percent signs, which
+    is silence about the scale rather than a distribution.
+
+    The cost of strictness is that a model which restates its line, or writes
+    "option A. 3 people" in its reasoning, scores as a parse failure. The pilot
+    measures that rate; loosening it is a bar-lock decision.
     """
     labels = _labels(n_options)
     if not completion:
         return None
-    groups: list = []
-    current: dict = {}
+    stated: dict = {}
     for label, value, is_percent in _pairs(completion, labels):
-        if label in current:
-            current = {}
-        current[label] = value / 100.0 if is_percent else value
-        if len(current) == n_options:
-            groups.append(current)
-            current = {}
-    if not groups:
+        if label in stated:
+            return None
+        stated[label] = value / 100.0 if is_percent else value
+    if set(stated) != set(labels):
         return None
-    chosen = groups[-1]
-    values = [chosen[label] for label in labels]
+    values = [stated[label] for label in labels]
     total = sum(values)
     if total < MIN_MASS - MASS_EPS or total > MAX_MASS + MASS_EPS:
         return None
@@ -662,14 +680,14 @@ def assert_no_answer_leak(grounding_block: str, true_answer: str,
         )
 
 
-def surviving_variants(rendered: str, variants, expand: bool = False) -> list:
+def surviving_variants(rendered: str, variants, expand: bool = True) -> list:
     """Name variants still present in a rendered prompt, in order of first hit.
 
-    Same matcher as :func:`redact`, so the guard is exactly as strong as the
-    scrubber and never trips on something ``redact`` could not have removed.
+    Same matcher and same default as :func:`redact`, so the guard is exactly as
+    strong as the scrubber and never trips on something ``redact`` could not
+    have removed.
     """
-    forms = expand_variants(variants) if expand else variants
-    pattern = _variant_regex(forms)
+    pattern = _variant_regex(variants, expand=expand)
     if pattern is None or not rendered:
         return []
     seen: dict = {}
@@ -678,14 +696,14 @@ def surviving_variants(rendered: str, variants, expand: bool = False) -> list:
     return list(seen.values())
 
 
-def assert_redacted(rendered: str, variants, expand: bool = False) -> None:
+def assert_redacted(rendered: str, variants, expand: bool = True) -> None:
     """D8 guard (c): no name variant may survive in the final rendered prompt.
 
     Assert on the *whole* rendered string, after replacement -- the question
     and the options come from the test interview and the distractor bank, and
     the guard exists precisely to catch the ones the caller forgot to scrub.
 
-    ``expand=True`` also rejects bare single name tokens (see
+    ``expand=True`` (the default) also rejects bare single name tokens (see
     :func:`expand_variants`). Pass the same setting here that you passed to
     :func:`redact`, or the two disagree.
     """

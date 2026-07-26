@@ -63,8 +63,10 @@ def _speech_words(block):
 def test_template_digest_is_frozen():
     # Re-freeze deliberately if a template changes; never "fix" this literal
     # to make a red suite green.
+    # Re-frozen once, deliberately, when the zero-information preamble gained
+    # its GUEST gloss (orchestrator fix round 1).
     assert R.TEMPLATE_SHA256 == (
-        "032f751fe3d113539d4e9ccdf5a4b69e6108931e916f06054ae6918c62120d9f"
+        "26def40977f381e732c757bdb16d1c620db415041af59719319cef5434f652b1"
     )
     assert R.TEMPLATE_SHA256 == R.sha256(R.TEMPLATE_TEXT)
 
@@ -82,9 +84,11 @@ def test_arms_are_the_five_d8_arms_in_spec_order():
 
 
 def test_spec_fixed_sentences_are_verbatim():
+    # D8's sentence first, then the orchestrator-approved GUEST gloss. Both
+    # zero-information arms carry both sentences.
     assert R.ZEROINFO_PREAMBLE == (
         "A person was interviewed on American broadcast news. Predict which "
-        "answer they gave."
+        "answer they gave. The person is called GUEST in the question below."
     )
     assert R.TWIN_NAME_LINE.format(name="Jane Smith") == "GUEST is Jane Smith."
     assert (R.ZEROINFO_NAME_LINE.format(name="Jane Smith")
@@ -176,11 +180,23 @@ def test_expand_variants_drops_initials_and_short_tokens():
     assert "Harris" in R.expand_variants(["R. Harris"])
 
 
-def test_expansion_is_what_catches_a_bare_surname():
+def test_redact_catches_a_bare_surname_by_default():
     text = "Hof told us the deal was dead."
-    assert R.redact(text, ["Frederic Hof"]) == text          # the hole
-    assert R.redact(text, R.expand_variants(["Frederic Hof"])) == (
-        "GUEST told us the deal was dead.")
+    assert R.redact(text, ["Frederic Hof"]) == "GUEST told us the deal was dead."
+    # expand=False is the documented opt-out, and it leaves the surname.
+    assert R.redact(text, ["Frederic Hof"], expand=False) == text
+
+
+def test_expansion_over_redacts_third_parties_and_ordinary_words():
+    # On the record: this noise is the accepted price of closing the
+    # bare-surname hole. It is deterministic and identical across arms.
+    assert R.redact("Bill Gates disagreed with Robert Gates.",
+                    ["Robert Gates"]) == "Bill GUEST disagreed with GUEST."
+    assert R.redact("Pour the coffee.", ["Bassir Pour"]) == "GUEST the coffee."
+    # Opting out restores the strict reading of the variant list.
+    assert R.redact("Bill Gates disagreed with Robert Gates.",
+                    ["Robert Gates"], expand=False) == (
+        "Bill Gates disagreed with GUEST.")
 
 
 # ---------------------------------------------------------------------------
@@ -342,6 +358,14 @@ def test_named_arms_add_exactly_one_line():
             base[:1] + [""] + base[1:])
 
 
+def test_both_zeroinfo_arms_explain_the_placeholder():
+    gloss = "The person is called GUEST in the question below."
+    for arm in ("zeroinfo_redacted", "zeroinfo_named"):
+        assert _render(arm).count(gloss) == 1
+    # The twin arms introduce GUEST in their own preamble instead.
+    assert gloss not in _render("twin_redacted")
+
+
 def test_zeroinfo_arms_carry_no_excerpt_program_or_date():
     for arm in ("zeroinfo_redacted", "zeroinfo_named"):
         text = _render(arm)
@@ -471,12 +495,24 @@ def test_parse_tolerates_separator_variants():
         assert R.parse_distribution(text) == pytest.approx([0.7, 0.1, 0.1, 0.1]), text
 
 
-def test_parse_ignores_prose_and_takes_the_last_complete_group():
-    text = ("Let me think. The excerpts point to B.\n"
-            "A: 0.1 B: 0.6 C: 0.2 D: 0.1\n"
-            "On reflection:\n"
+def test_parse_accepts_prose_before_the_line():
+    text = ("Let me think. The excerpts point to paperwork.\n"
             "A: 0.7 B: 0.1 C: 0.1 D: 0.1")
     assert R.parse_distribution(text) == pytest.approx([0.7, 0.1, 0.1, 0.1])
+
+
+def test_parse_rejects_a_repeated_label():
+    # Strict, like adaptive_render: two stated distributions is not an answer,
+    # even when the second one is complete and looks final.
+    restated = ("A: 0.1 B: 0.6 C: 0.2 D: 0.1\n"
+                "On reflection:\n"
+                "A: 0.7 B: 0.1 C: 0.1 D: 0.1")
+    assert R.parse_distribution(restated) is None
+    assert R.parse_distribution("A: 0.7 A: 0.7 B: 0.1 C: 0.1 D: 0.1") is None
+    # A stray "A. 3" in the reasoning poisons the answer too. Deliberate: the
+    # pilot measures the parse-failure rate this buys.
+    assert R.parse_distribution(
+        "Option A. 3 of the excerpts fit.\nA: 0.7 B: 0.1 C: 0.1 D: 0.1") is None
 
 
 def test_parse_accepts_reordered_labels_within_a_group():
@@ -641,14 +677,16 @@ def test_redaction_guard_is_exactly_as_strong_as_the_scrubber():
     R.assert_redacted(R.redact(text, variants), variants)
 
 
-def test_redaction_guard_expand_flag_catches_a_bare_surname():
+def test_redaction_guard_catches_a_bare_surname_by_default():
     variants = ["Frederic Hof"]
     text = "HOST: Hof, is the deal dead?"
-    R.assert_redacted(text, variants)                       # default: misses it
     with pytest.raises(ValueError, match="redaction failed"):
-        R.assert_redacted(text, variants, expand=True)
-    R.assert_redacted(R.redact(text, R.expand_variants(variants)), variants,
-                      expand=True)
+        R.assert_redacted(text, variants)
+    R.assert_redacted(R.redact(text, variants), variants)
+    # The opt-out has to be given on both sides or they disagree.
+    R.assert_redacted(text, variants, expand=False)
+    assert R.surviving_variants(text, variants) == ["Hof"]
+    assert R.surviving_variants(text, variants, expand=False) == []
 
 
 def test_named_arms_are_not_subject_to_the_redaction_guard():
