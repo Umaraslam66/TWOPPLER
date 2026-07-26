@@ -31,7 +31,7 @@ You are the **orchestrator, reviewer, and decision-maker only**. You are token-e
 ## Repository hygiene
 
 - Clean, professional structure: `src/`, `data/` (gitignored), `experiments/`, `results/`, `app/` (Stage 3), plus one generic `README.md` describing what the project is and how to run it.
-- **Never commit:** personal docs, planning docs, scratch notes, `.env`, API keys, raw participant data. A generic README is the only prose in the repo.
+- **Never commit:** personal docs, planning docs, scratch notes, `.env`, API keys, raw participant data. A generic README is the only prose in the repo — with one owner-approved exception: `results/PROJECT_LOG.md`, the chronological map a cold session reads first (it summarises and links; it is never the source of truth for a number).
 - Small, single-purpose commits with clear messages.
 
 ## Research discipline (non-negotiable)
