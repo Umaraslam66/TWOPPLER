@@ -234,6 +234,45 @@ def test_honorifics_do_not_hide_a_conflict():
                          make_row("C2", "Mr. Peter Sampson"))[0]
 
 
+# stage2_data.name_key changed semantics in T1 round 3 (built from cleaned
+# label_tokens, corpus noise-dot tokens dropped, no longer classify_speaker's
+# normalized name). The D7 exclusion is a consumer of that key, so pin what it
+# needs, in both directions.
+
+
+@pytest.mark.parametrize("label", [
+    "UNMOVIC. ROTH",            # corpus noise token before the surname
+    "ROTH (voice-over)",        # stage direction
+    "Richard Roth (on camera)",
+    "RICHARD ROTH, CNN ANCHOR",  # role descriptor after a comma
+    "ROTH - CNN",               # role descriptor after a dash
+    "Mr. ROTH",                 # honorific
+])
+def test_no_spelling_of_the_subject_slips_past_the_exclusion(label):
+    """A donor written any of these ways must still collide with 'Richard Roth'."""
+    assert name_conflict(make_row("C1", "Richard Roth"),
+                         make_row("C2", label))[0]
+
+
+@pytest.mark.parametrize("a, b", [
+    ("Jane Doe, CNN ANCHOR", "Karl Schmidt, CNN ANCHOR"),
+    ("UNMOVIC. DOE", "UNMOVIC. SCHMIDT"),
+    ("Jane Doe (voice-over)", "Karl Schmidt (voice-over)"),
+])
+def test_shared_corpus_noise_is_not_a_name_conflict(a, b):
+    """The other direction: noise the old key kept ("cnn", "anchor",
+    "unmovic") must not read as a shared name token and exclude a perfectly
+    good donor."""
+    assert not name_conflict(make_row("C1", a), make_row("C2", b))[0]
+
+
+def test_every_pool_row_stays_visible_to_the_exclusion():
+    """A name that cleans down to nothing would silently never conflict."""
+    for label in ["St. George", "B. Van Dam", "Mr. Ng", "O'Brien",
+                  "Jean-Luc de la Cruz Jr."]:
+        assert name_tokens(make_row("C1", label)), label
+
+
 # ---------------------------------------------------------------------------
 # Grounding text
 # ---------------------------------------------------------------------------
