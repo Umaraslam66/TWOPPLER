@@ -1,0 +1,256 @@
+{
+  "frozen_utc": "2026-07-26T22:49:54Z",
+  "frozen_before": "the phase-1 gate completions were read (slurm 50387477 was still running)",
+  "why": "Both subsections of PILOT_REPORT_3 are pre-specified so neither split can be drawn around the result.",
+  "polar_definition": "The question's answer space has two sides (yes/no, or an explicit A-or-B alternative). B10.5 forces every distractor to CONFLICT with the true position, so on such a question all three distractors land on the opposite side and the true option is the lone dissenter. If the gate solves these at higher margins than the wh-questions, 'pick the odd one out' is doing the work.",
+  "register_definition": "Capitalised-entity-token overlap between each option and the question. delta = true option's overlap minus the mean distractor's. A positive delta means the true option echoes the question's own naming more than the distractors do, which is the A4.1 tell.",
+  "n_items": 15,
+  "n_polar": 7,
+  "n_non_polar": 8,
+  "bar_lock_items": [
+    "Contradiction-rule refinement: require POSITION DIVERSITY among the three distractors on polar questions, so they do not all collapse onto one side. Design item for bar-lock, NOT a re-run of this pilot.",
+    "Generation-prompt refinement: instruct the generator to match the true answer's naming register relative to the question (if the question names countries, the alternatives name countries, not capital cities). Design item for bar-lock, NOT a re-run."
+  ],
+  "items": [
+    {
+      "item_id": "C00792:NPR-19884:10",
+      "canonical_id": "C00792",
+      "question": "Is there an opportunity to change course in Syria because of that?",
+      "polar": true,
+      "polar_reason": "yes/no -- 'Is there an opportunity to change course?'",
+      "boundary_note": null,
+      "question_entity_overlap_true": 0,
+      "question_entity_overlap_distractors": [
+        0,
+        0,
+        0
+      ],
+      "question_entity_overlap_delta": 0.0,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C00792:NPR-19884:13",
+      "canonical_id": "C00792",
+      "question": "Is there still enough of a nationalist movement for the U.S. or other countries to back, to support?",
+      "polar": true,
+      "polar_reason": "yes/no -- 'Is there still enough of a nationalist movement?'",
+      "boundary_note": null,
+      "question_entity_overlap_true": 0,
+      "question_entity_overlap_distractors": [
+        0,
+        0,
+        0
+      ],
+      "question_entity_overlap_delta": 0.0,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C00792:NPR-19884:15",
+      "canonical_id": "C00792",
+      "question": "Which international backer has lost most here - the U.S., Turkey, Saudi Arabia, Qatar? I mean who's the outside player who's lost (unintelligible)?",
+      "polar": false,
+      "polar_reason": null,
+      "boundary_note": null,
+      "question_entity_overlap_true": 0,
+      "question_entity_overlap_distractors": [
+        0,
+        0,
+        0
+      ],
+      "question_entity_overlap_delta": 0.0,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C00792:NPR-19884:2",
+      "canonical_id": "C00792",
+      "question": "Are these groups that having lost Aleppo might align with the so-called Islamic State elsewhere in Syria, or are they distinct and different and opposed to that group?",
+      "polar": true,
+      "polar_reason": "A-or-B -- 'might align with IS ... or are they distinct and opposed?'",
+      "boundary_note": null,
+      "question_entity_overlap_true": 0,
+      "question_entity_overlap_distractors": [
+        1,
+        0,
+        2
+      ],
+      "question_entity_overlap_delta": -1.0,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C00792:NPR-19884:6",
+      "canonical_id": "C00792",
+      "question": "To what extent is what is unfolding in Syria right now an American responsibility for lack of things the U.S. didn't do?",
+      "polar": false,
+      "polar_reason": null,
+      "boundary_note": "degree question ('to what extent'), but the true answer answers it as a denial, so it sits near the polar boundary -- reported separately if it behaves like one",
+      "question_entity_overlap_true": 1,
+      "question_entity_overlap_distractors": [
+        1,
+        1,
+        0
+      ],
+      "question_entity_overlap_delta": 0.333,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C01677:NPR-8791:77",
+      "canonical_id": "C01677",
+      "question": "With a much shorter timeline?",
+      "polar": true,
+      "polar_reason": "yes/no fragment -- 'With a much shorter timeline?'",
+      "boundary_note": null,
+      "question_entity_overlap_true": 0,
+      "question_entity_overlap_distractors": [
+        0,
+        0,
+        0
+      ],
+      "question_entity_overlap_delta": 0.0,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C02006:NPR-14829:19",
+      "canonical_id": "C02006",
+      "question": "(Laughter) The gist of your tweet, essentially, was your country is in a lot of trouble because of that stupid, bloody referendum. What do you mean?",
+      "polar": false,
+      "polar_reason": null,
+      "boundary_note": null,
+      "question_entity_overlap_true": 0,
+      "question_entity_overlap_distractors": [
+        1,
+        1,
+        0
+      ],
+      "question_entity_overlap_delta": -0.667,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C02006:NPR-14829:26",
+      "canonical_id": "C02006",
+      "question": "But does anybody in a position of power seriously want, maybe, to get out of Brexit, to back away from this? Or is it too late for that?",
+      "polar": true,
+      "polar_reason": "yes/no -- 'does anybody in power seriously want to get out of Brexit?'",
+      "boundary_note": null,
+      "question_entity_overlap_true": 2,
+      "question_entity_overlap_distractors": [
+        1,
+        0,
+        0
+      ],
+      "question_entity_overlap_delta": 1.667,
+      "true_option_is_top_echo": true
+    },
+    {
+      "item_id": "C02006:NPR-14829:29",
+      "canonical_id": "C02006",
+      "question": "Oh. So maybe from your perspective, this could actually turn out to be - this election result could turn out to be good, better, less bad?",
+      "polar": true,
+      "polar_reason": "yes/no -- 'could this turn out to be good, better, less bad?'",
+      "boundary_note": null,
+      "question_entity_overlap_true": 0,
+      "question_entity_overlap_distractors": [
+        0,
+        0,
+        0
+      ],
+      "question_entity_overlap_delta": 0.0,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C02013:NPR-9480:45",
+      "canonical_id": "C02013",
+      "question": "So you heard the president's remarks from Chicago on Friday. What stuck out of that speech for you?",
+      "polar": false,
+      "polar_reason": null,
+      "boundary_note": null,
+      "question_entity_overlap_true": 1,
+      "question_entity_overlap_distractors": [
+        1,
+        1,
+        0
+      ],
+      "question_entity_overlap_delta": 0.333,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C02013:NPR-9480:49",
+      "canonical_id": "C02013",
+      "question": "Let me ask you about that, Robert, because I wonder if this is a chicken and the egg thing, maybe you can't even answer it, but what comes first? Is it the poverty and the unemployment, or is it the gun violence? Because gun violence, when gun violence goes up, that results in people leaving a community, businesses leaving a community. So which of these things happens first?",
+      "polar": false,
+      "polar_reason": null,
+      "boundary_note": null,
+      "question_entity_overlap_true": 0,
+      "question_entity_overlap_distractors": [
+        1,
+        0,
+        0
+      ],
+      "question_entity_overlap_delta": -0.333,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C02013:NPR-9480:70",
+      "canonical_id": "C02013",
+      "question": "Well, let me bring that back to you, Robert Sampson, then. You're a professor of social sciences. This is something you've studied. And we're trying to talk about programs that actually work. So do we know that early education works to prevent future violence? Does community involvement? Does something like the caller who's walking around their neighborhood, does that work?",
+      "polar": false,
+      "polar_reason": null,
+      "boundary_note": null,
+      "question_entity_overlap_true": 0,
+      "question_entity_overlap_distractors": [
+        0,
+        0,
+        0
+      ],
+      "question_entity_overlap_delta": 0.0,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C02013:NPR-9480:82",
+      "canonical_id": "C02013",
+      "question": "That's - thank you very much, Amy. That's Amy in Oakland, California. And this kind of approach is something that people like Tio Hardiman use in CeaseFire. But I wonder, Robert, even for those people who are not victims or perpetrators of gun violence, I read an amazing statistic where it said 20 to 30 percent of kids in Chicago have witnessed a shooting firsthand. What kind of effect does it have on a generation? What's the difference in outcomes between a kid who witnesses real-live violence and the kid who doesn't?",
+      "polar": false,
+      "polar_reason": null,
+      "boundary_note": null,
+      "question_entity_overlap_true": 0,
+      "question_entity_overlap_distractors": [
+        0,
+        0,
+        0
+      ],
+      "question_entity_overlap_delta": 0.0,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C02124:NPR-12184:4",
+      "canonical_id": "C02124",
+      "question": "Samer, any doubt in your mind that General Sisi could win the election?",
+      "polar": true,
+      "polar_reason": "yes/no -- 'any doubt that General Sisi could win?'",
+      "boundary_note": null,
+      "question_entity_overlap_true": 1,
+      "question_entity_overlap_distractors": [
+        0,
+        0,
+        1
+      ],
+      "question_entity_overlap_delta": 0.667,
+      "true_option_is_top_echo": false
+    },
+    {
+      "item_id": "C02124:NPR-12184:6",
+      "canonical_id": "C02124",
+      "question": "In the end, how much would any Egyptian government would be concerned with the American reaction to their rule?",
+      "polar": false,
+      "polar_reason": null,
+      "boundary_note": null,
+      "question_entity_overlap_true": 0,
+      "question_entity_overlap_distractors": [
+        1,
+        0,
+        0
+      ],
+      "question_entity_overlap_delta": -0.333,
+      "true_option_is_top_echo": false
+    }
+  ]
+}

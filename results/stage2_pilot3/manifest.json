@@ -43,9 +43,21 @@
    "status": "bootstrapped",
    "slurm_job_ids": [],
    "actual_node_hours": null
+  },
+  "gate": {
+   "slurm_job_ids": [
+    "50387477"
+   ],
+   "status": "submitted",
+   "notes": [
+    {
+     "utc": "2026-07-26T22:48:53Z",
+     "note": "phase 1 gate, 15 zeroinfo_redacted standard prompts over the B10 candidate set, boost_qos_dbg"
+    }
+   ]
   }
  },
  "anomalies": [],
  "notes": [],
- "updated_utc": "2026-07-26T22:37:33Z"
+ "updated_utc": "2026-07-26T22:48:53Z"
 }
