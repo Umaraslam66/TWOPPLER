@@ -1,0 +1,89 @@
+{
+ "canonical_id": "C02124",
+ "canonical_name": "Samer Shehata",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster dated strictly earlier. Any other cluster sharing the test date is excluded entirely (same-event leak guard).",
+ "grounding": [
+  {
+   "cluster_id": "cl24",
+   "transcript_id": "NPR-33910",
+   "date": "2011-01-29",
+   "program": "All Things Considered",
+   "title": "Professor: Regime Change Can't Happen Overnight",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 562
+  },
+  {
+   "cluster_id": "cl17",
+   "transcript_id": "NPR-2929",
+   "date": "2011-02-01",
+   "program": "Talk of the Nation",
+   "title": "Egypt Uprising Lacks Leader And Unified Agenda",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 2505
+  },
+  {
+   "cluster_id": "cl23",
+   "transcript_id": "NPR-33809",
+   "date": "2011-02-12",
+   "program": "All Things Considered",
+   "title": "Defining Democracy In Egypt",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 644
+  },
+  {
+   "cluster_id": "cl22",
+   "transcript_id": "NPR-32437",
+   "date": "2011-10-13",
+   "program": "All Things Considered",
+   "title": "Egypt Helped Broker Israel-Hamas Prisoner Swap",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 410
+  },
+  {
+   "cluster_id": "cl21",
+   "transcript_id": "NPR-32351",
+   "date": "2011-11-25",
+   "program": "All Things Considered",
+   "title": "Impatience Grows Over Egypt's Unfinished Revolution",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 431
+  },
+  {
+   "cluster_id": "cl14",
+   "transcript_id": "NPR-10775",
+   "date": "2012-06-14",
+   "program": "Talk of the Nation",
+   "title": "The Future Of Democracy In Egypt",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 1337
+  },
+  {
+   "cluster_id": "cl18",
+   "transcript_id": "NPR-30384",
+   "date": "2012-11-24",
+   "program": "All Things Considered",
+   "title": "Will Egypt's Democracy Survive New President?",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 478
+  },
+  {
+   "cluster_id": "cl16",
+   "transcript_id": "NPR-28816",
+   "date": "2013-07-06",
+   "program": "All Things Considered",
+   "title": "With Egypt In Flux, An Uncertain Quest For Democracy",
+   "n_transcripts_in_cluster": 1,
+   "guest_words": 347
+  }
+ ],
+ "test": {
+  "cluster_id": "cl15",
+  "transcript_id": "NPR-12184",
+  "date": "2014-02-01",
+  "program": "Weekend Edition Saturday",
+  "title": "Will A Military Leader Become Egypt's New Strongman?",
+  "n_transcripts_in_cluster": 1,
+  "guest_words": 373
+ },
+ "excluded_same_date": []
+}

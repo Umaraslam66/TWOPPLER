@@ -1,6 +1,6 @@
 {
  "seed": 47,
- "rule": "Eligible = qualifies AND clean AND NOT ambiguous_identity in results/stage2_candidate_pool_v2.csv. Eligible canonical_ids are sorted lexicographically, then shuffled once with random.Random(47).shuffle. Walking that shuffled order, the first 3 ids whose wiki_status is not 'long-tail' and the first 2 whose wiki_status is 'long-tail' are the dev subjects. A subject found broken later stays burned (it is a dev subject forever and is never reused); its replacement is the next id of the same stratum in the same shuffled order. shuffle_pos is the 0-based position of each pick in that shuffled order.",
+ "rule": "Eligible = qualifies AND clean AND NOT ambiguous_identity in results/stage2_candidate_pool_v2.csv. Eligible canonical_ids are sorted lexicographically, then shuffled once with random.Random(47).shuffle. Walking that shuffled order, the first 3 ids whose wiki_status is not 'long-tail' and the first 2 whose wiki_status is 'long-tail' are the dev subjects. A subject found broken later stays burned (it is a dev subject forever and is never reused); its replacement is the next id of the same stratum in the same shuffled order. A subject broken for one purpose only is instead retained in place, annotated burned_for_qa, and the next id of its stratum is ADDED alongside it, which is why the subject count can exceed 5. shuffle_pos is the 0-based position of each pick in that shuffled order.",
  "drawn_at": "2026-07-26",
  "n_eligible": 578,
  "subjects": [
@@ -14,13 +14,20 @@
    "canonical_id": "C00292",
    "canonical_name": "Bassir Pour",
    "wiki_status": "long-tail",
-   "shuffle_pos": 1
+   "shuffle_pos": 1,
+   "burned_for_qa": true
   },
   {
    "canonical_id": "C02013",
    "canonical_name": "Robert Sampson",
    "wiki_status": "has-page",
    "shuffle_pos": 2
+  },
+  {
+   "canonical_id": "C02124",
+   "canonical_name": "Samer Shehata",
+   "wiki_status": "long-tail",
+   "shuffle_pos": 3
   },
   {
    "canonical_id": "C01677",
@@ -36,8 +43,21 @@
   }
  ],
  "burned": [],
- "replacements": [],
- "runtime_secs": 1.4,
+ "burned_for_qa": [
+  "C00292"
+ ],
+ "replacements": [
+  {
+   "burned_canonical_id": "C00292",
+   "burned_shuffle_pos": 1,
+   "stratum": "long-tail",
+   "mode": "retained_in_place",
+   "reason": "Yields no Q-A items: DIPLOMATIC LICENSE is a roundtable, and every host turn before one of its guest turns is a statement, so D4's cue filter rejects all of them. Owner decision 2026-07-26: the cue filter stays, the subject stays for classifier sampling and renderer exercise, and a sixth subject is added.",
+   "replaced_by": "C02124"
+  }
+ ],
+ "extended_at": "2026-07-26",
+ "runtime_secs": 1.7,
  "cost_usd": 0.0,
- "n_transcripts_fetched": 25
+ "n_transcripts_fetched": 34
 }
