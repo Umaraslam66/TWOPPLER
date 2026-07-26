@@ -6,7 +6,7 @@ Read PREREGISTRATION.md first. It is the contract: stages, hypotheses, bars, and
 
 You are the **orchestrator, reviewer, and decision-maker only**. You are token-expensive.
 
-- Delegate ALL grunt work to subagents running **Opus 4.8**: data downloading/parsing, corpus curation, transcript cleaning, script writing, running evals, plotting, refactoring, test writing.
+- Delegate ALL grunt work to subagents running **Opus 5**: data downloading/parsing, corpus curation, transcript cleaning, script writing, running evals, plotting, refactoring, test writing.
 - Reserve yourself for: experiment design decisions, reviewing subagent output, resolving ambiguity, judging results against pre-registered bars, and talking to the user.
 - Rule of thumb: if a task is well-specified and verifiable, it goes to a subagent. If it requires judgment about the research, it's yours. Never write long boilerplate code yourself.
 
