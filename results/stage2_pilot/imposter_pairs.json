@@ -1,164 +1,192 @@
 {
- "method": "SPEC D7. Each subject is represented by its concatenated guest-role text from GROUNDING clusters only (dev subjects: the committed grounding_turns.jsonl; donors: D2 applied to their pool row, guest turns of every grounding cluster's representative transcript). Donor pool = the seed-48 sample of 200 eligible subjects (qualifies AND clean AND NOT ambiguous_identity), drawn with random.Random(48).sample over the lexicographically sorted eligible ids with ALL dev-subject ids removed first; the same derivation the distractor bank uses. Eligible donors are those with >= 2500 words of grounding text and no name conflict with the subject (shared name token, or difflib ratio >= 0.7 between any pair of name variants, honorific-stripped and casefolded). Similarity = cosine between L2-normalised TF-IDF vectors, word unigrams, lowercase, token pattern (?u)\\b\\w\\w+\\b, smoothed idf ln((1+n)/(1+df))+1, fitted once on all eligible donor documents plus all subject documents. donor(X) = argmax similarity, rounded to 6 decimals, ties broken by lexicographic canonical_id. runner_up_top5 holds ranks 2-6 (the winner is in pairs).",
+ "method": "SPEC D7 with the v1.2 amendment (D7-r2). Each subject is represented by its concatenated guest-role text from GROUNDING clusters only (dev subjects: the committed grounding_turns.jsonl; donors: D2 applied to their pool row, guest turns of every grounding cluster's representative transcript). Donor pool = the seed-48 sample of 200 eligible subjects (qualifies AND clean AND NOT ambiguous_identity), drawn with random.Random(48).sample over the lexicographically sorted eligible ids with ALL dev-subject ids removed first; the same derivation the distractor bank uses. Eligible donors are those with >= 2500 words of grounding text and no name conflict with the subject (shared name token, or difflib ratio >= 0.7 between any pair of name variants, honorific-stripped and casefolded). Similarity = cosine between L2-normalised TF-IDF vectors, word unigrams, lowercase, token pattern (?u)\\b\\w\\w+\\b, smoothed idf ln((1+n)/(1+df))+1, fitted once on all eligible donor documents plus all subject documents, with terms whose document frequency exceeds 0.9 of that corpus DROPPED (v1.2 amendment; TfidfVectorizer(max_df=0.9) semantics). donor(X) = argmax similarity, rounded to 6 decimals, ties broken by lexicographic canonical_id. runner_up_top5 holds ranks 2-6 (the winner is in pairs).",
  "generated_at": "2026-07-26",
  "donor_seed": 48,
  "n_donor_sample": 200,
  "donor_sample_sha256": "e06f7d7276435b97dbf59c2342ba41e247eab98c1f45bce029ea750de241de2e",
  "word_floor": 2500,
  "name_ratio": 0.7,
- "n_eligible_donors": 68,
+ "max_df": 0.9,
+ "vocabulary_terms": 15746,
+ "n_eligible_donors": 70,
+ "donor_multiplicity": {
+  "distinct_donors": 6,
+  "n_subjects": 6,
+  "max_subjects_per_donor": 1,
+  "subjects_by_donor": {
+   "C00690": [
+    "C02013"
+   ],
+   "C01316": [
+    "C00792"
+   ],
+   "C01650": [
+    "C01677"
+   ],
+   "C02040": [
+    "C00292"
+   ],
+   "C02277": [
+    "C02124"
+   ],
+   "C02510": [
+    "C02006"
+   ]
+  },
+  "shared_donors": []
+ },
  "pairs": {
   "C00292": "C02040",
   "C00792": "C01316",
   "C01677": "C01650",
-  "C02006": "C02040",
-  "C02013": "C02040",
+  "C02006": "C02510",
+  "C02013": "C00690",
   "C02124": "C02277"
  },
  "similarity": {
-  "C00292": 0.829794,
-  "C00792": 0.785154,
-  "C01677": 0.623846,
-  "C02006": 0.750778,
-  "C02013": 0.736847,
-  "C02124": 0.880008
+  "C00292": 0.219569,
+  "C00792": 0.433763,
+  "C01677": 0.285537,
+  "C02006": 0.109169,
+  "C02013": 0.133946,
+  "C02124": 0.481952
  },
  "runner_up_top5": {
   "C00292": [
    [
-    "C00836",
-    0.826675
+    "C00077",
+    0.210463
+   ],
+   [
+    "C01005",
+    0.181254
+   ],
+   [
+    "C00163",
+    0.177744
    ],
    [
     "C00031",
-    0.815604
+    0.173305
    ],
    [
-    "C00203",
-    0.810752
-   ],
-   [
-    "C02496",
-    0.810151
-   ],
-   [
-    "C01302",
-    0.797929
+    "C00629",
+    0.173228
    ]
   ],
   "C00792": [
    [
     "C00031",
-    0.771132
+    0.302401
+   ],
+   [
+    "C00629",
+    0.215739
+   ],
+   [
+    "C01490",
+    0.187441
+   ],
+   [
+    "C01005",
+    0.182675
    ],
    [
     "C02040",
-    0.746093
-   ],
-   [
-    "C00836",
-    0.730929
-   ],
-   [
-    "C01302",
-    0.718476
-   ],
-   [
-    "C02277",
-    0.7184
+    0.162947
    ]
   ],
   "C01677": [
    [
-    "C02040",
-    0.597737
+    "C00629",
+    0.161982
    ],
    [
     "C01316",
-    0.577894
+    0.154438
    ],
    [
     "C01005",
-    0.573499
+    0.151825
    ],
    [
-    "C02264",
-    0.571035
+    "C00077",
+    0.150156
    ],
    [
-    "C00629",
-    0.570241
+    "C02266",
+    0.141727
    ]
   ],
   "C02006": [
    [
-    "C02496",
-    0.723164
+    "C00899",
+    0.10809
    ],
    [
-    "C00836",
-    0.717293
+    "C02040",
+    0.106098
    ],
    [
-    "C01302",
-    0.716733
+    "C01696",
+    0.099052
    ],
    [
     "C01837",
-    0.716249
+    0.097773
    ],
    [
-    "C00203",
-    0.712454
+    "C00700",
+    0.094299
    ]
   ],
   "C02013": [
    [
+    "C02040",
+    0.132331
+   ],
+   [
+    "C01501",
+    0.128303
+   ],
+   [
     "C00203",
-    0.731744
+    0.126498
    ],
    [
-    "C00836",
-    0.728677
+    "C01696",
+    0.126052
    ],
    [
-    "C02264",
-    0.726443
-   ],
-   [
-    "C00690",
-    0.726234
-   ],
-   [
-    "C02496",
-    0.724815
+    "C00312",
+    0.123774
    ]
   ],
   "C02124": [
    [
-    "C02040",
-    0.83676
-   ],
-   [
     "C02264",
-    0.823882
+    0.359647
    ],
    [
     "C00031",
-    0.817247
+    0.201453
    ],
    [
-    "C00836",
-    0.808925
+    "C02040",
+    0.180171
    ],
    [
-    "C02496",
-    0.808401
+    "C01316",
+    0.177292
+   ],
+   [
+    "C00078",
+    0.175061
    ]
   ]
  },
  "subject_words": {
-  "C00292": 5132,
+  "C00292": 6227,
   "C00792": 1532,
   "C01677": 1787,
   "C02006": 1397,
@@ -167,19 +195,27 @@
  },
  "donor_words": {
   "C00031": 4204,
+  "C00077": 2627,
+  "C00078": 3863,
+  "C00163": 4475,
   "C00203": 8984,
-  "C00629": 3769,
+  "C00312": 3860,
+  "C00629": 4071,
   "C00690": 4038,
-  "C00836": 2921,
+  "C00700": 3765,
+  "C00899": 10138,
   "C01005": 3555,
-  "C01302": 9171,
   "C01316": 5586,
+  "C01490": 2595,
+  "C01501": 3356,
   "C01650": 4407,
+  "C01696": 5664,
   "C01837": 5004,
   "C02040": 13832,
   "C02264": 2959,
+  "C02266": 2975,
   "C02277": 4735,
-  "C02496": 7546
+  "C02510": 5309
  },
  "excluded_by_name": {
   "C02006": [
@@ -197,19 +233,27 @@
  },
  "donors_recorded": [
   "C00031",
+  "C00077",
+  "C00078",
+  "C00163",
   "C00203",
+  "C00312",
   "C00629",
   "C00690",
-  "C00836",
+  "C00700",
+  "C00899",
   "C01005",
-  "C01302",
   "C01316",
+  "C01490",
+  "C01501",
   "C01650",
+  "C01696",
   "C01837",
   "C02040",
   "C02264",
+  "C02266",
   "C02277",
-  "C02496"
+  "C02510"
  ],
  "donor_sample": [
   "C02508",
@@ -414,8 +458,17 @@
   "C00449"
  ],
  "n_donors_no_grounding": 0,
- "n_donors_below_floor": 132,
+ "n_donors_below_floor": 130,
  "n_donor_grounding_transcripts": 696,
- "runtime_secs": 5.5,
+ "stage2_data_sha256": "84ec751d5c071300",
+ "subject_turns_sha256": {
+  "C00292": "86063efdeff9c690",
+  "C00792": "887ce60762d6dd90",
+  "C01677": "17b83a78aceeb29d",
+  "C02006": "1983980c29270803",
+  "C02013": "01c83004267a9fbe",
+  "C02124": "76f61c314253a73e"
+ },
+ "runtime_secs": 0.5,
  "cost_usd": 0.0
 }

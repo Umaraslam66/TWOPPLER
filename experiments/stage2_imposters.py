@@ -222,11 +222,18 @@ def main(argv: list[str]) -> int:
     write_json(OUT, doc)
 
     # The texts behind every recorded donor, so a reader can check the match
-    # without the corpus. Winners and runners-up only — not all 200.
+    # without the corpus. Winners and runners-up only — not all 200. Anything
+    # left over from an earlier match is deleted: a directory that disagrees
+    # with the artifact is a directory someone will eventually read as truth.
     for cid in doc["donors_recorded"]:
         path = donor_text_path(cid)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(donor_texts[cid].rstrip("\n") + "\n", encoding="utf-8")
+    keep = {f"{cid}.txt" for cid in doc["donors_recorded"]}
+    for stale in sorted(donor_text_path("x").parent.glob("*.txt")):
+        if stale.name not in keep:
+            stale.unlink()
+            print(f"  pruned stale donor text {stale.name}")
 
     # The matched donors' grounding TURNS (host + guest, with dates and
     # programs), which is what the imposter arm actually renders from. Second
@@ -276,6 +283,13 @@ def main(argv: list[str]) -> int:
             print(f"     name-excluded: "
                   f"{', '.join(b['donor'] + ' (' + b['reason'] + ')' for b in blocked)}")
         print()
+
+    for stale in sorted(donor_dir("x").parent.iterdir()):
+        if stale.is_dir() and stale.name not in winners:
+            for f in sorted(stale.iterdir()):
+                f.unlink()
+            stale.rmdir()
+            print(f"  pruned stale donor turns {stale.name}/")
 
     mult = doc["donor_multiplicity"]
     print(f"donor multiplicity: {mult['distinct_donors']} distinct donors for "

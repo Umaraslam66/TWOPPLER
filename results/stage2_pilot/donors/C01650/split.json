@@ -1,7 +1,7 @@
 {
  "canonical_id": "C01650",
  "canonical_name": "Martin Indyk",
- "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster dated strictly earlier. Any other cluster sharing the test date is excluded entirely (same-event leak guard).",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
  "grounding": [
   {
    "cluster_id": "cl82",
@@ -10,6 +10,9 @@
    "program": "Weekend Edition Saturday",
    "title": "",
    "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-05-28"
+   ],
    "guest_words": 397
   },
   {
@@ -19,6 +22,9 @@
    "program": "All Things Considered",
    "title": "",
    "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-03-17"
+   ],
    "guest_words": 534
   },
   {
@@ -28,6 +34,9 @@
    "program": "Weekend Edition Saturday",
    "title": "",
    "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-07-10"
+   ],
    "guest_words": 769
   },
   {
@@ -37,6 +46,9 @@
    "program": "Weekend Edition Sunday",
    "title": "",
    "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-03-04"
+   ],
    "guest_words": 577
   },
   {
@@ -46,6 +58,9 @@
    "program": "Talk of the Nation",
    "title": "",
    "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-11-26"
+   ],
    "guest_words": 1163
   },
   {
@@ -55,6 +70,9 @@
    "program": "All Things Considered",
    "title": "",
    "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-12-10"
+   ],
    "guest_words": 466
   },
   {
@@ -64,6 +82,9 @@
    "program": "All Things Considered",
    "title": "",
    "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-07-18"
+   ],
    "guest_words": 501
   }
  ],
@@ -74,6 +95,9 @@
   "program": "All Things Considered",
   "title": "",
   "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-04-01"
+  ],
   "guest_words": 500
  },
  "excluded_same_date": [],

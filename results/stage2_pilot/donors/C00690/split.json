@@ -1,68 +1,80 @@
 {
- "canonical_id": "C01316",
- "canonical_name": "Joshua Landis",
+ "canonical_id": "C00690",
+ "canonical_name": "Doris Meissner",
  "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
  "grounding": [
   {
-   "cluster_id": "cl14",
-   "transcript_id": "NPR-2251",
-   "date": "2011-04-13",
+   "cluster_id": "cl35",
+   "transcript_id": "NPR-44629",
+   "date": "2010-06-08",
    "program": "Talk of the Nation",
    "title": "",
    "n_transcripts_in_cluster": 1,
    "member_dates": [
-    "2011-04-13"
+    "2010-06-08"
    ],
-   "guest_words": 1502
+   "guest_words": 1735
   },
   {
-   "cluster_id": "cl12",
-   "transcript_id": "NPR-10912",
-   "date": "2012-05-29",
+   "cluster_id": "cl39",
+   "transcript_id": "NPR-9658",
+   "date": "2013-01-31",
    "program": "Talk of the Nation",
    "title": "",
    "n_transcripts_in_cluster": 1,
    "member_dates": [
-    "2012-05-29"
+    "2013-01-31"
    ],
-   "guest_words": 1552
+   "guest_words": 670
   },
   {
-   "cluster_id": "cl18",
-   "transcript_id": "NPR-9780",
-   "date": "2013-01-15",
-   "program": "Talk of the Nation",
+   "cluster_id": "cl38",
+   "transcript_id": "NPR-47125",
+   "date": "2018-01-12",
+   "program": "Morning Edition",
    "title": "",
    "n_transcripts_in_cluster": 1,
    "member_dates": [
-    "2013-01-15"
+    "2018-01-12"
    ],
-   "guest_words": 1045
+   "guest_words": 464
   },
   {
-   "cluster_id": "cl17",
-   "transcript_id": "NPR-8895",
-   "date": "2013-04-23",
-   "program": "Talk of the Nation",
+   "cluster_id": "cl37",
+   "transcript_id": "NPR-46309",
+   "date": "2018-06-16",
+   "program": "All Things Considered",
    "title": "",
    "n_transcripts_in_cluster": 1,
    "member_dates": [
-    "2013-04-23"
+    "2018-06-16"
    ],
-   "guest_words": 1487
+   "guest_words": 615
+  },
+  {
+   "cluster_id": "cl33",
+   "transcript_id": "NPR-4041",
+   "date": "2018-08-09",
+   "program": "Morning Edition",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-08-09"
+   ],
+   "guest_words": 554
   }
  ],
  "test": {
-  "cluster_id": "cl15",
-  "transcript_id": "NPR-29286",
-  "date": "2013-05-01",
+  "cluster_id": "cl32",
+  "transcript_id": "NPR-1689",
+  "date": "2018-12-19",
   "program": "All Things Considered",
   "title": "",
   "n_transcripts_in_cluster": 1,
   "member_dates": [
-   "2013-05-01"
+   "2018-12-19"
   ],
-  "guest_words": 595
+  "guest_words": 349
  },
  "excluded_same_date": [],
  "role": "imposter donor (SPEC D7); test cluster is NEVER used"
