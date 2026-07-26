@@ -4,6 +4,7 @@
  "donor_seed": 48,
  "n_donor_sample": 200,
  "donor_sample_sha256": "e06f7d7276435b97dbf59c2342ba41e247eab98c1f45bce029ea750de241de2e",
+ "n_donor_texts": 200,
  "word_floor": 2500,
  "name_ratio": 0.7,
  "max_df": 0.9,
@@ -469,6 +470,6 @@
   "C02013": "f5a0a864226b9153",
   "C02124": "f87b2b1de9247aaf"
  },
- "runtime_secs": 0.5,
+ "runtime_secs": 6.2,
  "cost_usd": 0.0
 }
