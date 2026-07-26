@@ -44,6 +44,19 @@ N_DONORS = 200
 # Pilot-grade and deliberately dumb: capitalisation, digits, $ and %. Real NER
 # is a bar-lock decision, not an implementation choice. Every reading of the
 # SPEC that had to be pinned down is named in the docstrings below.
+#
+# KNOWN ARTIFACT, implemented as SPEC D5 is written and NOT quietly patched:
+# the pronoun "I" is a capitalised token, so mid-sentence it counts as an
+# entity. Measured on the pilot bank (653 rows): "I"/"I'm"/"I've" account for
+# 625 of the single-token entity spans, against 65 for the next real entity
+# ("U.S"). 46% of bank answers are affected and 14% sit in a different density
+# bucket because of it; for the 18 pilot items, 28% would move bucket. So part
+# of what this calls "entity density" is really how often the speaker says
+# "I" -- a style signal, not a name signal.
+#
+# Excluding the first-person pronouns is a one-line change, but it is a change
+# to a frozen SPEC section, so it needs the orchestrator's sign-off. Flagged in
+# the T2 report; do not fix it here without that sign-off.
 # ---------------------------------------------------------------------------
 
 #: SPEC D5 bucket edges. Z = almost no entities, L = some, H = dense.

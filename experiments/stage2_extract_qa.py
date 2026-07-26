@@ -75,10 +75,26 @@ SOURCE_FILES = [
 ]
 
 
-def source_hashes() -> dict:
+def sha16(path) -> str:
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()[:16]
+
+
+def provenance(dev_ids: list[str]) -> dict:
+    """Everything this build is a function of, hashed.
+
+    Two moving parts, not one. The code (D3/D3.1 role assignment in
+    particular) decides which host turns exist in a DONOR transcript and so
+    what the bank holds. The committed test_turns.jsonl files decide what the
+    dev subjects' items are. Either changing invalidates these artifacts, and
+    without the hashes that goes unnoticed.
+    """
     from doppler.stage2_data import ROOT
-    return {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest()[:16]
-            for p in SOURCE_FILES}
+    return {
+        "source_sha256": {p: sha16(ROOT / p) for p in SOURCE_FILES},
+        "test_turns_sha256": {
+            cid: sha16(subject_dir(cid) / "test_turns.jsonl")
+            for cid in dev_ids},
+    }
 
 
 def outputs(dev_ids: list[str]) -> list[Path]:
@@ -213,7 +229,7 @@ def main(argv: list[str]) -> int:
         "skipped": [{"canonical_id": c, "note": n} for c, n in notes],
         "n_truncated": n_truncated,
         "stats": stats,
-        "source_sha256": source_hashes(),
+        "provenance": provenance(dev_ids),
         "runtime_secs": round(fetch_secs, 1),
         "cost_usd": 0.0,
     })
