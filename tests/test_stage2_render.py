@@ -195,6 +195,25 @@ def test_two_character_surnames_expand():
         assert surname in R.expand_variants([f"David {surname}"])
 
 
+def test_two_character_tokens_expand_only_as_a_final_surname():
+    assert R.expand_variants(["David Ng"]) == ["David Ng", "David", "Ng"]
+    # A leading particle is not a surname on its own.
+    assert R.expand_variants(["De Mistura"]) == ["De Mistura", "Mistura"]
+    # Generational suffixes are not names even in final position.
+    assert R.expand_variants(["Trump Jr"]) == ["Trump Jr", "Trump"]
+    assert R.expand_variants(["Abdullah Ii"]) == ["Abdullah Ii", "Abdullah"]
+    assert R.NAME_SUFFIXES == {"jr", "sr", "ii", "iii", "iv"}
+
+
+def test_the_particle_and_suffix_rules_change_what_gets_redacted():
+    assert R.redact("De met Mistura once.", ["De Mistura"]) == (
+        "De met GUEST once.")
+    assert R.redact("Jr called Trump back.", ["Trump Jr"]) == (
+        "Jr called GUEST back.")
+    # Three-character tokens still expand wherever they sit.
+    assert "Ali" in R.expand_variants(["Ali Hassan"])
+
+
 def test_matching_is_blind_to_apostrophe_style():
     # Variant straight, text curly -- and the other way round.
     assert R.redact("O’Brien said", ["O'Brien"]) == "GUEST said"
@@ -204,6 +223,18 @@ def test_matching_is_blind_to_apostrophe_style():
         R.assert_redacted("O’Brien said", ["O'Brien"])
     with pytest.raises(ValueError, match="redaction failed"):
         R.assert_redacted("O'Brien said", ["O’Brien"])
+
+
+def test_modifier_letter_apostrophe_does_not_hide_a_name():
+    # U+02BC is a word character to `re`, so without normalisation "OʼBrien"
+    # is one unbroken token and both the matcher and the guard miss it.
+    assert R.redact("OʼBrien said", ["O'Brien"]) == "GUEST said"
+    assert R.redact("O'Brien said", ["OʼBrien"]) == "GUEST said"
+    assert R.redact("OʼBrien said", ["OʼBrien"]) == "GUEST said"
+    with pytest.raises(ValueError, match="redaction failed"):
+        R.assert_redacted("OʼBrien said", ["O'Brien"])
+    with pytest.raises(ValueError, match="redaction failed"):
+        R.assert_redacted("O'Brien said", ["OʼBrien"])
 
 
 def test_redaction_leaves_the_rest_of_the_typography_alone():

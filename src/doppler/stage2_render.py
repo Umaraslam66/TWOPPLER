@@ -80,7 +80,9 @@ guard would still pass. Orchestrator decision, on record: deterministic
 over-redaction noise -- a third party who shares the surname turns into "Bill
 GUEST", and a surname that is also an ordinary word takes that word with it --
 beats silent surname leakage in the primary arm. ``expand=False`` is the
-documented opt-out.
+documented opt-out. Note that the twin arms scrub the subject's variants and
+the imposter arm scrubs the donor's, so the two arms can carry different
+amounts of that noise; see :func:`expand_variants`.
 
 The imposter arm has TWO identities to scrub, and neither list covers the
 other. Its excerpts are the donor's, so they are scrubbed with the **donor's**
@@ -300,19 +302,22 @@ _HONORIFICS = (
 #: to one GUEST instead of leaving "Senator GUEST" behind.
 _HONORIFIC_PREFIX = r"(?:(?:" + "|".join(_HONORIFICS) + r")\.?\s+)?"
 
-#: A name token must not start or end inside a longer word. Both apostrophes in
+#: A name token must not start or end inside a longer word. The apostrophes in
 #: the lookbehind keep "Brien" from matching inside "O'Brien" / "O’Brien"; the
 #: trailing check deliberately allows an apostrophe, so a possessive redacts as
 #: "GUEST's" rather than being missed.
-_LEFT_EDGE = r"(?<![\w'’])"
+_LEFT_EDGE = r"(?<![\w'’ʼ])"
 _RIGHT_EDGE = r"(?![\w])"
 
-#: Matching is apostrophe-blind: transcripts and the pool disagree about curly
-#: vs straight, and "O’Brien" must not hide from a variant written "O'Brien".
-#: The swap is 1:1 by character, so match offsets in the normalised copy line
-#: up with the original text and :func:`redact` can return the original
-#: characters everywhere it did not replace.
-_CURLY_APOSTROPHE = "’"
+#: Matching is apostrophe-blind: transcripts and the pool disagree about which
+#: apostrophe they use, and "O’Brien" must not hide from a variant written
+#: "O'Brien". U+02BC (MODIFIER LETTER APOSTROPHE) is in this list because it is
+#: a *word* character to ``re``: without normalisation "OʼBrien" is one
+#: unbroken token, so the matcher and the guard both miss it in silence. Each
+#: swap is 1:1 by code point, so match offsets in the normalised copy line up
+#: with the original text and :func:`redact` can return the original characters
+#: everywhere it did not replace.
+_APOSTROPHES = ("’", "ʼ")
 _STRAIGHT_APOSTROPHE = "'"
 
 #: Single name tokens shorter than this are not treated as name variants by
@@ -324,12 +329,20 @@ _STRAIGHT_APOSTROPHE = "'"
 #: reach it, and it needs an explicit variant in the pool row instead.
 MIN_EXPANDED_TOKEN = 2
 
+#: Two-character tokens that are not names even when they end one. Applied to
+#: two-character tokens only: a token of three characters or more expands
+#: unconditionally, so "III" still does.
+NAME_SUFFIXES = frozenset({"jr", "sr", "ii", "iii", "iv"})
+
 _TOKEN_RE = re.compile(r"[^\W\d_]+", re.UNICODE)
 
 
 def _straighten(text: str) -> str:
-    """Curly apostrophes to straight ones. Length-preserving by construction."""
-    return (text or "").replace(_CURLY_APOSTROPHE, _STRAIGHT_APOSTROPHE)
+    """Every apostrophe variant to the straight one. Length-preserving."""
+    out = text or ""
+    for mark in _APOSTROPHES:
+        out = out.replace(mark, _STRAIGHT_APOSTROPHE)
+    return out
 
 
 def _strip_honorifics(variant: str) -> str:
@@ -367,22 +380,39 @@ def expand_variants(variants, min_token: int = MIN_EXPANDED_TOKEN) -> list:
 
     "Frederic Hof" yields "Frederic" and "Hof" as well, which is what stops a
     bare surname in the transcript body from surviving redaction. Tokens
-    shorter than ``min_token`` characters (default 2, see
-    :data:`MIN_EXPANDED_TOKEN`), and tokens containing digits, are left out.
+    containing digits, and tokens shorter than ``min_token`` characters
+    (default 2, see :data:`MIN_EXPANDED_TOKEN`), are left out.
+
+    A **two-character** token expands only when it is the last token of its
+    variant and is not a generational suffix (:data:`NAME_SUFFIXES`). "David
+    Ng" gives "Ng"; "De Mistura" gives "Mistura" but not the particle "De";
+    "Trump Jr" gives "Trump" only; "Abdullah Ii" gives "Abdullah" only. Tokens
+    of three characters or more expand wherever they sit.
 
     This is the default for :func:`redact` and :func:`assert_redacted`, and it
     over-redacts on purpose: a third party who shares a name token is partly
     redacted too ("Bill Gates" -> "Bill GUEST" when the subject is Robert
     Gates), and a name that is also an ordinary word takes that word with it
-    ("Pour the coffee" -> "GUEST the coffee"). The noise is deterministic and
-    identical across arms; a leaked surname in the primary arm would not be.
+    ("Pour the coffee" -> "GUEST the coffee").
+
+    The noise is deterministic and reproducible, but it is NOT the same amount
+    in every arm: the twin arms scrub the subject's variants while the imposter
+    arm scrubs the donor's, so if one of those two name lists is more prone to
+    over-redaction than the other, one arm carries more damaged text than the
+    other. Worth a look at the two name lists before reading an arm difference
+    as a real effect.
     """
     forms = list(variant_forms(variants))
     extra = []
     for form in forms:
-        for token in _TOKEN_RE.findall(form):
-            if len(token) >= min_token:
-                extra.append(token)
+        tokens = _TOKEN_RE.findall(form)
+        for position, token in enumerate(tokens):
+            if len(token) < min_token:
+                continue
+            if len(token) == 2 and (position != len(tokens) - 1
+                                    or token.casefold() in NAME_SUFFIXES):
+                continue
+            extra.append(token)
     return variant_forms(forms + extra)
 
 
