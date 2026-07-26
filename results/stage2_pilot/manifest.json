@@ -16,12 +16,12 @@
    "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/stage2_pilot_smoke.sbatch",
    "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot",
    "projected_node_hours": 0.0653,
-   "status": "resubmitted",
+   "status": "completed",
    "slurm_job_ids": [
     "50356680",
     "50358183"
    ],
-   "actual_node_hours": null,
+   "actual_node_hours": 0.228,
    "notes": [
     {
      "utc": "2026-07-26T18:06:01Z",
@@ -30,6 +30,10 @@
     {
      "utc": "2026-07-26T18:15:51Z",
      "note": "smoke rerun after raising the prediction output cap 120->512; first run 50356680 truncated 20/20"
+    },
+    {
+     "utc": "2026-07-26T18:22:58Z",
+     "note": "two runs: 50356680 (0.1222 nh, 20/20 truncated at the 120-token cap) + 50358183 (0.1058 nh, 21/22 parsed after raising the cap to 512). sacct-billed."
     }
    ]
   },
@@ -54,12 +58,20 @@
    "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/stage2_pilot_full.sbatch",
    "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot",
    "projected_node_hours": 0.1112,
-   "status": "bootstrapped",
-   "slurm_job_ids": [],
-   "actual_node_hours": null
+   "status": "submitted",
+   "slurm_job_ids": [
+    "50359261"
+   ],
+   "actual_node_hours": null,
+   "notes": [
+    {
+     "utc": "2026-07-26T18:23:10Z",
+     "note": "all 10 prediction sets + classifier, 639 prompts, one engine init"
+    }
+   ]
   }
  },
  "anomalies": [],
  "notes": [],
- "updated_utc": "2026-07-26T18:15:51Z"
+ "updated_utc": "2026-07-26T18:23:10Z"
 }

@@ -1991,9 +1991,24 @@ def cmd_ingest(args) -> int:
           f"labels, {sum(1 for r in clf_rows if r['parse_failure'])} parse "
           "failures")
 
-    node_hours = _sum_node_hours(summaries)
+    # Billed node-hours come from sacct (elapsed x allocated nodes), recorded
+    # into the manifest by `record --node-hours`. A Booster node is billed
+    # whole, so sacct is the truth and batch_generate's own wall-clock is only
+    # a cross-check -- it misses queue-side overhead and teardown.
+    man = load_manifest(pilot_dir / "manifest.json")
+    billed = [e["actual_node_hours"] for e in man.get("jobs", {}).values()
+              if e.get("actual_node_hours") is not None]
+    measured = _sum_node_hours(summaries)
+    node_hours = round(sum(billed), 4) if billed else measured
+    if billed and measured:
+        print(f"[ingest] node-hours: {node_hours} billed (sacct) vs "
+              f"{measured} in-process (batch_generate summaries)")
     analysis = analyse(all_records, clf_rows, rule_rows, doc, node_hours,
                        missing_total, summaries)
+    analysis["node_hours_source"] = "sacct" if billed else "batch_generate"
+    analysis["node_hours_in_process"] = measured
+    analysis["jobs"] = {k: {kk: vv for kk, vv in v.items() if kk != "text"}
+                        for k, v in man.get("jobs", {}).items()}
     S.write_json(pilot_dir / "analysis.json", analysis)
     print(f"[ingest] analysis -> {pilot_dir / 'analysis.json'}")
 
@@ -2187,6 +2202,14 @@ def _table(headers: list[str], rows: list[list]) -> str:
     return "\n".join(out)
 
 
+def _cell(text, limit: int) -> str:
+    """One markdown table cell: whitespace collapsed, pipes escaped, clipped."""
+    flat = " ".join((text or "").split())
+    if len(flat) > limit:
+        flat = flat[:limit].rstrip() + "…"
+    return flat.replace("|", "\\|") or "—"
+
+
 def _fmt(x, nd=3):
     return "—" if x is None else f"{x:.{nd}f}"
 
@@ -2339,9 +2362,8 @@ def cmd_report(args) -> int:
                       "target turn (truncated)", "model's WHY"],
                      [[s["canonical_id"], s["transcript_id"], s["turn_idx"],
                        s["label"],
-                       (s.get("target_host") or "")[:150].replace("|", "\\|")
-                       + ("…" if len(s.get("target_host") or "") > 150 else ""),
-                       (s.get("why") or "").replace("|", "\\|")[:160]]
+                       _cell(s.get("target_host"), 150),
+                       _cell(s.get("why"), 160)]
                       for s in sample]),
               "",
               f"Subjects represented: "
