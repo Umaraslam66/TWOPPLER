@@ -38,11 +38,15 @@ from doppler.imposter2 import (
     DONOR_SEED,
     N_DONORS,
     WORD_FLOOR,
+    check_no_shared_transcripts,
+    check_no_subject_name_in_text,
     collect_donor_texts,
     donor_dir,
     donor_sample,
     donor_text_path,
     grounding_text,
+    guest_text,
+    join_grounding,
     match_donors,
     sample_sha256,
 )
@@ -54,6 +58,7 @@ from doppler.stage2_data import (
     load_dev_subjects,
     load_guest_words,
     load_pool,
+    load_split,
     subject_dir,
     word_count,
     write_json,
@@ -107,17 +112,32 @@ def cross_check_with_t2(pool, dev_ids, donor_ids) -> str:
 
     Both tasks derive it from the pool with random.Random(48) rather than one
     reading the other's output, so this is the only place the two derivations
-    ever meet. T2's module may not exist yet; that is not an error.
+    ever meet. A disagreement means the pilot's distractors and its imposter
+    donors come from different populations — every downstream comparison would
+    be quietly incomparable — so it stops the run rather than printing a note
+    somebody has to notice.
     """
     try:
         from doppler.distractors import sample_donor_ids
-    except Exception:
-        return "T2's distractors module is not importable yet — not checked"
-    theirs = sample_donor_ids(pool, dev_ids)
-    if list(theirs) == list(donor_ids):
+    except Exception as exc:                    # pragma: no cover - T2 present
+        return (f"[warn] NOT CHECKED: T2's distractors module did not import "
+                f"({exc.__class__.__name__}: {exc})")
+    theirs = list(sample_donor_ids(pool, dev_ids))
+    mine = list(donor_ids)
+    if theirs == mine:
         return "identical to T2's sample_donor_ids (order and membership)"
-    return ("MISMATCH with T2's sample_donor_ids: "
-            f"{len(set(theirs) & set(donor_ids))}/{len(donor_ids)} shared ids")
+    only_mine = sorted(set(mine) - set(theirs))
+    only_theirs = sorted(set(theirs) - set(mine))
+    order_only = not only_mine and not only_theirs
+    raise SystemExit(
+        "[fatal] the donor sample disagrees with T2's derivation.\n"
+        f"  shared ids : {len(set(mine) & set(theirs))} of {len(mine)}\n"
+        f"  only T3    : {only_mine[:8]}\n"
+        f"  only T2    : {only_theirs[:8]}\n"
+        f"  T3 sha256  : {sample_sha256(mine)}\n"
+        f"  T2 sha256  : {sample_sha256(theirs)}\n"
+        + ("  membership matches; the ORDER differs.\n" if order_only else "")
+        + "  The distractor bank and the imposter donors must be one sample.")
 
 
 def headline(row: dict) -> str:
@@ -205,11 +225,13 @@ def main(argv: list[str]) -> int:
               "(single-cluster subjects), dropped")
 
     doc = match_donors(dev_doc["subjects"], pool, subject_texts, donor_texts,
-                       generated_at=date.today().isoformat())
+                       generated_at=date.today().isoformat(),
+                       donor_ids=donor_ids)
     doc["donor_sample"] = donor_ids
     doc["n_donors_no_grounding"] = len(skipped)
-    doc["n_donors_below_floor"] = (len(donor_texts) - len(skipped)
-                                   - doc["n_eligible_donors"])
+    # donor_texts already excludes the donors D2 rejected, so subtracting them
+    # again would undercount the ones that simply came up short.
+    doc["n_donors_below_floor"] = len(donor_texts) - doc["n_eligible_donors"]
     # Distinct transcripts behind the donor side. Derived from the splits, not
     # from the run, so a cached run records the same number as a cold one.
     doc["n_donor_grounding_transcripts"] = len(
@@ -219,6 +241,16 @@ def main(argv: list[str]) -> int:
     doc["subject_turns_sha256"] = turn_sha
     doc["runtime_secs"] = round(time.time() - t0, 1)
     doc["cost_usd"] = 0.0
+
+    # Hard leakage guards, gym.py style, BEFORE anything is written: a tripped
+    # guard must leave no artifact behind for someone to pick up later.
+    for cid, did in sorted(doc["pairs"].items()):
+        check_no_shared_transcripts(by_id[cid], by_id[did],
+                                    load_split(cid), splits[did])
+        check_no_subject_name_in_text(by_id[cid], did, donor_texts[did])
+    print(f"leak guards:  {len(doc['pairs'])} pairs — no shared transcript, "
+          "no subject name in donor text")
+
     write_json(OUT, doc)
 
     # The texts behind every recorded donor, so a reader can check the match
@@ -243,19 +275,28 @@ def main(argv: list[str]) -> int:
                      for e in splits[cid]["grounding"]})
     records = fetch_records(wanted, RAW_JSON)
     for cid in winners:
-        turns = []
+        turns, pieces = [], []
         for entry in splits[cid]["grounding"]:
-            turns.extend(extract_turns(records[entry["transcript_id"]], by_id[cid]))
+            got = extract_turns(records[entry["transcript_id"]], by_id[cid])
+            turns.extend(got)
+            pieces.append(guest_text(got))
         out_dir = donor_dir(cid)
         split = dict(splits[cid])
         split["role"] = "imposter donor (SPEC D7); test cluster is NEVER used"
         write_json(out_dir / "split.json", split)
         n = write_jsonl(out_dir / "grounding_turns.jsonl", turns)
+        # Text equality, not word-count equality: the same count can hide a
+        # different sentence, and the report claims these agree word for word.
+        if join_grounding(pieces) != donor_texts[cid]:
+            raise AssertionError(
+                f"{cid}: the turn file and the text this donor was matched on "
+                "are not the same text")
+        leaked = sorted({t["transcript_id"] for t in turns
+                         if t["transcript_id"] == splits[cid]["test"]["transcript_id"]})
+        if leaked:
+            raise AssertionError(
+                f"{cid}: test transcript {leaked} leaked into grounding turns")
         guest = sum(word_count(t["text"]) for t in turns if t["role"] == "guest")
-        assert guest == word_count(donor_texts[cid]), \
-            f"{cid}: turn file and matched text disagree ({guest} vs matched)"
-        assert all(t["transcript_id"] != splits[cid]["test"]["transcript_id"]
-                   for t in turns), f"{cid}: test transcript leaked into grounding"
         print(f"  donors/{cid}: {n} turns, {guest} guest words")
 
     # ---- the table --------------------------------------------------------

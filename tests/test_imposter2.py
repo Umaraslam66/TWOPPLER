@@ -17,12 +17,15 @@ from doppler.imposter2 import (
     MAX_DF,
     NAME_RATIO,
     WORD_FLOOR,
+    check_no_shared_transcripts,
+    check_no_subject_name_in_text,
     collect_donor_texts,
     cosine,
     donor_sample,
     donor_splits,
     grounding_text,
     guest_text,
+    join_grounding,
     match_donors,
     name_conflict,
     name_tokens,
@@ -30,7 +33,7 @@ from doppler.imposter2 import (
     tfidf_vectors,
     tokenize,
 )
-from doppler.stage2_data import word_count, write_jsonl
+from doppler.stage2_data import chronological_split, word_count, write_jsonl
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -93,6 +96,30 @@ def test_donor_sample_matches_the_documented_derivation():
                  if r["qualifies"] and r["clean"] and not r["ambiguous_identity"]
                  and r["canonical_id"] not in set(dev))
     assert donor_sample(pool, dev, seed=48, n=10) == random.Random(48).sample(ids, 10)
+
+
+def test_donor_sample_agrees_with_t2s_independent_derivation():
+    """The real parity check: T3's sample IS T2's distractor-bank sample.
+
+    Imported, not re-implemented — an inline copy of the derivation would agree
+    with itself on both sides of a divergence and prove nothing. The import is
+    deliberately hard: doppler.distractors is a committed part of Stage 2, and
+    if it stops existing this check must fail loudly rather than skip.
+    """
+    from doppler.distractors import sample_donor_ids
+
+    pool = big_pool(n=80)
+    for dev in ([], ["C00000"], ["C00003", "C00007", "C00011"]):
+        mine = donor_sample(pool, dev, seed=48, n=25)
+        assert mine == list(sample_donor_ids(pool, dev, seed=48, n_donors=25))
+
+    # And prove the check is sensitive: sample() is not shuffle()[:n], the one
+    # divergence that would silently split the pilot's two donor populations.
+    ids = sorted(r["canonical_id"] for r in big_pool(n=80)
+                 if r["qualifies"] and r["clean"] and not r["ambiguous_identity"])
+    shuffled = list(ids)
+    random.Random(48).shuffle(shuffled)
+    assert donor_sample(big_pool(n=80), [], seed=48, n=25) != shuffled[:25]
 
 
 def test_donor_sample_excludes_dev_and_ineligible_ids():
@@ -336,6 +363,72 @@ def test_donor_splits_report_donors_with_no_grounding_side():
     assert "C1" in skipped
 
 
+# --- the two leakage guards -------------------------------------------------
+
+
+def test_shared_raw_transcript_is_fatal():
+    a = make_row("C1", "Jane Doe", transcripts=[
+        tr("NPR-1", "2010-01-01", "cl1"), tr("NPR-2", "2011-01-01", "cl2")])
+    b = make_row("C2", "John Roe", transcripts=[
+        tr("NPR-2", "2011-01-01", "cl9"), tr("NPR-3", "2012-01-01", "cl8")])
+    with pytest.raises(AssertionError, match="same transcript"):
+        check_no_shared_transcripts(a, b)
+
+
+def test_shared_transcript_is_caught_even_when_the_splits_hide_it():
+    """The raw-row check is the strict one: a transcript can sit outside both
+    splits (non-substantive, or a same-date exclusion) and still mean the two
+    people were in one broadcast."""
+    shared = tr("NPR-9", "2009-01-01", "cl0", substantive=False)
+    a = make_row("C1", "Jane Doe", transcripts=[
+        shared, tr("NPR-1", "2010-01-01", "cl1"), tr("NPR-2", "2011-01-01", "cl2")])
+    b = make_row("C2", "John Roe", transcripts=[
+        shared, tr("NPR-3", "2010-01-01", "cl3"), tr("NPR-4", "2011-01-01", "cl4")])
+    with pytest.raises(AssertionError, match="NPR-9"):
+        check_no_shared_transcripts(a, b)
+
+
+def test_disjoint_subjects_pass_both_transcript_checks():
+    a = make_row("C1", "Jane Doe", transcripts=[
+        tr("NPR-1", "2010-01-01", "cl1"), tr("NPR-2", "2011-01-01", "cl2")])
+    b = make_row("C2", "John Roe", transcripts=[
+        tr("NPR-3", "2010-01-01", "cl3"), tr("NPR-4", "2011-01-01", "cl4")])
+    check_no_shared_transcripts(a, b, chronological_split(a),
+                                chronological_split(b))
+
+
+def test_split_overlap_is_fatal_even_with_disjoint_raw_rows():
+    a = make_row("C1", "Jane Doe")
+    b = make_row("C2", "John Roe")
+    split_a = {"grounding": [{"transcript_id": "NPR-1"}],
+               "test": {"transcript_id": "NPR-2"}}
+    split_b = {"grounding": [{"transcript_id": "NPR-1"}],
+               "test": {"transcript_id": "NPR-5"}}
+    with pytest.raises(AssertionError, match="share split transcript"):
+        check_no_shared_transcripts(a, b, split_a, split_b)
+
+
+def test_subject_full_name_in_donor_text_is_fatal():
+    subject = make_row("C1", "Samer Shehata", variants=["Samer Shehata"])
+    text = "the panel agreed with samer shehata about the election"
+    with pytest.raises(AssertionError, match="full name"):
+        check_no_subject_name_in_text(subject, "C2", text)
+
+
+def test_a_single_subject_name_token_in_donor_text_is_fatal():
+    subject = make_row("C1", "Samer Shehata")
+    with pytest.raises(AssertionError, match="name token"):
+        check_no_subject_name_in_text(subject, "C2", "shehata was not there")
+
+
+def test_clean_donor_text_passes_the_name_guard():
+    subject = make_row("C1", "Samer Shehata")
+    check_no_subject_name_in_text(subject, "C2", text_of(BASEBALL, 200))
+    # Particles and initials are not comparable tokens, so they cannot trip it.
+    check_no_subject_name_in_text(make_row("C1", "J. de la Cruz"), "C2",
+                                  "the vote in de la paz was close")
+
+
 def test_collect_donor_texts_streams_one_pass(tmp_path):
     rows = [
         make_row("C1", "Jane Doe", transcripts=[
@@ -352,15 +445,12 @@ def test_collect_donor_texts_streams_one_pass(tmp_path):
     path.write_text(json.dumps(corpus), encoding="utf-8")
 
     texts, meta = collect_donor_texts(["C1", "C2"], rows, raw_path=path,
-                                      guest_words={"C1": {}, "C2": {}},
-                                      keep_turns=["C1"])
+                                      guest_words={"C1": {}, "C2": {}})
     # One transcript serves two donors; the later cluster is each donor's test.
     assert texts == {"C1": "jane says", "C2": "john says"}
     assert meta["n_transcripts_wanted"] == 1 and meta["n_transcripts_read"] == 1
     assert meta["missing_transcripts"] == [] and meta["malformed"] == {}
-    assert [t["role"] for t in meta["turns"]["C1"]["NPR-1"]] == \
-        ["host", "guest", "other"]
-    assert "C2" not in meta["turns"]
+    assert "turns" not in meta      # matched donors' turns come from a later pass
 
 
 # ---------------------------------------------------------------------------
@@ -552,6 +642,48 @@ def test_donor_multiplicity_is_reported():
     assert m["shared_donors"] == ["C00100"]
     assert m["subjects_by_donor"] == {"C00100": ["C00001", "C00002"],
                                       "C00200": ["C00003"]}
+
+
+def test_the_fingerprint_tracks_the_drawn_sample_not_the_surviving_texts():
+    """A donor with no grounding side never reaches donor_texts. The recorded
+    fingerprint must still describe the 200 ids that were DRAWN — that is the
+    list T2 has to agree with."""
+    dev, pool, st, dt = matching_fixture([
+        ("C00100", "Alice Adams", SYRIA, 3000),
+        ("C00200", "Bob Brown", BASEBALL, 3000),
+    ])
+    drawn = ["C00100", "C00200", "C00300"]      # C00300 had no grounding side
+    doc = match(dev, pool, st, dt, donor_ids=drawn)
+    assert doc["n_donor_sample"] == 3 and doc["n_donor_texts"] == 2
+    assert doc["donor_sample_sha256"] == sample_sha256(drawn)
+    assert doc["donor_sample_sha256"] != sample_sha256(dt)
+
+
+def test_donor_text_outside_the_drawn_sample_is_fatal():
+    dev, pool, st, dt = matching_fixture([("C00100", "Alice Adams", SYRIA, 3000)])
+    with pytest.raises(ValueError, match="outside the drawn sample"):
+        match(dev, pool, st, dt, donor_ids=["C00999"])
+
+
+def test_grounding_pieces_join_the_same_way_everywhere():
+    """join_grounding is the single definition of the transcript separator.
+
+    The driver used to spell the join out itself and got it wrong; word counts
+    could not see the difference, which is why the verification compares text.
+    """
+    assert join_grounding(["a", "", "b"]) == "a\n\nb"
+    row = make_row("C1", "Jane Doe", transcripts=[
+        tr("NPR-1", "2010-01-01", "cl1"), tr("NPR-2", "2011-01-01", "cl2"),
+        tr("NPR-3", "2012-01-01", "cl3")])
+    records = {
+        "NPR-1": donor_record("NPR-1", "JANE DOE", ["early words"]),
+        "NPR-2": donor_record("NPR-2", "JANE DOE", ["middle words"]),
+        "NPR-3": donor_record("NPR-3", "JANE DOE", ["test words"]),
+    }
+    from doppler.stage2_data import extract_turns
+    pieces = [guest_text(extract_turns(records[t], row)) for t in ("NPR-1", "NPR-2")]
+    assert join_grounding(pieces) == grounding_text("C1", pool=[row],
+                                                    records=records)
 
 
 def test_recorded_word_counts_use_the_whitespace_proxy():

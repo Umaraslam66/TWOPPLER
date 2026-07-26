@@ -161,6 +161,17 @@ def guest_text(turns) -> str:
                      if t.get("role") == "guest" and (t.get("text") or "").strip())
 
 
+def join_grounding(pieces) -> str:
+    """One subject's per-transcript guest texts into its grounding document.
+
+    The single definition of that join. It used to be spelled out in three
+    places — grounding_text, collect_donor_texts and the driver's verification
+    pass — and the driver's copy quietly used the wrong separator, which word
+    counts could not see and text equality caught immediately.
+    """
+    return "\n\n".join(p for p in pieces if p)
+
+
 def grounding_text(cid: str, pool=None, records=None, split=None,
                    guest_words=None, pilot_dir=PILOT_DIR) -> str:
     """Concatenated guest-role text from one subject's GROUNDING clusters.
@@ -194,7 +205,7 @@ def grounding_text(cid: str, pool=None, records=None, split=None,
             raise KeyError(f"{cid}: grounding transcript "
                            f"{entry['transcript_id']} was not fetched")
         parts.append(guest_text(extract_turns(record, row)))
-    return "\n\n".join(p for p in parts if p)
+    return join_grounding(parts)
 
 
 def _row(pool, cid: str) -> dict:
@@ -225,14 +236,18 @@ def donor_splits(donor_ids, pool, guest_words=None, cache_path=SCAN_CACHE):
 
 
 def collect_donor_texts(donor_ids, pool, raw_path=RAW_JSON, guest_words=None,
-                        cache_path=SCAN_CACHE, keep_turns=()):
+                        cache_path=SCAN_CACHE):
     """Grounding text for every donor, in ONE streaming pass over the corpus.
 
     Returns ``(texts, meta)`` where texts is {cid: grounding text} and meta
     carries the bookkeeping: which donors D2 rejected, which transcripts were
-    read, which records were malformed, and the per-donor turn lists for the
-    ids named in ``keep_turns`` (used to write the matched donors' turn files
-    without a second pass when the caller already knows who it wants).
+    read, and which records were malformed.
+
+    It deliberately does NOT keep turn lists. Only the matched donors need
+    them, and which donors those are is not known until after the match, which
+    is after this function has returned; keeping all 200 donors' turns to cover
+    that would cost hundreds of megabytes to use six of them. The driver takes
+    a second, ~30-transcript pass once it knows the winners.
 
     One transcript can belong to two donors — panels happen — so the wanted map
     is transcript_id -> [donor ids], and each record is decoded once and given
@@ -242,7 +257,6 @@ def collect_donor_texts(donor_ids, pool, raw_path=RAW_JSON, guest_words=None,
 
     splits, skipped = donor_splits(donor_ids, pool, guest_words, cache_path)
     by_id = {r["canonical_id"]: r for r in pool}
-    keep = set(keep_turns)
 
     wanted: dict[str, list[str]] = {}
     for cid, split in splits.items():
@@ -250,7 +264,6 @@ def collect_donor_texts(donor_ids, pool, raw_path=RAW_JSON, guest_words=None,
             wanted.setdefault(entry["transcript_id"], []).append(cid)
 
     pieces: dict[str, dict[str, str]] = {cid: {} for cid in splits}
-    turns_out: dict[str, dict[str, list]] = {cid: {} for cid in keep}
     malformed: dict[str, str] = {}
     decoder = json.JSONDecoder()
     seen = set()
@@ -268,15 +281,12 @@ def collect_donor_texts(donor_ids, pool, raw_path=RAW_JSON, guest_words=None,
                 malformed[f"{cid}:{tid}"] = str(exc)
                 continue
             pieces[cid][tid] = guest_text(turns)
-            if cid in keep:
-                turns_out[cid][tid] = turns
 
     missing = set(wanted) - seen
     texts = {}
     for cid, split in splits.items():
-        ordered = [pieces[cid].get(e["transcript_id"], "")
-                   for e in split["grounding"]]
-        texts[cid] = "\n\n".join(p for p in ordered if p)
+        texts[cid] = join_grounding(pieces[cid].get(e["transcript_id"], "")
+                                    for e in split["grounding"])
 
     meta = {
         "splits": splits,
@@ -285,7 +295,6 @@ def collect_donor_texts(donor_ids, pool, raw_path=RAW_JSON, guest_words=None,
         "n_transcripts_read": len(seen),
         "missing_transcripts": sorted(missing),
         "malformed": malformed,
-        "turns": turns_out,
     }
     return texts, meta
 
@@ -339,6 +348,83 @@ def name_conflict(row_a: dict, row_b: dict, ratio: float = NAME_RATIO):
     if best >= ratio:
         return True, f"difflib ratio {best:.3f} between {pair[0]!r} and {pair[1]!r}"
     return False, ""
+
+
+# ---------------------------------------------------------------------------
+# Leakage guards (hard asserts, gym.py style — a tripped guard stops the run)
+# ---------------------------------------------------------------------------
+
+def check_no_shared_transcripts(subject_row: dict, donor_row: dict,
+                                subject_split: dict | None = None,
+                                donor_split: dict | None = None) -> None:
+    """The subject and its imposter donor must never have been in the same room.
+
+    A shared transcript means the two people appeared in one broadcast. The
+    donor's grounding would then carry the subject's interview context — the
+    same event the twin arm is grounded on, or worse the test event — and the
+    imposter arm would stop being an independent control.
+
+    Checked twice over, because the two catch different things: the raw pool
+    rows (EVERY transcript either person appears in, substantive or not, test
+    or not — the strict version) and, when given, the D2 splits actually used.
+    """
+    a = {e["transcript_id"] for e in subject_row.get("transcripts", [])}
+    b = {e["transcript_id"] for e in donor_row.get("transcripts", [])}
+    shared = sorted(a & b)
+    if shared:
+        raise AssertionError(
+            f"{subject_row['canonical_id']} and donor "
+            f"{donor_row['canonical_id']} appear in the same transcript(s): "
+            f"{shared[:5]}")
+    if subject_split is not None and donor_split is not None:
+        sa = {e["transcript_id"] for e in subject_split["grounding"]}
+        sa.add(subject_split["test"]["transcript_id"])
+        sb = {e["transcript_id"] for e in donor_split["grounding"]}
+        sb.add(donor_split["test"]["transcript_id"])
+        overlap = sorted(sa & sb)
+        if overlap:
+            raise AssertionError(
+                f"{subject_row['canonical_id']} and donor "
+                f"{donor_row['canonical_id']} share split transcript(s): "
+                f"{overlap[:5]}")
+
+
+def check_no_subject_name_in_text(subject_row: dict, donor_id: str,
+                                  text: str) -> None:
+    """No trace of the subject's name may sit in the donor's grounding text.
+
+    The imposter arm renders the donor's excerpts with the DONOR's name
+    variants replaced by "GUEST" (D8). Nothing redacts the SUBJECT's name from
+    that text, so if the donor's transcripts happen to name the subject, the
+    redacted imposter prompt would hand the model the very identity the arm is
+    supposed to withhold.
+
+    Two levels, both fatal, distinguished in the message:
+
+    - a full name key of the subject appearing as a contiguous run of tokens
+      ("bassir pour") — an unambiguous identity leak;
+    - a single comparable token ("shehata") — weaker evidence, since a common
+      given name can hit by coincidence, but a coincidence is exactly the thing
+      a human should adjudicate rather than a pipeline wave through.
+    """
+    tokens = tokenize(text)
+    present = set(tokens)
+    for key in sorted(name_keys(subject_row)):
+        needle = key.split()
+        n = len(needle)
+        if n and any(tokens[i:i + n] == needle
+                     for i in range(len(tokens) - n + 1)):
+            raise AssertionError(
+                f"donor {donor_id}'s grounding text contains "
+                f"{subject_row['canonical_id']}'s full name {key!r}")
+    hits = sorted(name_tokens(subject_row) & present)
+    if hits:
+        raise AssertionError(
+            f"donor {donor_id}'s grounding text contains name token(s) "
+            f"{hits} of {subject_row['canonical_id']} "
+            f"({subject_row.get('canonical_name')!r}) — if this is a "
+            "coincidental common given name, adjudicate it explicitly rather "
+            "than relaxing the guard")
 
 
 # ---------------------------------------------------------------------------
@@ -414,7 +500,7 @@ def cosine(a: dict, b: dict) -> float:
 def match_donors(dev_subjects, pool, subject_texts: dict, donor_texts: dict,
                  word_floor: int = WORD_FLOOR, name_ratio: float = NAME_RATIO,
                  top_k: int = 5, generated_at: str | None = None,
-                 max_df: float = MAX_DF) -> dict:
+                 max_df: float = MAX_DF, donor_ids=None) -> dict:
     """SPEC D7. Return the results/stage2_pilot/imposter_pairs.json document.
 
     ``dev_subjects`` is dev_subjects.json's ``subjects`` list (only
@@ -434,6 +520,16 @@ def match_donors(dev_subjects, pool, subject_texts: dict, donor_texts: dict,
     leaked = sorted(set(dev_ids) & set(donor_texts))
     if leaked:
         raise ValueError(f"dev subjects in the donor pool: {leaked}")
+    # The recorded fingerprint must identify the DRAWN sample — the thing T2
+    # has to agree with — not whatever subset survived D2 and came back with
+    # text. They are the same 200 ids today; they would not be if a donor ever
+    # lost its grounding side, and that is exactly when a fingerprint that
+    # silently tracked the survivors would stop being comparable.
+    sample = sorted(donor_ids if donor_ids is not None else donor_texts)
+    if donor_ids is not None:
+        stray = sorted(set(donor_texts) - set(sample))
+        if stray:
+            raise ValueError(f"donor texts outside the drawn sample: {stray[:5]}")
 
     donor_words = {cid: word_count(t) for cid, t in donor_texts.items()}
     eligible = sorted(cid for cid, w in donor_words.items() if w >= word_floor)
@@ -489,8 +585,9 @@ def match_donors(dev_subjects, pool, subject_texts: dict, donor_texts: dict,
         "method": METHOD,
         "generated_at": generated_at,
         "donor_seed": DONOR_SEED,
-        "n_donor_sample": len(donor_texts),
-        "donor_sample_sha256": sample_sha256(donor_texts),
+        "n_donor_sample": len(sample),
+        "donor_sample_sha256": sample_sha256(sample),
+        "n_donor_texts": len(donor_texts),
         "word_floor": word_floor,
         "name_ratio": name_ratio,
         "max_df": max_df,
@@ -519,7 +616,8 @@ __all__ = [
     "DONOR_SEED", "N_DONORS", "WORD_FLOOR", "NAME_RATIO", "MAX_DF", "METHOD",
     "PARTICLES",
     "donor_sample", "sample_sha256", "guest_text", "grounding_text",
-    "donor_splits", "collect_donor_texts",
+    "donor_splits", "collect_donor_texts", "join_grounding",
+    "check_no_shared_transcripts", "check_no_subject_name_in_text",
     "name_strings", "name_keys", "name_tokens", "name_conflict",
     "tokenize", "tfidf_vectors", "cosine", "match_donors",
     "donor_text_path", "donor_dir",
