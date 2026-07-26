@@ -70,8 +70,11 @@ SPLIT_RULE = (
     "broken by lexicographically smallest transcript_id. test = the cluster "
     "with the latest date; a tie for latest is broken by representative "
     "transcript_id lexicographic order, largest wins. grounding = every "
-    "cluster dated strictly earlier. Any other cluster sharing the test date "
-    "is excluded entirely (same-event leak guard)."
+    "cluster ALL of whose member transcripts are dated strictly before the "
+    "test date. Every other cluster is excluded entirely: one sharing the test "
+    "date, and one whose cluster date is earlier but which has any member "
+    "transcript aired on or after the test date (same-event leak guard, "
+    "hardened v1.2 to test every member rather than the cluster minimum)."
 )
 
 
@@ -344,6 +347,8 @@ def draw_dev_subjects(pool: list[dict], seed: int = DEV_SEED,
         return "long-tail" if by_id[cid]["wiki_status"] == "long-tail" else "wiki"
 
     quota = {"long-tail": N_LONGTAIL, "wiki": N_WIKI}
+    for cid in burned_ids:
+        stratum_of(cid)              # validate: an unknown id is a typo, not a burn
     for cid in qa_reasons:
         quota[stratum_of(cid)] += 1
 
@@ -461,6 +466,7 @@ def chronological_split(subject_row: dict, guest_words: dict | None = None,
             "program": rep["program"],
             "title": titles.get(rep["transcript_id"], ""),
             "n_transcripts_in_cluster": len(members),
+            "member_dates": sorted({e["date"] for e in members}),
             "guest_words": int(guest_words.get(rep["transcript_id"], 0)),
         }
 
@@ -470,8 +476,21 @@ def chronological_split(subject_row: dict, guest_words: dict | None = None,
                        key=lambda e: e["transcript_id"])
     test = at_latest[-1]                       # tie: largest rep id wins
     excluded = at_latest[:-1]
-    grounding = sorted((e for e in built if e["date"] < latest),
-                       key=lambda e: (e["date"], e["transcript_id"]))
+
+    # D2 hardening (SPEC v1.2): a cluster whose date is earlier still leaks if
+    # ANY of its member transcripts was aired on or after the test date. Test
+    # every member, not just the cluster minimum.
+    grounding, late_members = [], []
+    for e in built:
+        if e is test or e in excluded:
+            continue
+        if max(e["member_dates"]) >= test["date"]:
+            late_members.append(e)
+        else:
+            grounding.append(e)
+    grounding.sort(key=lambda e: (e["date"], e["transcript_id"]))
+    excluded = sorted(excluded + late_members,
+                      key=lambda e: (e["date"], e["transcript_id"]))
 
     if not grounding:
         raise ValueError(f"{subject_row['canonical_id']}: no grounding "
@@ -493,49 +512,34 @@ def chronological_split(subject_row: dict, guest_words: dict | None = None,
 
 _PUNCT_RE = re.compile(r"[^\w\s]", re.UNICODE)
 
-
-def name_key(name: str) -> str:
-    """Comparison key for speaker names: honorific-free, punctuation-free, casefolded."""
-    if not name:
-        return ""
-    _, normalized, _ = classify_speaker(name)
-    base = normalized if normalized else name
-    base = _PUNCT_RE.sub(" ", base)
-    return re.sub(r"\s+", " ", base).strip().casefold()
+# The fixed list of explicit role words (SPEC D3.1-r2(b)). Same words the
+# origin classifier calls staff, so "registers as a person" and "is staff"
+# cannot disagree. Punctuation shape alone -- "(", ",", " - " -- never counts.
+_ROLE_WORD_RE = STAFF_ROLE_RE
 
 
-def subject_name_keys(subject_row: dict) -> set[str]:
-    """Every accepted spelling of the subject, as comparison keys."""
-    names = [subject_row["canonical_name"], *subject_row.get("variants", [])]
-    return {k for k in (name_key(n) for n in names) if k}
+def _drop_noise_dot_tokens(name: str) -> str:
+    """SPEC D3.1-r2(a): drop non-honorific tokens ending in ".".
 
+    MediaSum's CNN transcripts fuse a trailing fragment of the previous line
+    into the speaker label: "UNMOVIC. ROTH", "UN. GREENSTOCK", "AIDS. BASSIR
+    POUR". Those leading tokens are corpus noise, not first names, and left in
+    they invent a new person for every fragment.
 
-def _token_key(token: str) -> str:
-    """Comparison key for a single name token."""
-    return re.sub(r"\s+", " ", _PUNCT_RE.sub(" ", token or "")).strip().casefold()
-
-
-# A label "carries a role descriptor" when it appends an affiliation or a role
-# to the name: a parenthetical/bracketed block, anything after the first comma,
-# a " - "/" : " separator, or one of the staff role words.
-_ROLE_SEP_RE = re.compile(r"[,(\[]")
-
-
-def _name_part(raw: str) -> str:
-    """The name portion of a raw speaker label.
-
-    Mirrors the stripping classify_speaker does — parenthetical affiliation,
-    everything after the first comma or a " - " / " : " separator, then leading
-    honorifics — but WITHOUT its staff/anon short-circuits, because D3.1 has to
-    read a surname out of "RICHARD ROTH, CNN ANCHOR", a label classify_speaker
-    answers with no name at all.
+    Honorifics survive ("MR.", "DR.", "AMB."), and so do single-letter
+    initials ("R. Harris"), which are real name material. Only a multi-letter
+    non-honorific token ending in "." is treated as noise.
     """
-    if not raw:
-        return ""
-    name = _PAREN_RE.sub(" ", raw.strip())
-    name = name.split(",")[0]
-    name = _DASH_SPLIT_RE.split(name)[0]
-    name = name.strip().strip(".").strip()
+    kept = []
+    for token in name.split():
+        stem = token.rstrip(".").upper()
+        if token.endswith(".") and len(stem) >= 2 and stem not in HONORIFIC:
+            continue
+        kept.append(token)
+    return " ".join(kept)
+
+
+def _strip_honorifics(name: str) -> str:
     changed = True
     while changed and name:
         changed = False
@@ -553,76 +557,184 @@ def _name_part(raw: str) -> str:
         if parts[0].rstrip(".").upper() in HONORIFIC and len(parts) > 1:
             name = parts[1].strip()
             changed = True
+    return name
+
+
+def _name_part(raw: str) -> str:
+    """The cleaned name portion of a raw speaker label (SPEC D3.1-r2(a)).
+
+    Mirrors the stripping classify_speaker does -- parenthetical/bracketed
+    blocks, everything after the first comma or a " - " / " : " separator, then
+    leading honorifics -- but WITHOUT its staff/anon short-circuits, because
+    D3.1 has to read a surname out of "RICHARD ROTH, CNN ANCHOR", a label
+    classify_speaker answers with no name at all. On top of that it drops the
+    noise dot-tokens described above.
+
+    Note that the parenthetical strip removes stage directions as a
+    side-effect: "ROTH (voice-over)" and "ROTH (on camera)" both reduce to
+    "ROTH", so they are the same speaker and not three different people.
+    """
+    if not raw:
+        return ""
+    name = _PAREN_RE.sub(" ", raw.strip())
+    name = name.split(",")[0]
+    name = _DASH_SPLIT_RE.split(name)[0]
+    # The noise drop runs before any trailing-dot trimming, so that
+    # "DIPLOMATIC LICENSE." loses the whole noise token rather than just its
+    # dot and then passing as a two-token name.
+    name = _drop_noise_dot_tokens(name.strip())
+    name = _strip_honorifics(name.strip(" .,-"))
     return re.sub(r"\s+", " ", name).strip(" .,-")
 
 
-def _label_shape(raw: str) -> tuple[list[str], bool]:
-    """(name tokens, carries a role descriptor) for one raw speaker label."""
-    tokens = _name_part(raw).split()
-    up = (raw or "").upper()
-    has_role = bool(STAFF_ROLE_RE.search(up)) or bool(_ROLE_SEP_RE.search(raw or "")) \
-        or bool(_DASH_SPLIT_RE.search(raw or ""))
-    return tokens, has_role
+def label_tokens(raw: str) -> list[str]:
+    """The cleaned, comparable name tokens of a raw speaker label."""
+    return [t for t in (_token_key(t) for t in _name_part(raw).split()) if t]
+
+
+def _token_key(token: str) -> str:
+    """Comparison key for a single name token."""
+    return re.sub(r"\s+", " ", _PUNCT_RE.sub(" ", token or "")).strip().casefold()
+
+
+def name_key(name: str) -> str:
+    """Comparison key for a speaker name: honorific-free, punctuation-free,
+    casefolded, corpus-noise-free."""
+    return " ".join(label_tokens(name))
+
+
+def subject_name_keys(subject_row: dict) -> set[str]:
+    """Every accepted spelling of the subject, as comparison keys."""
+    names = [subject_row["canonical_name"], *subject_row.get("variants", [])]
+    return {k for k in (name_key(n) for n in names) if k}
+
+
+def subject_token_lists(subject_row: dict) -> list[list[str]]:
+    """Every accepted spelling of the subject, as token lists."""
+    names = [subject_row["canonical_name"], *subject_row.get("variants", [])]
+    out, seen = [], set()
+    for n in names:
+        toks = label_tokens(n)
+        key = " ".join(toks)
+        if toks and key not in seen:
+            seen.add(key)
+            out.append(toks)
+    return out
+
+
+def _contains_run(needle: list[str], haystack: list[str]) -> bool:
+    """True when `needle` appears as a contiguous run inside `haystack`."""
+    n = len(needle)
+    if not n or n > len(haystack):
+        return False
+    return any(haystack[i:i + n] == needle for i in range(len(haystack) - n + 1))
+
+
+def name_matches_subject(tokens: list[str], subject_tokens: list[list[str]]) -> bool:
+    """SPEC D3.1-r2(d): token-subsequence containment, not key equality.
+
+    A label matches the subject when the subject's tokens appear as a
+    contiguous run inside the label's tokens or vice versa, sharing at least
+    two tokens. That is what makes 'AFSANE BASSIR POUR, "LE MONDE"' the same
+    person as the canonical "Bassir Pour": the corpus writes the full name on
+    the introduction line and the short one everywhere else.
+
+    Exact equality still matches, so a one-token canonical name (which can
+    never reach the two-token floor) is not silently unmatchable.
+    """
+    if not tokens:
+        return False
+    for subject in subject_tokens:
+        if tokens == subject:
+            return True
+        if len(subject) >= 2 and _contains_run(subject, tokens):
+            return True
+        if len(tokens) >= 2 and _contains_run(tokens, subject):
+            return True
+    return False
 
 
 def surname_registry(speaker_labels) -> dict[str, str]:
-    """SPEC D3.1. {surname key: the full label that surname belongs to}.
+    """SPEC D3.1-r2(b)+(c). {surname key: the full label it belongs to}.
 
-    A label is registered when it carries a role descriptor or a multi-token
-    name — i.e. when it introduces a person properly. Anonymous and generic
-    labels ("UNIDENTIFIED MAN", "MALE VOICE") are never registered.
+    Registration (b): a label registers only if its cleaned name part has two
+    or more tokens, or the label carries an explicit role word from the fixed
+    list. Punctuation shape never registers, which is what keeps
+    "ROTH (voice-over)" from inventing a second Roth. Anonymous and generic
+    labels never register either.
 
-    A surname is only usable if exactly one distinct person registered it;
-    when two speakers share a surname it is dropped from the registry and the
-    bare label stays unresolved. Where one person registered several spellings,
-    the first one seen in the transcript is the representative.
+    Merge (c): a registered single-token key equal to the last token of a
+    registered multi-token name is the SAME person, not an ambiguity. Real
+    ambiguity is two DIFFERENT multi-token names sharing a surname, and only
+    that drops the surname from the registry.
 
-    The registry is built per transcript and is never shared between
-    transcripts — a name introduced in one interview says nothing about a bare
-    surname in another.
+    Representative: among the labels that registered one person, the first that
+    carries a role word wins, else the first seen. Preferring the role-bearing
+    spelling matters -- it is the only one that tells the classifier this
+    person is staff.
+
+    The registry is built per transcript and never shared between transcripts:
+    a name introduced in one interview says nothing about a bare surname in
+    another.
     """
-    by_surname: dict[str, dict[str, str]] = {}
+    regs = []       # (surname, name_key, is_multi, has_role, raw)
     for raw in speaker_labels:
         if classify_speaker(raw)[0] == "anon":
             continue
-        tokens, has_role = _label_shape(raw)
-        if not tokens or (len(tokens) < 2 and not has_role):
+        tokens = label_tokens(raw)
+        if not tokens:
             continue
-        surname = _token_key(tokens[-1])
-        if not surname:
-            continue
-        by_surname.setdefault(surname, {}).setdefault(
-            name_key(" ".join(tokens)), raw)
-    return {s: next(iter(v.values()))
-            for s, v in by_surname.items() if len(v) == 1}
+        has_role = bool(_ROLE_WORD_RE.search((raw or "").upper()))
+        if len(tokens) >= 2:
+            regs.append((tokens[-1], " ".join(tokens), True, has_role, raw))
+        elif has_role:
+            regs.append((tokens[0], tokens[0], False, True, raw))
+
+    out: dict[str, str] = {}
+    for surname in dict.fromkeys(r[0] for r in regs):
+        mine = [r for r in regs if r[0] == surname]
+        multi_names = list(dict.fromkeys(r[1] for r in mine if r[2]))
+        if len(multi_names) > 1:
+            continue                                    # genuine ambiguity
+        # At most one multi-token name is left, so every registration under
+        # this surname is the same person (the merge rule) and any of them may
+        # represent it. Prefer one that carries a role word: it is the only
+        # spelling that tells the classifier this person is staff.
+        out[surname] = next((r[4] for r in mine if r[3]), mine[0][4])
+    return out
 
 
 def extract_turns(record: dict, subject_row: dict) -> list[dict]:
-    """SPEC D3 + D3.1. One dict per utterance: transcript_id, turn_idx, role,
-    speaker_label, resolved_label, text.
+    """SPEC D3 + D3.1-r2. One dict per utterance: transcript_id, turn_idx,
+    role, speaker_label, resolved_label, text.
 
-    role is "guest" when the speaker label resolves to the subject
-    (canonical_name or any variant, case-insensitive and honorific-tolerant),
-    "host" when classify_speaker calls the label staff (host/anchor/
-    correspondent/reporter/commentator/byline), "other" otherwise —
-    anonymous voices, soundbites and third-party guests.
+    role is "guest" when the speaker label resolves to the subject (the
+    canonical name or any variant, matched by token containment, case- and
+    honorific-insensitive), "host" when classify_speaker calls the label staff
+    (host/anchor/correspondent/reporter/commentator/byline), "other" otherwise
+    -- anonymous voices, soundbites and third-party guests.
 
-    D3.1: transcripts routinely introduce a speaker once in full
-    ("RICHARD ROTH, CNN ANCHOR") and then use a bare surname ("ROTH") for
-    every later turn. Before roles are assigned, a bare-surname label is
-    replaced by the full label registered for that surname earlier in the SAME
-    transcript, when exactly one person registered it. This applies to hosts
-    and to the subject's own turns alike. `resolved_label` records the
-    substitution and is None when the raw label was used as-is;
-    `speaker_label` is always the raw label from the corpus.
+    D3.1-r2: transcripts introduce a speaker once in full ("RICHARD ROTH,
+    DIPLOMATIC LICENSE") and then use a bare surname ("ROTH", "ROTH
+    (voice-over)") for every later turn. Before roles are assigned, a
+    bare-surname label is replaced by the full label registered for that
+    surname in the SAME transcript. This applies to hosts and to the subject's
+    own turns alike. `resolved_label` records the substitution and is None when
+    the raw label was used as-is; `speaker_label` is always the raw corpus
+    label.
 
-    Note the one place this differs from a literal reading of D3: a label that
-    carries a staff marker ("ROBERT HARRIS, host") is classified staff by
-    classify_speaker, which returns no name, so it can never match the subject
-    and is labelled "host". That is deliberate — a same-named host is an
-    identity collision, not the subject speaking.
+    Two known limits, both inherited from the origin classifier and accepted
+    for the pilot:
+    - A label carrying a staff marker ("ROBERT HARRIS, host") is staff to
+      classify_speaker, which returns no name, so it can never match the
+      subject and is labelled "host". A same-named host is an identity
+      collision, not the subject speaking.
+    - A named correspondent appearing as a panellist ("ANTHONY SHADID,
+      NEW YORK TIMES CORRESPONDENT") is also staff, so it reads as "host"
+      even when it is really a third guest. This inflates host turns on
+      panel shows and is documented rather than fixed.
     """
-    keys = subject_name_keys(subject_row)
+    subject_tokens = subject_token_lists(subject_row)
     tid = record.get("id")
     utts = record.get("utt") or []
     speakers = record.get("speaker") or []
@@ -634,13 +746,15 @@ def extract_turns(record: dict, subject_row: dict) -> list[dict]:
     turns = []
     for idx, (label, text) in enumerate(zip(speakers, utts)):
         effective, resolved = label, None
-        tokens, has_role = _label_shape(label)
+        tokens = label_tokens(label)
+        has_role = bool(_ROLE_WORD_RE.search((label or "").upper()))
         if len(tokens) == 1 and not has_role:
-            full = registry.get(_token_key(tokens[0]))
+            full = registry.get(tokens[0])
             if full is not None and full != label:
                 effective, resolved = full, full
-        kind, normalized, _ = classify_speaker(effective)
-        if normalized is not None and name_key(normalized) in keys:
+                tokens = label_tokens(full)
+        kind, _, _ = classify_speaker(effective)
+        if kind == "guest" and name_matches_subject(tokens, subject_tokens):
             role = "guest"
         elif kind == "staff":
             role = "host"
@@ -858,8 +972,8 @@ __all__ = [
     "DEV_SEED", "DRAW_RULE", "SPLIT_RULE",
     "classify_speaker", "parse_transcripts", "load_pool", "eligible_subjects",
     "shuffled_eligible_ids", "draw_dev_subjects", "chronological_split",
-    "name_key", "subject_name_keys", "surname_registry", "extract_turns",
-    "word_count",
+    "name_key", "subject_name_keys", "subject_token_lists", "label_tokens",
+    "name_matches_subject", "surname_registry", "extract_turns", "word_count",
     "fetch_records", "iter_wanted_raw", "load_guest_words", "load_titles",
     "subject_dir", "write_jsonl", "read_jsonl", "write_json",
     "load_dev_subjects", "load_split",

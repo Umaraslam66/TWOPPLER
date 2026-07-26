@@ -299,6 +299,15 @@ def test_burned_for_qa_rejects_an_ineligible_id(tmp_path):
         S.draw_dev_subjects(pool, burned_for_qa=["C99999"], drawn_at="x")
 
 
+def test_burned_rejects_an_unknown_id(tmp_path):
+    """A typo in the burn list must not silently burn nothing."""
+    pool = S.load_pool(write_pool(tmp_path, big_pool()))
+    with pytest.raises(ValueError, match="not an eligible subject"):
+        S.draw_dev_subjects(pool, burned=["C99999"], drawn_at="x")
+    with pytest.raises(ValueError, match="not an eligible subject"):
+        S.draw_dev_subjects(pool, burned=["c00000"], drawn_at="x")   # wrong case
+
+
 def test_drop_and_retain_together(tmp_path):
     """One stratum losing a subject and another gaining one do not interfere."""
     pool = S.load_pool(write_pool(tmp_path, big_pool()))
@@ -434,6 +443,48 @@ def test_split_titles_are_filled_when_supplied():
     split = S.chronological_split(row, titles={"NPR-2": "The Last One"})
     assert split["test"]["title"] == "The Last One"
     assert split["grounding"][0]["title"] == ""
+
+
+def test_split_excludes_a_cluster_with_any_member_on_or_after_the_test_date():
+    """SPEC D2 hardening v1.2: test every member date, not the cluster minimum.
+
+    cl2's cluster date is 2002-02-02, safely early, but one of its re-airings
+    went out on the test date itself — that is the same-event leak the guard
+    exists for.
+    """
+    row = subject(
+        "NPR-1|2001-01-01|Prog A|cl1|S;"
+        "NPR-2|2002-02-02|Prog B|cl2|S;"
+        "NPR-3|2005-05-05|Prog B rerun|cl2|S;"
+        "NPR-9|2005-05-05|Prog C|cl3|S")
+    split = S.chronological_split(row, guest_words={"NPR-2": 90, "NPR-3": 10})
+    assert split["test"]["transcript_id"] == "NPR-9"
+    assert [g["cluster_id"] for g in split["grounding"]] == ["cl1"]
+    assert "cl2" in [e["cluster_id"] for e in split["excluded_same_date"]]
+
+
+def test_split_excludes_a_cluster_with_a_member_after_the_test_date():
+    row = subject(
+        "NPR-1|2001-01-01|Prog A|cl1|S;"
+        "NPR-2|2002-02-02|Prog B|cl2|S;"
+        "NPR-3|2009-09-09|Prog B rerun|cl2|S;"
+        "NPR-9|2005-05-05|Prog C|cl3|S")
+    split = S.chronological_split(row, guest_words={"NPR-2": 90, "NPR-3": 10})
+    assert split["test"]["transcript_id"] == "NPR-9"
+    assert [g["cluster_id"] for g in split["grounding"]] == ["cl1"]
+    assert [e["cluster_id"] for e in split["excluded_same_date"]] == ["cl2"]
+
+
+def test_split_records_member_dates():
+    row = subject(
+        "NPR-1|2001-01-01|Prog A|cl1|S;"
+        "NPR-2|2002-02-02|Prog B|cl2|S;"
+        "NPR-3|2002-02-05|Prog B rerun|cl2|S;"
+        "NPR-9|2005-05-05|Prog C|cl3|S")
+    split = S.chronological_split(row, guest_words={"NPR-2": 90, "NPR-3": 10})
+    cl2 = next(g for g in split["grounding"] if g["cluster_id"] == "cl2")
+    assert cl2["member_dates"] == ["2002-02-02", "2002-02-05"]
+    assert cl2["date"] == "2002-02-02"
 
 
 def test_split_requires_grounding():
@@ -579,9 +630,79 @@ def test_registry_single_token_with_role_descriptor_registers():
     assert reg == {"roth": "ROTH, CNN ANCHOR"}
 
 
-def test_registry_same_person_two_spellings_is_not_ambiguous():
-    reg = S.surname_registry(["RICHARD ROTH, CNN ANCHOR", "Mr. Richard Roth"])
-    assert reg["roth"] == "RICHARD ROTH, CNN ANCHOR"   # first spelling wins
+def test_registry_the_real_cnn_roth_collision():
+    """The corpus shapes that broke D3.1-r1, taken from CNN-3812 verbatim.
+
+    "ROTH (voice-over)" is a stage direction, "UNMOVIC. ROTH" and
+    "UN. GREENSTOCK" are fused fragments of the previous line. None of them is
+    a person, and r1 counted all of them as one, which poisoned the surname
+    and left every bare "ROTH" unresolved.
+    """
+    labels = [
+        "RICHARD ROTH, DIPLOMATIC LICENSE", "ROTH", "ROTH (voice-over)",
+        "ROTH (on camera)", "UNMOVIC. ROTH", "UN. ROTH",
+        "JEREMY GREENSTOCK, BRITISH AMB. TO UN", "UN. GREENSTOCK",
+        "GREENSTOCK", "UNMOVIC. (voice-over)",
+        "DIPLOMATIC LICENSE. (voice-over)",
+    ]
+    reg = S.surname_registry(labels)
+    assert reg["roth"] == "RICHARD ROTH, DIPLOMATIC LICENSE"
+    assert reg["greenstock"] == "JEREMY GREENSTOCK, BRITISH AMB. TO UN"
+    # The noise never invents a person.
+    assert "unmovic" not in reg and "un" not in reg and "license" not in reg
+    assert "diplomatic" not in reg
+
+
+def test_stage_directions_and_fused_fragments_all_resolve():
+    row = subject("CNN-1|2000-03-04|P|cl1|S", name="Bassir Pour")
+    rec = record("CNN-1",
+                 speakers=["RICHARD ROTH, DIPLOMATIC LICENSE", "ROTH",
+                           "ROTH (voice-over)", "UNMOVIC. ROTH", "UN. ROTH"],
+                 utts=["a", "b", "c", "d", "e"])
+    turns = S.extract_turns(rec, row)
+    assert all(t["resolved_label"] == "RICHARD ROTH, DIPLOMATIC LICENSE"
+               for t in turns[1:]), [t["resolved_label"] for t in turns]
+    assert turns[0]["resolved_label"] is None
+
+
+def test_name_part_drops_noise_dot_tokens_but_keeps_titles_and_initials():
+    assert S.label_tokens("UNMOVIC. ROTH") == ["roth"]
+    assert S.label_tokens("UN. GREENSTOCK") == ["greenstock"]
+    assert S.label_tokens("AIDS. BASSIR POUR") == ["bassir", "pour"]
+    assert S.label_tokens("DIPLOMATIC LICENSE. (voice-over)") == ["diplomatic"]
+    # Honorifics survive the noise drop (and are then stripped as honorifics).
+    assert S.label_tokens("MR. BOB MEADOWS") == ["bob", "meadows"]
+    assert S.label_tokens("MS. ANN LEE") == ["ann", "lee"]
+    assert S.label_tokens("DR. FREDERIC HOF") == ["frederic", "hof"]
+    assert S.label_tokens("AMB. ABDALLAH BAALI") == ["abdallah", "baali"]
+    # A single-letter initial is name material, not noise.
+    assert S.label_tokens("R. Harris") == ["r", "harris"]
+
+
+def test_punctuation_shape_alone_never_registers():
+    """SPEC D3.1-r2(b): "(", "," and dashes are not role descriptors."""
+    assert S.surname_registry(["ROTH (voice-over)"]) == {}
+    assert S.surname_registry(["ROTH, LE MONDE"]) == {}
+    assert S.surname_registry(["ROTH - CNN"]) == {}
+    # An explicit role word does register a single-token name.
+    assert S.surname_registry(["ROTH, CNN ANCHOR"]) == {"roth": "ROTH, CNN ANCHOR"}
+
+
+def test_single_token_registration_merges_into_the_multi_token_one():
+    """SPEC D3.1-r2(c): same surname, one person, not an ambiguity."""
+    reg = S.surname_registry(["ROTH, CNN ANCHOR", "RICHARD ROTH, DIPLOMATIC LICENSE"])
+    assert reg["roth"] == "ROTH, CNN ANCHOR"      # the role-bearing label wins
+
+
+def test_registry_prefers_the_role_bearing_spelling():
+    reg = S.surname_registry(["RICHARD ROTH, DIPLOMATIC LICENSE",
+                              "RICHARD ROTH, CNN ANCHOR"])
+    assert reg["roth"] == "RICHARD ROTH, CNN ANCHOR"
+
+
+def test_two_different_multi_token_names_are_a_real_ambiguity():
+    reg = S.surname_registry(["ROBERT HARRIS", "JANE HARRIS, CNN ANCHOR"])
+    assert "harris" not in reg
 
 
 def test_resolution_does_not_touch_labels_that_carry_a_role():
@@ -591,6 +712,51 @@ def test_resolution_does_not_touch_labels_that_carry_a_role():
     turns = S.extract_turns(rec, row)
     assert [t["role"] for t in turns] == ["guest", "host"]
     assert turns[1]["resolved_label"] is None
+
+
+# ---------------------------------------------------------------------------
+# D3.1-r2(d) — guest matching by token containment
+# ---------------------------------------------------------------------------
+
+def test_guest_matching_is_token_containment():
+    """The corpus writes the full name on the intro line and the short one
+    everywhere else; canonical "Bassir Pour" must match both."""
+    row = subject("CNN-1|2000-03-04|P|cl1|S", name="Bassir Pour")
+    rec = record("CNN-1",
+                 speakers=['AFSANE BASSIR POUR, "LE MONDE"', "BASSIR POUR",
+                           "UN. BASSIR POUR", "AIDS. BASSIR POUR",
+                           "I. BASSIR POUR", "JAMES BONE, TIMES OF LONDON"],
+                 utts=["a", "b", "c", "d", "e", "f"])
+    turns = S.extract_turns(rec, row)
+    assert [t["role"] for t in turns] == \
+        ["guest", "guest", "guest", "guest", "guest", "other"]
+
+
+def test_containment_needs_two_shared_tokens():
+    row = subject("NPR-1|2001-01-01|P|cl1|S", name="Ann Lee")
+    rec = record("NPR-1", ["JOHN LEE", "ANN LEE", "LEE HARVEY OSWALD"],
+                 ["a", "b", "c"])
+    assert [t["role"] for t in S.extract_turns(rec, row)] == \
+        ["other", "guest", "other"]
+
+
+def test_containment_matches_in_both_directions():
+    subj = [["bassir", "pour"]]
+    assert S.name_matches_subject(["afsane", "bassir", "pour"], subj)
+    assert S.name_matches_subject(["bassir", "pour"], subj)
+    assert not S.name_matches_subject(["pour"], subj)
+    assert not S.name_matches_subject(["bassir", "smith"], subj)
+    # Longer canonical, shorter label: containment the other way round.
+    assert S.name_matches_subject(["bassir", "pour"],
+                                  [["afsane", "bassir", "pour"]])
+    # Non-contiguous is not a match.
+    assert not S.name_matches_subject(["bassir", "x", "pour"], subj)
+
+
+def test_one_token_canonical_still_matches_exactly():
+    row = subject("NPR-1|2001-01-01|P|cl1|S", name="Madonna", variants=["Madonna"])
+    rec = record("NPR-1", ["MADONNA", "MADONNA CICCONE"], ["a", "b"])
+    assert [t["role"] for t in S.extract_turns(rec, row)] == ["guest", "other"]
 
 
 def test_extract_turns_rejects_misaligned_records():
@@ -731,6 +897,90 @@ def test_load_titles(tmp_path):
     cache = fake_cache(tmp_path, tid_info={"NPR-1": ("Prog", "The Title", 12)})
     assert S.load_titles(["NPR-1", "NPR-2"], cache) == \
         {"NPR-1": "The Title", "NPR-2": ""}
+
+
+# ---------------------------------------------------------------------------
+# The driver's guard functions (imported by path; experiments/ is not a package)
+# ---------------------------------------------------------------------------
+
+def _driver():
+    path = S.ROOT / "experiments/stage2_draw_dev.py"
+    if not path.exists():                                   # pragma: no cover
+        pytest.skip("experiments/stage2_draw_dev.py not present")
+    spec = importlib.util.spec_from_file_location("_stage2_draw_dev", path)
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules["_stage2_draw_dev"] = mod
+    spec.loader.exec_module(mod)                            # no side effects
+    return mod
+
+
+def _draw_doc(entries, **extra):
+    """entries: (canonical_id, wiki_status, shuffle_pos) in list order."""
+    subjects = [{"canonical_id": cid, "canonical_name": cid,
+                 "wiki_status": ws, "shuffle_pos": pos}
+                for cid, ws, pos in entries]
+    return {"seed": 47, "drawn_at": "x", "subjects": subjects, **extra}
+
+
+# Positions are the real thing the guard protects, so they are explicit here
+# and a newly added subject slots in at its own position without moving them.
+FIVE = [("C1", "long-tail", 0), ("C2", "long-tail", 1), ("C3", "has-page", 2),
+        ("C4", "has-page", 5), ("C5", "has-page", 6)]
+ADDED = ("C9", "long-tail", 3)
+
+
+def test_guard_refuses_an_existing_draw(tmp_path):
+    drv = _driver()
+    drv.guard(force=False, pilot_dir=tmp_path)              # nothing there yet
+    S.write_json(tmp_path / "dev_subjects.json", {"seed": 47})
+    with pytest.raises(SystemExit, match="refused"):
+        drv.guard(force=False, pilot_dir=tmp_path)
+    drv.guard(force=True, pilot_dir=tmp_path)               # --force overrides
+
+
+def test_check_extension_accepts_a_real_extension():
+    drv = _driver()
+    old = _draw_doc(FIVE)
+    new = _draw_doc(FIVE[:3] + [ADDED] + FIVE[3:])
+    assert drv.check_extension(old, new) == ["C9"]
+
+
+def test_check_extension_rejects_a_dropped_subject():
+    drv = _driver()
+    with pytest.raises(SystemExit, match="would drop committed"):
+        drv.check_extension(_draw_doc(FIVE), _draw_doc(FIVE[1:]))
+
+
+def test_check_extension_rejects_a_moved_shuffle_position():
+    drv = _driver()
+    new = _draw_doc(FIVE[:3] + [ADDED] + FIVE[3:])
+    new["subjects"][2]["shuffle_pos"] = 99
+    with pytest.raises(SystemExit, match="moved from shuffle position"):
+        drv.check_extension(_draw_doc(FIVE), new)
+
+
+def test_check_extension_rejects_a_reorder():
+    drv = _driver()
+    swapped = [FIVE[1], FIVE[0]] + FIVE[2:] + [ADDED]
+    with pytest.raises(SystemExit, match="relative order"):
+        drv.check_extension(_draw_doc(FIVE), _draw_doc(swapped))
+
+
+def test_check_extension_refuses_a_no_op():
+    drv = _driver()
+    with pytest.raises(SystemExit, match="nothing to add"):
+        drv.check_extension(_draw_doc(FIVE), _draw_doc(FIVE))
+
+
+def test_split_identity_ignores_guest_words_but_not_the_split():
+    drv = _driver()
+    row = subject("NPR-1|2001-01-01|P|cl1|S;NPR-2|2002-02-02|P|cl2|S")
+    a = S.chronological_split(row)
+    b = S.chronological_split(row)
+    b["grounding"][0]["guest_words"] = 12345
+    assert drv.split_identity(a) == drv.split_identity(b)
+    b["grounding"][0]["transcript_id"] = "NPR-77"
+    assert drv.split_identity(a) != drv.split_identity(b)
 
 
 # ---------------------------------------------------------------------------

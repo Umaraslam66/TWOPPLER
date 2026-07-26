@@ -78,8 +78,8 @@ BURNED_FOR_QA: dict[str, str] = {
 }
 
 
-def guard(force: bool) -> None:
-    out = Path(PILOT_DIR) / "dev_subjects.json"
+def guard(force: bool, pilot_dir=PILOT_DIR) -> None:
+    out = Path(pilot_dir) / "dev_subjects.json"
     if out.exists() and not force:
         raise SystemExit(
             f"[refused] {out} already exists.\n"
@@ -92,7 +92,7 @@ def guard(force: bool) -> None:
         print(f"[force] discarding the existing draw at {out}")
 
 
-def check_extension(old: dict, new: dict) -> None:
+def check_extension(old: dict, new: dict) -> list[str]:
     """The extended draw must contain the committed one, unchanged."""
     old_by = {s["canonical_id"]: s for s in old["subjects"]}
     new_by = {s["canonical_id"]: s for s in new["subjects"]}
@@ -120,6 +120,89 @@ def check_extension(old: dict, new: dict) -> None:
                          "BURNED_FOR_QA. Use --regen-turns to rebuild turns.")
     print(f"extending the committed draw: {len(old_by)} -> "
           f"{len(new_by)} subjects, adding {added}")
+    return added
+
+
+def split_identity(split: dict) -> tuple:
+    """The part of a split that --regen-turns must never move.
+
+    Guest word counts are derived from the turns and may legitimately shift
+    when role assignment changes. Which clusters and which transcripts are on
+    which side of the split may not.
+    """
+    def triples(entries):
+        return tuple((e["cluster_id"], e["transcript_id"], e["date"])
+                     for e in entries)
+    return (triples(split["grounding"]),
+            triples([split["test"]]),
+            triples(split["excluded_same_date"]))
+
+
+def build_subject(row: dict, split: dict, records: dict) -> dict:
+    """Everything one subject contributes, computed in memory. Writes nothing."""
+    cid = row["canonical_id"]
+    # The records are authoritative for title/program/word counts; the scan
+    # cache only had to be good enough to pick cluster representatives. Every
+    # entry in the split -- including the excluded ones -- is refreshed here,
+    # which is why the excluded transcripts are fetched too.
+    warnings = []
+    for entry in [*split["grounding"], split["test"], *split["excluded_same_date"]]:
+        rec = records.get(entry["transcript_id"])
+        if rec is None:
+            raise SystemExit(f"[fatal] {cid}: {entry['transcript_id']} was not "
+                             "fetched, so its split entry cannot be refreshed "
+                             "from the corpus")
+        entry["title"] = rec.get("title", "")
+        entry["program"] = rec.get("program", entry["program"])
+        cached = entry["guest_words"]
+        actual = sum(word_count(t["text"]) for t in extract_turns(rec, row)
+                     if t["role"] == "guest")
+        entry["guest_words"] = actual
+        if cached and abs(actual - cached) > 0.1 * cached:
+            warnings.append((entry["transcript_id"], actual, cached))
+
+    test_tid = split["test"]["transcript_id"]
+    ground_tids = [e["transcript_id"] for e in split["grounding"]]
+    if test_tid in ground_tids:
+        raise SystemExit(f"[fatal] {cid}: the test transcript is also in "
+                         "grounding")
+    if split["test"]["date"] <= max(e["date"] for e in split["grounding"]):
+        raise SystemExit(f"[fatal] {cid}: the test cluster is not strictly "
+                         "later than every grounding cluster")
+    for e in split["grounding"]:
+        if max(e.get("member_dates") or [e["date"]]) >= split["test"]["date"]:
+            raise SystemExit(f"[fatal] {cid}: grounding cluster "
+                             f"{e['cluster_id']} has a member transcript dated "
+                             "on or after the test date (D2 leak guard)")
+
+    ground_turns = [t for tid in ground_tids
+                    for t in extract_turns(records[tid], row)]
+    test_turns = extract_turns(records[test_tid], row)
+    if any(t["transcript_id"] == test_tid for t in ground_turns):
+        raise SystemExit(f"[fatal] {cid}: test text leaked into grounding turns")
+
+    return {
+        "canonical_id": cid,
+        "row": row,
+        "split": split,
+        "ground_turns": ground_turns,
+        "test_turns": test_turns,
+        "warnings": warnings,
+        "files": {
+            "split.json": json.dumps(split, indent=1, ensure_ascii=False) + "\n",
+            "grounding_turns.jsonl": jsonl_text(ground_turns),
+            "test_turns.jsonl": jsonl_text(test_turns),
+        },
+    }
+
+
+def jsonl_text(rows) -> str:
+    return "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows)
+
+
+def on_disk(cid: str, name: str) -> str | None:
+    path = subject_dir(cid) / name
+    return path.read_text(encoding="utf-8") if path.exists() else None
 
 
 def main(argv: list[str]) -> int:
@@ -145,96 +228,113 @@ def main(argv: list[str]) -> int:
 
     pool = load_pool(POOL_CSV)
     by_id = {r["canonical_id"]: r for r in pool}
+    frozen: set[str] = set()
 
     if regen:
-        # Read the frozen draw and the frozen splits. Nothing is re-drawn and
-        # no cluster is re-chosen; only the turn files are rebuilt.
+        # Read the frozen draw. Nothing is re-drawn. The splits are re-derived
+        # from the same pool rather than read back, so a change to the D2 rules
+        # is exercised too — but split_identity below then refuses to write if
+        # any cluster or transcript actually moved sides.
         draw = load_dev_subjects()
         rows = [by_id[s["canonical_id"]] for s in draw["subjects"]]
-        splits = {r["canonical_id"]: load_split(r["canonical_id"]) for r in rows}
-        before = {cid: json.dumps(s, indent=1, ensure_ascii=False) + "\n"
-                  for cid, s in splits.items()}
+        identity_before = {r["canonical_id"]:
+                           split_identity(load_split(r["canonical_id"]))
+                           for r in rows}
         print(f"regenerating turns for the {len(rows)} committed dev subjects "
               f"(seed {draw['seed']}, drawn {draw['drawn_at']}) — no re-draw")
     else:
         draw = draw_dev_subjects(pool, burned=BURNED,
                                  burned_for_qa=BURNED_FOR_QA)
+        identity_before = {}
         if extend:
             committed = load_dev_subjects()
-            check_extension(committed, draw)
+            added = check_extension(committed, draw)
+            frozen = {s["canonical_id"] for s in committed["subjects"]}
             draw["drawn_at"] = committed["drawn_at"]     # the draw date stands
             draw["extended_at"] = date.today().isoformat()
         rows = [by_id[s["canonical_id"]] for s in draw["subjects"]]
-        before = {}
         if not extend:
             print(f"pool: {len(pool)} rows, {draw['n_eligible']} eligible; "
                   f"drew {len(rows)} dev subjects with seed {draw['seed']}")
 
-        # Cluster representatives need per-transcript guest word counts. They
-        # are already in the v2 scan cache: one pickle load, not a scan.
-        guest_words = load_guest_words(rows, SCAN_CACHE)
-        all_tids = [e["transcript_id"] for r in rows for e in r["transcripts"]]
-        titles = load_titles(all_tids, SCAN_CACHE)
-        splits = {r["canonical_id"]:
-                  chronological_split(r, guest_words[r["canonical_id"]], titles)
-                  for r in rows}
+    # Cluster representatives need per-transcript guest word counts. They are
+    # already in the v2 scan cache: one pickle load, not a scan.
+    guest_words = load_guest_words(rows, SCAN_CACHE)
+    all_tids = [e["transcript_id"] for r in rows for e in r["transcripts"]]
+    titles = load_titles(all_tids, SCAN_CACHE)
+    splits = {r["canonical_id"]:
+              chronological_split(r, guest_words[r["canonical_id"]], titles)
+              for r in rows}
 
     wanted = set()
     for split in splits.values():
-        wanted.update(e["transcript_id"] for e in split["grounding"])
-        wanted.add(split["test"]["transcript_id"])
+        for entry in [*split["grounding"], split["test"],
+                      *split["excluded_same_date"]]:
+            wanted.add(entry["transcript_id"])
     print(f"fetching {len(wanted)} transcripts from {RAW_JSON} (one pass)...")
     t1 = time.time()
     records = fetch_records(sorted(wanted), RAW_JSON)
     print(f"  fetched {len(records)} records in {time.time() - t1:.1f}s")
 
+    # ---- build everything in memory, verify, and only then write -----------
+    built = [build_subject(row, splits[row["canonical_id"]], records)
+             for row in rows]
+
+    for b in built:
+        for tid, actual, cached in b["warnings"]:
+            source = "the committed split" if regen else "the scan cache"
+            print(f"  [warn] {b['canonical_id']} {tid}: guest words {actual} "
+                  f"extracted vs {cached} in {source}")
+
+    if regen:
+        moved = [b["canonical_id"] for b in built
+                 if split_identity(b["split"]) != identity_before[b["canonical_id"]]]
+        if moved:
+            raise SystemExit(
+                f"[refused] --regen-turns would move the split itself for "
+                f"{moved}. Turn rules may change guest word counts; they may "
+                "not change which clusters or transcripts are on which side. "
+                "Nothing was written.")
+        changed = [(b["canonical_id"], name)
+                   for b in built for name, text in b["files"].items()
+                   if on_disk(b["canonical_id"], name) != text]
+        if not changed:
+            print("  no file would change; nothing to rewrite")
+        else:
+            for cid, name in changed:
+                print(f"  [rewrite] {cid}/{name}")
+
+    if extend:
+        stale = [(b["canonical_id"], name)
+                 for b in built if b["canonical_id"] in frozen
+                 for name, text in b["files"].items()
+                 if on_disk(b["canonical_id"], name) not in (None, text)]
+        if stale:
+            lines = "\n".join(f"    {cid}/{name}" for cid, name in stale)
+            raise SystemExit(
+                "[refused] --extend would rewrite files belonging to the "
+                f"frozen subjects:\n{lines}\n"
+                "Extending adds a subject; it must never touch the ones "
+                "already committed. The turn rules must have changed since "
+                "they were built — run --regen-turns first, commit that, then "
+                "extend. Nothing was written.")
+
+    for b in built:
+        d = subject_dir(b["canonical_id"])
+        for name, text in b["files"].items():
+            path = d / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text, encoding="utf-8")
+
     summary = []
-    for row in rows:
-        cid = row["canonical_id"]
-        split = splits[cid]
-        # The records are authoritative for title/program/word counts; the scan
-        # cache only had to be good enough to pick cluster representatives.
-        for entry in [*split["grounding"], split["test"], *split["excluded_same_date"]]:
-            rec = records.get(entry["transcript_id"])
-            if rec is None:
-                continue
-            entry["title"] = rec.get("title", "")
-            entry["program"] = rec.get("program", entry["program"])
-            cached = entry["guest_words"]
-            actual = sum(word_count(t["text"]) for t in extract_turns(rec, row)
-                         if t["role"] == "guest")
-            entry["guest_words"] = actual
-            if cached and abs(actual - cached) > 0.1 * cached:
-                source = "the committed split" if regen else "the scan cache"
-                print(f"  [warn] {cid} {entry['transcript_id']}: guest words "
-                      f"{actual} extracted vs {cached} in {source}")
-
-        test_tid = split["test"]["transcript_id"]
-        ground_tids = [e["transcript_id"] for e in split["grounding"]]
-        assert test_tid not in ground_tids, f"{cid}: test transcript in grounding"
-        assert split["test"]["date"] > max(e["date"] for e in split["grounding"]), \
-            f"{cid}: test cluster is not strictly later than every grounding cluster"
-
-        ground_turns = [t for tid in ground_tids
-                        for t in extract_turns(records[tid], row)]
-        test_turns = extract_turns(records[test_tid], row)
-        assert all(t["transcript_id"] != test_tid for t in ground_turns), \
-            f"{cid}: test text leaked into grounding turns"
-
-        d = subject_dir(cid)
-        write_json(d / "split.json", split)
-        write_jsonl(d / "grounding_turns.jsonl", ground_turns)
-        write_jsonl(d / "test_turns.jsonl", test_turns)
-        if regen:
-            now = json.dumps(split, indent=1, ensure_ascii=False) + "\n"
-            if now != before[cid]:
-                print(f"  [changed] {cid} split.json is not byte-stable — "
-                      "the new turn roles moved its guest word counts")
-
-        gw = sum(word_count(t["text"]) for t in ground_turns if t["role"] == "guest")
-        tw = sum(word_count(t["text"]) for t in test_turns if t["role"] == "guest")
+    for b in built:
+        split, row = b["split"], b["row"]
+        gw = sum(word_count(t["text"]) for t in b["ground_turns"]
+                 if t["role"] == "guest")
+        tw = sum(word_count(t["text"]) for t in b["test_turns"]
+                 if t["role"] == "guest")
         summary.append({
-            "canonical_id": cid,
+            "canonical_id": b["canonical_id"],
             "name": row["canonical_name"],
             "wiki_status": row["wiki_status"],
             "n_grounding": len(split["grounding"]),
@@ -242,8 +342,12 @@ def main(argv: list[str]) -> int:
             "test_date": split["test"]["date"],
             "test_words": tw,
             "excluded": len(split["excluded_same_date"]),
-            "n_guest_turns_test": sum(1 for t in test_turns if t["role"] == "guest"),
-            "n_host_turns_test": sum(1 for t in test_turns if t["role"] == "host"),
+            "n_guest_turns_test": sum(1 for t in b["test_turns"]
+                                      if t["role"] == "guest"),
+            "n_host_turns_test": sum(1 for t in b["test_turns"]
+                                     if t["role"] == "host"),
+            "n_host_turns_grounding": sum(1 for t in b["ground_turns"]
+                                          if t["role"] == "host"),
         })
 
     runtime = round(time.time() - t0, 1)
@@ -254,7 +358,8 @@ def main(argv: list[str]) -> int:
         write_json(Path(PILOT_DIR) / "dev_subjects.json", draw)
 
     hdr = (f"{'subject':<28}{'wiki':<16}{'grnd':>5}{'grnd words':>12}"
-           f"{'test date':>13}{'test words':>12}{'test host':>11}{'excl':>6}")
+           f"{'grnd host':>11}{'test date':>13}{'test words':>12}"
+           f"{'test host':>11}{'excl':>6}")
     print()
     print(hdr)
     print("-" * len(hdr))
@@ -264,13 +369,13 @@ def main(argv: list[str]) -> int:
         mark = " *" if s["canonical_id"] in qa_burned else ""
         label = f"{s['canonical_id']} {s['name']}{mark}"
         print(f"{label:<28}{s['wiki_status']:<16}{s['n_grounding']:>5}"
-              f"{s['grounding_words']:>12,}{s['test_date']:>13}"
-              f"{s['test_words']:>12,}{s['n_host_turns_test']:>11}"
-              f"{s['excluded']:>6}")
+              f"{s['grounding_words']:>12,}{s['n_host_turns_grounding']:>11}"
+              f"{s['test_date']:>13}{s['test_words']:>12,}"
+              f"{s['n_host_turns_test']:>11}{s['excluded']:>6}")
     print("-" * len(hdr))
     print("grounding words = guest-role words across the grounding transcripts; "
-          "test words = guest-role words in the test transcript; "
-          "test host = host-role turns in the test transcript.")
+          "grnd host / test host = host-role turns on each side; "
+          "test words = guest-role words in the test transcript.")
     if qa_burned:
         print(f"* retired for Q-A (still a dev subject): {sorted(qa_burned)}")
     print(f"written under {PILOT_DIR} in {runtime}s (0 API calls, $0.00)")
