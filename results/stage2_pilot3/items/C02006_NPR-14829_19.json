@@ -1,0 +1,71 @@
+{
+ "item_id": "C02006:NPR-14829:19",
+ "canonical_id": "C02006",
+ "built": true,
+ "question": "(Laughter) The gist of your tweet, essentially, was your country is in a lot of trouble because of that stupid, bloody referendum. What do you mean?",
+ "true_answer_verbatim": "Well, you know, it was a great mistake to muddle two systems of government. You know, we have a representative democracy. We elect MPs. And the MPs go into the House of Commons. And they choose the laws. We had a referendum, a plebiscite, which overruled Westminster's power. And we have been in a mess ever since.",
+ "true_answer_paraphrased": "It was a mistake to muddle two systems of government because we have a representative democracy where we elect MPs who go into the House of Commons and choose the laws, but we had a referendum that overruled Westminster's power, and we have been in a mess ever since.",
+ "options": [
+  {
+   "text": "Leaving the European Union was an absolute economic necessity for our nation. The single market and the European Court of Justice were draining billions from our Treasury and crushing British industries. Taking back control over our laws and fisheries through that ballot was the smartest choice we ever made.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 views the referendum as a mistake that undermined representative democracy and caused a mess, whereas Answer 2 views leaving the European Union via the referendum as an absolute economic necessity and the smartest choice ever made.",
+   "answer_words": 49,
+   "entity_density": 0.14285714285714285,
+   "bucket": "H"
+  },
+  {
+   "text": "The establishment elite simply cannot accept that the working classes used the ballot box to dismantle their consensus. For decades, institutions like the BBC and the CBI ignored public anger over mass immigration. That referendum shattered their monopoly and forced Whitehall to finally listen to forgotten towns everywhere.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 views the referendum as a destabilizing mistake that undermined representative democracy, whereas Answer 2 views it as a necessary and triumphant correction by the working class against an out-of-touch establishment.",
+   "answer_words": 48,
+   "entity_density": 0.0625,
+   "bucket": "L"
+  },
+  {
+   "text": "It was a mistake to muddle two systems of government because we have a representative democracy where we elect MPs who go into the House of Commons and choose the laws, but we had a referendum that overruled Westminster's power, and we have been in a mess ever since.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "answer_words": 49,
+   "entity_density": 0.08163265306122448,
+   "bucket": "H"
+  },
+  {
+   "text": "That vote was the finest moment for British democracy in decades, as millions across England and Wales broke through the control of Brussels and Westminster politicians to instruct Downing Street to trigger Article Fifty, thereby reclaiming our sovereign borders and proving that ordinary citizens still run this island.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 views the referendum as a disastrous mistake that undermined representative democracy, whereas Answer 2 views it as a triumphant moment of democracy that reclaimed national sovereignty.",
+   "answer_words": 48,
+   "entity_density": 0.1875,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "Leaving the [NAME] was an absolute economic necessity for our nation. The single market and the [NAME] of [NAME] were draining billions from our [NAME] and crushing [NAME] industries. Taking back control over our laws and fisheries through that ballot was the smartest choice we ever made.",
+  "The establishment elite simply cannot accept that the working classes used the ballot box to dismantle their consensus. For decades, institutions like the [NAME] and the [NAME] ignored public anger over mass immigration. That referendum shattered their monopoly and forced [NAME] to finally listen to forgotten towns everywhere.",
+  "It was a mistake to muddle two systems of government because we have a representative democracy where we elect [NAME] who go into the [NAME] of [NAME] and choose the laws, but we had a referendum that overruled [NAME] power, and we have been in a mess ever since.",
+  "That vote was the finest moment for [NAME] democracy in decades, as millions across [NAME] and [NAME] broke through the control of [NAME] and [NAME] politicians to instruct [NAME] to trigger [NAME], thereby reclaiming our sovereign borders and proving that ordinary citizens still run this island."
+ ],
+ "correct_index": 2,
+ "relax_rung": 2,
+ "flags": [
+  "relax_rung_2"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B condenses the phrasing and removes conversational filler, but it retains the exact same core arguments and viewpoint regarding the conflict between representative democracy and referendums.",
+  "retried": false
+ },
+ "rejections": [],
+ "spare_generated": [
+  "That vote gave a much-needed jolt to a stagnant political class that had surrendered our national sovereignty for generations. Brussels bureaucrats and London technocrats had stripped away our power without the voters ever consenting. That high turnout gave our Parliament the backbone to stand up and walk away."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "tokens_in": 2521,
+ "tokens_out": 679,
+ "n_api_calls": 10
+}

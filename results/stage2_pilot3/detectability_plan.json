@@ -1,0 +1,165 @@
+{
+ "seed": 53,
+ "n_entries": 20,
+ "n_real": 10,
+ "n_control": 10,
+ "overlap": [
+  "C00792:NPR-19884:10",
+  "C00792:NPR-19884:13",
+  "C00792:NPR-19884:15",
+  "C00792:NPR-19884:6",
+  "C02006:NPR-14829:19"
+ ],
+ "twinned_entry_numbers": {
+  "C00792:NPR-19884:10": [
+   1,
+   20
+  ],
+  "C00792:NPR-19884:13": [
+   5,
+   17
+  ],
+  "C00792:NPR-19884:15": [
+   10,
+   16
+  ],
+  "C00792:NPR-19884:6": [
+   3,
+   4
+  ],
+  "C02006:NPR-14829:19": [
+   8,
+   15
+  ]
+ },
+ "uncontaminated_real_entries": [
+  9,
+  11,
+  12,
+  13,
+  19
+ ],
+ "overlap_caveat": "An overlapping pair shows the same question with three of four options identical, so the real answer is identifiable by elimination. Quote the hit rate over uncontaminated_real_entries; report the all-10 rate flagged beside it.",
+ "entries": [
+  {
+   "n": 1,
+   "kind": "real",
+   "item_id": "C00792:NPR-19884:10",
+   "correct_index": 0
+  },
+  {
+   "n": 2,
+   "kind": "control",
+   "item_id": "C00792:NPR-19884:2",
+   "correct_index": null
+  },
+  {
+   "n": 3,
+   "kind": "real",
+   "item_id": "C00792:NPR-19884:6",
+   "correct_index": 1
+  },
+  {
+   "n": 4,
+   "kind": "control",
+   "item_id": "C00792:NPR-19884:6",
+   "correct_index": null
+  },
+  {
+   "n": 5,
+   "kind": "real",
+   "item_id": "C00792:NPR-19884:13",
+   "correct_index": 2
+  },
+  {
+   "n": 6,
+   "kind": "control",
+   "item_id": "C02124:NPR-12184:4",
+   "correct_index": null
+  },
+  {
+   "n": 7,
+   "kind": "control",
+   "item_id": "C02006:NPR-14829:29",
+   "correct_index": null
+  },
+  {
+   "n": 8,
+   "kind": "real",
+   "item_id": "C02006:NPR-14829:19",
+   "correct_index": 2
+  },
+  {
+   "n": 9,
+   "kind": "real",
+   "item_id": "C02013:NPR-9480:70",
+   "correct_index": 3
+  },
+  {
+   "n": 10,
+   "kind": "real",
+   "item_id": "C00792:NPR-19884:15",
+   "correct_index": 2
+  },
+  {
+   "n": 11,
+   "kind": "real",
+   "item_id": "C01677:NPR-8791:77",
+   "correct_index": 2
+  },
+  {
+   "n": 12,
+   "kind": "real",
+   "item_id": "C02013:NPR-9480:82",
+   "correct_index": 1
+  },
+  {
+   "n": 13,
+   "kind": "real",
+   "item_id": "C02013:NPR-9480:49",
+   "correct_index": 1
+  },
+  {
+   "n": 14,
+   "kind": "control",
+   "item_id": "C02006:NPR-14829:26",
+   "correct_index": null
+  },
+  {
+   "n": 15,
+   "kind": "control",
+   "item_id": "C02006:NPR-14829:19",
+   "correct_index": null
+  },
+  {
+   "n": 16,
+   "kind": "control",
+   "item_id": "C00792:NPR-19884:15",
+   "correct_index": null
+  },
+  {
+   "n": 17,
+   "kind": "control",
+   "item_id": "C00792:NPR-19884:13",
+   "correct_index": null
+  },
+  {
+   "n": 18,
+   "kind": "control",
+   "item_id": "C02013:NPR-9480:45",
+   "correct_index": null
+  },
+  {
+   "n": 19,
+   "kind": "real",
+   "item_id": "C02124:NPR-12184:6",
+   "correct_index": 2
+  },
+  {
+   "n": 20,
+   "kind": "control",
+   "item_id": "C00792:NPR-19884:10",
+   "correct_index": null
+  }
+ ]
+}

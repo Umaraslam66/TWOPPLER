@@ -1,0 +1,71 @@
+{
+ "item_id": "C00792:NPR-19884:2",
+ "canonical_id": "C00792",
+ "built": true,
+ "question": "Are these groups that having lost Aleppo might align with the so-called Islamic State elsewhere in Syria, or are they distinct and different and opposed to that group?",
+ "true_answer_verbatim": "I think that anyone who considers himself a Syrian nationalist - in essence a Syria-firster - would find it very, very, very difficult to sign up with ISIS because ISIS of course believes it has a worldwide mission. And ISIS really has not been engaged in fighting Bashar al-Assad very much in any event.",
+ "true_answer_paraphrased": "I think that anyone who considers himself a Syrian nationalist, essentially someone who puts Syria first, would find it extremely difficult to join ISIS because ISIS believes it has a worldwide mission. And ISIS has not been fighting Bashar al-Assad very much.",
+ "options": [
+  {
+   "text": "After the collapse in eastern Aleppo, those defeated brigades have no choice. I expect thousands of fighters will retreat toward Raqqa and pledge allegiance to Daesh simply to survive the bombing campaigns by Russian jets and Hezbollah militias.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 argues that the defeated groups will not join ISIS due to ideological differences, whereas Answer 2 asserts that they will pledge allegiance to ISIS out of a need to survive.",
+   "answer_words": 38,
+   "entity_density": 0.13157894736842105,
+   "bucket": "H"
+  },
+  {
+   "text": "I think that anyone who considers himself a Syrian nationalist, essentially someone who puts Syria first, would find it extremely difficult to join ISIS because ISIS believes it has a worldwide mission. And ISIS has not been fighting Bashar al-Assad very much.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "answer_words": 42,
+   "entity_density": 0.16666666666666666,
+   "bucket": "H"
+  },
+  {
+   "text": "I believe we will see a large merger. Hardline groups like Ahrar al-Sham already share strong Salafist roots with Abu Bakr al-Baghdadi’s network. Losing their urban stronghold accelerates their inevitable integration into the Caliphate across Idlib and the Euphrates valley.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 argues that the groups will not join the Islamic State due to ideological differences, whereas Answer 2 asserts that they will inevitably merge with the group due to shared extremist roots.",
+   "answer_words": 40,
+   "entity_density": 0.175,
+   "bucket": "H"
+  },
+  {
+   "text": "The Free Syrian Army units in the Levant are out of money. With the CIA freezing covert support, many commanders will defect to the Islamic State in Deir ez-Zor, drawn by the oil smuggling wealth and heavy artillery there.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 argues that the rebel groups will not join the Islamic State due to ideological differences, whereas Answer 2 asserts that they will defect to the Islamic State for financial and material reasons.",
+   "answer_words": 39,
+   "entity_density": 0.23076923076923078,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "After the collapse in eastern [NAME], those defeated brigades have no choice. I expect thousands of fighters will retreat toward [NAME] and pledge allegiance to [NAME] simply to survive the bombing campaigns by [NAME] jets and [NAME] militias.",
+  "I think that anyone who considers himself a [NAME] nationalist, essentially someone who puts [NAME] first, would find it extremely difficult to join [NAME] because [NAME] believes it has a worldwide mission. [NAME] has not been fighting [NAME] al-Assad very much.",
+  "I believe we will see a large merger. Hardline groups like [NAME] al-Sham already share strong [NAME] roots with [NAME] al-Baghdadi’s network. Losing their urban stronghold accelerates their inevitable integration into the [NAME] across [NAME] and the [NAME] valley.",
+  "[NAME] units in the [NAME] are out of money. With the [NAME] freezing covert support, many commanders will defect to the [NAME] in [NAME] ez-Zor, drawn by the oil smuggling wealth and heavy artillery there."
+ ],
+ "correct_index": 1,
+ "relax_rung": 0,
+ "flags": [
+  "relax_rung_0"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Both versions make the exact same argument that Syrian nationalists would avoid joining ISIS because the group has global rather than national ambitions and has rarely fought Bashar al-Assad.",
+  "retried": false
+ },
+ "rejections": [],
+ "spare_generated": [
+  "I am certain they will form a united front now. This devastating defeat pushes rebel groups like Jabhat Fatah al-Sham directly into an alliance with Daesh. They feel completely abandoned by Washington and want immediate revenge against Moscow and Tehran forces."
+ ],
+ "generator": "gemini-3.1-pro-preview",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "tokens_in": 2462,
+ "tokens_out": 658,
+ "n_api_calls": 10
+}

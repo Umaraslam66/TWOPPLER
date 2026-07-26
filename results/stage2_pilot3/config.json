@@ -1,0 +1,94 @@
+{
+ "run": "stage2_pilot3",
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "confirmatory": false,
+ "contract": "SPEC.md v1.9 (Amendment 2 B10)",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "model": "Gemma-4-31B-it",
+ "model_label": "leonardo-gemma4-31b-it",
+ "temperature": 0.0,
+ "tp": 4,
+ "max_model_len": 8192,
+ "gpu_mem_util": 0.92,
+ "arms": [
+  "twin_redacted",
+  "twin_named",
+  "zeroinfo_redacted",
+  "zeroinfo_named",
+  "imposter_redacted"
+ ],
+ "option_variants": [
+  "standard",
+  "stripped"
+ ],
+ "grounding_budget_words": 2000,
+ "instrument": "B10 generated same-question counterfactuals",
+ "generator": "gemini-3.5-flash-lite",
+ "robustness_scorer": "gemini-3.5-flash-lite",
+ "generator_is_robustness_scorer": true,
+ "generator_separation": "DECLARED OVERLAP (B10.3): the generator gemini-3.5-flash-lite is also the Amendment 1 A3 robustness scorer. (a) INERT IN THIS PILOT -- pilot scoring is Gemma-4-31B-it only and no Gemini model scores anything here, so no model reads its own writing at any point in round 3. (b) AT THE CONFIRMATORY STAGE this is a live constraint: either the generator is changed to a different model at bar-lock, or every A3 robustness number computed on this instrument carries the overlap flag beside it. That is a bar-lock decision for the owner, not the implementer's. (c) MITIGATING SYMMETRY -- B10.4 sends all four options, INCLUDING the paraphrased true answer, through one byte-identical paraphrase call on this same model, so no option is stylistically closer to the generator than any other. A self-preference effect would have to distinguish text the model wrote from text it only rewrote, not model style from corpus style.",
+ "generator_history": [
+  {
+   "model": "gemini-3.1-pro-preview",
+   "status": "abandoned",
+   "reason": "owner cost directive",
+   "artifacts": "results/stage2_pilot3/{genlog,items}_pro_abandoned/ (5 items, audit trail only, never in a final set)"
+  },
+  {
+   "model": "gemini-3.5-flash",
+   "status": "superseded before any call",
+   "reason": "owner directive 2026-07-27 named the cheapest model instead"
+  },
+  {
+   "model": "gemini-3.5-flash-lite",
+   "status": "in use",
+   "reason": "owner directive 2026-07-27, final: cheapest available; pilot scoring is Gemma-only so nothing scored reads its own writing"
+  }
+ ],
+ "counterfactuals_template_sha256": "adb6fd3b42a5c67ce32cae7a7f20c48756dca8b92e36b2c6cdaf6a873b299e19",
+ "n_candidate_items": 15,
+ "gate_prompts_total": 15,
+ "prediction_prompts_total": 150,
+ "projection": {
+  "gate": {
+   "n_calls": 15,
+   "tokens_in_est": 13662,
+   "tokens_out_cap": 7680,
+   "seconds": 3.048857142857143
+  },
+  "prediction": {
+   "n_calls": 150,
+   "tokens_in_est": 474594,
+   "tokens_out_cap": 76800,
+   "seconds": 78.77057142857143
+  },
+  "jobs": {
+   "stage2_pilot3_gate": {
+    "n_calls": 15,
+    "generation_seconds": 3.0,
+    "engine_init_seconds": 225.0,
+    "projected_node_hours": 0.0633,
+    "walltime": "00:20:00",
+    "qos": "boost_qos_dbg"
+   },
+   "stage2_pilot3_pred": {
+    "n_calls": 150,
+    "generation_seconds": 78.8,
+    "engine_init_seconds": 225.0,
+    "projected_node_hours": 0.0844,
+    "walltime": "00:30:00",
+    "qos": "boost_usr_prod (normal)"
+   }
+  },
+  "effective_tokens_per_second": 7000.0,
+  "measured_tokens_per_second": 21000.0,
+  "long_prompt_derate": 3.0,
+  "tokens_per_word": 1.9,
+  "total_projected_node_hours": 0.1477,
+  "walltime_bounded_worst_case_node_hours": 0.8333,
+  "abort_above_node_hours": 1.2,
+  "budget_node_hours": 1.2,
+  "note": "Both jobs are dominated by engine init: 110 prompts against round 1's 639, on the same node and the same model. Output tokens are counted at the 512-token cap, so the generation term is an upper bound."
+ },
+ "generated_utc": "2026-07-26T22:37:33Z"
+}

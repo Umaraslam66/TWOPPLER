@@ -1,0 +1,71 @@
+{
+ "item_id": "C02124:NPR-12184:4",
+ "canonical_id": "C02124",
+ "built": true,
+ "question": "Samer, any doubt in your mind that General Sisi could win the election?",
+ "true_answer_verbatim": "No doubt whatsoever. In fact, many of the other potential candidates have already said if Abdel Fattah el-Sisi declares his candidacy they're going to withdraw. The real question is what does it mean for Egyptian democracy? And I think the answer is it doesn't bode well to have a military general as president in a country that has had military strongmen ruling for 60 years. And that's, I think, the great tragedy of all of this.",
+ "true_answer_paraphrased": "There is no doubt whatsoever. In fact, many of the other potential candidates have already said that if Abdel Fattah el-Sisi declares his candidacy, they are going to withdraw. The real question is what this means for Egyptian democracy. I think the answer is that it does not bode well to have a military general as president in a country that has had military strongmen ruling for 60 years, and I think that is the great tragedy of all of this.",
+ "options": [
+  {
+   "text": "I think there is serious doubt about whether he would actually win at the ballot box. While the state media in Cairo tries to project an aura of inevitability, ordinary citizens in places like Tahrir Square are growing deeply fatigued by military rule. When you look at the strong grassroots organizing coming out of the Muslim Brotherhood and other civilian factions, a general stepping into the presidency faces a fierce contest, and victory is far from guaranteed for him.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 states there is no doubt Sisi will win and that opponents will withdraw, whereas Answer 2 argues there is serious doubt about his victory due to strong grassroots opposition.",
+   "answer_words": 79,
+   "entity_density": 0.06329113924050633,
+   "bucket": "L"
+  },
+  {
+   "text": "People have good reason to doubt his chances in the election because powerful opposition networks in Alexandria and Giza still remember the harsher days of the Supreme Council of the Armed Forces, and prominent political figures are already organizing a united front to challenge any uniformed candidate so that if he runs, he will face a formidable campaign that could easily defeat him when voters cast their ballots this spring.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 states there is no doubt that General Sisi will win the election, whereas Answer 2 argues that he faces a formidable campaign that could easily defeat him.",
+   "answer_words": 70,
+   "entity_density": 0.08571428571428572,
+   "bucket": "H"
+  },
+  {
+   "text": "There is no doubt whatsoever. In fact, many of the other potential candidates have already said that if Abdel Fattah el-Sisi declares his candidacy, they are going to withdraw. The real question is what this means for Egyptian democracy. I think the answer is that it does not bode well to have a military general as president in a country that has had military strongmen ruling for 60 years, and I think that is the great tragedy of all of this.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "answer_words": 81,
+   "entity_density": 0.04938271604938271,
+   "bucket": "L"
+  },
+  {
+   "text": "I have serious doubts about assuming he is unbeatable because the country faces a severe economic crisis and the Tamarod movement and youth groups are holding any future leader to an incredibly high standard. If Field Marshal el-Sisi runs, he will have to answer for persistent shortages and security failures that frustrate voters daily, and a charismatic civilian alternative could easily galvanize enough public anger to pull off an upset against the military establishment.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 states there is no doubt that General Sisi will win, whereas Answer 2 argues there are serious doubts about assuming he is unbeatable due to economic crises and potential voter backlash.",
+   "answer_words": 74,
+   "entity_density": 0.05405405405405406,
+   "bucket": "L"
+  }
+ ],
+ "options_stripped": [
+  "I think there is serious doubt about whether he would actually win at the ballot box. While the state media in [NAME] tries to project an aura of inevitability, ordinary citizens in places like [NAME] are growing deeply fatigued by military rule. When you look at the strong grassroots organizing coming out of the [NAME] and other civilian factions, a general stepping into the presidency faces a fierce contest, and victory is far from guaranteed for him.",
+  "People have good reason to doubt his chances in the election because powerful opposition networks in [NAME] and [NAME] still remember the harsher days of the [NAME] of the [NAME], and prominent political figures are already organizing a united front to challenge any uniformed candidate so that if he runs, he will face a formidable campaign that could easily defeat him when voters cast their ballots this spring.",
+  "There is no doubt whatsoever. In fact, many of the other potential candidates have already said that if [NAME] el-Sisi declares his candidacy, they are going to withdraw. The real question is what this means for [NAME] democracy. I think the answer is that it does not bode well to have a military general as president in a country that has had military strongmen ruling for [NUMBER] years, and I think that is the great tragedy of all of this.",
+  "I have serious doubts about assuming he is unbeatable because the country faces a severe economic crisis and the [NAME] movement and youth groups are holding any future leader to an incredibly high standard. [NAME] el-Sisi runs, he will have to answer for persistent shortages and security failures that frustrate voters daily, and a charismatic civilian alternative could easily galvanize enough public anger to pull off an upset against the military establishment."
+ ],
+ "correct_index": 2,
+ "relax_rung": 2,
+ "flags": [
+  "relax_rung_2"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B is merely a lightly edited copy of Version A that preserves the exact same meaning, position, and substantive claims.",
+  "retried": false
+ },
+ "rejections": [],
+ "spare_generated": [
+  "The outcome is completely unpredictable right now. While the state apparatus heavily favors the military establishment, the Wafd Party and other secular coalitions are actively rallying voters who want a strict separation of the armed forces from governance. Public opinion across the Nile Delta is deeply fractured, and many working-class families are openly questioning whether a former defense minister can fix our broken economy. He could very well stumble if an energetic civilian opponent emerges."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "tokens_in": 2916,
+ "tokens_out": 950,
+ "n_api_calls": 10
+}

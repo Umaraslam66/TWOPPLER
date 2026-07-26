@@ -1,0 +1,71 @@
+{
+ "item_id": "C00792:NPR-19884:6",
+ "canonical_id": "C00792",
+ "built": true,
+ "question": "To what extent is what is unfolding in Syria right now an American responsibility for lack of things the U.S. didn't do?",
+ "true_answer_verbatim": "You know, this is not an American responsibility. I would say that the failure of the United States to take any steps at all - this has certainly aggravated the problem, and its given the Russians, the Assad regime and Iran the sense that they have a - have an absolutely free ride to do anything they want to civilians.",
+ "true_answer_paraphrased": "This is not an American responsibility, but the failure of the United States to take any steps has certainly aggravated the problem and has given the Russians, the Assad regime, and Iran the sense that they have an absolute free ride to do anything they want to civilians.",
+ "options": [
+  {
+   "text": "The tragedy in Syria is entirely our fault because the administration in Washington failed to enforce basic humanitarian norms, and because President Obama and Secretary Kerry refused to establish safe zones, Vladimir Putin and the Iranian regime realized they could prop up the dictator in Damascus without facing any real opposition.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 explicitly rejects that the situation is an American responsibility, whereas Answer 2 argues that the tragedy is entirely the fault of the U.S. administration.",
+   "answer_words": 51,
+   "entity_density": 0.19607843137254902,
+   "bucket": "H"
+  },
+  {
+   "text": "This is not an American responsibility, but the failure of the United States to take any steps has certainly aggravated the problem and has given the Russians, the Assad regime, and Iran the sense that they have an absolute free ride to do anything they want to civilians.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "answer_words": 48,
+   "entity_density": 0.125,
+   "bucket": "H"
+  },
+  {
+   "text": "This catastrophe falls squarely on American shoulders due to our total inaction throughout the conflict, because when Bashar al-Assad deployed chemical weapons in Ghouta and barrel bombs across Aleppo, the Department of Defense stood by, giving a green light to both the Kremlin and the Iranian Revolutionary Guard to slaughter innocents.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 explicitly rejects that the situation is an American responsibility, whereas Answer 2 argues that the catastrophe falls squarely on American shoulders.",
+   "answer_words": 51,
+   "entity_density": 0.19607843137254902,
+   "bucket": "H"
+  },
+  {
+   "text": "We carry the main burden here because Washington abandoned the Syrian people when the red line was crossed in Damascus, and by refusing to support the Free Syrian Army and ignoring requests from Turkey and Saudi Arabia, the White House created a vacuum that brought Tehran and Moscow into the conflict.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 explicitly states that the situation in Syria is not an American responsibility, whereas Answer 2 argues that the United States carries the main burden for the crisis.",
+   "answer_words": 51,
+   "entity_density": 0.2549019607843137,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "The tragedy in [NAME] is entirely our fault because the administration in [NAME] failed to enforce basic humanitarian norms, and because [NAME] and [NAME] refused to establish safe zones, [NAME] and the [NAME] regime realized they could prop up the dictator in [NAME] without facing any real opposition.",
+  "This is not an [NAME] responsibility, but the failure of the [NAME] to take any steps has certainly aggravated the problem and has given the [NAME], the [NAME] regime, and [NAME] the sense that they have an absolute free ride to do anything they want to civilians.",
+  "This catastrophe falls squarely on [NAME] shoulders due to our total inaction throughout the conflict, because when [NAME] al-Assad deployed chemical weapons in [NAME] and barrel bombs across [NAME], the [NAME] of [NAME] stood by, giving a green light to both the [NAME] and the [NAME] to slaughter innocents.",
+  "We carry the main burden here because [NAME] abandoned the [NAME] people when the red line was crossed in [NAME], and by refusing to support the [NAME] and ignoring requests from [NAME] and [NAME], the [NAME] created a vacuum that brought [NAME] and [NAME] into the conflict."
+ ],
+ "correct_index": 1,
+ "relax_rung": 0,
+ "flags": [
+  "relax_rung_0"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B preserves the exact same stance and substantive claims as Version A, differing only in minor punctuation and phrasing.",
+  "retried": false
+ },
+ "rejections": [],
+ "spare_generated": [
+  "We are directly responsible for this humanitarian disaster because our diplomatic paralysis allowed the conflict to spiral out of control, and if the Pentagon had armed moderate opposition groups and confronted the Syrian military early on, Vladimir Putin and Tehran would never have gained total dominance over the Middle East region today."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "tokens_in": 2485,
+ "tokens_out": 665,
+ "n_api_calls": 10
+}

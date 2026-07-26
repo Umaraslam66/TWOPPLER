@@ -1,0 +1,96 @@
+{
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "phase": "gate",
+ "contract": "SPEC.md v1.9 (Amendment 2 B10)",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "exported_utc": "2026-07-26T22:35:31Z",
+ "arm": "zeroinfo_redacted",
+ "variant": "standard",
+ "n_candidate_items": 15,
+ "generator": "gemini-3.5-flash-lite",
+ "generator_is_robustness_scorer": true,
+ "generator_separation": "DECLARED OVERLAP (B10.3): the generator gemini-3.5-flash-lite is also the Amendment 1 A3 robustness scorer. (a) INERT IN THIS PILOT -- pilot scoring is Gemma-4-31B-it only and no Gemini model scores anything here, so no model reads its own writing at any point in round 3. (b) AT THE CONFIRMATORY STAGE this is a live constraint: either the generator is changed to a different model at bar-lock, or every A3 robustness number computed on this instrument carries the overlap flag beside it. That is a bar-lock decision for the owner, not the implementer's. (c) MITIGATING SYMMETRY -- B10.4 sends all four options, INCLUDING the paraphrased true answer, through one byte-identical paraphrase call on this same model, so no option is stylistically closer to the generator than any other. A self-preference effect would have to distinguish text the model wrote from text it only rewrote, not model style from corpus style.",
+ "gate_rule": "B10.7. An item this arm argmax-solves never enters the final set. PRE-gate accuracy on this file is the instrument-difficulty number; post-gate zero-info accuracy is ~0 by construction.",
+ "per_subject": {
+  "C00792": {
+   "canonical_id": "C00792",
+   "canonical_name": "Frederic Hof",
+   "n_items": 5,
+   "item_ids": [
+    "C00792:NPR-19884:10",
+    "C00792:NPR-19884:13",
+    "C00792:NPR-19884:15",
+    "C00792:NPR-19884:2",
+    "C00792:NPR-19884:6"
+   ],
+   "donor_id": "C01316"
+  },
+  "C02013": {
+   "canonical_id": "C02013",
+   "canonical_name": "Robert Sampson",
+   "n_items": 4,
+   "item_ids": [
+    "C02013:NPR-9480:45",
+    "C02013:NPR-9480:49",
+    "C02013:NPR-9480:70",
+    "C02013:NPR-9480:82"
+   ],
+   "donor_id": "C00690"
+  },
+  "C02124": {
+   "canonical_id": "C02124",
+   "canonical_name": "Samer Shehata",
+   "n_items": 2,
+   "item_ids": [
+    "C02124:NPR-12184:4",
+    "C02124:NPR-12184:6"
+   ],
+   "donor_id": "C02277"
+  },
+  "C01677": {
+   "canonical_id": "C01677",
+   "canonical_name": "Matthew Kroenig",
+   "n_items": 1,
+   "item_ids": [
+    "C01677:NPR-8791:77"
+   ],
+   "donor_id": "C01650"
+  },
+  "C02006": {
+   "canonical_id": "C02006",
+   "canonical_name": "Robert Harris",
+   "n_items": 3,
+   "item_ids": [
+    "C02006:NPR-14829:19",
+    "C02006:NPR-14829:26",
+    "C02006:NPR-14829:29"
+   ],
+   "donor_id": "C02510"
+  }
+ },
+ "context": {
+  "longest_prompt_words": 927,
+  "longest_prompt_item": "C02013:NPR-9480:82",
+  "longest_prompt_arm": "zeroinfo_redacted",
+  "worst_case_tokens_needed": 2412,
+  "max_model_len": 8192,
+  "headroom_tokens": 5780
+ },
+ "renderer": {
+  "stage2_render_template_sha256": "26def40977f381e732c757bdb16d1c620db415041af59719319cef5434f652b1",
+  "counterfactuals_template_sha256": "adb6fd3b42a5c67ce32cae7a7f20c48756dca8b92e36b2c6cdaf6a873b299e19",
+  "stage2_render_file_sha256": "25a13febf5ee85cf4ef8b4371ecc8162ed0f1685841f518d3399c62151e0425a",
+  "counterfactuals_file_sha256": "6399475f41c12c91c855c37ef3b0c03e32ff9c9ec5e526b1648b18ac14b7262e"
+ },
+ "files": {
+  "gate": {
+   "prompts_file": "prompts_gate.jsonl",
+   "meta_file": "meta_gate.jsonl",
+   "n_prompts": 15,
+   "prompts_sha256": "5d5e1748b3b0d6b25de0577de5040fac7e6fc68b44026f4c806b6c99641a35a8",
+   "meta_sha256": "39027d0822e5fcfc4fd2d2ccaefec49360368d5d80e53144b9577468484a3391",
+   "total_prompt_words": 7191,
+   "max_prompt_words": 927
+  }
+ }
+}

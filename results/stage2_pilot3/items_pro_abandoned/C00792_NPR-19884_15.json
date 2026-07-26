@@ -1,0 +1,71 @@
+{
+ "item_id": "C00792:NPR-19884:15",
+ "canonical_id": "C00792",
+ "built": true,
+ "question": "Which international backer has lost most here - the U.S., Turkey, Saudi Arabia, Qatar? I mean who's the outside player who's lost (unintelligible)?",
+ "true_answer_verbatim": "You know, I think, Robert, in terms of external actors who have involved themselves one way or the other in the Syrian crisis, the biggest loser is the United States. The loss in terms of credibility, reputation has been simply enormous.",
+ "true_answer_paraphrased": "I think that among the external actors who have involved themselves in the Syrian crisis, the United States is the biggest loser. The loss of credibility and reputation has been enormous.",
+ "options": [
+  {
+   "text": "I think Turkey suffered the heaviest blow. They put massive resources into supporting the opposition, but they ended up facing millions of refugees and a hostile Kurdish presence on their border.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 identifies the United States as the biggest loser, whereas Answer 2 argues that Turkey suffered the heaviest blow, representing a direct disagreement on the substance of the question.",
+   "answer_words": 31,
+   "entity_density": 0.06451612903225806,
+   "bucket": "L"
+  },
+  {
+   "text": "Qatar is the most defeated party. Doha provided immense financial support to groups like Al-Nusra, but those fighters have been completely devastated by Russian airstrikes over recent months.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 identifies the United States as the biggest loser, while Answer 2 claims Qatar is the most defeated party, representing a direct disagreement on substance.",
+   "answer_words": 28,
+   "entity_density": 0.07142857142857142,
+   "bucket": "L"
+  },
+  {
+   "text": "I think that among the external actors who have involved themselves in the Syrian crisis, the United States is the biggest loser. The loss of credibility and reputation has been enormous.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "answer_words": 31,
+   "entity_density": 0.0967741935483871,
+   "bucket": "H"
+  },
+  {
+   "text": "I think Saudi Arabia suffered the most in this situation. They spent billions arming rebel factions, but ultimately watched Iran and Hezbollah secure a major strategic victory across the region.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 identifies the United States as the biggest loser in the conflict, whereas Answer 2 argues that Saudi Arabia suffered the most.",
+   "answer_words": 30,
+   "entity_density": 0.13333333333333333,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "I think [NAME] suffered the heaviest blow. They put massive resources into supporting the opposition, but they ended up facing millions of refugees and a hostile [NAME] presence on their border.",
+  "Qatar is the most defeated party. Doha provided immense financial support to groups like [NAME], but those fighters have been completely devastated by [NAME] airstrikes over recent months.",
+  "I think that among the external actors who have involved themselves in the [NAME] crisis, the [NAME] is the biggest loser. The loss of credibility and reputation has been enormous.",
+  "I think [NAME] suffered the most in this situation. They spent billions arming rebel factions, but ultimately watched [NAME] and [NAME] secure a major strategic victory across the region."
+ ],
+ "correct_index": 2,
+ "relax_rung": 2,
+ "flags": [
+  "relax_rung_2"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Both versions make the exact same substantive claims that the United States is the biggest loser among external actors in the Syrian crisis and has suffered an enormous loss of credibility and reputation.",
+  "retried": false
+ },
+ "rejections": [],
+ "spare_generated": [
+  "I see the European Union as the primary casualty. Brussels failed militarily and absorbed over a million desperate migrants, which fundamentally destabilized their own political landscape today."
+ ],
+ "generator": "gemini-3.1-pro-preview",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "tokens_in": 2267,
+ "tokens_out": 498,
+ "n_api_calls": 10
+}

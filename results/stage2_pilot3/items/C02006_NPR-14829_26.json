@@ -1,0 +1,83 @@
+{
+ "item_id": "C02006:NPR-14829:26",
+ "canonical_id": "C02006",
+ "built": true,
+ "question": "But does anybody in a position of power seriously want, maybe, to get out of Brexit, to back away from this? Or is it too late for that?",
+ "true_answer_verbatim": "There is probably a majority in the House of Commons not to stop Brexit, but to go for a different form of Brexit. When the British people voted to leave the - leave Europe, the question was simply yes or no. But leaving Europe - there are very different ways of leaving Europe. One, to which we seem to be heading at the moment, is what's called a hard Brexit, where we might, indeed, end up with no agreement at all. Certainly, we wouldn't be a part of the single market, which is so economically powerful. There is another option. That is that we do remain a part of the single market. And in return, we continue to allow unrestricted access by citizens of the European Union to come and work here. That second softer Brexit, which most economists think would be far preferable, that now does become more feasible, I think.",
+ "true_answer_paraphrased": "There is probably a majority in the House of Commons not to stop Brexit, but to go for a different form of Brexit. When the British people voted to leave Europe, the question was simply yes or no. But there are very different ways of leaving Europe. One, to which we seem to be heading at the moment, is what is called a hard Brexit, where we might end up with no agreement at all. Certainly, we would not be a part of the single market, which is so economically powerful. There is another option. That is that we do remain a part of the single market. And in return, we continue to allow unrestricted access by citizens of the European Union to come and work here. That second softer Brexit, which most economists think would be far preferable, now becomes more feasible, I think.",
+ "options": [
+  {
+   "text": "There is a strong group within the parliamentary Labour Party and some Conservative rebels quietly plotting to stop Brexit completely. Jeremy Corbyn and his shadow cabinet, along with figures like Ken Clarke, are working behind the scenes to push for a second referendum on the final deal. They believe public opinion has shifted since the vote, especially in major urban centers like London and Manchester, where voters strongly favored remaining. These politicians want to halt the invocation of Article 50 and keep Britain fully integrated with the European Commission and the European Court of Justice. They argue that the economic chaos predicted by the Treasury and the Bank of England gives them enough justification to reverse course entirely. So, influential power brokers are actively maneuvering to keep us anchored firmly inside the European Union.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 states there is likely no majority in Parliament to stop Brexit entirely, whereas Answer 2 asserts that influential politicians are actively plotting and maneuvering to halt Brexit completely.",
+   "answer_words": 134,
+   "entity_density": 0.1791044776119403,
+   "bucket": "H"
+  },
+  {
+   "text": "Nobody in Westminster wants to halt the exit process now, because Theresa May and her cabinet have made it clear that Article Fifty is an irreversible step. We are definitely leaving the European Union completely, and there is no appetite among MPs in Parliament to reverse the referendum result. The leadership of both the Conservative Party and the Labour Party understands that the British electorate expects us to sever ties fully with Brussels. We are not looking at staying inside any customs union or trading bloc. Instead, the focus for our negotiators in Whitehall is purely on forging a comprehensive free trade deal that respects our national sovereignty. Business leaders in the Confederation of British Industry may voice concerns, but the political reality is that stopping our departure is completely off the table. We are moving forward with absolute determination to succeed outside.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 suggests that a softer Brexit remaining part of the single market is feasible and has support, whereas Answer 2 asserts that staying inside any customs union or trading bloc is completely off the table and that Parliament has no appetite to reverse the hard exit trajectory.",
+   "answer_words": 143,
+   "entity_density": 0.13286713286713286,
+   "bucket": "H"
+  },
+  {
+   "text": "Political figures across the spectrum now recognize that leaving the European Union will cause severe economic damage, so they are looking for a way to exit this situation. Members of the House of Lords and moderate MPs are privately discussing ways to pause negotiations with Michel Barnier and European leaders in Brussels. They know that leaving without a deal would harm our manufacturing sector, particularly companies like Nissan and Airbus that rely on frictionless trade. Financial institutions in the City of London are applying immense pressure, and senior lawmakers are looking for legal mechanisms to suspend Article Fifty behind closed doors. They want to buy time to let the political temperature cool down, knowing that public enthusiasm for this disruption is fading across the country.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 states there is a majority in Parliament to pursue a form of Brexit rather than stop it, whereas Answer 2 claims political figures are actively looking for a way to exit or pause the Brexit situation entirely.",
+   "answer_words": 125,
+   "entity_density": 0.12,
+   "bucket": "H"
+  },
+  {
+   "text": "There is probably a majority in the House of Commons not to stop Brexit, but to go for a different form of Brexit. When the British people voted to leave Europe, the question was simply yes or no. But there are very different ways of leaving Europe. One, to which we seem to be heading at the moment, is what is called a hard Brexit, where we might end up with no agreement at all. Certainly, we would not be a part of the single market, which is so economically powerful. There is another option. That is that we do remain a part of the single market. And in return, we continue to allow unrestricted access by citizens of the European Union to come and work here. That second softer Brexit, which most economists think would be far preferable, now becomes more feasible, I think.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "answer_words": 145,
+   "entity_density": 0.07586206896551724,
+   "bucket": "L"
+  }
+ ],
+ "options_stripped": [
+  "There is a strong group within the parliamentary [NAME] and some [NAME] rebels quietly plotting to stop [NAME] completely. [NAME] and his shadow cabinet, along with figures like [NAME], are working behind the scenes to push for a second referendum on the final deal. They believe public opinion has shifted since the vote, especially in major urban centers like [NAME] and [NAME], where voters strongly favored remaining. These politicians want to halt the invocation of [NAME] [NUMBER] and keep [NAME] fully integrated with the [NAME] and the [NAME] of [NAME] argue that the economic chaos predicted by the [NAME] and the [NAME] of [NAME] gives them enough justification to reverse course entirely. So, influential power brokers are actively maneuvering to keep us anchored firmly inside the [NAME].",
+  "Nobody in [NAME] wants to halt the exit process now, because [NAME] and her cabinet have made it clear that [NAME] is an irreversible step. We are definitely leaving the [NAME] completely, and there is no appetite among [NAME] in [NAME] to reverse the referendum result. The leadership of both the [NAME] and the [NAME] understands that the [NAME] electorate expects us to sever ties fully with [NAME]. We are not looking at staying inside any customs union or trading bloc. Instead, the focus for our negotiators in [NAME] is purely on forging a comprehensive free trade deal that respects our national sovereignty. Business leaders in the [NAME] of [NAME] may voice concerns, but the political reality is that stopping our departure is completely off the table. We are moving forward with absolute determination to succeed outside.",
+  "Political figures across the spectrum now recognize that leaving the [NAME] will cause severe economic damage, so they are looking for a way to exit this situation. Members of the [NAME] of [NAME] and moderate [NAME] are privately discussing ways to pause negotiations with [NAME] and [NAME] leaders in [NAME]. They know that leaving without a deal would harm our manufacturing sector, particularly companies like [NAME] and [NAME] that rely on frictionless trade. Financial institutions in the [NAME] of [NAME] are applying immense pressure, and senior lawmakers are looking for legal mechanisms to suspend [NAME] behind closed doors. They want to buy time to let the political temperature cool down, knowing that public enthusiasm for this disruption is fading across the country.",
+  "There is probably a majority in the [NAME] of [NAME] not to stop [NAME], but to go for a different form of [NAME]. When the [NAME] people voted to leave [NAME], the question was simply yes or no. But there are very different ways of leaving [NAME]. One, to which we seem to be heading at the moment, is what is called a hard [NAME], where we might end up with no agreement at all. Certainly, we would not be a part of the single market, which is so economically powerful. There is another option. That is that we do remain a part of the single market. And in return, we continue to allow unrestricted access by citizens of the [NAME] to come and work here. That second softer [NAME], which most economists think would be far preferable, now becomes more feasible, I think."
+ ],
+ "correct_index": 3,
+ "relax_rung": 2,
+ "flags": [
+  "relax_rung_2"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B contains identical substantive claims and the exact same political assessment as Version A, with only trivial wording omissions that do not alter the meaning.",
+  "retried": false
+ },
+ "rejections": [
+  {
+   "text": "London's establishment has never accepted the referendum result, and senior civil servants are doing everything they can to delay or dilute our departure. Officials at the Treasury and the Foreign Office are afraid of losing access to the European single market, and they are telling ministers that we must accept freedom of movement indefinitely. They want a status quo arrangement that keeps us bound to Brussels directives while stripping us of our voting rights. This is a deliberate strategy by the Westminster elite to frustrate the democratic will of millions of citizens who voted for real change. While they might not openly state that they want to cancel Brexit outright, their endless demands for transition periods and regulatory alignment are designed to create a situation where we never actually leave the European Union in practice.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "Both answers argue that powerful figures in Parliament or the establishment are pushing for a softer form of Brexit that retains ties to the single market rather than stopping Brexit outright."
+    }
+   ]
+  }
+ ],
+ "spare_generated": [
+  "London's establishment has never accepted the referendum result, and senior civil servants are doing everything they can to delay or dilute our departure. Officials at the Treasury and the Foreign Office are afraid of losing access to the European single market, and they are telling ministers that we must accept freedom of movement indefinitely. They want a status quo arrangement that keeps us bound to Brussels directives while stripping us of our voting rights. This is a deliberate strategy by the Westminster elite to frustrate the democratic will of millions of citizens who voted for real change. While they might not openly state that they want to cancel Brexit outright, their endless demands for transition periods and regulatory alignment are designed to create a situation where we never actually leave the European Union in practice."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "tokens_in": 4441,
+ "tokens_out": 1599,
+ "n_api_calls": 11
+}

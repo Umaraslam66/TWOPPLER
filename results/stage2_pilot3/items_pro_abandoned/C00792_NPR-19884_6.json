@@ -1,0 +1,71 @@
+{
+ "item_id": "C00792:NPR-19884:6",
+ "canonical_id": "C00792",
+ "built": true,
+ "question": "To what extent is what is unfolding in Syria right now an American responsibility for lack of things the U.S. didn't do?",
+ "true_answer_verbatim": "You know, this is not an American responsibility. I would say that the failure of the United States to take any steps at all - this has certainly aggravated the problem, and its given the Russians, the Assad regime and Iran the sense that they have a - have an absolutely free ride to do anything they want to civilians.",
+ "true_answer_paraphrased": "This is not an American responsibility. I would say that the failure of the United States to take any steps at all has certainly aggravated the problem, and it has given the Russians, the Assad regime, and Iran the sense that they have an absolutely free ride to do anything they want to civilians.",
+ "options": [
+  {
+   "text": "This is completely our fault, resulting directly from our failure to act. When President Obama did not enforce his chemical weapons red line in Ghouta, Washington gave up its global leadership. By refusing to deploy the Air Force to create safe zones near the Turkish border, Congress allowed the mass killings we are seeing today.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 explicitly states that the situation is not an American responsibility, whereas Answer 2 asserts that it is completely the fault of the United States.",
+   "answer_words": 55,
+   "entity_density": 0.16363636363636364,
+   "bucket": "H"
+  },
+  {
+   "text": "This is not an American responsibility. I would say that the failure of the United States to take any steps at all has certainly aggravated the problem, and it has given the Russians, the Assad regime, and Iran the sense that they have an absolutely free ride to do anything they want to civilians.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "answer_words": 54,
+   "entity_density": 0.1111111111111111,
+   "bucket": "H"
+  },
+  {
+   "text": "We are not to blame here. Washington exhausted every diplomatic avenue at the Geneva peace talks and provided billions through USAID. The failure rests entirely with the UN Security Council and our partners in the European Union, who refused to enforce humanitarian corridors in places like Homs while we carried the financial burden.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "While both answers initially state that the situation is not an American responsibility, they conflict on substance because Answer 1 claims the U.S. failed to take any steps and aggravated the problem, whereas Answer 2 claims the U.S. took extensive diplomatic and financial actions.",
+   "answer_words": 53,
+   "entity_density": 0.1509433962264151,
+   "bucket": "H"
+  },
+  {
+   "text": "I think we are fully responsible, but that is because of our aggressive interventions, not our inaction. By approving CIA programs like Timber Sycamore and sending weapons through Turkey and Saudi Arabia, Washington actively fueled a proxy war. We armed radical groups in Aleppo and Idlib, which turned a local uprising into a catastrophic international slaughter.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 states that the situation is not an American responsibility, whereas Answer 2 argues that the U.S. is fully responsible due to its active interventions rather than its inaction.",
+   "answer_words": 56,
+   "entity_density": 0.16071428571428573,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "This is completely our fault, resulting directly from our failure to act. [NAME] did not enforce his chemical weapons red line in [NAME] gave up its global leadership. By refusing to deploy the [NAME] to create safe zones near the [NAME] border, [NAME] allowed the mass killings we are seeing today.",
+  "This is not an [NAME] responsibility. I would say that the failure of the [NAME] to take any steps at all has certainly aggravated the problem, and it has given the [NAME], the [NAME] regime, and [NAME] the sense that they have an absolutely free ride to do anything they want to civilians.",
+  "We are not to blame here. Washington exhausted every diplomatic avenue at the [NAME] peace talks and provided billions through [NAME]. The failure rests entirely with the [NAME] and our partners in the [NAME], who refused to enforce humanitarian corridors in places like [NAME] while we carried the financial burden.",
+  "I think we are fully responsible, but that is because of our aggressive interventions, not our inaction. By approving [NAME] programs like [NAME] and sending weapons through [NAME] and [NAME] actively fueled a proxy war. We armed radical groups in [NAME] and [NAME], which turned a local uprising into a catastrophic international slaughter."
+ ],
+ "correct_index": 1,
+ "relax_rung": 0,
+ "flags": [
+  "relax_rung_0"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B simply removes conversational filler words and corrects minor grammar from Version A without altering any of the substantive claims or the overall position.",
+  "retried": false
+ },
+ "rejections": [],
+ "spare_generated": [
+  "We need to stop thinking that Washington controls everything. This tragedy is a deeply rooted sectarian conflict, not an American failure. Whether the Pentagon intervened or not, the fighting between Sunni militias, Kurdish Peshmerga forces, and Hezbollah fighters coming from Lebanon was inevitable. The Middle East determines its own future, regardless of our policies."
+ ],
+ "generator": "gemini-3.1-pro-preview",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "tokens_in": 2568,
+ "tokens_out": 763,
+ "n_api_calls": 10
+}

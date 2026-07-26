@@ -1,0 +1,71 @@
+{
+ "item_id": "C00792:NPR-19884:13",
+ "canonical_id": "C00792",
+ "built": true,
+ "question": "Is there still enough of a nationalist movement for the U.S. or other countries to back, to support?",
+ "true_answer_verbatim": "Yes, I believe there is. But I think the focal point of our support should be in the area of civilian protection. For the people of Syria, for the West, it's had political consequences as well. There is a straight line, for example, between a vote in the United Kingdom to leave the European Union and a huge migrant crisis affecting Europe, mainly in 2015, most of which came from Syria.",
+ "true_answer_paraphrased": "Yes, I believe there is. But I think our support should focus on civilian protection. For the people of Syria and the West, this has had political consequences too. For example, there is a direct line between the huge migrant crisis that affected Europe mostly in 2015, driven largely by Syria, and the vote in the United Kingdom to leave the European Union.",
+ "options": [
+  {
+   "text": "Not anymore, since those independent militias have lost all their credibility and territorial control. Back during the early battles in Idlib and Daraa, groups like Ahrar al-Sham offered a democratic alternative to Bashar al-Assad. However, rampant corruption and internal factionalism ruined them. Any foreign assistance from the Pentagon or NATO would be utterly wasted on a fragmented movement that cannot govern its own captured towns or protect local citizens.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 affirms that a viable nationalist movement still exists to be supported, whereas Answer 2 explicitly denies this, stating that such groups have lost all credibility and control.",
+   "answer_words": 69,
+   "entity_density": 0.08695652173913043,
+   "bucket": "H"
+  },
+  {
+   "text": "That movement is entirely gone, so foreign governments have nobody reliable left to support. Years ago, moderate councils in places like Homs and Deir ez-Zor showed real promise against the regime in Damascus. Yet relentless Russian airstrikes and Iranian ground offensives decimated those leaders. Right now, supplying arms through Turkey or Jordan only prolongs a stalemate without empowering any coherent political alternative capable of ruling a post-war nation.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 affirms that a viable nationalist movement still exists to be supported, whereas Answer 2 asserts that this movement is entirely gone and leaves no reliable partner for foreign backing.",
+   "answer_words": 68,
+   "entity_density": 0.10294117647058823,
+   "bucket": "H"
+  },
+  {
+   "text": "Yes, I believe there is. But I think our support should focus on civilian protection. For the people of Syria and the West, this has had political consequences too. For example, there is a direct line between the huge migrant crisis that affected Europe mostly in 2015, driven largely by Syria, and the vote in the United Kingdom to leave the European Union.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "answer_words": 63,
+   "entity_density": 0.14285714285714285,
+   "bucket": "H"
+  },
+  {
+   "text": "No, because that faction has completely disintegrated on the ground there. Back when the Free Syrian Army held territory near Damascus and Aleppo, intervention might have mattered. But today, extremist groups like Jabhat Fateh al-Sham and ISIS completely dominate the opposition forces. If Washington or London sends money or weaponry now, it simply ends up in the hands of jihadists fighting against Western interests across the Middle East.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 affirms that a nationalist movement still exists to be supported, whereas Answer 2 denies this, arguing that the faction has completely disintegrated.",
+   "answer_words": 68,
+   "entity_density": 0.20588235294117646,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "Not anymore, since those independent militias have lost all their credibility and territorial control. Back during the early battles in [NAME] and [NAME], groups like [NAME] al-Sham offered a democratic alternative to [NAME] al-Assad. However, rampant corruption and internal factionalism ruined them. Any foreign assistance from the [NAME] or [NAME] would be utterly wasted on a fragmented movement that cannot govern its own captured towns or protect local citizens.",
+  "That movement is entirely gone, so foreign governments have nobody reliable left to support. Years ago, moderate councils in places like [NAME] and [NAME] ez-Zor showed real promise against the regime in [NAME]. Yet relentless [NAME] airstrikes and [NAME] ground offensives decimated those leaders. Right now, supplying arms through [NAME] or [NAME] only prolongs a stalemate without empowering any coherent political alternative capable of ruling a post-war nation.",
+  "Yes, I believe there is. But I think our support should focus on civilian protection. For the people of [NAME] and the [NAME], this has had political consequences too. For example, there is a direct line between the huge migrant crisis that affected [NAME] mostly in [NUMBER], driven largely by [NAME], and the vote in the [NAME] to leave the [NAME].",
+  "No, because that faction has completely disintegrated on the ground there. Back when the [NAME] held territory near [NAME] and [NAME], intervention might have mattered. But today, extremist groups like [NAME] al-Sham and [NAME] completely dominate the opposition forces. [NAME] or [NAME] sends money or weaponry now, it simply ends up in the hands of jihadists fighting against [NAME] interests across the [NAME]."
+ ],
+ "correct_index": 2,
+ "relax_rung": 0,
+ "flags": [
+  "relax_rung_0"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Both versions express identical substantive claims regarding the focus on civilian protection and the causal link between the Syrian migrant crisis and Brexit.",
+  "retried": false
+ },
+ "rejections": [],
+ "spare_generated": [
+  "There are no viable rebel groups left to support because radical Islamists have completely taken them over. People who used to support a pluralistic Syrian republic have either fled to Beirut or been killed by extremist commanders. If the White House or the European Union tries to fund these remaining groups now, they are just repeating past mistakes in places like Libya and Iraq. We have to accept that the government in Damascus has won the military victory."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "tokens_in": 2831,
+ "tokens_out": 925,
+ "n_api_calls": 10
+}

@@ -1,0 +1,54 @@
+{
+ "item_id": "C02124:NPR-12184:2",
+ "canonical_id": "C02124",
+ "built": false,
+ "reason": "only 1 distractors survived the checks",
+ "rejections": [
+  {
+   "text": "People support him because of the Tamarod movement and the June protests, as everyone grew frustrated with the Freedom and Justice Party pushing their own agenda instead of helping the economy, and people in Cairo and Alexandria want a strong leader like Abdel Fattah el-Sisi to restore law and order right now.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "Both answers explain the field marshal's popularity as a reaction against the Muslim Brotherhood/Morsi administration and a desire for stability, security, and strong leadership."
+    }
+   ]
+  },
+  {
+   "text": "It comes down to his impressive resume and military background. Citizens remember how the Supreme Council of the Armed Forces managed the transition after Hosni Mubarak stepped down. They trust a uniformed commander far more than civilian politicians in Parliament who only argue and fail to deliver any actual public services.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "Both answers provide complementary reasons explaining the field marshal's popularity in Egypt, focusing on the desire for stability, distrust of civilian politicians, and reliance on the military."
+    }
+   ]
+  },
+  {
+   "text": "Look at the massive economic collapse we witnessed across Giza and Luxor last year. Ordinary workers blame the administration for endless fuel shortages and soaring food prices. They see the armed forces as the only reliable institution capable of organizing relief, fixing infrastructure, and saving the nation from total financial ruin today.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "Both answers explain the field marshal's popularity by attributing it to public desire for strong leadership and stability in the wake of the previous administration's failures."
+    }
+   ]
+  }
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Both versions attribute the subject's popularity to the same set of factors: pre-existing opposition to the Muslim Brotherhood and Morsi, a disastrous year in office, and a public desire for stability and security provided by a military general.",
+  "retried": false
+ },
+ "spare": [
+  "People support him because of the Tamarod movement and the June protests, as everyone grew frustrated with the Freedom and Justice Party pushing their own agenda instead of helping the economy, and people in Cairo and Alexandria want a strong leader like Abdel Fattah el-Sisi to restore law and order right now.",
+  "It comes down to his impressive resume and military background. Citizens remember how the Supreme Council of the Armed Forces managed the transition after Hosni Mubarak stepped down. They trust a uniformed commander far more than civilian politicians in Parliament who only argue and fail to deliver any actual public services.",
+  "Look at the massive economic collapse we witnessed across Giza and Luxor last year. Ordinary workers blame the administration for endless fuel shortages and soaring food prices. They see the armed forces as the only reliable institution capable of organizing relief, fixing infrastructure, and saving the nation from total financial ruin today."
+ ],
+ "tokens_in": 2833,
+ "tokens_out": 774,
+ "n_api_calls": 11
+}

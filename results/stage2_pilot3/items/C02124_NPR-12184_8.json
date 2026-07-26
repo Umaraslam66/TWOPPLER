@@ -1,0 +1,54 @@
+{
+ "item_id": "C02124:NPR-12184:8",
+ "canonical_id": "C02124",
+ "built": false,
+ "reason": "only 1 distractors survived the checks",
+ "rejections": [
+  {
+   "text": "To understand the current situation in Egypt, you have to look at foreign interference and the complete failure to build a coalition among secular youth groups in downtown Cairo. Movement leaders like those in the April 6 Youth Movement were too disorganized and naive, which allowed wealthy Gulf states like Saudi Arabia and the United Arab Emirates to pour billions of dollars into backing old regime elements. The military, led by Field Marshal Hussein Tantawi and later his successors, simply outmaneuvered the civilian opposition every step of the way, crushing any real chance for a pluralistic society.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "Both answers address the question of how the Egyptian uprising failed by pointing to the shortcomings of the civilian opposition and the entrenched power of the old regime/military, thus complementing rather than contradicting each other."
+    }
+   ]
+  },
+  {
+   "text": "The fundamental error was believing that Egypt, with its deep bureaucratic traditions and powerful military oversight by the Supreme Council of the Armed Forces, could instantly adopt Western-style democracy. Hosni Mubarak spent thirty years hollowing out civil society, destroying political parties like the Wafd, and leaving behind a security apparatus in Giza and Alexandria that was simply too entrenched to be dismantled by a few weeks of protests. When the Muslim Brotherhood took over the presidency, they proved just as authoritarian as the old guard, leading directly to the massive demonstrations backed by Tamarod and General al-Sisi.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "Both answers explain how the initial optimism of the Egyptian uprising faded by analyzing the enduring power of the military and the regime, alongside the governance failures and authoritarian tendencies of the Muslim Brotherhood."
+    }
+   ]
+  },
+  {
+   "text": "People forget that the Egyptian uprising was fundamentally economic in nature, driven by skyrocketing bread prices, youth unemployment, and corruption under Prime Minister Ahmed Nazif. When the interim military government failed to deliver any meaningful reforms or justice for the victims of state violence, public patience evaporated entirely. The Muslim Brotherhood failed because they cared more about capturing ministries and appointing partisans than solving the country's severe fiscal crisis. By the time the Tamarod petition campaign collected millions of signatures, the public had completely lost faith in both Islamist governance and parliamentary politics.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "Both answers explain the downfall of Egypt's post-uprising transition by pointing to both the persistence of the deep state/military and the incompetence or missteps of the Muslim Brotherhood in power."
+    }
+   ]
+  }
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B is merely a punctuation and syntax reformatting of Version A and contains the exact same arguments, historical distinctions, and substantive claims.",
+  "retried": false
+ },
+ "spare": [
+  "To understand the current situation in Egypt, you have to look at foreign interference and the complete failure to build a coalition among secular youth groups in downtown Cairo. Movement leaders like those in the April 6 Youth Movement were too disorganized and naive, which allowed wealthy Gulf states like Saudi Arabia and the United Arab Emirates to pour billions of dollars into backing old regime elements. The military, led by Field Marshal Hussein Tantawi and later his successors, simply outmaneuvered the civilian opposition every step of the way, crushing any real chance for a pluralistic society.",
+  "The fundamental error was believing that Egypt, with its deep bureaucratic traditions and powerful military oversight by the Supreme Council of the Armed Forces, could instantly adopt Western-style democracy. Hosni Mubarak spent thirty years hollowing out civil society, destroying political parties like the Wafd, and leaving behind a security apparatus in Giza and Alexandria that was simply too entrenched to be dismantled by a few weeks of protests. When the Muslim Brotherhood took over the presidency, they proved just as authoritarian as the old guard, leading directly to the massive demonstrations backed by Tamarod and General al-Sisi.",
+  "People forget that the Egyptian uprising was fundamentally economic in nature, driven by skyrocketing bread prices, youth unemployment, and corruption under Prime Minister Ahmed Nazif. When the interim military government failed to deliver any meaningful reforms or justice for the victims of state violence, public patience evaporated entirely. The Muslim Brotherhood failed because they cared more about capturing ministries and appointing partisans than solving the country's severe fiscal crisis. By the time the Tamarod petition campaign collected millions of signatures, the public had completely lost faith in both Islamist governance and parliamentary politics."
+ ],
+ "tokens_in": 3748,
+ "tokens_out": 1255,
+ "n_api_calls": 11
+}

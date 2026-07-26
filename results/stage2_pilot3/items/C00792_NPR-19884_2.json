@@ -1,0 +1,83 @@
+{
+ "item_id": "C00792:NPR-19884:2",
+ "canonical_id": "C00792",
+ "built": true,
+ "question": "Are these groups that having lost Aleppo might align with the so-called Islamic State elsewhere in Syria, or are they distinct and different and opposed to that group?",
+ "true_answer_verbatim": "I think that anyone who considers himself a Syrian nationalist - in essence a Syria-firster - would find it very, very, very difficult to sign up with ISIS because ISIS of course believes it has a worldwide mission. And ISIS really has not been engaged in fighting Bashar al-Assad very much in any event.",
+ "true_answer_paraphrased": "Anyone who considers himself a Syrian nationalist, meaning a Syria-firster, would find it very difficult to join ISIS because ISIS believes it has a worldwide mission, and ISIS has not been fighting Bashar al-Assad very much anyway.",
+ "options": [
+  {
+   "text": "Many fighters leaving Homs and Hama share the exact same radical ideology as Daesh, and once they regroup in the eastern desert near Raqqa, commanders like Zahran Alloush will likely merge their brigades directly into the Islamic State.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 argues that Syrian nationalists would find it difficult to join ISIS due to differing ideologies and goals, whereas Answer 2 argues that many departing fighters share ISIS's radical ideology and will likely merge their brigades into the Islamic State.",
+   "answer_words": 38,
+   "entity_density": 0.21052631578947367,
+   "bucket": "H"
+  },
+  {
+   "text": "Anyone who considers himself a Syrian nationalist, meaning a Syria-firster, would find it very difficult to join ISIS because ISIS believes it has a worldwide mission, and ISIS has not been fighting Bashar al-Assad very much anyway.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "answer_words": 37,
+   "entity_density": 0.16216216216216217,
+   "bucket": "H"
+  },
+  {
+   "text": "Those northern militias operating around Azaz and Al-Bab are purely mercenary networks funded by Turkey. They have no ideological loyalty to either Bashar al-Assad or the caliphate, shifting their allegiance strictly based on Saudi financial backing every month.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 suggests that Syrian nationalists would find it difficult to join ISIS due to ideological and strategic differences, whereas Answer 2 characterizes the northern militias as purely mercenary networks driven solely by financial backing rather than any ideological alignment or opposition.",
+   "answer_words": 38,
+   "entity_density": 0.13157894736842105,
+   "bucket": "H"
+  },
+  {
+   "text": "They are deeply intertwined radical factions that frequently coordinate attacks with the Islamic State across Deir ez-Zur, and local emirs in Mosul and Raqqa regularly transfer weapons to these brigades, proving they operate as unified branches of the same movement.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 argues that Syrian nationalist rebels would find it difficult to join ISIS due to differing ideologies and goals, whereas Answer 2 claims these groups are deeply intertwined and operate as unified branches of the same movement.",
+   "answer_words": 40,
+   "entity_density": 0.125,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "Many fighters leaving [NAME] and [NAME] share the exact same radical ideology as [NAME], and once they regroup in the eastern desert near [NAME], commanders like [NAME] will likely merge their brigades directly into the [NAME].",
+  "Anyone who considers himself a [NAME] nationalist, meaning a [NAME], would find it very difficult to join [NAME] because [NAME] believes it has a worldwide mission, and [NAME] has not been fighting [NAME] al-Assad very much anyway.",
+  "Those northern militias operating around [NAME] and [NAME] are purely mercenary networks funded by [NAME]. They have no ideological loyalty to either [NAME] al-Assad or the caliphate, shifting their allegiance strictly based on [NAME] financial backing every month.",
+  "They are deeply intertwined radical factions that frequently coordinate attacks with the [NAME] across [NAME] ez-Zur, and local emirs in [NAME] and [NAME] regularly transfer weapons to these brigades, proving they operate as unified branches of the same movement."
+ ],
+ "correct_index": 1,
+ "relax_rung": 0,
+ "flags": [
+  "relax_rung_0"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Both versions convey the exact same arguments that a Syrian nationalist would struggle to join ISIS due to its global mission and its limited focus on fighting Bashar al-Assad.",
+  "retried": false
+ },
+ "rejections": [
+  {
+   "text": "They are completely separate factions across Idlib and Daraa that despise Abu Bakr al-Baghdadi, as Jabhat Fateh al-Sham and Ahrar al-Sham reject the caliphate entirely, choosing instead to focus solely on overthrowing Bashar al-Assad's regime in Damascus.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "Both answers argue that these rebel groups are distinct from and opposed to the Islamic State, supporting the same general position regarding the question asked."
+    }
+   ]
+  }
+ ],
+ "spare_generated": [
+  "They are completely separate factions across Idlib and Daraa that despise Abu Bakr al-Baghdadi, as Jabhat Fateh al-Sham and Ahrar al-Sham reject the caliphate entirely, choosing instead to focus solely on overthrowing Bashar al-Assad's regime in Damascus."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "tokens_in": 2736,
+ "tokens_out": 722,
+ "n_api_calls": 11
+}

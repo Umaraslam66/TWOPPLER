@@ -1,0 +1,71 @@
+{
+ "item_id": "C00792:NPR-19884:13",
+ "canonical_id": "C00792",
+ "built": true,
+ "question": "Is there still enough of a nationalist movement for the U.S. or other countries to back, to support?",
+ "true_answer_verbatim": "Yes, I believe there is. But I think the focal point of our support should be in the area of civilian protection. For the people of Syria, for the West, it's had political consequences as well. There is a straight line, for example, between a vote in the United Kingdom to leave the European Union and a huge migrant crisis affecting Europe, mainly in 2015, most of which came from Syria.",
+ "true_answer_paraphrased": "Yes, I believe there is, but I think our support should focus on protecting civilians. It has also had political consequences for the people of Syria and the West. For example, there is a direct connection between the UK's vote to leave the European Union and the large migrant crisis that affected Europe mainly in 2015, which mostly involved people coming from Syria.",
+ "options": [
+  {
+   "text": "Yes, but we must change our strategy and provide lethal military aid. The Free Syrian Army still has tens of thousands of dedicated fighters around Aleppo and Daraa. Instead of just sending bandages, Washington needs to give these rebels anti-aircraft missiles to counter Putin's jets and Iranian militias. If the White House doesn't act decisively, Damascus will never negotiate in Geneva.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Although both agree that there is a nationalist movement worth supporting, they disagree on the nature of that support, with Answer 1 advocating for a focus on protecting civilians and Answer 2 demanding lethal military aid.",
+   "answer_words": 61,
+   "entity_density": 0.21311475409836064,
+   "bucket": "H"
+  },
+  {
+   "text": "No. The traditional Arab nationalist rebellion is over after the recent collapse in eastern Aleppo. Our only viable partners on the ground now are the Kurdish forces. The Department of Defense should strictly support the Syrian Democratic Forces and the YPG in the north. Focusing our resources on taking Raqqa from the Islamic State is much more important than trying to find a moderate opposition that does not exist.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 asserts that there is still a nationalist movement to support, while Answer 2 explicitly denies this by stating the rebellion is over.",
+   "answer_words": 69,
+   "entity_density": 0.18840579710144928,
+   "bucket": "H"
+  },
+  {
+   "text": "Yes, I believe there is, but I think our support should focus on protecting civilians. It has also had political consequences for the people of Syria and the West. For example, there is a direct connection between the UK's vote to leave the European Union and the large migrant crisis that affected Europe mainly in 2015, which mostly involved people coming from Syria.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "answer_words": 63,
+   "entity_density": 0.12698412698412698,
+   "bucket": "H"
+  },
+  {
+   "text": "No, I don't think there is. The groups referred to as the moderate opposition in Syria have been entirely taken over by radical factions like Al-Nusra and ISIS. If the CIA or the Pentagon tries to send weapons through Turkey now, those arms will end up with jihadists in Idlib. We have to accept that Assad and his Russian allies have won this phase of the war.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 asserts that there is still a nationalist movement worth supporting, whereas Answer 2 explicitly denies this by arguing that radical factions have completely taken over the opposition.",
+   "answer_words": 67,
+   "entity_density": 0.13432835820895522,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "Yes, but we must change our strategy and provide lethal military aid. [NAME] still has tens of thousands of dedicated fighters around [NAME] and [NAME]. Instead of just sending bandages, [NAME] needs to give these rebels anti-aircraft missiles to counter [NAME] jets and [NAME] militias. If the [NAME] doesn't act decisively, [NAME] will never negotiate in [NAME].",
+  "No. The traditional [NAME] nationalist rebellion is over after the recent collapse in eastern [NAME]. Our only viable partners on the ground now are the [NAME] forces. [NAME] of [NAME] should strictly support the [NAME] and the [NAME] in the north. Focusing our resources on taking [NAME] from the [NAME] is much more important than trying to find a moderate opposition that does not exist.",
+  "Yes, I believe there is, but I think our support should focus on protecting civilians. It has also had political consequences for the people of [NAME] and the [NAME]. For example, there is a direct connection between the [NAME] vote to leave the [NAME] and the large migrant crisis that affected [NAME] mainly in [NUMBER], which mostly involved people coming from [NAME].",
+  "No, I don't think there is. The groups referred to as the moderate opposition in [NAME] have been entirely taken over by radical factions like [NAME] and [NAME]. If the [NAME] or the [NAME] tries to send weapons through [NAME] now, those arms will end up with jihadists in [NAME]. We have to accept that [NAME] and his [NAME] allies have won this phase of the war."
+ ],
+ "correct_index": 2,
+ "relax_rung": 0,
+ "flags": [
+  "relax_rung_0"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B simply rephrases the exact same points about focusing support on civilian protection and the political consequences of the Syrian migrant crisis on the West, including Brexit.",
+  "retried": false
+ },
+ "rejections": [],
+ "spare_generated": [
+  "There is no cohesive national movement, and there never was. What we see in places like Homs and Hama are fractured local militias financed by Saudi Arabia, Qatar, and Turkey. The State Department needs to stop pretending we can engineer a democratic uprising in the Levant. Congress must cut off all funding for Operation Timber Sycamore and withdraw from this proxy war."
+ ],
+ "generator": "gemini-3.1-pro-preview",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "tokens_in": 2784,
+ "tokens_out": 877,
+ "n_api_calls": 10
+}

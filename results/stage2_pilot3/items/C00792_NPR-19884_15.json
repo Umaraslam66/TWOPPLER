@@ -1,0 +1,71 @@
+{
+ "item_id": "C00792:NPR-19884:15",
+ "canonical_id": "C00792",
+ "built": true,
+ "question": "Which international backer has lost most here - the U.S., Turkey, Saudi Arabia, Qatar? I mean who's the outside player who's lost (unintelligible)?",
+ "true_answer_verbatim": "You know, I think, Robert, in terms of external actors who have involved themselves one way or the other in the Syrian crisis, the biggest loser is the United States. The loss in terms of credibility, reputation has been simply enormous.",
+ "true_answer_paraphrased": "Robert, regarding external actors involved in the Syrian crisis, the biggest loser is the United States, and the loss of credibility and reputation has been enormous.",
+ "options": [
+  {
+   "text": "Robert, regarding foreign backers in Syria, Ankara has taken the heaviest hit, especially since President Erdogan failed to remove Assad from power in Damascus.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 identifies the United States as the biggest loser, whereas Answer 2 asserts that Turkey (Ankara) has taken the heaviest hit.",
+   "answer_words": 24,
+   "entity_density": 0.25,
+   "bucket": "H"
+  },
+  {
+   "text": "Looking across all foreign participants in Syria, Doha took the hardest blow, with Emir Tamim losing all leverage over the main rebel factions in Idlib.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 identifies the United States as the biggest loser, whereas Answer 2 asserts that Qatar (Doha) took the hardest blow.",
+   "answer_words": 25,
+   "entity_density": 0.2,
+   "bucket": "H"
+  },
+  {
+   "text": "Robert, regarding external actors involved in the Syrian crisis, the biggest loser is the United States, and the loss of credibility and reputation has been enormous.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "answer_words": 26,
+   "entity_density": 0.11538461538461539,
+   "bucket": "H"
+  },
+  {
+   "text": "Among outside powers meddling in Syria, Riyadh suffered the greatest defeat, watching King Salman's proxy militias crumble completely across the northern provinces last month.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 identifies the United States as the biggest loser, whereas Answer 2 identifies Saudi Arabia (Riyadh) as having suffered the greatest defeat.",
+   "answer_words": 24,
+   "entity_density": 0.16666666666666666,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "Robert, regarding foreign backers in [NAME] has taken the heaviest hit, especially since [NAME] failed to remove [NAME] from power in [NAME].",
+  "Looking across all foreign participants in [NAME] took the hardest blow, with [NAME] losing all leverage over the main rebel factions in [NAME].",
+  "Robert, regarding external actors involved in the [NAME] crisis, the biggest loser is the [NAME], and the loss of credibility and reputation has been enormous.",
+  "Among outside powers meddling in [NAME] suffered the greatest defeat, watching [NAME] proxy militias crumble completely across the northern provinces last month."
+ ],
+ "correct_index": 2,
+ "relax_rung": 0,
+ "flags": [
+  "relax_rung_0"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Both versions assert that the United States is the biggest loser among external actors in the Syrian crisis and that it has suffered an enormous loss of credibility and reputation.",
+  "retried": false
+ },
+ "rejections": [],
+ "spare_generated": [
+  "Regarding international patrons in the Syrian conflict, nobody lost worse than Tehran, despite Qasem Soleimani deploying thousands of elite fighters to prop up Assad."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "tokens_in": 2207,
+ "tokens_out": 443,
+ "n_api_calls": 10
+}

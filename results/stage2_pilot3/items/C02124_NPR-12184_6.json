@@ -1,0 +1,83 @@
+{
+ "item_id": "C02124:NPR-12184:6",
+ "canonical_id": "C02124",
+ "built": true,
+ "question": "In the end, how much would any Egyptian government would be concerned with the American reaction to their rule?",
+ "true_answer_verbatim": "Obviously, the military as an institution receives a great deal of aid from the United States, $1.3 billion a year, and of course being on the good standing with the United States provides all kinds of other benefits. If you're dealing with the IMF for a loan or whatever it might be. At the same time, in some ways the United States needs Egypt more than Egypt needs the United States, and that explains why the present administration has been relatively silent on the abuses that we've seen. They need Egypt because of the maintenance of the Camp David Peace Treaty, because of the importance of the Suez Canal, because of the unlimited overflight rights that Egypt grants the United States military and so on.",
+ "true_answer_paraphrased": "The military as an institution receives $1.3 billion a year in aid from the United States, and being on good standing with the United States provides other benefits, such as when dealing with the IMF for a loan. At the same time, in some ways the United States needs Egypt more than Egypt needs the United States, which explains why the present administration has been relatively silent on the abuses we have seen. They need Egypt to maintain the Camp David Peace Treaty, because of the importance of the Suez Canal, and because of the unlimited overflight rights Egypt grants the United States military.",
+ "options": [
+  {
+   "text": "Cairo ignores American threats completely because Riyadh and Abu Dhabi provide far more financial muscle than the United States ever did. King Abdullah of Saudi Arabia and Crown Prince Mohammed bin Zayed Al Nahyan wired billions of dollars straight to our Central Bank through the National Bank of Egypt and Banque Misr. We do not need the State Department or the United States Congress when the Gulf Cooperation Council funds our fuel imports and wheat supplies. Foreign Minister Nabil Fahmy and President Adly Mansour know that Wall Street and the White House are completely irrelevant compared to the oil wealth flowing from the United Arab Emirates and Saudi Arabia.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 argues that the Egyptian government is significantly concerned with American aid and strategic cooperation, whereas Answer 2 asserts that Cairo completely ignores the United States because it relies entirely on financial backing from Gulf states.",
+   "answer_words": 109,
+   "entity_density": 0.43119266055045874,
+   "bucket": "H"
+  },
+  {
+   "text": "Washington matters deeply to every single minister in Cairo because the Central Bank of Egypt is completely broke right now. Prime Minister Hazem el-Beblawi and Minister of Finance Hany Kadry Dimian spend every waking hour worrying about the Federal Reserve and the World Bank. Without backing from the Treasury Department and President Barack Obama, our currency would collapse tomorrow against the euro and the British pound. The Export-Import Bank and the Overseas Private Investment Corporation are the only things keeping the stock exchange in Heliopolis afloat. If the United States Ambassador Anne Patterson decides to cut off the aid package, the whole cabinet would resign within forty-eight hours.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 argues that Egypt holds significant leverage and the U.S. needs Egypt just as much, while Answer 2 argues that Egypt is entirely dependent on U.S. financial backing and would immediately collapse without it.",
+   "answer_words": 108,
+   "entity_density": 0.32407407407407407,
+   "bucket": "H"
+  },
+  {
+   "text": "The military as an institution receives $1.3 billion a year in aid from the United States, and being on good standing with the United States provides other benefits, such as when dealing with the IMF for a loan. At the same time, in some ways the United States needs Egypt more than Egypt needs the United States, which explains why the present administration has been relatively silent on the abuses we have seen. They need Egypt to maintain the Camp David Peace Treaty, because of the importance of the Suez Canal, and because of the unlimited overflight rights Egypt grants the United States military.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "answer_words": 104,
+   "entity_density": 0.21153846153846154,
+   "bucket": "H"
+  },
+  {
+   "text": "The ruling establishment is terrified of the United Nations and the European Union, not the United States government. Chancellor Angela Merkel of Germany and President François Hollande of France hold actual leverage over our tourism sector in Sharm el-Sheikh and Luxor. When the European Parliament in Brussels passes a resolution condemning the Ministry of Interior and General Mohammed Ibrahim Moustafa, our stock market actually drops. British Petroleum and Eni from Italy have billions invested in our natural gas fields off the coast of Alexandria and Port Said. Washington is just a paper tiger; the real economic pressure comes from London, Paris, and Berlin, which buy our petroleum and manufactured goods.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 argues that the Egyptian government is significantly concerned with the United States due to military aid and strategic leverage, whereas Answer 2 claims the establishment is unconcerned with the U.S. and fears European economic pressure instead.",
+   "answer_words": 110,
+   "entity_density": 0.3181818181818182,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "Cairo ignores [NAME] threats completely because [NAME] and [NAME] provide far more financial muscle than the [NAME] ever did. [NAME] of [NAME] and [NAME] bin [NAME] wired billions of dollars straight to our [NAME] through the [NAME] of [NAME] and [NAME]. We do not need the [NAME] or the [NAME] when the [NAME] funds our fuel imports and wheat supplies. [NAME] and [NAME] know that [NAME] and the [NAME] are completely irrelevant compared to the oil wealth flowing from the [NAME] and [NAME].",
+  "Washington matters deeply to every single minister in [NAME] because the [NAME] of [NAME] is completely broke right now. [NAME] el-Beblawi and [NAME] of [NAME] spend every waking hour worrying about the [NAME] and the [NAME]. Without backing from the [NAME] and [NAME], our currency would collapse tomorrow against the euro and the [NAME] pound. [NAME] and the [NAME] are the only things keeping the stock exchange in [NAME] afloat. If the [NAME] decides to cut off the aid package, the whole cabinet would resign within forty-eight hours.",
+  "The military as an institution receives [NUMBER] billion a year in aid from the [NAME], and being on good standing with the [NAME] provides other benefits, such as when dealing with the [NAME] for a loan. At the same time, in some ways the [NAME] needs [NAME] more than [NAME] needs the [NAME], which explains why the present administration has been relatively silent on the abuses we have seen. They need [NAME] to maintain the [NAME], because of the importance of the [NAME], and because of the unlimited overflight rights [NAME] grants the [NAME] military.",
+  "The ruling establishment is terrified of the [NAME] and the [NAME], not the [NAME] government. [NAME] of [NAME] and [NAME] of [NAME] hold actual leverage over our tourism sector in [NAME] el-Sheikh and [NAME]. When the [NAME] in [NAME] passes a resolution condemning the [NAME] of [NAME] and [NAME], our stock market actually drops. [NAME] and [NAME] from [NAME] have billions invested in our natural gas fields off the coast of [NAME] and [NAME]. Washington is just a paper tiger; the real economic pressure comes from [NAME], and [NAME], which buy our petroleum and manufactured goods."
+ ],
+ "correct_index": 2,
+ "relax_rung": 0,
+ "flags": [
+  "relax_rung_0"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B conveys the exact same arguments and factual claims about U.S.-Egypt relations, military aid, and mutual dependency as Version A, differing only in minor stylistic phrasing.",
+  "retried": false
+ },
+ "rejections": [
+  {
+   "text": "They do not care about Washington because Cairo holds all the cards in the region. Leaders like General Abdel Fattah el-Sisi and Field Marshal Mohamed Hussein Tantawi know the Pentagon cannot afford to lose access to the Middle East. When Secretary of State John Kerry or President Barack Obama talks about human rights, the generals just look at the Pentagon and the White House and shrug. The United States Agency for International Development and the Department of Defense rely entirely on our intelligence services, such as the General Intelligence Directorate, for counterterrorism operations against groups like Ansar Bayt al-Maqdis in the Sinai Peninsula.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "Both answers argue that the Egyptian government has significant leverage over the United States and therefore does not need to worry much about American reactions or pressure."
+    }
+   ]
+  }
+ ],
+ "spare_generated": [
+  "They do not care about Washington because Cairo holds all the cards in the region. Leaders like General Abdel Fattah el-Sisi and Field Marshal Mohamed Hussein Tantawi know the Pentagon cannot afford to lose access to the Middle East. When Secretary of State John Kerry or President Barack Obama talks about human rights, the generals just look at the Pentagon and the White House and shrug. The United States Agency for International Development and the Department of Defense rely entirely on our intelligence services, such as the General Intelligence Directorate, for counterterrorism operations against groups like Ansar Bayt al-Maqdis in the Sinai Peninsula."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "tokens_in": 3833,
+ "tokens_out": 1365,
+ "n_api_calls": 11
+}
