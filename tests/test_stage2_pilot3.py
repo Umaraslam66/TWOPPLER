@@ -308,13 +308,36 @@ def test_the_ladder_rung_is_recorded(tmp_path):
 # ---------------------------------------------------------------------------
 
 
-def test_the_generator_is_never_the_robustness_scorer():
-    assert P3.GENERATOR != P3.ROBUSTNESS_SCORER
+def test_the_generator_is_never_a_scored_model():
+    """B10.3's hard invariant: no model scores its own writing."""
+    assert P3.GENERATOR not in P3.SCORED_MODELS
 
 
-def test_a_build_refuses_to_run_on_the_robustness_scorer(tmp_path, monkeypatch):
+def test_the_robustness_scorer_overlap_is_declared_not_hidden():
+    """B10.3 allows the overlap; it does not allow leaving it unsaid.
+
+    The generator is the A3 robustness scorer, so the flag must be true and the
+    declaration must state all three things a reader needs: that it is inert in
+    this pilot, what happens at the confirmatory stage, and why the paraphrase
+    symmetry mitigates self-preference.
+    """
+    assert P3.GENERATOR_IS_ROBUSTNESS_SCORER is True
+    text = P3.B10_3_OVERLAP_DECLARATION
+    assert "INERT IN THIS PILOT" in text
+    assert "CONFIRMATORY STAGE" in text
+    assert "MITIGATING SYMMETRY" in text
+
+
+def test_the_generator_history_records_every_switch():
+    models = [e["model"] for e in P3.GENERATOR_HISTORY]
+    assert models[-1] == P3.GENERATOR
+    assert "gemini-3.1-pro-preview" in models
+    assert all(e.get("reason") for e in P3.GENERATOR_HISTORY)
+
+
+def test_a_build_refuses_to_run_on_a_scored_model(tmp_path, monkeypatch):
     client = FakeClient()
-    client.model_name = P3.ROBUSTNESS_SCORER
+    client.model_name = P3.SCORED_MODELS[0]
     with pytest.raises(SystemExit, match="B10.3 violation"):
         P3.cmd_build(Args(pilot1_dir=ROOT / "results/stage2_pilot",
                           out_dir=tmp_path, client=client, force=False,
@@ -376,6 +399,38 @@ def test_the_key_names_the_answer_for_every_entry(tmp_path):
     assert key.count("| real |") == 10
     assert key.count("| control |") == 10
     assert "**none**" in key
+
+
+def test_the_key_spells_out_the_overlap_leak_when_items_are_reused(tmp_path):
+    """12 built items cannot supply 20 disjoint entries, so some are twinned.
+
+    A twinned pair shows the same question with three of four options shared,
+    which identifies the real answer by elimination. The KEY must say so and
+    must name the real entries that are NOT twinned, because that subset is the
+    only uncontaminated hit rate.
+    """
+    _fake_built(tmp_path, n=12)
+    P3.cmd_sheet(Args(out_dir=tmp_path))
+    key = (tmp_path / "DETECTABILITY_KEY.md").read_text()
+    plan = json.loads((tmp_path / "detectability_plan.json").read_text())
+    assert plan["twinned_entry_numbers"], "12 items must force an overlap"
+    assert "READ THIS BEFORE SCORING" in key
+    assert "by elimination" in key
+    assert plan["uncontaminated_real_entries"]
+    assert len(plan["uncontaminated_real_entries"]) == \
+        10 - len(plan["twinned_entry_numbers"])
+    for n in plan["uncontaminated_real_entries"]:
+        assert f"#{n}" in key
+
+
+def test_a_disjoint_sheet_carries_no_overlap_warning(tmp_path):
+    _fake_built(tmp_path, n=20)
+    P3.cmd_sheet(Args(out_dir=tmp_path))
+    key = (tmp_path / "DETECTABILITY_KEY.md").read_text()
+    plan = json.loads((tmp_path / "detectability_plan.json").read_text())
+    assert plan["twinned_entry_numbers"] == {}
+    assert "READ THIS BEFORE SCORING" not in key
+    assert "overlap between real and control draws: none" in key
 
 
 def test_a_control_entry_contains_no_real_answer(tmp_path):

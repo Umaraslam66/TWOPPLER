@@ -93,35 +93,88 @@ SCORED_CLAIM = (
 # Generator (B10.3)
 # ---------------------------------------------------------------------------
 
-#: The robustness scorer named by Amendment 1 A3 / CLAUDE.md. The generator must
-#: not be this model.
+#: The A3 robustness scorer named by Amendment 1 / CLAUDE.md.
 ROBUSTNESS_SCORER = "gemini-3.5-flash-lite"
 
-#: The generator. Different family version AND different tier from the
-#: robustness scorer, so B10.3 holds on the strict reading of "version".
-#: Availability was checked against the key before selection; measured 12/12
-#: calls in 53.9 s with no retries, which supports a build of this size.
-GENERATOR = "gemini-3.1-pro-preview"
+#: The generator. Owner directive 2026-07-27 (final): the cheapest model.
+#:
+#: Two switches happened, both on owner cost directives, both recorded here
+#: because B10.3 requires the exact generator version per run:
+#:   1. gemini-3.1-pro-preview -> gemini-3.5-flash (owner cost directive). Five
+#:      items had been built on Pro; they are kept UNTOUCHED as an audit trail
+#:      under genlog_pro_abandoned/ and items_pro_abandoned/, and none of them
+#:      enters a final set -- a set must have ONE generator and one version
+#:      string, so all 17 items were regenerated from scratch.
+#:   2. gemini-3.5-flash -> gemini-3.5-flash-lite (owner directive 2026-07-27):
+#:      cheapest available, and pilot scoring is Gemma-only so nothing scored
+#:      reads its own writing.
+GENERATOR = "gemini-3.5-flash-lite"
+
+#: Models SCORED in this pilot. The generator must never be one of them -- that
+#: is the invariant B10.3 protects and it is still enforced as a hard failure.
+SCORED_MODELS = ("Gemma-4-31B-it", "leonardo-gemma4-31b-it")
+
+#: B10.3 DECLARED OVERLAP. The generator now IS the A3 robustness scorer. B10.3
+#: anticipated this ("if operational constraints ever force the same version,
+#: that overlap is reported beside every robustness number it touches") and the
+#: constraint here is the owner's cost directive. Declared, not hidden:
+GENERATOR_IS_ROBUSTNESS_SCORER = GENERATOR == ROBUSTNESS_SCORER
+
+B10_3_OVERLAP_DECLARATION = (
+    "DECLARED OVERLAP (B10.3): the generator gemini-3.5-flash-lite is also the "
+    "Amendment 1 A3 robustness scorer. (a) INERT IN THIS PILOT -- pilot scoring "
+    "is Gemma-4-31B-it only and no Gemini model scores anything here, so no "
+    "model reads its own writing at any point in round 3. (b) AT THE "
+    "CONFIRMATORY STAGE this is a live constraint: either the generator is "
+    "changed to a different model at bar-lock, or every A3 robustness number "
+    "computed on this instrument carries the overlap flag beside it. That is a "
+    "bar-lock decision for the owner, not the implementer's. (c) MITIGATING "
+    "SYMMETRY -- B10.4 sends all four options, INCLUDING the paraphrased true "
+    "answer, through one byte-identical paraphrase call on this same model, so "
+    "no option is stylistically closer to the generator than any other. A "
+    "self-preference effect would have to distinguish text the model wrote from "
+    "text it only rewrote, not model style from corpus style.")
+
+#: Every generator this round has used, in order, with the reason it changed.
+#: B10.3 requires the exact generator version per run; a switch mid-round is
+#: exactly the thing that must not be silent.
+GENERATOR_HISTORY = [
+    {"model": "gemini-3.1-pro-preview", "status": "abandoned",
+     "reason": "owner cost directive",
+     "artifacts": "results/stage2_pilot3/{genlog,items}_pro_abandoned/ "
+                  "(5 items, audit trail only, never in a final set)"},
+    {"model": "gemini-3.5-flash", "status": "superseded before any call",
+     "reason": "owner directive 2026-07-27 named the cheapest model instead"},
+    {"model": "gemini-3.5-flash-lite", "status": "in use",
+     "reason": "owner directive 2026-07-27, final: cheapest available; pilot "
+               "scoring is Gemma-only so nothing scored reads its own writing"},
+]
 
 GEN_TEMPERATURE = 0.7      # counterfactuals need diversity
 CHECK_TEMPERATURE = 0.0    # paraphrase and the checks must not wander
 
-#: Token budgets, sized on MEASURED thinking cost, not guessed.
+#: Token budgets, sized on MEASURED behaviour of THIS generator, not inherited.
 #:
-#: gemini-3.1-pro-preview refuses thinking_budget=0 ("this model only works in
-#: thinking mode"), and its hidden thinking is charged against
-#: max_output_tokens. A 2048 budget was consumed 1963/2048 by thinking and the
-#: visible answer was truncated at 81 tokens mid-sentence -- which is exactly
-#: how the first trial item failed, with the generator appearing to return 2
-#: blocks instead of 4. Measured at 8192: 3,205 thinking + 273 visible tokens,
-#: finish_reason STOP, all 4 blocks present.
-#: Measured again on a 228-word answer: the paraphrase spent ~3,900 tokens
-#: thinking and returned 163 visible tokens ending mid-word under a 4,096
-#: budget. Thinking cost scales with input, so the budgets are sized for the
-#: longest real answer rather than the median one.
-GEN_MAX_TOKENS = 16384
-PARA_MAX_TOKENS = 16384
-CHECK_MAX_TOKENS = 8192
+#: Pro's budgets (16384/16384/8192) do not transfer, and re-measuring was not
+#: optional: Pro charges hidden thinking against max_output_tokens, so its
+#: budgets were mostly thinking headroom. flash-lite as configured in
+#: doppler.gemini sends NO thinking config, and the probe measured
+#: ``thoughts_token_count == 0`` on all 15 calls -- the budget is visible output
+#: and nothing else.
+#:
+#: Measured 2026-07-27, worst-case item C02013:NPR-9480:70 (318-word answer):
+#:   generate      1,555 visible tokens at an 8,192 budget (finish STOP, 4/4
+#:                 blocks). At 1,024 it hit MAX_TOKENS and the 4th block came
+#:                 back 10 words long -- the exact failure shape that made Pro's
+#:                 first trial look like a 2-block generator.
+#:   paraphrase    253 visible tokens (318 words in, ~210 out). Not truncated
+#:                 even at a 512 budget.
+#:   checks        28-43 visible tokens; not truncated even at a 128 budget.
+#: Budgets are set well above the worst measurement, which costs nothing --
+#: billing is on tokens produced, not on the budget.
+GEN_MAX_TOKENS = 8192
+PARA_MAX_TOKENS = 2048
+CHECK_MAX_TOKENS = 1024
 
 #: Hard ceiling on API calls for one build invocation. A runaway loop costs
 #: quota that the next day's work needs.
@@ -449,15 +502,19 @@ def cmd_build(args) -> int:
         client = GeminiClient(max_calls=args.call_cap,
                               temperature=CHECK_TEMPERATURE,
                               max_output_tokens=CHECK_MAX_TOKENS)
-        if client.model_name == GENERATOR:
-            raise fatal("MODEL_NAME already names the generator; the override "
-                        "below is what documents B10.3, so this is ambiguous")
-        # B10.3: the generator is NEVER the robustness scorer. Overriding the
-        # attribute (rather than editing the shared client) keeps the module
-        # other experiments import untouched.
+        # The GENERATOR constant is authoritative, not .env's MODEL_NAME: the
+        # constant is what every artifact records, so the run must use it even
+        # when the two happen to agree. Setting the attribute (rather than
+        # editing the shared client) keeps the module other experiments import
+        # untouched.
         client.model_name = GENERATOR
-    if getattr(client, "model_name", GENERATOR) == ROBUSTNESS_SCORER:
-        raise fatal(f"B10.3 violation: generator is {ROBUSTNESS_SCORER}")
+    # B10.3's hard invariant, still enforced: the generator is NEVER a model
+    # this pilot scores. The generator/robustness-scorer overlap is a DECLARED
+    # limitation (B10_3_OVERLAP_DECLARATION), not a build-time failure -- B10.3
+    # explicitly provides for it, and nothing Gemini-side is scored in round 3.
+    if getattr(client, "model_name", GENERATOR) in SCORED_MODELS:
+        raise fatal(f"B10.3 violation: the generator is a scored model "
+                    f"({client.model_name})")
 
     built = skipped = failed = 0
     tin_total = tout_total = 0
@@ -564,10 +621,14 @@ def build_summary(out_dir: Path, pilot1_dir: Path) -> dict:
         "built_utc": now(),
         "generator": GENERATOR,
         "robustness_scorer": ROBUSTNESS_SCORER,
-        "generator_separation":
-            "B10.3 holds: the generator is a different Gemini version AND a "
-            "different tier from the robustness scorer, and pilot scoring is "
-            "Gemma-only, so no scored model reads its own writing.",
+        "generator_is_robustness_scorer": GENERATOR_IS_ROBUSTNESS_SCORER,
+        "generator_separation": B10_3_OVERLAP_DECLARATION,
+        "generator_history": GENERATOR_HISTORY,
+        "token_budgets": {"generate": GEN_MAX_TOKENS,
+                          "paraphrase": PARA_MAX_TOKENS,
+                          "checks": CHECK_MAX_TOKENS,
+                          "sized_from": "measured on this generator 2026-07-27; "
+                                        "thoughts_token_count 0 on all probes"},
         "gen_temperature": GEN_TEMPERATURE,
         "check_temperature": CHECK_TEMPERATURE,
         "template_sha256": CF.TEMPLATE_SHA256,
@@ -618,6 +679,10 @@ def sheet_plan(out_dir: Path, n_real: int = SHEET_REAL,
     control = (pool + extra)[:n_control]
     return {"real": real, "control": control,
             "overlap": sorted({r["item_id"] for r in control} & real_ids)}
+
+
+def records_built(out_dir: Path) -> list[dict]:
+    return [r for r in load_records(out_dir) if r["built"]]
 
 
 def control_options(rec: dict) -> list[str] | None:
@@ -686,6 +751,16 @@ def cmd_sheet(args) -> int:
     (out_dir / "DETECTABILITY_SHEET.md").write_text("\n".join(sheet),
                                                     encoding="utf-8")
 
+    # Which entry numbers share an item, and therefore share three of their
+    # four options. This is the sheet's one known weakness and it is spelled
+    # out rather than left as a bare list of ids.
+    seen: dict[str, list[int]] = {}
+    for i, e in enumerate(entries, 1):
+        seen.setdefault(e["item_id"], []).append(i)
+    twinned = {k: v for k, v in seen.items() if len(v) > 1}
+    clean_real = [i for i, e in enumerate(entries, 1)
+                  if e["kind"] == "real" and len(seen[e["item_id"]]) == 1]
+
     key = [
         "# Detectability sheet — KEY (Amendment 2 B10.8)",
         "",
@@ -699,12 +774,44 @@ def cmd_sheet(args) -> int:
         "Chance on a real entry, if the owner always names a letter, is 0.25. "
         "The control entries measure the false-positive rate: naming any letter "
         "on a control is a false positive.",
-        "",
-        f"Item overlap between real and control draws: "
-        f"{plan['overlap'] or 'none'}.",
-        "",
-        "| # | kind | item_id | real answer |",
-        "|---|---|---|---|"]
+        ""]
+
+    if twinned:
+        pairs = ", ".join(f"#{v[0]}/#{v[1]} (`{k}`)"
+                          for k, v in sorted(twinned.items(),
+                                             key=lambda kv: kv[1]))
+        key += [
+            "## READ THIS BEFORE SCORING — the overlapping entries leak",
+            "",
+            f"{len(twinned)} items appear TWICE, once as a real entry and once "
+            f"as a control: {pairs}.",
+            "",
+            "The overlap is forced by supply, not chosen: B10.8 asks for 10 "
+            f"real and 10 control entries and only {len(records_built(out_dir))} "
+            "items were built, so 20 disjoint entries do not exist.",
+            "",
+            "**Why it matters.** A control reuses the same item's three "
+            "distractors plus its unused spare, so an overlapping pair shows "
+            "the SAME question with THREE of the four options identical. The "
+            "option that appears in the real entry and not in its control twin "
+            "IS the real answer. Anyone who compares the two entries can score "
+            "those items **by elimination**, without judging realism at all.",
+            "",
+            "**Therefore:** the uncontaminated hit rate is the one computed "
+            f"over the {len(clean_real)} real entries with no control twin — "
+            f"{', '.join('#' + str(i) for i in clean_real)} — and that is the "
+            "number to quote. Report the all-10 rate beside it, flagged. "
+            "Whether to rebuild the sheet with disjoint items (fewer entries, "
+            "or a second generation pass for control-only option sets) is a "
+            "design decision for the owner, not the implementer's.",
+            "",
+            "| # | kind | item_id | real answer |",
+            "|---|---|---|---|"]
+    else:
+        key += ["Item overlap between real and control draws: none.",
+                "",
+                "| # | kind | item_id | real answer |",
+                "|---|---|---|---|"]
     for i, e in enumerate(entries, 1):
         ans = labels[e["correct_index"]] if e["kind"] == "real" else "none"
         key.append(f"| {i} | {e['kind']} | `{e['item_id']}` | **{ans}** |")
@@ -715,6 +822,13 @@ def cmd_sheet(args) -> int:
         "n_real": sum(1 for e in entries if e["kind"] == "real"),
         "n_control": sum(1 for e in entries if e["kind"] == "control"),
         "overlap": plan["overlap"],
+        "twinned_entry_numbers": {k: v for k, v in sorted(twinned.items())},
+        "uncontaminated_real_entries": clean_real,
+        "overlap_caveat":
+            "An overlapping pair shows the same question with three of four "
+            "options identical, so the real answer is identifiable by "
+            "elimination. Quote the hit rate over uncontaminated_real_entries; "
+            "report the all-10 rate flagged beside it.",
         "entries": [{"n": i, "kind": e["kind"], "item_id": e["item_id"],
                      "correct_index": e["correct_index"]}
                     for i, e in enumerate(entries, 1)]})
@@ -857,6 +971,8 @@ def cmd_export_gate(args) -> int:
         "arm": GATE_ARM, "variant": GATE_VARIANT,
         "n_candidate_items": build["n_items"],
         "generator": GENERATOR,
+        "generator_is_robustness_scorer": GENERATOR_IS_ROBUSTNESS_SCORER,
+        "generator_separation": B10_3_OVERLAP_DECLARATION,
         "gate_rule": "B10.7. An item this arm argmax-solves never enters the "
                      "final set. PRE-gate accuracy on this file is the "
                      "instrument-difficulty number; post-gate zero-info "
@@ -1017,7 +1133,9 @@ def cmd_bootstrap(args) -> int:
         "grounding_budget_words": P2.GROUNDING_BUDGET_WORDS,
         "instrument": "B10 generated same-question counterfactuals",
         "generator": GENERATOR, "robustness_scorer": ROBUSTNESS_SCORER,
+        "generator_is_robustness_scorer": GENERATOR_IS_ROBUSTNESS_SCORER,
         "generator_separation": summary["generator_separation"],
+        "generator_history": GENERATOR_HISTORY,
         "counterfactuals_template_sha256": CF.TEMPLATE_SHA256,
         "n_candidate_items": gate["n_items"],
         "gate_prompts_total": len(gate_rows),
