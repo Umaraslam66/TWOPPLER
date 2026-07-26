@@ -72,6 +72,7 @@ sys.path.insert(0, str(_ROOT / "experiments"))
 
 import stage2_pilot as P1  # noqa: E402
 
+from doppler import diagnostics_v2 as DG  # noqa: E402
 from doppler import distractors_v2 as D2  # noqa: E402
 from doppler import stage2_data as S  # noqa: E402
 from doppler import stage2_render as R  # noqa: E402
@@ -1143,6 +1144,244 @@ def cmd_finalize(args) -> int:
 
 
 # ---------------------------------------------------------------------------
+# Diagnostics (NOT arms -- see src/doppler/diagnostics_v2.py)
+# ---------------------------------------------------------------------------
+
+
+DIAG_WALLTIME = "00:20:00"
+DIAG_QOS = GATE_QOS
+
+
+def build_diagnostics(out_dir: Path, pilot1_dir: Path) -> dict:
+    """Both diagnostic prompt sets over the SAME candidate items as the gate."""
+    subjects = P1.prediction_subjects(P1.dev_subjects(pilot1_dir))
+    pool = P1.pool_rows()
+    sets: dict[str, list[dict]] = {DG.DIAG_STRIPPED: [], DG.DIAG_QUESTION_BLIND: []}
+
+    for subject in subjects:
+        cid = subject["canonical_id"]
+        items = load_candidate_items(cid, out_dir, pilot1_dir, final=False)
+        if not items:
+            continue
+        row = pool[cid]
+        variants = P1.name_variants(row)
+
+        for item in items:
+            # --- A: the frozen renderer, entity-stripped options -------------
+            built = P1.render_and_guard(
+                GATE_ARM, "stripped", item, subject_name=row["canonical_name"],
+                subject_variants=variants, grounding_block=None)
+            built.update({"item_id": item["item_id"], "canonical_id": cid,
+                          "arm": GATE_ARM, "variant": "stripped",
+                          "diagnostic": DG.DIAG_STRIPPED,
+                          "correct_index": item["correct_index"],
+                          "n_options": len(item["options"]["stripped"])})
+            sets[DG.DIAG_STRIPPED].append(built)
+
+            # --- B: question removed, standard options -----------------------
+            question = R.redact(item["question"], variants)
+            options = [R.redact(x, variants) for x in item["options"]["standard"]]
+            rendered = DG.render_question_blind(options)
+            R.assert_redacted(rendered, variants)
+            DG.assert_question_blind(rendered, question)
+            words = R.word_count(rendered)
+            sets[DG.DIAG_QUESTION_BLIND].append({
+                "prompt": rendered, "prompt_sha256": R.sha256(rendered),
+                "prompt_words": words,
+                "prompt_tokens_est": int(round(words * TOKENS_PER_WORD)),
+                "max_output_tokens": PREDICTION_MAX_OUTPUT_TOKENS,
+                "item_id": item["item_id"], "canonical_id": cid,
+                "arm": GATE_ARM, "variant": "standard",
+                "diagnostic": DG.DIAG_QUESTION_BLIND,
+                "correct_index": item["correct_index"],
+                "n_options": len(options)})
+
+    n = {k: len(v) for k, v in sets.items()}
+    if len(set(n.values())) != 1:
+        raise fatal(f"diagnostic sets are not the same size: {n}")
+    return sets
+
+
+DIAG_META_FIELDS = ("item_id", "canonical_id", "arm", "variant", "diagnostic",
+                    "correct_index", "n_options", "prompt_sha256",
+                    "prompt_words")
+
+
+def cmd_export_diagnostics(args) -> int:
+    out_dir = Path(getattr(args, "out_dir", None) or PILOT2_DIR)
+    pilot1_dir = Path(getattr(args, "pilot1_dir", None) or PILOT1_DIR)
+    export_dir = out_dir / "exports"
+    manifest_path = export_dir / "export_manifest_diag.json"
+    if manifest_path.exists() and not args.force:
+        raise fatal(f"{manifest_path} already exists; pass --force to rebuild")
+
+    sets = build_diagnostics(out_dir, pilot1_dir)
+    rows = [r for v in sets.values() for r in v]
+    if not rows:
+        raise fatal("no candidate items; run build first")
+    ctx = context_check(rows)
+
+    files = {}
+    for name, group in sets.items():
+        files[name] = _write_pair(export_dir / f"prompts_{name}.jsonl",
+                                  export_dir / f"meta_{name}.jsonl",
+                                  group, DIAG_META_FIELDS)
+        print(f"[export-diag] {name}: {len(group)} prompts")
+
+    S.write_json(manifest_path, {
+        "pilot": PILOT_BANNER, "phase": "diagnostic", "contract": CONTRACT,
+        "exported_utc": now(),
+        "status": "DIAGNOSTIC ONLY -- not an arm, not a bar, never a fidelity "
+                  "number. Decomposes the phase-1 gate result.",
+        "rules": DG.DIAG_RULES,
+        "baseline": "The phase-1 gate (zeroinfo_redacted, standard options) on "
+                    "these same items.",
+        "n_items": len(sets[DG.DIAG_STRIPPED]),
+        "context": ctx,
+        "renderer": {
+            "stage2_render_template_sha256": R.TEMPLATE_SHA256,
+            "qb_template_sha256": DG.QB_TEMPLATE_SHA256,
+            "diagnostics_v2_file_sha256": sha256_file(
+                _ROOT / "src/doppler/diagnostics_v2.py"),
+        },
+        "files": files,
+    })
+    print(f"[export-diag] manifest -> {rel(manifest_path)}")
+    return 0
+
+
+def diag_set_names() -> list[str]:
+    return [DG.DIAG_STRIPPED, DG.DIAG_QUESTION_BLIND]
+
+
+def diag_sbatch(hours: float) -> str:
+    head = P1.HEADER.format(
+        job_name="dop-s2p2-diag", account=ACCOUNT,
+        qos_line=f"#SBATCH --qos={DIAG_QOS}\n",
+        walltime=DIAG_WALLTIME, node_root=NODE_ROOT,
+        title="DIAGNOSTIC: entity-stripped + question-blind zero-info gates",
+        banner=PILOT_BANNER, hours=hours, name="stage2_pilot2_diag",
+        out=NODE_RUN)
+    return head + _pairs_loop(diag_set_names()) + P1.FOOTER.format(
+        name="stage2_pilot2_diag")
+
+
+def cmd_ingest_diagnostics(args) -> int:
+    out_dir = Path(getattr(args, "out_dir", None) or PILOT2_DIR)
+    export_dir = out_dir / "exports"
+    nodedir = Path(args.nodedir)
+    gate = json.loads((out_dir / "gate_results.json").read_text(encoding="utf-8"))
+
+    blocks: dict[str, dict] = {}
+    summaries: list[dict] = []
+    tokens_in = tokens_out = 0
+    for name in diag_set_names():
+        metas = S.read_jsonl(export_dir / f"meta_{name}.jsonl")
+        comp_path = nodedir / f"completions_{name}.jsonl"
+        comps = {}
+        if comp_path.exists():
+            comps = {int(r["idx"]): r for r in S.read_jsonl(comp_path)}
+            side = nodedir / f"completions_{name}.jsonl.summary.json"
+            if side.exists():
+                summaries.append(json.loads(side.read_text(encoding="utf-8")))
+        else:
+            print(f"[warn] no completions for {name}", file=sys.stderr)
+        records, texts = [], {}
+        for meta in metas:
+            row = comps.get(int(meta["idx"]))
+            tokens_in += int((row or {}).get("tokens_in", 0) or 0)
+            tokens_out += int((row or {}).get("tokens_out", 0) or 0)
+            texts[int(meta["idx"])] = _completion_text(row)
+            rec = score_gate(meta, _completion_text(row))
+            rec["missing_completion"] = row is None
+            records.append(rec)
+        parsed = [r for r in records if r["parsed"]]
+        solved = [r for r in parsed if r["argmax_correct"]]
+        diag = diagnose_parse_failures(records, metas, texts)
+        recovered = [r for r in diag["records"] if r.get("recoverable")]
+        n_eff = len(parsed) + len(recovered)
+        n_eff_solved = len(solved) + sum(1 for r in recovered
+                                         if r["argmax_correct"])
+        blocks[name] = {
+            "rule": DG.DIAG_RULES[name],
+            "n_items": len(records), "n_parsed": len(parsed),
+            "n_parse_failures": len(records) - len(parsed),
+            "argmax_accuracy": round(len(solved) / len(parsed), 4)
+            if parsed else None,
+            "mean_prob_mass_correct":
+                round(sum(r["p_correct"] for r in parsed) / len(parsed), 4)
+                if parsed else None,
+            "mean_margin": round(sum(r["margin"] for r in parsed)
+                                 / len(parsed), 4) if parsed else None,
+            "effective_n": n_eff,
+            "effective_argmax_accuracy":
+                round(n_eff_solved / n_eff, 4) if n_eff else None,
+            "parse_failure_diagnostic": diag,
+            "records": records,
+        }
+        print(f"[ingest-diag] {name}: {len(parsed)}/{len(records)} parsed, "
+              f"argmax {blocks[name]['argmax_accuracy']}, "
+              f"effective {blocks[name]['effective_argmax_accuracy']} "
+              f"(n={n_eff})")
+
+    gate_diag = gate.get("parse_failure_diagnostic", {})
+    gate_recovered = [r for r in gate_diag.get("records", [])
+                      if r.get("recoverable")]
+    gate_eff_n = gate["n_parsed"] + len(gate_recovered)
+    gate_eff_solved = gate["n_rejected"] + sum(1 for r in gate_recovered
+                                               if r["argmax_correct"])
+    decomposition = {
+        "baseline_standard": {
+            "rule": "Phase-1 gate: zeroinfo_redacted, standard options.",
+            "n_items": gate["n_candidates"], "n_parsed": gate["n_parsed"],
+            "n_parse_failures": gate["n_parse_failures"],
+            "argmax_accuracy": gate["pre_gate_zeroinfo_argmax_accuracy"],
+            "mean_prob_mass_correct": gate["pre_gate_mean_prob_mass_correct"],
+            "effective_n": gate_eff_n,
+            "effective_argmax_accuracy":
+                round(gate_eff_solved / gate_eff_n, 4) if gate_eff_n else None,
+        },
+        **{name: {k: v for k, v in b.items()
+                  if k not in ("records", "parse_failure_diagnostic")}
+           for name, b in blocks.items()},
+    }
+
+    in_process = P1._sum_node_hours(summaries)
+    billed = billed_node_hours(out_dir, "stage2_pilot2_diag")
+    node_hours = billed if billed is not None else in_process
+
+    S.write_json(out_dir / "diagnostic_results.json", {
+        "pilot": PILOT_BANNER,
+        "status": "DIAGNOSTIC ONLY -- not an arm, not a bar, never a fidelity "
+                  "number.",
+        "ingested_utc": now(),
+        "decomposition": decomposition,
+        "blocks": blocks,
+        "node_hours": node_hours,
+        "node_hours_source": "sacct" if billed is not None else "batch_generate",
+        "node_hours_in_process": in_process,
+        "tokens_in": tokens_in, "tokens_out": tokens_out,
+    })
+    print(f"[ingest-diag] -> {rel(out_dir / 'diagnostic_results.json')}")
+
+    if args.skip_cost:
+        print("[cost] --skip-cost: no ledger entry")
+    elif node_hours:
+        append_cost_log(P1._zero_api_cost(build_cost_entry(
+            run_id="stage2_pilot2/diagnostic", model=MODEL_LABEL,
+            split=SPLIT_LABEL, variant="stage2_d6v2_diag",
+            n_persons=len({r["canonical_id"] for b in blocks.values()
+                           for r in b["records"]}),
+            n_calls=sum(b["n_items"] for b in blocks.values()), n_retries=0,
+            n_parse_failures=sum(b["n_parse_failures"]
+                                 for b in blocks.values()),
+            tokens_in=tokens_in, tokens_out=tokens_out,
+            backend="leonardo-batch", node_hours=node_hours)), COST_LOG)
+        print(f"[cost] diagnostic: {node_hours} node-hours, $0.00 API")
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # verify
 # ---------------------------------------------------------------------------
 
@@ -1534,6 +1773,15 @@ def main(argv=None) -> int:
                        help="re-analyse without writing cost-log entries (the "
                             "ledger is append-only; a re-run would double-bill)")
     p_inp.set_defaults(fn=cmd_ingest_pred)
+
+    p_diag = sub.add_parser("export-diagnostics")
+    p_diag.add_argument("--force", action="store_true")
+    p_diag.set_defaults(fn=cmd_export_diagnostics)
+
+    p_ind = sub.add_parser("ingest-diagnostics")
+    p_ind.add_argument("--nodedir", required=True)
+    p_ind.add_argument("--skip-cost", action="store_true")
+    p_ind.set_defaults(fn=cmd_ingest_diagnostics)
 
     p_bill = sub.add_parser("bill")
     p_bill.add_argument("--name", required=True)

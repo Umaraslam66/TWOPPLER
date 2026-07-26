@@ -1,0 +1,46 @@
+{
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "phase": "diagnostic",
+ "contract": "SPEC.md v1.8 (D6-v2 same-subject distractors)",
+ "exported_utc": "2026-07-26T21:04:42Z",
+ "status": "DIAGNOSTIC ONLY -- not an arm, not a bar, never a fidelity number. Decomposes the phase-1 gate result.",
+ "rules": {
+  "gate_stripped": "DIAGNOSTIC A. The frozen zeroinfo_redacted template, standard renderer, called with A4.2's entity-stripped option texts. No new template. Isolates how much of the solve rides on named entities and numbers.",
+  "gate_qblind": "DIAGNOSTIC B. Zero-information, standard option texts, HOST QUESTION REMOVED. Isolates how much of the solve rides on the true answer being responsive to the question shown, versus cues intrinsic to the options (era, style, dates)."
+ },
+ "baseline": "The phase-1 gate (zeroinfo_redacted, standard options) on these same items.",
+ "n_items": 10,
+ "context": {
+  "longest_prompt_words": 611,
+  "longest_prompt_item": "C02006:NPR-14829:26",
+  "longest_prompt_arm": "zeroinfo_redacted",
+  "worst_case_tokens_needed": 1765,
+  "max_model_len": 8192,
+  "headroom_tokens": 6427
+ },
+ "renderer": {
+  "stage2_render_template_sha256": "26def40977f381e732c757bdb16d1c620db415041af59719319cef5434f652b1",
+  "qb_template_sha256": "d275f7a7cc0d7476eaa9290a74aea280fa46f11da5d7a9c5ec0b5de276bcba80",
+  "diagnostics_v2_file_sha256": "0a4ee5cf2c1b4291a470aabde2b4511707cd53e18aae69e420551c93ff1366af"
+ },
+ "files": {
+  "gate_stripped": {
+   "prompts_file": "prompts_gate_stripped.jsonl",
+   "meta_file": "meta_gate_stripped.jsonl",
+   "n_prompts": 10,
+   "prompts_sha256": "de402054931dd2697ca6488b1663556b2ceca1d2d095fd84f206448714266b6c",
+   "meta_sha256": "31e335e096508ab0dcb53ec1ad3dcef4d94be3ca619ce1ef37e2ef3eccf07a8b",
+   "total_prompt_words": 4263,
+   "max_prompt_words": 611
+  },
+  "gate_qblind": {
+   "prompts_file": "prompts_gate_qblind.jsonl",
+   "meta_file": "meta_gate_qblind.jsonl",
+   "n_prompts": 10,
+   "prompts_sha256": "225a9c8cf2b38956b691abebb0bab7f1f185911c88852b89f59f4cb8d603ca81",
+   "meta_sha256": "032a46e4719d1ed70371fbf429632b5e9f07f9295fb104c823bd4f1ef77d5644",
+   "total_prompt_words": 4080,
+   "max_prompt_words": 582
+  }
+ }
+}

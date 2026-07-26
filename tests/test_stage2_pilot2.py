@@ -789,3 +789,112 @@ def test_a_parsed_record_never_appears_in_the_diagnostic():
     diag = P2.diagnose_parse_failures([P2.score_gate(metas[0], good)], metas,
                                       {0: good})
     assert diag["n_parse_failures"] == 0
+
+
+# ---------------------------------------------------------------------------
+# The two diagnostics
+# ---------------------------------------------------------------------------
+
+
+def test_export_diagnostics_writes_both_sets_over_the_candidate_items(rig):
+    _build(rig)
+    assert P2.cmd_export_diagnostics(rig) == 0
+    doc = json.loads((rig.out_dir / "exports"
+                      / "export_manifest_diag.json").read_text())
+    assert doc["n_items"] == 10
+    assert set(doc["files"]) == {"gate_stripped", "gate_qblind"}
+    for info in doc["files"].values():
+        assert info["n_prompts"] == 10
+    assert "DIAGNOSTIC ONLY" in doc["status"]
+
+
+def test_the_question_blind_export_really_drops_the_question(rig):
+    _build(rig)
+    P2.cmd_export_diagnostics(rig)
+    prompts = [json.loads(l) for l in (rig.out_dir / "exports"
+               / "prompts_gate_qblind.jsonl").read_text().splitlines()]
+    for row in prompts:
+        assert "HOST:" not in row["prompt"]
+        assert "what did you make of item" not in row["prompt"]
+
+
+def test_the_stripped_diagnostic_uses_the_frozen_arm_template(rig):
+    _build(rig)
+    P2.cmd_export_diagnostics(rig)
+    prompts = [json.loads(l) for l in (rig.out_dir / "exports"
+               / "prompts_gate_stripped.jsonl").read_text().splitlines()]
+    # It IS the frozen zeroinfo_redacted prompt -- question and all -- only the
+    # option texts are the entity-stripped ones.
+    for row in prompts:
+        assert row["prompt"].startswith(R.ZEROINFO_PREAMBLE)
+        assert "HOST:" in row["prompt"]
+
+
+def test_both_diagnostics_run_in_one_job(rig):
+    _build(rig)
+    text = P2.diag_sbatch(0.07)
+    for name in P2.diag_set_names():
+        assert f'"{name}"' in text
+    # One engine init: a single batch_generate invocation takes both files.
+    assert text.count("python jobs/batch_generate.py") == 1
+
+
+def test_a_diagnostic_prompt_is_never_redacted_less_than_an_arm(rig):
+    _build(rig)
+    P2.cmd_export_diagnostics(rig)
+    for name in P2.diag_set_names():
+        for line in (rig.out_dir / "exports"
+                     / f"prompts_{name}.jsonl").read_text().splitlines():
+            row = json.loads(line)
+            assert "Zorvath" not in row["prompt"]
+            assert "Quilliman" not in row["prompt"]
+
+
+def _run_diag(rig, solved):
+    """Fake a diagnostic run. ``solved[name]`` = idxs the arm gets right."""
+    node = rig.nodedir or (rig.out_dir.parent / "node")
+    node.mkdir(parents=True, exist_ok=True)
+    rig.nodedir = node
+    for name in P2.diag_set_names():
+        metas = [json.loads(l) for l in (rig.out_dir / "exports"
+                 / f"meta_{name}.jsonl").read_text().splitlines()]
+        lines = []
+        for meta in metas:
+            c = int(meta["correct_index"])
+            if meta["idx"] not in solved[name]:
+                c = (c + 1) % int(meta["n_options"])
+            dist = [0.05] * 4
+            dist[c] = 0.85
+            lines.append(json.dumps({
+                "idx": meta["idx"], "tokens_in": 500, "tokens_out": 50,
+                "text": "A: %.2f B: %.2f C: %.2f D: %.2f" % tuple(dist)}))
+        (node / f"completions_{name}.jsonl").write_text("\n".join(lines) + "\n",
+                                                        encoding="utf-8")
+        (node / f"completions_{name}.jsonl.summary.json").write_text(
+            json.dumps({"engine_init_seconds": 200.0,
+                        "generation_wall_seconds": 3.0}), encoding="utf-8")
+    assert P2.cmd_ingest_diagnostics(rig) == 0
+
+
+def test_the_decomposition_puts_the_gate_baseline_beside_both_diagnostics(rig):
+    _build(rig)
+    _run_gate(rig, solved_idxs=set(range(10)))
+    P2.cmd_export_diagnostics(rig)
+    _run_diag(rig, {"gate_stripped": {0, 1, 2, 3, 4},
+                    "gate_qblind": {0}})
+    doc = json.loads((rig.out_dir
+                      / "diagnostic_results.json").read_text())
+    dec = doc["decomposition"]
+    assert dec["baseline_standard"]["argmax_accuracy"] == 1.0
+    assert dec["gate_stripped"]["argmax_accuracy"] == 0.5
+    assert dec["gate_qblind"]["argmax_accuracy"] == 0.1
+    assert "DIAGNOSTIC ONLY" in doc["status"]
+
+
+def test_the_diagnostic_never_writes_an_arm_or_a_final_item_set(rig):
+    _build(rig)
+    _run_gate(rig, solved_idxs=set(range(10)))
+    P2.cmd_export_diagnostics(rig)
+    _run_diag(rig, {"gate_stripped": set(), "gate_qblind": set()})
+    assert not (rig.out_dir / "items_final.jsonl").exists()
+    assert not (rig.out_dir / "records").exists()

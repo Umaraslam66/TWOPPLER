@@ -72,6 +72,43 @@
    "status": "bootstrapped",
    "slurm_job_ids": [],
    "actual_node_hours": null
+  },
+  "stage2_pilot2_diag": {
+   "kind": "diagnostic",
+   "walltime": "00:20:00",
+   "qos": "boost_qos_dbg",
+   "prompt_files": [
+    "gate_stripped",
+    "gate_qblind"
+   ],
+   "sbatch_local": "results/stage2_pilot2/stage2_pilot2_diag.sbatch",
+   "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/stage2_pilot2_diag.sbatch",
+   "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot2",
+   "projected_node_hours": 0.0635,
+   "status": "completed",
+   "slurm_job_ids": [
+    "50379940"
+   ],
+   "actual_node_hours": 0.1036,
+   "notes": [
+    {
+     "utc": "2026-07-26T21:06:20Z",
+     "note": "DIAGNOSTIC A (entity-stripped) + B (question-blind), one engine init"
+    },
+    {
+     "utc": "2026-07-26T21:06:50Z",
+     "note": "DIAGNOSTIC A+B, 20 prompts, one engine init, boost_qos_dbg"
+    }
+   ],
+   "sacct": [
+    {
+     "job_id": "50379940",
+     "state": "COMPLETED",
+     "elapsed": "00:06:13",
+     "alloc_nodes": 1,
+     "node_hours": 0.1036
+    }
+   ]
   }
  },
  "anomalies": [
@@ -82,5 +119,5 @@
   }
  ],
  "notes": [],
- "updated_utc": "2026-07-26T20:56:58Z"
+ "updated_utc": "2026-07-26T21:25:32Z"
 }

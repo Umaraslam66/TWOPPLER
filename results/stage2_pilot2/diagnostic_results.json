@@ -1,0 +1,477 @@
+{
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "status": "DIAGNOSTIC ONLY -- not an arm, not a bar, never a fidelity number.",
+ "ingested_utc": "2026-07-26T21:25:33Z",
+ "decomposition": {
+  "baseline_standard": {
+   "rule": "Phase-1 gate: zeroinfo_redacted, standard options.",
+   "n_items": 10,
+   "n_parsed": 8,
+   "n_parse_failures": 2,
+   "argmax_accuracy": 1.0,
+   "mean_prob_mass_correct": 0.9375,
+   "effective_n": 10,
+   "effective_argmax_accuracy": 1.0
+  },
+  "gate_stripped": {
+   "rule": "DIAGNOSTIC A. The frozen zeroinfo_redacted template, standard renderer, called with A4.2's entity-stripped option texts. No new template. Isolates how much of the solve rides on named entities and numbers.",
+   "n_items": 10,
+   "n_parsed": 10,
+   "n_parse_failures": 0,
+   "argmax_accuracy": 1.0,
+   "mean_prob_mass_correct": 0.87,
+   "mean_margin": 0.82,
+   "effective_n": 10,
+   "effective_argmax_accuracy": 1.0
+  },
+  "gate_qblind": {
+   "rule": "DIAGNOSTIC B. Zero-information, standard option texts, HOST QUESTION REMOVED. Isolates how much of the solve rides on the true answer being responsive to the question shown, versus cues intrinsic to the options (era, style, dates).",
+   "n_items": 10,
+   "n_parsed": 5,
+   "n_parse_failures": 5,
+   "argmax_accuracy": 0.2,
+   "mean_prob_mass_correct": 0.24,
+   "mean_margin": -0.12,
+   "effective_n": 10,
+   "effective_argmax_accuracy": 0.1
+  }
+ },
+ "blocks": {
+  "gate_stripped": {
+   "rule": "DIAGNOSTIC A. The frozen zeroinfo_redacted template, standard renderer, called with A4.2's entity-stripped option texts. No new template. Isolates how much of the solve rides on named entities and numbers.",
+   "n_items": 10,
+   "n_parsed": 10,
+   "n_parse_failures": 0,
+   "argmax_accuracy": 1.0,
+   "mean_prob_mass_correct": 0.87,
+   "mean_margin": 0.82,
+   "effective_n": 10,
+   "effective_argmax_accuracy": 1.0,
+   "parse_failure_diagnostic": {
+    "note": "DIAGNOSTIC ONLY -- the frozen D8 parser's verdict stands and the gate decision used it. This says what the rejected replies contained.",
+    "n_parse_failures": 0,
+    "n_recoverable": 0,
+    "n_recoverable_argmax_correct": 0,
+    "records": []
+   },
+   "records": [
+    {
+     "item_id": "C00792:NPR-19884:2",
+     "canonical_id": "C00792",
+     "correct_index": 1,
+     "raw_response": "The host's question asks whether certain groups in Syria (specifically those who lost Aleppo) would align with the Islamic State (ISIS) or if they are distinct and opposed to them.\n\n*   **Option A** discusses boots on the ground and rescuing journalists, which does not answer the question about group alignment.\n*   **Option B** directly addresses the ideological conflict between Syrian nationalists and the worldwide mission of the Islamic State, explaining why they would find it difficult to align. This is a direct answer to the host's question.\n*   **Option C** discusses civilian protection a",
+     "parsed": true,
+     "argmax_correct": true,
+     "p_correct": 1.0,
+     "argmax_index": 1,
+     "margin": 1.0,
+     "distribution": [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C00792:NPR-19884:6",
+     "canonical_id": "C00792",
+     "correct_index": 1,
+     "raw_response": "The host's question asks specifically about the extent of \"American responsibility\" for the situation in Syria due to inaction. \n\nOption B directly addresses the concept of \"responsibility\" and the \"failure... to take any steps at all,\" which mirrors the host's phrasing regarding \"things the U.S. didn't do.\" Option D also discusses the need for the U.S. to take steps, but Option B is a more direct answer to the specific question of responsibility and the consequences of inaction. Option A discusses the president's instincts and past failures (likely Iraq), and Option C discusses specific milit",
+     "parsed": true,
+     "argmax_correct": true,
+     "p_correct": 0.6,
+     "argmax_index": 1,
+     "margin": 0.4,
+     "distribution": [
+      0.1,
+      0.6,
+      0.1,
+      0.2
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C00792:NPR-19884:10",
+     "canonical_id": "C00792",
+     "correct_index": 0,
+     "raw_response": "The host's question asks specifically about the \"opportunity to change course in Syria.\" \n\nOption A directly addresses the \"opportunity\" mentioned in the question, referencing the president-elect's campaign rhetoric and the strategic reality of the conflict (the \"recruiting tool\" for ISIS). Option B focuses more on the military course and the \"warfighting lens,\" Option C focuses on the refugee crisis and voting with their feet, and Option D focuses on alliances. \n\nOption A is the most direct response to the specific phrasing of the host's question regarding the \"opportunity to change course.\"\n",
+     "parsed": true,
+     "argmax_correct": true,
+     "p_correct": 0.7000000000000001,
+     "argmax_index": 0,
+     "margin": 0.6,
+     "distribution": [
+      0.7000000000000001,
+      0.10000000000000002,
+      0.10000000000000002,
+      0.10000000000000002
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C00792:NPR-19884:13",
+     "canonical_id": "C00792",
+     "correct_index": 2,
+     "raw_response": "The host's question asks whether there is still enough of a \"nationalist movement\" for the U.S. or other countries to support. \n\nOption A discusses people \"voting with their feet\" and migration due to hopelessness in a specific region.\nOption B focuses on military strategy, barrel bombs, and recruiting for an enemy.\nOption C begins with a direct answer to the host's question (\"Yes, I believe there is\") and then pivots to the importance of civilian protection and the political consequences of migration.\nOption D focuses on the prerequisites for a political solution and the failure to protect ci",
+     "parsed": true,
+     "argmax_correct": true,
+     "p_correct": 0.7000000000000001,
+     "argmax_index": 2,
+     "margin": 0.6,
+     "distribution": [
+      0.10000000000000002,
+      0.10000000000000002,
+      0.7000000000000001,
+      0.10000000000000002
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C02124:NPR-12184:2",
+     "canonical_id": "C02124",
+     "correct_index": 3,
+     "raw_response": "The host's question asks specifically about the popularity of a field marshal in Egypt. \n\n- Option A discusses a recording or a meeting, which is irrelevant to the question.\n- Option B discusses films and television series, which is irrelevant to the question.\n- Option C discusses diplomatic pressure and visits, which does not address why a specific person is popular.\n- Option D directly answers the question by explaining the reasons for the field marshal's popularity, citing the desire for stability and security following a disastrous period of governance.\n\nA: 0.0 B: 0.0 C: 0.0 D: 1.0",
+     "parsed": true,
+     "argmax_correct": true,
+     "p_correct": 1.0,
+     "argmax_index": 3,
+     "margin": 1.0,
+     "distribution": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C02124:NPR-12184:4",
+     "canonical_id": "C02124",
+     "correct_index": 2,
+     "raw_response": "The host's question specifically asks about General Sisi's chances of winning an election. \n\n- Option A discusses a tape and whether someone (likely bin Laden) is alive, which is irrelevant.\n- Option B discusses parliamentary seats and a strategy of \"participation, not domination,\" which does not address General Sisi.\n- Option C directly answers the question (\"No doubt whatsoever\"), mentions General el-Sisi by name, and discusses the implications of a military general becoming president.\n- Option D discusses a delayed conference and security disasters/bombings, which does not answer the specif",
+     "parsed": true,
+     "argmax_correct": true,
+     "p_correct": 1.0,
+     "argmax_index": 2,
+     "margin": 1.0,
+     "distribution": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C02124:NPR-12184:6",
+     "canonical_id": "C02124",
+     "correct_index": 2,
+     "raw_response": "The host's question asks about the level of concern an Egyptian government would have regarding the American reaction to its rule. \n\n- Option A discusses election ballots, political parties, and legislative bodies.\n- Option B discusses a mission to the UN, Chapter 7 of the UN charter, and sanctions/military force.\n- Option C directly addresses the relationship between the Egyptian military and the US, mentioning the billions in aid, loans, and the strategic reasons why the US needs Egypt (Suez Canal, overflight rights), which explains the dynamic of mutual concern and leverage.\n- Option D disc",
+     "parsed": true,
+     "argmax_correct": true,
+     "p_correct": 0.85,
+     "argmax_index": 2,
+     "margin": 0.8,
+     "distribution": [
+      0.05,
+      0.05,
+      0.85,
+      0.05
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C02124:NPR-12184:8",
+     "canonical_id": "C02124",
+     "correct_index": 1,
+     "raw_response": "The host's question asks for an explanation of how the political situation in Egypt evolved from the hopeful \"people's uprising\" (the Arab Spring) to its current state. \n\nOption A discusses a mission, a charter, and sanctions, which does not directly answer the \"how did this happen\" question regarding the nature of the uprising.\nOption B directly addresses the host's mention of the \"people's uprising,\" distinguishing between an uprising and a revolution, and explaining that the military institution remained in place, which provides a historical and political analysis of why the democratic hope",
+     "parsed": true,
+     "argmax_correct": true,
+     "p_correct": 0.85,
+     "argmax_index": 1,
+     "margin": 0.8,
+     "distribution": [
+      0.05,
+      0.85,
+      0.05,
+      0.05
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C02006:NPR-14829:26",
+     "canonical_id": "C02006",
+     "correct_index": 3,
+     "raw_response": "The host's question specifically asks about \"Brexit,\" \"getting out of Brexit,\" and whether it is \"too late for that.\" \n\n- Option A discusses a legal case involving abuse and a tape.\n- Option B is a eulogy for a deceased person.\n- Option C discusses a marriage between two journalists.\n- Option D discusses the \"majority in the [NAME] of [NAME],\" the \"hard [NAME]\" (Hard Brexit), the \"single market,\" and a \"softer [NAME]\" (Soft Brexit).\n\nOption D is the only response that addresses the topic of Brexit and the political mechanisms of leaving the European Union.\n\nA: 0.0 B: 0.0 C: 0.0 D: 1.0",
+     "parsed": true,
+     "argmax_correct": true,
+     "p_correct": 1.0,
+     "argmax_index": 3,
+     "margin": 1.0,
+     "distribution": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C02006:NPR-14829:29",
+     "canonical_id": "C02006",
+     "correct_index": 2,
+     "raw_response": "The host's question specifically asks about an \"election result\" and whether it could be \"good, better, [or] less bad.\" \n\n- Option A discusses a client, a \"booty call,\" and collecting money (legal/criminal defense context).\n- Option B discusses a \"horrible thing\" caught on tape and cases of abuse (legal/social commentary context).\n- Option C directly addresses the \"election result,\" mentions \"negotiations,\" and discusses the legitimacy of a \"different approach,\" which logically follows the host's prompt.\n- Option D discusses \"witness statements\" and a \"booking report\" (legal defense context).\n",
+     "parsed": true,
+     "argmax_correct": true,
+     "p_correct": 1.0,
+     "argmax_index": 2,
+     "margin": 1.0,
+     "distribution": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ],
+     "missing_completion": false
+    }
+   ]
+  },
+  "gate_qblind": {
+   "rule": "DIAGNOSTIC B. Zero-information, standard option texts, HOST QUESTION REMOVED. Isolates how much of the solve rides on the true answer being responsive to the question shown, versus cues intrinsic to the options (era, style, dates).",
+   "n_items": 10,
+   "n_parsed": 5,
+   "n_parse_failures": 5,
+   "argmax_accuracy": 0.2,
+   "mean_prob_mass_correct": 0.24,
+   "mean_margin": -0.12,
+   "effective_n": 10,
+   "effective_argmax_accuracy": 0.1,
+   "parse_failure_diagnostic": {
+    "note": "DIAGNOSTIC ONLY -- the frozen D8 parser's verdict stands and the gate decision used it. This says what the rejected replies contained.",
+    "n_parse_failures": 5,
+    "n_recoverable": 5,
+    "n_recoverable_argmax_correct": 0,
+    "records": [
+     {
+      "item_id": "C00792:NPR-19884:2",
+      "recoverable": true,
+      "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+      "argmax_correct": false,
+      "p_correct": 0.2,
+      "distribution": [
+       0.2,
+       0.2,
+       0.1,
+       0.5
+      ]
+     },
+     {
+      "item_id": "C00792:NPR-19884:13",
+      "recoverable": true,
+      "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+      "argmax_correct": false,
+      "p_correct": 0.15,
+      "distribution": [
+       0.15,
+       0.5,
+       0.15,
+       0.2
+      ]
+     },
+     {
+      "item_id": "C02124:NPR-12184:2",
+      "recoverable": true,
+      "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+      "argmax_correct": false,
+      "p_correct": 0.3,
+      "distribution": [
+       0.15,
+       0.1,
+       0.45,
+       0.3
+      ]
+     },
+     {
+      "item_id": "C02124:NPR-12184:6",
+      "recoverable": true,
+      "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+      "argmax_correct": false,
+      "p_correct": 0.3,
+      "distribution": [
+       0.15,
+       0.15,
+       0.3,
+       0.4
+      ]
+     },
+     {
+      "item_id": "C02124:NPR-12184:8",
+      "recoverable": true,
+      "reason": "the model printed the distribution twice, so the stated mass is ~2.0 and D8's renormalise window [0.8, 1.2] rejects it",
+      "argmax_correct": false,
+      "p_correct": 0.2,
+      "distribution": [
+       0.1,
+       0.2,
+       0.1,
+       0.6
+      ]
+     }
+    ]
+   },
+   "records": [
+    {
+     "item_id": "C00792:NPR-19884:2",
+     "canonical_id": "C00792",
+     "correct_index": 1,
+     "raw_response": "To predict the correct answer, we must analyze the linguistic markers and content of the options. \n\nOption C mentions \"British political leaders,\" which is less likely for a person being interviewed on *American* broadcast news unless they are a foreign guest, but the phrasing \"failure on the part of the West\" is common in international discourse. \n\nOptions A, B, and D focus on US policy, ISIS, and the geopolitical landscape of Syria. Option D specifically mentions \"President Obama\" and \"Iraq 2003,\" which are quintessential topics for American news analysis during the mid-2010s. Option A discu",
+     "parsed": false,
+     "argmax_correct": null,
+     "p_correct": null,
+     "margin": null,
+     "missing_completion": false
+    },
+    {
+     "item_id": "C00792:NPR-19884:6",
+     "canonical_id": "C00792",
+     "correct_index": 1,
+     "raw_response": "The provided options are all excerpts from a single interview with the same person (likely a foreign policy expert or former official) discussing the Syrian conflict and U.S. intervention. In a typical interview format, a guest will provide multiple answers to different questions. However, if the task is to predict which specific answer was given in response to a specific (though unstated) prompt, or to identify a specific segment, we must look at the nature of the options.\n\nOptions A, B, and D are argumentative and analytical, while C is a factual clarification. In the context of American bro",
+     "parsed": true,
+     "argmax_correct": false,
+     "p_correct": 0.25,
+     "argmax_index": 0,
+     "margin": 0.0,
+     "distribution": [
+      0.25,
+      0.25,
+      0.25,
+      0.25
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C00792:NPR-19884:10",
+     "canonical_id": "C00792",
+     "correct_index": 0,
+     "raw_response": "Based on the phrasing and content, these options appear to be excerpts from an interview with a foreign policy expert (likely regarding the Syrian conflict and the transition to the Trump administration). Option A specifically addresses the \"President-elect Trump\" and the specific rhetoric regarding Russia and Assad during the campaign, which is a common focal point for news interviews during that specific transition period. Option B is a more general strategic argument, while C and D focus on the UK and alliances. Option A is the most characteristic of a direct answer to a question about the ",
+     "parsed": true,
+     "argmax_correct": true,
+     "p_correct": 0.4,
+     "argmax_index": 0,
+     "margin": 0.1,
+     "distribution": [
+      0.4,
+      0.3,
+      0.15,
+      0.15
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C00792:NPR-19884:13",
+     "canonical_id": "C00792",
+     "correct_index": 2,
+     "raw_response": "The provided text options appear to be excerpts from an interview regarding the Syrian crisis, civilian protection, and the resulting migration crisis affecting Europe and the UK. \n\nOption B is written in a style typical of a policy expert or advocate addressing a US audience (referencing \"The President of the United States\" and \"warfighting lens\"), which aligns with the context of an \"American broadcast news\" interview. Options A, C, and D focus more heavily on the British perspective and the internal dynamics of the UK/EU, which, while relevant, are often framed as secondary points in a US-b",
+     "parsed": false,
+     "argmax_correct": null,
+     "p_correct": null,
+     "margin": null,
+     "missing_completion": false
+    },
+    {
+     "item_id": "C02124:NPR-12184:2",
+     "canonical_id": "C02124",
+     "correct_index": 3,
+     "raw_response": "To predict the correct answer, we must analyze the linguistic style and content of the options. All four options are transcripts of a speaker who sounds like an academic or a political analyst specializing in Middle Eastern affairs.\n\n- **Option A** discusses the authenticity of a video involving Ayman Al-Zawahiri and the Arab League, typical of the early-to-mid 2000s intelligence analysis.\n- **Option B** discusses the global reach of American soap operas and pop culture.\n- **Option C** mentions Colin Powell, Condoleezza Rice, George W. Bush, and Ariel Sharon, placing the interview roughly betw",
+     "parsed": false,
+     "argmax_correct": null,
+     "p_correct": null,
+     "margin": null,
+     "missing_completion": false
+    },
+    {
+     "item_id": "C02124:NPR-12184:4",
+     "canonical_id": "C02124",
+     "correct_index": 2,
+     "raw_response": "The provided options are transcripts of interviews with experts on Middle Eastern affairs. Option A discusses Osama bin Laden and Ayman al-Zawahiri (likely from the early 2000s). Option B and C discuss Egyptian politics, specifically the Muslim Brotherhood and Abdel Fattah el-Sisi (likely from the 2010s). Option D discusses the security situation in Iraq and election delays.\n\nWithout a specific person or context provided in the prompt, this appears to be a pattern recognition task from a dataset of news interviews. Based on the linguistic style and common patterns in such datasets, these are a",
+     "parsed": true,
+     "argmax_correct": false,
+     "p_correct": 0.25,
+     "argmax_index": 0,
+     "margin": 0.0,
+     "distribution": [
+      0.25,
+      0.25,
+      0.25,
+      0.25
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C02124:NPR-12184:6",
+     "canonical_id": "C02124",
+     "correct_index": 2,
+     "raw_response": "To predict which answer was given, we must analyze the content and context of the options. \n\n- **Option A** discusses the Iraqi interim government and the January 2005 elections, mentioning Iyad Allawi.\n- **Option B** discusses the Arab League, the UN Security Council Chapter 7, and Israel.\n- **Option C** discusses US-Egypt relations, military aid, and the Camp David Peace Treaty.\n- **Option D** discusses the Supreme Council of the Armed Forces in Egypt and the appointment of a committee to reflect diversity.\n\nOptions C and D both focus on Egypt, but Option D describes a very specific politica",
+     "parsed": false,
+     "argmax_correct": null,
+     "p_correct": null,
+     "margin": null,
+     "missing_completion": false
+    },
+    {
+     "item_id": "C02124:NPR-12184:8",
+     "canonical_id": "C02124",
+     "correct_index": 1,
+     "raw_response": "To predict the correct answer, we must analyze the context and content of the options. Options B and D both discuss the Egyptian regime, the Muslim Brotherhood, and the transition from Mubarak, suggesting they are from the same interview or a similar thematic discussion regarding the Arab Spring and its geopolitical effects (such as a prisoner swap). Option A discusses the Arab League and UN Chapter 7 regarding Israel, and Option C discusses Colin Powell and Ariel Sharon (dating it to the early 2000s).\n\nComparing B and D, Option D provides a more direct answer to a specific question about a \"p",
+     "parsed": false,
+     "argmax_correct": null,
+     "p_correct": null,
+     "margin": null,
+     "missing_completion": false
+    },
+    {
+     "item_id": "C02006:NPR-14829:26",
+     "canonical_id": "C02006",
+     "correct_index": 3,
+     "raw_response": "To predict which answer was given, we analyze the content and style of the options. \n\nOption A sounds like a legal expert or social worker discussing a specific criminal case. Option B and C are tributes to a man named Harry (likely Harry Gude or a similar figure) and his wife Tina Brown, spoken by someone who knew them personally. Option D is a political analysis of Brexit.\n\nThe prompt specifies the person was interviewed on \"American broadcast news.\" While all these topics could appear on American news, Options B and C are parts of the same narrative (a eulogy/tribute). Option D is a very sp",
+     "parsed": true,
+     "argmax_correct": false,
+     "p_correct": 0.2,
+     "argmax_index": 0,
+     "margin": -0.4,
+     "distribution": [
+      0.6,
+      0.1,
+      0.1,
+      0.2
+     ],
+     "missing_completion": false
+    },
+    {
+     "item_id": "C02006:NPR-14829:29",
+     "canonical_id": "C02006",
+     "correct_index": 2,
+     "raw_response": "To predict the correct answer, we must analyze the linguistic patterns and contexts of the options. \n\nOptions A, B, and D are spoken by legal representatives (lawyers) discussing specific cases. Option A and D specifically address a host named \"Nancy\" (likely Nancy Grace, known for her legal-centric broadcast style). Option B discusses a case involving a parent and a recording. Option C is a political analysis regarding negotiations and an election.\n\nComparing A and D, they both address \"Nancy\" and discuss a client/police report. However, Option A contains a specific narrative (\"booty call\" vs",
+     "parsed": true,
+     "argmax_correct": false,
+     "p_correct": 0.1,
+     "argmax_index": 0,
+     "margin": -0.3,
+     "distribution": [
+      0.4,
+      0.3,
+      0.1,
+      0.2
+     ],
+     "missing_completion": false
+    }
+   ]
+  }
+ },
+ "node_hours": 0.1036,
+ "node_hours_source": "sacct",
+ "node_hours_in_process": 0.0609,
+ "tokens_in": 11154,
+ "tokens_out": 4676
+}
