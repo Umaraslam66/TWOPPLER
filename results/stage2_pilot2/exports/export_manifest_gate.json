@@ -1,0 +1,98 @@
+{
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "phase": "gate",
+ "contract": "SPEC.md v1.8 (D6-v2 same-subject distractors)",
+ "exported_utc": "2026-07-26T20:34:02Z",
+ "arm": "zeroinfo_redacted",
+ "variant": "standard",
+ "n_candidate_items": 10,
+ "gate_rule": "An item this arm argmax-solves NEVER enters the final set. Rejection counts are logged. PRE-gate accuracy on this file is the instrument-difficulty number; post-gate zero-info accuracy is ~0 by construction (same model, temperature 0).",
+ "per_subject": {
+  "C00792": {
+   "canonical_id": "C00792",
+   "canonical_name": "Frederic Hof",
+   "n_items": 4,
+   "item_ids": [
+    "C00792:NPR-19884:2",
+    "C00792:NPR-19884:6",
+    "C00792:NPR-19884:10",
+    "C00792:NPR-19884:13"
+   ],
+   "donor_id": "C01316",
+   "relax_rungs": [
+    2,
+    1,
+    2,
+    3
+   ]
+  },
+  "C02013": {
+   "canonical_id": "C02013",
+   "n_items": 0,
+   "item_ids": [],
+   "donor_id": "C00690"
+  },
+  "C02124": {
+   "canonical_id": "C02124",
+   "canonical_name": "Samer Shehata",
+   "n_items": 4,
+   "item_ids": [
+    "C02124:NPR-12184:2",
+    "C02124:NPR-12184:4",
+    "C02124:NPR-12184:6",
+    "C02124:NPR-12184:8"
+   ],
+   "donor_id": "C02277",
+   "relax_rungs": [
+    2,
+    1,
+    0,
+    0
+   ]
+  },
+  "C01677": {
+   "canonical_id": "C01677",
+   "n_items": 0,
+   "item_ids": [],
+   "donor_id": "C01650"
+  },
+  "C02006": {
+   "canonical_id": "C02006",
+   "canonical_name": "Robert Harris",
+   "n_items": 2,
+   "item_ids": [
+    "C02006:NPR-14829:26",
+    "C02006:NPR-14829:29"
+   ],
+   "donor_id": "C02510",
+   "relax_rungs": [
+    3,
+    3
+   ]
+  }
+ },
+ "context": {
+  "longest_prompt_words": 617,
+  "longest_prompt_item": "C02006:NPR-14829:26",
+  "longest_prompt_arm": "zeroinfo_redacted",
+  "worst_case_tokens_needed": 1777,
+  "max_model_len": 8192,
+  "headroom_tokens": 6415
+ },
+ "renderer": {
+  "stage2_render_template_sha256": "26def40977f381e732c757bdb16d1c620db415041af59719319cef5434f652b1",
+  "stage2_render_file_sha256": "25a13febf5ee85cf4ef8b4371ecc8162ed0f1685841f518d3399c62151e0425a",
+  "distractors_v2_file_sha256": "b7b39090123a15af29a1e570588bebc741dd7fd1f8aba8d1ad0af5a6bc0c1e68"
+ },
+ "files": {
+  "gate": {
+   "prompts_file": "prompts_gate.jsonl",
+   "meta_file": "meta_gate.jsonl",
+   "n_prompts": 10,
+   "prompts_sha256": "b37acb13efba980da94c21ce744fb1a72c4e0f8edf9aee9ef6672ce929e42486",
+   "meta_sha256": "4272f7951cfa9952300769159c7be2ae62d1fafef22f9360a30b390e8435667f",
+   "total_prompt_words": 4365,
+   "max_prompt_words": 617
+  }
+ }
+}

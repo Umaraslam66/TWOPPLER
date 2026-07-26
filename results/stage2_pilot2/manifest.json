@@ -1,0 +1,51 @@
+{
+ "created_utc": "2026-07-26T20:34:40Z",
+ "run": "Stage 2 pilot round 2 (SPEC v1.8)",
+ "confirmatory": false,
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "contract": "SPEC.md v1.8 (D6-v2 same-subject distractors)",
+ "jobs": {
+  "stage2_pilot2_gate": {
+   "kind": "gate",
+   "walltime": "00:20:00",
+   "qos": "boost_qos_dbg",
+   "prompt_files": [
+    "gate"
+   ],
+   "sbatch_local": "results/stage2_pilot2/stage2_pilot2_gate.sbatch",
+   "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/stage2_pilot2_gate.sbatch",
+   "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot2",
+   "projected_node_hours": 0.063,
+   "status": "bootstrapped",
+   "slurm_job_ids": [],
+   "actual_node_hours": null
+  },
+  "stage2_pilot2_pred": {
+   "kind": "prediction",
+   "walltime": "00:30:00",
+   "qos": null,
+   "prompt_files": [
+    "pred_twin_redacted_standard",
+    "pred_twin_redacted_stripped",
+    "pred_twin_named_standard",
+    "pred_twin_named_stripped",
+    "pred_zeroinfo_redacted_standard",
+    "pred_zeroinfo_redacted_stripped",
+    "pred_zeroinfo_named_standard",
+    "pred_zeroinfo_named_stripped",
+    "pred_imposter_redacted_standard",
+    "pred_imposter_redacted_stripped"
+   ],
+   "sbatch_local": "results/stage2_pilot2/stage2_pilot2_pred.sbatch",
+   "sbatch_node": "/leonardo_work/AIFAC_P02_548/DOPPLER/jobs/stage2_pilot2_pred.sbatch",
+   "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_pilot2",
+   "projected_node_hours": 0.077,
+   "status": "bootstrapped",
+   "slurm_job_ids": [],
+   "actual_node_hours": null
+  }
+ },
+ "anomalies": [],
+ "notes": [],
+ "updated_utc": "2026-07-26T20:34:40Z"
+}

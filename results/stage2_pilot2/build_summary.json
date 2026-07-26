@@ -1,0 +1,557 @@
+{
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "contract": "SPEC.md v1.8 (D6-v2 same-subject distractors)",
+ "built_utc": "2026-07-26T20:33:56Z",
+ "runtime_secs": 7.0,
+ "cost_usd": 0.0,
+ "rules": {
+  "pool": "Every transcript the subject appears in EXCEPT the test cluster and any cluster D2 excluded for sharing the test date; substantive and non-substantive alike. D4 Q-A extraction is run per transcript, so a pool row is one real answer the subject gave to one real question.",
+  "anti_leak": "A candidate is excluded when its answer shares any 10-word shingle with the subject's rendered grounding block (the frozen D8 guard-(a) test, stage2_render.find_answer_leak). The test runs twice, raw-against-raw and redacted-against-redacted, and either hit excludes.",
+  "duplicate": "A candidate whose answer has word-set Jaccard >= 0.8 against the item's true answer is excluded (two correct options is not a forced choice). The same threshold drops near-duplicate answers WITHIN the pool, keeping the first in (transcript_id, q_turn_idx) order, so a re-aired interview cannot supply the same answer three times.",
+  "controls": "A4: length within +-20% of the true answer, matching entity-density bucket, then D6's relaxation ladder (tolerance, adjacent-bucket) = [(0.2, False), (0.3, False), (0.3, True), (0.5, True)]; the rung used is recorded per item.",
+  "no_fallback": "An item that cannot fill 3 distractors from the subject's own pool is NOT built. There is no cross-person fallback.",
+  "gate": "Phase 1 exports the zeroinfo_redacted standard prompt for every candidate. An item the zero-information arm argmax-solves never enters the final set. PRE-gate zero-info accuracy is the instrument-difficulty number; post-gate accuracy is ~0 by construction."
+ },
+ "per_subject": [
+  {
+   "canonical_id": "C00792",
+   "canonical_name": "Frederic Hof",
+   "source_transcripts": 5,
+   "answer_pool_raw": 18,
+   "duplicate_dropped": 0,
+   "anti_leak_excluded": 11,
+   "answer_pool_usable": 7,
+   "test_items": 5,
+   "items_built": 4,
+   "items_unfillable": 1
+  },
+  {
+   "canonical_id": "C01677",
+   "canonical_name": "Matthew Kroenig",
+   "source_transcripts": 14,
+   "answer_pool_raw": 8,
+   "duplicate_dropped": 0,
+   "anti_leak_excluded": 4,
+   "answer_pool_usable": 4,
+   "test_items": 1,
+   "items_built": 0,
+   "items_unfillable": 1
+  },
+  {
+   "canonical_id": "C02006",
+   "canonical_name": "Robert Harris",
+   "source_transcripts": 9,
+   "answer_pool_raw": 11,
+   "duplicate_dropped": 0,
+   "anti_leak_excluded": 6,
+   "answer_pool_usable": 5,
+   "test_items": 3,
+   "items_built": 2,
+   "items_unfillable": 1
+  },
+  {
+   "canonical_id": "C02013",
+   "canonical_name": "Robert Sampson",
+   "source_transcripts": 2,
+   "answer_pool_raw": 3,
+   "duplicate_dropped": 0,
+   "anti_leak_excluded": 2,
+   "answer_pool_usable": 1,
+   "test_items": 4,
+   "items_built": 0,
+   "items_unfillable": 4
+  },
+  {
+   "canonical_id": "C02124",
+   "canonical_name": "Samer Shehata",
+   "source_transcripts": 27,
+   "answer_pool_raw": 60,
+   "duplicate_dropped": 0,
+   "anti_leak_excluded": 9,
+   "answer_pool_usable": 51,
+   "test_items": 4,
+   "items_built": 4,
+   "items_unfillable": 0
+  }
+ ],
+ "totals": {
+  "subjects": 5,
+  "answer_pool_usable": 68,
+  "test_items": 17,
+  "items_built": 10,
+  "items_unfillable": 7
+ },
+ "similarity": {
+  "corpus_questions": 85,
+  "corpus_sha256": "049fe5f200b264343a1959c805ba92e40f78062aa26ea4efa1b2381c14d838b7",
+  "vocab_size": 4175,
+  "vectorizer": "TfidfVectorizer(analyzer='word', ngram_range=(1,2), lowercase=True) fitted once on all dev pool questions + all test questions",
+  "build_floor": 0.0
+ },
+ "similarity_floor_sweep": {
+  "floors": [
+   "0.00",
+   "0.02",
+   "0.05",
+   "0.10",
+   "0.15",
+   "0.20"
+  ],
+  "per_subject": {
+   "C00792": {
+    "0.00": 4,
+    "0.02": 4,
+    "0.05": 1,
+    "0.10": 0,
+    "0.15": 0,
+    "0.20": 0
+   },
+   "C01677": {
+    "0.00": 0,
+    "0.02": 0,
+    "0.05": 0,
+    "0.10": 0,
+    "0.15": 0,
+    "0.20": 0
+   },
+   "C02006": {
+    "0.00": 2,
+    "0.02": 0,
+    "0.05": 0,
+    "0.10": 0,
+    "0.15": 0,
+    "0.20": 0
+   },
+   "C02013": {
+    "0.00": 0,
+    "0.02": 0,
+    "0.05": 0,
+    "0.10": 0,
+    "0.15": 0,
+    "0.20": 0
+   },
+   "C02124": {
+    "0.00": 4,
+    "0.02": 4,
+    "0.05": 2,
+    "0.10": 0,
+    "0.15": 0,
+    "0.20": 0
+   }
+  },
+  "total": {
+   "0.00": 10,
+   "0.02": 8,
+   "0.05": 3,
+   "0.10": 0,
+   "0.15": 0,
+   "0.20": 0
+  }
+ },
+ "per_subject_detail": {
+  "C00792": {
+   "per_transcript": [
+    {
+     "transcript_id": "CNN-214288",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-267783",
+     "substantive": false,
+     "n_items": 7,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-12324",
+     "substantive": true,
+     "n_items": 4,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-24031",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-6779",
+     "substantive": true,
+     "n_items": 7,
+     "note": null
+    }
+   ],
+   "blocked_cluster_ids": [
+    "cl4"
+   ],
+   "grounding_words_rendered": 2036
+  },
+  "C01677": {
+   "per_transcript": [
+    {
+     "transcript_id": "CNN-178432",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-178436",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-178455",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-178460",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-178476",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-192133",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-313242",
+     "substantive": false,
+     "n_items": 2,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-339505",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-358641",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-358673",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-358690",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-358744",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-11032",
+     "substantive": true,
+     "n_items": 1,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-12784",
+     "substantive": true,
+     "n_items": 5,
+     "note": null
+    }
+   ],
+   "blocked_cluster_ids": [
+    "cl12"
+   ],
+   "grounding_words_rendered": 1835
+  },
+  "C02006": {
+   "per_transcript": [
+    {
+     "transcript_id": "CNN-120307",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-124010",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-220639",
+     "substantive": false,
+     "n_items": 2,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-411756",
+     "substantive": false,
+     "n_items": 2,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-60867",
+     "substantive": false,
+     "n_items": 1,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-99904",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-19257",
+     "substantive": true,
+     "n_items": 2,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-37397",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-37430",
+     "substantive": true,
+     "n_items": 4,
+     "note": null
+    }
+   ],
+   "blocked_cluster_ids": [
+    "cl7"
+   ],
+   "grounding_words_rendered": 1937
+  },
+  "C02013": {
+   "per_transcript": [
+    {
+     "transcript_id": "NPR-46234",
+     "substantive": true,
+     "n_items": 2,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-6056",
+     "substantive": true,
+     "n_items": 1,
+     "note": null
+    }
+   ],
+   "blocked_cluster_ids": [
+    "cl3"
+   ],
+   "grounding_words_rendered": 1817
+  },
+  "C02124": {
+   "per_transcript": [
+    {
+     "transcript_id": "CNN-187112",
+     "substantive": false,
+     "n_items": 2,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-187114",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-372670",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-41441",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-43473",
+     "substantive": false,
+     "n_items": 3,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-52091",
+     "substantive": false,
+     "n_items": 4,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-52565",
+     "substantive": false,
+     "n_items": 4,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-56408",
+     "substantive": false,
+     "n_items": 2,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-68923",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-69764",
+     "substantive": false,
+     "n_items": 2,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-72659",
+     "substantive": false,
+     "n_items": 2,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-72981",
+     "substantive": false,
+     "n_items": 3,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-85337",
+     "substantive": false,
+     "n_items": 2,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-85867",
+     "substantive": false,
+     "n_items": 3,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-86162",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-86690",
+     "substantive": false,
+     "n_items": 4,
+     "note": null
+    },
+    {
+     "transcript_id": "CNN-88299",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-10775",
+     "substantive": true,
+     "n_items": 5,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-28816",
+     "substantive": true,
+     "n_items": 2,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-2929",
+     "substantive": true,
+     "n_items": 5,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-30384",
+     "substantive": true,
+     "n_items": 4,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-30394",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-31093",
+     "substantive": false,
+     "n_items": 0,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-32351",
+     "substantive": true,
+     "n_items": 4,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-32437",
+     "substantive": true,
+     "n_items": 3,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-33809",
+     "substantive": true,
+     "n_items": 4,
+     "note": null
+    },
+    {
+     "transcript_id": "NPR-33910",
+     "substantive": true,
+     "n_items": 2,
+     "note": null
+    }
+   ],
+   "blocked_cluster_ids": [
+    "cl15"
+   ],
+   "grounding_words_rendered": 2038
+  }
+ },
+ "upstream_sha256": {
+  "dev_subjects.json": "e1dbbec5842fb26c797a74c8b132eb96a36a49033f52ceef22e37c184e48b1dd",
+  "imposter_pairs.json": "e230f0586ee7a8cdd9db26e92889c9b4c647fffecf67ba9bc98f7d3c412fddbc",
+  "subjects/C00292/split.json": "3d109ecaab76570a60cedf8f6bc922a4304501ba93ae63d94cc0658e11c3ee77",
+  "subjects/C00292/qa_items.jsonl": "ce95fb363455f45ad426eddc95d99bba762257f0cc9725fed13be81a6e9744fc",
+  "subjects/C00292/grounding_turns.jsonl": "d68aa01f077bca318190ca4e8e2d46892c13f2929666f2c59e0dae307bf4b38c",
+  "subjects/C00792/split.json": "a30b36785d8b1270967078949b78b02180c2012b1a27e6d1743d9934ed6f252d",
+  "subjects/C00792/qa_items.jsonl": "b0b08c8a14c4b7cd2cfe8609cfd93a74ba12842d7054f3e09cd29039c49fa193",
+  "subjects/C00792/grounding_turns.jsonl": "088fc4a2bee50e89c037afe1ed09319954f2436c068dba4705a1ba18d7ae6232",
+  "subjects/C01677/split.json": "cb19c2250d23606444523e93ad67a0cdd3a089472af3e6622aa9fdbbfa15894c",
+  "subjects/C01677/qa_items.jsonl": "cd486d0d4688b2fb1cb4b173ca15b98cb453292c81dbfef8a093d0abc826e01e",
+  "subjects/C01677/grounding_turns.jsonl": "1afe8f9670499f59d17d8e572d47eda763512a89a9899d96c672f1c7e71d32fb",
+  "subjects/C02006/split.json": "d3b8502c24b4da8a549a96fe80fecfc41cf379a348caaafe25ced82658d8391d",
+  "subjects/C02006/qa_items.jsonl": "3f0000084e9c5f7429136a83b9eeb861cfeec9dd1c8f477defa11d26894f2655",
+  "subjects/C02006/grounding_turns.jsonl": "98ec8719fb678327852e8126cec8690e5b4c66a4c4be7a4554d025afb36ef367",
+  "subjects/C02013/split.json": "e88ac7cb956cfdc59c9dfc9b53602d75238ace757be573f0f4d4d000e5384184",
+  "subjects/C02013/qa_items.jsonl": "1827a5986dd8d77f829d841c1845a83ce545d6b15583f9e487dd214bb7c0ca61",
+  "subjects/C02013/grounding_turns.jsonl": "f5a0a864226b91531903c78073d164665aece0cce397441ad32018c48331c591",
+  "subjects/C02124/split.json": "1150aed61aa5f9b8b0901607bc35af029a015d8ec34dbd9e67d433ef746b1078",
+  "subjects/C02124/qa_items.jsonl": "4859adbd9becb55d024e37e054e2ad9328ef36e122f6f1ef739405ba34cdf0fd",
+  "subjects/C02124/grounding_turns.jsonl": "f87b2b1de9247aaf01de5d838c6cd3e9287a7e25d0ac33420969f69ed9d78db2"
+ }
+}
