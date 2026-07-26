@@ -14,6 +14,7 @@ import random
 import pytest
 
 from doppler.imposter2 import (
+    MAX_DF,
     NAME_RATIO,
     WORD_FLOOR,
     collect_donor_texts,
@@ -128,7 +129,7 @@ def test_tokenize_drops_single_characters_and_lowercases():
 
 
 def test_tfidf_matches_the_hand_computed_values():
-    rows = tfidf_vectors(["a bb cc", "bb dd"])
+    rows = tfidf_vectors(["a bb cc", "bb dd"], max_df=1.0)
     idf_rare = math.log(3 / 2) + 1.0          # df = 1, n = 2, smoothed
     norm = math.sqrt(1.0 + idf_rare ** 2)
     assert set(rows[0]) == {"bb", "cc"}       # "a" is below the token pattern
@@ -138,22 +139,60 @@ def test_tfidf_matches_the_hand_computed_values():
 
 
 def test_cosine_endpoints():
-    same = tfidf_vectors(["alpha beta gamma", "alpha beta gamma"])
+    same = tfidf_vectors(["alpha beta gamma", "alpha beta gamma"], max_df=1.0)
     assert cosine(same[0], same[1]) == pytest.approx(1.0)
-    apart = tfidf_vectors(["alpha beta", "gamma delta"])
+    apart = tfidf_vectors(["alpha beta", "gamma delta"], max_df=1.0)
     assert cosine(apart[0], apart[1]) == 0.0
+
+
+# --- D7-r2 (SPEC v1.2): the max_df trim ------------------------------------
+
+
+def test_max_df_drops_terms_above_the_ceiling():
+    """A term in every document is gone; a term in 90% of them survives."""
+    docs = ["ubiquitous alpha"] * 9 + ["ubiquitous beta"]
+    rows = tfidf_vectors(docs, max_df=MAX_DF)
+    assert "ubiquitous" not in rows[0]        # df 10/10 = 1.0 > 0.9
+    assert "alpha" in rows[0]                 # df 9/10 = 0.9, kept (inclusive)
+    assert set(rows[9]) == {"beta"}
+
+
+def test_max_df_ceiling_is_inclusive_at_exactly_the_share():
+    docs = ["shared uniq1", "shared uniq2", "shared uniq3", "only4"]
+    assert "shared" in tfidf_vectors(docs, max_df=0.75)[0]   # df 3 <= 3.0
+    assert "shared" not in tfidf_vectors(docs, max_df=0.7)[0]  # df 3 > 2.8
+
+
+def test_max_df_lets_the_topical_document_win():
+    """The point of the amendment, in miniature.
+
+    Every document is full of the same filler. Without the trim the filler
+    decides and the longest filler document wins; with it, the two documents
+    that share a topic win.
+    """
+    filler = " ".join(["think", "know", "people", "going", "right"] * 60)
+    subject = filler + " " + text_of(SYRIA, 40)
+    topical = filler + " " + text_of(SYRIA, 40)
+    windbag = " ".join(["think", "know", "people", "going", "right"] * 400)
+    docs = [subject, topical, windbag, filler + " " + text_of(BASEBALL, 40)]
+    raw = tfidf_vectors(docs, max_df=1.0)
+    trimmed = tfidf_vectors(docs, max_df=MAX_DF)
+    assert cosine(raw[0], raw[2]) > 0.9                     # filler twins
+    assert cosine(trimmed[0], trimmed[1]) > cosine(trimmed[0], trimmed[2])
+    assert cosine(trimmed[0], trimmed[2]) == 0.0            # nothing left to share
 
 
 def test_tfidf_parity_with_sklearn_when_available():
     sk = pytest.importorskip("sklearn.feature_extraction.text")
     docs = [text_of(SYRIA, 40), text_of(BASEBALL, 55),
             text_of(SYRIA + BASEBALL, 30), "damascus damascus bullpen"]
-    mine = tfidf_vectors(docs)
-    theirs = sk.TfidfVectorizer().fit_transform(docs)
-    for i in range(len(docs)):
-        for j in range(len(docs)):
-            assert cosine(mine[i], mine[j]) == pytest.approx(
-                float((theirs[i] @ theirs[j].T).toarray()[0][0]), abs=1e-9)
+    for max_df in (1.0, MAX_DF, 0.5):
+        mine = tfidf_vectors(docs, max_df=max_df)
+        theirs = sk.TfidfVectorizer(max_df=max_df).fit_transform(docs)
+        for i in range(len(docs)):
+            for j in range(len(docs)):
+                assert cosine(mine[i], mine[j]) == pytest.approx(
+                    float((theirs[i] @ theirs[j].T).toarray()[0][0]), abs=1e-9)
 
 
 # ---------------------------------------------------------------------------
@@ -302,12 +341,24 @@ def matching_fixture(donor_specs, subject_name="Frederic Hof",
     return [{"canonical_id": "C00001"}], pool, subject_texts, donor_texts
 
 
+def match(dev, pool, st, dt, **kw):
+    """match_donors with D7-r2's trim pinned off, for the rule tests.
+
+    These fixtures are two or three tiny documents built from one shared
+    vocabulary, so max_df=0.9 would delete every term they have in common and
+    leave nothing to rank. The trim is tested on its own above, and at the
+    match level in test_match_applies_the_max_df_trim_by_default.
+    """
+    kw.setdefault("max_df", 1.0)
+    return match_donors(dev, pool, st, dt, **kw)
+
+
 def test_match_picks_the_most_similar_eligible_donor():
     dev, pool, st, dt = matching_fixture([
         ("C00100", "Alice Adams", SYRIA, 3000),
         ("C00200", "Bob Brown", BASEBALL, 3000),
     ])
-    doc = match_donors(dev, pool, st, dt)
+    doc = match(dev, pool, st, dt)
     assert doc["pairs"] == {"C00001": "C00100"}
     assert doc["similarity"]["C00001"] == pytest.approx(1.0)
     assert doc["runner_up_top5"]["C00001"][0][0] == "C00200"
@@ -320,7 +371,7 @@ def test_match_is_deterministic():
         ("C00200", "Bob Brown", SYRIA + BASEBALL, 4000),
         ("C00300", "Carol Cook", BASEBALL, 3000),
     ])
-    assert match_donors(dev, pool, st, dt) == match_donors(dev, pool, st, dt)
+    assert match(dev, pool, st, dt) == match(dev, pool, st, dt)
 
 
 def test_word_floor_excludes_a_short_donor():
@@ -328,7 +379,7 @@ def test_word_floor_excludes_a_short_donor():
         ("C00100", "Alice Adams", SYRIA, WORD_FLOOR - 1),   # best match, too short
         ("C00200", "Bob Brown", BASEBALL, WORD_FLOOR),
     ])
-    doc = match_donors(dev, pool, st, dt)
+    doc = match(dev, pool, st, dt)
     assert doc["pairs"] == {"C00001": "C00200"}
     assert doc["n_eligible_donors"] == 1
     assert "C00100" not in doc["donor_words"]
@@ -337,7 +388,7 @@ def test_word_floor_excludes_a_short_donor():
 def test_word_floor_is_inclusive():
     dev, pool, st, dt = matching_fixture([("C00100", "Alice Adams", SYRIA,
                                            WORD_FLOOR)])
-    assert match_donors(dev, pool, st, dt)["pairs"] == {"C00001": "C00100"}
+    assert match(dev, pool, st, dt)["pairs"] == {"C00001": "C00100"}
 
 
 def test_name_conflict_excludes_the_best_donor():
@@ -345,7 +396,7 @@ def test_name_conflict_excludes_the_best_donor():
         ("C00100", "Rachel Hof", SYRIA, 3000),       # shares the subject surname
         ("C00200", "Bob Brown", SYRIA, 3000),
     ])
-    doc = match_donors(dev, pool, st, dt)
+    doc = match(dev, pool, st, dt)
     assert doc["pairs"] == {"C00001": "C00200"}
     assert doc["excluded_by_name"]["C00001"][0]["donor"] == "C00100"
     assert "C00100" not in [d for d, _ in doc["runner_up_top5"]["C00001"]]
@@ -356,7 +407,7 @@ def test_fuzzy_name_conflict_excludes_a_near_spelling():
         ("C00100", "Frederick Hoff", SYRIA, 3000),
         ("C00200", "Bob Brown", SYRIA, 3000),
     ])
-    doc = match_donors(dev, pool, st, dt)
+    doc = match(dev, pool, st, dt)
     assert doc["pairs"] == {"C00001": "C00200"}
     assert "difflib" in doc["excluded_by_name"]["C00001"][0]["reason"]
 
@@ -366,7 +417,7 @@ def test_ties_break_on_lexicographic_canonical_id():
         ("C00300", "Zoe Zane", SYRIA, 3000),
         ("C00200", "Bob Brown", SYRIA, 3000),        # identical text, smaller id
     ])
-    doc = match_donors(dev, pool, st, dt)
+    doc = match(dev, pool, st, dt)
     assert doc["similarity"]["C00001"] == pytest.approx(1.0)
     assert doc["pairs"] == {"C00001": "C00200"}
     assert doc["runner_up_top5"]["C00001"] == [["C00300", 1.0]]
@@ -376,7 +427,7 @@ def test_runner_up_list_is_capped_and_excludes_the_winner():
     specs = [(f"C0{100 * i:04d}", f"Person {i}", SYRIA + [f"topic{i}"], 3000)
              for i in range(1, 9)]
     dev, pool, st, dt = matching_fixture(specs)
-    doc = match_donors(dev, pool, st, dt)
+    doc = match(dev, pool, st, dt)
     runners = doc["runner_up_top5"]["C00001"]
     assert len(runners) == 5
     assert doc["pairs"]["C00001"] not in [d for d, _ in runners]
@@ -389,7 +440,7 @@ def test_a_dev_subject_in_the_donor_pool_is_fatal():
     dev, pool, st, dt = matching_fixture([("C00100", "Alice Adams", SYRIA, 3000)])
     dt["C00001"] = text_of(SYRIA, 3000)
     with pytest.raises(ValueError, match="dev subjects in the donor pool"):
-        match_donors(dev, pool, st, dt)
+        match(dev, pool, st, dt)
 
 
 def test_every_dev_subject_gets_a_pair_including_a_burned_one():
@@ -399,7 +450,7 @@ def test_every_dev_subject_gets_a_pair_including_a_burned_one():
             make_row("C00100", "Alice Adams"), make_row("C00200", "Bob Brown")]
     st = {"C00001": text_of(SYRIA, 1200), "C00002": text_of(BASEBALL, 1200)}
     dt = {"C00100": text_of(SYRIA, 3000), "C00200": text_of(BASEBALL, 3000)}
-    doc = match_donors(dev, pool, st, dt)
+    doc = match(dev, pool, st, dt)
     assert doc["pairs"] == {"C00001": "C00100", "C00002": "C00200"}
     assert doc["subject_words"] == {"C00001": 1200, "C00002": 1200}
 
@@ -407,17 +458,65 @@ def test_every_dev_subject_gets_a_pair_including_a_burned_one():
 def test_no_eligible_donor_is_an_error():
     dev, pool, st, dt = matching_fixture([("C00100", "Alice Adams", SYRIA, 10)])
     with pytest.raises(ValueError, match="grounding floor"):
-        match_donors(dev, pool, st, dt)
+        match(dev, pool, st, dt)
 
 
 def test_all_donors_blocked_by_name_is_an_error():
     dev, pool, st, dt = matching_fixture([("C00100", "Rachel Hof", SYRIA, 3000)])
     with pytest.raises(ValueError, match="excluded by name"):
-        match_donors(dev, pool, st, dt)
+        match(dev, pool, st, dt)
+
+
+def test_match_applies_the_max_df_trim_by_default():
+    """D7-r2 at the match level, and the pilot's problem in miniature.
+
+    The subject is mostly conversational filler with a little Syria in it.
+    C00100 is pure filler and nothing else — the register twin, which raw
+    counts pick (cosine 0.98). C00200 talks about Syria. The trim deletes the
+    filler every document shares and the topical donor wins.
+    """
+    filler = ["think", "know", "people", "going", "right"]
+    pool = [make_row("C00001", "Frederic Hof"),
+            make_row("C00100", "Windbag Wilson"),
+            make_row("C00200", "Topical Turner"),
+            make_row("C00300", "Third Wheel")]
+    dev = [{"canonical_id": "C00001"}]
+    st = {"C00001": text_of(filler, 2000) + " " + text_of(SYRIA, 300)}
+    dt = {"C00100": text_of(filler, 4000),
+          "C00200": text_of(filler, 400) + " " + text_of(SYRIA, 3000),
+          "C00300": text_of(filler, 400) + " " + text_of(BASEBALL, 3000)}
+
+    raw = match(dev, pool, st, dt)                     # max_df = 1.0
+    assert raw["pairs"] == {"C00001": "C00100"}
+    assert raw["similarity"]["C00001"] > 0.97
+    assert raw["vocabulary_terms"] == 15
+
+    doc = match_donors(dev, pool, st, dt)              # D7-r2 default
+    assert doc["pairs"] == {"C00001": "C00200"}
+    assert doc["max_df"] == MAX_DF
+    assert doc["vocabulary_terms"] == 10               # the filler is gone
+    assert doc["runner_up_top5"]["C00001"] == [["C00100", 0.0], ["C00300", 0.0]]
+
+
+def test_donor_multiplicity_is_reported():
+    dev = [{"canonical_id": "C00001"}, {"canonical_id": "C00002"},
+           {"canonical_id": "C00003"}]
+    pool = [make_row("C00001", "Ann One"), make_row("C00002", "Ben Two"),
+            make_row("C00003", "Cal Three"), make_row("C00100", "Alice Adams"),
+            make_row("C00200", "Bob Brown")]
+    st = {"C00001": text_of(SYRIA, 900), "C00002": text_of(SYRIA, 900),
+          "C00003": text_of(BASEBALL, 900)}
+    dt = {"C00100": text_of(SYRIA, 3000), "C00200": text_of(BASEBALL, 3000)}
+    m = match(dev, pool, st, dt)["donor_multiplicity"]
+    assert m["distinct_donors"] == 2 and m["n_subjects"] == 3
+    assert m["max_subjects_per_donor"] == 2
+    assert m["shared_donors"] == ["C00100"]
+    assert m["subjects_by_donor"] == {"C00100": ["C00001", "C00002"],
+                                      "C00200": ["C00003"]}
 
 
 def test_recorded_word_counts_use_the_whitespace_proxy():
     dev, pool, st, dt = matching_fixture([("C00100", "Alice Adams", SYRIA, 3000)])
-    doc = match_donors(dev, pool, st, dt)
+    doc = match(dev, pool, st, dt)
     assert doc["donor_words"]["C00100"] == word_count(dt["C00100"]) == 3000
     assert doc["name_ratio"] == NAME_RATIO and doc["word_floor"] == WORD_FLOOR

@@ -30,10 +30,15 @@ almost disjoint sets for this pool — SPEC D6 says "seeded sample", D1 says
 can be copied to a compute node next to a driver without dragging a scientific
 stack behind it, and the matching rule must not be able to drift between
 copies. The TF-IDF here reproduces ``sklearn.feature_extraction.text.
-TfidfVectorizer`` defaults exactly — same token pattern ``(?u)\\b\\w\\w+\\b``,
-same smoothed idf ``ln((1+n)/(1+df)) + 1``, same L2 row normalization — and
-tests/test_imposter2.py asserts that parity against the real thing whenever
-sklearn happens to be importable (it is not installed in this repo's env).
+TfidfVectorizer`` exactly — same token pattern ``(?u)\\b\\w\\w+\\b``, same
+smoothed idf ``ln((1+n)/(1+df)) + 1``, same L2 row normalization, same
+``max_df`` vocabulary trimming — and tests/test_imposter2.py asserts that
+parity against the real thing whenever sklearn is importable.
+
+SPEC v1.2 (D7-r2) added the ``max_df = 0.9`` trim after the first pilot run:
+without it, cosine over broadcast transcripts is dominated by conversational
+filler that every document shares, and three topically unrelated subjects
+collapsed onto one politically generic donor.
 """
 
 from __future__ import annotations
@@ -71,9 +76,19 @@ N_DONORS = 200
 WORD_FLOOR = 2500
 #: difflib ratio at or above which two names count as the same person.
 NAME_RATIO = 0.7
+#: D7-r2 (SPEC v1.2): terms appearing in more than this share of the matching
+#: corpus are dropped before scoring. Raw-count vectors over broadcast
+#: transcripts are dominated by conversational filler ("think", "know",
+#: "people") that every document carries, so cosine measured how alike two
+#: people SOUND rather than what they talked about, and topically unrelated
+#: subjects collapsed onto one donor. Same semantics as
+#: TfidfVectorizer(max_df=0.9): keep a term iff its document count is
+#: <= 0.9 * n_documents.
+MAX_DF = 0.9
 
 METHOD = (
-    "SPEC D7. Each subject is represented by its concatenated guest-role text "
+    "SPEC D7 with the v1.2 amendment (D7-r2). Each subject is represented by "
+    "its concatenated guest-role text "
     "from GROUNDING clusters only (dev subjects: the committed "
     "grounding_turns.jsonl; donors: D2 applied to their pool row, guest turns "
     "of every grounding cluster's representative transcript). Donor pool = the "
@@ -86,9 +101,11 @@ METHOD = (
     "name variants, honorific-stripped and casefolded). Similarity = cosine "
     "between L2-normalised TF-IDF vectors, word unigrams, lowercase, token "
     "pattern (?u)\\b\\w\\w+\\b, smoothed idf ln((1+n)/(1+df))+1, fitted once on "
-    "all eligible donor documents plus all subject documents. donor(X) = argmax "
-    "similarity, rounded to 6 decimals, ties broken by lexicographic "
-    "canonical_id. runner_up_top5 holds ranks 2-6 (the winner is in pairs)."
+    "all eligible donor documents plus all subject documents, with terms whose "
+    "document frequency exceeds 0.9 of that corpus DROPPED (v1.2 amendment; "
+    "TfidfVectorizer(max_df=0.9) semantics). donor(X) = argmax similarity, "
+    "rounded to 6 decimals, ties broken by lexicographic canonical_id. "
+    "runner_up_top5 holds ranks 2-6 (the winner is in pairs)."
 )
 
 # Name particles and generational suffixes never count as a shared name token:
@@ -336,15 +353,23 @@ def tokenize(text: str) -> list[str]:
     return TOKEN_RE.findall((text or "").lower())
 
 
-def tfidf_vectors(docs) -> list[dict[str, float]]:
+def tfidf_vectors(docs, max_df: float = MAX_DF) -> list[dict[str, float]]:
     """L2-normalised TF-IDF rows, one sparse dict per document.
 
     Reproduces TfidfVectorizer(lowercase=True, ngram_range=(1,1),
-    smooth_idf=True, sublinear_tf=False, norm='l2'):
+    smooth_idf=True, sublinear_tf=False, norm='l2', max_df=max_df):
     ``tfidf = count * (ln((1 + n_docs) / (1 + df)) + 1)``, then each row is
     divided by its L2 norm. Fitting and transforming are one step here — the
     caller passes every document it wants compared, so no term can be out of
     vocabulary.
+
+    ``max_df`` is D7-r2: a term is kept only when it appears in at most
+    ``max_df * n_docs`` documents, so ubiquitous conversational vocabulary is
+    dropped before scoring rather than dominating every vector. sklearn trims
+    the vocabulary before the idf is computed, but the surviving terms' df and
+    the document count are unchanged by the trim, so the surviving weights are
+    identical either way — tests assert that against real sklearn. Pass
+    ``max_df=1.0`` for the pre-amendment behaviour.
 
     Unigrams, not the 1-2 grams SPEC D6 uses for ranking short questions: these
     documents run to tens of thousands of words each and a bigram vocabulary of
@@ -356,11 +381,13 @@ def tfidf_vectors(docs) -> list[dict[str, float]]:
     df: Counter = Counter()
     for c in counts:
         df.update(c.keys())
-    idf = {t: math.log((1.0 + n) / (1.0 + d)) + 1.0 for t, d in df.items()}
+    ceiling = max_df * n
+    idf = {t: math.log((1.0 + n) / (1.0 + d)) + 1.0
+           for t, d in df.items() if d <= ceiling}
 
     rows = []
     for c in counts:
-        vec = {t: f * idf[t] for t, f in c.items()}
+        vec = {t: f * idf[t] for t, f in c.items() if t in idf}
         norm = math.sqrt(sum(v * v for v in vec.values()))
         if norm > 0:
             vec = {t: v / norm for t, v in vec.items()}
@@ -386,7 +413,8 @@ def cosine(a: dict, b: dict) -> float:
 
 def match_donors(dev_subjects, pool, subject_texts: dict, donor_texts: dict,
                  word_floor: int = WORD_FLOOR, name_ratio: float = NAME_RATIO,
-                 top_k: int = 5, generated_at: str | None = None) -> dict:
+                 top_k: int = 5, generated_at: str | None = None,
+                 max_df: float = MAX_DF) -> dict:
     """SPEC D7. Return the results/stage2_pilot/imposter_pairs.json document.
 
     ``dev_subjects`` is dev_subjects.json's ``subjects`` list (only
@@ -416,8 +444,10 @@ def match_donors(dev_subjects, pool, subject_texts: dict, donor_texts: dict,
     subjects = sorted(dev_ids)
     docs = eligible + subjects
     vectors = tfidf_vectors([donor_texts[c] for c in eligible]
-                            + [subject_texts[c] for c in subjects])
+                            + [subject_texts[c] for c in subjects],
+                            max_df=max_df)
     vec = dict(zip(docs, vectors))
+    vocabulary = len({t for row in vectors for t in row})
 
     pairs, similarity, runners, excluded = {}, {}, {}, {}
     for cid in subjects:
@@ -443,6 +473,18 @@ def match_donors(dev_subjects, pool, subject_texts: dict, donor_texts: dict,
 
     used = sorted({*pairs.values(),
                    *(d for rs in runners.values() for d, _ in rs)})
+    # SPEC v1.2: one donor may serve several subjects, but it must be visible.
+    by_donor: dict[str, list[str]] = {}
+    for cid, donor in pairs.items():
+        by_donor.setdefault(donor, []).append(cid)
+    multiplicity = {
+        "distinct_donors": len(by_donor),
+        "n_subjects": len(pairs),
+        "max_subjects_per_donor": max((len(v) for v in by_donor.values()),
+                                      default=0),
+        "subjects_by_donor": {d: sorted(v) for d, v in sorted(by_donor.items())},
+        "shared_donors": sorted(d for d, v in by_donor.items() if len(v) > 1),
+    }
     return {
         "method": METHOD,
         "generated_at": generated_at,
@@ -451,7 +493,10 @@ def match_donors(dev_subjects, pool, subject_texts: dict, donor_texts: dict,
         "donor_sample_sha256": sample_sha256(donor_texts),
         "word_floor": word_floor,
         "name_ratio": name_ratio,
+        "max_df": max_df,
+        "vocabulary_terms": vocabulary,
         "n_eligible_donors": len(eligible),
+        "donor_multiplicity": multiplicity,
         "pairs": pairs,
         "similarity": similarity,
         "runner_up_top5": runners,
@@ -471,7 +516,8 @@ def donor_dir(cid: str, pilot_dir=PILOT_DIR) -> Path:
 
 
 __all__ = [
-    "DONOR_SEED", "N_DONORS", "WORD_FLOOR", "NAME_RATIO", "METHOD", "PARTICLES",
+    "DONOR_SEED", "N_DONORS", "WORD_FLOOR", "NAME_RATIO", "MAX_DF", "METHOD",
+    "PARTICLES",
     "donor_sample", "sample_sha256", "guest_text", "grounding_text",
     "donor_splits", "collect_donor_texts",
     "name_strings", "name_keys", "name_tokens", "name_conflict",

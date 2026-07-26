@@ -20,12 +20,14 @@ the deliberate override and prints what it discards.
 
 The expensive step is one streaming pass over the 4.45 GB corpus for the 200
 donors' grounding transcripts (~700 records). Its result is cached under
-data/stage2_cache/ (gitignored), keyed by the donor sample's fingerprint, so a
-re-run costs seconds. CPU only, no network, no model calls, $0.
+data/stage2_cache/ (gitignored), keyed by the donor sample AND by the bytes of
+stage2_data.py, so a re-run costs seconds but a change to the turn-extraction
+rules always re-reads the corpus. CPU only, no network, no model calls, $0.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 import time
@@ -52,32 +54,52 @@ from doppler.stage2_data import (
     load_dev_subjects,
     load_guest_words,
     load_pool,
+    subject_dir,
     word_count,
     write_json,
     write_jsonl,
 )
 
+ROOT = Path(__file__).resolve().parents[1]
 OUT = PILOT_DIR / "imposter_pairs.json"
-CACHE = Path(__file__).resolve().parents[1] / "data/stage2_cache/donor_grounding_v1.json"
+CACHE = ROOT / "data/stage2_cache/donor_grounding_v1.json"
+STAGE2_DATA_PY = ROOT / "src/doppler/stage2_data.py"
 
 
 # ---------------------------------------------------------------------------
 
-def load_cache(fingerprint: str):
-    """The cached donor texts, but only if they are the same 200 donors."""
+def sha256_file(path) -> str:
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def cache_key(fingerprint: str) -> str:
+    """Donor sample AND the extraction rules that produced the texts.
+
+    Donor grounding text comes out of stage2_data.extract_turns, which T1 is
+    still amending (D3.1-r2 label cleaning, guest containment matching). A
+    cache keyed only on the donor ids would happily serve text built under the
+    old rules against a subject side built under the new ones, and nothing
+    downstream would notice. Keying on the module's bytes forces a re-pass
+    whenever those rules move — 5 seconds, and it cannot go stale silently.
+    """
+    return hashlib.sha256(
+        (fingerprint + ":" + sha256_file(STAGE2_DATA_PY)).encode()).hexdigest()
+
+
+def load_cache(key: str):
+    """The cached donor texts, but only for the same donors AND same rules."""
     if not CACHE.exists():
         return None
     doc = json.loads(CACHE.read_text(encoding="utf-8"))
-    if doc.get("donor_sample_sha256") != fingerprint:
+    if doc.get("cache_key") != key:
         return None
     return doc["texts"]
 
 
-def save_cache(fingerprint: str, texts: dict) -> None:
+def save_cache(key: str, texts: dict) -> None:
     CACHE.parent.mkdir(parents=True, exist_ok=True)
-    CACHE.write_text(json.dumps({"donor_sample_sha256": fingerprint,
-                                 "texts": texts}, ensure_ascii=False),
-                     encoding="utf-8")
+    CACHE.write_text(json.dumps({"cache_key": key, "texts": texts},
+                                ensure_ascii=False), encoding="utf-8")
 
 
 def cross_check_with_t2(pool, dev_ids, donor_ids) -> str:
@@ -148,10 +170,16 @@ def main(argv: list[str]) -> int:
 
     # Subject side: the committed turn files, guest role only, grounding only.
     subject_texts = {cid: grounding_text(cid) for cid in dev_ids}
+    # T1 is still amending turn extraction, so record exactly which turn files
+    # this match was computed from. A refresh that changes any of these hashes
+    # is a refresh that can change the pairs.
+    turn_sha = {cid: sha256_file(subject_dir(cid) / "grounding_turns.jsonl")[:16]
+                for cid in sorted(dev_ids)}
 
     # Donor side: one corpus pass, cached.
     guest_words = load_guest_words([by_id[c] for c in donor_ids])
-    cached = load_cache(fingerprint)
+    key = cache_key(fingerprint)
+    cached = load_cache(key)
     if cached is not None:
         donor_texts = cached
         from doppler.imposter2 import donor_splits
@@ -171,7 +199,7 @@ def main(argv: list[str]) -> int:
                   f"transcript) pairs skipped: {list(meta['malformed'])[:3]}")
         print(f"              {meta['n_transcripts_read']} grounding "
               f"transcripts read in {time.time() - t0:.1f}s")
-        save_cache(fingerprint, donor_texts)
+        save_cache(key, donor_texts)
     if skipped:
         print(f"              {len(skipped)} donors have no grounding side "
               "(single-cluster subjects), dropped")
@@ -186,6 +214,9 @@ def main(argv: list[str]) -> int:
     # from the run, so a cached run records the same number as a cold one.
     doc["n_donor_grounding_transcripts"] = len(
         {e["transcript_id"] for sp in splits.values() for e in sp["grounding"]})
+    # Provenance of the inputs, so a later refresh can prove what moved.
+    doc["stage2_data_sha256"] = sha256_file(STAGE2_DATA_PY)[:16]
+    doc["subject_turns_sha256"] = turn_sha
     doc["runtime_secs"] = round(time.time() - t0, 1)
     doc["cost_usd"] = 0.0
     write_json(OUT, doc)
@@ -222,7 +253,8 @@ def main(argv: list[str]) -> int:
 
     # ---- the table --------------------------------------------------------
     print(f"\n{len(dev_ids)} pairs — subject then donor, "
-          f"floor {WORD_FLOOR} words, {doc['n_eligible_donors']} eligible donors\n")
+          f"floor {WORD_FLOOR} words, {doc['n_eligible_donors']} eligible "
+          f"donors, max_df {doc['max_df']}, {doc['vocabulary_terms']:,} terms\n")
     for cid in sorted(dev_ids):
         srow = by_id[cid]
         did = doc["pairs"][cid]
@@ -244,6 +276,14 @@ def main(argv: list[str]) -> int:
             print(f"     name-excluded: "
                   f"{', '.join(b['donor'] + ' (' + b['reason'] + ')' for b in blocked)}")
         print()
+
+    mult = doc["donor_multiplicity"]
+    print(f"donor multiplicity: {mult['distinct_donors']} distinct donors for "
+          f"{mult['n_subjects']} subjects, at most "
+          f"{mult['max_subjects_per_donor']} subjects on one donor")
+    for donor in mult["shared_donors"]:
+        print(f"  {donor} {by_id[donor]['canonical_name']} serves "
+              f"{', '.join(mult['subjects_by_donor'][donor])}")
 
     print(f"wrote {OUT}")
     print(f"      {len(doc['donors_recorded'])} donor texts, "
