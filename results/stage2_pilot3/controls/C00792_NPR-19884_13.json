@@ -1,0 +1,30 @@
+{
+ "item_id": "C00792:NPR-19884:13",
+ "canonical_id": "C00792",
+ "built": true,
+ "reason": null,
+ "kind": "control_fresh",
+ "question": "Is there still enough of a nationalist movement for the U.S. or other countries to back, to support?",
+ "options": [
+  "No, there is nothing viable left to support over there now because groups like the Free Syrian Army or local councils in Aleppo and Idlib have been completely sidelined. Washington and Brussels missed their window back when the uprising started in Daraa, so pouring more cash from USAID or the State Department into those shattered factions now is just throwing good money after bad, and frankly, it risks empowering extremist elements instead.",
+  "No, that ship sailed years ago. When moderate commanders in places like Homs and Ghouta were abandoned by the Obama administration, the whole project collapsed. Now you only have radical factions tied to al-Nusra or extremists backed by Turkey and Saudi Arabia. If the Pentagon or the UK Foreign Office tries funding anyone on the ground today, those weapons will immediately end up in the hands of jihadists fighting near Damascus.",
+  "Not at all, that option no longer exists in any meaningful way because the secular opposition we used to talk about in places like Latakia and the Damascus suburbs has been utterly crushed by Russian airstrikes and Iranian militias, organizations like the Syrian National Council have zero credibility left among ordinary citizens, and anyone in Washington or London talking about reviving that movement is completely detached from the brutal realities on the ground today.",
+  "No, there is nothing left to salvage because the moderate opposition groups we once counted on in Daraa and rural Damascus have been completely decimated, and between the Russian intervention, the Syrian Arab Army, and ISIS, those secular forces are gone. If the CIA or British intelligence tries to prop up new factions now, we are just creating another Afghanistan, so we need to accept that the war is essentially over and move on from this fantasy."
+ ],
+ "why": [
+  "Answer 1 affirms that a viable nationalist movement still exists to be supported, whereas Answer 2 explicitly denies that anything viable is left to support.",
+  "Answer 1 affirms that a viable nationalist movement still exists to be supported, whereas Answer 2 asserts that such a movement no longer exists and that any backing would inevitably go to extremists.",
+  "Answer 1 affirms that a nationalist movement still exists to be supported, whereas Answer 2 explicitly denies that any such meaningful movement remains.",
+  "Answer 1 affirms that a viable nationalist movement still exists to be supported, whereas Answer 2 explicitly denies this, stating that moderate opposition forces have been completely decimated and nothing is left to salvage."
+ ],
+ "n_requested": 6,
+ "n_parsed": 6,
+ "rejections": [],
+ "shares_options_with_real_entry": false,
+ "generator": "gemini-3.5-flash-lite",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "note": "B10.8 second generation pass. This item is drawn as BOTH a real entry and a control, so its control entry gets an entirely fresh option set. The two entries share the question and nothing else, which removes the elimination shortcut.",
+ "tokens_in": 2702,
+ "tokens_out": 1028,
+ "n_api_calls": 9
+}

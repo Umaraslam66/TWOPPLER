@@ -6,15 +6,13 @@ A **real** entry has one paraphrased true answer among three generated distracto
 
 Chance on a real entry, if the owner always names a letter, is 0.25. The control entries measure the false-positive rate: naming any letter on a control is a false positive.
 
-## READ THIS BEFORE SCORING — the overlapping entries leak
+## Note on the repeated questions
 
-5 items appear TWICE, once as a real entry and once as a control: #1/#20 (`C00792:NPR-19884:10`), #3/#4 (`C00792:NPR-19884:6`), #5/#17 (`C00792:NPR-19884:13`), #8/#15 (`C02006:NPR-14829:19`), #10/#16 (`C00792:NPR-19884:15`).
+5 questions appear TWICE, once as a real entry and once as a control: #1/#20 (`C00792:NPR-19884:10`), #3/#4 (`C00792:NPR-19884:6`), #5/#17 (`C00792:NPR-19884:13`), #8/#15 (`C02006:NPR-14829:19`), #10/#16 (`C00792:NPR-19884:15`). This is unavoidable at 15 built items — B10.8 asks for 20 entries and 20 disjoint items do not exist.
 
-The overlap is forced by supply, not chosen: B10.8 asks for 10 real and 10 control entries and only 15 items were built, so 20 disjoint entries do not exist.
+**Those 5 control entries share the QUESTION and NOTHING ELSE.** Their four options come from a second generation pass: fresh counterfactuals against the same paraphrased true answer, through the same guards, the same paraphrase step and the same contradiction check, then checked against the real entry's own options so no text is reused. Comparing a pair therefore tells you nothing — there is no option present in one and absent from the other to eliminate on. All 10 real entries count.
 
-**Why it matters.** A control reuses the same item's three distractors plus its unused spare, so an overlapping pair shows the SAME question with THREE of the four options identical. The option that appears in the real entry and not in its control twin IS the real answer. Anyone who compares the two entries can score those items **by elimination**, without judging realism at all.
-
-**Therefore:** the uncontaminated hit rate is the one computed over the 5 real entries with no control twin — #9, #11, #12, #13, #19 — and that is the number to quote. Report the all-10 rate beside it, flagged. Whether to rebuild the sheet with disjoint items (fewer entries, or a second generation pass for control-only option sets) is a design decision for the owner, not the implementer's.
+For the record, the earlier draft of this sheet built a control from the real item's own three distractors plus its spare, which left three of four options identical across the pair and let the real answer fall out **by elimination**. That is fixed; this note stays so the fix is auditable.
 
 | # | kind | item_id | real answer |
 |---|---|---|---|

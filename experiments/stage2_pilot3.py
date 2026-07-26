@@ -202,6 +202,13 @@ SHEET_SEED = 53
 SHEET_REAL = 10
 SHEET_CONTROL = 10
 
+#: Options on a control entry.
+N_CONTROL_OPTIONS = 4
+
+#: Counterfactuals requested per FRESH control set. More than the four needed
+#: because the contradiction check rejects some (9 of 65 on the main build).
+N_CONTROL_GENERATED = 6
+
 
 def now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -685,19 +692,233 @@ def records_built(out_dir: Path) -> list[dict]:
     return [r for r in load_records(out_dir) if r["built"]]
 
 
-def control_options(rec: dict) -> list[str] | None:
+def twinned_item_ids(plan: dict) -> list[str]:
+    """Items drawn as BOTH a real entry and a control.
+
+    Forced by supply: B10.8 wants 20 entries and only 15 items were built. The
+    ids returned here are the ones that need a freshly generated control option
+    set, because reusing the real entry's own distractors would let the real
+    answer fall out by elimination.
+    """
+    real_ids = {r["item_id"] for r in plan["real"]}
+    return sorted({r["item_id"] for r in plan["control"]} & real_ids)
+
+
+def control_path(out_dir: Path, item_id: str) -> Path:
+    return out_dir / "controls" / f"{safe_id(item_id)}.json"
+
+
+def fresh_control_options(out_dir: Path, item_id: str) -> list[str] | None:
+    """A second-pass control option set, if one was generated for this item."""
+    path = control_path(out_dir, item_id)
+    if not path.exists():
+        return None
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    opts = list(doc.get("options") or [])
+    return opts[:N_CONTROL_OPTIONS] if len(opts) >= N_CONTROL_OPTIONS else None
+
+
+def control_options(rec: dict, out_dir: Path | None = None) -> list[str] | None:
     """Four generated options for a control entry, or None if there are < 4.
 
-    The three distractors the real item uses plus one unused spare. The real
-    answer never appears, so a control has no correct answer at all — which is
-    what makes it a control for "can you spot the real one" rather than a
-    harder version of the same question.
+    A control has no correct answer at all — that is what makes it a control
+    for "can you spot the real one" rather than a harder version of the same
+    question.
+
+    Two sources, in order of preference:
+
+    1. A FRESH set from the second generation pass (``controls/``). Required
+       whenever the item is also a real entry: reusing the real entry's own
+       three distractors plus its spare would show the same question with three
+       of four options identical, and the option present in the real entry but
+       absent from its twin IS the real answer. That is elimination, not
+       detection, and it corrupts the B10.8 number.
+    2. Otherwise the item's three distractors plus its unused spare, which
+       costs no extra generation and is safe when the item is control-only.
     """
+    if out_dir is not None:
+        fresh = fresh_control_options(out_dir, rec["item_id"])
+        if fresh:
+            return fresh
     generated = [o["text"] for o in rec["options"] if o["kind"] == "distractor"]
     spares = list(rec.get("spare_generated") or [])
-    if len(generated) + len(spares) < 4:
+    if len(generated) + len(spares) < N_CONTROL_OPTIONS:
         return None
-    return generated + spares[:4 - len(generated)]
+    return generated + spares[:N_CONTROL_OPTIONS - len(generated)]
+
+
+def build_control_set(client, rec: dict, ctx: dict, log: GenLog) -> dict:
+    """A fresh all-generated option set for one twinned control entry.
+
+    Same pipeline as a real item's distractors and deliberately so: generated
+    against the same paraphrased true answer, put through the same offline
+    guards, the same paraphrase step, and the same contradiction check. Only
+    CONFLICT options are kept, so a control's four options are drawn from the
+    same population as a real entry's three — otherwise the control would be
+    an easier or a harder task than the thing it is a control for.
+
+    More than four are requested because the contradiction check rejects some,
+    and every kept option is additionally checked against the real entry's own
+    option texts so the two entries share nothing but the question.
+    """
+    question = rec["question"]
+    para_true = rec["true_answer_paraphrased"]
+    verbatim = rec["true_answer_verbatim"]
+    banned = [o["text"] for o in rec["options"]] + list(
+        rec.get("spare_generated") or [])
+    rejections: list[dict] = []
+    guard_item = {"answer": verbatim}
+
+    prompt = CF.gen_prompt(question, para_true, ctx["test_date"],
+                           n=N_CONTROL_GENERATED)
+    _configure(client, GEN_TEMPERATURE, GEN_MAX_TOKENS)
+    text, tin, tout = client.generate(prompt)
+    log.add("control_generate", prompt, text, tin, tout,
+            temperature=GEN_TEMPERATURE)
+    raw = CF.parse_generated(text, n=N_CONTROL_GENERATED)
+
+    _configure(client, CHECK_TEMPERATURE, CHECK_MAX_TOKENS)
+    accepted: list[dict] = []
+    for k, cand in enumerate(raw):
+        if len(accepted) >= N_CONTROL_OPTIONS:
+            break
+        verdict = _guard_offline(cand, item=guard_item, ctx=ctx, stage="raw")
+        if not verdict["ok"]:
+            rejections.append({"slot": k, "text": cand, **verdict})
+            continue
+
+        _configure(client, CHECK_TEMPERATURE, PARA_MAX_TOKENS)
+        p = CF.para_prompt(cand)
+        got, a, b = client.generate(p)
+        log.add(f"control_paraphrase:gen{k}", p, got, a, b,
+                truncated=CF.looks_truncated(got))
+        if CF.looks_truncated(got):
+            rejections.append({"slot": k, "text": cand, "stage": "paraphrase",
+                               "ok": False, "reasons": [
+                                   {"reason": "empty_or_truncated_paraphrase"}]})
+            continue
+        out = CF.parse_paraphrase(got)
+        _configure(client, CHECK_TEMPERATURE, CHECK_MAX_TOKENS)
+
+        verdict = _guard_offline(out, item=guard_item, ctx=ctx,
+                                 stage="paraphrased")
+        if not verdict["ok"]:
+            rejections.append({"slot": k, "text": out, **verdict})
+            continue
+        # Never reproduce anything the real entry shows, and never restate the
+        # true position under a different surface form.
+        if any(out == b or CF.copies_true(out, b) for b in banned):
+            rejections.append({"slot": k, "text": out, "stage": "overlap",
+                               "ok": False, "reasons": [
+                                   {"reason": "duplicates_real_entry_option"}]})
+            continue
+        if CF.copies_true(out, para_true):
+            rejections.append({"slot": k, "text": out, "stage": "overlap",
+                               "ok": False, "reasons": [
+                                   {"reason": "copies_paraphrased_true"}]})
+            continue
+
+        cp = CF.contra_prompt(question, para_true, out)
+        got, a, b = client.generate(cp)
+        log.add(f"control_contradiction_check:gen{k}", cp, got, a, b)
+        v, w = CF.parse_verdict(got, ("CONFLICT", "AGREE", "UNRELATED"))
+        if v == "CONFLICT":
+            accepted.append({"text": out, "why": w})
+        else:
+            rejections.append({
+                "text": out, "stage": "contradiction", "ok": False,
+                "reasons": [{"reason":
+                             f"contradiction_{(v or 'unparsed').lower()}",
+                             "detail": w}]})
+
+    ok = len(accepted) >= N_CONTROL_OPTIONS
+    options = [a["text"] for a in accepted[:N_CONTROL_OPTIONS]]
+    return {
+        "item_id": rec["item_id"], "canonical_id": rec["canonical_id"],
+        "built": ok,
+        "reason": None if ok else
+                  f"only {len(accepted)} of {N_CONTROL_OPTIONS} control options "
+                  "survived the checks",
+        "kind": "control_fresh",
+        "question": question,
+        "options": options,
+        "why": [a["why"] for a in accepted[:N_CONTROL_OPTIONS]],
+        "n_requested": N_CONTROL_GENERATED,
+        "n_parsed": len(raw),
+        "rejections": rejections,
+        "shares_options_with_real_entry": False,
+        "generator": GENERATOR,
+        "scored_claim": SCORED_CLAIM,
+        "note": "B10.8 second generation pass. This item is drawn as BOTH a "
+                "real entry and a control, so its control entry gets an "
+                "entirely fresh option set. The two entries share the question "
+                "and nothing else, which removes the elimination shortcut.",
+    }
+
+
+def cmd_build_controls(args) -> int:
+    """Second generation pass: fresh option sets for the twinned controls."""
+    out_dir = Path(getattr(args, "out_dir", None) or PILOT3_DIR)
+    pilot1_dir = Path(getattr(args, "pilot1_dir", None) or PILOT3_DIR.parent
+                      / "stage2_pilot")
+    plan = sheet_plan(out_dir)
+    need = twinned_item_ids(plan)
+    if not need:
+        print("[controls] no twinned entries; nothing to generate")
+        return 0
+    by_id = {r["item_id"]: r for r in records_built(out_dir)}
+    ctx = subject_context(pilot1_dir)
+
+    client = args.client
+    if client is None:
+        from doppler.gemini import GeminiClient
+        client = GeminiClient(max_calls=args.call_cap,
+                              temperature=CHECK_TEMPERATURE,
+                              max_output_tokens=CHECK_MAX_TOKENS)
+        client.model_name = GENERATOR
+    if getattr(client, "model_name", GENERATOR) in SCORED_MODELS:
+        raise fatal(f"B10.3 violation: the generator is a scored model "
+                    f"({client.model_name})")
+
+    built = failed = 0
+    tin_total = tout_total = 0
+    for item_id in need:
+        path = control_path(out_dir, item_id)
+        if path.exists() and not args.force:
+            print(f"[controls] {item_id:28s} SKIP (already generated)")
+            continue
+        rec = by_id[item_id]
+        log = GenLog(out_dir / "genlog_controls"
+                     / f"{safe_id(item_id)}.jsonl")
+        try:
+            doc = build_control_set(client, rec, ctx[rec["canonical_id"]], log)
+        finally:
+            log.flush()
+            a, b = log.tokens
+            tin_total += a
+            tout_total += b
+        doc["tokens_in"], doc["tokens_out"] = log.tokens
+        doc["n_api_calls"] = len(log.rows)
+        S.write_json(path, doc)
+        built += int(doc["built"])
+        failed += int(not doc["built"])
+        print(f"[controls] {item_id:28s} "
+              f"{'BUILT' if doc['built'] else 'FAILED'} "
+              f"({len(log.rows)} calls)"
+              + ("" if doc["built"] else f" -- {doc['reason']}"))
+
+    if not args.skip_cost and client.n_calls:
+        append_cost_log(build_cost_entry(
+            run_id="stage2_pilot3/build_controls", model=GENERATOR,
+            split="stage2_pilot3", variant="b10_8_fresh_controls",
+            n_persons=len({by_id[i]["canonical_id"] for i in need}),
+            n_calls=client.n_calls, n_retries=client.n_retries,
+            n_parse_failures=0, tokens_in=tin_total, tokens_out=tout_total,
+            backend="gemini"), COST_LOG)
+
+    print(f"\n[controls] {built} built, {failed} failed, "
+          f"{client.n_calls} API calls, {tin_total} in / {tout_total} out")
+    return 0
 
 
 def cmd_sheet(args) -> int:
@@ -710,7 +931,7 @@ def cmd_sheet(args) -> int:
                         "options": [o["text"] for o in rec["options"]],
                         "correct_index": rec["correct_index"]})
     for rec in plan["control"]:
-        opts = control_options(rec)
+        opts = control_options(rec, out_dir)
         if opts is None:
             continue
         rng = random.Random(CF.shuffle_seed(rec["item_id"]) ^ SHEET_SEED)
@@ -780,33 +1001,41 @@ def cmd_sheet(args) -> int:
         pairs = ", ".join(f"#{v[0]}/#{v[1]} (`{k}`)"
                           for k, v in sorted(twinned.items(),
                                              key=lambda kv: kv[1]))
+        fresh = [k for k in twinned if fresh_control_options(out_dir, k)]
+        stale = [k for k in twinned if k not in fresh]
         key += [
-            "## READ THIS BEFORE SCORING — the overlapping entries leak",
+            "## Note on the repeated questions",
             "",
-            f"{len(twinned)} items appear TWICE, once as a real entry and once "
-            f"as a control: {pairs}.",
+            f"{len(twinned)} questions appear TWICE, once as a real entry and "
+            f"once as a control: {pairs}. This is unavoidable at "
+            f"{len(records_built(out_dir))} built items — B10.8 asks for 20 "
+            "entries and 20 disjoint items do not exist.",
             "",
-            "The overlap is forced by supply, not chosen: B10.8 asks for 10 "
-            f"real and 10 control entries and only {len(records_built(out_dir))} "
-            "items were built, so 20 disjoint entries do not exist.",
+            f"**Those {len(fresh)} control entries share the QUESTION and "
+            "NOTHING ELSE.** Their four options come from a second generation "
+            "pass: fresh counterfactuals against the same paraphrased true "
+            "answer, through the same guards, the same paraphrase step and the "
+            "same contradiction check, then checked against the real entry's "
+            "own options so no text is reused. Comparing a pair therefore tells "
+            "you nothing — there is no option present in one and absent from "
+            "the other to eliminate on. All 10 real entries count.",
             "",
-            "**Why it matters.** A control reuses the same item's three "
-            "distractors plus its unused spare, so an overlapping pair shows "
-            "the SAME question with THREE of the four options identical. The "
-            "option that appears in the real entry and not in its control twin "
-            "IS the real answer. Anyone who compares the two entries can score "
-            "those items **by elimination**, without judging realism at all.",
-            "",
-            "**Therefore:** the uncontaminated hit rate is the one computed "
-            f"over the {len(clean_real)} real entries with no control twin — "
-            f"{', '.join('#' + str(i) for i in clean_real)} — and that is the "
-            "number to quote. Report the all-10 rate beside it, flagged. "
-            "Whether to rebuild the sheet with disjoint items (fewer entries, "
-            "or a second generation pass for control-only option sets) is a "
-            "design decision for the owner, not the implementer's.",
-            "",
-            "| # | kind | item_id | real answer |",
-            "|---|---|---|---|"]
+            "For the record, the earlier draft of this sheet built a control "
+            "from the real item's own three distractors plus its spare, which "
+            "left three of four options identical across the pair and let the "
+            "real answer fall out **by elimination**. That is fixed; this note "
+            "stays so the fix is auditable.",
+            ""]
+        if stale:
+            key += [
+                f"**WARNING** — {len(stale)} twinned control(s) still reuse the "
+                f"real entry's options: {', '.join('`'+s+'`' for s in stale)}. "
+                "Score those by elimination-free entries only; the "
+                f"uncontaminated real entries are "
+                f"{', '.join('#' + str(i) for i in clean_real) or 'none'}.",
+                ""]
+        key += ["| # | kind | item_id | real answer |",
+                "|---|---|---|---|"]
     else:
         key += ["Item overlap between real and control draws: none.",
                 "",
@@ -823,12 +1052,17 @@ def cmd_sheet(args) -> int:
         "n_control": sum(1 for e in entries if e["kind"] == "control"),
         "overlap": plan["overlap"],
         "twinned_entry_numbers": {k: v for k, v in sorted(twinned.items())},
+        "twinned_with_fresh_options": sorted(
+            k for k in twinned if fresh_control_options(out_dir, k)),
+        "twinned_reusing_real_options": sorted(
+            k for k in twinned if not fresh_control_options(out_dir, k)),
         "uncontaminated_real_entries": clean_real,
         "overlap_caveat":
-            "An overlapping pair shows the same question with three of four "
-            "options identical, so the real answer is identifiable by "
-            "elimination. Quote the hit rate over uncontaminated_real_entries; "
-            "report the all-10 rate flagged beside it.",
+            "A twinned pair shares only the QUESTION when the control's four "
+            "options come from the second generation pass; then all 10 real "
+            "entries count. Any item listed in twinned_reusing_real_options "
+            "still shares three of four options and is scoreable by "
+            "elimination -- quote uncontaminated_real_entries in that case.",
         "entries": [{"n": i, "kind": e["kind"], "item_id": e["item_id"],
                      "correct_index": e["correct_index"]}
                     for i, e in enumerate(entries, 1)]})
@@ -1188,6 +1422,12 @@ def main(argv=None) -> int:
     p_b.add_argument("--call-cap", type=int, default=DEFAULT_CALL_CAP)
     p_b.add_argument("--skip-cost", action="store_true")
     p_b.set_defaults(fn=cmd_build, client=None)
+
+    p_c = sub.add_parser("build-controls")
+    p_c.add_argument("--force", action="store_true")
+    p_c.add_argument("--call-cap", type=int, default=DEFAULT_CALL_CAP)
+    p_c.add_argument("--skip-cost", action="store_true")
+    p_c.set_defaults(fn=cmd_build_controls, client=None)
 
     sub.add_parser("sheet").set_defaults(fn=cmd_sheet)
 

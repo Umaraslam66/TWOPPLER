@@ -32,6 +32,14 @@
    15
   ]
  },
+ "twinned_with_fresh_options": [
+  "C00792:NPR-19884:10",
+  "C00792:NPR-19884:13",
+  "C00792:NPR-19884:15",
+  "C00792:NPR-19884:6",
+  "C02006:NPR-14829:19"
+ ],
+ "twinned_reusing_real_options": [],
  "uncontaminated_real_entries": [
   9,
   11,
@@ -39,7 +47,7 @@
   13,
   19
  ],
- "overlap_caveat": "An overlapping pair shows the same question with three of four options identical, so the real answer is identifiable by elimination. Quote the hit rate over uncontaminated_real_entries; report the all-10 rate flagged beside it.",
+ "overlap_caveat": "A twinned pair shares only the QUESTION when the control's four options come from the second generation pass; then all 10 real entries count. Any item listed in twinned_reusing_real_options still shares three of four options and is scoreable by elimination -- quote uncontaminated_real_entries in that case.",
  "entries": [
   {
    "n": 1,

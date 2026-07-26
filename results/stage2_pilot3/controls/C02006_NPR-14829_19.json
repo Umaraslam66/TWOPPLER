@@ -1,0 +1,30 @@
+{
+ "item_id": "C02006:NPR-14829:19",
+ "canonical_id": "C02006",
+ "built": true,
+ "reason": null,
+ "kind": "control_fresh",
+ "question": "(Laughter) The gist of your tweet, essentially, was your country is in a lot of trouble because of that stupid, bloody referendum. What do you mean?",
+ "options": [
+  "That vote was the best thing to happen to our democracy because Westminster politicians had ignored working class towns for decades. When the people finally spoke up and demanded Brexit, they broke through the London consensus and forced Downing Street to listen to ordinary citizens again.",
+  "The national vote was a triumph for accountability because it broke the deadlock that the European Union imposed on us, and for years Brussels bureaucrats dictated our trade and borders without anyone in Parliament being able to stop them, so taking back control saved our sovereign nation.",
+  "The historic plebiscite rescued our constitutional order from total decay by giving power back to the voters, because every single MP in the House of Commons had promised to respect the referendum result, and honoring that pledge was essential to restore faith in the British Parliament.",
+  "That public consultation worked well as civic engagement because it bypassed career politicians who wanted to keep us tied to Brussels. Millions of Britons in regions like Sunderland and Cornwall finally had their voices heard, proving that direct democracy works for our country."
+ ],
+ "why": [
+  "Answer 1 views the referendum as a disastrous mistake that undermined representative democracy, whereas Answer 2 views it as a triumph that successfully forced politicians to listen to ordinary citizens.",
+  "Answer 1 views the referendum as a disastrous mistake that undermined representative democracy, whereas Answer 2 views it as a triumph that restored sovereignty and accountability.",
+  "Answer 1 argues that holding the referendum was a mistake that undermined representative democracy, whereas Answer 2 argues it was a necessary and positive rescue of the constitutional order.",
+  "Answer 1 argues that the referendum was a mistake that undermined representative democracy, whereas Answer 2 argues that the referendum was a success that empowered citizens through direct democracy."
+ ],
+ "n_requested": 6,
+ "n_parsed": 6,
+ "rejections": [],
+ "shares_options_with_real_entry": false,
+ "generator": "gemini-3.5-flash-lite",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "note": "B10.8 second generation pass. This item is drawn as BOTH a real entry and a control, so its control entry gets an entirely fresh option set. The two entries share the question and nothing else, which removes the elimination shortcut.",
+ "tokens_in": 2385,
+ "tokens_out": 695,
+ "n_api_calls": 9
+}

@@ -401,26 +401,82 @@ def test_the_key_names_the_answer_for_every_entry(tmp_path):
     assert "**none**" in key
 
 
-def test_the_key_spells_out_the_overlap_leak_when_items_are_reused(tmp_path):
+def _fake_fresh_controls(out_dir):
+    """Second-pass control sets for whichever items the draw twinned."""
+    plan = P3.sheet_plan(out_dir)
+    ids = P3.twinned_item_ids(plan)
+    for item_id in ids:
+        P3.S.write_json(P3.control_path(out_dir, item_id), {
+            "item_id": item_id, "built": True, "kind": "control_fresh",
+            "options": [f"fresh control {item_id} {j}" for j in range(4)]})
+    return ids
+
+
+def test_a_twinned_control_without_a_fresh_set_is_warned_about(tmp_path):
     """12 built items cannot supply 20 disjoint entries, so some are twinned.
 
-    A twinned pair shows the same question with three of four options shared,
-    which identifies the real answer by elimination. The KEY must say so and
-    must name the real entries that are NOT twinned, because that subset is the
-    only uncontaminated hit rate.
+    Left unfixed, a twinned pair shows the same question with three of four
+    options shared and the real answer falls out by elimination. Until the
+    second pass runs, the KEY must warn and must name the real entries that
+    are NOT twinned, because that subset is the only clean hit rate.
     """
     _fake_built(tmp_path, n=12)
     P3.cmd_sheet(Args(out_dir=tmp_path))
     key = (tmp_path / "DETECTABILITY_KEY.md").read_text()
     plan = json.loads((tmp_path / "detectability_plan.json").read_text())
     assert plan["twinned_entry_numbers"], "12 items must force an overlap"
-    assert "READ THIS BEFORE SCORING" in key
+    assert plan["twinned_reusing_real_options"]
+    assert plan["twinned_with_fresh_options"] == []
+    assert "WARNING" in key
     assert "by elimination" in key
-    assert plan["uncontaminated_real_entries"]
     assert len(plan["uncontaminated_real_entries"]) == \
         10 - len(plan["twinned_entry_numbers"])
-    for n in plan["uncontaminated_real_entries"]:
-        assert f"#{n}" in key
+
+
+def test_a_fresh_control_set_removes_the_elimination_shortcut(tmp_path):
+    """After the second pass a twinned pair shares the question and nothing else."""
+    _fake_built(tmp_path, n=12)
+    ids = _fake_fresh_controls(tmp_path)
+    assert ids, "12 items must force an overlap"
+    P3.cmd_sheet(Args(out_dir=tmp_path))
+    key = (tmp_path / "DETECTABILITY_KEY.md").read_text()
+    plan = json.loads((tmp_path / "detectability_plan.json").read_text())
+
+    assert plan["twinned_reusing_real_options"] == []
+    assert sorted(plan["twinned_with_fresh_options"]) == sorted(ids)
+    assert "WARNING" not in key
+    assert "NOTHING ELSE" in key
+
+    # the control entry must show none of the real entry's option texts
+    recs = {r["item_id"]: r for r in P3.records_built(tmp_path)}
+    for item_id in ids:
+        rec = recs[item_id]
+        real = {o["text"] for o in rec["options"]}
+        real |= set(rec.get("spare_generated") or [])
+        assert not real & set(P3.control_options(rec, tmp_path))
+
+
+def test_control_options_prefer_a_fresh_set_over_the_items_own_distractors(
+        tmp_path):
+    _fake_built(tmp_path, n=12)
+    rec = P3.records_built(tmp_path)[0]
+    reused = P3.control_options(rec)
+    assert reused and all(t.startswith(("generated", "spare")) for t in reused)
+    P3.S.write_json(P3.control_path(tmp_path, rec["item_id"]), {
+        "item_id": rec["item_id"], "built": True,
+        "options": [f"fresh {j}" for j in range(4)]})
+    fresh = P3.control_options(rec, tmp_path)
+    assert fresh == [f"fresh {j}" for j in range(4)]
+
+
+def test_a_short_fresh_set_falls_back_rather_than_showing_three_options(
+        tmp_path):
+    _fake_built(tmp_path, n=12)
+    rec = P3.records_built(tmp_path)[0]
+    P3.S.write_json(P3.control_path(tmp_path, rec["item_id"]), {
+        "item_id": rec["item_id"], "built": False,
+        "options": ["fresh 0", "fresh 1"]})
+    assert len(P3.control_options(rec, tmp_path)) == 4
 
 
 def test_a_disjoint_sheet_carries_no_overlap_warning(tmp_path):

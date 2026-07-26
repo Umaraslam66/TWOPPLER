@@ -1,0 +1,30 @@
+{
+ "item_id": "C00792:NPR-19884:15",
+ "canonical_id": "C00792",
+ "built": true,
+ "reason": null,
+ "kind": "control_fresh",
+ "question": "Which international backer has lost most here - the U.S., Turkey, Saudi Arabia, Qatar? I mean who's the outside player who's lost (unintelligible)?",
+ "options": [
+  "Qatar takes the hardest hit here, because Doha spent billions backing the Muslim Brotherhood, and now the entire Gulf Cooperation Council is totally freezing them out.",
+  "Turkey experienced the worst possible outcome because President Erdogan watched his entire Syrian border policy completely collapse while Moscow and Tehran dictated terms right on his doorstep.",
+  "Saudi Arabia definitely lost the most among outside powers, since King Salman watched his regional leverage in Riyadh evaporate while Iran expanded its land corridor all the way.",
+  "Moscow absorbed the heaviest strategic blow here, because President Putin invested vast military resources into Syria without securing any stable political settlement or lasting economic payoff."
+ ],
+ "why": [
+  "Answer 1 identifies the United States as the biggest loser, whereas Answer 2 argues that Qatar takes the hardest hit.",
+  "Answer 1 identifies the United States as the biggest loser, whereas Answer 2 argues that Turkey experienced the worst possible outcome.",
+  "Answer 1 identifies the United States as the biggest loser, whereas Answer 2 explicitly claims that Saudi Arabia lost the most.",
+  "Answer 1 identifies the United States as the biggest loser, whereas Answer 2 argues that Moscow (Russia) suffered the heaviest strategic blow."
+ ],
+ "n_requested": 6,
+ "n_parsed": 6,
+ "rejections": [],
+ "shares_options_with_real_entry": false,
+ "generator": "gemini-3.5-flash-lite",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "note": "B10.8 second generation pass. This item is drawn as BOTH a real entry and a control, so its control entry gets an entirely fresh option set. The two entries share the question and nothing else, which removes the elimination shortcut.",
+ "tokens_in": 2116,
+ "tokens_out": 454,
+ "n_api_calls": 9
+}

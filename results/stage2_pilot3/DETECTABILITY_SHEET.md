@@ -60,13 +60,13 @@ Your answer: ______
 
 **Q.** To what extent is what is unfolding in Syria right now an American responsibility for lack of things the U.S. didn't do?
 
-**A.** We carry the main burden here because Washington abandoned the Syrian people when the red line was crossed in Damascus, and by refusing to support the Free Syrian Army and ignoring requests from Turkey and Saudi Arabia, the White House created a vacuum that brought Tehran and Moscow into the conflict.
+**A.** Blaming Washington for the brutality in Syria misreads the geopolitical reality on the ground because neither the Pentagon nor the CIA had viable options to stop the fighting between the regime and extremist groups, and imposing American military power across Mesopotamia and the Levant historically creates more instability, as we saw in Iraq previously.
 
-**B.** The tragedy in Syria is entirely our fault because the administration in Washington failed to enforce basic humanitarian norms, and because President Obama and Secretary Kerry refused to establish safe zones, Vladimir Putin and the Iranian regime realized they could prop up the dictator in Damascus without facing any real opposition.
+**B.** Washington bears no blame for this Middle Eastern catastrophe, as Bashar al-Assad and Vladimir Putin made calculated choices in Damascus and Moscow, while the United States lacks the moral authority or military mandate to police every foreign civil war, and intervening earlier would only have drawn America into a much wider regional quagmire.
 
-**C.** This catastrophe falls squarely on American shoulders due to our total inaction throughout the conflict, because when Bashar al-Assad deployed chemical weapons in Ghouta and barrel bombs across Aleppo, the Department of Defense stood by, giving a green light to both the Kremlin and the Iranian Revolutionary Guard to slaughter innocents.
+**C.** The ongoing tragedy in Syria stems entirely from local sectarian divisions, not from American foreign policy failures. Outside powers like Tehran, Moscow, and the regime in Damascus are the sole culprits driving the violence. Washington could not have altered outcomes in Homs or Idlib through any amount of diplomatic pressure or military supplies.
 
-**D.** We are directly responsible for this humanitarian disaster because our diplomatic paralysis allowed the conflict to spiral out of control, and if the Pentagon had armed moderate opposition groups and confronted the Syrian military early on, Vladimir Putin and Tehran would never have gained total dominance over the Middle East region today.
+**D.** The United States created this power vacuum by prematurely withdrawing troops from the region and abandoning moderate rebels in the Levant, and because the White House showed profound weakness, dictators in Moscow and Damascus felt completely empowered to bombard hospitals in Aleppo, ignoring United Nations warnings and proving America cannot be trusted as a global leader.
 
 Your answer: ______
 
@@ -236,13 +236,13 @@ Your answer: ______
 
 **Q.** (Laughter) The gist of your tweet, essentially, was your country is in a lot of trouble because of that stupid, bloody referendum. What do you mean?
 
-**A.** That vote was the finest moment for British democracy in decades, as millions across England and Wales broke through the control of Brussels and Westminster politicians to instruct Downing Street to trigger Article Fifty, thereby reclaiming our sovereign borders and proving that ordinary citizens still run this island.
+**A.** The historic plebiscite rescued our constitutional order from total decay by giving power back to the voters, because every single MP in the House of Commons had promised to respect the referendum result, and honoring that pledge was essential to restore faith in the British Parliament.
 
-**B.** That vote gave a much-needed jolt to a stagnant political class that had surrendered our national sovereignty for generations. Brussels bureaucrats and London technocrats had stripped away our power without the voters ever consenting. That high turnout gave our Parliament the backbone to stand up and walk away.
+**B.** That public consultation worked well as civic engagement because it bypassed career politicians who wanted to keep us tied to Brussels. Millions of Britons in regions like Sunderland and Cornwall finally had their voices heard, proving that direct democracy works for our country.
 
-**C.** The establishment elite simply cannot accept that the working classes used the ballot box to dismantle their consensus. For decades, institutions like the BBC and the CBI ignored public anger over mass immigration. That referendum shattered their monopoly and forced Whitehall to finally listen to forgotten towns everywhere.
+**C.** The national vote was a triumph for accountability because it broke the deadlock that the European Union imposed on us, and for years Brussels bureaucrats dictated our trade and borders without anyone in Parliament being able to stop them, so taking back control saved our sovereign nation.
 
-**D.** Leaving the European Union was an absolute economic necessity for our nation. The single market and the European Court of Justice were draining billions from our Treasury and crushing British industries. Taking back control over our laws and fisheries through that ballot was the smartest choice we ever made.
+**D.** That vote was the best thing to happen to our democracy because Westminster politicians had ignored working class towns for decades. When the people finally spoke up and demanded Brexit, they broke through the London consensus and forced Downing Street to listen to ordinary citizens again.
 
 Your answer: ______
 
@@ -252,13 +252,13 @@ Your answer: ______
 
 **Q.** Which international backer has lost most here - the U.S., Turkey, Saudi Arabia, Qatar? I mean who's the outside player who's lost (unintelligible)?
 
-**A.** Regarding international patrons in the Syrian conflict, nobody lost worse than Tehran, despite Qasem Soleimani deploying thousands of elite fighters to prop up Assad.
+**A.** Moscow absorbed the heaviest strategic blow here, because President Putin invested vast military resources into Syria without securing any stable political settlement or lasting economic payoff.
 
-**B.** Looking across all foreign participants in Syria, Doha took the hardest blow, with Emir Tamim losing all leverage over the main rebel factions in Idlib.
+**B.** Turkey experienced the worst possible outcome because President Erdogan watched his entire Syrian border policy completely collapse while Moscow and Tehran dictated terms right on his doorstep.
 
-**C.** Among outside powers meddling in Syria, Riyadh suffered the greatest defeat, watching King Salman's proxy militias crumble completely across the northern provinces last month.
+**C.** Saudi Arabia definitely lost the most among outside powers, since King Salman watched his regional leverage in Riyadh evaporate while Iran expanded its land corridor all the way.
 
-**D.** Robert, regarding foreign backers in Syria, Ankara has taken the heaviest hit, especially since President Erdogan failed to remove Assad from power in Damascus.
+**D.** Qatar takes the hardest hit here, because Doha spent billions backing the Muslim Brotherhood, and now the entire Gulf Cooperation Council is totally freezing them out.
 
 Your answer: ______
 
@@ -268,13 +268,13 @@ Your answer: ______
 
 **Q.** Is there still enough of a nationalist movement for the U.S. or other countries to back, to support?
 
-**A.** That movement is entirely gone, so foreign governments have nobody reliable left to support. Years ago, moderate councils in places like Homs and Deir ez-Zor showed real promise against the regime in Damascus. Yet relentless Russian airstrikes and Iranian ground offensives decimated those leaders. Right now, supplying arms through Turkey or Jordan only prolongs a stalemate without empowering any coherent political alternative capable of ruling a post-war nation.
+**A.** No, that ship sailed years ago. When moderate commanders in places like Homs and Ghouta were abandoned by the Obama administration, the whole project collapsed. Now you only have radical factions tied to al-Nusra or extremists backed by Turkey and Saudi Arabia. If the Pentagon or the UK Foreign Office tries funding anyone on the ground today, those weapons will immediately end up in the hands of jihadists fighting near Damascus.
 
-**B.** Not anymore, since those independent militias have lost all their credibility and territorial control. Back during the early battles in Idlib and Daraa, groups like Ahrar al-Sham offered a democratic alternative to Bashar al-Assad. However, rampant corruption and internal factionalism ruined them. Any foreign assistance from the Pentagon or NATO would be utterly wasted on a fragmented movement that cannot govern its own captured towns or protect local citizens.
+**B.** No, there is nothing viable left to support over there now because groups like the Free Syrian Army or local councils in Aleppo and Idlib have been completely sidelined. Washington and Brussels missed their window back when the uprising started in Daraa, so pouring more cash from USAID or the State Department into those shattered factions now is just throwing good money after bad, and frankly, it risks empowering extremist elements instead.
 
-**C.** No, because that faction has completely disintegrated on the ground there. Back when the Free Syrian Army held territory near Damascus and Aleppo, intervention might have mattered. But today, extremist groups like Jabhat Fateh al-Sham and ISIS completely dominate the opposition forces. If Washington or London sends money or weaponry now, it simply ends up in the hands of jihadists fighting against Western interests across the Middle East.
+**C.** Not at all, that option no longer exists in any meaningful way because the secular opposition we used to talk about in places like Latakia and the Damascus suburbs has been utterly crushed by Russian airstrikes and Iranian militias, organizations like the Syrian National Council have zero credibility left among ordinary citizens, and anyone in Washington or London talking about reviving that movement is completely detached from the brutal realities on the ground today.
 
-**D.** There are no viable rebel groups left to support because radical Islamists have completely taken them over. People who used to support a pluralistic Syrian republic have either fled to Beirut or been killed by extremist commanders. If the White House or the European Union tries to fund these remaining groups now, they are just repeating past mistakes in places like Libya and Iraq. We have to accept that the government in Damascus has won the military victory.
+**D.** No, there is nothing left to salvage because the moderate opposition groups we once counted on in Daraa and rural Damascus have been completely decimated, and between the Russian intervention, the Syrian Arab Army, and ISIS, those secular forces are gone. If the CIA or British intelligence tries to prop up new factions now, we are just creating another Afghanistan, so we need to accept that the war is essentially over and move on from this fantasy.
 
 Your answer: ______
 
@@ -316,13 +316,13 @@ Your answer: ______
 
 **Q.** Is there an opportunity to change course in Syria because of that?
 
-**A.** No, because Syrian military forces under President Bashar al-Assad, alongside our Iranian allies and General Qasem Soleimani’s Revolutionary Guard, are fighting extremist factions like Jabhat Fateh al-Sham. Washington politicians like Senator John McCain and Secretary John Kerry misread the ground reality in Aleppo and Damascus. President-elect Donald Trump must understand that working with Vladimir Putin’s Kremlin is the only viable path to stabilize the Levant and destroy terror networks.
+**A.** There is no reason to alter our policy since Bashar al-Assad and Vladimir Putin have already destroyed the moderate opposition in Aleppo and eastern Ghouta with Iranian militias. Vice President Joe Biden and Secretary Ashton Carter both warned the Senate Armed Services Committee that Moscow only wants to prop up the Ba'ath party dictatorship, not fight extremists. If Washington trusts the Kremlin or the Islamic Revolutionary Guard Corps, we abandon our Kurdish allies in the Syrian Democratic Forces and betray every democratic value we hold dear.
 
-**B.** We must maintain our current posture because the Syrian Democratic Forces, backed by American special operations units, are making historic gains against the caliphate near Raqqa and Tabqa Dam. Kurdish commanders like Mazloum Abdi and political figures from the Democratic Union Party are proving that local ground forces can defeat extremists without relying on Bashar al-Assad or the Russian military. Pentagon generals like Joseph Votel know that abandoning our Kurdish partners to appease Moscow would destroy American credibility across the Middle East.
+**B.** President-elect Trump can coordinate airstrikes with Vladimir Putin and the Syrian Arab Army against al-Nusra Front in Idlib, which creates an opening to pivot our approach. General Michael Flynn and other national security advisors understand that fighting both Damascus and ISIS simultaneously in Palmyra and Deir ez-Zor makes no strategic sense. We can finally end the civil war, secure the borders, and stop wasting resources on corrupt rebel factions backed by foreign intelligence agencies by aligning with Russia and the regime.
 
-**C.** The incoming Washington administration should increase support for moderate Syrian opposition units under the High Negotiations Committee banner, funded by Saudi Arabia and Qatar. President Barack Obama made a serious mistake by not enforcing his red lines against Bashar al-Assad's chemical weapons use near Damascus. If Donald Trump abandons the Free Syrian Army, fighters trained by the CIA in Jordan and Turkey will disappear, handing a permanent victory to Tehran and Moscow.
+**C.** We have a major opportunity to shift course because President Bashar al-Assad has defeated the radical Islamist elements in Idlib and Daraa, leaving a unified Syrian Arab Army ready to secure the border. Ambassador Staffan de Mistura at the United Nations told the Security Council that moderate opposition groups in Homs are willing to negotiate a lasting peace in Geneva. If President-elect Trump works with Tehran and Moscow, we can stabilize the region and defeat foreign jihadists permanently.
 
-**D.** There is no chance for a strategic reset because the humanitarian catastrophe engineered by the regime in Damascus and Russian warplanes targeting hospitals in East Aleppo has ruined any diplomatic leverage. United Nations envoy Staffan de Mistura and European Union leaders in Brussels recognize that Bashar al-Assad is a war criminal who must face the International Criminal Court in The Hague. The incoming White House team under Donald Trump cannot legitimize Vladimir Putin’s brutal military campaign.
+**D.** There is no opening to shift our strategy because Bashar al-Assad remains entirely dependent on Vladimir Putin and Tehran to hold Damascus, and neither of them has any intention of targeting extremists. When Secretary Kerry met with Sergey Lavrov in Geneva, we saw that diplomacy achieved nothing for the Free Syrian Army in Aleppo. The Pentagon and General Joseph Dunford know that partnering with Moscow only alienates Turkey and our Gulf partners in Riyadh, so shifting course now would be a strategic disaster.
 
 Your answer: ______
 
