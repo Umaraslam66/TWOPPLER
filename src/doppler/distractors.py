@@ -45,18 +45,23 @@ N_DONORS = 200
 # is a bar-lock decision, not an implementation choice. Every reading of the
 # SPEC that had to be pinned down is named in the docstrings below.
 #
-# KNOWN ARTIFACT, implemented as SPEC D5 is written and NOT quietly patched:
-# the pronoun "I" is a capitalised token, so mid-sentence it counts as an
-# entity. Measured on the pilot bank (653 rows): "I"/"I'm"/"I've" account for
-# 625 of the single-token entity spans, against 65 for the next real entity
-# ("U.S"). 46% of bank answers are affected and 14% sit in a different density
-# bucket because of it; for the 18 pilot items, 28% would move bucket. So part
-# of what this calls "entity density" is really how often the speaker says
-# "I" -- a style signal, not a name signal.
+# D5-r2 (SPEC v1.4, orchestrator-approved on T2's evidence) closes the two
+# ways the first reading over-counted:
 #
-# Excluding the first-person pronouns is a one-line change, but it is a change
-# to a frozen SPEC section, so it needs the orchestrator's sign-off. Flagged in
-# the T2 report; do not fix it here without that sign-off.
+# (a) The pronoun "I" is a capitalised token, so mid-sentence it used to count
+#     as an entity. On the first pilot bank (653 rows) I/I'm/I've were 625 of
+#     the single-token entity spans against 65 for the next real entity
+#     ("U.S"); 46% of rows affected and 14% in the wrong bucket. The density
+#     was partly measuring how often the speaker says "I" -- a style signal,
+#     not a name signal. The I family is now never an entity token.
+#
+# (b) Spans used to run across sentence boundaries, so "Absolutely. He" was a
+#     two-token span and therefore an entity, and got stripped to "[NAME]".
+#     39% of rows had at least one such span. Spans now break at a sentence
+#     boundary, which leaves both halves as lone sentence-initial capitals and
+#     so excludes both.
+#
+# Bucket boundaries are unchanged. Everything else in D5 stands.
 # ---------------------------------------------------------------------------
 
 #: SPEC D5 bucket edges. Z = almost no entities, L = some, H = dense.
@@ -70,6 +75,14 @@ _CAP_RE = re.compile(r"[A-Z][\w'’.-]*")
 _LEAD_PUNCT = "\"'“”‘’([{-–—*"
 _TRAIL_PUNCT = ",.;:!?)]}\"'“”‘’-–—*"
 _SENT_END_CHARS = ".!?"
+
+#: SPEC D5-r2(a): the first-person pronoun family, never an entity token.
+#: Case-exact -- "I" is the pronoun, "i" is not, and neither is "IM".
+#: Both apostrophes are accepted because they are the same word however the
+#: transcriber typed it (this corpus uses ASCII only; the D5 token class
+#: already allows the typographic one).
+I_FORMS = frozenset(
+    ["I"] + [f"I{a}{s}" for a in ("'", "’") for s in ("m", "ve", "d", "ll")])
 
 
 def _split_token(tok: str) -> tuple[str, str, str]:
@@ -126,16 +139,22 @@ def _analyse(text: str):
     pairs for the capitalised spans that COUNT, and ``numbers`` is the set of
     indices of number tokens.
 
-    A capitalised span is a maximal run of consecutive capitalised tokens. It
-    counts unless it is *solely sentence-initial* — that is, unless it is a
-    single token sitting at the start of a sentence, where the capital says
-    nothing but "new sentence". A multi-token span counts even at a sentence
-    start, because the second capital is not explained by punctuation.
+    A capitalised span is a run of consecutive capitalised tokens that does not
+    cross a sentence boundary (SPEC D5-r2(b)). It counts unless it is *solely
+    sentence-initial* — that is, unless it is a single token sitting at the
+    start of a sentence, where the capital says nothing but "new sentence". A
+    multi-token span counts even at a sentence start, because the second
+    capital is not explained by punctuation.
+
+    The first-person pronoun family never counts as capitalised at all (SPEC
+    D5-r2(a)), so it can neither be an entity nor hold a span together: in
+    "met Rex I think", "Rex" and "think" are not one span.
     """
     raw = (text or "").split()
     tokens = [_split_token(t) for t in raw]
     placeholder = [_is_placeholder(*t) for t in tokens]
     caps = [_is_capitalised(core) and not placeholder[k]
+            and core not in I_FORMS
             for k, (_, core, _) in enumerate(tokens)]
 
     sentence_start = [False] * len(tokens)
@@ -153,8 +172,9 @@ def _analyse(text: str):
         if not caps[i]:
             i += 1
             continue
-        j = i
-        while j < len(tokens) and caps[j]:
+        j = i + 1
+        # A new sentence ends the span, however the capitals run on.
+        while j < len(tokens) and caps[j] and not sentence_start[j]:
             j += 1
         if not (j - i == 1 and sentence_start[i]):
             spans.append((i, j))

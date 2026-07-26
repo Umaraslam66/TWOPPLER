@@ -155,6 +155,79 @@ def test_adjacency_is_symmetric_and_z_is_not_adjacent_to_h():
 
 
 # ---------------------------------------------------------------------------
+# D5-r2 (SPEC v1.4) — the pronoun family, and spans breaking at sentences
+# ---------------------------------------------------------------------------
+
+def test_the_pronoun_i_is_never_an_entity():
+    assert entity_density("that's why I referred to it") == 0.0
+    assert entity_density("I told them so") == 0.0
+
+
+def test_the_i_contraction_family_is_never_an_entity():
+    for form in ("I'm", "I've", "I'd", "I'll"):
+        assert entity_density(f"and {form} sure about that") == 0.0, form
+    # Same word however the transcriber typed the apostrophe.
+    for form in ("I’m", "I’ve", "I’d", "I’ll"):
+        assert entity_density(f"and {form} sure about that") == 0.0, form
+
+
+def test_i_forms_are_case_exact_so_real_names_still_count():
+    """"I" is the pronoun; "Ian" and "Id" are not."""
+    assert entity_density("he met Ian today") == pytest.approx(1 / 4)
+    assert entity_density("he met Ivan today") == pytest.approx(1 / 4)
+    assert entity_density("he read the Id chapter") == pytest.approx(1 / 5)
+
+
+def test_the_pronoun_does_not_hold_a_span_together():
+    """Only "Rex" is a name here -- the pronoun must not glue on "think"."""
+    assert entity_density("he met Rex I think") == pytest.approx(1 / 5)
+    assert strip_entities("he met Rex I think") == "he met [NAME] I think"
+
+
+def test_a_capitalised_span_breaks_at_a_sentence_boundary():
+    """The case that motivated D5-r2(b): two sentences, not one name."""
+    text = "Absolutely. He should have returned immediately."
+    assert entity_density(text) == 0.0
+    assert strip_entities(text) == text
+
+
+def test_a_multi_token_name_after_a_sentence_boundary_still_counts():
+    assert entity_density("he left. New York was cold") == pytest.approx(2 / 6)
+    assert strip_entities("he left. New York was cold") == "he left. [NAME] was cold"
+
+
+def test_an_i_heavy_passage_no_longer_mis_buckets():
+    """Under the first D5 reading this scored 5/35 = 0.143 and bucketed H.
+
+    The five "entity" tokens it found were "I", "I", "Later I've" and "I'd".
+    There is not a single name in the passage, so H was simply wrong; both
+    D5-r2 fixes are needed to get it to Z (the pronouns, and the span that
+    glued a sentence opening to the pronoun after it).
+    """
+    text = ("I went along to the meeting and I listened for a while. "
+            "I'm not sure I agreed with any of it. "
+            "Later I've thought about it a lot and I'd say it went badly here.")
+    assert len(text.split()) == 35
+    assert entity_density(text) == 0.0
+    assert density_bucket(entity_density(text)) == "Z"
+    assert strip_entities(text) == " ".join(text.split())
+
+
+def test_known_d5_r2_limit_an_abbreviation_dot_reads_as_a_sentence_end():
+    """PINS CURRENT BEHAVIOUR, which is not desirable behaviour.
+
+    SPEC D5-r2(b) defines a sentence boundary as ". ! ?" followed by a space,
+    and an abbreviation's dot is indistinguishable from that. So "Mr. Morsi"
+    splits and the surname survives into the stripped text. Measured cost on
+    the pilot bank: 20 of 653 rows (3%), 10 bucket shifts. Reported to the
+    orchestrator for a decision; if an abbreviation guard is approved, this
+    test is the one to change.
+    """
+    assert strip_entities("opposed to Mr. Morsi before then") == \
+        "opposed to [NAME]. Morsi before then"
+
+
+# ---------------------------------------------------------------------------
 # D5 — stripping
 # ---------------------------------------------------------------------------
 
