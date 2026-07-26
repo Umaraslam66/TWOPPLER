@@ -460,15 +460,15 @@
  "n_donors_no_grounding": 0,
  "n_donors_below_floor": 130,
  "n_donor_grounding_transcripts": 696,
- "stage2_data_sha256": "84ec751d5c071300",
+ "stage2_data_sha256": "140dd02b5f31c11b",
  "subject_turns_sha256": {
-  "C00292": "86063efdeff9c690",
-  "C00792": "887ce60762d6dd90",
-  "C01677": "17b83a78aceeb29d",
-  "C02006": "1983980c29270803",
-  "C02013": "01c83004267a9fbe",
-  "C02124": "76f61c314253a73e"
+  "C00292": "d68aa01f077bca31",
+  "C00792": "088fc4a2bee50e89",
+  "C01677": "1afe8f9670499f59",
+  "C02006": "98ec8719fb678327",
+  "C02013": "f5a0a864226b9153",
+  "C02124": "f87b2b1de9247aaf"
  },
- "runtime_secs": 0.4,
+ "runtime_secs": 0.5,
  "cost_usd": 0.0
 }
