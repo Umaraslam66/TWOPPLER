@@ -1,7 +1,7 @@
 {
  "canonical_id": "C00292",
  "canonical_name": "Bassir Pour",
- "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster dated strictly earlier. Any other cluster sharing the test date is excluded entirely (same-event leak guard).",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
  "grounding": [
   {
    "cluster_id": "cl3",
@@ -10,7 +10,10 @@
    "program": "CNN International Diplomatic Linense",
    "title": "",
    "n_transcripts_in_cluster": 1,
-   "guest_words": 391
+   "member_dates": [
+    "2000-03-04"
+   ],
+   "guest_words": 399
   },
   {
    "cluster_id": "cl5",
@@ -19,7 +22,10 @@
    "program": "CNN International Diplomatic Linense",
    "title": "",
    "n_transcripts_in_cluster": 1,
-   "guest_words": 449
+   "member_dates": [
+    "2000-03-25"
+   ],
+   "guest_words": 569
   },
   {
    "cluster_id": "cl10",
@@ -28,7 +34,10 @@
    "program": "CNN International Diplomatic Linense",
    "title": "",
    "n_transcripts_in_cluster": 1,
-   "guest_words": 501
+   "member_dates": [
+    "2000-04-08"
+   ],
+   "guest_words": 583
   },
   {
    "cluster_id": "cl11",
@@ -37,7 +46,10 @@
    "program": "CNN International Diplomatic Linense",
    "title": "",
    "n_transcripts_in_cluster": 1,
-   "guest_words": 381
+   "member_dates": [
+    "2000-04-15"
+   ],
+   "guest_words": 657
   },
   {
    "cluster_id": "cl12",
@@ -46,7 +58,10 @@
    "program": "CNN International Diplomatic Linense",
    "title": "",
    "n_transcripts_in_cluster": 1,
-   "guest_words": 516
+   "member_dates": [
+    "2000-04-22"
+   ],
+   "guest_words": 711
   },
   {
    "cluster_id": "cl14",
@@ -55,7 +70,10 @@
    "program": "CNN International Diplomatic Linense",
    "title": "",
    "n_transcripts_in_cluster": 1,
-   "guest_words": 350
+   "member_dates": [
+    "2000-05-13"
+   ],
+   "guest_words": 467
   },
   {
    "cluster_id": "cl19",
@@ -64,7 +82,10 @@
    "program": "CNN International Diplomatic Linense",
    "title": "",
    "n_transcripts_in_cluster": 1,
-   "guest_words": 352
+   "member_dates": [
+    "2000-06-10"
+   ],
+   "guest_words": 392
   },
   {
    "cluster_id": "cl2",
@@ -73,7 +94,10 @@
    "program": "CNN International Diplomatic Linense",
    "title": "",
    "n_transcripts_in_cluster": 1,
-   "guest_words": 383
+   "member_dates": [
+    "2000-12-02"
+   ],
+   "guest_words": 393
   },
   {
    "cluster_id": "cl4",
@@ -82,7 +106,10 @@
    "program": "CNN DIPLOMATIC LICENSE",
    "title": "",
    "n_transcripts_in_cluster": 1,
-   "guest_words": 325
+   "member_dates": [
+    "2002-03-23"
+   ],
+   "guest_words": 470
   },
   {
    "cluster_id": "cl7",
@@ -91,7 +118,10 @@
    "program": "CNN DIPLOMATIC LICENSE",
    "title": "",
    "n_transcripts_in_cluster": 2,
-   "guest_words": 359
+   "member_dates": [
+    "2002-06-08"
+   ],
+   "guest_words": 372
   },
   {
    "cluster_id": "cl8",
@@ -100,7 +130,10 @@
    "program": "DIPLOMATIC LICENSE",
    "title": "",
    "n_transcripts_in_cluster": 2,
-   "guest_words": 389
+   "member_dates": [
+    "2002-06-22"
+   ],
+   "guest_words": 462
   },
   {
    "cluster_id": "cl15",
@@ -109,7 +142,10 @@
    "program": "DIPLOMATIC LICENSE",
    "title": "",
    "n_transcripts_in_cluster": 1,
-   "guest_words": 736
+   "member_dates": [
+    "2004-05-28"
+   ],
+   "guest_words": 752
   }
  ],
  "test": {
@@ -119,7 +155,10 @@
   "program": "DIPLOMATIC LICENSE",
   "title": "",
   "n_transcripts_in_cluster": 1,
-  "guest_words": 399
+  "member_dates": [
+   "2004-12-31"
+  ],
+  "guest_words": 461
  },
  "excluded_same_date": []
 }
