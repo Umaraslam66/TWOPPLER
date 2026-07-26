@@ -476,6 +476,8 @@ def chronological_split(subject_row: dict, guest_words: dict | None = None,
                        key=lambda e: e["transcript_id"])
     test = at_latest[-1]                       # tie: largest rep id wins
     excluded = at_latest[:-1]
+    for e in excluded:
+        e["reason"] = "shares_test_date"
 
     # D2 hardening (SPEC v1.2): a cluster whose date is earlier still leaks if
     # ANY of its member transcripts was aired on or after the test date. Test
@@ -485,6 +487,7 @@ def chronological_split(subject_row: dict, guest_words: dict | None = None,
         if e is test or e in excluded:
             continue
         if max(e["member_dates"]) >= test["date"]:
+            e["reason"] = "member_on_or_after_test"
             late_members.append(e)
         else:
             grounding.append(e)
@@ -590,6 +593,79 @@ def _name_part(raw: str) -> str:
 def label_tokens(raw: str) -> list[str]:
     """The cleaned, comparable name tokens of a raw speaker label."""
     return [t for t in (_token_key(t) for t in _name_part(raw).split()) if t]
+
+
+# ---------------------------------------------------------------------------
+# D3.2 (SPEC v1.3) — the show's own name as a host marker
+# ---------------------------------------------------------------------------
+
+#: PROVISIONAL, pending bar-lock. See the D3.2 note in the T1 report: the
+#: threshold was set from one subject's separation evidence (the true anchor
+#: scores 0.680 against a highest non-anchor of 0.379) and fires on 3.42% of
+#: the corpus. Review before any confirmatory-scale use.
+D32_FUZZY_THRESHOLD = 0.60
+
+_NETWORK_PREFIX_RE = re.compile(r"^(CNN|NPR|ABC|CBS|NBC|FOX|PBS|MSNBC)\b")
+
+
+def _descriptor_part(raw: str) -> str:
+    """The text after the name in a speaker label, stage directions removed.
+
+    "RICHARD ROTH, DIPLOMATIC LICENSE (voice-over)" -> "DIPLOMATIC LICENSE".
+    """
+    if not raw:
+        return ""
+    cleaned = _PAREN_RE.sub(" ", raw)
+    _, sep, tail = cleaned.partition(",")
+    if not sep:
+        parts = _DASH_SPLIT_RE.split(cleaned, maxsplit=1)
+        tail = parts[1] if len(parts) > 1 else ""
+    return re.sub(r"\s+", " ", tail).strip(" .,-")
+
+
+def _normalize_show(text: str) -> str:
+    """Comparison form for a show name: no network prefix, no punctuation."""
+    up = _NETWORK_PREFIX_RE.sub("", _PAREN_RE.sub(" ", text or "").upper())
+    return re.sub(r"\s+", " ", re.sub(r"[^A-Z0-9 ]", " ", up)).strip()
+
+
+def program_host_match(raw: str, program: str) -> dict | None:
+    """SPEC D3.2. Is this label the anchor, named by the show they present?
+
+    CNN writes its anchors "NAME, PROGRAM NAME" with no role word at all
+    ("RICHARD ROTH, DIPLOMATIC LICENSE"), so the origin classifier reads them
+    as ordinary guests. This rule recovers them: a label whose descriptor part
+    equals or contains the record's own `program`, or is a close fuzzy match to
+    it, is the show's host.
+
+    The fuzzy arm exists because the program field is dirty. C00292's eight
+    affected transcripts all carry `CNN International Diplomatic Linense` --
+    MediaSum's typo for "License" -- which no exact or containment test can
+    match against the descriptor "DIPLOMATIC LICENSE". Corpus dirt of this
+    class recurs, so the rule is measured and audited rather than special-cased.
+
+    Returns None, or a record of the match for the turn's audit trail.
+    """
+    descriptor = _descriptor_part(raw)
+    if not descriptor or not program:
+        return None
+    du, pu = descriptor.upper(), program.upper()
+    if du == pu or pu in du:
+        return {"rule": "literal", "ratio": 1.0, "program": program,
+                "descriptor": descriptor}
+    dn, pn = _normalize_show(descriptor), _normalize_show(program)
+    if not dn or not pn:
+        return None
+    if dn == pn or pn in dn or dn in pn:
+        return {"rule": "normalized", "ratio": 1.0, "program": program,
+                "descriptor": descriptor}
+    import difflib
+
+    ratio = difflib.SequenceMatcher(None, dn, pn).ratio()
+    if ratio >= D32_FUZZY_THRESHOLD:
+        return {"rule": "fuzzy", "ratio": round(ratio, 4), "program": program,
+                "descriptor": descriptor}
+    return None
 
 
 def _token_key(token: str) -> str:
@@ -705,8 +781,8 @@ def surname_registry(speaker_labels) -> dict[str, str]:
 
 
 def extract_turns(record: dict, subject_row: dict) -> list[dict]:
-    """SPEC D3 + D3.1-r2. One dict per utterance: transcript_id, turn_idx,
-    role, speaker_label, resolved_label, text.
+    """SPEC D3 + D3.1-r2 + D3.2. One dict per utterance: transcript_id,
+    turn_idx, role, speaker_label, resolved_label, d32_program_host, text.
 
     role is "guest" when the speaker label resolves to the subject (the
     canonical name or any variant, matched by token containment, case- and
@@ -723,8 +799,15 @@ def extract_turns(record: dict, subject_row: dict) -> list[dict]:
     the raw label was used as-is; `speaker_label` is always the raw corpus
     label.
 
-    Two known limits, both inherited from the origin classifier and accepted
-    for the pilot:
+    D3.2: last, before the "other" fallback, a label named by the show it
+    presents ("RICHARD ROTH, DIPLOMATIC LICENSE" on DIPLOMATIC LICENSE) is the
+    host. See program_host_match. It never overrides a guest match and never
+    touches a label the classifier already called staff, so the earlier paths
+    are unchanged. A converted turn carries `d32_program_host` with the rule,
+    the ratio and the program string it matched, so every conversion is
+    inspectable; the field is None on every other turn.
+
+    Three known limits, all accepted for the pilot:
     - A label carrying a staff marker ("ROBERT HARRIS, host") is staff to
       classify_speaker, which returns no name, so it can never match the
       subject and is labelled "host". A same-named host is an identity
@@ -733,6 +816,8 @@ def extract_turns(record: dict, subject_row: dict) -> list[dict]:
       NEW YORK TIMES CORRESPONDENT") is also staff, so it reads as "host"
       even when it is really a third guest. This inflates host turns on
       panel shows and is documented rather than fixed.
+    - A bare surname with no full-name form anywhere in its transcript stays
+      unresolvable, so an anchor who is never introduced stays "other".
     """
     subject_tokens = subject_token_lists(subject_row)
     tid = record.get("id")
@@ -742,6 +827,7 @@ def extract_turns(record: dict, subject_row: dict) -> list[dict]:
         raise ValueError(f"{tid}: {len(utts)} utterances but "
                          f"{len(speakers)} speaker labels")
     registry = surname_registry(speakers)
+    program = record.get("program") or ""
 
     turns = []
     for idx, (label, text) in enumerate(zip(speakers, utts)):
@@ -754,18 +840,21 @@ def extract_turns(record: dict, subject_row: dict) -> list[dict]:
                 effective, resolved = full, full
                 tokens = label_tokens(full)
         kind, _, _ = classify_speaker(effective)
+        d32 = None
         if kind == "guest" and name_matches_subject(tokens, subject_tokens):
-            role = "guest"
+            role = "guest"                       # D3.2 never overrides this
         elif kind == "staff":
-            role = "host"
+            role = "host"                        # role words keep their path
         else:
-            role = "other"
+            d32 = program_host_match(effective, program)
+            role = "host" if d32 else "other"
         turns.append({
             "transcript_id": tid,
             "turn_idx": idx,
             "role": role,
             "speaker_label": label,
             "resolved_label": resolved,
+            "d32_program_host": d32,
             "text": text,
         })
     return turns
@@ -973,7 +1062,8 @@ __all__ = [
     "classify_speaker", "parse_transcripts", "load_pool", "eligible_subjects",
     "shuffled_eligible_ids", "draw_dev_subjects", "chronological_split",
     "name_key", "subject_name_keys", "subject_token_lists", "label_tokens",
-    "name_matches_subject", "surname_registry", "extract_turns", "word_count",
+    "name_matches_subject", "surname_registry", "program_host_match",
+    "D32_FUZZY_THRESHOLD", "extract_turns", "word_count",
     "fetch_records", "iter_wanted_raw", "load_guest_words", "load_titles",
     "subject_dir", "write_jsonl", "read_jsonl", "write_json",
     "load_dev_subjects", "load_split",

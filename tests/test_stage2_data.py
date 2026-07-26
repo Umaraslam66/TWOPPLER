@@ -475,6 +475,23 @@ def test_split_excludes_a_cluster_with_a_member_after_the_test_date():
     assert [e["cluster_id"] for e in split["excluded_same_date"]] == ["cl2"]
 
 
+def test_excluded_entries_carry_a_reason():
+    row = subject(
+        "NPR-1|2001-01-01|Prog A|cl1|S;"
+        "NPR-2|2002-02-02|Prog B|cl2|S;"          # cl2 re-aired on the test date
+        "NPR-3|2005-05-05|Prog B rerun|cl2|S;"
+        "NPR-5|2005-05-05|Prog D|cl4|S;"          # cl4 shares the test date
+        "NPR-9|2005-05-05|Prog C|cl3|S")
+    split = S.chronological_split(row, guest_words={"NPR-2": 90, "NPR-3": 10})
+    assert split["test"]["transcript_id"] == "NPR-9"
+    reasons = {e["cluster_id"]: e["reason"] for e in split["excluded_same_date"]}
+    assert reasons == {"cl2": "member_on_or_after_test",
+                       "cl4": "shares_test_date"}
+    # The kept sides carry no reason at all.
+    assert all("reason" not in g for g in split["grounding"])
+    assert "reason" not in split["test"]
+
+
 def test_split_records_member_dates():
     row = subject(
         "NPR-1|2001-01-01|Prog A|cl1|S;"
@@ -712,6 +729,111 @@ def test_resolution_does_not_touch_labels_that_carry_a_role():
     turns = S.extract_turns(rec, row)
     assert [t["role"] for t in turns] == ["guest", "host"]
     assert turns[1]["resolved_label"] is None
+
+
+# ---------------------------------------------------------------------------
+# D3.2 — the show's own name as a host marker
+# ---------------------------------------------------------------------------
+
+def test_d32_the_real_c00292_anchor_labels():
+    """The two anchor spellings the review found, against a clean program."""
+    row = subject("CNN-1|2004-12-31|P|cl1|S", name="Bassir Pour")
+    rec = record("CNN-1",
+                 speakers=["RICHARD ROTH, DIPLOMATIC LICENSE", "ROTH",
+                           "KITTY PILGRIM, DIPLOMATIC LICENSE (voice-over)",
+                           "PILGRIM"],
+                 utts=["a", "b", "c", "d"],
+                 program="DIPLOMATIC LICENSE")
+    turns = S.extract_turns(rec, row)
+    assert [t["role"] for t in turns] == ["host", "host", "host", "host"]
+    assert turns[0]["d32_program_host"]["rule"] == "literal"
+    assert turns[0]["d32_program_host"]["program"] == "DIPLOMATIC LICENSE"
+    assert turns[0]["d32_program_host"]["descriptor"] == "DIPLOMATIC LICENSE"
+    # The bare surnames get there through D3.1 resolution, then D3.2.
+    assert turns[1]["resolved_label"] == "RICHARD ROTH, DIPLOMATIC LICENSE"
+    assert turns[3]["resolved_label"] == \
+        "KITTY PILGRIM, DIPLOMATIC LICENSE (voice-over)"
+
+
+def test_d32_fuzzy_survives_the_program_typo():
+    """The blocker: MediaSum spells the show "Linense" on these records."""
+    row = subject("CNN-1|2000-03-04|P|cl1|S", name="Bassir Pour")
+    rec = record("CNN-1",
+                 speakers=["RICHARD ROTH, DIPLOMATIC LICENSE", "ROTH",
+                           "JAMES BONE, TIMES OF LONDON",
+                           "KOFI ANNAN, UN SECRETARY-GENERAL"],
+                 utts=["a", "b", "c", "d"],
+                 program="CNN International Diplomatic Linense")
+    turns = S.extract_turns(rec, row)
+    assert [t["role"] for t in turns] == ["host", "host", "other", "other"]
+    audit = turns[0]["d32_program_host"]
+    assert audit["rule"] == "fuzzy"
+    assert audit["ratio"] >= S.D32_FUZZY_THRESHOLD
+    assert audit["program"] == "CNN International Diplomatic Linense"
+    # The affiliations in the same transcript stay well clear of the bar.
+    assert turns[2]["d32_program_host"] is None
+    assert turns[3]["d32_program_host"] is None
+
+
+def test_d32_never_overrides_a_guest_match():
+    """A guest whose descriptor happens to name the show stays a guest."""
+    row = subject("CNN-1|2004-12-31|P|cl1|S", name="Bassir Pour")
+    rec = record("CNN-1",
+                 speakers=['AFSANE BASSIR POUR, DIPLOMATIC LICENSE',
+                           "BASSIR POUR"],
+                 utts=["a", "b"], program="DIPLOMATIC LICENSE")
+    turns = S.extract_turns(rec, row)
+    assert [t["role"] for t in turns] == ["guest", "guest"]
+    assert all(t["d32_program_host"] is None for t in turns)
+
+
+def test_d32_leaves_role_word_labels_on_their_existing_path():
+    row = subject("NPR-1|2013-02-19|P|cl1|S", name="Robert Sampson")
+    rec = record("NPR-1",
+                 speakers=["CELESTE HEADLEE, HOST", "CHERYL CORLEY, BYLINE",
+                           "ROBERT SAMPSON"],
+                 utts=["a", "b", "c"], program="Talk of the Nation")
+    turns = S.extract_turns(rec, row)
+    assert [t["role"] for t in turns] == ["host", "host", "guest"]
+    assert all(t["d32_program_host"] is None for t in turns)
+
+
+def test_d32_does_not_fire_without_a_program():
+    row = subject("CNN-1|2004-12-31|P|cl1|S", name="Bassir Pour")
+    rec = record("CNN-1", ["RICHARD ROTH, DIPLOMATIC LICENSE"], ["a"],
+                 program="")
+    assert S.extract_turns(rec, row)[0]["role"] == "other"
+
+
+def test_d32_no_full_name_form_stays_other():
+    """An anchor never introduced in its transcript is still unresolvable."""
+    row = subject("CNN-1|2002-06-08|P|cl1|S", name="Bassir Pour")
+    rec = record("CNN-1", ["ROTH", "BASSIR POUR", "ROTH"], ["a", "b", "c"],
+                 program="DIPLOMATIC LICENSE")
+    turns = S.extract_turns(rec, row)
+    assert [t["role"] for t in turns] == ["other", "guest", "other"]
+
+
+def test_program_host_match_predicate():
+    m = S.program_host_match("X, DIPLOMATIC LICENSE", "DIPLOMATIC LICENSE")
+    assert m["rule"] == "literal" and m["ratio"] == 1.0
+    # Network prefix and punctuation differences are normalised away.
+    m = S.program_host_match("X, DIPLOMATIC LICENSE", "CNN DIPLOMATIC LICENSE")
+    assert m["rule"] == "normalized"
+    # The typo needs the fuzzy arm.
+    m = S.program_host_match("X, DIPLOMATIC LICENSE",
+                             "CNN International Diplomatic Linense")
+    assert m["rule"] == "fuzzy" and 0.6 <= m["ratio"] < 1.0
+    # Stage directions do not defeat it.
+    assert S.program_host_match("X, DIPLOMATIC LICENSE (voice-over)",
+                                "DIPLOMATIC LICENSE")["rule"] == "literal"
+    # A label with no descriptor at all, and unrelated affiliations.
+    assert S.program_host_match("ROTH", "DIPLOMATIC LICENSE") is None
+    for affiliation in ["TIMES OF LONDON", "LE MONDE", "UN SECRETARY-GENERAL",
+                        "U.S. AMB. TO UN", "CHIEF UN WEAPONS INSPECTOR",
+                        "CONGRESSIONAL RESEARCH SERVICE", "NEW YORK CITY MAYOR"]:
+        assert S.program_host_match(f"X, {affiliation}",
+                                    "CNN International Diplomatic Linense") is None
 
 
 # ---------------------------------------------------------------------------
