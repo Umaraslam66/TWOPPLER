@@ -460,7 +460,7 @@
   "opened": "2026-07-28, per the pre-committed on-fail path; bar unchanged",
   "rubric_r2_draft": "rubric_r2_draft.txt",
   "rubric_r2_sha256": "ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464",
-  "rubric_r2_status": "PROPOSED — owner approval of the r1->r2 diff required",
+  "rubric_r2_status": "APPROVED AS DRAFTED 2026-07-28 (owner review: edits confined to the three adjudicated failure modes, all strictness-increasing, CENTRAL line + parser widening with regression test) — adopted as the proposed judge rubric pending the parameter-5 verdict; file byte-unchanged so the pinned sha and the sha printed on sheets F/G stay valid",
   "rubric_r2_edits": [
    "rule 1: first-order-ask clause for multi-part questions (D6/E6; codifies A5 adjudication)",
    "rule 5: rejecting-the-premise-is-not-opposition clause (E7)",

@@ -225,7 +225,9 @@ freezes until the owner adopts the addendum.
    deviation D4, owner-directed) scored **raw 0.7778 / κ 0.5789**
    against the judge — both legs miss the pre-committed bar. The
    verdict was applied mechanically and the pre-committed on-fail path
-   executed the same day, bar unchanged: rubric r2 **[PROPOSED]**
+   executed the same day, bar unchanged: rubric r2 — **approved as
+   drafted by the owner 2026-07-28**, the proposed judge rubric
+   pending the parameter-5 verdict
    (`results/stage2_openended/rubric_r2_draft.txt`, sha256
    `ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464`;
    three targeted edits matching the three diagnosed judge failure

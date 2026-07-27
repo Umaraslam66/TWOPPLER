@@ -179,6 +179,34 @@ or amend the r1→r2 diff; (2) the r2 judge run on the 18 rows (needs
 the Gemini key — no `.env` is present in the repo); (3) rubric-briefed
 labels on sheets F/G.
 
+### r2 adoption and the second round (2026-07-28, later the same night)
+
+**The r1→r2 diff is APPROVED as drafted** (owner review on record:
+edits confined to the three adjudicated failure modes, all
+strictness-increasing; CENTRAL line + parser widening with a
+regression test). r2 is the proposed judge rubric pending parameter 5.
+The rubric file is byte-unchanged by adoption, so the pinned sha
+`ad050d1a…102464` and the sha printed on sheets F/G stay valid; the
+approval lives here and in `audit_scores.json`, not in the file.
+
+Two ambiguities resolved conservatively, logged:
+- `.env` provides `MODEL_NAME=gemini-3.5-flash-lite` — that is the
+  robustness scored model, not the judge. The judge stays the pinned
+  `gemini-3.5-flash` (addendum parameter 2); `MODEL_NAME` is ignored
+  for judging.
+- The F/G auditor line arrived before the r2 judge run. The judge is
+  blind by construction (stateless API calls that see only redacted
+  QUESTION/REAL/CANDIDATE, never a label), so the ordering cannot leak
+  the auditor line into the judge; noted rather than hidden.
+
+Runner: `experiments/oe1_r2_judge.py` (pinned config verbatim from
+`stage2_oe1.py`: gemini-3.5-flash, temp 0.0, `thinking_budget=0`, 512
+tokens, same redaction path, one candidate per stateless call; parser
+self-test runs before any API call; committed before the run so the
+tooling predates the result). Regression branch rule, owner-set: if r2
+breaks more than 2 of the 14 previously-correct D/E rows, STOP —
+overfitted.
+
 ## 3. Fuzzy-host sheet — LLM co-auditor line (D2)
 
 Line (rows 1–20): staff · false · false · anchor · anchor · anchor ·
