@@ -1,0 +1,52 @@
+{
+ "pilot": "PILOT -- open-ended instrument validation on dev subjects; no research conclusions.",
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 0.0,
+ "max_output_tokens": 256,
+ "run_id": "stage2_oe1/gen_flashlite",
+ "per_arm": {
+  "twin_redacted": {
+   "n": 17,
+   "tokens_in": 44981,
+   "tokens_out": 2539,
+   "cost_usd": 0.019842,
+   "n_truncated": 0,
+   "n_era_violations": 0
+  },
+  "twin_named": {
+   "n": 17,
+   "tokens_in": 45113,
+   "tokens_out": 2769,
+   "cost_usd": 0.020456,
+   "n_truncated": 0,
+   "n_era_violations": 0
+  },
+  "zeroinfo_redacted": {
+   "n": 17,
+   "tokens_in": 2003,
+   "tokens_out": 2452,
+   "cost_usd": 0.006731,
+   "n_truncated": 0,
+   "n_era_violations": 0
+  },
+  "zeroinfo_named": {
+   "n": 17,
+   "tokens_in": 2135,
+   "tokens_out": 2430,
+   "cost_usd": 0.006715,
+   "n_truncated": 0,
+   "n_era_violations": 1
+  },
+  "imposter_redacted": {
+   "n": 17,
+   "tokens_in": 46985,
+   "tokens_out": 2561,
+   "cost_usd": 0.020498,
+   "n_truncated": 0,
+   "n_era_violations": 0
+  }
+ },
+ "total_cost_usd": 0.074242,
+ "api_budget_usd": 0.4,
+ "generated_utc": "2026-07-27T14:36:45Z"
+}

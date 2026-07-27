@@ -1,0 +1,17 @@
+{"item_id": "C00792:NPR-19884:10", "canonical_id": "C00792", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.739564}
+{"item_id": "C00792:NPR-19884:13", "canonical_id": "C00792", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.732553}
+{"item_id": "C00792:NPR-19884:15", "canonical_id": "C00792", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.666847}
+{"item_id": "C00792:NPR-19884:2", "canonical_id": "C00792", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.760584}
+{"item_id": "C00792:NPR-19884:6", "canonical_id": "C00792", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.702177}
+{"item_id": "C01677:NPR-8791:77", "canonical_id": "C01677", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.771546}
+{"item_id": "C02006:NPR-14829:19", "canonical_id": "C02006", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.583707}
+{"item_id": "C02006:NPR-14829:26", "canonical_id": "C02006", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.516523}
+{"item_id": "C02006:NPR-14829:29", "canonical_id": "C02006", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.627431}
+{"item_id": "C02013:NPR-9480:45", "canonical_id": "C02013", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.790309}
+{"item_id": "C02013:NPR-9480:49", "canonical_id": "C02013", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.778694}
+{"item_id": "C02013:NPR-9480:70", "canonical_id": "C02013", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.791501}
+{"item_id": "C02013:NPR-9480:82", "canonical_id": "C02013", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.809164}
+{"item_id": "C02124:NPR-12184:2", "canonical_id": "C02124", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.656644}
+{"item_id": "C02124:NPR-12184:4", "canonical_id": "C02124", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.712244}
+{"item_id": "C02124:NPR-12184:6", "canonical_id": "C02124", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.670922}
+{"item_id": "C02124:NPR-12184:8", "canonical_id": "C02124", "embedding_model": "BAAI/bge-large-en-v1.5", "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09", "cosine_grounding_to_real": 0.732306}

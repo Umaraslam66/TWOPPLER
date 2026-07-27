@@ -1,0 +1,243 @@
+{
+ "pilot": "PILOT -- open-ended instrument validation on dev subjects; no research conclusions.",
+ "candidates": [
+  {
+   "name": "sentence-transformers/all-mpnet-base-v2",
+   "revision": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+   "test_cosine": 0.562584,
+   "encode_seconds": 0.8559,
+   "load_seconds": 29.2254,
+   "dim": 768,
+   "prefixes_used": null
+  },
+  {
+   "name": "BAAI/bge-large-en-v1.5",
+   "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09",
+   "test_cosine": 0.735866,
+   "encode_seconds": 2.625,
+   "load_seconds": 51.6049,
+   "dim": 1024,
+   "prefixes_used": null
+  },
+  {
+   "name": "intfloat/e5-large-v2",
+   "revision": "f169b11e22de13617baa190a028a32f3493550b6",
+   "test_cosine": 0.863931,
+   "encode_seconds": 1.918,
+   "load_seconds": 50.0467,
+   "dim": 1024,
+   "prefixes_used": "query: / passage: (required by e5; applied as 'query: ' on text a and 'passage: ' on text b)"
+  },
+  {
+   "name": "sentence-transformers/all-MiniLM-L6-v2",
+   "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+   "test_cosine": 0.445923,
+   "encode_seconds": 0.0959,
+   "load_seconds": 3.455,
+   "dim": 384,
+   "prefixes_used": null
+  }
+ ],
+ "selection_rule": "Score all four; pick the candidate with the cleanest own-minus-imposter separation on the primary model; ties break toward the smaller, more standard model. Dev subjects are for tuning, so this selection is legitimate and is recorded here.",
+ "never_an_api_model": true,
+ "device": "cpu",
+ "results": {
+  "sentence-transformers/all-mpnet-base-v2": {
+   "revision": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+   "per_arm": {
+    "twin_redacted": {
+     "n": 17,
+     "min": 0.281304,
+     "mean": 0.636764,
+     "max": 0.849603
+    },
+    "twin_named": {
+     "n": 17,
+     "min": 0.365957,
+     "mean": 0.669868,
+     "max": 0.836887
+    },
+    "zeroinfo_redacted": {
+     "n": 17,
+     "min": 0.313008,
+     "mean": 0.581659,
+     "max": 0.828459
+    },
+    "zeroinfo_named": {
+     "n": 17,
+     "min": 0.317487,
+     "mean": 0.647729,
+     "max": 0.864089
+    },
+    "imposter_redacted": {
+     "n": 17,
+     "min": 0.146776,
+     "mean": 0.5708,
+     "max": 0.79269
+    }
+   },
+   "n_rows": 85,
+   "own_minus_imposter_paired": {
+    "n": 17,
+    "min": -0.30379999999999996,
+    "mean": 0.065964,
+    "max": 0.25691300000000006
+   },
+   "n_items_own_gt_imposter": "11/17",
+   "diagnostic": {
+    "n": 17,
+    "min": 0.068805,
+    "mean": 0.434321,
+    "max": 0.630051
+   }
+  },
+  "BAAI/bge-large-en-v1.5": {
+   "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09",
+   "per_arm": {
+    "twin_redacted": {
+     "n": 17,
+     "min": 0.643856,
+     "mean": 0.804516,
+     "max": 0.871914
+    },
+    "twin_named": {
+     "n": 17,
+     "min": 0.695686,
+     "mean": 0.808363,
+     "max": 0.860783
+    },
+    "zeroinfo_redacted": {
+     "n": 17,
+     "min": 0.640199,
+     "mean": 0.770982,
+     "max": 0.846226
+    },
+    "zeroinfo_named": {
+     "n": 17,
+     "min": 0.706087,
+     "mean": 0.794332,
+     "max": 0.873737
+    },
+    "imposter_redacted": {
+     "n": 17,
+     "min": 0.576764,
+     "mean": 0.76072,
+     "max": 0.831992
+    }
+   },
+   "n_rows": 85,
+   "own_minus_imposter_paired": {
+    "n": 17,
+    "min": -0.028410000000000046,
+    "mean": 0.043796,
+    "max": 0.109425
+   },
+   "n_items_own_gt_imposter": "13/17",
+   "diagnostic": {
+    "n": 17,
+    "min": 0.516523,
+    "mean": 0.708395,
+    "max": 0.809164
+   }
+  },
+  "intfloat/e5-large-v2": {
+   "revision": "f169b11e22de13617baa190a028a32f3493550b6",
+   "per_arm": {
+    "twin_redacted": {
+     "n": 17,
+     "min": 0.753018,
+     "mean": 0.814566,
+     "max": 0.865623
+    },
+    "twin_named": {
+     "n": 17,
+     "min": 0.756418,
+     "mean": 0.81453,
+     "max": 0.861186
+    },
+    "zeroinfo_redacted": {
+     "n": 17,
+     "min": 0.741366,
+     "mean": 0.799498,
+     "max": 0.860217
+    },
+    "zeroinfo_named": {
+     "n": 17,
+     "min": 0.759041,
+     "mean": 0.809957,
+     "max": 0.849119
+    },
+    "imposter_redacted": {
+     "n": 17,
+     "min": 0.73868,
+     "mean": 0.801416,
+     "max": 0.844556
+    }
+   },
+   "n_rows": 85,
+   "own_minus_imposter_paired": {
+    "n": 17,
+    "min": -0.010135000000000005,
+    "mean": 0.013149,
+    "max": 0.04611999999999994
+   },
+   "n_items_own_gt_imposter": "13/17",
+   "diagnostic": {
+    "n": 17,
+    "min": 0.736169,
+    "mean": 0.782205,
+    "max": 0.82883
+   }
+  },
+  "sentence-transformers/all-MiniLM-L6-v2": {
+   "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+   "per_arm": {
+    "twin_redacted": {
+     "n": 17,
+     "min": 0.130971,
+     "mean": 0.541048,
+     "max": 0.72051
+    },
+    "twin_named": {
+     "n": 17,
+     "min": 0.174813,
+     "mean": 0.590984,
+     "max": 0.783528
+    },
+    "zeroinfo_redacted": {
+     "n": 17,
+     "min": 0.261303,
+     "mean": 0.495422,
+     "max": 0.740394
+    },
+    "zeroinfo_named": {
+     "n": 17,
+     "min": 0.289452,
+     "mean": 0.570245,
+     "max": 0.733821
+    },
+    "imposter_redacted": {
+     "n": 17,
+     "min": 0.067841,
+     "mean": 0.456372,
+     "max": 0.721985
+    }
+   },
+   "n_rows": 85,
+   "own_minus_imposter_paired": {
+    "n": 17,
+    "min": -0.138983,
+    "mean": 0.084676,
+    "max": 0.36957700000000004
+   },
+   "n_items_own_gt_imposter": "11/17",
+   "diagnostic": {
+    "n": 17,
+    "min": -0.046009,
+    "mean": 0.373516,
+    "max": 0.649045
+   }
+  }
+ },
+ "embedded_utc": "2026-07-27T14:44:38Z"
+}

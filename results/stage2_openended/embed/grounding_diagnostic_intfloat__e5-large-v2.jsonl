@@ -1,0 +1,17 @@
+{"item_id": "C00792:NPR-19884:10", "canonical_id": "C00792", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.767043}
+{"item_id": "C00792:NPR-19884:13", "canonical_id": "C00792", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.755657}
+{"item_id": "C00792:NPR-19884:15", "canonical_id": "C00792", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.78328}
+{"item_id": "C00792:NPR-19884:2", "canonical_id": "C00792", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.765874}
+{"item_id": "C00792:NPR-19884:6", "canonical_id": "C00792", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.793423}
+{"item_id": "C01677:NPR-8791:77", "canonical_id": "C01677", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.764293}
+{"item_id": "C02006:NPR-14829:19", "canonical_id": "C02006", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.751713}
+{"item_id": "C02006:NPR-14829:26", "canonical_id": "C02006", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.736169}
+{"item_id": "C02006:NPR-14829:29", "canonical_id": "C02006", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.767677}
+{"item_id": "C02013:NPR-9480:45", "canonical_id": "C02013", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.819639}
+{"item_id": "C02013:NPR-9480:49", "canonical_id": "C02013", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.825329}
+{"item_id": "C02013:NPR-9480:70", "canonical_id": "C02013", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.824942}
+{"item_id": "C02013:NPR-9480:82", "canonical_id": "C02013", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.82883}
+{"item_id": "C02124:NPR-12184:2", "canonical_id": "C02124", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.76989}
+{"item_id": "C02124:NPR-12184:4", "canonical_id": "C02124", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.791351}
+{"item_id": "C02124:NPR-12184:6", "canonical_id": "C02124", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.763285}
+{"item_id": "C02124:NPR-12184:8", "canonical_id": "C02124", "embedding_model": "intfloat/e5-large-v2", "revision": "f169b11e22de13617baa190a028a32f3493550b6", "cosine_grounding_to_real": 0.789082}

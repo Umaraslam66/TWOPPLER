@@ -1,0 +1,33 @@
+{
+ "probe": "judge hidden-thinking budget probe",
+ "why": "82 of 85 judge replies came back with the WHY line cut mid-phrase while the LABEL line survived. This probe re-ran ONE judge input at two output budgets to find out why.",
+ "model": "gemini-3.5-flash",
+ "temperature": 0.0,
+ "item_id": "C00792:NPR-19884:2",
+ "arm_of_candidate": "twin_redacted",
+ "runs": [
+  {
+   "max_output_tokens": 256,
+   "finish_reason": "MAX_TOKENS",
+   "prompt_tokens": 894,
+   "visible_tokens": 9,
+   "thoughts_tokens": 243,
+   "label": "DIFFERENT",
+   "text": "LABEL: DIFFERENT\nWHY: The REAL answer"
+  },
+  {
+   "max_output_tokens": 1024,
+   "finish_reason": "MAX_TOKENS",
+   "prompt_tokens": 894,
+   "visible_tokens": 40,
+   "thoughts_tokens": 980,
+   "label": "UNCLEAR",
+   "text": "LABEL: UNCLEAR\nWHY: The REAL answer commits to the position that Syrian nationalists \"would find it very, very, very difficult to sign up with ISIS,\" while the CANDIDATE answer takes"
+  }
+ ],
+ "finding": "gemini-3.5-flash charges hidden thinking against max_output_tokens and did not finish thinking at either budget: 243/256 then 980/1024 tokens went to thoughts, both runs ended MAX_TOKENS. The visible reply is whatever fits in the remainder, which is why LABEL survives and WHY does not.",
+ "material_consequence": "The LABEL FLIPPED between the two budgets at temperature 0 (DIFFERENT -> UNCLEAR). The 85 labels in judgements.jsonl are therefore a function of the truncation, not only of the rubric. They are not trustworthy as scored data.",
+ "not_fixed_here": "Raising the budget alone does not fix it (1024 still hit MAX_TOKENS). The fix is an explicit thinking setting on the shared GeminiClient path -- the same class of change src/doppler/gemini.py already documents for flash-lite. That changes the judge's behaviour, so it is an owner decision, not an implementer's. No re-run was made.",
+ "probe_cost_usd_estimate": 0.0071,
+ "unaffected": "The gemini-3.5-flash-lite GENERATIONS are unaffected: max tokens_out was 188 against a 256 budget, no truncation flags, and every reply ends on a complete sentence."
+}

@@ -1,0 +1,79 @@
+{
+ "pilot": "PILOT -- open-ended instrument validation on dev subjects; no research conclusions.",
+ "judge_model": "gemini-3.5-flash",
+ "temperature": 0.0,
+ "rubric_version": "r1",
+ "rubric_sha256": "85c7c990af522c2c1e41c116617f406a473496b4c5875f293d687ef62bff64d1",
+ "rubric_file": "results/stage2_openended/rubric_r1.txt",
+ "call_order_seed": 20260727,
+ "n_calls": 85,
+ "n_malformed_retried": 7,
+ "n_unparsed_after_retry": 2,
+ "unclear_rule": "UNCLEAR is excluded from the stance-match denominator; per-arm UNCLEAR rates are printed beside every rate (C2.3).",
+ "protocol": "One candidate per call. The judge never sees two candidates together, never sees an arm or model label, never sees a subject name (all three texts are GUEST-redacted), and never sees both twins of a duplicated question.",
+ "per_arm": {
+  "twin_redacted": {
+   "n": 17,
+   "tokens_in": 16562,
+   "tokens_out": 147,
+   "n_unparsed": 0,
+   "SAME": 15,
+   "DIFFERENT": 2,
+   "UNCLEAR": 0,
+   "cost_usd": 0.013083,
+   "stance_match_rate": 0.8824,
+   "unclear_rate": 0.0
+  },
+  "imposter_redacted": {
+   "n": 17,
+   "tokens_in": 18457,
+   "tokens_out": 215,
+   "n_unparsed": 1,
+   "SAME": 9,
+   "DIFFERENT": 5,
+   "UNCLEAR": 2,
+   "cost_usd": 0.01481,
+   "stance_match_rate": 0.6429,
+   "unclear_rate": 0.1176
+  },
+  "zeroinfo_redacted": {
+   "n": 17,
+   "tokens_in": 19404,
+   "tokens_out": 179,
+   "n_unparsed": 1,
+   "SAME": 10,
+   "DIFFERENT": 4,
+   "UNCLEAR": 2,
+   "cost_usd": 0.015359,
+   "stance_match_rate": 0.7143,
+   "unclear_rate": 0.1176
+  },
+  "zeroinfo_named": {
+   "n": 17,
+   "tokens_in": 17472,
+   "tokens_out": 157,
+   "n_unparsed": 0,
+   "SAME": 14,
+   "DIFFERENT": 2,
+   "UNCLEAR": 1,
+   "cost_usd": 0.013811,
+   "stance_match_rate": 0.875,
+   "unclear_rate": 0.0588
+  },
+  "twin_named": {
+   "n": 17,
+   "tokens_in": 17811,
+   "tokens_out": 169,
+   "n_unparsed": 0,
+   "SAME": 14,
+   "DIFFERENT": 3,
+   "UNCLEAR": 0,
+   "cost_usd": 0.014119,
+   "stance_match_rate": 0.8235,
+   "unclear_rate": 0.0
+  }
+ },
+ "total_cost_usd": 0.071182,
+ "api_budget_usd": 0.4,
+ "judged_utc": "2026-07-27T14:41:21Z"
+}

@@ -1,0 +1,105 @@
+{
+ "pilot": "PILOT -- open-ended instrument validation on dev subjects; no research conclusions.",
+ "phase": "determinism_probe",
+ "judge_model": "gemini-3.5-flash",
+ "temperature": 0.0,
+ "thinking_budget": 0,
+ "max_output_tokens": 512,
+ "config_note": "Owner decision 2026-07-27, after the v1 judge run: thinking EXPLICITLY disabled (thinking_budget=0) and max_output_tokens raised to 512; gemini-3.5-flash, temperature 0, rubric r1 verbatim, same blinding, same randomization seed -- everything else unchanged. The rubric asks for a mechanical classification with an auditable WHY line; hidden thinking is budget-unstable at temperature 0 (see judge/thinking_budget_probe.json, where the label moved between a 256 and a 1024 budget) and it defeats the owner's >=50-label spot-check by truncating every WHY. Both settings become PINNED judge parameters at bar-lock.",
+ "n_items_probed": 3,
+ "n_calls": 6,
+ "all_labels_agree": true,
+ "all_why_intact": true,
+ "disagreements": [],
+ "gate": "If any label disagrees at temperature 0 with thinking off, STOP and report; do not run the batch.",
+ "probe": [
+  {
+   "call_order": 0,
+   "arm": "twin_redacted",
+   "item_id": "C00792:NPR-19884:2",
+   "labels_agree": true,
+   "both_why_intact": true,
+   "runs": [
+    {
+     "attempt": 1,
+     "label": "DIFFERENT",
+     "why": "The REAL answer asserts that Syrian nationalists \"would find it very, very, very difficult to sign up with ISIS,\" whereas the CANDIDATE answer claims that \"some individuals or splinter factions may conclude that survival dictates aligning with... the Islamic State.\"",
+     "why_intact": true,
+     "why_words": 40,
+     "tokens_out": 55,
+     "output_hit_cap": false,
+     "raw": "LABEL: DIFFERENT\nWHY: The REAL answer asserts that Syrian nationalists \"would find it very, very, very difficult to sign up with ISIS,\" whereas the CANDIDATE answer claims that \"some individuals or splinter factions may conclude that survival dictates aligning with... the Islamic State.\""
+    },
+    {
+     "attempt": 2,
+     "label": "DIFFERENT",
+     "why": "The REAL answer claims that Syrian nationalists \"would find it very, very, very difficult to sign up with ISIS,\" whereas the CANDIDATE answer claims that \"some individuals or splinter factions may conclude that survival dictates aligning with... the Islamic State.\"",
+     "why_intact": true,
+     "why_words": 40,
+     "tokens_out": 55,
+     "output_hit_cap": false,
+     "raw": "LABEL: DIFFERENT\nWHY: The REAL answer claims that Syrian nationalists \"would find it very, very, very difficult to sign up with ISIS,\" whereas the CANDIDATE answer claims that \"some individuals or splinter factions may conclude that survival dictates aligning with... the Islamic State.\""
+    }
+   ]
+  },
+  {
+   "call_order": 1,
+   "arm": "imposter_redacted",
+   "item_id": "C02006:NPR-14829:19",
+   "labels_agree": true,
+   "both_why_intact": true,
+   "runs": [
+    {
+     "attempt": 1,
+     "label": "SAME",
+     "why": "The REAL answer states that the referendum \"was a great mistake\" and left the country \"in a mess ever since,\" which aligns with the CANDIDATE answer's claim that the referendum was \"short-sighted, and it hurts everybody.\"",
+     "why_intact": true,
+     "why_words": 36,
+     "tokens_out": 55,
+     "output_hit_cap": false,
+     "raw": "LABEL: SAME\nWHY: The REAL answer states that the referendum \"was a great mistake\" and left the country \"in a mess ever since,\" which aligns with the CANDIDATE answer's claim that the referendum was \"short-sighted, and it hurts everybody.\""
+    },
+    {
+     "attempt": 2,
+     "label": "SAME",
+     "why": "The REAL answer states that the referendum \"was a great mistake\" and left the country \"in a mess ever since,\" which aligns with the CANDIDATE answer's claim that the referendum was \"short-sighted, and it hurts everybody.\"",
+     "why_intact": true,
+     "why_words": 36,
+     "tokens_out": 55,
+     "output_hit_cap": false,
+     "raw": "LABEL: SAME\nWHY: The REAL answer states that the referendum \"was a great mistake\" and left the country \"in a mess ever since,\" which aligns with the CANDIDATE answer's claim that the referendum was \"short-sighted, and it hurts everybody.\""
+    }
+   ]
+  },
+  {
+   "call_order": 2,
+   "arm": "zeroinfo_redacted",
+   "item_id": "C02006:NPR-14829:19",
+   "labels_agree": true,
+   "both_why_intact": true,
+   "runs": [
+    {
+     "attempt": 1,
+     "label": "SAME",
+     "why": "The REAL answer states \"we had a referendum... and we have been in a mess ever since,\" which matches the CANDIDATE answer's claim that \"we are living through the consequences of a monumental political blunder.\"",
+     "why_intact": true,
+     "why_words": 35,
+     "tokens_out": 50,
+     "output_hit_cap": false,
+     "raw": "LABEL: SAME\nWHY: The REAL answer states \"we had a referendum... and we have been in a mess ever since,\" which matches the CANDIDATE answer's claim that \"we are living through the consequences of a monumental political blunder.\""
+    },
+    {
+     "attempt": 2,
+     "label": "SAME",
+     "why": "The REAL answer states \"we had a referendum... and we have been in a mess ever since,\" which matches the CANDIDATE answer's claim that \"we are living through the consequences of a monumental political blunder.\"",
+     "why_intact": true,
+     "why_words": 35,
+     "tokens_out": 50,
+     "output_hit_cap": false,
+     "raw": "LABEL: SAME\nWHY: The REAL answer states \"we had a referendum... and we have been in a mess ever since,\" which matches the CANDIDATE answer's claim that \"we are living through the consequences of a monumental political blunder.\""
+    }
+   ]
+  }
+ ],
+ "probed_utc": "2026-07-27T14:52:46Z"
+}

@@ -1,0 +1,53 @@
+STANCE JUDGE RUBRIC (draft r1 — text and sha256 frozen at bar-lock)
+
+You will see three texts: a QUESTION asked in a broadcast interview,
+the REAL answer the interviewee gave, and a CANDIDATE answer.
+
+Decide whether the CANDIDATE takes the same position as the REAL
+answer on the central issue the QUESTION asks about.
+
+SAME — the CANDIDATE commits to the same position as the REAL answer
+on the central issue: the same direction of judgment (for/against,
+likely/unlikely, better/worse), the same recommendation, or the same
+central explanatory claim. Differences of wording, style, detail,
+emphasis, or strength do not matter; a more extreme version of the
+same direction is SAME; agreement on the central issue with
+disagreement on a side issue is SAME.
+
+DIFFERENT — the CANDIDATE commits to a position the REAL answer's
+position rules out: the opposite direction, an incompatible
+recommendation, or a central claim that contradicts the REAL
+answer's. Judge positions, not topics: two answers on the same topic
+can be DIFFERENT, and answers emphasizing different aspects are not
+DIFFERENT unless their commitments actually conflict.
+
+UNCLEAR — anything that prevents the call: the CANDIDATE takes no
+discernible position (pure hedging, refusal, generic both-sides
+summary, off-topic reply); the REAL answer itself takes no position;
+or the QUESTION does not ask for one and the answers share no central
+claim to compare.
+
+Boundary rules:
+1. Central issue only. Identify the one thing the QUESTION most
+   directly asks about; score positions on that. Side claims never
+   flip a label.
+2. Direction, not degree. "Cautiously yes" and "emphatically yes" are
+   SAME. "Cautiously yes" and "probably not" are DIFFERENT.
+3. Hedged but committed is a position. If an answer hedges and then
+   lands ("it's complicated, but on balance X"), its position is X.
+4. Factual-explanation questions: the "position" is the central
+   explanatory claim (the main cause, mechanism, or account offered).
+   Same central claim = SAME; contradicting central claims =
+   DIFFERENT; merely different details of compatible accounts =
+   UNCLEAR.
+5. Answering a different question: if the CANDIDATE addresses a
+   different issue and never commits on the central one, it is
+   UNCLEAR, not DIFFERENT.
+6. Predictions and counterfactuals count as positions (will/won't,
+   would/wouldn't).
+7. Never reward style. Fluency, idiom, or sounding like a broadcast
+   guest is evidence for nothing.
+
+Reply in exactly this format:
+LABEL: <SAME|DIFFERENT|UNCLEAR>
+WHY: <one sentence quoting the decisive phrase of each answer>
