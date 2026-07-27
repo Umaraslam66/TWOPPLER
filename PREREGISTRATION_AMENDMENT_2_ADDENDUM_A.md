@@ -22,9 +22,19 @@ ADOPTED**, and committing this revision to git does **not** commit it as a
 freeze. The freeze still requires every precondition below to clear and the
 owner to adopt it.
 
+**Filled 2026-07-28.** The instrument-parameter slots are filled from
+OE-1 measurements, the audit lines are scored, and deviations D1–D3 are
+recorded inline. Two things remain deliberately open: the judge trust
+bar (parameter 5 — pending the owner's ruling on 4 flagged rows) and
+the H6/B3 parameters (unmeasured). Status is unchanged: **DRAFT, NOT
+ADOPTED** — values marked [PROPOSED] and this whole text freeze only
+when the owner approves and adopts it.
+
 Evidence base: `results/stage2_pilot2/BARLOCK_MEASUREMENTS.md` (measured
 on dev subjects and pool metadata only), `results/stage2_pilot/
-PILOT_REPORT.md`, `results/stage2_pilot2/PILOT_REPORT_2.md`.
+PILOT_REPORT.md`, `results/stage2_pilot2/PILOT_REPORT_2.md`,
+`results/stage2_openended/OE1_PILOT_REPORT.md`, and
+`results/stage2_openended/AUDIT_LINES_2026-07-28.md`.
 
 ## The ten frozen decisions
 
@@ -38,7 +48,11 @@ census: false fires drop 86 → 4, anchor precision rises to 0.79, one true
 anchor lost. 0.70 is rejected on record: it misses the Diplomatic License
 anchor (0.68) the rule exists for. Precondition: the owner's independent
 labelling of the 20-row spot-check sheet must not overturn the census
-labels.
+labels. **Satisfied 2026-07-28 via deviation D2** (LLM co-auditor
+substituted for the human line, owner-directed): the blind co-audit
+matched the census key **20/20**, overturning nothing
+(`results/stage2_openended/AUDIT_LINES_2026-07-28.md` §3). The
+census-wide numbers above remain the operative measurement.
 
 ### 2. Entity handling: real NER
 
@@ -144,54 +158,117 @@ generated distractors and paraphrased true answers). Rejections logged.
 Interview **cluster count, not time span, is the binding supply
 constraint** (pilot evidence: a 10.6-year subject with 3 clusters fills
 only 2 H7 bins; 4 of 6 dev subjects hold ≤ 3 clusters). Confirmatory
-draws record cluster count at draw time, and subjects below **[TO FILL —
-proposed ≥ 4 dated clusters, confirmed after the open-ended dev pilot's
-yield]** are deprioritized in the draw order (H7 eligibility per B7 is
-unchanged and stricter).
+draws record cluster count at draw time, and subjects below **≥ 4 dated
+clusters** are deprioritized in the draw order (H7 eligibility per B7 is
+unchanged and stricter). Filled 2026-07-28 at the proposed value: OE-1's
+yield produced no contrary evidence (all 17 D4 items built and scored;
+the dev subjects holding ≤ 3 clusters filled at most 2 H7 Δ bins), and
+the operative supply measurement is the H7 pool census (262 of 578
+candidates at ≥ 4 dated clusters — 3× headroom on the ≥ 80 branch).
 
 ## Instrument parameters deferred to the open-ended dev pilot (per Amendment 3 C6/C7)
 
 Each value below is frozen here when filled, before any confirmatory
-scoring.
+scoring. Filled 2026-07-28 from OE-1 measurements
+(`results/stage2_openended/OE1_PILOT_REPORT.md`); values marked
+**[PROPOSED]** await the owner's approval of this text, and nothing
+freezes until the owner adopts the addendum.
 
-1. **Embedding model and its pinned version (channel 1) [TO FILL].** Run
-   locally, never an API model, never a scored model (C2.2).
-2. **Judge model and its version (channel 2) [TO FILL].** Generator-side
-   family, never a scored model, and a different model version than the A3
-   robustness scorer — or the overlap is declared beside every robustness
-   number it touches (C2.3).
-3. **Judge rubric text and its sha256 [TO FILL].**
-4. **Generation cap and the format-instruction text [TO FILL]** —
-   identical across all five arms (C2.1).
-5. **Judge trust bar [TO FILL]** — set after the owner's ≥ 50-label
-   spot-check per C4.2.
-6. **UNCLEAR handling rule [TO FILL].** Proposed in C2.3: UNCLEAR items are
-   excluded from the stance-match rate's denominator; every arm's UNCLEAR
-   rate is always reported beside its stance-match rate; a material
-   difference in UNCLEAR rates between arms is flagged, not silently
-   absorbed.
-7. **Magnitude ("interesting") bars for H1, H2, H6 and H7 on the new
-   continuous scales [TO FILL]** — the accuracy-point bars do not transfer
-   to similarity scores, and no magnitude claim is made until these are set
-   (C5).
-8. **Free-standing intro sentence handling [TO FILL]** — added by owner
+1. **Embedding model (channel 1): `sentence-transformers/all-mpnet-base-v2`,
+   HF revision `e8c3b32edf5434bc2275fc9bab85f82640a19130`**, run locally
+   on CPU, cosine between the generated answer and the real verbatim
+   answer. Selected by the pre-stated rule (cleanest own-minus-imposter
+   on the primary model among eligible candidates: mpnet +0.1024 >
+   bge-large +0.0582 > e5-large +0.0242; MiniLM excluded by spec as
+   sanity-only). Never an API model, never a scored model (C2.2).
+2. **Judge (channel 2): `gemini-3.5-flash`, temperature 0.0,
+   `thinking_budget=0`, `max_output_tokens=512`**, AI Studio endpoint,
+   one candidate per stateless call, blind to arm/model/subject.
+   The thinking-off setting is load-bearing: with hidden thinking
+   enabled, labels were budget-dependent at temperature 0 (the OE-1
+   judge-v1 defect record). Different model version than the A3
+   robustness scorer (`gemini-3.5-flash-lite`); the family overlap is
+   declared per Amendment 3 C3.
+3. **Judge rubric: `results/stage2_openended/rubric_r1.txt`, sha256
+   `85c7c990af522c2c1e41c116617f406a473496b4c5875f293d687ef62bff64d1`.**
+4. **Generation cap and format instruction: 150 words,
+   `max_output_tokens=256`, temperature 0.0, identical tail across all
+   five arms (C2.1), tail sha256
+   `d8758204009e71b482d36fb7133641f3077b7414df87e5a055f3949cb2ef3d3b`.**
+   Measured: 0 truncations at the cap on either scored model; 82/85 and
+   85/85 within the word cap.
+5. **Judge trust bar [PENDING — owner ruling required].** The C4.2
+   spot-check ran under deviation D1 (human tranche = sheet A only,
+   17 of 51 rows; LLM co-auditor on all 51; human–LLM concordance 17/17
+   on sheet A). Measured concordance vs the judge: human 0.765 raw /
+   κ 0.556 (n=17); co-auditor 0.784 raw / κ 0.596 (n=51); pooled 0.779
+   / κ 0.586. The judge disagreed with the concordant sheet-A auditor
+   line on 4 rows (> 3), so per the owner's pre-stated rule those rows
+   went to the owner verbatim and **no bar is proposed until the owner
+   rules on them** (`AUDIT_LINES_2026-07-28.md` §2). For calibration:
+   the B2.2 pattern (raw ≥ 0.85, κ ≥ 0.6) would currently fail on raw
+   agreement for every line.
+6. **UNCLEAR handling rule — adopted as proposed in C2.3:** UNCLEAR items
+   are excluded from the stance-match rate's denominator; every arm's
+   UNCLEAR rate is always reported beside its stance-match rate; a
+   between-arm UNCLEAR-rate difference **≥ 0.10 absolute [PROPOSED]** is
+   flagged as material. (OE-1 measured the flag firing: imposter 0.353
+   vs twin 0.059 on the primary model.)
+7. **Magnitude ("interesting") bars [PROPOSED], one unit per channel,
+   derived as half of OE-1's dev own-minus-imposter effect:** a
+   registered contrast is "interesting" only if it reaches **≥ +0.05
+   cosine (channel 1, pinned model)** or **≥ +0.09 stance-match points
+   (channel 2)** — with direction agreement across both channels
+   required for any headline, as always. Applied to each hypothesis's
+   registered contrast (H1: own-twin − zero-info; H2: between-arm;
+   H7: freshest − stalest Δ bin, beside the unchanged crossover
+   statistic). Rationale on record: every pilot effect in this project
+   has shrunk at scale, so the dev effect halved is a deliberately
+   modest bar; no magnitude claim is made below it.
+8. **Free-standing intro sentence handling [PROPOSED]** — added by owner
    direction 2026-07-27. S1's frozen scope removes appositive
    descriptors but not free-standing host-intro sentences; in OE-1 dev
    prompts this left identifying role descriptions for the subject and,
-   in at least one case, for the imposter DONOR (a blog-naming line).
-   The miss is symmetric across own and imposter arms and the
-   contamination meter is the backstop, but whether a
-   free-standing-intro rule is added, and its exact scope, is decided
-   here on OE-1 evidence — not silently dropped.
+   in at least one case, for the imposter DONOR (a blog-naming line; a
+   second case: a full donor résumé surviving because the "U.S."
+   abbreviation's period truncates S1's clause pattern). Proposed
+   resolution: extend S1 with (a) an abbreviation-safe clause pattern
+   and (b) the `GUEST, who …` appositive shape — both inside S1's
+   declared intent (the host's descriptive clause about GUEST) — then
+   re-measure collateral damage on dev prompts before any confirmatory
+   render; the extension freezes only if collateral stays at zero, else
+   the miss stays declared with the contamination meter as backstop.
 
 H6 parameters likewise per B3: token budget(s) B, segment/chain
-definitions, rich/poor thresholds, flagged-turn threshold **[TO FILL]**.
+definitions, rich/poor thresholds, flagged-turn threshold **[TO FILL —
+stays open on record]**. OE-1 measured none of these; they require their
+own dev measurement and MUST be filled before any confirmatory H6
+scoring. This is the one slot this revision deliberately does not fill,
+and it is said here rather than hidden.
+
+## Deviations D1–D3 (owner-directed 2026-07-28, all documented)
+
+- **D1** — the C4.2 human judge tranche is sheet A only (17 of 51 rows,
+  owner time constraint); the full 51 rows carry an out-of-family LLM
+  co-auditor line. The two lines are reported separately, never pooled;
+  their sheet-A concordance (17/17) is stated wherever either is cited.
+- **D2** — the fuzzy-host 20-row spot-check is fully substituted by the
+  out-of-family LLM co-auditor; no human line exists for it.
+- **D3** — the H6 trust audit runs as a blind LLM co-audit (Opus 5)
+  with a disagreement-triggered human tranche: agreement at or above
+  the B2.2 bar (raw ≥ 85%, κ ≥ 0.6) satisfies the part-1 gate with D3
+  recorded; below the bar, everything stops and a 30-row human tranche
+  stratified on the disagreements goes to the owner.
+
+Full lines, scores, and flags: `results/stage2_openended/AUDIT_LINES_2026-07-28.md`.
 
 ## Preconditions before this addendum can freeze
 
 1. Owner's independent 20-row fuzzy-host spot-check (sheet:
    `results/stage2_pilot2/barlock/fuzzy_host_spotcheck_sheet.md`) —
-   labels must not overturn the census.
+   labels must not overturn the census. **SATISFIED 2026-07-28 via D2:**
+   the blind LLM co-audit matched the census key 20/20; nothing
+   overturned.
 2. H7 date-sanity pass over 30 sampled subjects
    (`results/stage2_pilot2/barlock/h7_date_sanity.md`) — **CLEARED
    2026-07-26: 90/90 transcripts agree with the raw MediaSum record on
@@ -202,6 +279,8 @@ definitions, rich/poor thresholds, flagged-turn threshold **[TO FILL]**.
    is weak by nature (broadcast transcripts rarely state their own
    date).
 3. Owner review of the open-ended dev pilot report (per Amendment 3 C7).
+   **CLEARED 2026-07-28** — the owner reviewed OE1_PILOT_REPORT and
+   issued the audit directives and deviations D1–D3 on its basis.
 4. Detectability check (B10.8) — **NO LONGER A LIVE FREEZE CONDITION.**
    The record stands as documented history per Amendment 3 C6: the HUMAN
    line was **WAIVED by owner decision 2026-07-27 — a documented deviation
@@ -226,6 +305,19 @@ definitions, rich/poor thresholds, flagged-turn threshold **[TO FILL]**.
    all Stage 2 machinery — the untouchability rule wins — so 6 subjects
    / 120 rows is accepted as satisfying B2.2's intent for the freeze.
    The labeling itself remains outstanding.
+   **Part 1 SATISFIED 2026-07-28 via deviation D3** (owner-directed):
+   the audit ran as a blind LLM co-audit (Opus 5; read only the sheet
+   and the frozen rubric, sha256
+   `053b96cba42ebf03d966db3c22fce2acde3a685d5b4cca9badd556ee248a24da`;
+   the key and classifier records were off-limits). Result over all
+   120 rows: **raw agreement 0.8667, Cohen's κ 0.7333** — clears the
+   B2.2 bar (≥ 0.85, κ ≥ 0.6), so the pre-stated escalation rule does
+   NOT trigger and no human tranche is built. Recorded beside the
+   verdict, not buried: 15 of the 16 disagreements run one way
+   (co-auditor NEW-TOPIC where the classifier said FOLLOW-UP), and 11
+   of 16 sit in the co-auditor's 35 self-flagged low-confidence rows —
+   the classifier's FOLLOW-UP boundary reads looser than a strict
+   rubric application, a note the part-2 tranche should revisit.
    **Part 2 (binding, added 2026-07-27):** after this addendum freezes
    and the classifier first runs on confirmatory subjects, a second
    blind audit tranche of ≥ 60 labels drawn from ≥ 10 confirmatory
@@ -234,6 +326,11 @@ definitions, rich/poor thresholds, flagged-turn threshold **[TO FILL]**.
    the bar, H6 scoring halts pending rubric revision. Dev-only evidence
    gates the freeze; confirmatory-subject evidence gates the science.
 6. Owner's ≥ 50-label judge spot-check (Amendment 3 C4.2), sampled across
-   subjects and balanced across SAME/DIFFERENT. It can only run once the
-   open-ended dev pilot has produced judge labels, so it is sequenced
-   after precondition 3, not beside it.
+   subjects and balanced across SAME/DIFFERENT. **RAN 2026-07-28 under
+   D1** (human: sheet A, 17 rows; LLM co-auditor: all 51; concordance
+   17/17 on A). Scores in `AUDIT_LINES_2026-07-28.md` §2. **OPEN
+   REMAINDER:** the judge disagreed with the concordant sheet-A line on
+   4 rows (> 3), so per the owner's pre-stated rule the trust bar
+   (instrument parameter 5) stays unproposed until the owner rules on
+   those rows. This precondition closes when that ruling lands and the
+   trust bar is set.
