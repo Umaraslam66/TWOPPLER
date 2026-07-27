@@ -944,7 +944,13 @@ def cmd_gen_flashlite(args) -> int:
 
 
 def cmd_ingest_gemma(args) -> int:
-    """Join the node's completions back to their items (no GPU, no API)."""
+    """Join the node's completions back to their items (no GPU, no API).
+
+    Also bills the GPU job: ``--node-hours`` comes from ``sacct`` ElapsedRaw on
+    a whole node (Leonardo bills per node regardless of how many of its 4 GPUs
+    a job uses), and every attempt is accumulated, not just the one that
+    worked.
+    """
     out_dir = Path(getattr(args, "out_dir", None) or OE_DIR)
     nodedir = Path(args.nodedir)
     items = load_items(out_dir)
@@ -969,12 +975,32 @@ def cmd_ingest_gemma(args) -> int:
             "over_word_cap": R.word_count(text) > OE.MAX_ANSWER_WORDS,
             "truncated": looks_truncated(text, tout),
             "era_violations": CF.era_violations(text, item["test_date"]),
-            "tokens_out": tout,
+            "tokens_in": int(got.get("tokens_in") or 0), "tokens_out": tout,
         })
     for arm, rows in per_arm.items():
         S.write_jsonl(gen_dir / f"completions_{arm}.jsonl", rows)
         print(f"[ingest-gemma] {arm:20s} {len(rows)} generations, "
               f"{sum(1 for r in rows if r['truncated'])} truncated")
+
+    node_hours = getattr(args, "node_hours", None)
+    if node_hours is not None:
+        if node_hours > NODE_HOUR_BUDGET:
+            raise fatal(f"billed {node_hours} node-hours exceeds the "
+                        f"{NODE_HOUR_BUDGET} cap")
+        n_rows = sum(len(v) for v in per_arm.values())
+        append_cost_log(build_cost_entry(
+            run_id="stage2_oe1/gen_gemma", model=P2.MODEL_LABEL,
+            split="stage2_openended", variant="oe1_gemma_generation",
+            n_persons=len({r["canonical_id"] for v in per_arm.values()
+                           for r in v}),
+            n_calls=n_rows, n_retries=0, n_parse_failures=0,
+            tokens_in=sum(int(r.get("tokens_in") or 0)
+                          for v in per_arm.values() for r in v),
+            tokens_out=sum(int(r.get("tokens_out") or 0)
+                           for v in per_arm.values() for r in v),
+            backend="leonardo-batch", node_hours=node_hours), COST_LOG)
+        print(f"[ingest-gemma] billed {node_hours} node-hours "
+              f"(cap {NODE_HOUR_BUDGET}), job {getattr(args,'job_id',None)}")
     return 0
 
 
@@ -1498,8 +1524,15 @@ def cmd_embed(args) -> int:
 
 OWN_ARM = "twin_redacted"
 IMPOSTER_ARM = "imposter_redacted"
+ZERO_RED = "zeroinfo_redacted"
+ZERO_NAMED = "zeroinfo_named"
 BOOTSTRAP_ITERS = 10000
 BOOTSTRAP_SEED = 20260727
+
+#: gen/<dir> -> the model version string that produced it.
+GEN_DIR_MODEL = {"gemma": PRIMARY_MODEL, "flashlite": ROBUSTNESS_MODEL}
+#: judge tag -> the gen dir it judged.
+JUDGE_TAG_DIR = {"v2": "flashlite", "gemma": "gemma"}
 
 
 def _bootstrap_ci(pairs, iters: int = BOOTSTRAP_ITERS,
@@ -1508,7 +1541,8 @@ def _bootstrap_ci(pairs, iters: int = BOOTSTRAP_ITERS,
 
     ``pairs`` maps subject id -> list of per-item differences. Clustering by
     subject is the honest unit here: 17 items over 5 subjects, so item-level
-    resampling would pretend to more independence than exists.
+    resampling would pretend to more independence than exists. With 5 clusters
+    the interval is coarse by construction and is reported as directional.
     """
     clusters = [v for v in pairs.values() if v]
     if len(clusters) < 2:
@@ -1523,9 +1557,8 @@ def _bootstrap_ci(pairs, iters: int = BOOTSTRAP_ITERS,
     if not means:
         return None, None
     means.sort()
-    lo = means[int(0.025 * len(means))]
-    hi = means[min(len(means) - 1, int(0.975 * len(means)))]
-    return round(lo, 4), round(hi, 4)
+    return (round(means[int(0.025 * len(means))], 4),
+            round(means[min(len(means) - 1, int(0.975 * len(means)))], 4))
 
 
 def _tvd(a: dict, b: dict) -> float:
@@ -1533,188 +1566,985 @@ def _tvd(a: dict, b: dict) -> float:
     keys = set(a) | set(b)
     na, nb = sum(a.values()), sum(b.values())
     if not na or not nb:
-        return float("nan")
+        return None
     return round(0.5 * sum(abs(a.get(k, 0) / na - b.get(k, 0) / nb)
                            for k in keys), 4)
 
 
-def channel1_table(out_dir: Path, embedding_model: str) -> list[dict]:
-    safe = embedding_model.replace("/", "__")
+def _paired_block(per_arm_values: dict, own: dict, imposter: dict,
+                  subject_of: dict) -> dict:
+    """One channel x model row: per-arm means, the paired contrast, its CI."""
+    pairs: dict = {}
+    for iid in sorted(set(own) & set(imposter)):
+        pairs.setdefault(subject_of[iid], []).append(own[iid] - imposter[iid])
+    flat = [d for v in pairs.values() for d in v]
+    lo, hi = _bootstrap_ci(pairs)
+    signs = sum(1 for v in pairs.values() if sum(v) / len(v) > 0)
+    means = {arm: (round(sum(v) / len(v), 4) if v else None)
+             for arm, v in per_arm_values.items()}
+    return {
+        "per_arm_mean": means,
+        "n_paired_items": len(flat),
+        "n_subject_clusters": len(pairs),
+        "own_minus_imposter": round(sum(flat) / len(flat), 4) if flat else None,
+        "ci95": [lo, hi],
+        "subjects_own_gt_imposter": f"{signs}/{len(pairs)}",
+        "contamination_meter": (
+            None if means.get(ZERO_NAMED) is None
+            or means.get(ZERO_RED) is None
+            else round(means[ZERO_NAMED] - means[ZERO_RED], 4)),
+    }
+
+
+def load_cosines(out_dir: Path, candidate: str) -> list:
+    safe = candidate.replace("/", "__")
     path = out_dir / "embed" / f"cosines_{safe}.jsonl"
     return S.read_jsonl(path) if path.exists() else []
 
 
-def _score_rows_to_channel(rows, value_key: str) -> dict:
-    """Per (model, arm) means plus the paired own-minus-imposter reading."""
-    by_model: dict[str, dict] = {}
-    for row in rows:
-        model = row.get("model") or row.get("scored_model_dir")
-        by_model.setdefault(model, {}).setdefault(row["arm"], []).append(row)
+def load_diagnostic(out_dir: Path, candidate: str) -> list:
+    safe = candidate.replace("/", "__")
+    path = out_dir / "embed" / f"grounding_diagnostic_{safe}.jsonl"
+    return S.read_jsonl(path) if path.exists() else []
+
+
+def _pearson(xs, ys):
+    n = len(xs)
+    if n < 3:
+        return None
+    mx, my = sum(xs) / n, sum(ys) / n
+    num = sum((a - mx) * (b - my) for a, b in zip(xs, ys))
+    den = (sum((a - mx) ** 2 for a in xs) * sum((b - my) ** 2 for b in ys)) ** 0.5
+    return round(num / den, 3) if den else None
+
+
+def channel1_all(out_dir: Path, items: dict) -> dict:
+    """Channel 1 for every candidate x model, plus the section-8 diagnostic."""
+    subject_of = {iid: it["canonical_id"] for iid, it in items.items()}
     out = {}
-    for model, arms in by_model.items():
-        means = {arm: (round(sum(r[value_key] for r in rs) / len(rs), 4)
-                       if rs else None) for arm, rs in arms.items()}
-        own = {r["item_id"]: r for r in arms.get(OWN_ARM, [])}
-        imp = {r["item_id"]: r for r in arms.get(IMPOSTER_ARM, [])}
-        pairs: dict[str, list] = {}
-        for iid in sorted(set(own) & set(imp)):
-            diff = own[iid][value_key] - imp[iid][value_key]
-            pairs.setdefault(own[iid]["canonical_id"], []).append(diff)
-        flat = [d for v in pairs.values() for d in v]
-        lo, hi = _bootstrap_ci(pairs)
-        signs = sum(1 for v in pairs.values() if sum(v) / len(v) > 0)
-        out[model] = {
-            "per_arm_mean": means,
-            "n_paired_items": len(flat),
-            "own_minus_imposter": (round(sum(flat) / len(flat), 4)
-                                   if flat else None),
-            "ci95": [lo, hi],
-            "subjects_with_own_gt_imposter": f"{signs}/{len(pairs)}",
-            "contamination_meter": (
-                None if means.get("zeroinfo_named") is None
-                or means.get("zeroinfo_redacted") is None
-                else round(means["zeroinfo_named"]
-                           - means["zeroinfo_redacted"], 4)),
-        }
+    for cand in embed_candidates(out_dir):
+        name = cand["name"]
+        rows = load_cosines(out_dir, name)
+        diag = {d["item_id"]: d["cosine_grounding_to_real"]
+                for d in load_diagnostic(out_dir, name)}
+        per_model = {}
+        for model in (PRIMARY_MODEL, ROBUSTNESS_MODEL):
+            rs = [r for r in rows if r["model"] == model]
+            if not rs:
+                continue
+            per_arm = {arm: [r["cosine_to_real"] for r in rs if r["arm"] == arm]
+                       for arm in OE.ARMS}
+            own = {r["item_id"]: r["cosine_to_real"] for r in rs
+                   if r["arm"] == OWN_ARM}
+            imp = {r["item_id"]: r["cosine_to_real"] for r in rs
+                   if r["arm"] == IMPOSTER_ARM}
+            block = _paired_block(per_arm, own, imp, subject_of)
+            ids = sorted(set(own) & set(diag))
+            block["diagnostic_pearson_vs_own_arm"] = _pearson(
+                [diag[i] for i in ids], [own[i] for i in ids])
+            per_model[model] = block
+        out[name] = {"revision": cand.get("revision"),
+                     "diagnostic": _mmm(list(diag.values()), 6),
+                     "per_model": per_model}
     return out
 
 
-REPORT_HEADER = """# OE-1 — open-ended dev pilot report (Amendment 3 C4 gate)
+#: PILOT_SPEC section 3, the selection rule stated before any run.
+SELECTION_RULE_TEXT = (
+    "Score all four on the pilot; pick the candidate with the cleanest "
+    "own-minus-imposter separation on the primary model; ties break toward "
+    "the smaller, more standard model. Dev subjects are for tuning, so this "
+    "selection is legitimate -- it is recorded in the pilot report and the "
+    "winner is pinned in the addendum.")
 
-{banner}
 
-**Directional, not powered.** 17 items over 5 dev subjects, one of which
-(C01677) contributes a single item. Subject-level readings for C01677 are
-noise; that is said here, not discovered later. No magnitude number in this
-report is a claim — magnitude bars are set only after these measurements (C5).
+def select_embedding_candidate(c1: dict) -> dict:
+    """Spec section 3 selection rule, applied in the open.
 
-Contract: {contract}
+    "Score all four on the pilot; pick the candidate with the cleanest
+    own-minus-imposter separation on the primary model; ties break toward the
+    smaller, more standard model." Absolute cosine LEVEL is not comparable
+    across models (each has its own similarity scale), so the rule is read on
+    the separation, exactly as written. The sanity-check candidate
+    (all-MiniLM-L6-v2) is excluded from selection by the spec: "never the
+    pinned channel".
+    """
+    ranked = []
+    for name, doc in c1.items():
+        block = doc["per_model"].get(PRIMARY_MODEL)
+        if not block or block["own_minus_imposter"] is None:
+            continue
+        eligible = "MiniLM" not in name
+        ranked.append({
+            "candidate": name, "revision": doc.get("revision"),
+            "eligible": eligible,
+            "own_minus_imposter": block["own_minus_imposter"],
+            "ci95": block["ci95"],
+            "subjects_own_gt_imposter": block["subjects_own_gt_imposter"],
+            "diagnostic_pearson": block["diagnostic_pearson_vs_own_arm"],
+        })
+    ranked.sort(key=lambda r: (-r["own_minus_imposter"], r["candidate"]))
+    winners = [r for r in ranked if r["eligible"]]
+    return {
+        "rule": SELECTION_RULE_TEXT,
+        "ranked_on_primary_model": ranked,
+        "excluded_from_selection": [r["candidate"] for r in ranked
+                                    if not r["eligible"]],
+        "exclusion_reason": "PILOT_SPEC section 3 names all-MiniLM-L6-v2 a "
+                            "sanity check only -- 'never the pinned channel'.",
+        "selected": winners[0]["candidate"] if winners else None,
+        "selected_revision": winners[0]["revision"] if winners else None,
+    }
 
-Scored claim: {claim}
 
-Generated {when}.
+def channel2_all(out_dir: Path, items: dict) -> dict:
+    """Channel 2 per model: stance match, UNCLEAR rates, paired contrast, TVD."""
+    subject_of = {iid: it["canonical_id"] for iid, it in items.items()}
+    out = {}
+    for tag, gen_dir in JUDGE_TAG_DIR.items():
+        path = out_dir / "judge" / f"judgements_{tag}.jsonl"
+        if not path.exists():
+            continue
+        rows = S.read_jsonl(path)
+        model = GEN_DIR_MODEL[gen_dir]
+        label = {(r["arm"], r["item_id"]): r["label"] for r in rows}
+        counts = {arm: {lab: sum(1 for r in rows
+                                 if r["arm"] == arm and r["label"] == lab)
+                        for lab in LABELS} for arm in OE.ARMS}
+        # C2.3: UNCLEAR is excluded from the match denominator; its rate is
+        # printed beside every rate rather than folded into one.
+        scored = {arm: [1.0 if label[(arm, i)] == "SAME" else 0.0
+                        for i in items
+                        if label.get((arm, i)) in ("SAME", "DIFFERENT")]
+                  for arm in OE.ARMS}
+        own = {i: (1.0 if label[(OWN_ARM, i)] == "SAME" else 0.0)
+               for i in items if label.get((OWN_ARM, i)) in ("SAME", "DIFFERENT")}
+        imp = {i: (1.0 if label[(IMPOSTER_ARM, i)] == "SAME" else 0.0)
+               for i in items
+               if label.get((IMPOSTER_ARM, i)) in ("SAME", "DIFFERENT")}
+        block = _paired_block(scored, own, imp, subject_of)
+        block["label_counts"] = counts
+        block["unclear_rate"] = {
+            arm: round(counts[arm]["UNCLEAR"] / max(1, sum(counts[arm].values())), 4)
+            for arm in OE.ARMS}
+        block["match_denominator"] = {arm: len(v) for arm, v in scored.items()}
+        # B8: TVD is BETWEEN ARMS -- the real answer carries no label of its
+        # own, so there is no reference distribution to compare an arm to.
+        block["tvd_vs_own_arm"] = {
+            arm: _tvd(counts[arm], counts[OWN_ARM]) for arm in OE.ARMS}
+        block["judge_tag"] = tag
+        out[model] = block
+    return out
+
+
+def generation_stats(out_dir: Path) -> dict:
+    stats = {}
+    for gen_dir, model in GEN_DIR_MODEL.items():
+        per_arm = {}
+        for arm in OE.ARMS:
+            path = out_dir / "gen" / gen_dir / f"completions_{arm}.jsonl"
+            if not path.exists():
+                continue
+            rows = S.read_jsonl(path)
+            words = [r["answer_words"] for r in rows]
+            per_arm[arm] = {
+                "n": len(rows),
+                "words": _mmm(words),
+                "n_over_word_cap": sum(1 for r in rows if r.get("over_word_cap")),
+                "truncation_rate": round(
+                    sum(1 for r in rows if r.get("truncated")) / len(rows), 4),
+                "n_empty": sum(1 for r in rows if not (r.get("text") or "").strip()),
+                "n_era_violations": sum(1 for r in rows if r.get("era_violations")),
+                "max_tokens_out": max(int(r.get("tokens_out") or 0) for r in rows),
+            }
+        if per_arm:
+            stats[model] = per_arm
+    return stats
+
+
+def cost_table(cost_log: Path) -> dict:
+    rows = [r for r in S.read_jsonl(cost_log)
+            if str(r.get("run_id", "")).startswith("stage2_oe1/")] \
+        if Path(cost_log).exists() else []
+    per_run: dict = {}
+    for r in rows:
+        entry = per_run.setdefault(r["run_id"], {
+            "model": r["model"], "backend": r["backend"], "n_calls": 0,
+            "tokens_in": 0, "tokens_out": 0, "cost_usd": 0.0,
+            "node_hours": 0.0, "per_arm": {}})
+        entry["n_calls"] += r["n_calls"]
+        entry["tokens_in"] += r["tokens_in"]
+        entry["tokens_out"] += r["tokens_out"]
+        entry["cost_usd"] += r["cost_usd"] or 0.0
+        entry["node_hours"] += r["node_hours"] or 0.0
+        entry["per_arm"][r["variant"]] = {
+            "n_calls": r["n_calls"], "cost_usd": r["cost_usd"],
+            "node_hours": r["node_hours"]}
+    for e in per_run.values():
+        e["cost_usd"] = round(e["cost_usd"], 6)
+        e["node_hours"] = round(e["node_hours"], 5)
+    return {
+        "per_run": per_run,
+        "total_cost_usd": round(sum(e["cost_usd"] for e in per_run.values()), 6),
+        "total_node_hours": round(sum(e["node_hours"] for e in per_run.values()), 5),
+        "api_budget_usd": API_BUDGET_USD,
+        "node_hour_budget": NODE_HOUR_BUDGET,
+    }
+
+
+def extract_spec_readings(spec_path: Path) -> dict:
+    """The two pre-written C4 readings from PILOT_SPEC section 7, VERBATIM."""
+    lines = Path(spec_path).read_text(encoding="utf-8").splitlines()
+    out = {}
+    for key, marker in (("pass", "- **PASS reading"),
+                        ("pause", "- **PAUSE reading")):
+        start = next((i for i, l in enumerate(lines)
+                      if l.startswith(marker)), None)
+        if start is None:
+            raise fatal(f"PILOT_SPEC section 7 has no {marker!r} bullet")
+        end = start + 1
+        while end < len(lines) and lines[end].startswith("  "):
+            end += 1
+        out[key] = "\n".join(lines[start:end])
+    return out
+
+
+# ---------------------------------------------------------------------------
+# The C4 validation-gate report (PILOT_SPEC section 7 format)
+# ---------------------------------------------------------------------------
+
+#: Items quoted in full in the report. Five DIFFERENT items, one per Q-A dev
+#: subject, so the reader sees every subject once.
+EXAMPLE_ITEMS = (
+    "C00792:NPR-19884:6",
+    "C01677:NPR-8791:77",
+    "C02006:NPR-14829:29",
+    "C02013:NPR-9480:45",
+    "C02124:NPR-12184:4",
+)
+
+VERDICT_PLACEHOLDER = """## C4 verdict — [ORCHESTRATOR APPLIES]
+
+*This section is deliberately empty. The two readings above are the
+pre-written ones from PILOT_SPEC section 7, quoted verbatim, with the gate
+inputs laid beside them. Choosing between them is the orchestrator's call
+against the pre-registered bar, not this driver's and not the implementer's.*
 """
+
+
+def _fmt(x, nd=4):
+    return "—" if x is None else (f"{x:.{nd}f}" if isinstance(x, float) else str(x))
+
+
+def _core_table(c1: dict, c2: dict, pinned: str) -> list:
+    rows = ["| channel | model | own mean | imposter mean | own−imposter "
+            "(95% CI) | subj own>imp | zeroinfo_red | zeroinfo_named | "
+            "contamination |",
+            "|---|---|---|---|---|---|---|---|---|"]
+    for model in (PRIMARY_MODEL, ROBUSTNESS_MODEL):
+        b = c1.get(pinned, {}).get("per_model", {}).get(model)
+        if not b:
+            continue
+        m = b["per_arm_mean"]
+        rows.append(
+            f"| 1 embedding | {model} | {_fmt(m[OWN_ARM])} | "
+            f"{_fmt(m[IMPOSTER_ARM])} | {_fmt(b['own_minus_imposter'])} "
+            f"({_fmt(b['ci95'][0])}, {_fmt(b['ci95'][1])}) | "
+            f"{b['subjects_own_gt_imposter']} | {_fmt(m[ZERO_RED])} | "
+            f"{_fmt(m[ZERO_NAMED])} | {_fmt(b['contamination_meter'])} |")
+    for model in (PRIMARY_MODEL, ROBUSTNESS_MODEL):
+        b = c2.get(model)
+        if not b:
+            continue
+        m = b["per_arm_mean"]
+        rows.append(
+            f"| 2 stance | {model} | {_fmt(m[OWN_ARM])} | "
+            f"{_fmt(m[IMPOSTER_ARM])} | {_fmt(b['own_minus_imposter'])} "
+            f"({_fmt(b['ci95'][0])}, {_fmt(b['ci95'][1])}) | "
+            f"{b['subjects_own_gt_imposter']} | {_fmt(m[ZERO_RED])} | "
+            f"{_fmt(m[ZERO_NAMED])} | {_fmt(b['contamination_meter'])} |")
+    return rows
 
 
 def cmd_report(args) -> int:
     out_dir = Path(getattr(args, "out_dir", None) or OE_DIR)
     summary = json.loads((out_dir / "build_summary.json").read_text(
         encoding="utf-8"))
-    embedding_model = args.embedding_model or embed_candidates(out_dir)[0]["name"]
+    items = load_items(out_dir)
+    c1 = channel1_all(out_dir, items)
+    c2 = channel2_all(out_dir, items)
+    selection = select_embedding_candidate(c1)
+    pinned = args.embedding_model or selection["selected"] \
+        or embed_candidates(out_dir)[0]["name"]
+    gens = generation_stats(out_dir)
+    costs = cost_table(COST_LOG)
+    readings = extract_spec_readings(Path(getattr(args, "spec", None) or SPEC_PATH))
+    jsum = {}
+    for tag in JUDGE_TAG_DIR:
+        p = out_dir / "judge" / f"judge_{tag}_summary.json"
+        if p.exists():
+            jsum[tag] = json.loads(p.read_text(encoding="utf-8"))
 
-    c1_rows = channel1_table(out_dir, embedding_model)
-    c1 = _score_rows_to_channel(c1_rows, "cosine_to_real")
-
-    judgements = []
-    jpath = out_dir / "judge" / "judgements.jsonl"
-    if jpath.exists():
-        judgements = S.read_jsonl(jpath)
-    for row in judgements:
-        row["model"] = row.get("scored_model_dir")
-        row["stance_same"] = 1.0 if row.get("label") == "SAME" else 0.0
-    judged = [r for r in judgements if r.get("label") in ("SAME", "DIFFERENT")]
-    c2 = _score_rows_to_channel(judged, "stance_same")
-
-    unclear = {}
-    for row in judgements:
-        stat = unclear.setdefault(row["arm"], {lab: 0 for lab in LABELS})
-        if row.get("label"):
-            stat[row["label"]] += 1
-    unclear_rates = {
-        arm: {"unclear_rate": (round(s["UNCLEAR"] / max(1, sum(s.values())), 4)),
-              "counts": s}
-        for arm, s in unclear.items()}
-    tvd = {arm: _tvd(unclear.get(arm, {}), unclear.get(IMPOSTER_ARM, {}))
-           for arm in unclear}
-
-    truncation = {}
-    for model_dir in list(args.models):
+    L = []
+    A = L.append
+    A("# OE-1 — open-ended dev pilot, measurement report")
+    A("")
+    A(f"**{PILOT_BANNER}**")
+    A("")
+    A("**Directional, not powered.** 17 items over 5 Q–A dev subjects, one of "
+      "which (C01677) contributes a single item — subject-level readings for "
+      "it are noise, and that is said here rather than discovered later. No "
+      "magnitude number in this report is a claim: magnitude bars are set only "
+      "after these measurements (Amendment 3 C5). Stage 1/dev-subject work is "
+      "for development and tuning; nothing here answers a pre-registered bar.")
+    A("")
+    A(f"- Contract: {CONTRACT}")
+    A(f"- Scored claim: {SCORED_CLAIM}")
+    A(f"- Generated {now()}")
+    A("")
+    A("## 1. Instrument and configuration")
+    A("")
+    A("| item | value |")
+    A("|---|---|")
+    A(f"| primary scored model | `{PRIMARY_MODEL}` (vLLM TP=4, "
+      f"max_model_len {P2.MAX_MODEL_LEN}, seed 0) |")
+    A(f"| robustness scored model | `{ROBUSTNESS_MODEL}` (Google AI Studio) |")
+    A(f"| generation settings, both | temperature {GEN_TEMPERATURE}, "
+      f"max_output_tokens {OE.MAX_OUTPUT_TOKENS}, answer cap "
+      f"{OE.MAX_ANSWER_WORDS} words |")
+    A(f"| instruction tail | byte-identical across all five arms, sha256 "
+      f"`{OE.INSTRUCTION_SHA256}` |")
+    A(f"| judge | `{JUDGE_MODEL}`, temperature {JUDGE_TEMPERATURE}, "
+      f"**thinking_budget {JUDGE_THINKING_BUDGET}**, max_output_tokens "
+      f"{JUDGE_MAX_OUTPUT_TOKENS} |")
+    A(f"| rubric | r1 verbatim from PILOT_SPEC section 4, sha256 "
+      f"`{summary['judge']['rubric_sha256']}` |")
+    A(f"| judge call order | randomized, seed {JUDGE_ORDER_SEED}; one "
+      "candidate per call; blind to arm and model; all three texts "
+      "GUEST-redacted |")
+    A(f"| grounding budget | {OE.GROUNDING_BUDGET_WORDS} words, "
+      "most-recent-first fill, rendered chronologically |")
+    A(f"| items | {summary['n_items']} over 5 subjects; "
+      + ", ".join(f"{v} {k.replace('_', ' ')}"
+                  for k, v in sorted(summary["item_types"].items())) + " |")
+    A("")
+    A("Embedding candidates, pinned by HF revision (local CPU, never an API "
+      "model, never a scored model):")
+    A("")
+    A("| candidate | revision |")
+    A("|---|---|")
+    for cand in embed_candidates(out_dir):
+        A(f"| `{cand['name']}` | `{cand.get('revision')}` |")
+    A("")
+    A("## 2. Generation behaviour, per arm, both models")
+    A("")
+    A("| model | arm | n | words min/mean/max | >150w | truncation rate | "
+      "empty | era violations | max tokens_out |")
+    A("|---|---|---|---|---|---|---|---|---|")
+    for model, per_arm in gens.items():
         for arm in OE.ARMS:
-            path = out_dir / "gen" / model_dir / f"completions_{arm}.jsonl"
-            if not path.exists():
+            s = per_arm.get(arm)
+            if not s:
                 continue
-            rows = S.read_jsonl(path)
-            truncation.setdefault(model_dir, {})[arm] = {
-                "n": len(rows),
-                "truncation_rate": round(
-                    sum(1 for r in rows if r.get("truncated")) / len(rows), 4),
-                "over_word_cap": sum(1 for r in rows if r.get("over_word_cap")),
-                "era_violations": sum(1 for r in rows
-                                      if r.get("era_violations")),
-            }
+            w = s["words"]
+            A(f"| {model} | {arm} | {s['n']} | "
+              f"{w['min']}/{w['mean']}/{w['max']} | {s['n_over_word_cap']} | "
+              f"{s['truncation_rate']} | {s['n_empty']} | "
+              f"{s['n_era_violations']} | {s['max_tokens_out']} |")
+    A("")
+    A("## 3. C4 core table — per channel × model")
+    A("")
+    A(f"Channel 1 is reported on the pinned candidate `{pinned}` (selection in "
+      "section 4). Channel 2 excludes UNCLEAR from the match denominator "
+      "(C2.3); per-arm UNCLEAR rates are in section 5. Differences are paired "
+      "per item, own vs imposter on the same item; the CI is a bootstrap over "
+      "**subjects** (5 clusters), so it is coarse by construction.")
+    A("")
+    L.extend(_core_table(c1, c2, pinned))
+    A("")
+    A("Paired-item N per row:")
+    A("")
+    for model in (PRIMARY_MODEL, ROBUSTNESS_MODEL):
+        b1 = c1.get(pinned, {}).get("per_model", {}).get(model)
+        b2 = c2.get(model)
+        if b1:
+            A(f"- channel 1, {model}: {b1['n_paired_items']} items over "
+              f"{b1['n_subject_clusters']} subjects")
+        if b2:
+            A(f"- channel 2, {model}: {b2['n_paired_items']} items over "
+              f"{b2['n_subject_clusters']} subjects — an item enters only when "
+              "BOTH its own and its imposter generation got a non-UNCLEAR "
+              "label, which is why this N and the subject-cluster count are "
+              "below channel 1's")
+    A("")
+    A("## 4. Channel 1 — all four candidates, and the section-3 selection")
+    A("")
+    A("Absolute cosine LEVEL is not comparable across these models (each has "
+      "its own similarity scale), so the selection rule reads the "
+      "own−imposter SEPARATION, exactly as the spec words it.")
+    A("")
+    A("| candidate | model | own | imposter | own−imposter (95% CI) | "
+      "subj own>imp | zeroinfo_red | contamination |")
+    A("|---|---|---|---|---|---|---|---|")
+    for name, doc in c1.items():
+        for model in (PRIMARY_MODEL, ROBUSTNESS_MODEL):
+            b = doc["per_model"].get(model)
+            if not b:
+                continue
+            m = b["per_arm_mean"]
+            A(f"| `{name.split('/')[-1]}` | {model} | {_fmt(m[OWN_ARM])} | "
+              f"{_fmt(m[IMPOSTER_ARM])} | {_fmt(b['own_minus_imposter'])} "
+              f"({_fmt(b['ci95'][0])}, {_fmt(b['ci95'][1])}) | "
+              f"{b['subjects_own_gt_imposter']} | {_fmt(m[ZERO_RED])} | "
+              f"{_fmt(b['contamination_meter'])} |")
+    A("")
+    A("**Selection rule applied, on the primary model:**")
+    A("")
+    A(f"> {selection['rule']}")
+    A("")
+    A("| rank | candidate | own−imposter on primary | eligible |")
+    A("|---|---|---|---|")
+    for i, r in enumerate(selection["ranked_on_primary_model"], 1):
+        A(f"| {i} | `{r['candidate'].split('/')[-1]}` | "
+          f"{_fmt(r['own_minus_imposter'])} | "
+          f"{'yes' if r['eligible'] else 'NO — sanity check only'} |")
+    A("")
+    A(f"Excluded: {selection['exclusion_reason']}")
+    A("")
+    A(f"**Candidate the rule selects: `{selection['selected']}` "
+      f"(revision `{selection['selected_revision']}`).** Recorded here as the "
+      "pilot measurement that feeds the addendum; the pin itself happens at "
+      "bar-lock, after owner review.")
+    A("")
+    A("### Section-8 diagnostic — does grounding-to-answer similarity alone "
+      "explain the own-arm score?")
+    A("")
+    A("Declared risk 1: the own twin's grounding shares the subject's "
+      "recurring topics and vocabulary with the real answer, and some of that "
+      "is trivial topic recurrence rather than person signal. The diagnostic "
+      "is cosine(own-arm grounding text, real answer) per item, reported as a "
+      "covariate.")
+    A("")
+    A("| candidate | diagnostic mean | min | max | Pearson r vs own-arm score "
+      "(primary model) |")
+    A("|---|---|---|---|---|")
+    for name, doc in c1.items():
+        d = doc["diagnostic"]
+        b = doc["per_model"].get(PRIMARY_MODEL, {})
+        A(f"| `{name.split('/')[-1]}` | {_fmt(d['mean'])} | {_fmt(d['min'])} | "
+          f"{_fmt(d['max'])} | {_fmt(b.get('diagnostic_pearson_vs_own_arm'), 3)} |")
+    A("")
+    A("Caveat on this diagnostic, stated rather than buried: the grounding "
+      f"block is ~{OE.GROUNDING_BUDGET_WORDS} words and every candidate "
+      "encoder has a 512-token window, so the grounding is truncated to its "
+      "opening excerpts before encoding. The number describes the head of the "
+      "grounding, not all of it.")
+    A("")
+    A("## 5. Channel 2 — stance labels, UNCLEAR rates, and B8 divergence")
+    A("")
+    A("| model | arm | SAME | DIFFERENT | UNCLEAR | match rate (UNCLEAR "
+      "excluded) | denominator | UNCLEAR rate |")
+    A("|---|---|---|---|---|---|---|---|")
+    for model in (PRIMARY_MODEL, ROBUSTNESS_MODEL):
+        b = c2.get(model)
+        if not b:
+            continue
+        for arm in OE.ARMS:
+            c = b["label_counts"][arm]
+            A(f"| {model} | {arm} | {c['SAME']} | {c['DIFFERENT']} | "
+              f"{c['UNCLEAR']} | {_fmt(b['per_arm_mean'][arm])} | "
+              f"{b['match_denominator'][arm]} | {b['unclear_rate'][arm]} |")
+    A("")
+    A("**Material between-arm UNCLEAR differences, flagged per C2.3.** " +
+      _unclear_flag(c2))
+    A("")
+    A("**B8 — population-level divergence over stance categories.** The real "
+      "answer carries no stance label of its own, so there is no reference "
+      "distribution to score an arm against; the divergence that exists to be "
+      "measured is **between arms**. TVD below is each arm's "
+      "SAME/DIFFERENT/UNCLEAR distribution against the own-twin arm's.")
+    A("")
+    A("| model | arm | TVD vs twin_redacted |")
+    A("|---|---|---|")
+    for model in (PRIMARY_MODEL, ROBUSTNESS_MODEL):
+        b = c2.get(model)
+        if not b:
+            continue
+        for arm in OE.ARMS:
+            if arm == OWN_ARM:
+                continue
+            A(f"| {model} | {arm} | {_fmt(b['tvd_vs_own_arm'][arm])} |")
+    A("")
+    A("## 6. Contamination meter")
+    A("")
+    A("`zeroinfo_named − zeroinfo_redacted`, per channel and model — what the "
+      "name alone buys a model with no excerpts.")
+    A("")
+    A("| channel | model | zeroinfo_named | zeroinfo_redacted | meter |")
+    A("|---|---|---|---|---|")
+    for label, src in (("1 embedding",
+                        {m: c1.get(pinned, {}).get("per_model", {}).get(m)
+                         for m in (PRIMARY_MODEL, ROBUSTNESS_MODEL)}),
+                       ("2 stance", c2)):
+        for model, b in src.items():
+            if not b:
+                continue
+            m = b["per_arm_mean"]
+            A(f"| {label} | {model} | {_fmt(m[ZERO_NAMED])} | "
+              f"{_fmt(m[ZERO_RED])} | {_fmt(b['contamination_meter'])} |")
+    A("")
+    A("## 7. Verbatim examples")
+    A("")
+    A("Five different items, one per Q–A dev subject. Each shows the question, "
+      "the real held-out answer, and what the own twin and the imposter twin "
+      "said, with the judge's label for each.")
+    A("")
+    gen_cache = {}
+    for gd in GEN_DIR_MODEL:
+        for arm in OE.ARMS:
+            p = out_dir / "gen" / gd / f"completions_{arm}.jsonl"
+            if p.exists():
+                for r in S.read_jsonl(p):
+                    gen_cache[(gd, arm, r["item_id"])] = r
+    lab_cache = {}
+    for tag, gd in JUDGE_TAG_DIR.items():
+        p = out_dir / "judge" / f"judgements_{tag}.jsonl"
+        if p.exists():
+            for r in S.read_jsonl(p):
+                lab_cache[(gd, r["arm"], r["item_id"])] = r
+    for n, iid in enumerate(EXAMPLE_ITEMS, 1):
+        it = items.get(iid)
+        if not it:
+            continue
+        A(f"### Example {n} — `{iid}` ({it['canonical_id']}, "
+          f"{it['item_type']}, donor `{it['donor_id']}`, Δ {it['delta_days']} "
+          f"days / bin {it['delta_bin']})")
+        A("")
+        A(f"**Question.** {R._norm_ws(it['question'])}")
+        A("")
+        A(f"**Real answer ({it['answer_words']} words).** "
+          f"{R._norm_ws(it['real_answer_verbatim'])}")
+        A("")
+        show = [(OWN_ARM, "own twin"), (IMPOSTER_ARM, "imposter twin")]
+        if n == 1:
+            show.append((ZERO_RED, "zero-information"))
+        for arm, human in show:
+            for gd, model in GEN_DIR_MODEL.items():
+                g = gen_cache.get((gd, arm, iid))
+                if not g:
+                    continue
+                j = lab_cache.get((gd, arm, iid))
+                A(f"**{human} — {model} — judge: "
+                  f"{(j or {}).get('label', 'n/a')}** "
+                  f"({g['answer_words']} words)")
+                A("")
+                A(f"> {R._norm_ws(g['text'])}")
+                A("")
+                if j and j.get("why"):
+                    A(f"*Judge WHY:* {j['why']}")
+                    A("")
+    A("## 8. Carries and anomalies")
+    A("")
+    A("1. **Era violations.** " + _era_note(gens))
+    A("2. **S1 leaves a free-standing intro clause standing, and in one "
+      "imposter prompt that clause describes the DONOR.** S1 removes the "
+      "clause attached to GUEST; it does not remove a third party's résumé in "
+      "the same line, and its pattern misses `GUEST, who ...` when an "
+      "abbreviation's full stop truncates the clause before the role word. "
+      "Measured: 1 of 17 `imposter_redacted` prompts (subject C01677, donor "
+      "C01650) still carries, verbatim, *\"GUEST, who served two tours as "
+      "U.S. ambassador to Israel, now at the Brookings Institution\"* and "
+      "*\"GUEST, who used to be U.S. ambassador there, as well as assistant "
+      "secretary of state for the region and who now directs foreign policy "
+      "programs at the Brookings Institution\"*. No NAME survives — the name "
+      "guard passes — but that is a donor-identifying résumé sitting in the "
+      "arm whose entire job is to withhold identity. Separately, twin prompts "
+      "retain co-panellist résumés (*\"Eugene Rivers, a Pentecostal minister, "
+      "community activist and co-founder of the city's 10-point Coalition, "
+      "and GUEST, [DESCRIPTION REMOVED]\"*), which is a co-occurrence "
+      "fingerprint on the subject. Both are scope questions for bar-lock, not "
+      "things to patch mid-pilot.")
+    A("3. **The zero-information preamble still reads \"Predict which answer "
+      "they gave.\"** — forced-choice wording carried over from v1.10, kept "
+      "because PILOT_SPEC section 2 freezes every arm's preamble so the "
+      "instruction tail stays byte-identical. Measured effect: none visible. "
+      "All 34 zero-information generations on both models are fluent "
+      "first-person spoken replies; none names an option, restates the task, "
+      "or asks which answer to choose.")
+    A("4. **S1 was not applied by rounds 1–4.** OE-1 applies it to all five "
+      "arms (so a named arm still differs from its redacted counterpart by "
+      "exactly one line). OE-1 prompts are therefore not byte-comparable to "
+      "round 4's on this dimension.")
+    A("5. **Two of the 17 items have no hand-final type.** "
+      "`results/stage2_pilot4/item_types.json` covers the 15 items round 3 "
+      "built; `C02124:NPR-12184:2` and `C02124:NPR-12184:8` fell to the "
+      "documented cue rule and both landed factual_explanation, so the split "
+      "reported here is 10 subjective / 7 factual, not the spec's 10 / 5.")
+    A("")
+    A("## 9. The judge defect, and what was pinned because of it")
+    A("")
+    A("The first judge pass (v1, `judge/judgements.jsonl`) ran "
+      f"`{JUDGE_MODEL}` at max_output_tokens 256 with no thinking setting. "
+      "82 of 85 replies came back with the `WHY:` line cut mid-phrase while "
+      "`LABEL:` survived. A two-budget probe "
+      "(`judge/thinking_budget_probe.json`) found the cause: the model charges "
+      "hidden thinking against `max_output_tokens` and did not finish "
+      "thinking at either budget — 243 of 256, then 980 of 1024 tokens went "
+      "to thoughts, both ending `MAX_TOKENS`. **The label itself moved between "
+      "the two budgets at temperature 0** (DIFFERENT → UNCLEAR), so the v1 "
+      "labels were a function of the truncation, not only of the rubric.")
+    A("")
+    A("Owner decision, taken before any re-run: thinking explicitly disabled "
+      f"(`thinking_budget={JUDGE_THINKING_BUDGET}`) and "
+      f"`max_output_tokens={JUDGE_MAX_OUTPUT_TOKENS}`, everything else "
+      "unchanged — same model, temperature 0, rubric r1 verbatim, same "
+      "blinding, same randomization seed. **Both settings are pinned judge "
+      "parameters at bar-lock.**")
+    A("")
+    A("A determinism probe ran first "
+      "(`judge/determinism_probe_v2.json`): 3 items × 2 runs under the new "
+      "config, 3/3 identical labels, WHY intact on all 6. Only then did the "
+      "batches run.")
+    A("")
+    A("| pass | file | thinking | max out | parse failures | WHY intact |")
+    A("|---|---|---|---|---|---|")
+    A("| v1 (defect record, retained) | `judge/judgements.jsonl` | default "
+      "(on) | 256 | 2 / 85 | 3 / 85 |")
+    for tag in ("v2", "gemma"):
+        s = jsum.get(tag)
+        if not s:
+            continue
+        A(f"| {tag} ({GEN_DIR_MODEL[JUDGE_TAG_DIR[tag]]}) | "
+          f"`judge/judgements_{tag}.jsonl` | disabled | "
+          f"{s['max_output_tokens']} | {s['n_unparsed_after_retry']} / "
+          f"{s['n_calls']} | {int(s['why_intact_rate_overall'] * s['n_calls'])}"
+          f" / {s['n_calls']} |")
+    A("")
+    A("v1 and v2 agree on 72 of 85 labels (84.7%) on the same flash-lite "
+      "generations. v1 is retained as the defect record and is used for "
+      "nothing else.")
+    A("")
+    A("## 10. Cost")
+    A("")
+    A("| run | model | backend | calls | tokens in | tokens out | USD | "
+      "node-hours |")
+    A("|---|---|---|---|---|---|---|---|")
+    for run, e in sorted(costs["per_run"].items()):
+        A(f"| `{run}` | {e['model']} | {e['backend']} | {e['n_calls']} | "
+          f"{e['tokens_in']} | {e['tokens_out']} | "
+          f"{e['cost_usd'] if e['cost_usd'] else '—'} | "
+          f"{e['node_hours'] if e['node_hours'] else '—'} |")
+    A(f"| **total** | | | | | | **${costs['total_cost_usd']}** | "
+      f"**{costs['total_node_hours']}** |")
+    A("")
+    A("Per-arm breakdown lives in `cost_log.jsonl` under each run's `variant` "
+      "field. The primary-model generation is billed per whole node "
+      "(1 node-hour = 4 GPU-hours = 32 core-hours), from `sacct` ElapsedRaw.")
+    A("")
+    A("## 11. The two pre-written C4 readings, quoted verbatim")
+    A("")
+    A("From `results/stage2_openended/PILOT_SPEC.md` section 7, written before "
+      "any of these numbers existed:")
+    A("")
+    A(readings["pass"])
+    A("")
+    A(readings["pause"])
+    A("")
+    A("### The gate inputs, laid beside them")
+    A("")
+    A(f"Primary model (`{PRIMARY_MODEL}`), pinned embedding candidate "
+      f"`{pinned}`:")
+    A("")
+    A("| channel | own | imposter | own−imposter | 95% CI (subject-clustered) "
+      "| subjects own>imp | paired N |")
+    A("|---|---|---|---|---|---|---|")
+    b1 = c1.get(pinned, {}).get("per_model", {}).get(PRIMARY_MODEL)
+    b2 = c2.get(PRIMARY_MODEL)
+    if b1:
+        A(f"| 1 embedding | {_fmt(b1['per_arm_mean'][OWN_ARM])} | "
+          f"{_fmt(b1['per_arm_mean'][IMPOSTER_ARM])} | "
+          f"{_fmt(b1['own_minus_imposter'])} | ({_fmt(b1['ci95'][0])}, "
+          f"{_fmt(b1['ci95'][1])}) | {b1['subjects_own_gt_imposter']} | "
+          f"{b1['n_paired_items']} |")
+    if b2:
+        A(f"| 2 stance | {_fmt(b2['per_arm_mean'][OWN_ARM])} | "
+          f"{_fmt(b2['per_arm_mean'][IMPOSTER_ARM])} | "
+          f"{_fmt(b2['own_minus_imposter'])} | ({_fmt(b2['ci95'][0])}, "
+          f"{_fmt(b2['ci95'][1])}) | {b2['subjects_own_gt_imposter']} | "
+          f"{b2['n_paired_items']} |")
+    A("")
+    A(f"Robustness model (`{ROBUSTNESS_MODEL}`) — per Amendment 3 C3 its "
+      "absolute scores are secondary and only its own-minus-imposter contrast "
+      "carries robustness weight:")
+    A("")
+    A("| channel | own−imposter | 95% CI | subjects own>imp | paired N |")
+    A("|---|---|---|---|---|")
+    r1 = c1.get(pinned, {}).get("per_model", {}).get(ROBUSTNESS_MODEL)
+    r2 = c2.get(ROBUSTNESS_MODEL)
+    if r1:
+        A(f"| 1 embedding | {_fmt(r1['own_minus_imposter'])} | "
+          f"({_fmt(r1['ci95'][0])}, {_fmt(r1['ci95'][1])}) | "
+          f"{r1['subjects_own_gt_imposter']} | {r1['n_paired_items']} |")
+    if r2:
+        A(f"| 2 stance | {_fmt(r2['own_minus_imposter'])} | "
+          f"({_fmt(r2['ci95'][0])}, {_fmt(r2['ci95'][1])}) | "
+          f"{r2['subjects_own_gt_imposter']} | {r2['n_paired_items']} |")
+    A("")
+    A(VERDICT_PLACEHOLDER)
 
-    def _direction(chan):
-        vals = [v["own_minus_imposter"] for v in chan.values()
-                if v["own_minus_imposter"] is not None]
-        return bool(vals) and all(v > 0 for v in vals)
-
-    primary_c1 = c1.get(PRIMARY_MODEL, {})
-    primary_c2 = c2.get(PRIMARY_MODEL, {})
-    both_positive = (primary_c1.get("own_minus_imposter") or 0) > 0 and \
-                    (primary_c2.get("own_minus_imposter") or 0) > 0
-    reading = "PASS" if both_positive else "PAUSE"
-
-    lines = [REPORT_HEADER.format(
-        banner=PILOT_BANNER, contract=CONTRACT, claim=SCORED_CLAIM,
-        when=now())]
-    lines.append("\n## Core table\n")
-    lines.append("| channel | model | own mean | imposter mean | "
-                 "own-imposter (95% CI) | zero-info mean | subjects own>imp |")
-    lines.append("|---|---|---|---|---|---|---|")
-    for label, chan in (("1 embedding", c1), ("2 stance", c2)):
-        for model, v in sorted(chan.items()):
-            m = v["per_arm_mean"]
-            lines.append(
-                f"| {label} | {model} | {m.get(OWN_ARM)} | "
-                f"{m.get(IMPOSTER_ARM)} | {v['own_minus_imposter']} "
-                f"({v['ci95'][0]}, {v['ci95'][1]}) | "
-                f"{m.get('zeroinfo_redacted')} | "
-                f"{v['subjects_with_own_gt_imposter']} |")
-    lines.append("\n## Per-arm raw scores, both channels\n")
-    lines.append("```json")
-    lines.append(json.dumps({"channel1": c1, "channel2": c2}, indent=1))
-    lines.append("```")
-    lines.append("\n## UNCLEAR rates per arm (denominator excludes UNCLEAR)\n")
-    lines.append("```json")
-    lines.append(json.dumps({"per_arm": unclear_rates,
-                             "tvd_vs_imposter": tvd}, indent=1))
-    lines.append("```")
-    lines.append("\n## Truncation, word cap and era violations per arm\n")
-    lines.append("```json")
-    lines.append(json.dumps(truncation, indent=1))
-    lines.append("```")
-    lines.append("\n## Reading\n")
-    if reading == "PASS":
-        lines.append(
-            "**PASS (pre-written).** own > imposter in the pre-registered "
-            "direction on the primary model in BOTH channels. Next: fill the "
-            "bar-lock addendum's [TO FILL] slots and run the owner's "
-            ">=50-label judge spot-check (precondition 6).")
-    else:
-        lines.append(
-            "**PAUSE (pre-written).** The direction is absent on the primary "
-            "model, or the two channels disagree on direction. **Stage 2 "
-            "pauses for a design review** per C4.3. This report is the record; "
-            "no new instrument is reached for without a new amendment. A pause "
-            "is a finding about the instrument, reported with the same care as "
-            "a pass.")
-    lines.append(f"\nChannel directions agree across models: channel 1 "
-                 f"{_direction(c1)}, channel 2 {_direction(c2)}.\n")
-    lines.append("\n## Build and cost record\n")
-    lines.append("```json")
-    lines.append(json.dumps({
-        "build": {k: summary.get(k) for k in
-                  ("n_items", "n_prompts", "item_types",
-                   "delta_bins_smoke_check", "generation", "judge")},
-        "embedding_model_reported": embedding_model,
-        "api_budget_usd": API_BUDGET_USD,
-        "node_hour_budget": NODE_HOUR_BUDGET,
-    }, indent=1))
-    lines.append("```")
-    path = out_dir / "PILOT_REPORT_OE1.md"
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"[report] reading: {reading}")
+    path = out_dir / "OE1_PILOT_REPORT.md"
+    path.write_text("\n".join(L) + "\n", encoding="utf-8")
+    S.write_json(out_dir / "oe1_numbers.json", {
+        "pilot": PILOT_BANNER, "contract": CONTRACT,
+        "pinned_embedding_candidate": pinned,
+        "embedding_selection": selection,
+        "channel1": c1, "channel2": c2,
+        "generation": gens, "cost": costs, "computed_utc": now()})
     print(f"[report] -> {rel(path)}")
+    print(f"[report] numbers -> {rel(out_dir / 'oe1_numbers.json')}")
+    return 0
+
+
+def _unclear_flag(c2: dict) -> str:
+    """Name any arm whose UNCLEAR rate is far from the own arm's (C2.3)."""
+    bits = []
+    for model, b in c2.items():
+        own = b["unclear_rate"][OWN_ARM]
+        worst = max(OE.ARMS, key=lambda a: b["unclear_rate"][a])
+        gap = round(b["unclear_rate"][worst] - own, 4)
+        bits.append(
+            f"{model}: highest is `{worst}` at {b['unclear_rate'][worst]} "
+            f"against `{OWN_ARM}`'s {own} (gap {gap}, denominator falls to "
+            f"{b['match_denominator'][worst]} of 17)")
+    return (
+        "Declared risk 2 was UNCLEAR flooding shrinking the judged "
+        "denominator, and it is present. " + "; ".join(bits) + ". This is not "
+        "cosmetic: an arm that loses more items to UNCLEAR is scored on a "
+        "different, smaller subset than the arm it is compared with, and the "
+        "paired contrast in section 3 drops any item where EITHER side is "
+        "UNCLEAR. It is measured here and reported; the UNCLEAR rule freezes "
+        "in the addendum, not mid-pilot. Note separately that `twin_named` "
+        "and `twin_redacted` produce identical label counts on both models "
+        "(TVD 0.0000) -- on stance, the name line changes nothing.")
+
+
+def _era_note(gens: dict) -> str:
+    bits = []
+    for model, per_arm in gens.items():
+        n = sum(s["n_era_violations"] for s in per_arm.values())
+        bits.append(f"{model}: {n}")
+    return ("Generated answers must not reference events after the test "
+            "interview's date. Counts by model — " + "; ".join(bits) +
+            ". The single flash-lite violation is `C02006:NPR-14829:26` "
+            "(zeroinfo_named), which mentions \"2019\". It is flagged, kept in "
+            "the tables, and named here rather than dropped.")
+
+
+# ---------------------------------------------------------------------------
+# Owner spot-check sheet (precondition 6)
+# ---------------------------------------------------------------------------
+
+SPOTCHECK_SEED = 610
+SPOTCHECK_SHEETS = ("A", "B", "C")
+SPOTCHECK_TARGET = {"SAME": 25, "DIFFERENT": 25}
+
+SPOTCHECK_HEADER = """# OE-1 judge spot-check — sheet {sheet} of {n_sheets}
+
+{banner}
+
+**What you are doing.** For each entry below you see a QUESTION from a
+broadcast interview, the REAL answer the person gave, and a CANDIDATE answer.
+Decide whether the CANDIDATE takes the same position as the REAL answer on the
+central issue the question asks about, and write SAME, DIFFERENT or UNCLEAR
+next to the entry number on your own sheet. The rubric you are applying is
+`results/stage2_openended/rubric_r1.txt` — read it first.
+
+**What you are NOT told, on purpose.** Which condition each candidate came
+from, which model wrote it, and what the automated judge said. That mapping is
+in
+`judge_spotcheck_key.json`, which you should not open until your labels are
+written down.
+
+**Standing twin rule (D6-v4.9).** Within this sheet every question appears at
+most once, so no entry can be reasoned about from its neighbour. That is why
+the sample is split across {n_sheets} sheets rather than presented as one list.
+
+Every name is replaced by GUEST, exactly as the automated judge saw it.
+
+---
+"""
+
+
+def _spotcheck_pool(out_dir: Path, items: dict) -> list:
+    """Every judged candidate, with the texts a human rater needs."""
+    pool = []
+    for tag, gen_dir in JUDGE_TAG_DIR.items():
+        jpath = out_dir / "judge" / f"judgements_{tag}.jsonl"
+        if not jpath.exists():
+            continue
+        gens = {}
+        for arm in OE.ARMS:
+            gp = out_dir / "gen" / gen_dir / f"completions_{arm}.jsonl"
+            if gp.exists():
+                for g in S.read_jsonl(gp):
+                    gens[(arm, g["item_id"])] = g["text"]
+        for j in S.read_jsonl(jpath):
+            key = (j["arm"], j["item_id"])
+            if key not in gens or not j.get("label"):
+                continue
+            it = items[j["item_id"]]
+            pool.append({
+                "item_id": j["item_id"], "canonical_id": j["canonical_id"],
+                "arm": j["arm"], "model": GEN_DIR_MODEL[gen_dir],
+                "judge_label": j["label"], "judge_why": j.get("why"),
+                "item_type": it["item_type"],
+                "question": it["question"],
+                "real": it["real_answer_verbatim"],
+                "candidate": gens[key],
+            })
+    return pool
+
+
+def _balanced_sample(pool: list, n_sheets: int, target: dict, seed: int):
+    """One row per item per sheet, pushed toward the label balance.
+
+    Constraint first, balance second: the twin rule caps the sample at
+    ``n_sheets`` rows per item, so the achievable number of DIFFERENT rows is
+    bounded by how many DIFFERENT labels the item set actually contains. The
+    shortfall is filled with UNCLEAR and reported, exactly as PILOT_SPEC
+    section 7 says to.
+    """
+    rng = random.Random(seed)
+    by_item: dict = {}
+    for row in pool:
+        by_item.setdefault(row["item_id"], []).append(row)
+    for rows in by_item.values():
+        rng.shuffle(rows)
+
+    quota = {lab: target.get(lab, 0) for lab in LABELS}
+    chosen: dict = {item_id: [] for item_id in by_item}
+    # Scarcest label first, so DIFFERENT is not crowded out by SAME.
+    for lab in ("DIFFERENT", "SAME", "UNCLEAR"):
+        for _ in range(n_sheets):
+            for item_id, rows in sorted(by_item.items()):
+                if quota.get(lab, 0) <= 0:
+                    break
+                if len(chosen[item_id]) >= n_sheets:
+                    continue
+                taken = {id(r) for r in chosen[item_id]}
+                pick = next((r for r in rows if r["judge_label"] == lab
+                             and id(r) not in taken), None)
+                if pick is None:
+                    continue
+                chosen[item_id].append(pick)
+                quota[lab] -= 1
+    # Fill every remaining slot with whatever that item still has.
+    for item_id, rows in sorted(by_item.items()):
+        while len(chosen[item_id]) < n_sheets:
+            taken = {id(r) for r in chosen[item_id]}
+            pick = next((r for r in rows if id(r) not in taken), None)
+            if pick is None:
+                break
+            chosen[item_id].append(pick)
+
+    sheets = {name: [] for name in SPOTCHECK_SHEETS[:n_sheets]}
+    for item_id, rows in sorted(chosen.items()):
+        for i, row in enumerate(rows):
+            sheets[SPOTCHECK_SHEETS[i]].append(row)
+    for name in sheets:
+        rng.shuffle(sheets[name])
+    return sheets
+
+
+def cmd_spotcheck(args) -> int:
+    out_dir = Path(getattr(args, "out_dir", None) or OE_DIR)
+    items = load_items(out_dir)
+    pool = _spotcheck_pool(out_dir, items)
+    if not pool:
+        raise fatal("no judged generations on disk; run judge first")
+    n_sheets = int(args.sheets)
+    sheets = _balanced_sample(pool, n_sheets, SPOTCHECK_SAMPLE_TARGET := dict(
+        SPOTCHECK_TARGET), SPOTCHECK_SEED)
+
+    ctx = subject_blocks(Path(getattr(args, "pilot1_dir", None) or PILOT1_DIR))
+    key_rows = []
+    total = 0
+    counts = {lab: 0 for lab in LABELS}
+    for name in SPOTCHECK_SHEETS[:n_sheets]:
+        rows = sheets[name]
+        # The standing rule, asserted rather than assumed.
+        assert_no_cross_visible_twins({f"spotcheck_sheet_{name}": rows})
+        body = [SPOTCHECK_HEADER.format(sheet=name, n_sheets=n_sheets,
+                                        banner=PILOT_BANNER)]
+        for i, row in enumerate(rows, 1):
+            variants = ctx[row["canonical_id"]]["variants"]
+            q = R._norm_ws(R.redact(row["question"], variants))
+            real = R._norm_ws(R.redact(row["real"], variants))
+            cand = R._norm_ws(R.redact(row["candidate"], variants))
+            body.append(f"## {name}{i}")
+            body.append("")
+            body.append(f"**QUESTION.** {q}")
+            body.append("")
+            body.append(f"**REAL ANSWER.** {real}")
+            body.append("")
+            body.append(f"**CANDIDATE ANSWER.** {cand}")
+            body.append("")
+            body.append("`SAME / DIFFERENT / UNCLEAR:` ______")
+            body.append("")
+            body.append("---")
+            body.append("")
+            key_rows.append({
+                "entry": f"{name}{i}", "sheet": name, "position": i,
+                "item_id": row["item_id"], "canonical_id": row["canonical_id"],
+                "arm": row["arm"], "model": row["model"],
+                "item_type": row["item_type"],
+                "judge_label": row["judge_label"],
+                "judge_why": row["judge_why"],
+            })
+            counts[row["judge_label"]] += 1
+            total += 1
+        path = out_dir / f"judge_spotcheck_sheet_{name}.md"
+        path.write_text("\n".join(body), encoding="utf-8")
+        print(f"[spotcheck] sheet {name}: {len(rows)} entries -> {rel(path)}")
+
+    shortfall = {lab: SPOTCHECK_TARGET[lab] - counts[lab]
+                 for lab in SPOTCHECK_TARGET if counts[lab] < SPOTCHECK_TARGET[lab]}
+    key = {
+        "pilot": PILOT_BANNER,
+        "purpose": "Owner >=50-label judge spot-check (PILOT_SPEC section 7, "
+                   "precondition 6). Do not open until the labels are written.",
+        "n_entries": total, "n_sheets": n_sheets,
+        "sample_seed": SPOTCHECK_SEED,
+        "target_balance": SPOTCHECK_TARGET,
+        "achieved_balance": counts,
+        "shortfall_vs_target": shortfall,
+        "shortfall_note":
+            "PILOT_SPEC section 7 asks for 50 calls balanced 25 SAME / 25 "
+            "DIFFERENT 'where supply allows (shortfall filled with UNCLEAR and "
+            "said so)'. Supply does not allow 25 DIFFERENT here. Across both "
+            "scored models and all five arms the item set yields 37 DIFFERENT "
+            "labels in total, and 9 of the 17 items have ZERO DIFFERENT "
+            "labels anywhere. The standing twin rule caps the sample at one "
+            "row per item per sheet, so the ceiling on DIFFERENT rows is 23. "
+            "The remainder is filled with UNCLEAR and is named here rather "
+            "than quietly rebalanced.",
+        "blinding": "Sheets carry no arm, no model and no judge label. The "
+                    "mapping lives only in this file.",
+        "twin_rule": TWIN_RULE,
+        "subjects_covered": sorted({r["canonical_id"] for r in key_rows}),
+        "models_covered": sorted({r["model"] for r in key_rows}),
+        "arms_covered": sorted({r["arm"] for r in key_rows}),
+        "rubric_file": "rubric_r1.txt",
+        "entries": key_rows,
+        "generated_utc": now(),
+    }
+    kpath = out_dir / "judge_spotcheck_key.json"
+    S.write_json(kpath, key)
+    print(f"[spotcheck] {total} entries, balance {counts}")
+    if shortfall:
+        print(f"[spotcheck] shortfall vs target {shortfall} -- filled with "
+              "UNCLEAR, documented in the key")
+    print(f"[spotcheck] key -> {rel(kpath)}")
     return 0
 
 
@@ -1739,6 +2569,10 @@ def main(argv=None) -> int:
 
     p_i = sub.add_parser("ingest-gemma")
     p_i.add_argument("--nodedir", required=True)
+    p_i.add_argument("--node-hours", type=float, default=None,
+                     help="sacct ElapsedRaw/3600 for the whole node, "
+                          "accumulated over every attempt")
+    p_i.add_argument("--job-id", default=None)
     p_i.set_defaults(fn=cmd_ingest_gemma)
 
     p_j = sub.add_parser("judge")
@@ -1760,6 +2594,10 @@ def main(argv=None) -> int:
     p_e = sub.add_parser("embed")
     p_e.add_argument("--models", nargs="+", default=["gemma", "flashlite"])
     p_e.set_defaults(fn=cmd_embed)
+
+    p_s = sub.add_parser("spotcheck")
+    p_s.add_argument("--sheets", type=int, default=3)
+    p_s.set_defaults(fn=cmd_spotcheck)
 
     p_r = sub.add_parser("report")
     p_r.add_argument("--models", nargs="+", default=["gemma", "flashlite"])
