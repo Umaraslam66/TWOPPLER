@@ -207,6 +207,60 @@ tooling predates the result). Regression branch rule, owner-set: if r2
 breaks more than 2 of the 14 previously-correct D/E rows, STOP —
 overfitted.
 
+### The r2 round, scored (2026-07-28) — regression clean, parameter 5
+### PASSES
+
+**Run:** 36 rows + 2-row determinism probe, 0 retries, 0 parse
+failures, 36/36 CENTRAL lines present and WHY intact, probe stable
+(identical labels on re-call). Cost $0.0459, logged in
+`cost_log.jsonl` (`stage2_oe1/judge_r2_{regression,fg}`). Scorer:
+`experiments/oe1_r2_score.py`.
+
+**STEP 1 — regression on D/E.** r2 judge line, verbatim:
+D1 SAME · D2 SAME · D3 SAME · D4 DIFFERENT · D5 DIFFERENT ·
+D6 DIFFERENT · D7 SAME · D8 DIFFERENT · D9 DIFFERENT
+E1 SAME · E2 DIFFERENT · E3 SAME · E4 SAME · E5 SAME · E6 DIFFERENT ·
+E7 UNCLEAR · E8 DIFFERENT · E9 SAME
+**Broken previously-correct rows: 0** (rule: >2 → STOP; not
+triggered). Fixed 1 of 4 (E7 DIFFERENT→UNCLEAR, the rule-5 case).
+D6, E6, E9 unchanged and still against the auditor line; D/E
+agreement 14 → 15 (0.7778 → 0.8333). Honest note, on the record: r2's
+CENTRAL lines show the judge *naming the adjudicated central issue*
+on all three residual rows ("whether anyone in power wants to back
+away from Brexit"; "which international backer has lost the most")
+and still holding its call — the residual gap is judge-model
+application, not rubric text. Kept beside the PASS below, not
+buried: the fresh-tranche bar is met while three known hard rows
+remain wrong.
+
+**STEP 2 — parameter 5 on F/G.** The rubric-briefed auditor line
+(Claude, r2 sha `ad050d1a…102464` read in full, key never opened —
+the D4 pattern again, owner-directed), verbatim:
+F1 SAME · F2 SAME · F3 SAME · F4 SAME · F5 DIFFERENT · F6 SAME ·
+F7 SAME · F8 DIFFERENT · F9 SAME
+G1 UNCLEAR · G2 SAME · G3 SAME · G4 SAME · G5 SAME · G6 UNCLEAR ·
+G7 UNCLEAR · G8 DIFFERENT · G9 DIFFERENT
+Low-confidence flags, recorded verbatim: **F4, G3, G5, G7**.
+r2 judge line, verbatim:
+F1 SAME · F2 SAME · F3 SAME · F4 SAME · F5 DIFFERENT · F6 SAME ·
+F7 UNCLEAR · F8 DIFFERENT · F9 SAME
+G1 UNCLEAR · G2 SAME · G3 SAME · G4 SAME · G5 SAME · G6 UNCLEAR ·
+G7 SAME · G8 DIFFERENT · G9 DIFFERENT
+
+**Score: raw 0.8889 (16/18), Cohen's κ 0.7978** vs the unchanged
+pre-committed bar (raw ≥ 0.80 AND κ ≥ 0.60). **Verdict, applied
+mechanically: PASS.** Both disagreements are SAME↔UNCLEAR confusions
+(F7 auditor-SAME/judge-UNCLEAR; G7 auditor-UNCLEAR/judge-SAME, an
+auditor-self-flagged row); no SAME↔DIFFERENT flip anywhere on the
+tranche. Balance under r2 relabeling: 11 SAME / 4 DIFFERENT / 3
+UNCLEAR (draw was 9/4/5 by r1 labels; drift reported in the key).
+
+**Consequence:** parameter 5 is filled — the stance judge is trusted
+as `gemini-3.5-flash` + rubric r2 (sha pinned) + the widened parser +
+the pinned config. Addendum precondition 6 closes. The r1 FAIL, this
+r2 PASS, and the three residual D/E rows all stay on the record
+together.
+
 ## 3. Fuzzy-host sheet — LLM co-auditor line (D2)
 
 Line (rows 1–20): staff · false · false · anchor · anchor · anchor ·

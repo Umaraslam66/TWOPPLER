@@ -479,10 +479,46 @@
    "supply_caveat": "unused pool held only 4 judge-DIFFERENT rows; another failed iteration requires new dev generations, not another draw",
    "labels_caveat": "balance labels are r1-judge labels; the r2 judge is re-run on these 18 rows after diff approval and before the auditor line is scored; pass/fail = r2-judge vs auditor, same bar"
   },
-  "awaiting_owner": [
-   "approve or amend the r1->r2 diff",
-   "r2 judge run on the 18 rows (needs Gemini key; no .env present)",
-   "rubric-briefed labels on sheets F/G"
-  ]
+  "awaiting_owner": [],
+  "r2_round_scored_2026-07-28": {
+   "runner": "experiments/oe1_r2_judge.py",
+   "scorer": "experiments/oe1_r2_score.py",
+   "run_quality": {"n_calls": 38, "n_retries": 0, "n_unparsed": 0,
+                   "central_present": "36/36", "why_intact": "36/36",
+                   "determinism_probe": "2/2 stable",
+                   "cost_usd": 0.045888},
+   "step1_regression_DE": {
+    "broken_previously_correct": 0,
+    "branch_rule": "STOP if broken > 2 — not triggered",
+    "fixed": ["E7"],
+    "still_wrong": ["D6", "E6", "E9"],
+    "de_agreement": "14/18 (r1) -> 15/18 (r2)",
+    "note": "r2 CENTRAL lines name the adjudicated central issue on all three residual rows yet hold the call — residual gap is judge-model application, not rubric text"
+   },
+   "step2_parameter5_FG": {
+    "auditor_line": {
+     "F1": "SAME", "F2": "SAME", "F3": "SAME", "F4": "SAME",
+     "F5": "DIFFERENT", "F6": "SAME", "F7": "SAME", "F8": "DIFFERENT",
+     "F9": "SAME",
+     "G1": "UNCLEAR", "G2": "SAME", "G3": "SAME", "G4": "SAME",
+     "G5": "SAME", "G6": "UNCLEAR", "G7": "UNCLEAR", "G8": "DIFFERENT",
+     "G9": "DIFFERENT"
+    },
+    "auditor_low_confidence": ["F4", "G3", "G5", "G7"],
+    "auditor_deviation": "D4 pattern (rubric-briefed out-of-family Claude line, owner-directed)",
+    "judge_r2_line_file": "judge/judgements_r2_fg.jsonl",
+    "raw": 0.8889,
+    "kappa": 0.7978,
+    "n": 18,
+    "bar": "raw >= 0.80 AND kappa >= 0.60 (pre-committed, unchanged through both rounds)",
+    "verdict": "PASS — mechanical",
+    "disagreements": {
+     "F7": {"auditor": "SAME", "judge_r2": "UNCLEAR"},
+     "G7": {"auditor": "UNCLEAR", "judge_r2": "SAME", "note": "auditor self-flagged"}
+    },
+    "balance_drift": {"SAME": 11, "DIFFERENT": 4, "UNCLEAR": 3}
+   },
+   "consequence": "parameter 5 FILLED: judge trusted as gemini-3.5-flash + rubric r2 (sha ad050d1a…102464) + widened parser + pinned config; addendum precondition 6 CLOSES"
+  }
  }
 }

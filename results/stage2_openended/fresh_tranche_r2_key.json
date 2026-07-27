@@ -54,7 +54,9 @@
    "model": "Gemma-4-31B-it",
    "judge_label_r1_draw_only": "SAME",
    "judge_why_r1": "The REAL answer states \"It's really hard to disentangle, actually, and that's why I referred to it as kind of a vicious cycle\" and the CANDIDATE similarly claims \"I think it's more of a cycle than a linear sequence. You can't really separate them because they reinforce one another.\"",
-   "judge_label_r2": null
+   "judge_label_r2": "SAME",
+   "judge_central_r2": "whether poverty/unemployment or gun violence comes first",
+   "judge_why_r2": "The REAL answer states \"it's really hard to disentangle... kind of a vicious cycle\" and the CANDIDATE similarly claims \"it's more of a cycle than a linear sequence. You can't really separate them\"."
   },
   {
    "entry": "F2",
@@ -66,7 +68,9 @@
    "model": "gemini-3.5-flash-lite",
    "judge_label_r1_draw_only": "SAME",
    "judge_why_r1": "The REAL answer explains the outcome because \"the Mubarak regime and the military as an institution remained in place\" and the Brotherhood \"made all kinds of mistakes,\" which matches the CANDIDATE's claim that the military \"preserved the core interests of the military and the old regime\" alongside \"a series of missteps by civilian actors.\"",
-   "judge_label_r2": null
+   "judge_label_r2": "SAME",
+   "judge_central_r2": "The explanation for how Egypt's democratic uprising failed and reverted to military/autocratic dominance",
+   "judge_why_r2": "The REAL answer attributes the outcome to the fact that \"the Mubarak regime and the military as an institution remained in place\" alongside \"mistakes\" by civilian leaders, while the CANDIDATE similarly explains that the military \"preserved the core interests of the military and the old regime\" amid \"a series of missteps by civilian actors.\""
   },
   {
    "entry": "F3",
@@ -78,7 +82,9 @@
    "model": "gemini-3.5-flash-lite",
    "judge_label_r1_draw_only": "SAME",
    "judge_why_r1": "The REAL answer states \"yes, I think there's encouraging evidence there\" regarding early childhood intervention, while the CANDIDATE answer similarly asserts that \"investments in early childhood education and community-level interventions do have a measurable, positive impact.\"",
-   "judge_label_r2": null
+   "judge_label_r2": "SAME",
+   "judge_central_r2": "whether early childhood education and community-level interventions work to prevent future violence",
+   "judge_why_r2": "The REAL answer states \"there's encouraging evidence there\" regarding early childhood and community interventions, while the CANDIDATE answer asserts that \"investments in early childhood education and community-level interventions do have a measurable, positive impact.\""
   },
   {
    "entry": "F4",
@@ -90,7 +96,9 @@
    "model": "gemini-3.5-flash-lite",
    "judge_label_r1_draw_only": "DIFFERENT",
    "judge_why_r1": "The REAL answer states that there is a majority \"not to stop Brexit, but to go for a different form of Brexit,\" whereas the CANDIDATE answer asserts that \"privately they want out\" of Brexit entirely.",
-   "judge_label_r2": null
+   "judge_label_r2": "SAME",
+   "judge_central_r2": "whether anyone in a position of power wants to get out of or back away from Brexit",
+   "judge_why_r2": "The REAL answer states \"there is probably a majority in the House of Commons... to go for a different form of Brexit\" (a softer Brexit), while the CANDIDATE states \"privately they want out, but publicly they lack the courage to say it.\""
   },
   {
    "entry": "F5",
@@ -102,7 +110,9 @@
    "model": "Gemma-4-31B-it",
    "judge_label_r1_draw_only": "DIFFERENT",
    "judge_why_r1": "The REAL answer explicitly states \"this is not an American responsibility\" (attributing the crisis to other actors while noting U.S. inaction merely aggravated it), whereas the CANDIDATE answer asserts \"It is a significant responsibility\" for the United States.",
-   "judge_label_r2": null
+   "judge_label_r2": "DIFFERENT",
+   "judge_central_r2": "Whether the situation in Syria is an American responsibility due to U.S. inaction",
+   "judge_why_r2": "The REAL answer asserts \"this is not an American responsibility\" despite U.S. inaction aggravating the problem, whereas the CANDIDATE answer claims \"It is a significant responsibility\" due to U.S. strategic failures and hesitation."
   },
   {
    "entry": "F6",
@@ -114,7 +124,9 @@
    "model": "gemini-3.5-flash-lite",
    "judge_label_r1_draw_only": "SAME",
    "judge_why_r1": "The REAL answer asserts \"Yes, I believe there is\" a nationalist movement to back, while the CANDIDATE answer similarly affirms \"There is, but it has been badly fragmented\" and concludes \"the human infrastructure is still there.\"",
-   "judge_label_r2": null
+   "judge_label_r2": "SAME",
+   "judge_central_r2": "whether there is still enough of a nationalist movement in Syria for the U.S. or other countries to support",
+   "judge_why_r2": "The REAL answer states \"Yes, I believe there is\" and the CANDIDATE answer agrees that \"There is, but it has been badly fragmented.\""
   },
   {
    "entry": "F7",
@@ -126,7 +138,9 @@
    "model": "Gemma-4-31B-it",
    "judge_label_r1_draw_only": "UNCLEAR",
    "judge_why_r1": "The REAL answer focuses on predicting the timeline based on current Iranian actions (\"it all depends on Iranian behavior\"), whereas the CANDIDATE answer addresses a different question by focusing on the strategic military consequences of a shrunken timeline (\"we might be forced into a military solution\").",
-   "judge_label_r2": null
+   "judge_label_r2": "UNCLEAR",
+   "judge_central_r2": "whether a shorter timeline for Iran's nuclear program is inevitable",
+   "judge_why_r2": "The REAL answer takes no definitive position, stating \"it all depends on Iranian behavior,\" while the CANDIDATE answer assumes a shrinking timeline as a given (\"When the timeline shrinks...\") to discuss the resulting strategic risks."
   },
   {
    "entry": "F8",
@@ -138,7 +152,9 @@
    "model": "gemini-3.5-flash-lite",
    "judge_label_r1_draw_only": "DIFFERENT",
    "judge_why_r1": "The REAL answer suggests \"this election result would legitimize a different approach\" that could turn out \"better,\" whereas the CANDIDATE answer rejects this optimism, stating \"my fear is that the economic and diplomatic price we will pay for this decision will be heavy indeed.\"",
-   "judge_label_r2": null
+   "judge_label_r2": "DIFFERENT",
+   "judge_central_r2": "whether the election result could turn out to be good, better, or less bad",
+   "judge_why_r2": "The REAL answer says \"It's possible\" that the result could turn out to be good because it \"would legitimize a different approach,\" whereas the CANDIDATE answer rejects this optimism, stating \"I worry we have just taken a very significant step down that path\" and that \"It tends to make things worse.\""
   },
   {
    "entry": "F9",
@@ -150,7 +166,9 @@
    "model": "Gemma-4-31B-it",
    "judge_label_r1_draw_only": "SAME",
    "judge_why_r1": "The REAL answer explains his popularity because people are \"longing for stability and security\" and find a military general \"reassuring,\" while the CANDIDATE answer similarly claims \"he represents stability and the restoration of order\" to people \"exhausted by political instability.\"",
-   "judge_label_r2": null
+   "judge_label_r2": "SAME",
+   "judge_central_r2": "the reason for the field marshal's popularity in Egypt",
+   "judge_why_r2": "The REAL answer attributes his popularity to people \"longing for stability and security\" under a military leader, while the CANDIDATE answer similarly states he \"represents stability and the restoration of order\" as a guarantor of national security."
   },
   {
    "entry": "G1",
@@ -162,7 +180,9 @@
    "model": "gemini-3.5-flash-lite",
    "judge_label_r1_draw_only": "UNCLEAR",
    "judge_why_r1": "The REAL answer commits to the position that the election result could \"turn out to be good, better, less bad\" because it \"would legitimize a different approach,\" whereas the CANDIDATE answer avoids the central question entirely, offering a generic reflection that \"things happen in politics and in life that force us to look at ourselves.\"",
-   "judge_label_r2": null
+   "judge_label_r2": "UNCLEAR",
+   "judge_central_r2": "whether the election result could turn out to be a good or better outcome",
+   "judge_why_r2": "The REAL answer commits to \"It's possible\" that the result could be good by legitimizing a different approach, whereas the CANDIDATE answer takes no discernible position on the election's outcome, stating only that \"When a shock comes along, it strips away the polite illusions.\""
   },
   {
    "entry": "G2",
@@ -174,7 +194,9 @@
    "model": "gemini-3.5-flash-lite",
    "judge_label_r1_draw_only": "SAME",
    "judge_why_r1": "The REAL answer explains the outcome because \"the military as an institution remained in place\" and \"the Brotherhood... made all kinds of mistakes,\" while the CANDIDATE similarly attributes it to \"the military to step back in\" after the \"Muslim Brotherhood sought to monopolize power.\"",
-   "judge_label_r2": null
+   "judge_label_r2": "SAME",
+   "judge_central_r2": "the explanation for how Egypt's democratic uprising failed and led to the current situation",
+   "judge_why_r2": "The REAL answer attributes the outcome to the military regime remaining in place and the Brotherhood being \"miserable in power,\" while the CANDIDATE similarly blames the lack of democratic institutions allowing the military \"to step back in\" and the Brotherhood seeking to \"monopolize power.\""
   },
   {
    "entry": "G3",
@@ -186,7 +208,9 @@
    "model": "Gemma-4-31B-it",
    "judge_label_r1_draw_only": "SAME",
    "judge_why_r1": "The REAL answer notes that \"the military as an institution receives a great deal of aid from the United States... and of course being on the good standing with the United States provides all kinds of other benefits,\" which aligns with the CANDIDATE's claim that \"if we are talking about the military or a regime that relies heavily on the $1.3 billion in annual military aid... then yes, the American reaction matters quite a bit.\"",
-   "judge_label_r2": null
+   "judge_label_r2": "SAME",
+   "judge_central_r2": "whether an Egyptian government would be concerned with the American reaction to their rule",
+   "judge_why_r2": "The REAL answer notes that \"the military as an institution receives a great deal of aid... and of course being on the good standing with the United States provides all kinds of other benefits,\" while the CANDIDATE answer similarly states that for \"a regime that relies heavily on the $1.3 billion in annual military aid... the American reaction matters quite a bit.\""
   },
   {
    "entry": "G4",
@@ -198,7 +222,9 @@
    "model": "Gemma-4-31B-it",
    "judge_label_r1_draw_only": "SAME",
    "judge_why_r1": "The REAL answer states \"yes, I think there's encouraging evidence there\" regarding early childhood intervention, while the CANDIDATE answer similarly commits to the position that \"the evidence suggests that these interventions can be effective.\"",
-   "judge_label_r2": null
+   "judge_label_r2": "SAME",
+   "judge_central_r2": "whether early education and community interventions work to prevent future violence",
+   "judge_why_r2": "The REAL answer states \"there's encouraging evidence there\" regarding early childhood intervention, while the CANDIDATE answer agrees that \"the evidence suggests that these interventions can be effective.\""
   },
   {
    "entry": "G5",
@@ -210,7 +236,9 @@
    "model": "Gemma-4-31B-it",
    "judge_label_r1_draw_only": "UNCLEAR",
    "judge_why_r1": "The REAL answer takes the position that the referendum was a mistake because \"it was a great mistake to muddle two systems of government,\" whereas the CANDIDATE answer addresses a different issue regarding \"rights and the fundamental way we see ourselves as a people\" without committing to a position on the constitutional conflict between representative democracy and referendums.",
-   "judge_label_r2": null
+   "judge_label_r2": "SAME",
+   "judge_central_r2": "Whether the referendum was a mistake that caused trouble for the country",
+   "judge_why_r2": "The REAL answer states \"we had a referendum... and we have been in a mess ever since,\" while the CANDIDATE answer agrees that the referendum was \"a tragedy, really, and it's a very dangerous path to take.\""
   },
   {
    "entry": "G6",
@@ -222,7 +250,9 @@
    "model": "Gemma-4-31B-it",
    "judge_label_r1_draw_only": "UNCLEAR",
    "judge_why_r1": "The REAL answer discusses the timeline of Iran's nuclear program (\"it all depends on Iranian behavior and how fast they push the nuclear program\"), whereas the CANDIDATE answer addresses a different question about organizational project management and decision-making (\"When you're dealing with a window this tight... We have to prioritize the most critical objectives\").",
-   "judge_label_r2": null
+   "judge_label_r2": "UNCLEAR",
+   "judge_central_r2": "Whether a shorter timeline for the Iranian nuclear threat is expected or manageable",
+   "judge_why_r2": "The REAL answer addresses the timeline of Iran's nuclear program (\"it all depends on Iranian behavior\"), whereas the CANDIDATE answer addresses a generic organizational challenge of working under a tight window (\"the cost of inaction or a slower pace is far greater than the risk of moving quickly\") without committing to a position on the Iranian nuclear timeline."
   },
   {
    "entry": "G7",
@@ -234,7 +264,9 @@
    "model": "Gemma-4-31B-it",
    "judge_label_r1_draw_only": "SAME",
    "judge_why_r1": "The REAL answer commits to the existence of a supportable movement by stating \"Yes, I believe there is,\" while the CANDIDATE similarly commits to its viability by stating \"I suspect there is still a deep-seated desire for a national identity\" that can be supportable if it offers an inclusive alternative.",
-   "judge_label_r2": null
+   "judge_label_r2": "SAME",
+   "judge_central_r2": "whether there is still a nationalist movement in Syria for the U.S. or other countries to support",
+   "judge_why_r2": "The REAL answer asserts \"Yes, I believe there is\" a movement to back, while the CANDIDATE similarly commits to the position that \"there is still a deep-seated desire for a national identity\" that could be viable and supportable if it offers an inclusive alternative."
   },
   {
    "entry": "G8",
@@ -246,7 +278,9 @@
    "model": "gemini-3.5-flash-lite",
    "judge_label_r1_draw_only": "DIFFERENT",
    "judge_why_r1": "The REAL answer states that there is a majority \"not to stop Brexit, but to go for a different form of Brexit,\" whereas the CANDIDATE answer argues that we must eventually reverse the decision because \"we cannot pretend forever that we are better off alone.\"",
-   "judge_label_r2": null
+   "judge_label_r2": "DIFFERENT",
+   "judge_central_r2": "whether anyone in power wants to back away from Brexit or if it is too late",
+   "judge_why_r2": "The REAL answer claims there is a majority \"not to stop Brexit, but to go for a different form of Brexit,\" whereas the CANDIDATE answer argues that we must eventually reverse it because \"we cannot pretend forever that we are better off alone.\""
   },
   {
    "entry": "G9",
@@ -258,7 +292,10 @@
    "model": "gemini-3.5-flash-lite",
    "judge_label_r1_draw_only": "UNCLEAR",
    "judge_why_r1": "The REAL answer commits to the position that \"There is an opportunity\" to change course, whereas the CANDIDATE answer takes no discernible position on whether an opportunity exists, stating instead that \"any talk of a new direction is just more of the same wishful thinking\" without committing to a yes or no.",
-   "judge_label_r2": null
+   "judge_label_r2": "DIFFERENT",
+   "judge_central_r2": "whether there is an opportunity to change course in Syria",
+   "judge_why_r2": "The REAL answer asserts \"There is an opportunity\" to change course, whereas the CANDIDATE answer claims that \"any talk of a new direction is just more of the same wishful thinking.\""
   }
- ]
+ ],
+ "balance_drift_note": "r2 judge labels on this tranche: {\"SAME\": 11, \"DIFFERENT\": 4, \"UNCLEAR\": 3} (draw was balanced on r1 labels 9/4/5; drift reported, not repaired)"
 }

@@ -1,0 +1,51 @@
+{
+ "judge_model": "gemini-3.5-flash",
+ "temperature": 0.0,
+ "thinking_budget": 0,
+ "max_output_tokens": 512,
+ "rubric": "rubric_r2_draft.txt",
+ "rubric_sha256": "ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464",
+ "model_name_env_note": "MODEL_NAME in .env is the robustness scored model; ignored here, judge stays pinned",
+ "per_tranche": {
+  "regression": {
+   "n": 18,
+   "labels": {
+    "SAME": 9,
+    "DIFFERENT": 8,
+    "UNCLEAR": 1
+   },
+   "cost_usd": 0.022761,
+   "n_retries": 0,
+   "n_unparsed": 0,
+   "n_why_intact": 18,
+   "n_central_present": 18
+  },
+  "fg": {
+   "n": 18,
+   "labels": {
+    "SAME": 11,
+    "DIFFERENT": 4,
+    "UNCLEAR": 3
+   },
+   "cost_usd": 0.023127,
+   "n_retries": 0,
+   "n_unparsed": 0,
+   "n_why_intact": 18,
+   "n_central_present": 18
+  }
+ },
+ "determinism_probe": [
+  {
+   "entry": "D1",
+   "first": "SAME",
+   "second": "SAME",
+   "stable": true
+  },
+  {
+   "entry": "D2",
+   "first": "SAME",
+   "second": "SAME",
+   "stable": true
+  }
+ ]
+}
