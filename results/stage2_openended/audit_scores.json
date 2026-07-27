@@ -3,7 +3,8 @@
  "deviations": {
   "D1": "human judge tranche = sheet A only (17/51); LLM co-auditor all 51",
   "D2": "fuzzy-host sheet fully substituted by LLM co-auditor",
-  "D3": "H6 audit as blind LLM co-audit with disagreement-triggered human tranche"
+  "D3": "H6 audit as blind LLM co-audit with disagreement-triggered human tranche",
+  "D4": "parameter-5 D/E auditor line = rubric-briefed out-of-family LLM (Claude, rubric read in full, key never opened), owner-directed, in place of the owner's own rubric-in-hand labels"
  },
  "judge_spotcheck": {
   "human_line_sheetA": {
@@ -427,6 +428,61 @@
   "no_overlap_with_ABC": true,
   "rubric_printed_on_sheet": true,
   "subjects_note": "C01677 absent (single-item subject, two-per-item cap under strict balance)",
-  "generator": "experiments/oe1_fresh_tranche.py (byte-identical rerun verified)"
+  "generator": "experiments/oe1_fresh_tranche.py (byte-identical rerun verified)",
+  "auditor_line_2026-07-28": {
+   "deviation": "D4",
+   "labels": {
+    "D1": "SAME", "D2": "SAME", "D3": "SAME", "D4": "DIFFERENT",
+    "D5": "DIFFERENT", "D6": "SAME", "D7": "SAME", "D8": "DIFFERENT",
+    "D9": "DIFFERENT",
+    "E1": "SAME", "E2": "DIFFERENT", "E3": "SAME", "E4": "SAME",
+    "E5": "SAME", "E6": "SAME", "E7": "UNCLEAR", "E8": "DIFFERENT",
+    "E9": "DIFFERENT"
+   },
+   "low_confidence": ["D6", "D9", "E2", "E6"]
+  },
+  "scores": {
+   "raw": 0.7778,
+   "kappa": 0.5789,
+   "n": 18,
+   "scorer": "experiments/oe1_param5_score.py"
+  },
+  "bar": "raw >= 0.80 AND kappa >= 0.60 (pre-committed 2026-07-28)",
+  "verdict": "FAIL — mechanical; pre-committed on-fail path executed",
+  "disagreements": {
+   "D6": {"auditor": "SAME", "judge": "DIFFERENT", "diagnosis": "A5-type: second-order feasibility scored over shared first-order landing"},
+   "E6": {"auditor": "SAME", "judge": "DIFFERENT", "diagnosis": "A5-type: same item as D6, same error"},
+   "E7": {"auditor": "UNCLEAR", "judge": "DIFFERENT", "diagnosis": "rule-5 violation: refusal-of-framing read as opposition"},
+   "E9": {"auditor": "DIFFERENT", "judge": "SAME", "diagnosis": "A3-type: matched a side claim on a pick-one question"}
+  }
+ },
+ "r2_iteration": {
+  "opened": "2026-07-28, per the pre-committed on-fail path; bar unchanged",
+  "rubric_r2_draft": "rubric_r2_draft.txt",
+  "rubric_r2_sha256": "ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464",
+  "rubric_r2_status": "PROPOSED — owner approval of the r1->r2 diff required",
+  "rubric_r2_edits": [
+   "rule 1: first-order-ask clause for multi-part questions (D6/E6; codifies A5 adjudication)",
+   "rule 5: rejecting-the-premise-is-not-opposition clause (E7)",
+   "rule 8 (new): pick-one questions — the position is the pick (E9; codifies A3)",
+   "reply format: CENTRAL line added; parser widened to accept it; judge config otherwise unchanged, re-pinned at bar-lock"
+  ],
+  "tranche": {
+   "sheets": ["fresh_tranche_r2_sheet_F.md", "fresh_tranche_r2_sheet_G.md"],
+   "key": "fresh_tranche_r2_key.json (sealed until labeled)",
+   "seed": 613,
+   "n_rows": 18,
+   "generator": "experiments/oe1_r2_tranche.py (byte-identical rerun verified)",
+   "drawn_from": "combos unused in A/B/C AND D/E (101-row pool)",
+   "balance_r1_labels": {"SAME": 9, "DIFFERENT": 4, "UNCLEAR": 5},
+   "shortfall": {"DIFFERENT": 5},
+   "supply_caveat": "unused pool held only 4 judge-DIFFERENT rows; another failed iteration requires new dev generations, not another draw",
+   "labels_caveat": "balance labels are r1-judge labels; the r2 judge is re-run on these 18 rows after diff approval and before the auditor line is scored; pass/fail = r2-judge vs auditor, same bar"
+  },
+  "awaiting_owner": [
+   "approve or amend the r1->r2 diff",
+   "r2 judge run on the 18 rows (needs Gemini key; no .env present)",
+   "rubric-briefed labels on sheets F/G"
+  ]
  }
 }

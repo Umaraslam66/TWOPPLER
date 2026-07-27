@@ -1,6 +1,6 @@
 # Project DOPPLER — project log
 
-Last updated 2026-07-27.
+Last updated 2026-07-28.
 
 ## 1. What this file is, and what it is not
 
@@ -244,8 +244,14 @@ generation, dual-channel scoring, own-minus-imposter primary.
    owner's ≥50-label judge spot-check (sheets A/B/C ready), then the
    addendum's [TO FILL] slots.
 2. **The bar-lock addendum** ([`PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md`](../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md)),
-   revised 2026-07-27 to Amendment-3 terms, still a DRAFT: its [TO FILL] slots
-   wait on the dev pilot, and its preconditions on the owner tasks below.
+   revised 2026-07-27 to Amendment-3 terms, still a DRAFT. On 2026-07-28 its
+   slots were filled, the audits ran under documented deviations D1–D4, and
+   the pre-committed judge trust bar (parameter 5: raw ≥ 0.80 AND κ ≥ 0.60)
+   was measured on the fresh 18-row tranche: **FAIL** (raw 0.7778, κ 0.5789).
+   The pre-committed on-fail path is running — rubric r2 proposed, re-tranche
+   (sheets F/G) built from unused generations, same bar, no bar movement.
+   Record: [`results/stage2_openended/AUDIT_LINES_2026-07-28.md`](stage2_openended/AUDIT_LINES_2026-07-28.md).
+   Awaiting the owner: the r1→r2 diff decision, the r2 judge run, F/G labels.
 3. **Three owner human tasks gating the freeze:** the 20-row fuzzy-host
    spot-check (sheet ready at
    [`results/stage2_pilot2/barlock/fuzzy_host_spotcheck_sheet.md`](stage2_pilot2/barlock/fuzzy_host_spotcheck_sheet.md)),

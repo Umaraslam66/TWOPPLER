@@ -1,0 +1,69 @@
+STANCE JUDGE RUBRIC (draft r2 — PROPOSED 2026-07-28 after the
+parameter-5 FAIL; supersedes r1 only if the owner approves the diff;
+text and sha256 pinned at bar-lock on adoption)
+
+You will see three texts: a QUESTION asked in a broadcast interview,
+the REAL answer the interviewee gave, and a CANDIDATE answer.
+
+Decide whether the CANDIDATE takes the same position as the REAL
+answer on the central issue the QUESTION asks about.
+
+SAME — the CANDIDATE commits to the same position as the REAL answer
+on the central issue: the same direction of judgment (for/against,
+likely/unlikely, better/worse), the same recommendation, or the same
+central explanatory claim. Differences of wording, style, detail,
+emphasis, or strength do not matter; a more extreme version of the
+same direction is SAME; agreement on the central issue with
+disagreement on a side issue is SAME.
+
+DIFFERENT — the CANDIDATE commits to a position the REAL answer's
+position rules out: the opposite direction, an incompatible
+recommendation, or a central claim that contradicts the REAL
+answer's. Judge positions, not topics: two answers on the same topic
+can be DIFFERENT, and answers emphasizing different aspects are not
+DIFFERENT unless their commitments actually conflict.
+
+UNCLEAR — anything that prevents the call: the CANDIDATE takes no
+discernible position (pure hedging, refusal, generic both-sides
+summary, off-topic reply); the REAL answer itself takes no position;
+or the QUESTION does not ask for one and the answers share no central
+claim to compare.
+
+Boundary rules:
+1. Central issue only. Identify the one thing the QUESTION most
+   directly asks about; score positions on that. Side claims never
+   flip a label. If the QUESTION asks more than one thing ("does
+   anyone want X — or is it too late for that?"), the central issue
+   is the first-order ask: whether X happens, should happen, or is
+   wanted. When both answers land the same way on the first-order
+   ask, conflict over X's form, feasibility, or timing alone never
+   makes DIFFERENT.
+2. Direction, not degree. "Cautiously yes" and "emphatically yes" are
+   SAME. "Cautiously yes" and "probably not" are DIFFERENT.
+3. Hedged but committed is a position. If an answer hedges and then
+   lands ("it's complicated, but on balance X"), its position is X.
+4. Factual-explanation questions: the "position" is the central
+   explanatory claim (the main cause, mechanism, or account offered).
+   Same central claim = SAME; contradicting central claims =
+   DIFFERENT; merely different details of compatible accounts =
+   UNCLEAR.
+5. Answering a different question: if the CANDIDATE addresses a
+   different issue and never commits on the central one, it is
+   UNCLEAR, not DIFFERENT. Rejecting the QUESTION's framing or
+   premise is this case, not opposition: an answer that declines to
+   take a position on the asked issue ("my focus isn't on that") is
+   UNCLEAR even when it argues the question is wrongly posed.
+6. Predictions and counterfactuals count as positions (will/won't,
+   would/wouldn't).
+7. Never reward style. Fluency, idiom, or sounding like a broadcast
+   guest is evidence for nothing.
+8. Pick-one questions. If the QUESTION asks to choose among items
+   (which, who, what — most, biggest, best), the position is the
+   pick itself. Same pick = SAME; different pick = DIFFERENT; no
+   pick = rule 5. A hedged pick still counts (rule 3), and agreeing
+   on a side observation about a non-picked item never makes SAME.
+
+Reply in exactly this format:
+CENTRAL: <one clause naming the central issue you scored>
+LABEL: <SAME|DIFFERENT|UNCLEAR>
+WHY: <one sentence quoting the decisive phrase of each answer>

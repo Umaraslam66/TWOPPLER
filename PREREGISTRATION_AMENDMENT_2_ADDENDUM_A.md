@@ -26,12 +26,14 @@ owner to adopt it.
 OE-1 measurements, the audit lines are scored, deviations D1–D3 are
 recorded inline, the four flagged judge rows are owner-adjudicated (net
 2–2), and the judge trust bar is **set and pre-committed** (parameter
-5). Two things remain deliberately open: the parameter-5 verdict itself
-(awaiting the owner's rubric-in-hand labels on the fresh 18-row
-tranche) and the H6/B3 parameters (unmeasured). The owner approved the
-[PROPOSED] values in items 6, 7, 8 and 10 on 2026-07-28. Status is
-unchanged: **DRAFT, NOT ADOPTED** — nothing freezes until the owner's
-final freeze review after the parameter-5 verdict.
+5). The owner approved the [PROPOSED] values in items 6, 7, 8 and 10 on
+2026-07-28. **Parameter 5's first measurement landed later the same
+day: FAIL** (raw 0.7778 / κ 0.5789 vs the pre-committed ≥ 0.80 / ≥
+0.60, under deviation D4) — the pre-committed on-fail path is running:
+one rubric/judge iteration (r2 PROPOSED), a re-tranche (sheets F/G),
+same bar, no bar movement. Parameter 5 and the H6/B3 parameters remain
+open. Status is unchanged: **DRAFT, NOT ADOPTED** — nothing freezes
+until the owner's final freeze review after the parameter-5 verdict.
 
 Evidence base: `results/stage2_pilot2/BARLOCK_MEASUREMENTS.md` (measured
 on dev subjects and pool metadata only), `results/stage2_pilot/
@@ -217,14 +219,27 @@ freezes until the owner adopts the addendum.
    surface framing; the real answer's central claim is the dependency
    reversal), **A5 auditors correct** (both texts land "no one will
    reverse Brexit"; optimism-vs-doom is secondary). Net 2–2.
-   **Measurement pending:** a fresh 18-row blind tranche
-   (`fresh_tranche_sheet_{D,E}.md`, seed 611, drawn only from
-   generations unused in the A/B/C sample, 9 SAME / 9 DIFFERENT, arms
-   3–4 each, both models 9/9, rubric text printed on the sheet) awaits
-   the owner's rubric-in-hand labels. The judge passes or fails
-   parameter 5 against the bar above; on fail, rubric/judge iteration
-   on dev subjects and a re-tranche, with the same pre-committed bar —
-   no bar-shopping.
+   **Measured 2026-07-28 on the fresh 18-row tranche
+   (`fresh_tranche_sheet_{D,E}.md`, seed 611): FAIL.** The
+   rubric-briefed auditor line (an out-of-family LLM line under
+   deviation D4, owner-directed) scored **raw 0.7778 / κ 0.5789**
+   against the judge — both legs miss the pre-committed bar. The
+   verdict was applied mechanically and the pre-committed on-fail path
+   executed the same day, bar unchanged: rubric r2 **[PROPOSED]**
+   (`results/stage2_openended/rubric_r2_draft.txt`, sha256
+   `ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464`;
+   three targeted edits matching the three diagnosed judge failure
+   modes, each anchored to an owner adjudication: multi-part
+   first-order-ask (A5/D6/E6), premise-rejection-is-UNCLEAR (E7),
+   pick-one questions (A3/E9); reply format gains a CENTRAL line and
+   the judge config is re-pinned on adoption) and a re-tranche
+   (`fresh_tranche_r2_sheet_{F,G}.md`, seed 613, combos unused in
+   A/B/C AND D/E, key sealed; the unused pool held only 4
+   judge-DIFFERENT rows, so balance by r1 labels is 9/4/5 with the
+   shortfall documented). **Parameter 5 stays OPEN** pending: owner
+   approval of the r1→r2 diff, the r2 judge run on the 18 F/G rows,
+   and the rubric-briefed auditor labels — scored against the same
+   bar. Full record: `results/stage2_openended/AUDIT_LINES_2026-07-28.md`.
 6. **UNCLEAR handling rule — adopted as proposed in C2.3:** UNCLEAR items
    are excluded from the stance-match rate's denominator; every arm's
    UNCLEAR rate is always reported beside its stance-match rate; a
@@ -263,7 +278,7 @@ own dev measurement and MUST be filled before any confirmatory H6
 scoring. This is the one slot this revision deliberately does not fill,
 and it is said here rather than hidden.
 
-## Deviations D1–D3 (owner-directed 2026-07-28, all documented)
+## Deviations D1–D4 (owner-directed 2026-07-28, all documented)
 
 - **D1** — the C4.2 human judge tranche is sheet A only (17 of 51 rows,
   owner time constraint); the full 51 rows carry an out-of-family LLM
@@ -276,6 +291,11 @@ and it is said here rather than hidden.
   the B2.2 bar (raw ≥ 85%, κ ≥ 0.6) satisfies the part-1 gate with D3
   recorded; below the bar, everything stops and a 30-row human tranche
   stratified on the disagreements goes to the owner.
+- **D4** — the parameter-5 auditor line on the fresh D/E tranche is a
+  rubric-briefed out-of-family LLM line (Claude; frozen rubric read in
+  full, key never opened), owner-directed, in place of the owner's own
+  rubric-in-hand labels this addendum anticipated. Reported as its own
+  line, never pooled with a human line.
 
 Full lines, scores, and flags: `results/stage2_openended/AUDIT_LINES_2026-07-28.md`.
 
@@ -348,6 +368,10 @@ Full lines, scores, and flags: `results/stage2_openended/AUDIT_LINES_2026-07-28.
    17/17 on A). Scores in `AUDIT_LINES_2026-07-28.md` §2. The four
    flagged rows were **adjudicated by the owner 2026-07-28** (net 2–2;
    see instrument parameter 5) and the trust bar is now **set and
-   pre-committed**. **OPEN REMAINDER:** the owner's rubric-in-hand
-   labels on the fresh 18-row tranche, and the resulting parameter-5
-   pass/fail verdict. This precondition closes when that verdict lands.
+   pre-committed**. The fresh D/E tranche was scored 2026-07-28 under
+   deviation D4: **FAIL** (raw 0.7778 / κ 0.5789), and the
+   pre-committed iteration opened — rubric r2 proposed, re-tranche F/G
+   built, same bar. **OPEN REMAINDER:** the r1→r2 diff decision, the
+   r2 judge run on sheets F/G, the rubric-briefed labels on F/G, and
+   the resulting parameter-5 pass/fail verdict. This precondition
+   closes when that verdict lands.

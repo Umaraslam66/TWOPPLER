@@ -1,0 +1,264 @@
+{
+ "purpose": "Parameter-5 r2-iteration tranche (pre-committed on-fail path, 2026-07-28). Do not open until both sheets are labeled.",
+ "bar_pre_committed": "Pre-committed 2026-07-28, unchanged through the r1 FAIL \u2014 no bar-shopping: the judge passes parameter 5 iff raw agreement >= 0.80 AND Cohen's kappa >= 0.60 against the rubric-briefed auditor line on this tranche.",
+ "seed": 613,
+ "n_rows": 18,
+ "recipe": "same as A/B/C and D/E: SAME/DIFFERENT primary balance by judge label, UNCLEAR fills shortfall (documented); spread across arms, models, subjects; twin rule per sub-sheet; drawn only from combos unused in A/B/C AND D/E",
+ "r1_fail_being_iterated": {
+  "raw": 0.7778,
+  "kappa": 0.5789,
+  "disagreements": [
+   "D6",
+   "E6",
+   "E7",
+   "E9"
+  ]
+ },
+ "labels_caveat": "balance labels are r1-judge labels (the only judge line that exists at build time). The r2 judge MUST be re-run on exactly these 18 rows after the owner approves the r2 diff and BEFORE the auditor line is scored; pass/fail = r2-judge vs auditor under the unchanged bar. Balance may drift under r2 relabeling; drift is reported, not repaired.",
+ "achieved_balance_r1": {
+  "SAME": 9,
+  "DIFFERENT": 4,
+  "UNCLEAR": 5
+ },
+ "shortfall": {
+  "DIFFERENT": 5
+ },
+ "arms": {
+  "imposter_redacted": 5,
+  "zeroinfo_named": 3,
+  "zeroinfo_redacted": 4,
+  "twin_named": 3,
+  "twin_redacted": 3
+ },
+ "models": {
+  "Gemma-4-31B-it": 9,
+  "gemini-3.5-flash-lite": 9
+ },
+ "subjects": {
+  "C02013": 3,
+  "C02124": 4,
+  "C02006": 5,
+  "C00792": 4,
+  "C01677": 2
+ },
+ "rubric_r2_sha256": "ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464",
+ "rubric_r2_status": "PROPOSED \u2014 owner approval of the r1->r2 diff required before labeling or judging",
+ "entries": [
+  {
+   "entry": "F1",
+   "sheet": "F",
+   "position": 1,
+   "item_id": "C02013:NPR-9480:49",
+   "canonical_id": "C02013",
+   "arm": "imposter_redacted",
+   "model": "Gemma-4-31B-it",
+   "judge_label_r1_draw_only": "SAME",
+   "judge_why_r1": "The REAL answer states \"It's really hard to disentangle, actually, and that's why I referred to it as kind of a vicious cycle\" and the CANDIDATE similarly claims \"I think it's more of a cycle than a linear sequence. You can't really separate them because they reinforce one another.\"",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "F2",
+   "sheet": "F",
+   "position": 2,
+   "item_id": "C02124:NPR-12184:8",
+   "canonical_id": "C02124",
+   "arm": "zeroinfo_named",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label_r1_draw_only": "SAME",
+   "judge_why_r1": "The REAL answer explains the outcome because \"the Mubarak regime and the military as an institution remained in place\" and the Brotherhood \"made all kinds of mistakes,\" which matches the CANDIDATE's claim that the military \"preserved the core interests of the military and the old regime\" alongside \"a series of missteps by civilian actors.\"",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "F3",
+   "sheet": "F",
+   "position": 3,
+   "item_id": "C02013:NPR-9480:70",
+   "canonical_id": "C02013",
+   "arm": "imposter_redacted",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label_r1_draw_only": "SAME",
+   "judge_why_r1": "The REAL answer states \"yes, I think there's encouraging evidence there\" regarding early childhood intervention, while the CANDIDATE answer similarly asserts that \"investments in early childhood education and community-level interventions do have a measurable, positive impact.\"",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "F4",
+   "sheet": "F",
+   "position": 4,
+   "item_id": "C02006:NPR-14829:26",
+   "canonical_id": "C02006",
+   "arm": "zeroinfo_named",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label_r1_draw_only": "DIFFERENT",
+   "judge_why_r1": "The REAL answer states that there is a majority \"not to stop Brexit, but to go for a different form of Brexit,\" whereas the CANDIDATE answer asserts that \"privately they want out\" of Brexit entirely.",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "F5",
+   "sheet": "F",
+   "position": 5,
+   "item_id": "C00792:NPR-19884:6",
+   "canonical_id": "C00792",
+   "arm": "zeroinfo_redacted",
+   "model": "Gemma-4-31B-it",
+   "judge_label_r1_draw_only": "DIFFERENT",
+   "judge_why_r1": "The REAL answer explicitly states \"this is not an American responsibility\" (attributing the crisis to other actors while noting U.S. inaction merely aggravated it), whereas the CANDIDATE answer asserts \"It is a significant responsibility\" for the United States.",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "F6",
+   "sheet": "F",
+   "position": 6,
+   "item_id": "C00792:NPR-19884:13",
+   "canonical_id": "C00792",
+   "arm": "zeroinfo_named",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label_r1_draw_only": "SAME",
+   "judge_why_r1": "The REAL answer asserts \"Yes, I believe there is\" a nationalist movement to back, while the CANDIDATE answer similarly affirms \"There is, but it has been badly fragmented\" and concludes \"the human infrastructure is still there.\"",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "F7",
+   "sheet": "F",
+   "position": 7,
+   "item_id": "C01677:NPR-8791:77",
+   "canonical_id": "C01677",
+   "arm": "twin_named",
+   "model": "Gemma-4-31B-it",
+   "judge_label_r1_draw_only": "UNCLEAR",
+   "judge_why_r1": "The REAL answer focuses on predicting the timeline based on current Iranian actions (\"it all depends on Iranian behavior\"), whereas the CANDIDATE answer addresses a different question by focusing on the strategic military consequences of a shrunken timeline (\"we might be forced into a military solution\").",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "F8",
+   "sheet": "F",
+   "position": 8,
+   "item_id": "C02006:NPR-14829:29",
+   "canonical_id": "C02006",
+   "arm": "twin_redacted",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label_r1_draw_only": "DIFFERENT",
+   "judge_why_r1": "The REAL answer suggests \"this election result would legitimize a different approach\" that could turn out \"better,\" whereas the CANDIDATE answer rejects this optimism, stating \"my fear is that the economic and diplomatic price we will pay for this decision will be heavy indeed.\"",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "F9",
+   "sheet": "F",
+   "position": 9,
+   "item_id": "C02124:NPR-12184:2",
+   "canonical_id": "C02124",
+   "arm": "zeroinfo_redacted",
+   "model": "Gemma-4-31B-it",
+   "judge_label_r1_draw_only": "SAME",
+   "judge_why_r1": "The REAL answer explains his popularity because people are \"longing for stability and security\" and find a military general \"reassuring,\" while the CANDIDATE answer similarly claims \"he represents stability and the restoration of order\" to people \"exhausted by political instability.\"",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "G1",
+   "sheet": "G",
+   "position": 1,
+   "item_id": "C02006:NPR-14829:29",
+   "canonical_id": "C02006",
+   "arm": "imposter_redacted",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label_r1_draw_only": "UNCLEAR",
+   "judge_why_r1": "The REAL answer commits to the position that the election result could \"turn out to be good, better, less bad\" because it \"would legitimize a different approach,\" whereas the CANDIDATE answer avoids the central question entirely, offering a generic reflection that \"things happen in politics and in life that force us to look at ourselves.\"",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "G2",
+   "sheet": "G",
+   "position": 2,
+   "item_id": "C02124:NPR-12184:8",
+   "canonical_id": "C02124",
+   "arm": "imposter_redacted",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label_r1_draw_only": "SAME",
+   "judge_why_r1": "The REAL answer explains the outcome because \"the military as an institution remained in place\" and \"the Brotherhood... made all kinds of mistakes,\" while the CANDIDATE similarly attributes it to \"the military to step back in\" after the \"Muslim Brotherhood sought to monopolize power.\"",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "G3",
+   "sheet": "G",
+   "position": 3,
+   "item_id": "C02124:NPR-12184:6",
+   "canonical_id": "C02124",
+   "arm": "twin_named",
+   "model": "Gemma-4-31B-it",
+   "judge_label_r1_draw_only": "SAME",
+   "judge_why_r1": "The REAL answer notes that \"the military as an institution receives a great deal of aid from the United States... and of course being on the good standing with the United States provides all kinds of other benefits,\" which aligns with the CANDIDATE's claim that \"if we are talking about the military or a regime that relies heavily on the $1.3 billion in annual military aid... then yes, the American reaction matters quite a bit.\"",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "G4",
+   "sheet": "G",
+   "position": 4,
+   "item_id": "C02013:NPR-9480:70",
+   "canonical_id": "C02013",
+   "arm": "twin_redacted",
+   "model": "Gemma-4-31B-it",
+   "judge_label_r1_draw_only": "SAME",
+   "judge_why_r1": "The REAL answer states \"yes, I think there's encouraging evidence there\" regarding early childhood intervention, while the CANDIDATE answer similarly commits to the position that \"the evidence suggests that these interventions can be effective.\"",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "G5",
+   "sheet": "G",
+   "position": 5,
+   "item_id": "C02006:NPR-14829:19",
+   "canonical_id": "C02006",
+   "arm": "imposter_redacted",
+   "model": "Gemma-4-31B-it",
+   "judge_label_r1_draw_only": "UNCLEAR",
+   "judge_why_r1": "The REAL answer takes the position that the referendum was a mistake because \"it was a great mistake to muddle two systems of government,\" whereas the CANDIDATE answer addresses a different issue regarding \"rights and the fundamental way we see ourselves as a people\" without committing to a position on the constitutional conflict between representative democracy and referendums.",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "G6",
+   "sheet": "G",
+   "position": 6,
+   "item_id": "C01677:NPR-8791:77",
+   "canonical_id": "C01677",
+   "arm": "zeroinfo_redacted",
+   "model": "Gemma-4-31B-it",
+   "judge_label_r1_draw_only": "UNCLEAR",
+   "judge_why_r1": "The REAL answer discusses the timeline of Iran's nuclear program (\"it all depends on Iranian behavior and how fast they push the nuclear program\"), whereas the CANDIDATE answer addresses a different question about organizational project management and decision-making (\"When you're dealing with a window this tight... We have to prioritize the most critical objectives\").",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "G7",
+   "sheet": "G",
+   "position": 7,
+   "item_id": "C00792:NPR-19884:13",
+   "canonical_id": "C00792",
+   "arm": "twin_redacted",
+   "model": "Gemma-4-31B-it",
+   "judge_label_r1_draw_only": "SAME",
+   "judge_why_r1": "The REAL answer commits to the existence of a supportable movement by stating \"Yes, I believe there is,\" while the CANDIDATE similarly commits to its viability by stating \"I suspect there is still a deep-seated desire for a national identity\" that can be supportable if it offers an inclusive alternative.",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "G8",
+   "sheet": "G",
+   "position": 8,
+   "item_id": "C02006:NPR-14829:26",
+   "canonical_id": "C02006",
+   "arm": "twin_named",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label_r1_draw_only": "DIFFERENT",
+   "judge_why_r1": "The REAL answer states that there is a majority \"not to stop Brexit, but to go for a different form of Brexit,\" whereas the CANDIDATE answer argues that we must eventually reverse the decision because \"we cannot pretend forever that we are better off alone.\"",
+   "judge_label_r2": null
+  },
+  {
+   "entry": "G9",
+   "sheet": "G",
+   "position": 9,
+   "item_id": "C00792:NPR-19884:10",
+   "canonical_id": "C00792",
+   "arm": "zeroinfo_redacted",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label_r1_draw_only": "UNCLEAR",
+   "judge_why_r1": "The REAL answer commits to the position that \"There is an opportunity\" to change course, whereas the CANDIDATE answer takes no discernible position on whether an opportunity exists, stating instead that \"any talk of a new direction is just more of the same wishful thinking\" without committing to a yes or no.",
+   "judge_label_r2": null
+  }
+ ]
+}

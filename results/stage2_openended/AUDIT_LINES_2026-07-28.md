@@ -1,6 +1,6 @@
 # Audit lines — judge spot-check, fuzzy-host, H6 (2026-07-28)
 
-The owner's recorded audit lines and their scoring. Three deviations,
+The owner's recorded audit lines and their scoring. Four deviations,
 all documented, none silent:
 
 - **D1** — the human judge tranche is **sheet A only** (17 of 51 rows),
@@ -13,6 +13,11 @@ all documented, none silent:
   κ ≥ 0.6) the part-1 gate is satisfied with D3 recorded; below the
   bar, everything stops and a 30-row human tranche stratified on the
   disagreements is built for the owner.
+- **D4** — the parameter-5 auditor line on the fresh D/E tranche is a
+  **rubric-briefed out-of-family LLM line** (Claude; the frozen rubric
+  sha `85c7c990…bff64d1` read in full, key never opened),
+  owner-directed, substituted for the owner's own rubric-in-hand labels
+  that §2 anticipated. Same pattern as D1–D3.
 
 The co-auditor for lines 2 and 3 of the judge sheets and for the fuzzy
 sheet is Claude (out-of-family from the generator, both scored models,
@@ -95,6 +100,84 @@ sealed in `fresh_tranche_key.json`. C01677 is absent (single-item
 subject, rows lost to the two-per-item cap under strict label
 balance — documented in the key). On a fail: rubric/judge iteration on
 dev subjects, re-tranche, same pre-committed bar.
+
+### Parameter-5 verdict (2026-07-28, fresh tranche D/E) — FAIL; the
+### pre-committed iteration is opened
+
+The rubric-briefed auditor line arrived under **deviation D4** (see
+header). Recorded verbatim:
+D1 SAME · D2 SAME · D3 SAME · D4 DIFFERENT · D5 DIFFERENT · D6 SAME ·
+D7 SAME · D8 DIFFERENT · D9 DIFFERENT
+E1 SAME · E2 DIFFERENT · E3 SAME · E4 SAME · E5 SAME · E6 SAME ·
+E7 UNCLEAR · E8 DIFFERENT · E9 DIFFERENT
+Low-confidence flags, recorded verbatim: **D6, D9, E2, E6**.
+
+**Score vs the judge line** (key: `fresh_tranche_key.json`; scorer:
+`experiments/oe1_param5_score.py`): **raw 0.7778 (14/18), Cohen's κ
+0.5789.** The pre-committed bar is raw ≥ 0.80 AND κ ≥ 0.60 — both legs
+miss. **Verdict, applied mechanically: FAIL.** The pre-committed
+on-fail path runs: one rubric/judge iteration on dev subjects,
+re-tranche, same bar. No bar movement.
+
+The four disagreements, diagnosed — each is a failure mode the A-sheet
+adjudication already ruled on:
+
+- **D6 + E6** (auditor SAME, judge DIFFERENT; both auditor-flagged
+  low-confidence; two candidates for the same Brexit item). Both
+  answers land "nobody will stop Brexit"; they conflict only on whether
+  backing away toward a softer form is feasible. The judge scored the
+  second-order feasibility conflict instead of the first-order landing
+  — the **A5 error** (adjudicated auditors-correct) repeated, twice.
+- **E7** (auditor UNCLEAR, judge DIFFERENT). The candidate refuses the
+  question's framing ("my focus isn't on celebrating or despairing
+  over a specific outcome") and never commits on the asked issue.
+  Rubric rule 5 says UNCLEAR; the judge read refusal-of-framing as
+  opposition. It applied rule 5 correctly on A6 — the application is
+  inconsistent, not absent.
+- **E9** (auditor DIFFERENT, judge SAME). A pick-one question ("who
+  lost most"). The REAL answer picks the U.S.; the candidate picks
+  "the international community as a whole" (Turkey among the listed
+  actors) and merely also notes U.S. credibility loss. The judge
+  matched on that side claim — the **A3 "keyed on surface framing"
+  error** again.
+
+Direction note: 3 of 4 disagreements are the judge over-calling
+DIFFERENT. The auditor self-flagged 2 of the 4 disagreements (D6, E6)
+plus two rows that agreed (D9, E2). The judge line carries no UNCLEAR
+on this tranche by construction (9/9 draw); the auditor produced one.
+
+**The iteration, executed 2026-07-28 per the pre-committed path:**
+
+- **Rubric r2 draft** — `rubric_r2_draft.txt`, sha256
+  `ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464`,
+  status PROPOSED. Three targeted edits, one per failure mode: rule 1
+  gains a first-order-ask clause for multi-part questions (D6/E6 —
+  codifies the A5 adjudication); rule 5 gains a
+  rejecting-the-premise-is-not-opposition clause (E7); new rule 8 for
+  pick-one questions (E9 — codifies A3). The reply format gains a
+  CENTRAL line (the judge names the central issue it scored) — this
+  requires a one-line parser widening (accept CENTRAL before LABEL)
+  and re-pins the judge config at bar-lock; the rest of the pinned
+  config (temp 0.0, `thinking_budget=0`, 512 tokens) is unchanged.
+- **Re-tranche** — `fresh_tranche_r2_sheet_{F,G}.md`, 18 rows, seed
+  613, generator `experiments/oe1_r2_tranche.py` (byte-identical rerun
+  verified), drawn only from combos unused in A/B/C AND D/E, key
+  sealed in `fresh_tranche_r2_key.json`. **Supply caveat, said
+  loudly:** the unused pool holds only 4 judge-DIFFERENT rows, so the
+  recipe's shortfall rule fired — balance by r1 labels is 9 SAME / 4
+  DIFFERENT / 5 UNCLEAR. The dev pool is nearly out of judge-DIFFERENT
+  generations: if this iteration also fails, a further label-balanced
+  re-tranche requires new dev generations, not another draw.
+- **Key caveat** — the key's balance labels are r1-judge labels (the
+  only judge line in existence at build time). The r2 judge is re-run
+  on exactly these 18 rows after the owner approves the r2 diff and
+  before the auditor line is scored; pass/fail = r2-judge vs the
+  rubric-briefed auditor line, same bar.
+
+**STOPPED at the pre-committed stop.** Awaiting the owner: (1) approve
+or amend the r1→r2 diff; (2) the r2 judge run on the 18 rows (needs
+the Gemini key — no `.env` is present in the repo); (3) rubric-briefed
+labels on sheets F/G.
 
 ## 3. Fuzzy-host sheet — LLM co-auditor line (D2)
 
