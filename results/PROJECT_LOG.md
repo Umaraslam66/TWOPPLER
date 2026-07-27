@@ -233,10 +233,16 @@ generation, dual-channel scoring, own-minus-imposter primary.
 
 ## 10. What is open right now
 
-1. **The open-ended dev pilot** (Amendment 3 C4/C7): spec written and awaiting
-   the owner's go — [`results/stage2_openended/PILOT_SPEC.md`](stage2_openended/PILOT_SPEC.md).
-   No runs until then; the C4 gate must separate own from imposter on dev
-   subjects or Stage 2 pauses for design review.
+1. **The open-ended dev pilot RAN and its C4 gate PASSED** (2026-07-27,
+   directional, not powered) —
+   [`results/stage2_openended/OE1_PILOT_REPORT.md`](stage2_openended/OE1_PILOT_REPORT.md).
+   Own beat imposter on the primary model in both channels (embedding
+   +0.1024, stance +0.1818); the imposter-arm UNCLEAR asymmetry and the
+   topic-overlap diagnostic are reported beside the verdict. The pilot
+   also caught and fixed a judge defect (hidden thinking made labels
+   budget-dependent; pinned to thinking-off, 512 tokens). Next: the
+   owner's ≥50-label judge spot-check (sheets A/B/C ready), then the
+   addendum's [TO FILL] slots.
 2. **The bar-lock addendum** ([`PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md`](../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md)),
    revised 2026-07-27 to Amendment-3 terms, still a DRAFT: its [TO FILL] slots
    wait on the dev pilot, and its preconditions on the owner tasks below.
@@ -262,9 +268,9 @@ Source of truth: [`results/cost_log.jsonl`](cost_log.jsonl), one line per run.
 
 | item | value |
 |---|---|
-| entries logged | 47 |
-| API spend (Gemini) | **$3.416** (5 rows carry null cost — unpriced models, not zero) |
-| Leonardo compute | **12.63 node-hours** |
+| entries logged | 68 |
+| API spend (Gemini) | **$3.733** (5 rows carry null cost — unpriced models, not zero) |
+| Leonardo compute | **12.74 node-hours** |
 | Leonardo balance remaining | ~1,008 node-hours (as of 2026-07-27) |
 | allocation expires | **2026-09-17** |
 
@@ -296,7 +302,10 @@ Compute is not the constraint. Owner review time is.
 | Stage 2 pilot 3 | [`stage2_pilot3/PILOT_REPORT_3.md`](stage2_pilot3/PILOT_REPORT_3.md) | — |
 | Stage 2 pilot 4 (kill rule fired) | [`stage2_pilot4/PILOT_REPORT_4.md`](stage2_pilot4/PILOT_REPORT_4.md) | — |
 | Stage 2 design contract v1.10 | [`stage2_pilot4/SPEC_v1.10.md`](stage2_pilot4/SPEC_v1.10.md) | frozen snapshot |
-| Open-ended dev pilot spec (awaiting go) | [`stage2_openended/PILOT_SPEC.md`](stage2_openended/PILOT_SPEC.md) | — |
+| Open-ended dev pilot spec | [`stage2_openended/PILOT_SPEC.md`](stage2_openended/PILOT_SPEC.md) | — |
+| OE-1 pilot report (C4 gate PASS) | [`stage2_openended/OE1_PILOT_REPORT.md`](stage2_openended/OE1_PILOT_REPORT.md) | `experiments/stage2_oe1.py report` |
+| OE-1 pre-GPU checkpoint + resolutions | [`stage2_openended/CHECKPOINT_PREGPU.md`](stage2_openended/CHECKPOINT_PREGPU.md) | — |
+| Owner sheets: judge spot-check A/B/C, H6 audit | [`stage2_openended/`](stage2_openended/) | `experiments/h6_audit_sample.py`, `stage2_oe1.py spotcheck` |
 | Bar-lock proposals | [`stage2_pilot2/BARLOCK_MEASUREMENTS.md`](stage2_pilot2/BARLOCK_MEASUREMENTS.md) | `experiments/barlock_*.py` |
 | Why MoE fails on Leonardo | [`moe_failure_note.md`](moe_failure_note.md) | — |
 | Superseded documents | [`results/archive/`](archive/) | — |
