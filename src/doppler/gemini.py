@@ -155,6 +155,7 @@ class GeminiClient:
         min_interval_s: float = DEFAULT_MIN_INTERVAL_S,
         timeout_ms: int = DEFAULT_TIMEOUT_MS,
         rpm_guard: int = RPM_GUARD_PER_MIN,
+        thinking_budget: int | None = None,
     ) -> None:
         load_dotenv(dotenv_path=_PROJECT_ROOT / ".env")
         api_key = os.environ.get("GOOGLE_AI_STUDIO")
@@ -173,13 +174,28 @@ class GeminiClient:
         self.temperature = float(temperature)
         self.max_output_tokens = int(max_output_tokens)
 
-        # No thinking_config: gemini-3.5-flash-lite rejects thinking_budget and,
-        # with a thinking_level set, spends the whole token budget on hidden
-        # thinking and returns no answer. Omitting it returns the digit directly.
+        # ``thinking_budget=None`` (the default) sends NO thinking_config, which
+        # is the setting every existing caller was built and measured on:
+        # gemini-3.5-flash-lite rejects thinking_budget and, with a
+        # thinking_level set, spends the whole token budget on hidden thinking
+        # and returns no answer. Omitting it returns the digit directly.
+        #
+        # ``thinking_budget=0`` sends an EXPLICIT disable. It exists for models
+        # that think BY DEFAULT, where omitting the config is not neutral:
+        # gemini-3.5-flash charges hidden thinking against max_output_tokens,
+        # and the OE-1 judge probe measured 243 of 256 and then 980 of 1024
+        # tokens going to thoughts, both ending MAX_TOKENS with the visible
+        # reply cut mid-sentence -- and the label itself moved between the two
+        # budgets at temperature 0. Opt-in rather than default so no existing
+        # caller's measured behaviour changes.
+        self.thinking_budget = thinking_budget
         self._config = types.GenerateContentConfig(
             temperature=self.temperature,
             max_output_tokens=self.max_output_tokens,
             candidate_count=1,
+            **({} if thinking_budget is None else {
+                "thinking_config": types.ThinkingConfig(
+                    thinking_budget=int(thinking_budget))}),
         )
 
         self._lock = threading.Lock()

@@ -112,7 +112,17 @@ E5_PASSAGE_PREFIX = "passage: "
 GEN_TEMPERATURE = OE.TEMPERATURE          # 0.0, both scored models
 GEN_MAX_OUTPUT_TOKENS = OE.MAX_OUTPUT_TOKENS  # 256, both scored models
 JUDGE_TEMPERATURE = 0.0
-JUDGE_MAX_OUTPUT_TOKENS = 256
+
+#: Owner decision 2026-07-27, after the v1 judge run: thinking EXPLICITLY
+#: disabled, max_output_tokens 512, everything else unchanged. Rationale on
+#: record: the rubric asks for a mechanical classification with an auditable
+#: WHY line; hidden thinking is budget-unstable at temperature 0 (the v1 probe
+#: in results/stage2_openended/judge/thinking_budget_probe.json flipped a label
+#: between a 256 and a 1024 budget) and it defeats the owner's >=50-label
+#: spot-check by truncating every WHY. These two become PINNED judge
+#: parameters at bar-lock.
+JUDGE_MAX_OUTPUT_TOKENS = 512
+JUDGE_THINKING_BUDGET = 0
 
 #: Spec section 6 caps. Overshoot stops the run and reports.
 API_BUDGET_USD = 0.40
@@ -181,12 +191,14 @@ def safe_id(item_id: str) -> str:
     return item_id.replace(":", "_")
 
 
-def _mmm(values) -> dict:
+def _mmm(values, digits: int = 2) -> dict:
+    """n / min / mean / max. ``digits`` because a cosine mean rounded to 2
+    decimals throws away most of an own-minus-imposter difference."""
     vals = [v for v in values if v is not None]
     if not vals:
         return {"n": 0, "min": None, "mean": None, "max": None}
     return {"n": len(vals), "min": min(vals),
-            "mean": round(sum(vals) / len(vals), 2), "max": max(vals)}
+            "mean": round(sum(vals) / len(vals), digits), "max": max(vals)}
 
 
 # ---------------------------------------------------------------------------
@@ -829,10 +841,18 @@ def load_items(out_dir: Path) -> dict:
 
 
 def _make_client(model: str, *, temperature: float, max_output_tokens: int,
-                 call_cap: int):
+                 call_cap: int, thinking_budget: int | None = None):
+    """A client for one phase. ``thinking_budget`` is opt-in per phase.
+
+    ``None`` keeps the historic behaviour (no thinking_config at all), which is
+    what the flash-lite GENERATION path was measured on and must keep. ``0``
+    sends the explicit disable, which the judge path needs because
+    gemini-3.5-flash thinks by default.
+    """
     from doppler.gemini import GeminiClient
     client = GeminiClient(max_calls=call_cap, temperature=temperature,
-                          max_output_tokens=max_output_tokens)
+                          max_output_tokens=max_output_tokens,
+                          thinking_budget=thinking_budget)
     client.model_name = model
     return client
 
@@ -1064,6 +1084,110 @@ def judge_calls(out_dir: Path, models: list[str]) -> list[dict]:
     return calls
 
 
+JUDGE_CONFIG_NOTE = (
+    "Owner decision 2026-07-27, after the v1 judge run: thinking EXPLICITLY "
+    "disabled (thinking_budget=0) and max_output_tokens raised to 512; "
+    "gemini-3.5-flash, temperature 0, rubric r1 verbatim, same blinding, same "
+    "randomization seed -- everything else unchanged. The rubric asks for a "
+    "mechanical classification with an auditable WHY line; hidden thinking is "
+    "budget-unstable at temperature 0 (see judge/thinking_budget_probe.json, "
+    "where the label moved between a 256 and a 1024 budget) and it defeats the "
+    "owner's >=50-label spot-check by truncating every WHY. Both settings "
+    "become PINNED judge parameters at bar-lock.")
+
+
+#: A WHY line the owner's spot-check can actually audit: present, and not cut
+#: off mid-phrase. The rubric asks for "one sentence quoting the decisive
+#: phrase of each answer", so a WHY under this many words is a truncation
+#: symptom, not a terse judge.
+WHY_MIN_WORDS = 8
+
+
+def why_is_intact(why, tokens_out: int) -> bool:
+    """Did the WHY line survive, or did the output budget eat it?"""
+    if not why:
+        return False
+    if tokens_out >= JUDGE_MAX_OUTPUT_TOKENS:
+        return False
+    return len(why.split()) >= WHY_MIN_WORDS
+
+
+def _judge_names(tag):
+    """(judgements file, summary file, run_id) for a judge pass.
+
+    ``tag`` keeps a re-run from standing on top of an earlier one: the v1 files
+    and the thinking-budget probe are the DEFECT RECORD and are never
+    overwritten or deleted.
+    """
+    if not tag:
+        return "judgements.jsonl", "judge_summary.json", "stage2_oe1/judge"
+    return (f"judgements_{tag}.jsonl", f"judge_{tag}_summary.json",
+            f"stage2_oe1/judge_{tag}")
+
+
+def _determinism_probe(args, judge_dir: Path, tag, n: int, calls, ctx,
+                       rubric, client) -> int:
+    """Run the first ``n`` judge calls TWICE and compare. Spends 2n calls.
+
+    The point is not that the API promises determinism -- it does not. The
+    point is that with thinking off at temperature 0 the label must not move,
+    because the v1 defect was exactly a label moving when the hidden-thinking
+    budget changed. A disagreement here means the instrument is not stable
+    enough to score with, and the batch must not run.
+    """
+    probe = []
+    disagreements = []
+    for order, call in enumerate(calls[:n]):
+        variants = ctx[call["canonical_id"]]["variants"]
+        prompt = judge_input(rubric["text"], call["question"], call["real"],
+                             call["candidate"], variants)
+        runs = []
+        for attempt in (1, 2):
+            text, tin, tout = client.generate(prompt)
+            label, why = parse_judge(text)
+            runs.append({"attempt": attempt, "label": label, "why": why,
+                         "why_intact": why_is_intact(why, tout),
+                         "why_words": len((why or "").split()),
+                         "tokens_out": tout,
+                         "output_hit_cap": tout >= JUDGE_MAX_OUTPUT_TOKENS,
+                         "raw": text})
+        same_label = runs[0]["label"] == runs[1]["label"]
+        if not same_label:
+            disagreements.append(call["item_id"])
+        probe.append({"call_order": order, "arm": call["arm"],
+                      "item_id": call["item_id"],
+                      "labels_agree": same_label,
+                      "both_why_intact": all(r["why_intact"] for r in runs),
+                      "runs": runs})
+    doc = {
+        "pilot": PILOT_BANNER, "phase": "determinism_probe",
+        "judge_model": JUDGE_MODEL, "temperature": JUDGE_TEMPERATURE,
+        "thinking_budget": JUDGE_THINKING_BUDGET,
+        "max_output_tokens": JUDGE_MAX_OUTPUT_TOKENS,
+        "config_note": JUDGE_CONFIG_NOTE,
+        "n_items_probed": len(probe), "n_calls": 2 * len(probe),
+        "all_labels_agree": not disagreements,
+        "all_why_intact": all(p["both_why_intact"] for p in probe),
+        "disagreements": disagreements,
+        "gate": "If any label disagrees at temperature 0 with thinking off, "
+                "STOP and report; do not run the batch.",
+        "probe": probe, "probed_utc": now(),
+    }
+    path = judge_dir / f"determinism_probe_{tag or 'v1'}.json"
+    S.write_json(path, doc)
+    for row in probe:
+        print(f"[probe] {row['arm']:20s} {row['item_id']:22s} "
+              f"labels={row['runs'][0]['label']}/{row['runs'][1]['label']} "
+              f"agree={row['labels_agree']} why_intact={row['both_why_intact']}")
+    print(f"[probe] labels all agree: {doc['all_labels_agree']}; "
+          f"WHY intact both runs: {doc['all_why_intact']}")
+    print(f"[probe] -> {rel(path)}")
+    if disagreements:
+        raise fatal(f"determinism probe FAILED on {len(disagreements)} item(s) "
+                    f"({', '.join(disagreements)}); the batch was NOT run")
+    return 0
+
+
 def cmd_judge(args) -> int:
     out_dir = Path(getattr(args, "out_dir", None) or OE_DIR)
     if JUDGE_MODEL in SCORED_MODELS:
@@ -1082,10 +1206,23 @@ def cmd_judge(args) -> int:
 
     client = getattr(args, "client", None) or _make_client(
         JUDGE_MODEL, temperature=JUDGE_TEMPERATURE,
-        max_output_tokens=JUDGE_MAX_OUTPUT_TOKENS, call_cap=args.call_cap)
+        max_output_tokens=JUDGE_MAX_OUTPUT_TOKENS, call_cap=args.call_cap,
+        thinking_budget=JUDGE_THINKING_BUDGET)
 
     judge_dir = out_dir / "judge"
     judge_dir.mkdir(parents=True, exist_ok=True)
+    tag = getattr(args, "tag", None)
+    jfile, sfile, run_id = _judge_names(tag)
+    if (judge_dir / jfile).exists() and not getattr(args, "force", False):
+        raise fatal(f"{rel(judge_dir / jfile)} already exists; pass a new "
+                    "--tag (an earlier pass is a record, not scratch) or "
+                    "--force")
+
+    probe_n = int(getattr(args, "determinism_probe", 0) or 0)
+    if probe_n:
+        return _determinism_probe(args, judge_dir, tag, probe_n, calls, ctx,
+                                  rubric, client)
+
     rows = []
     per_arm: dict[str, dict] = {}
     n_retries = n_unparsed = 0
@@ -1115,27 +1252,35 @@ def cmd_judge(args) -> int:
             "item_id": call["item_id"], "canonical_id": call["canonical_id"],
             "item_type": call["item_type"],
             "label": label, "why": why, "retried": retried,
+            "why_intact": why_is_intact(why, tout),
+            "why_words": len((why or "").split()),
+            "output_hit_cap": tout >= JUDGE_MAX_OUTPUT_TOKENS,
             "raw": text, "judge_model": JUDGE_MODEL,
+            "judge_thinking_budget": JUDGE_THINKING_BUDGET,
+            "judge_max_output_tokens": JUDGE_MAX_OUTPUT_TOKENS,
             "judge_prompt_sha256": R.sha256(prompt),
             "tokens_in": tin, "tokens_out": tout,
         })
         stat = per_arm.setdefault(call["arm"], {
             "n": 0, "tokens_in": 0, "tokens_out": 0, "n_unparsed": 0,
+            "n_why_intact": 0, "n_output_hit_cap": 0,
             **{lab: 0 for lab in LABELS}})
         stat["n"] += 1
         stat["tokens_in"] += tin
         stat["tokens_out"] += tout
+        stat["n_why_intact"] += int(rows[-1]["why_intact"])
+        stat["n_output_hit_cap"] += int(rows[-1]["output_hit_cap"])
         if label is None:
             stat["n_unparsed"] += 1
         else:
             stat[label] += 1
 
-    S.write_jsonl(judge_dir / "judgements.jsonl", rows)
+    S.write_jsonl(judge_dir / jfile, rows)
 
     spent = 0.0
     for arm, stat in per_arm.items():
         entry = build_cost_entry(
-            run_id="stage2_oe1/judge", model=JUDGE_MODEL,
+            run_id=run_id, model=JUDGE_MODEL,
             split="stage2_openended", variant=f"arm_{arm}",
             n_persons=len({r["canonical_id"] for r in rows
                            if r["arm"] == arm}),
@@ -1152,9 +1297,15 @@ def cmd_judge(args) -> int:
                                      if denom else None)
         stat["unclear_rate"] = (round(stat["UNCLEAR"] / stat["n"], 4)
                                 if stat["n"] else None)
-    S.write_json(judge_dir / "judge_summary.json", {
+        stat["why_intact_rate"] = (round(stat["n_why_intact"] / stat["n"], 4)
+                                   if stat["n"] else None)
+    S.write_json(judge_dir / sfile, {
         "pilot": PILOT_BANNER, "judge_model": JUDGE_MODEL,
+        "tag": tag, "run_id": run_id,
         "temperature": JUDGE_TEMPERATURE,
+        "thinking_budget": JUDGE_THINKING_BUDGET,
+        "max_output_tokens": JUDGE_MAX_OUTPUT_TOKENS,
+        "config_note": JUDGE_CONFIG_NOTE,
         "rubric_version": rubric["version"],
         "rubric_sha256": rubric["sha256"],
         "rubric_file": rel(rubric_path),
@@ -1169,6 +1320,9 @@ def cmd_judge(args) -> int:
                     "never sees a subject name (all three texts are "
                     "GUEST-redacted), and never sees both twins of a "
                     "duplicated question.",
+        "why_intact_rate_overall": round(
+            sum(1 for r in rows if r["why_intact"]) / len(rows), 4),
+        "n_output_hit_cap": sum(1 for r in rows if r["output_hit_cap"]),
         "per_arm": per_arm, "total_cost_usd": round(spent, 6),
         "api_budget_usd": API_BUDGET_USD, "judged_utc": now()})
     if spent > API_BUDGET_USD:
@@ -1178,8 +1332,12 @@ def cmd_judge(args) -> int:
         print(f"[judge] {arm:20s} n={stat['n']:3d} "
               f"SAME={stat['SAME']:3d} DIFFERENT={stat['DIFFERENT']:3d} "
               f"UNCLEAR={stat['UNCLEAR']:3d} "
-              f"match={stat['stance_match_rate']}")
+              f"match={stat['stance_match_rate']} "
+              f"why_intact={stat['why_intact_rate']}")
     print(f"[judge] rubric {rubric['sha256'][:16]} -> {rel(rubric_path)}")
+    print(f"[judge] wrote {rel(judge_dir / jfile)} (thinking_budget="
+          f"{JUDGE_THINKING_BUDGET}, max_output_tokens="
+          f"{JUDGE_MAX_OUTPUT_TOKENS})")
     print(f"[judge] total ${spent:.4f} (cap ${API_BUDGET_USD})")
     return 0
 
@@ -1305,11 +1463,20 @@ def cmd_embed(args) -> int:
         per_arm = {}
         for arm in OE.ARMS:
             vals = [r["cosine_to_real"] for r in rows if r["arm"] == arm]
-            per_arm[arm] = _mmm(vals)
+            per_arm[arm] = _mmm(vals, 6)
+        own = {r["item_id"]: r["cosine_to_real"] for r in rows
+               if r["arm"] == OWN_ARM}
+        imp = {r["item_id"]: r["cosine_to_real"] for r in rows
+               if r["arm"] == IMPOSTER_ARM}
+        paired = [own[i] - imp[i] for i in sorted(set(own) & set(imp))]
         results[name] = {"revision": revision,
                          "per_arm": per_arm, "n_rows": len(rows),
+                         "own_minus_imposter_paired": _mmm(paired, 6),
+                         "n_items_own_gt_imposter":
+                             f"{sum(1 for d in paired if d > 0)}/{len(paired)}",
                          "diagnostic": _mmm(
-                             [d["cosine_grounding_to_real"] for d in diagnostic])}
+                             [d["cosine_grounding_to_real"] for d in diagnostic],
+                             6)}
         print(f"[embed] {name}: {len(rows)} cosines")
 
     S.write_json(embed_dir / "embed_summary.json", {
@@ -1579,6 +1746,15 @@ def main(argv=None) -> int:
     p_j.add_argument("--skip-cost", action="store_true")
     p_j.add_argument("--models", nargs="+", default=["gemma", "flashlite"],
                      help="generation directories under gen/ to judge")
+    p_j.add_argument("--tag", default=None,
+                     help="suffix for this pass's files and run_id, e.g. v2; "
+                          "an earlier pass is a record and is never "
+                          "overwritten")
+    p_j.add_argument("--force", action="store_true")
+    p_j.add_argument("--determinism-probe", type=int, default=0,
+                     metavar="N",
+                     help="run the first N calls twice, compare labels, write "
+                          "the probe and exit WITHOUT running the batch")
     p_j.set_defaults(fn=cmd_judge, client=None)
 
     p_e = sub.add_parser("embed")
