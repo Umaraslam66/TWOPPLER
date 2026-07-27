@@ -223,7 +223,6 @@
    "rule": {
     "kind": "subjective",
     "subjective_cues": [
-     "your perspective",
      "from your perspective"
     ],
     "evaluative_cues": [
@@ -233,7 +232,7 @@
      "could"
     ],
     "factual_cues": [],
-    "score_subjective": 4,
+    "score_subjective": 3,
     "score_factual": 0,
     "tie_broken_to_factual": false,
     "no_cue_fired": false
@@ -343,7 +342,6 @@
    "rule": {
     "kind": "subjective",
     "subjective_cues": [
-     "in your mind",
      "any doubt in your mind"
     ],
     "evaluative_cues": [
@@ -353,7 +351,7 @@
      "could"
     ],
     "factual_cues": [],
-    "score_subjective": 4,
+    "score_subjective": 3,
     "score_factual": 0,
     "tie_broken_to_factual": false,
     "no_cue_fired": false

@@ -165,8 +165,14 @@ TEMPLATE_SHA256_V3_REUSED = CF.TEMPLATE_SHA256
 
 
 def format_exemplars(answers) -> str:
-    """The style-exemplar block. Empty input is an explicit absence, not a gap."""
-    rows = [" ".join(str(a).split()) for a in answers if str(a).strip()]
+    """The style-exemplar block. Empty input is an explicit absence, not a gap.
+
+    ``None`` entries are dropped rather than rendered. ``str(None)`` is the
+    literal "None", which would have put ``STYLE EXAMPLE 1: None`` into the
+    prompt for a guest whose exemplar lookup came back short.
+    """
+    rows = [" ".join(str(a).split()) for a in (answers or ())
+            if a is not None and str(a).strip()]
     if not rows:
         return ("(No style examples were available for this guest, so match the "
                 "register of the ACTUAL ANSWER below instead.)")
@@ -242,17 +248,26 @@ def host_name_forms(labels) -> list[str]:
     A MediaSum host label looks like ``ROBERT SIEGEL, HOST``. Both the full
     name and each name token are stripped, because the transcript says "Robert"
     where the label says "ROBERT SIEGEL".
+
+    The FULL-name form keeps every alphabetic token; only the standalone-token
+    forms drop short ones. Building the full name from the surviving tokens
+    only turned "AL SHARPTON, HOST" into just ``["SHARPTON"]``, so
+    "Al Sharpton is wrong" stripped to "Al is wrong" -- the tell half-removed,
+    which is worse than not stripping at all because it also mangles the text.
+    Short tokens are still excluded as STANDALONE forms, since stripping every
+    "al" or "jo" out of an option would do real damage.
     """
     forms: set[str] = set()
     for label in labels or ():
         name = str(label).split(",")[0].strip()
         if not name:
             continue
-        tokens = [t for t in re.split(r"\s+", name) if t.isalpha() and len(t) > 2]
+        tokens = [t for t in re.split(r"\s+", name)
+                  if t.replace(".", "").isalpha()]
         if not tokens:
             continue
         forms.add(" ".join(tokens))
-        forms.update(tokens)
+        forms.update(t for t in tokens if len(t) > 2)
     return sorted(forms, key=len, reverse=True)
 
 
@@ -295,10 +310,30 @@ def strip_deixis(text: str, host_forms) -> tuple[str, list[str]]:
         removed.append(hit.group(0).strip())
         out = _SECOND_PERSON.sub(" ", out)
 
-    out = " ".join(out.split()).lstrip(",;: ").strip()
+    out = _tidy_punctuation(out)
     if out:
         out = out[0].upper() + out[1:]
     return out, removed
+
+
+def _tidy_punctuation(text: str) -> str:
+    """Repair the punctuation a mid-sentence removal leaves behind.
+
+    Load-bearing, not cosmetic. Removing a vocative that is not at the front
+    strands its commas: "I think it's fine, Robert." became "I think it's fine,
+    ." and "The situation, as you said, is worrying." became "The situation, is
+    worrying." Those strings go straight into an option the scorer reads, so a
+    stray " , ." in one option and not the others is a NEW formatting tell --
+    exactly the kind of asymmetry D6-v4.2 exists to remove. The retain-ratio
+    guard cannot catch it either, because the word count barely moves.
+    """
+    out = " ".join((text or "").split())
+    out = re.sub(r"\s+([,;:.!?])", r"\1", out)     # " ," -> ","
+    out = re.sub(r",\s*([.!?])", r"\1", out)       # ", ." -> "."
+    out = re.sub(r"([,;:])\s*\1+", r"\1", out)     # ",," -> ","
+    out = re.sub(r",\s*,", ",", out)
+    out = re.sub(r"\s{2,}", " ", out)
+    return out.strip().lstrip(",;: ").strip()
 
 
 def apply_deixis_rule(texts, host_forms,
@@ -333,6 +368,12 @@ def apply_deixis_rule(texts, host_forms,
                       f"{too_short}; the set is retained unstripped so all four "
                       "options carry the same packaging",
             "min_retain_ratio": min_retain_ratio,
+            "forced_by_option_index": too_short,
+            # What the strip WOULD have taken, kept so a reader auditing the
+            # decision can see the evidence for it instead of re-running
+            # strip_deixis by hand.
+            "would_have_removed_per_option": removals,
+            "would_have_produced": stripped,
             "removed_per_option": [[] for _ in originals],
             "n_options_changed": 0,
         }
@@ -388,6 +429,18 @@ FACTUAL_CUES = (
 )
 
 
+def _distinct_cues(cues, text: str) -> list[str]:
+    """Matched cues with nested duplicates dropped.
+
+    "do you think" also contains "you think", so a single phrase scored twice
+    and the subjective/factual comparison is a raw count. Only the longest
+    match at a given position is a distinct signal.
+    """
+    hits = [c for c in cues if c in text]
+    return [c for c in hits
+            if not any(c != other and c in other for other in hits)]
+
+
 def classify_question(question: str) -> dict:
     """``subjective`` / ``factual_explanation`` / ``unclear`` for one question.
 
@@ -410,9 +463,9 @@ def classify_question(question: str) -> dict:
     with a recorded hand classification and reports every disagreement.
     """
     text = " ".join((question or "").split()).lower()
-    subj = [c for c in SUBJECTIVE_CUES if c in text]
-    evalu = [c for c in EVALUATIVE_CUES if c in text]
-    fact = [c for c in FACTUAL_CUES if c in text]
+    subj = _distinct_cues(SUBJECTIVE_CUES, text)
+    evalu = _distinct_cues(EVALUATIVE_CUES, text)
+    fact = _distinct_cues(FACTUAL_CUES, text)
     modals = [m for m in SUBJECTIVE_MODALS if re.search(rf"\b{m}\b", text)]
 
     score_s = len(subj) + len(evalu) + (1 if modals else 0)

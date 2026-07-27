@@ -148,14 +148,36 @@ def test_a_reply_that_never_parsed_has_no_widening_reason():
     assert DP.widened_reason(NO_ANSWER_REPLY) is None
 
 
-def test_a_reordered_distribution_parses_frozen_but_not_widened():
-    """Pins a known asymmetry: the window is anchored on the label A, so a reply
-    that opens on B loses everything before it and the widened reading fails
-    where the contract parser succeeds. Widening is therefore NOT a superset of
-    the frozen reading, and the widened N can be the smaller of the two."""
+def test_the_widened_reading_is_always_a_superset_of_the_frozen_one():
+    """Widening may only ever ADD readings, never remove them.
+
+    The window is anchored on the label A, so a reply stating its labels out of
+    order loses everything before the A and no window parses. If that were the
+    whole rule the widened N could come out SMALLER than the contract N, which
+    makes the both-N table incoherent -- the widened column is supposed to say
+    "the contract, plus what it discarded". The frozen reading is therefore
+    tried first and returned unchanged when it succeeds.
+    """
     reordered = "B: 0.2 A: 0.1 C: 0.6 D: 0.1"
     assert R.parse_distribution(reordered) == [0.1, 0.2, 0.6, 0.1]
-    assert DP.widened_parse(reordered) is None
+    assert DP.widened_parse(reordered) == [0.1, 0.2, 0.6, 0.1]
+
+    lowercase = "a: 0.1 b: 0.2 c: 0.6 d: 0.1"
+    assert R.parse_distribution(lowercase) is not None
+    assert DP.widened_parse(lowercase) == R.parse_distribution(lowercase)
+
+
+def test_no_completion_parses_frozen_while_failing_widened():
+    """The superset invariant, stated over a spread of shapes rather than one."""
+    for text in ("A: 0.25 B: 0.25 C: 0.25 D: 0.25",
+                 "B: 0.2 A: 0.1 C: 0.6 D: 0.1",
+                 "a: 0.1 b: 0.2 c: 0.6 d: 0.1",
+                 "A: 70% B: 10% C: 10% D: 10%",
+                 "prose first. A: 0.4 B: 0.3 C: 0.2 D: 0.1",
+                 "A: 0.1 B: 0.2 C: 0.6 D: 0.1\nA: 0.1 B: 0.2 C: 0.6 D: 0.1",
+                 "no distribution at all"):
+        if R.parse_distribution(text) is not None:
+            assert DP.widened_parse(text) is not None, text
 
 
 # ---------------------------------------------------------------------------

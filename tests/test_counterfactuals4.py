@@ -196,11 +196,35 @@ def test_a_host_label_yields_the_full_name_and_each_name_token_longest_first():
     assert [len(f) for f in forms] == sorted((len(f) for f in forms), reverse=True)
 
 
-def test_initials_and_two_letter_tokens_are_not_treated_as_names():
-    """Stripping "AL" or "J." would delete ordinary words all over an option;
-    the name form has to be long enough to be a name."""
-    assert C4.host_name_forms(["AL SHARPTON, HOST"]) == ["SHARPTON"]
-    assert C4.host_name_forms(["J. K. ROWLING, HOST"]) == ["ROWLING"]
+def test_short_tokens_survive_in_the_full_name_but_not_as_standalone_forms():
+    """A half-removed name is worse than none: it mangles the text AND leaves
+    the tell.
+
+    Dropping short tokens everywhere built the "full name" from the survivors
+    only, so "AL SHARPTON, HOST" produced just ["SHARPTON"] and "Al Sharpton is
+    wrong" stripped to "Al is wrong". Short tokens are still excluded as
+    STANDALONE forms, because stripping every "al" out of an option would do
+    real damage.
+    """
+    forms = C4.host_name_forms(["AL SHARPTON, HOST"])
+    assert "AL SHARPTON" in forms          # the full name strips cleanly
+    assert "SHARPTON" in forms             # the surname alone still strips
+    assert "AL" not in forms               # but "al" is never stripped alone
+
+    initials = C4.host_name_forms(["J. K. ROWLING, HOST"])
+    assert "J. K. ROWLING" in initials
+    assert "ROWLING" in initials
+    assert "J." not in initials
+
+
+def test_stripping_prefers_the_longest_matching_name_form():
+    """Forms are applied longest-first so the full name goes before the surname
+    and never leaves a stranded first name behind."""
+    forms = C4.host_name_forms(["AL SHARPTON, HOST"])
+    assert forms == sorted(forms, key=len, reverse=True)
+    out, removed = C4.strip_deixis("Al Sharpton is wrong about this.", forms)
+    assert "Sharpton" not in out and "Al " not in out
+    assert removed
 
 
 def test_a_label_with_no_usable_name_yields_nothing_to_strip():
@@ -209,7 +233,7 @@ def test_a_label_with_no_usable_name_yields_nothing_to_strip():
     assert C4.host_name_forms([]) == []
     assert C4.host_name_forms(None) == []
     assert C4.host_name_forms([""]) == []
-    assert C4.host_name_forms(["A B, HOST"]) == []
+    assert C4.host_name_forms(["123, HOST"]) == []
 
 
 # ---------------------------------------------------------------------------
@@ -462,3 +486,77 @@ def test_the_exemplar_guards_tolerate_a_guest_with_no_exemplars():
     assert C4.quotes_any("some text", ["", None]) is None
     assert not C4.copies_any("some text", [])
     assert not C4.copies_any("some text", ["", None])
+
+
+# ---------------------------------------------------------------------------
+# Punctuation repair after a mid-sentence removal
+# ---------------------------------------------------------------------------
+
+
+def test_a_trailing_vocative_does_not_leave_dangling_punctuation():
+    """A stray " , ." in one option and not the others is a NEW formatting tell.
+
+    Removing a vocative that is not at the front strands its commas, and the
+    result goes straight into an option the scorer reads. The retain-ratio
+    guard cannot catch it either, because the word count barely moves -- which
+    is exactly why it has to be repaired here.
+    """
+    out, removed = C4.strip_deixis("I think it's fine, Robert.", ["ROBERT"])
+    assert removed
+    assert out == "I think it's fine."
+    assert " ," not in out and ", ." not in out
+
+
+def test_a_mid_sentence_address_does_not_leave_a_doubled_comma():
+    out, removed = C4.strip_deixis(
+        "The situation, as you said, is worrying now.", [])
+    assert removed
+    assert ", ," not in out and " ," not in out
+    assert out.endswith("worrying now.")
+
+
+def test_no_stripped_option_ends_with_orphaned_punctuation():
+    """Across a spread of shapes, never leave punctuation the generator would
+    not have produced."""
+    cases = [
+        "Well, Robert, the answer is complicated.",
+        "The answer is complicated, Robert.",
+        "You know, Robert, as you said, it is complicated.",
+        "It is complicated, Robert, and it always was.",
+    ]
+    for text in cases:
+        out, _ = C4.strip_deixis(text, ["ROBERT"])
+        assert "Robert" not in out, text
+        assert " ," not in out and ", ." not in out and ",," not in out, text
+        assert not out.startswith(","), text
+
+
+def test_the_retained_mode_records_what_it_would_have_removed():
+    """A reader auditing the decision should not have to re-run the stripper."""
+    texts = ["Well, Robert, you know.",
+             "A perfectly ordinary alternative answer that survives stripping.",
+             "Another ordinary alternative answer that survives stripping too.",
+             "A third ordinary alternative answer that also survives it fine."]
+    out, record = C4.apply_deixis_rule(texts, ["ROBERT"])
+    assert record["mode"] == "retained"
+    assert out == texts
+    assert record["forced_by_option_index"] == [0]
+    assert any(record["would_have_removed_per_option"])
+    assert record["would_have_produced"][0] != texts[0]
+
+
+def test_a_none_exemplar_never_reaches_the_prompt_as_the_word_none():
+    """str(None) is the literal "None", which would have put
+    `STYLE EXAMPLE 1: None` in front of the generator."""
+    assert "None" not in C4.format_exemplars([None, None])
+    block = C4.format_exemplars([None, "A real answer with hedging in it."])
+    assert "None" not in block
+    assert "STYLE EXAMPLE 1" in block and "STYLE EXAMPLE 2" not in block
+
+
+def test_an_overlapping_cue_is_counted_once():
+    """"do you think" contains "you think"; one phrase must not score twice,
+    because the subjective/factual comparison is a raw count."""
+    got = C4.classify_question("Do you think the council acted correctly?")
+    assert got["subjective_cues"] == ["do you think"]
+    assert got["score_subjective"] == 1

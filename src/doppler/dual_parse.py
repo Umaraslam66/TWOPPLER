@@ -32,13 +32,18 @@ from doppler import stage2_render as R
 #: label so a window always begins at a distribution rather than mid-way
 #: through one.
 _BLOCK_START = re.compile(r"(?:(?<=^)|(?<=[\s>*_`]))A\s*[:=).\]\-]\s*(?=\d|\.)",
-                          re.MULTILINE)
+                          re.MULTILINE | re.IGNORECASE)
 
-#: Reasons a widened read differs from the frozen one. Reported, not guessed at.
-DOUBLED = ("the model printed a distribution more than once, so the stated mass "
-           "falls outside the frozen renormalise window [0.8, 1.2]")
-STRAY = ("the frozen parser saw a stray label-like token in the reasoning "
-         "(e.g. 'option A. 3 people'), which makes a label repeat")
+#: Reasons a widened read differs from the frozen one. Worded as what was
+#: OBSERVED, not as a claim about the model's intent: the two are told apart by
+#: how many distribution blocks the reply contains, which is evidence, not a
+#: diagnosis. Note the stray example uses label B deliberately -- a stray "A."
+#: in the reasoning opens a new window and so reports as DOUBLED.
+DOUBLED = ("more than one distribution block appears in the reply, so the "
+           "stated mass falls outside the frozen renormalise window [0.8, 1.2]")
+STRAY = ("only one distribution block appears, so a stray label-like token "
+         "elsewhere in the reply (e.g. 'option B. 3 people') made a label "
+         "repeat and the frozen parser refused it")
 
 
 def distribution_windows(completion: str) -> list[str]:
@@ -52,9 +57,19 @@ def widened_parse(completion, n_options: int = 4):
     """The LAST well-formed distribution in the reply, read by the frozen parser.
 
     Returns the same shape ``parse_distribution`` returns -- ``n_options``
-    probabilities summing to 1, or ``None``. ``None`` means no window in the
-    reply parsed, so the reply genuinely did not answer.
+    probabilities summing to 1, or ``None``. ``None`` means neither the whole
+    reply nor any window in it parsed, so the reply genuinely did not answer.
+
+    **The frozen reading is tried FIRST, so the widened set is always a
+    superset of the frozen set.** Without that, a reply stating its labels out
+    of order ("B: 0.2 A: 0.1 C: 0.6 D: 0.1") parsed frozen and failed widened,
+    because the window is anchored on the first label -- which would make the
+    widened N SMALLER than the contract N and the both-N table incoherent.
+    Widening may only ever add readings, never remove them.
     """
+    frozen = R.parse_distribution(completion, n_options)
+    if frozen is not None:
+        return frozen
     for window in reversed(distribution_windows(completion)):
         got = R.parse_distribution(window, n_options)
         if got is not None:
@@ -73,10 +88,17 @@ def widened_reason(completion, n_options: int = 4) -> str | None:
 
 def score_distribution(dist, correct_index: int, n_options: int = 4) -> dict:
     """Argmax, mass on the true option, and margin over the best rival."""
-    if dist is None:
-        return {"parsed": False, "argmax_correct": None, "p_correct": None,
+    unparsed = {"parsed": False, "argmax_correct": None, "p_correct": None,
                 "argmax_index": None, "margin": None, "distribution": None}
+    if dist is None:
+        return unparsed
     n = min(n_options, len(dist))
+    if not 0 <= correct_index < n:
+        # A correct_index off the end is a corrupt meta row, not an answer.
+        # Returning the unparsed shape keeps one bad row from killing an
+        # ingest that would otherwise report every other row correctly.
+        return {**unparsed, "error": f"correct_index {correct_index} outside "
+                                     f"0..{n - 1}"}
     argmax = max(range(n), key=lambda i: dist[i])
     rival = max((dist[i] for i in range(n) if i != correct_index), default=0.0)
     return {
@@ -112,6 +134,11 @@ def dual_score(meta: dict, completion) -> dict:
         "recovered_by_widening": bool(not frozen["parsed"]
                                       and widened["parsed"]),
         "widened_reason": widened_reason(completion, n) if completion else None,
+        # Structurally always False: when the frozen parser succeeds the
+        # widened reading returns its result unchanged. Kept as a TRIPWIRE --
+        # if it ever goes True the two readings have diverged in a way this
+        # module says is impossible, and a report built on "the contract
+        # number plus a wider one" would be wrong.
         "readings_disagree_on_argmax": bool(
             frozen["parsed"] and widened["parsed"]
             and frozen["argmax_correct"] != widened["argmax_correct"]),
