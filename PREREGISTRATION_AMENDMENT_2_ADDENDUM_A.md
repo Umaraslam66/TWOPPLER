@@ -1,14 +1,24 @@
 # Addendum A to Amendment 2 — Stage 2 bar lock
 
-Status: **DRAFT — NOT ADOPTED, NOT COMMITTED.** This addendum freezes the
-numeric and procedural parameters that Amendment 2 (adopted 2026-07-26,
-commit `9949c9d`) left to bar-lock. The owner approved the ten decision
-items below IN DIRECTION on 2026-07-26, with the measured values as
-drafted; the addendum FREEZES only when every precondition in the list at
-the bottom has cleared and the owner adopts it. Values marked **[TO FILL]**
-await the open-ended dev pilot or a pending owner check. Confirmatory
-subjects remain untouched by all Stage 2 machinery until this addendum is
-committed.
+Status: **ADOPTED 2026-07-28.** Every precondition in the list at the
+bottom is cleared (1 via D2; 2; 3; 4 no longer live; 5 part-1 via D3;
+6 closed by the parameter-5 PASS after one pre-committed iteration —
+raw 0.8889 / κ 0.7978 vs the unchanged bar). The owner's sign-off was
+given conditionally in advance, on the record, before the verdict
+existed ("this conditional freeze is my sign-off: I have reviewed the
+full addendum text and approve it as-is contingent only on this
+verdict"), reaffirmed for the r2 round, and the condition resolved
+PASS — the verdict was applied mechanically. One slot stays open BY
+DESIGN and is not part of the freeze: the H6/B3 parameters (see their
+section), which MUST be filled and owner-approved before any
+confirmatory H6 scoring. Committed on adoption; the OSF snapshot is
+updated to v4.
+
+This addendum freezes the numeric and procedural parameters that
+Amendment 2 (adopted 2026-07-26, commit `9949c9d`) left to bar-lock.
+The owner approved the ten decision items below IN DIRECTION on
+2026-07-26, with the measured values as drafted. Confirmatory subjects
+remained untouched by all Stage 2 machinery until this adoption.
 
 **Revised 2026-07-27 to Amendment-3 terms.** Amendment 3 was adopted that
 day (commit `7548bc3`): the forced-choice instrument is dead by
@@ -32,8 +42,10 @@ day: FAIL** (raw 0.7778 / κ 0.5789 vs the pre-committed ≥ 0.80 / ≥
 0.60, under deviation D4) — the pre-committed on-fail path is running:
 one rubric/judge iteration (r2 PROPOSED), a re-tranche (sheets F/G),
 same bar, no bar movement. Parameter 5 and the H6/B3 parameters remain
-open. Status is unchanged: **DRAFT, NOT ADOPTED** — nothing freezes
-until the owner's final freeze review after the parameter-5 verdict.
+open. Status at that point was unchanged: **DRAFT, NOT ADOPTED** —
+nothing froze until the parameter-5 verdict. (Resolved later the same
+day: the r2 round PASSED and the addendum was ADOPTED — see the
+status line and parameter 5.)
 
 Evidence base: `results/stage2_pilot2/BARLOCK_MEASUREMENTS.md` (measured
 on dev subjects and pool metadata only), `results/stage2_pilot/
@@ -188,14 +200,22 @@ freezes until the owner adopts the addendum.
    sanity-only). Never an API model, never a scored model (C2.2).
 2. **Judge (channel 2): `gemini-3.5-flash`, temperature 0.0,
    `thinking_budget=0`, `max_output_tokens=512`**, AI Studio endpoint,
-   one candidate per stateless call, blind to arm/model/subject.
+   one candidate per stateless call, blind to arm/model/subject; reply
+   format CENTRAL/LABEL/WHY (the r2 format — the parser accepts the
+   CENTRAL line additively, LABEL/WHY parsing unchanged, regression-
+   tested in `experiments/oe1_r2_judge.py`).
    The thinking-off setting is load-bearing: with hidden thinking
    enabled, labels were budget-dependent at temperature 0 (the OE-1
    judge-v1 defect record). Different model version than the A3
    robustness scorer (`gemini-3.5-flash-lite`); the family overlap is
    declared per Amendment 3 C3.
-3. **Judge rubric: `results/stage2_openended/rubric_r1.txt`, sha256
-   `85c7c990af522c2c1e41c116617f406a473496b4c5875f293d687ef62bff64d1`.**
+3. **Judge rubric: `results/stage2_openended/rubric_r2_draft.txt`,
+   sha256
+   `ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464`**
+   (r2, adopted 2026-07-28 after the parameter-5 iteration; r1 —
+   `rubric_r1.txt`, sha256 `85c7c990af522c2c1e41c116617f406a473496b4c5875f293d687ef62bff64d1`
+   — failed the trust bar on the D/E tranche, raw 0.7778 / κ 0.5789,
+   and is kept as the record of that round).
 4. **Generation cap and format instruction: 150 words,
    `max_output_tokens=256`, temperature 0.0, identical tail across all
    five arms (C2.1), tail sha256
@@ -238,10 +258,17 @@ freezes until the owner adopts the addendum.
    (`fresh_tranche_r2_sheet_{F,G}.md`, seed 613, combos unused in
    A/B/C AND D/E, key sealed; the unused pool held only 4
    judge-DIFFERENT rows, so balance by r1 labels is 9/4/5 with the
-   shortfall documented). **Parameter 5 stays OPEN** pending: owner
-   approval of the r1→r2 diff, the r2 judge run on the 18 F/G rows,
-   and the rubric-briefed auditor labels — scored against the same
-   bar. Full record: `results/stage2_openended/AUDIT_LINES_2026-07-28.md`.
+   shortfall documented). **Resolved 2026-07-28, later the same
+   night:** the owner approved the r1→r2 diff as drafted; the r2
+   judge ran on both tranches (pre-committed runner, 0 parse
+   failures, determinism probe stable). Regression on D/E broke **0**
+   previously-correct rows (owner rule: >2 → stop) and fixed E7;
+   D6/E6/E9 remain against the auditor line and stay on the record.
+   On F/G the r2 judge scored **raw 0.8889 / κ 0.7978** against the
+   rubric-briefed auditor line (D4 pattern) — **PASS** against the
+   unchanged bar, verdict applied mechanically. **Parameter 5 is
+   FILLED: the stance judge is trusted as pinned in parameters 2–3.**
+   Full record: `results/stage2_openended/AUDIT_LINES_2026-07-28.md`.
 6. **UNCLEAR handling rule — adopted as proposed in C2.3:** UNCLEAR items
    are excluded from the stance-match rate's denominator; every arm's
    UNCLEAR rate is always reported beside its stance-match rate; a
@@ -373,7 +400,8 @@ Full lines, scores, and flags: `results/stage2_openended/AUDIT_LINES_2026-07-28.
    pre-committed**. The fresh D/E tranche was scored 2026-07-28 under
    deviation D4: **FAIL** (raw 0.7778 / κ 0.5789), and the
    pre-committed iteration opened — rubric r2 proposed, re-tranche F/G
-   built, same bar. **OPEN REMAINDER:** the r1→r2 diff decision, the
-   r2 judge run on sheets F/G, the rubric-briefed labels on F/G, and
-   the resulting parameter-5 pass/fail verdict. This precondition
-   closes when that verdict lands.
+   built, same bar. **CLOSED 2026-07-28:** the r1→r2 diff was approved
+   as drafted; the r2 judge ran on F/G; the rubric-briefed line (D4
+   pattern) scored **raw 0.8889 / κ 0.7978 — PASS** against the
+   unchanged bar, with 0 previously-correct D/E rows broken in
+   regression. Parameter 5 is filled; this precondition is closed.
