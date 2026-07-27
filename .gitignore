@@ -5,6 +5,16 @@ data/
 # Personal / planning docs
 # (PREREGISTRATION.md and its amendments are committed as of Amendment 1 — owner decision 2026-07-24)
 leonardo.md
+memory/
+/*.pdf
+app/consent_policy_draft.md
+
+# Local session logs
+results/*.log
+
+# Regenerable Stage 1E training-split run artifacts (175M; summaries and
+# the committed reports are the record)
+results/adaptive_train_*/
 
 # Python
 .venv/
