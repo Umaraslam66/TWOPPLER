@@ -1,6 +1,6 @@
 # Project DOPPLER — project log
 
-Last updated 2026-07-26.
+Last updated 2026-07-27.
 
 ## 1. What this file is, and what it is not
 
@@ -40,13 +40,15 @@ moved. Later documents override earlier ones where they conflict.
 | [`PREREGISTRATION_AMENDMENT_1.md`](../PREREGISTRATION_AMENDMENT_1.md) | A1 same-domain imposter arm mandatory, A2 ceiling numbers descriptive only, A3 two-model replication for headlines, A4 distractor controls, A5 the ≥80-subject power branch, plus Stage 1E inserted before Stage 2. | frozen |
 | [`PREREGISTRATION_AMENDMENT_1_ADDENDUM_A.md`](../PREREGISTRATION_AMENDMENT_1_ADDENDUM_A.md) | Stage 1E's bars, locked before the confirm split was drawn: C1, C2 with both readings pre-written, C3, binding dual decoding. | frozen |
 | [`PREREGISTRATION_AMENDMENT_2.md`](../PREREGISTRATION_AMENDMENT_2.md) | **Adopted 2026-07-26**, commit `9949c9d`. B7 new hypothesis H7 (twin staleness, co-headline with H1, with a pre-declared crossover statistic); B8 individual-level lift and population-level TVD reported side by side everywhere; B9 positioning, Stage 3 demoted to optional demo and **H4 withdrawn** as a documented deviation; B10 the revised Stage 2 instrument (generated same-question counterfactuals), forced by the two pilots below. | frozen |
+| [`PREREGISTRATION_AMENDMENT_3.md`](../PREREGISTRATION_AMENDMENT_3.md) | **Adopted 2026-07-27**, commit `7548bc3`. C1 declares forced choice dead by pre-committed kill rule (four dev-pilot rounds, zero-info solved every item; a claimable, scoped negative finding); C2 the replacement instrument — open-ended generation, scored by a pinned local embedding model and a rubric-locked stance judge, no claim on one channel alone; C3 own-minus-imposter primary, robustness absolute scores explicitly secondary; C4 a dev validation gate with a pause-for-design-review branch; C5 hypotheses transfer, magnitude bars re-set at bar-lock. | frozen |
 
 **External timestamping.** [`results/osf_preregistration_snapshot.md`](osf_preregistration_snapshot.md)
 is a frozen copy of the pre-registration plus Amendment 1, prepared for OSF.
-[`results/osf_preregistration_snapshot_v2.md`](osf_preregistration_snapshot_v2.md)
-is the current one, covering all four documents. **The OSF upload itself is still
-outstanding on the owner.** Until it happens, "pre-registered" means "committed to
-git before the data was touched", which is weaker.
+[`results/osf_preregistration_snapshot_v3.md`](osf_preregistration_snapshot_v3.md)
+is the current one, covering all five documents with per-document commit and
+sha256 provenance; v2 and the original are kept verbatim. **The OSF upload
+itself is still outstanding on the owner.** Until it happens, "pre-registered"
+means "committed to git before the data was touched", which is weaker.
 
 ## 4. Stage 1 — development and tuning (24–25 July)
 
@@ -165,7 +167,7 @@ label, with no staff evidence — [`results/staff_reserve_spotcheck.md`](staff_r
 The owner's rule is re-admit only with quoted guest-role evidence, and a human
 spot-check of 20 first. That spot-check has not happened.
 
-## 9. Stage 2 — the two dev pilots (26 July), and what they killed
+## 9. Stage 2 — the four dev pilots (26–27 July), and what they killed
 
 **Pilot 1** — [`results/stage2_pilot/PILOT_REPORT.md`](stage2_pilot/PILOT_REPORT.md),
 design contract snapshot [`results/stage2_pilot/SPEC_v1.7.md`](stage2_pilot/SPEC_v1.7.md).
@@ -214,23 +216,45 @@ Every number in it is a **proposal**; nothing is frozen. Headline: the D3.2 fuzz
 host threshold of 0.60 is too low — at that setting only 17 of the 120 fires that
 actually change a label are the anchor.
 
+**Pilots 3 and 4 (27 July) killed the instrument itself.** Round 3 built the
+B10 generated counterfactuals and the zero-information arm solved 15/15 — the
+tell moved to register (generated advocacy vs real hedging), world-truth, and
+deixis ([`results/stage2_pilot3/PILOT_REPORT_3.md`](stage2_pilot3/PILOT_REPORT_3.md)).
+Round 4 fixed all of that under a pre-committed owner kill rule (zero-info
+≥ 0.90 → dead, no round 5) and measured **1.00 under both parser readings**:
+the register tell inverted instead of disappearing, and a frozen pre-gate
+frontier-LLM rater line had predicted exactly that
+([`results/stage2_pilot4/PILOT_REPORT_4.md`](stage2_pilot4/PILOT_REPORT_4.md),
+design contract [`results/stage2_pilot4/SPEC_v1.10.md`](stage2_pilot4/SPEC_v1.10.md)).
+Four rounds, four distractor constructions, four person-blind mechanisms — a
+claimable negative methods finding, scoped to this corpus. That fired the
+pre-written fallback into **Amendment 3** (adopted 2026-07-27): open-ended
+generation, dual-channel scoring, own-minus-imposter primary.
+
 ## 10. What is open right now
 
-1. **Pilot 3 — generated counterfactuals — in progress.** The B10 instrument has
-   to survive a dev-subject pilot before any confirmatory registration.
-2. **The human detectability check** (Amendment 2 B10.8, binding): the owner gets
-   20 unmarked items, 10 real and 10 all-generated controls, and tries to spot the
-   real option. If the owner beats chance materially, the design iterates.
-3. **Bar-lock decisions still unfrozen** — the fuzzy host threshold, real NER vs
-   the D5 heuristic, nickname handling at scale, the Q–A eligibility floor,
-   affiliation redaction, and the H6 rubric. Proposals in
-   [`BARLOCK_MEASUREMENTS.md`](stage2_pilot2/BARLOCK_MEASUREMENTS.md).
+1. **The open-ended dev pilot** (Amendment 3 C4/C7): spec written and awaiting
+   the owner's go — [`results/stage2_openended/PILOT_SPEC.md`](stage2_openended/PILOT_SPEC.md).
+   No runs until then; the C4 gate must separate own from imposter on dev
+   subjects or Stage 2 pauses for design review.
+2. **The bar-lock addendum** ([`PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md`](../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md)),
+   revised 2026-07-27 to Amendment-3 terms, still a DRAFT: its [TO FILL] slots
+   wait on the dev pilot, and its preconditions on the owner tasks below.
+3. **Three owner human tasks gating the freeze:** the 20-row fuzzy-host
+   spot-check (sheet ready at
+   [`results/stage2_pilot2/barlock/fuzzy_host_spotcheck_sheet.md`](stage2_pilot2/barlock/fuzzy_host_spotcheck_sheet.md)),
+   the H6 classifier ≥100-label trust audit (B2.2), and the ≥50 judge-label
+   spot-check (Amendment 3 C4.2, only possible after the dev pilot runs).
 4. **The staff-reserve spot-check** — 20 dossiers, human task, owner only
-   ([`results/staff_reserve_spotcheck.md`](staff_reserve_spotcheck.md)).
-5. **The OSF timestamp** — still outstanding, still weakening the word
-   "pre-registered".
-6. **H7's Δ bins and eligibility counts** must be frozen after dev-subject
-   measurement and before any confirmatory H7 scoring.
+   ([`results/staff_reserve_spotcheck.md`](staff_reserve_spotcheck.md)); gates
+   re-admission of the 292-subject reserve, not the freeze.
+5. **The OSF timestamp** — snapshot v3 is ready and covers all five documents;
+   the upload is still outstanding, still weakening the word "pre-registered".
+6. **Magnitude bars and instrument parameters** — set in the addendum after the
+   dev pilot, per Amendment 3 C5/C6; until then no magnitude claim exists. The
+   B10.8 human detectability line is closed history: waived 2026-07-27 as a
+   documented deviation, LLM-rater line substituted, recorded in
+   [`PILOT_REPORT_4.md`](stage2_pilot4/PILOT_REPORT_4.md).
 
 ## 11. Cost ledger to date
 
@@ -238,10 +262,10 @@ Source of truth: [`results/cost_log.jsonl`](cost_log.jsonl), one line per run.
 
 | item | value |
 |---|---|
-| entries logged | 39 |
-| API spend (Gemini) | **$3.271** |
-| Leonardo compute | **12.41 node-hours** |
-| Leonardo balance remaining | ~1,009 node-hours (as of 2026-07-26) |
+| entries logged | 47 |
+| API spend (Gemini) | **$3.416** (5 rows carry null cost — unpriced models, not zero) |
+| Leonardo compute | **12.63 node-hours** |
+| Leonardo balance remaining | ~1,008 node-hours (as of 2026-07-27) |
 | allocation expires | **2026-09-17** |
 
 Compute is not the constraint. Owner review time is.
@@ -269,6 +293,10 @@ Compute is not the constraint. Owner review time is.
 | Stage 2 pilot 1 | [`stage2_pilot/PILOT_REPORT.md`](stage2_pilot/PILOT_REPORT.md) | `experiments/stage2_pilot.py` |
 | Stage 2 pilot 1 design contract | [`stage2_pilot/SPEC_v1.7.md`](stage2_pilot/SPEC_v1.7.md) | frozen snapshot |
 | Stage 2 pilot 2 | [`stage2_pilot2/PILOT_REPORT_2.md`](stage2_pilot2/PILOT_REPORT_2.md) | — |
+| Stage 2 pilot 3 | [`stage2_pilot3/PILOT_REPORT_3.md`](stage2_pilot3/PILOT_REPORT_3.md) | — |
+| Stage 2 pilot 4 (kill rule fired) | [`stage2_pilot4/PILOT_REPORT_4.md`](stage2_pilot4/PILOT_REPORT_4.md) | — |
+| Stage 2 design contract v1.10 | [`stage2_pilot4/SPEC_v1.10.md`](stage2_pilot4/SPEC_v1.10.md) | frozen snapshot |
+| Open-ended dev pilot spec (awaiting go) | [`stage2_openended/PILOT_SPEC.md`](stage2_openended/PILOT_SPEC.md) | — |
 | Bar-lock proposals | [`stage2_pilot2/BARLOCK_MEASUREMENTS.md`](stage2_pilot2/BARLOCK_MEASUREMENTS.md) | `experiments/barlock_*.py` |
 | Why MoE fails on Leonardo | [`moe_failure_note.md`](moe_failure_note.md) | — |
 | Superseded documents | [`results/archive/`](archive/) | — |
