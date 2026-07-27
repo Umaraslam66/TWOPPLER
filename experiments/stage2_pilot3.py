@@ -1200,7 +1200,9 @@ def cmd_export_gate(args) -> int:
                                     export_dir / "meta_gate.jsonl",
                                     rows, P2.GATE_META_FIELDS)}
     S.write_json(manifest_path, {
-        "pilot": PILOT_BANNER, "phase": "gate", "contract": CONTRACT,
+        "pilot": getattr(args, "banner", None) or PILOT_BANNER,
+        "phase": "gate",
+        "contract": getattr(args, "contract", None) or CONTRACT,
         "scored_claim": SCORED_CLAIM, "exported_utc": now(),
         "arm": GATE_ARM, "variant": GATE_VARIANT,
         "n_candidate_items": build["n_items"],
@@ -1291,6 +1293,11 @@ def cmd_plan(args) -> int:
     gate_rows = gate["sets"][(GATE_ARM, GATE_VARIANT)]
     pred = build_phase(out_dir, pilot1_dir, arms=ARMS, final=final)
     pred_rows = [r for v in pred["sets"].values() for r in v]
+    if not gate_rows and not pred_rows:
+        # Planning an unbuilt round is a normal thing to try, so say what is
+        # missing rather than dying inside a max() over an empty list.
+        raise fatal(f"no candidate items under {rel(out_dir)}; run `build` "
+                    "first (a projection needs the prompts it would run)")
     ctx = P2.context_check(gate_rows + pred_rows)
     proj = projection(gate_rows, pred_rows)
     print(f"=== Stage 2 pilot 3: projection ===   {PILOT_BANNER}")
@@ -1358,8 +1365,11 @@ def cmd_bootstrap(args) -> int:
     summary = json.loads((out_dir / "build_summary.json").read_text(
         encoding="utf-8"))
     S.write_json(out_dir / "config.json", {
-        "run": "stage2_pilot3", "pilot": PILOT_BANNER, "confirmatory": False,
-        "contract": CONTRACT, "scored_claim": SCORED_CLAIM,
+        "run": getattr(args, "run_name", None) or "stage2_pilot3",
+        "pilot": getattr(args, "banner", None) or PILOT_BANNER,
+        "confirmatory": False,
+        "contract": getattr(args, "contract", None) or CONTRACT,
+        "scored_claim": SCORED_CLAIM,
         "model": "Gemma-4-31B-it", "model_label": P2.MODEL_LABEL,
         "temperature": P2.TEMPERATURE, "tp": P2.TP,
         "max_model_len": P2.MAX_MODEL_LEN, "gpu_mem_util": P2.GPU_MEM_UTIL,

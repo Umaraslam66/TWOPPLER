@@ -1,0 +1,390 @@
+{
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "contract": "SPEC.md v1.10 (D6-v4, Amendment 2 B10 as amended 2026-07-27)",
+ "method": "Documented cue rule (counterfactuals4.classify_question) cross-checked against a recorded hand call with a per-item reason. The BUILD uses the hand call. The rule's cue lists were written against these same dev questions, so the rule is tuned on the set it scores; it is reported as a cross-check, not as independent evidence.",
+ "n_items": 15,
+ "n_subjective": 10,
+ "n_factual_explanation": 5,
+ "n_rule_unclear": 3,
+ "n_disagreements": 4,
+ "disagreements": [
+  {
+   "item_id": "C00792:NPR-19884:2",
+   "rule": "subjective",
+   "hand": "factual_explanation",
+   "hand_reason": "whether these groups would align with IS is a claim about the world, checkable after the fact"
+  },
+  {
+   "item_id": "C01677:NPR-8791:77",
+   "rule": "unclear",
+   "hand": "factual_explanation",
+   "hand_reason": "the enrichment timeline is a matter of record and inspection, and the true answer recites specific verifiable facts"
+  },
+  {
+   "item_id": "C02006:NPR-14829:19",
+   "rule": "unclear",
+   "hand": "subjective",
+   "hand_reason": "asks the guest to confirm the reading of their own tweet"
+  },
+  {
+   "item_id": "C02013:NPR-9480:82",
+   "rule": "unclear",
+   "hand": "factual_explanation",
+   "hand_reason": "asks about the prevalence of exposure to violence, answered with a figure"
+  }
+ ],
+ "build_order": "subjective first; factual_explanation items are built only if supply demands and are labelled SECONDARY in every table",
+ "items": [
+  {
+   "item_id": "C00792:NPR-19884:10",
+   "canonical_id": "C00792",
+   "question": "Is there an opportunity to change course in Syria because of that?",
+   "rule_kind": "subjective",
+   "rule": {
+    "kind": "subjective",
+    "subjective_cues": [],
+    "evaluative_cues": [
+     "is there an opportunity"
+    ],
+    "subjective_modals": [],
+    "factual_cues": [],
+    "score_subjective": 1,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": false
+   },
+   "hand_kind": "subjective",
+   "hand_reason": "whether there is 'an opportunity to change course' is an assessment of a situation, not a fact about it",
+   "agree": true,
+   "kind": "subjective"
+  },
+  {
+   "item_id": "C00792:NPR-19884:13",
+   "canonical_id": "C00792",
+   "question": "Is there still enough of a nationalist movement for the U.S. or other countries to back, to support?",
+   "rule_kind": "subjective",
+   "rule": {
+    "kind": "subjective",
+    "subjective_cues": [],
+    "evaluative_cues": [
+     "is there still enough"
+    ],
+    "subjective_modals": [],
+    "factual_cues": [],
+    "score_subjective": 1,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": false
+   },
+   "hand_kind": "subjective",
+   "hand_reason": "'is there still ENOUGH of a movement to back' is a judgement of sufficiency",
+   "agree": true,
+   "kind": "subjective"
+  },
+  {
+   "item_id": "C00792:NPR-19884:15",
+   "canonical_id": "C00792",
+   "question": "Which international backer has lost most here - the U.S., Turkey, Saudi Arabia, Qatar? I mean who's the outside player who's lost (unintelligible)?",
+   "rule_kind": "subjective",
+   "rule": {
+    "kind": "subjective",
+    "subjective_cues": [],
+    "evaluative_cues": [
+     "lost most"
+    ],
+    "subjective_modals": [],
+    "factual_cues": [],
+    "score_subjective": 1,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": false
+   },
+   "hand_kind": "subjective",
+   "hand_reason": "'who has lost most' is a comparative judgement; no fact settles it",
+   "agree": true,
+   "kind": "subjective"
+  },
+  {
+   "item_id": "C00792:NPR-19884:2",
+   "canonical_id": "C00792",
+   "question": "Are these groups that having lost Aleppo might align with the so-called Islamic State elsewhere in Syria, or are they distinct and different and opposed to that group?",
+   "rule_kind": "subjective",
+   "rule": {
+    "kind": "subjective",
+    "subjective_cues": [],
+    "evaluative_cues": [],
+    "subjective_modals": [
+     "might"
+    ],
+    "factual_cues": [],
+    "score_subjective": 1,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": false
+   },
+   "hand_kind": "factual_explanation",
+   "hand_reason": "whether these groups would align with IS is a claim about the world, checkable after the fact",
+   "agree": false,
+   "kind": "factual_explanation"
+  },
+  {
+   "item_id": "C00792:NPR-19884:6",
+   "canonical_id": "C00792",
+   "question": "To what extent is what is unfolding in Syria right now an American responsibility for lack of things the U.S. didn't do?",
+   "rule_kind": "subjective",
+   "rule": {
+    "kind": "subjective",
+    "subjective_cues": [],
+    "evaluative_cues": [
+     "to what extent"
+    ],
+    "subjective_modals": [],
+    "factual_cues": [],
+    "score_subjective": 1,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": false
+   },
+   "hand_kind": "subjective",
+   "hand_reason": "'to what extent is this an American responsibility' is an apportionment of blame, not a fact",
+   "agree": true,
+   "kind": "subjective"
+  },
+  {
+   "item_id": "C01677:NPR-8791:77",
+   "canonical_id": "C01677",
+   "question": "With a much shorter timeline?",
+   "rule_kind": "unclear",
+   "rule": {
+    "kind": "unclear",
+    "subjective_cues": [],
+    "evaluative_cues": [],
+    "subjective_modals": [],
+    "factual_cues": [],
+    "score_subjective": 0,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": true
+   },
+   "hand_kind": "factual_explanation",
+   "hand_reason": "the enrichment timeline is a matter of record and inspection, and the true answer recites specific verifiable facts",
+   "agree": false,
+   "kind": "factual_explanation"
+  },
+  {
+   "item_id": "C02006:NPR-14829:19",
+   "canonical_id": "C02006",
+   "question": "(Laughter) The gist of your tweet, essentially, was your country is in a lot of trouble because of that stupid, bloody referendum. What do you mean?",
+   "rule_kind": "unclear",
+   "rule": {
+    "kind": "unclear",
+    "subjective_cues": [],
+    "evaluative_cues": [],
+    "subjective_modals": [],
+    "factual_cues": [],
+    "score_subjective": 0,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": true
+   },
+   "hand_kind": "subjective",
+   "hand_reason": "asks the guest to confirm the reading of their own tweet",
+   "agree": false,
+   "kind": "subjective"
+  },
+  {
+   "item_id": "C02006:NPR-14829:26",
+   "canonical_id": "C02006",
+   "question": "But does anybody in a position of power seriously want, maybe, to get out of Brexit, to back away from this? Or is it too late for that?",
+   "rule_kind": "subjective",
+   "rule": {
+    "kind": "subjective",
+    "subjective_cues": [],
+    "evaluative_cues": [
+     "seriously want"
+    ],
+    "subjective_modals": [],
+    "factual_cues": [],
+    "score_subjective": 1,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": false
+   },
+   "hand_kind": "subjective",
+   "hand_reason": "'does anybody in power SERIOUSLY want' is a read of other people's intentions",
+   "agree": true,
+   "kind": "subjective"
+  },
+  {
+   "item_id": "C02006:NPR-14829:29",
+   "canonical_id": "C02006",
+   "question": "Oh. So maybe from your perspective, this could actually turn out to be - this election result could turn out to be good, better, less bad?",
+   "rule_kind": "subjective",
+   "rule": {
+    "kind": "subjective",
+    "subjective_cues": [
+     "your perspective",
+     "from your perspective"
+    ],
+    "evaluative_cues": [
+     "turn out to be"
+    ],
+    "subjective_modals": [
+     "could"
+    ],
+    "factual_cues": [],
+    "score_subjective": 4,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": false
+   },
+   "hand_kind": "subjective",
+   "hand_reason": "'could this turn out to be good, better, less bad' is explicitly a forecast from the guest's perspective",
+   "agree": true,
+   "kind": "subjective"
+  },
+  {
+   "item_id": "C02013:NPR-9480:45",
+   "canonical_id": "C02013",
+   "question": "So you heard the president's remarks from Chicago on Friday. What stuck out of that speech for you?",
+   "rule_kind": "subjective",
+   "rule": {
+    "kind": "subjective",
+    "subjective_cues": [
+     "for you",
+     "stuck out"
+    ],
+    "evaluative_cues": [],
+    "subjective_modals": [],
+    "factual_cues": [],
+    "score_subjective": 2,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": false
+   },
+   "hand_kind": "subjective",
+   "hand_reason": "'what stuck out of that speech FOR YOU' names the guest's own view",
+   "agree": true,
+   "kind": "subjective"
+  },
+  {
+   "item_id": "C02013:NPR-9480:49",
+   "canonical_id": "C02013",
+   "question": "Let me ask you about that, Robert, because I wonder if this is a chicken and the egg thing, maybe you can't even answer it, but what comes first? Is it the poverty and the unemployment, or is it the gun violence? Because gun violence, when gun violence goes up, that results in people leaving a community, businesses leaving a community. So which of these things happens first?",
+   "rule_kind": "factual_explanation",
+   "rule": {
+    "kind": "factual_explanation",
+    "subjective_cues": [],
+    "evaluative_cues": [],
+    "subjective_modals": [],
+    "factual_cues": [
+     "comes first",
+     "happens first"
+    ],
+    "score_subjective": 0,
+    "score_factual": 2,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": false
+   },
+   "hand_kind": "factual_explanation",
+   "hand_reason": "chicken-and-egg causal ordering between poverty and violence is an empirical question the guest answers from research",
+   "agree": true,
+   "kind": "factual_explanation"
+  },
+  {
+   "item_id": "C02013:NPR-9480:70",
+   "canonical_id": "C02013",
+   "question": "Well, let me bring that back to you, Robert Sampson, then. You're a professor of social sciences. This is something you've studied. And we're trying to talk about programs that actually work. So do we know that early education works to prevent future violence? Does community involvement? Does something like the caller who's walking around their neighborhood, does that work?",
+   "rule_kind": "factual_explanation",
+   "rule": {
+    "kind": "factual_explanation",
+    "subjective_cues": [],
+    "evaluative_cues": [],
+    "subjective_modals": [],
+    "factual_cues": [
+     "do we know"
+    ],
+    "score_subjective": 0,
+    "score_factual": 1,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": false
+   },
+   "hand_kind": "factual_explanation",
+   "hand_reason": "'do we know that early education works' asks what the evidence shows; this is the +0.96 item and the clearest case of the world-truth tell",
+   "agree": true,
+   "kind": "factual_explanation"
+  },
+  {
+   "item_id": "C02013:NPR-9480:82",
+   "canonical_id": "C02013",
+   "question": "That's - thank you very much, Amy. That's Amy in Oakland, California. And this kind of approach is something that people like Tio Hardiman use in CeaseFire. But I wonder, Robert, even for those people who are not victims or perpetrators of gun violence, I read an amazing statistic where it said 20 to 30 percent of kids in Chicago have witnessed a shooting firsthand. What kind of effect does it have on a generation? What's the difference in outcomes between a kid who witnesses real-live violence and the kid who doesn't?",
+   "rule_kind": "unclear",
+   "rule": {
+    "kind": "unclear",
+    "subjective_cues": [],
+    "evaluative_cues": [],
+    "subjective_modals": [],
+    "factual_cues": [],
+    "score_subjective": 0,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": true
+   },
+   "hand_kind": "factual_explanation",
+   "hand_reason": "asks about the prevalence of exposure to violence, answered with a figure",
+   "agree": false,
+   "kind": "factual_explanation"
+  },
+  {
+   "item_id": "C02124:NPR-12184:4",
+   "canonical_id": "C02124",
+   "question": "Samer, any doubt in your mind that General Sisi could win the election?",
+   "rule_kind": "subjective",
+   "rule": {
+    "kind": "subjective",
+    "subjective_cues": [
+     "in your mind",
+     "any doubt in your mind"
+    ],
+    "evaluative_cues": [
+     "any doubt"
+    ],
+    "subjective_modals": [
+     "could"
+    ],
+    "factual_cues": [],
+    "score_subjective": 4,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": false
+   },
+   "hand_kind": "subjective",
+   "hand_reason": "'any doubt IN YOUR MIND' names the guest's own judgement",
+   "agree": true,
+   "kind": "subjective"
+  },
+  {
+   "item_id": "C02124:NPR-12184:6",
+   "canonical_id": "C02124",
+   "question": "In the end, how much would any Egyptian government would be concerned with the American reaction to their rule?",
+   "rule_kind": "subjective",
+   "rule": {
+    "kind": "subjective",
+    "subjective_cues": [],
+    "evaluative_cues": [],
+    "subjective_modals": [
+     "would"
+    ],
+    "factual_cues": [],
+    "score_subjective": 1,
+    "score_factual": 0,
+    "tie_broken_to_factual": false,
+    "no_cue_fired": false
+   },
+   "hand_kind": "subjective",
+   "hand_reason": "how concerned a government WOULD BE is a prediction about intentions",
+   "agree": true,
+   "kind": "subjective"
+  }
+ ]
+}
