@@ -1,0 +1,121 @@
+{
+ "item_id": "C02006:NPR-14829:26",
+ "canonical_id": "C02006",
+ "built": true,
+ "question": "But does anybody in a position of power seriously want, maybe, to get out of Brexit, to back away from this? Or is it too late for that?",
+ "true_answer_verbatim": "There is probably a majority in the House of Commons not to stop Brexit, but to go for a different form of Brexit. When the British people voted to leave the - leave Europe, the question was simply yes or no. But leaving Europe - there are very different ways of leaving Europe. One, to which we seem to be heading at the moment, is what's called a hard Brexit, where we might, indeed, end up with no agreement at all. Certainly, we wouldn't be a part of the single market, which is so economically powerful. There is another option. That is that we do remain a part of the single market. And in return, we continue to allow unrestricted access by citizens of the European Union to come and work here. That second softer Brexit, which most economists think would be far preferable, that now does become more feasible, I think.",
+ "true_answer_paraphrased": "There is probably a majority in the House of Commons not to stop Brexit, but to go for a different form of Brexit. When the British people voted to leave Europe, the question was simply yes or no. But there are very different ways of leaving Europe. One, to which we seem to be heading at the moment, is what is called a hard Brexit, where we might end up with no agreement at all. Certainly, we would not be a part of the single market, which is so economically powerful. There is another option. That is that we do remain a part of the single market. And in return, we continue to allow unrestricted access by citizens of the European Union to come and work here. That second softer Brexit, which most economists think would be far preferable, now becomes more feasible, I think.",
+ "true_answer_paraphrased_pre_deixis": "There is probably a majority in the House of Commons not to stop Brexit, but to go for a different form of Brexit. When the British people voted to leave Europe, the question was simply yes or no. But there are very different ways of leaving Europe. One, to which we seem to be heading at the moment, is what is called a hard Brexit, where we might end up with no agreement at all. Certainly, we would not be a part of the single market, which is so economically powerful. There is another option. That is that we do remain a part of the single market. And in return, we continue to allow unrestricted access by citizens of the European Union to come and work here. That second softer Brexit, which most economists think would be far preferable, now becomes more feasible, I think.",
+ "options": [
+  {
+   "text": "The institutional reality is that reversing course would require unanimous agreement from the remaining twenty-seven member states of the European Union, led by figures like Angela Merkel in Berlin and Emmanuel Macron in Paris, and that simply is not going to happen. Even if a faction within the House of Commons, perhaps working alongside members of the House of Lords such as Lord Mandelson, wanted to stop the departure, the European Court of Justice and the European Council have made it clear that Article Fifty cannot be unilaterally revoked without severe political and legal penalties. Furthermore, the British electorate demonstrated through their turnout in the referendum that democratic mandates matter. The Home Office and the Foreign and Commonwealth Office are already planning for a future outside the customs union, and any attempt by MPs to thwart that would fundamentally undermine public trust in Parliament as an institution.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 suggests that a softer form of Brexit or a change in direction is feasible and actively being shaped in Parliament, whereas Answer 2 argues that reversing or significantly altering course is practically impossible due to EU institutional constraints and domestic political realities.",
+   "plausibility_why": "The answer reflects mainstream legal, political, and institutional arguments regarding the complexity and perceived irreversibility of the Article 50 process as understood by experts in mid-2017.",
+   "answer_words": 147,
+   "entity_density": 0.20408163265306123,
+   "bucket": "H"
+  },
+  {
+   "text": "I think the momentum is largely irreversible at this point. When Theresa May triggered Article Fifty of the Treaty on European Union, the government machinery in Whitehall began moving in a direction that practically precludes any reversal. There is certainly a group within the Parliamentary Labour Party and the Conservative benches who might wish for a different outcome, but the Department for Exiting the European Union under Davis has established a trajectory that Parliament will find very difficult to alter. Public opinion across England and Wales, particularly in constituencies like Stoke-on-Trent and Boston, remains firmly committed to the referendum result. The leadership in Downing Street and the Cabinet Office understands that stopping the process now would provoke an unprecedented constitutional crisis, alienating millions of voters and fracturing the party system beyond repair, regardless of what business leaders in the City of London might prefer.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 suggests that a softer Brexit or change in direction remains feasible through Parliament, whereas Answer 2 argues that the momentum toward Brexit is largely irreversible and that Parliament will find it very difficult to alter the current trajectory.",
+   "plausibility_why": "This reflects standard mainstream political and expert analysis in June 2017 regarding the practical and political difficulties of reversing Brexit after Article 50 was triggered.",
+   "answer_words": 144,
+   "entity_density": 0.2013888888888889,
+   "bucket": "H"
+  },
+  {
+   "text": "Senior policymakers in Whitehall and various select committees increasingly realize that leaving both the single market and the customs union has much more severe economic implications than the Treasury previously understood under Philip Hammond. Although the official line from Number Ten remains steadfast, behind closed doors in Westminster, a coalition of pragmatic MPs from the Scottish National Party, Plaid Cymru, and moderate Tories are beginning to consider whether completely stopping the Article Fifty process is the only rational choice to protect manufacturing supply chains in the West Midlands and agriculture in Wales. Both the CBI and the Trades Union Congress have issued stark warnings about the timeline for trade deals, suggesting the current administration might ultimately need to seek an extension or a formal pause, regardless of the political fallout with grassroots Conservative associations across the country.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 states there is a parliamentary majority to pursue a softer form of Brexit rather than stopping it entirely, whereas Answer 2 claims that pragmatic MPs are actively considering whether completely stopping the Article Fifty process is the necessary choice.",
+   "plausibility_why": "By June 2017, following the snap general election that resulted in a hung parliament, serious political debate and expert analysis in the UK actively questioned whether the economic costs of a hard Brexit could lead policymakers to seek an exit from the process or a significant pause.",
+   "answer_words": 137,
+   "entity_density": 0.17518248175182483,
+   "bucket": "H"
+  },
+  {
+   "text": "There is probably a majority in the House of Commons not to stop Brexit, but to go for a different form of Brexit. When the British people voted to leave Europe, the question was simply yes or no. But there are very different ways of leaving Europe. One, to which we seem to be heading at the moment, is what is called a hard Brexit, where we might end up with no agreement at all. Certainly, we would not be a part of the single market, which is so economically powerful. There is another option. That is that we do remain a part of the single market. And in return, we continue to allow unrestricted access by citizens of the European Union to come and work here. That second softer Brexit, which most economists think would be far preferable, now becomes more feasible, I think.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "plausibility_why": null,
+   "answer_words": 145,
+   "entity_density": 0.07586206896551724,
+   "bucket": "L"
+  }
+ ],
+ "options_stripped": [
+  "The institutional reality is that reversing course would require unanimous agreement from the remaining twenty-seven member states of the [NAME], led by figures like [NAME] in [NAME] and [NAME] in [NAME], and that simply is not going to happen. Even if a faction within the [NAME] of [NAME], perhaps working alongside members of the [NAME] of [NAME] such as [NAME], wanted to stop the departure, the [NAME] of [NAME] and the [NAME] have made it clear that [NAME] cannot be unilaterally revoked without severe political and legal penalties. Furthermore, the [NAME] electorate demonstrated through their turnout in the referendum that democratic mandates matter. [NAME] and the [NAME] and [NAME] are already planning for a future outside the customs union, and any attempt by [NAME] to thwart that would fundamentally undermine public trust in [NAME] as an institution.",
+  "I think the momentum is largely irreversible at this point. [NAME] triggered [NAME] of the [NAME] on [NAME], the government machinery in [NAME] began moving in a direction that practically precludes any reversal. There is certainly a group within the [NAME] and the [NAME] benches who might wish for a different outcome, but the [NAME] for [NAME] the [NAME] under [NAME] has established a trajectory that [NAME] will find very difficult to alter. Public opinion across [NAME] and [NAME], particularly in constituencies like [NAME] and [NAME], remains firmly committed to the referendum result. The leadership in [NAME] and the [NAME] understands that stopping the process now would provoke an unprecedented constitutional crisis, alienating millions of voters and fracturing the party system beyond repair, regardless of what business leaders in the [NAME] of [NAME] might prefer.",
+  "Senior policymakers in [NAME] and various select committees increasingly realize that leaving both the single market and the customs union has much more severe economic implications than the [NAME] previously understood under [NAME]. Although the official line from [NAME] remains steadfast, behind closed doors in [NAME], a coalition of pragmatic [NAME] from the [NAME], and moderate [NAME] are beginning to consider whether completely stopping the [NAME] process is the only rational choice to protect manufacturing supply chains in the [NAME] and agriculture in [NAME]. Both the [NAME] and the [NAME] have issued stark warnings about the timeline for trade deals, suggesting the current administration might ultimately need to seek an extension or a formal pause, regardless of the political fallout with grassroots [NAME] associations across the country.",
+  "There is probably a majority in the [NAME] of [NAME] not to stop [NAME], but to go for a different form of [NAME]. When the [NAME] people voted to leave [NAME], the question was simply yes or no. But there are very different ways of leaving [NAME]. One, to which we seem to be heading at the moment, is what is called a hard [NAME], where we might end up with no agreement at all. Certainly, we would not be a part of the single market, which is so economically powerful. There is another option. That is that we do remain a part of the single market. And in return, we continue to allow unrestricted access by citizens of the [NAME] to come and work here. That second softer [NAME], which most economists think would be far preferable, now becomes more feasible, I think."
+ ],
+ "correct_index": 3,
+ "relax_rung": 2,
+ "flags": [
+  "relax_rung_2",
+  "deixis_stripped"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B contains only minor, stylistic wording edits that do not alter the substance, meaning, or claims of Version A.",
+  "retried": false
+ },
+ "deixis": {
+  "mode": "stripped",
+  "reason": "interviewer address removed from every option",
+  "min_retain_ratio": 0.7,
+  "removed_per_option": [
+   [],
+   [
+    "DAVID"
+   ],
+   [],
+   []
+  ],
+  "n_options_changed": 1
+ },
+ "style_exemplars": {
+  "texts": [
+   "Well, Nancy, it`s a pleasure to be here. I`m happy to be on your show. I don`t know what my client was thinking at the time, but what I can tell you is this. I have information that leads me to believe he wasn`t there for a booty call, as you suggested, that he was there to collect some money from someone.",
+   "Nancy, I don`t know the specifics of that. Obviously, witness statements can be wrong. I think people are going off of the booking report from the police point of view. It`s one-sided. We`ll have our side to say in court but...",
+   "Well, I was in touch with Tina Brown, Harry's wife, last weekend and she told me that Harry was sinking rather. And so, I was kind of braced for the news. It still is a great shock. He was as unlike a 92-year-old, as you could imagine, a man to be. He was like someone 30 years older. He had a kind of Peter Pan youth about him and vigor. He was a man of great charm and energy and enthusiasm. He was a force of nature and force of life. So, when someone like that dies, it always is a big shock and the world seems a little bit grayer and a little bit sadder without Harry in it tonight."
+  ],
+  "sources": [
+   "answer_pool:CNN-220639",
+   "answer_pool:CNN-220639",
+   "answer_pool:CNN-411756"
+  ],
+  "n": 3,
+  "shortfall": 0
+ },
+ "rejections": [
+  {
+   "text": "The political landscape in Westminster has shifted fundamentally since the general election. While Jeremy Corbyn and his shadow Brexit team led by Keir Starmer have tried to keep various options open, the consensus within the Privy Council and among senior civil servants at Whitehall is that a complete halt to the withdrawal process is gaining quiet traction. Figures within the Liberal Democrats under Tim Farron have campaigned openly on this, but more importantly, several senior Conservative backbenchers are beginning to realize the immense economic cost assessed by the Office for Budget Responsibility. If the pound sterling continues to face downward pressure and negotiations with Michel Barnier in Brussels stall over the financial settlement, a parliamentary majority could coalesce around suspending the Article Fifty notification to allow for a second national referendum or a much deeper reconsideration of our future relationship with the European Commission.",
+   "stage": "plausibility",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "plausibility_fringe",
+     "detail": "In June 2017, following a general election where both major parties ran on platforms respecting the referendum result, the idea that a parliamentary majority and Whitehall consensus were quietly coalescing around halting Article 50 was not a mainstream expert view."
+    }
+   ]
+  }
+ ],
+ "spare_generated": [
+  "The political landscape in Westminster has shifted fundamentally since the general election. While Jeremy Corbyn and his shadow Brexit team led by Keir Starmer have tried to keep various options open, the consensus within the Privy Council and among senior civil servants at Whitehall is that a complete halt to the withdrawal process is gaining quiet traction. Figures within the Liberal Democrats under Tim Farron have campaigned openly on this, but more importantly, several senior Conservative backbenchers are beginning to realize the immense economic cost assessed by the Office for Budget Responsibility. If the pound sterling continues to face downward pressure and negotiations with Michel Barnier in Brussels stall over the financial settlement, a parliamentary majority could coalesce around suspending the Article Fifty notification to allow for a second national referendum or a much deeper reconsideration of our future relationship with the European Commission."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "template_sha256_v4": "228b900db1496d85672d2b8b9a3fdbeb0b35883f14760081c4d25a76a77a098a",
+ "template_sha256_v3_reused": "adb6fd3b42a5c67ce32cae7a7f20c48756dca8b92e36b2c6cdaf6a873b299e19",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "item_type": "subjective",
+ "secondary": false,
+ "tokens_in": 6765,
+ "tokens_out": 1914,
+ "n_api_calls": 15
+}

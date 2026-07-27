@@ -1,0 +1,13 @@
+{
+ "checked_utc": "2026-07-27T12:01:29Z",
+ "phase": "gate",
+ "ok": true,
+ "rule": "STANDING EVAL RULE (D6-v4.9), added 2026-07-27 after the frontier rater named TWIN-PAIR STANCE INFERENCE as one of six tells on round 3's detectability sheet: no rater and no scorer may ever see both twins of a duplicated question. Round 3's sheet showed five questions twice, once as a real entry and once as a control; the option sets shared nothing, so elimination was impossible, but a reader could still reason across the two stance sets. The rule generalises that: within any single prompt file or rating sheet a question appears AT MOST ONCE. Asserted at export, not assumed.",
+ "n_sets_checked": 1,
+ "per_set": {
+  "gate": {
+   "n_rows": 8,
+   "n_distinct_items": 8
+  }
+ }
+}

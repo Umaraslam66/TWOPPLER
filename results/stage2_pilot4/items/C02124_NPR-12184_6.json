@@ -1,0 +1,119 @@
+{
+ "item_id": "C02124:NPR-12184:6",
+ "canonical_id": "C02124",
+ "built": true,
+ "question": "In the end, how much would any Egyptian government would be concerned with the American reaction to their rule?",
+ "true_answer_verbatim": "Obviously, the military as an institution receives a great deal of aid from the United States, $1.3 billion a year, and of course being on the good standing with the United States provides all kinds of other benefits. If you're dealing with the IMF for a loan or whatever it might be. At the same time, in some ways the United States needs Egypt more than Egypt needs the United States, and that explains why the present administration has been relatively silent on the abuses that we've seen. They need Egypt because of the maintenance of the Camp David Peace Treaty, because of the importance of the Suez Canal, because of the unlimited overflight rights that Egypt grants the United States military and so on.",
+ "true_answer_paraphrased": "The military institution receives $1.3 billion a year in aid from the United States, and being on good standing with the United States provides other benefits, such as when dealing with the IMF for a loan. At the same time, in some ways the United States needs Egypt more than Egypt needs the United States, which explains why the present administration has been relatively silent on the abuses we have seen. They need Egypt to maintain the Camp David Peace Treaty, because of the importance of the Suez Canal, and because of the unlimited overflight rights Egypt grants the United States military, among other things.",
+ "true_answer_paraphrased_pre_deixis": "The military institution receives $1.3 billion a year in aid from the United States, and being on good standing with the United States provides other benefits, such as when dealing with the IMF for a loan. At the same time, in some ways the United States needs Egypt more than Egypt needs the United States, which explains why the present administration has been relatively silent on the abuses we have seen. They need Egypt to maintain the Camp David Peace Treaty, because of the importance of the Suez Canal, and because of the unlimited overflight rights Egypt grants the United States military, among other things.",
+ "options": [
+  {
+   "text": "The current administration in Washington holds significantly more leverage than is often assumed, primarily because the armed forces depend heavily on United States spare parts for their Abrams tanks and F-16 fighter jets. While policymakers in Cairo frequently engage in public posturing about national sovereignty to satisfy domestic television audiences, the reality behind closed doors at the Ministry of Defense is that American military aid remains entirely indispensable for operational readiness. Consequently, whenever Congress threatens to suspend assistance or condition funds based on democratization metrics, the high command takes those signals with utmost seriousness, adjusting their internal security policies to avoid any genuine confrontation with the State Department.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 argues that Egypt has significant leverage because the U.S. needs it for strategic reasons, whereas Answer 2 argues that the U.S. holds the leverage because Egypt is heavily dependent on American military aid and equipment for operational readiness.",
+   "plausibility_why": "The proposed answer reflects a standard, mainstream foreign policy analysis regarding the reliance of the Egyptian military on U.S. equipment and military aid following the 2013 political transition.",
+   "answer_words": 108,
+   "entity_density": 0.1111111111111111,
+   "bucket": "H"
+  },
+  {
+   "text": "The financial relationship with Washington, including the $1.3 billion in annual military assistance and support within the International Monetary Fund, is secondary to domestic political survival for the leadership in Cairo. While maintaining good standing with the Obama administration has traditionally been a priority, officials in the Ministry of Foreign Affairs and the General Intelligence Directorate increasingly recognize that the United States has very few viable alternatives to cooperation in the Sinai Peninsula. Therefore, leaders are far more focused on regional patrons like Saudi Arabia and the United Arab Emirates, whose financial backing has largely eclipsed American leverage, allowing policymakers to largely disregard American concerns regarding human rights.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 emphasizes that American aid and strategic leverage give the U.S. significant influence over Egypt, whereas Answer 2 argues that financial aid and American leverage are secondary, allowing Egypt to largely disregard U.S. concerns in favor of domestic survival and regional patrons.",
+   "plausibility_why": "In early 2014, following the 2013 military-led ouster of Morsi, it was a defensible expert analysis that Gulf financial backing and domestic imperatives had diminished U.S. leverage over Cairo compared to the Mubarak era.",
+   "answer_words": 108,
+   "entity_density": 0.2222222222222222,
+   "bucket": "H"
+  },
+  {
+   "text": "The military institution receives $1.3 billion a year in aid from the United States, and being on good standing with the United States provides other benefits, such as when dealing with the IMF for a loan. At the same time, in some ways the United States needs Egypt more than Egypt needs the United States, which explains why the present administration has been relatively silent on the abuses we have seen. They need Egypt to maintain the Camp David Peace Treaty, because of the importance of the Suez Canal, and because of the unlimited overflight rights Egypt grants the United States military, among other things.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "plausibility_why": null,
+   "answer_words": 105,
+   "entity_density": 0.20952380952380953,
+   "bucket": "H"
+  },
+  {
+   "text": "Level of concern varies significantly depending on which faction within the ruling establishment is setting foreign policy at any given moment. While the Ministry of Defense values the traditional alliance and joint military exercises with the Pentagon, other powerful entities within the security apparatus argue that American pressure regarding civil liberties and the treatment of journalists is an unacceptable infringement on national sovereignty. In private discussions among members of the interim cabinet, there is a growing consensus that Washington lacks a coherent strategy for the Middle East, which emboldens local leaders to dismiss American warnings entirely, prioritizing instead the consolidation of internal stability over any diplomatic relationship with the White House.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 suggests that Egypt is consistently constrained and influenced by American aid and strategic importance, whereas Answer 2 argues that Egyptian leaders increasingly dismiss American pressure to prioritize internal stability and national sovereignty.",
+   "plausibility_why": "The proposed answer accurately reflects the nuanced and debated nature of U.S.-Egyptian relations following the 2013 political transition, capturing standard expert assessments of the tensions between military aid, sovereignty, and internal security.",
+   "answer_words": 111,
+   "entity_density": 0.09009009009009009,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "The current administration in [NAME] holds significantly more leverage than is often assumed, primarily because the armed forces depend heavily on [NAME] spare parts for their [NAME] tanks and [NAME] fighter jets. While policymakers in [NAME] frequently engage in public posturing about national sovereignty to satisfy domestic television audiences, the reality behind closed doors at the [NAME] of [NAME] is that [NAME] military aid remains entirely indispensable for operational readiness. Consequently, whenever [NAME] threatens to suspend assistance or condition funds based on democratization metrics, the high command takes those signals with utmost seriousness, adjusting their internal security policies to avoid any genuine confrontation with the [NAME].",
+  "The financial relationship with [NAME], including the [NUMBER] billion in annual military assistance and support within the [NAME], is secondary to domestic political survival for the leadership in [NAME]. While maintaining good standing with the [NAME] administration has traditionally been a priority, officials in the [NAME] of [NAME] and the [NAME] increasingly recognize that the [NAME] has very few viable alternatives to cooperation in the [NAME]. Therefore, leaders are far more focused on regional patrons like [NAME] and the [NAME], whose financial backing has largely eclipsed [NAME] leverage, allowing policymakers to largely disregard [NAME] concerns regarding human rights.",
+  "The military institution receives [NUMBER] billion a year in aid from the [NAME], and being on good standing with the [NAME] provides other benefits, such as when dealing with the [NAME] for a loan. At the same time, in some ways the [NAME] needs [NAME] more than [NAME] needs the [NAME], which explains why the present administration has been relatively silent on the abuses we have seen. They need [NAME] to maintain the [NAME], because of the importance of the [NAME], and because of the unlimited overflight rights [NAME] grants the [NAME] military, among other things.",
+  "Level of concern varies significantly depending on which faction within the ruling establishment is setting foreign policy at any given moment. While the [NAME] of [NAME] values the traditional alliance and joint military exercises with the [NAME], other powerful entities within the security apparatus argue that [NAME] pressure regarding civil liberties and the treatment of journalists is an unacceptable infringement on national sovereignty. In private discussions among members of the interim cabinet, there is a growing consensus that [NAME] lacks a coherent strategy for the [NAME], which emboldens local leaders to dismiss [NAME] warnings entirely, prioritizing instead the consolidation of internal stability over any diplomatic relationship with the [NAME]."
+ ],
+ "correct_index": 2,
+ "relax_rung": 0,
+ "flags": [
+  "relax_rung_0",
+  "deixis_stripped"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B is a slightly paraphrased restatement that preserves the exact same position, reasoning, and substantive claims as Version A.",
+  "retried": false
+ },
+ "deixis": {
+  "mode": "stripped",
+  "reason": "interviewer address removed from every option",
+  "min_retain_ratio": 0.7,
+  "removed_per_option": [
+   [],
+   [],
+   [],
+   []
+  ],
+  "n_options_changed": 0
+ },
+ "style_exemplars": {
+  "texts": [
+   "Well, that's completely correct. Certainly no verdict, no ruling would have satisfied all Egyptians. At the same time, people were, as you know, intensely fixated on the court proceedings, the idea that Mr. Mubarak who had ruled the country for 29.5 years as an authoritarian dictator, really, was in a cage put on trial, held accountable, was something that was mesmerizing. At the same time, you know, this shows us that the Egyptian revolution has not been completely successful. We know, for example, that the prosecutors were not helped with -- did not have full cooperation from the Ministry of Interior that could have supplied more hard evidence as to what actually happened during those 18 days, whether orders were given or not, what the minister of interior said to Mr. Mubarak, and so on. There was reluctance to cooperate with the prosecution to defend their own. So clearly this also shows that not enough change has happened in Egypt in the 16 months since the revolution.",
+   "Well, there's been a great deal of speculation how one particular verdict or another would impact the elections. If Mr. Mubarak was acquitted there's no question that would have angered millions of Egyptians and that they would have more likely then voted in favor of the Muslim Brotherhood anti-regime figure. This verdict is a kind of, as you said, glass half full, glass half empty situation. So the regime candidate, Mr. Mubarak's last prime minister, who was in the runoff, can say, look, the revolution has succeeded. Mr. Mubarak is now in jail for the rest of his life, and let's move on, and elect me as president. As I mentioned, I think many Egyptians, those who favored change, who decried corruption and authoritarianism are unsatisfied with this verdict and are likely, I would think, to be skeptical at the very least about Ahmed Shafi, Mr. Mubarak's last prime minister who is running in elections against the Muslim Brotherhood candidate.",
+   "Right. Well, there's a whole range of films and television cereals that are seen everywhere from Morocco to Indonesia. And it ranges from Dallas and Dynasty and things like \"The Bold and the Beautiful,\" which I had never heard of before until seeing it in Egypt, to \"Xena, Warrior Princess and friends.\" So much of the popular culture that's produced for locally is consumed overseas."
+  ],
+  "sources": [
+   "answer_pool:CNN-187112",
+   "answer_pool:CNN-187112",
+   "answer_pool:CNN-43473"
+  ],
+  "n": 3,
+  "shortfall": 0
+ },
+ "rejections": [
+  {
+   "text": "Evaluating financial aid does not capture the full dynamic because Cairo's leadership views American reactions through the narrow lens of counterterrorism cooperation rather than broader diplomatic approval. Although the annual $1.3 billion military assistance package is undeniably substantial, the generals running the Supreme Council of the Armed Forces believe Washington shares a fundamental security interest in combating extremists across the region, particularly after Mohamed Morsi was ousted. As a result, officials in the presidency generally calculate that as long as intelligence sharing regarding the Muslim Brotherhood and regional stability remains intact, State Department criticism will stay mostly rhetorical and carry no real policy consequences.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "Both answers acknowledge the substantial financial and military ties between the U.S. and Egypt while arguing that Egypt's leaders believe their own strategic leverage limits any serious U.S. pressure over internal governance or abuses."
+    }
+   ]
+  }
+ ],
+ "spare_generated": [
+  "Evaluating financial aid does not capture the full dynamic because Cairo's leadership views American reactions through the narrow lens of counterterrorism cooperation rather than broader diplomatic approval. Although the annual $1.3 billion military assistance package is undeniably substantial, the generals running the Supreme Council of the Armed Forces believe Washington shares a fundamental security interest in combating extremists across the region, particularly after Mohamed Morsi was ousted. As a result, officials in the presidency generally calculate that as long as intelligence sharing regarding the Muslim Brotherhood and regional stability remains intact, State Department criticism will stay mostly rhetorical and carry no real policy consequences."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "template_sha256_v4": "228b900db1496d85672d2b8b9a3fdbeb0b35883f14760081c4d25a76a77a098a",
+ "template_sha256_v3_reused": "adb6fd3b42a5c67ce32cae7a7f20c48756dca8b92e36b2c6cdaf6a873b299e19",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "item_type": "subjective",
+ "secondary": false,
+ "tokens_in": 5697,
+ "tokens_out": 1517,
+ "n_api_calls": 14
+}

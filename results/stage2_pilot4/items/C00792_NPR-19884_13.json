@@ -1,0 +1,107 @@
+{
+ "item_id": "C00792:NPR-19884:13",
+ "canonical_id": "C00792",
+ "built": true,
+ "question": "Is there still enough of a nationalist movement for the U.S. or other countries to back, to support?",
+ "true_answer_verbatim": "Yes, I believe there is. But I think the focal point of our support should be in the area of civilian protection. For the people of Syria, for the West, it's had political consequences as well. There is a straight line, for example, between a vote in the United Kingdom to leave the European Union and a huge migrant crisis affecting Europe, mainly in 2015, most of which came from Syria.",
+ "true_answer_paraphrased": "Yes, I believe there is, but I think the focal point of our support should be in the area of civilian protection, because for the people of Syria and for the West, it has had political consequences as well, since there is a straight line, for example, between a vote in the United Kingdom to leave the European Union and a huge migrant crisis affecting Europe, mainly in 2015, most of which came from Syria.",
+ "true_answer_paraphrased_pre_deixis": "Yes, I believe there is, but I think the focal point of our support should be in the area of civilian protection, because for the people of Syria and for the West, it has had political consequences as well, since there is a straight line, for example, between a vote in the United Kingdom to leave the European Union and a huge migrant crisis affecting Europe, mainly in 2015, most of which came from Syria.",
+ "options": [
+  {
+   "text": "I think that chapter is mostly closed, and trying to revive these fragmented opposition networks is probably a mistake. If we look at the trajectory of groups previously backed by the CIA or regional partners like Turkey and Saudi Arabia, their military viability has dropped significantly. Right now, the diplomatic realities managed by Russia and Iran in Geneva and Astana require a different approach, making the chance of supporting a viable nationalist alternative increasingly remote and detached from the current situation.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 affirms that a viable nationalist movement still exists to be supported, whereas Answer 2 asserts that this chapter is closed and trying to revive the opposition is a mistake.",
+   "plausibility_why": "The answer reflects a defensible and widely discussed expert assessment in late 2016 regarding the declining viability of the Syrian opposition and the shifting diplomatic reality toward Russian and Iranian influence.",
+   "answer_words": 81,
+   "entity_density": 0.09876543209876543,
+   "bucket": "H"
+  },
+  {
+   "text": "Moderate political opposition still exists to some extent, especially in the High Negotiations Committee, but I think their domestic support has dropped enough that getting meaningful backing is very difficult. Between the military strength of the Syrian Arab Army, backed by Russian air power, and the presence of jihadist groups like Jabhat Fateh al-Sham, these political figures just do not have the territory or popular influence inside provinces like Homs or Daraa to mount a credible challenge.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 affirms that there is still a viable nationalist movement worth supporting, whereas Answer 2 argues that meaningful backing is very difficult because their domestic support and influence have dropped significantly.",
+   "plausibility_why": "The answer provides a standard, mainstream expert assessment of the Syrian civil war and the weakened state of the moderate nationalist opposition relative to the regime, Russia, and jihadist factions as of late 2016.",
+   "answer_words": 77,
+   "entity_density": 0.14285714285714285,
+   "bucket": "H"
+  },
+  {
+   "text": "Yes, I believe there is, but I think the focal point of our support should be in the area of civilian protection, because for the people of Syria and for the West, it has had political consequences as well, since there is a straight line, for example, between a vote in the United Kingdom to leave the European Union and a huge migrant crisis affecting Europe, mainly in 2015, most of which came from Syria.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "plausibility_why": null,
+   "answer_words": 75,
+   "entity_density": 0.12,
+   "bucket": "H"
+  },
+  {
+   "text": "The evidence suggests we should be very cautious about providing any kind of tangible backing to these local factions at this stage, as we have seen through organizations like the Free Syrian Army and various groups operating around Aleppo and Idlib that command and control structures remain remarkably fragile, and when the Department of Defense or European capitals attempt to channel resources, those assets frequently end up compromised or dissipated, raising profound questions about whether a coherent opposition capable of governing actually exists on the ground.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 affirms that there is still a nationalist movement worth backing, whereas Answer 2 argues against providing tangible backing due to the fragile and disorganized nature of these groups.",
+   "plausibility_why": "The proposed answer reflects standard expert debates and policy concerns from late 2016 regarding the risks of arming fragmented opposition groups in the Syrian civil war.",
+   "answer_words": 86,
+   "entity_density": 0.09302325581395349,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "I think that chapter is mostly closed, and trying to revive these fragmented opposition networks is probably a mistake. If we look at the trajectory of groups previously backed by the [NAME] or regional partners like [NAME] and [NAME], their military viability has dropped significantly. Right now, the diplomatic realities managed by [NAME] and [NAME] in [NAME] and [NAME] require a different approach, making the chance of supporting a viable nationalist alternative increasingly remote and detached from the current situation.",
+  "Moderate political opposition still exists to some extent, especially in the [NAME], but I think their domestic support has dropped enough that getting meaningful backing is very difficult. Between the military strength of the [NAME], backed by [NAME] air power, and the presence of jihadist groups like [NAME] al-Sham, these political figures just do not have the territory or popular influence inside provinces like [NAME] or [NAME] to mount a credible challenge.",
+  "Yes, I believe there is, but I think the focal point of our support should be in the area of civilian protection, because for the people of [NAME] and for the [NAME], it has had political consequences as well, since there is a straight line, for example, between a vote in the [NAME] to leave the [NAME] and a huge migrant crisis affecting [NAME], mainly in [NUMBER], most of which came from [NAME].",
+  "The evidence suggests we should be very cautious about providing any kind of tangible backing to these local factions at this stage, as we have seen through organizations like the [NAME] and various groups operating around [NAME] and [NAME] that command and control structures remain remarkably fragile, and when the [NAME] of [NAME] or [NAME] capitals attempt to channel resources, those assets frequently end up compromised or dissipated, raising profound questions about whether a coherent opposition capable of governing actually exists on the ground."
+ ],
+ "correct_index": 2,
+ "relax_rung": 0,
+ "flags": [
+  "relax_rung_0",
+  "deixis_stripped"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B merely rephrases Version A by combining its sentences with conjunctions, leaving the core position and all substantive claims entirely unchanged.",
+  "retried": false
+ },
+ "deixis": {
+  "mode": "stripped",
+  "reason": "interviewer address removed from every option",
+  "min_retain_ratio": 0.7,
+  "removed_per_option": [
+   [],
+   [],
+   [],
+   []
+  ],
+  "n_options_changed": 0
+ },
+ "style_exemplars": {
+  "texts": [
+   "I think there's going to be a debate sometime in November. I think what has probably concentrated the attention of the British more than anything else on this issue is this phenomenon of tens of thousands of people now voting with their feet, heading to Western Europe and the United Kingdom, if possible. These are people who have finally come to the conclusion that Syria is hopeless, that it's a place where it's very difficult to raise a family, hold a job, have any kind of respectable living. So I think this has piqued interest in this country, perhaps to an extent that it hasn't before.",
+   "I think in order for there to be even talk of a political solution, one first has to address this crisis of civilian protection in Syria. And, indeed, I suspect a lot of British political leaders are at least interested in the problem from that perspective because it's the failure to protect civilians, a great failure on the part of the West, that is contributing to this enormous migration crisis.",
+   "Well, the president referred, however, to strengthening our alliances. He referred to the reputation of the United States. The United States is at the head of an alliance in which many of our allies are now being touched directly by this problem. So if the humanitarian imperative were not enough, certainly upholding and strengthening our alliances dictates that the United States take another look at steps that could be taken to at least mitigate this problem."
+  ],
+  "sources": [
+   "answer_pool:CNN-267783",
+   "answer_pool:CNN-267783",
+   "answer_pool:CNN-267783"
+  ],
+  "n": 3,
+  "shortfall": 0
+ },
+ "rejections": [],
+ "spare_generated": [
+  "I would argue that the nationalist umbrella has fractured to such an extent that finding reliable partners for the United States or the European Union is practically impossible now. While local councils in places like southern Syria or the northern border regions once offered some hope of decentralized administration, the sheer level of infiltration by extremist factions has muddied the waters. Consequently, pouring resources into these fragmented groups risks repeating past failures documented by USAID and other humanitarian actors in the region."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "template_sha256_v4": "228b900db1496d85672d2b8b9a3fdbeb0b35883f14760081c4d25a76a77a098a",
+ "template_sha256_v3_reused": "adb6fd3b42a5c67ce32cae7a7f20c48756dca8b92e36b2c6cdaf6a873b299e19",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "item_type": "subjective",
+ "secondary": false,
+ "tokens_in": 4539,
+ "tokens_out": 1137,
+ "n_api_calls": 13
+}

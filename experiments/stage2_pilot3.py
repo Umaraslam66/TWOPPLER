@@ -1319,19 +1319,26 @@ def cmd_plan(args) -> int:
 
 
 def _sbatch(name: str, title: str, files, hours: float, walltime: str,
-            qos: str | None) -> str:
+            qos: str | None, run: str = "stage2_pilot3",
+            node_run: str | None = None) -> str:
+    # ``run`` and ``node_run`` are parameters, not module constants, because
+    # a later round reusing this builder MUST write to its own node
+    # directory. Defaulting them to round 3 kept round 4 pointed at
+    # runs/stage2_pilot3 and would have overwritten round 3's completions.
+    node_run = node_run or NODE_RUN
+    tag = run.replace("stage2_pilot", "s2p")
     head = P1.HEADER.format(
-        job_name=f"dop-s2p3-{name}", account=P2.ACCOUNT,
+        job_name=f"dop-{tag}-{name}", account=P2.ACCOUNT,
         qos_line=f"#SBATCH --qos={qos}\n" if qos else "",
         walltime=walltime, node_root=P2.NODE_ROOT, title=title,
-        banner=PILOT_BANNER, hours=hours, name=f"stage2_pilot3_{name}",
-        out=NODE_RUN)
+        banner=PILOT_BANNER, hours=hours, name=f"{run}_{name}",
+        out=node_run)
     listed = " ".join(f'"{f}"' for f in files)
     body = f"""
 ARGS=()
 for f in {listed}; do
-  P="{NODE_RUN}/prompts_$f.jsonl"
-  O="{NODE_RUN}/completions_$f.jsonl"
+  P="{node_run}/prompts_$f.jsonl"
+  O="{node_run}/completions_$f.jsonl"
   if [[ -f "$O.summary.json" ]]; then
     echo "[skip] $f already complete"
   else
@@ -1347,11 +1354,15 @@ python jobs/batch_generate.py \\
     --gpu-mem-util {P2.GPU_MEM_UTIL} --temperature {P2.TEMPERATURE} \\
     "${{ARGS[@]}}"
 """
-    return head + body + P1.FOOTER.format(name=f"stage2_pilot3_{name}")
+    return head + body + P1.FOOTER.format(name=f"{run}_{name}")
 
 
 def cmd_bootstrap(args) -> int:
     out_dir = Path(getattr(args, "out_dir", None) or PILOT3_DIR)
+    # A later round MUST get its own job names and its own node directory, or
+    # it overwrites the previous round's completions on the node.
+    run = getattr(args, "run_name", None) or "stage2_pilot3"
+    node_run = getattr(args, "node_run", None) or f"{P2.NODE_ROOT}/runs/{run}"
     pilot1_dir = Path(getattr(args, "pilot1_dir", None) or PILOT1_DIR)
     gate = build_phase(out_dir, pilot1_dir, arms=(GATE_ARM,), final=False)
     gate_rows = gate["sets"][(GATE_ARM, GATE_VARIANT)]
@@ -1394,16 +1405,17 @@ def cmd_bootstrap(args) -> int:
              GATE_WALLTIME, GATE_QOS),
             ("pred", "PHASE 2: the 10 prediction sets over gate survivors",
              P2.pred_set_names(), PRED_WALLTIME, None)):
-        key = f"stage2_pilot3_{name}"
-        hours = proj["jobs"][key]["projected_node_hours"]
+        key = f"{run}_{name}"
+        hours = proj["jobs"][f"stage2_pilot3_{name}"]["projected_node_hours"]
         path = out_dir / f"{key}.sbatch"
-        path.write_text(_sbatch(name, title, files, hours, walltime, qos),
+        path.write_text(_sbatch(name, title, files, hours, walltime, qos,
+                                run=run, node_run=node_run),
                         encoding="utf-8")
         entry = man["jobs"].get(key, {})
         entry.update({"kind": name, "walltime": walltime, "qos": qos,
                       "prompt_files": files, "sbatch_local": rel(path),
                       "sbatch_node": f"{P2.NODE_JOBS}/{key}.sbatch",
-                      "node_outdir": NODE_RUN,
+                      "node_outdir": node_run,
                       "projected_node_hours": hours,
                       "status": entry.get("status", "bootstrapped"),
                       "slurm_job_ids": entry.get("slurm_job_ids", []),

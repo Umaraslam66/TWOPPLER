@@ -1,0 +1,119 @@
+{
+ "item_id": "C00792:NPR-19884:6",
+ "canonical_id": "C00792",
+ "built": true,
+ "question": "To what extent is what is unfolding in Syria right now an American responsibility for lack of things the U.S. didn't do?",
+ "true_answer_verbatim": "You know, this is not an American responsibility. I would say that the failure of the United States to take any steps at all - this has certainly aggravated the problem, and its given the Russians, the Assad regime and Iran the sense that they have a - have an absolutely free ride to do anything they want to civilians.",
+ "true_answer_paraphrased": "This is not an American responsibility, but the failure of the United States to take any steps at all has certainly aggravated the problem and has given the Russians, the Assad regime, and Iran the sense that they have an absolute free ride to do anything they want to civilians.",
+ "true_answer_paraphrased_pre_deixis": "This is not an American responsibility, but the failure of the United States to take any steps at all has certainly aggravated the problem and has given the Russians, the Assad regime, and Iran the sense that they have an absolute free ride to do anything they want to civilians.",
+ "options": [
+  {
+   "text": "That perspective places far too much emphasis on Washington while ignoring the primary actors on the ground. While the Obama administration struggled to articulate a coherent policy, the catastrophic loss of life in Damascus and Idlib stems directly from the military strategy pursued by Moscow and the Syrian government.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 holds the U.S. partially responsible by arguing its inaction aggravated the situation, whereas Answer 2 explicitly rejects this view, stating that blaming Washington places too much emphasis on the U.S. and ignores the primary actors.",
+   "plausibility_why": "This answer reflects a mainstream expert consensus on December 14, 2016, which debated the limits of U.S. intervention while attributing the primary responsibility for the violence in Syria to the actions of the Assad regime and its Russian allies.",
+   "answer_words": 49,
+   "entity_density": 0.12244897959183673,
+   "bucket": "H"
+  },
+  {
+   "text": "This is not an American responsibility, but the failure of the United States to take any steps at all has certainly aggravated the problem and has given the Russians, the Assad regime, and Iran the sense that they have an absolute free ride to do anything they want to civilians.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "plausibility_why": null,
+   "answer_words": 50,
+   "entity_density": 0.12,
+   "bucket": "H"
+  },
+  {
+   "text": "I would argue the United States holds minimal responsibility here, even if earlier interventions might have altered the humanitarian calculus slightly. When you look at the complexities involving ISIS, the Kurdish forces in northern Syria, and Russian air power, it seems unlikely that additional American measures would have changed outcomes fundamentally.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 asserts that U.S. inaction significantly aggravated the situation and emboldened adversaries, whereas Answer 2 argues that additional American measures would have had minimal impact on the outcome.",
+   "plausibility_why": "This perspective reflects a mainstream, defensible foreign policy argument held by many experts at the time who were skeptical of U.S. intervention and doubted that American military action could alter the deeply entrenched sectarian and geopolitical dynamics of the Syrian civil war.",
+   "answer_words": 51,
+   "entity_density": 0.13725490196078433,
+   "bucket": "H"
+  },
+  {
+   "text": "We cannot blame America for this situation, even though critics often point to unused diplomatic channels in Geneva or the UN Security Council. The core drivers of this tragedy are domestic and rooted in decisions made by Bashar al-Assad, Hezbollah, and Tehran, which makes Washington's potential impact fairly marginal.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 argues that the failure of the U.S. to act significantly aggravated the situation and gave adversaries a free ride, whereas Answer 2 dismisses American responsibility and argues that Washington's potential impact is marginal.",
+   "plausibility_why": "This reflects a standard foreign policy expert position arguing that local actors were the primary drivers of the Syrian civil war and that U.S. leverage was inherently limited.",
+   "answer_words": 49,
+   "entity_density": 0.1836734693877551,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "That perspective places far too much emphasis on [NAME] while ignoring the primary actors on the ground. While the [NAME] administration struggled to articulate a coherent policy, the catastrophic loss of life in [NAME] and [NAME] stems directly from the military strategy pursued by [NAME] and the [NAME] government.",
+  "This is not an [NAME] responsibility, but the failure of the [NAME] to take any steps at all has certainly aggravated the problem and has given the [NAME], the [NAME] regime, and [NAME] the sense that they have an absolute free ride to do anything they want to civilians.",
+  "I would argue the [NAME] holds minimal responsibility here, even if earlier interventions might have altered the humanitarian calculus slightly. When you look at the complexities involving [NAME], the [NAME] forces in northern [NAME], and [NAME] air power, it seems unlikely that additional [NAME] measures would have changed outcomes fundamentally.",
+  "We cannot blame [NAME] for this situation, even though critics often point to unused diplomatic channels in [NAME] or the [NAME]. The core drivers of this tragedy are domestic and rooted in decisions made by [NAME] al-Assad, [NAME], and [NAME], which makes [NAME] potential impact fairly marginal."
+ ],
+ "correct_index": 1,
+ "relax_rung": 0,
+ "flags": [
+  "relax_rung_0",
+  "deixis_stripped"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B uses slightly smoother phrasing and punctuation to combine the exact same arguments and claims made in Version A.",
+  "retried": false
+ },
+ "deixis": {
+  "mode": "stripped",
+  "reason": "interviewer address removed from every option",
+  "min_retain_ratio": 0.7,
+  "removed_per_option": [
+   [],
+   [],
+   [],
+   []
+  ],
+  "n_options_changed": 0
+ },
+ "style_exemplars": {
+  "texts": [
+   "I think there's going to be a debate sometime in November. I think what has probably concentrated the attention of the British more than anything else on this issue is this phenomenon of tens of thousands of people now voting with their feet, heading to Western Europe and the United Kingdom, if possible. These are people who have finally come to the conclusion that Syria is hopeless, that it's a place where it's very difficult to raise a family, hold a job, have any kind of respectable living. So I think this has piqued interest in this country, perhaps to an extent that it hasn't before.",
+   "I think in order for there to be even talk of a political solution, one first has to address this crisis of civilian protection in Syria. And, indeed, I suspect a lot of British political leaders are at least interested in the problem from that perspective because it's the failure to protect civilians, a great failure on the part of the West, that is contributing to this enormous migration crisis.",
+   "Well, the president referred, however, to strengthening our alliances. He referred to the reputation of the United States. The United States is at the head of an alliance in which many of our allies are now being touched directly by this problem. So if the humanitarian imperative were not enough, certainly upholding and strengthening our alliances dictates that the United States take another look at steps that could be taken to at least mitigate this problem."
+  ],
+  "sources": [
+   "answer_pool:CNN-267783",
+   "answer_pool:CNN-267783",
+   "answer_pool:CNN-267783"
+  ],
+  "n": 3,
+  "shortfall": 0
+ },
+ "rejections": [
+  {
+   "text": "I think the responsibility lies mostly elsewhere, though Washington certainly missed several chances to shape the battlefield in places like Aleppo. Still, regional actors like Turkey and Saudi Arabia bear much of the weight, and I suspect overstating American blame misunderstands how limited our actual leverage was against the Syrian military.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "Both answers argue that primary responsibility lies outside the United States while acknowledging that U.S. omissions or missed opportunities contributed to the worsening situation."
+    }
+   ]
+  }
+ ],
+ "spare_generated": [
+  "I think the responsibility lies mostly elsewhere, though Washington certainly missed several chances to shape the battlefield in places like Aleppo. Still, regional actors like Turkey and Saudi Arabia bear much of the weight, and I suspect overstating American blame misunderstands how limited our actual leverage was against the Syrian military."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "template_sha256_v4": "228b900db1496d85672d2b8b9a3fdbeb0b35883f14760081c4d25a76a77a098a",
+ "template_sha256_v3_reused": "adb6fd3b42a5c67ce32cae7a7f20c48756dca8b92e36b2c6cdaf6a873b299e19",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "item_type": "subjective",
+ "secondary": false,
+ "tokens_in": 4308,
+ "tokens_out": 913,
+ "n_api_calls": 14
+}

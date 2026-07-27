@@ -1,0 +1,308 @@
+{
+ "pilot": "PILOT -- pipeline validation on dev subjects; no research conclusions.",
+ "contract": "SPEC.md v1.10 (D6-v4, Amendment 2 B10 as amended 2026-07-27)",
+ "phase": "gate",
+ "ingested_utc": "2026-07-27T12:10:30Z",
+ "kill_rule": "KILL RULE, pre-committed before any round-4 data existed: if round 4's zero-information argmax accuracy is >= 0.90, four-way forced choice is DEAD on this corpus and there is no round 5 on any axis. Rounds 1, 2 and 3 solved 17/17, 10/10 and 15/15 by three different mechanisms; a fourth instrument that also fails is evidence about the format, not about the next patch. The fallback landing zone is already written and committed: results/stage2_pilot3/FALLBACK_OPENENDED_SKETCH.md (commit 71ae352).",
+ "kill_rule_threshold": 0.9,
+ "kill_rule_fires": true,
+ "kill_rule_note": "The FROZEN reading is the contract number and is what the rule is read on. The widened accuracy is reported beside it; if the two straddle the threshold that is itself the finding and the owner decides.",
+ "b10_7_margin_consideration": "B10.7 CONSIDERATION, documented and NOT adopted for round 4. A margin-relaxed gate -- rejecting an item only when the zero-information arm solves it by more than some margin, rather than on argmax alone -- would keep items the current gate discards, and round 3's tightest item sat at +0.30. It is NOT adopted here for one reason: round 4 is the round that tests a pre-committed kill rule, and a kill rule means nothing if the bar moves in the same round it is tested. Loosening the gate and then reporting that fewer items were rejected would be unfalsifiable. This consideration is available at BAR-LOCK, and only if round 4 lands in the gray zone -- zero-information accuracy clearly below 0.90 but clearly above the 0.25 chance line. The owner decides; the implementer does not.",
+ "both_readings": {
+  "frozen": {
+   "reading": "frozen",
+   "n_prompts": 8,
+   "n_parsed": 2,
+   "n_parse_failures": 6,
+   "n_argmax_correct": 2,
+   "argmax_accuracy": 1.0,
+   "mean_prob_mass_correct": 0.75,
+   "mean_margin": 0.63,
+   "min_margin": 0.4,
+   "max_margin": 0.86
+  },
+  "widened": {
+   "reading": "widened",
+   "n_prompts": 8,
+   "n_parsed": 8,
+   "n_parse_failures": 0,
+   "n_argmax_correct": 8,
+   "argmax_accuracy": 1.0,
+   "mean_prob_mass_correct": 0.6937,
+   "mean_margin": 0.5575,
+   "min_margin": 0.4,
+   "max_margin": 0.86
+  },
+  "n_recovered_by_widening": 6,
+  "n_readings_disagree_on_argmax": 0,
+  "contract_note": "The FROZEN parser is the contract number (SPEC D8). The widened reading takes the LAST well-formed distribution in the reply and reads it with the same frozen parser; it is reported beside the contract number, never in place of it. Widening the contract is a bar-lock decision."
+ },
+ "records": [
+  {
+   "item_id": "C00792:NPR-19884:10",
+   "canonical_id": "C00792",
+   "arm": "zeroinfo_redacted",
+   "variant": "standard",
+   "correct_index": 0,
+   "frozen": {
+    "parsed": true,
+    "argmax_correct": true,
+    "p_correct": 0.9,
+    "argmax_index": 0,
+    "margin": 0.86,
+    "distribution": [
+     0.9,
+     0.03,
+     0.03,
+     0.04
+    ]
+   },
+   "widened": {
+    "parsed": true,
+    "argmax_correct": true,
+    "p_correct": 0.9,
+    "argmax_index": 0,
+    "margin": 0.86,
+    "distribution": [
+     0.9,
+     0.03,
+     0.03,
+     0.04
+    ]
+   },
+   "recovered_by_widening": false,
+   "widened_reason": null,
+   "readings_disagree_on_argmax": false,
+   "raw_response": "The provided text is a transcript from a news interview (likely featuring a foreign policy expert or former official) discussing the transition to the Trump administration's approach to Syria. Option A reflects the specific rhetorical style and political arguments common in critiques of early Trump-era campaign rhetoric regarding Russia and Assad, specifically the point that their tactics served as a \"recruiting tool\" for ISIS. Options B, C, and D are written in a more generic, academic, or policy-heavy style that lacks the specific \"campaign\" context and the biting irony (\"a gift that keeps o"
+  },
+  {
+   "item_id": "C00792:NPR-19884:13",
+   "canonical_id": "C00792",
+   "arm": "zeroinfo_redacted",
+   "variant": "standard",
+   "correct_index": 2,
+   "frozen": {
+    "parsed": false,
+    "argmax_correct": null,
+    "p_correct": null,
+    "argmax_index": null,
+    "margin": null,
+    "distribution": null
+   },
+   "widened": {
+    "parsed": true,
+    "argmax_correct": true,
+    "p_correct": 0.6,
+    "argmax_index": 2,
+    "margin": 0.45,
+    "distribution": [
+     0.1,
+     0.15,
+     0.6,
+     0.15
+    ]
+   },
+   "recovered_by_widening": true,
+   "widened_reason": "more than one distribution block appears in the reply, so the stated mass falls outside the frozen renormalise window [0.8, 1.2]",
+   "readings_disagree_on_argmax": false,
+   "raw_response": "The host's question asks whether there is still enough of a nationalist movement to support. Option C is the only response that begins with a direct \"Yes,\" providing a positive answer to the \"Is there...?\" question, while also linking the Syrian conflict to broader geopolitical consequences (like Brexit and the migrant crisis), which is a common narrative structure in American broadcast news interviews involving foreign policy experts. Options A, B, and D are more focused on military viability and structural failures, which, while plausible, are phrased more like academic or intelligence brief"
+  },
+  {
+   "item_id": "C00792:NPR-19884:15",
+   "canonical_id": "C00792",
+   "arm": "zeroinfo_redacted",
+   "variant": "standard",
+   "correct_index": 2,
+   "frozen": {
+    "parsed": false,
+    "argmax_correct": null,
+    "p_correct": null,
+    "argmax_index": null,
+    "margin": null,
+    "distribution": null
+   },
+   "widened": {
+    "parsed": true,
+    "argmax_correct": true,
+    "p_correct": 0.6,
+    "argmax_index": 2,
+    "margin": 0.45,
+    "distribution": [
+     0.1,
+     0.15,
+     0.6,
+     0.15
+    ]
+   },
+   "recovered_by_widening": true,
+   "widened_reason": "more than one distribution block appears in the reply, so the stated mass falls outside the frozen renormalise window [0.8, 1.2]",
+   "readings_disagree_on_argmax": false,
+   "raw_response": "The host's question focuses on which international backer has \"lost most\" in the context of a conflict (likely the Syrian Civil War, given the mention of Turkey, Saudi Arabia, and Qatar). In American broadcast news interviews regarding the Syrian conflict, guests frequently highlight the strategic failure, loss of credibility, and diminished global standing of the United States as the primary \"loser\" among the external powers involved. Option C reflects a common critical narrative often presented in these geopolitical discussions.\n\nA: 0.10\nB: 0.15\nC: 0.60\nD: 0.15\n\nA: 0.10 B: 0.15 C: 0.60 D: 0."
+  },
+  {
+   "item_id": "C00792:NPR-19884:6",
+   "canonical_id": "C00792",
+   "arm": "zeroinfo_redacted",
+   "variant": "standard",
+   "correct_index": 1,
+   "frozen": {
+    "parsed": false,
+    "argmax_correct": null,
+    "p_correct": null,
+    "argmax_index": null,
+    "margin": null,
+    "distribution": null
+   },
+   "widened": {
+    "parsed": true,
+    "argmax_correct": true,
+    "p_correct": 0.6,
+    "argmax_index": 1,
+    "margin": 0.4,
+    "distribution": [
+     0.2,
+     0.6,
+     0.1,
+     0.1
+    ]
+   },
+   "recovered_by_widening": true,
+   "widened_reason": "more than one distribution block appears in the reply, so the stated mass falls outside the frozen renormalise window [0.8, 1.2]",
+   "readings_disagree_on_argmax": false,
+   "raw_response": "The provided dialogue is characteristic of an interview with a foreign policy expert or diplomat. Option B reflects a common nuanced geopolitical argument: denying primary responsibility while acknowledging that inaction (a \"vacuum\") emboldens adversaries. This specific phrasing—mentioning the \"free ride\" for Russia, the Assad regime, and Iran—is highly representative of the rhetoric used by analysts discussing the Syrian conflict on American news networks.\n\nA: 0.20\nB: 0.60\nC: 0.10\nD: 0.10\n\nA: 0.20 B: 0.60 C: 0.10 D: 0.10"
+  },
+  {
+   "item_id": "C02124:NPR-12184:6",
+   "canonical_id": "C02124",
+   "arm": "zeroinfo_redacted",
+   "variant": "standard",
+   "correct_index": 2,
+   "frozen": {
+    "parsed": false,
+    "argmax_correct": null,
+    "p_correct": null,
+    "argmax_index": null,
+    "margin": null,
+    "distribution": null
+   },
+   "widened": {
+    "parsed": true,
+    "argmax_correct": true,
+    "p_correct": 0.6,
+    "argmax_index": 2,
+    "margin": 0.4,
+    "distribution": [
+     0.1,
+     0.2,
+     0.6,
+     0.1
+    ]
+   },
+   "recovered_by_widening": true,
+   "widened_reason": "more than one distribution block appears in the reply, so the stated mass falls outside the frozen renormalise window [0.8, 1.2]",
+   "readings_disagree_on_argmax": false,
+   "raw_response": "The provided options vary in their level of detail and tone. Option C reflects the typical style of a broadcast news interview: it is concise, balances two opposing viewpoints (the benefit of aid vs. the strategic need of the US), and uses accessible language rather than the dense, academic, or overly analytical phrasing found in options A, B, and D. In a real-world broadcast setting, guests tend to provide a nuanced \"on the one hand, on the other hand\" explanation that covers the primary financial and strategic drivers without delving into the specific internal bureaucratic disputes mentioned"
+  },
+  {
+   "item_id": "C02006:NPR-14829:19",
+   "canonical_id": "C02006",
+   "arm": "zeroinfo_redacted",
+   "variant": "standard",
+   "correct_index": 2,
+   "frozen": {
+    "parsed": false,
+    "argmax_correct": null,
+    "p_correct": null,
+    "argmax_index": null,
+    "margin": null,
+    "distribution": null
+   },
+   "widened": {
+    "parsed": true,
+    "argmax_correct": true,
+    "p_correct": 0.85,
+    "argmax_index": 2,
+    "margin": 0.8,
+    "distribution": [
+     0.05,
+     0.05,
+     0.85,
+     0.05
+    ]
+   },
+   "recovered_by_widening": true,
+   "widened_reason": "more than one distribution block appears in the reply, so the stated mass falls outside the frozen renormalise window [0.8, 1.2]",
+   "readings_disagree_on_argmax": false,
+   "raw_response": "The host's phrasing (\"stupid, bloody referendum\") suggests a conversational, high-energy broadcast style (likely CNN or MSNBC) and a guest who is speaking bluntly about the political chaos following Brexit. \n\nOption A and B are too academic and analytical for a soundbite response to that specific prompt. Option D is too focused on the technicalities of Article 50 and Whitehall. Option C matches the tone of a guest explaining a \"mess\" in simple, direct terms, focusing on the conflict between representative democracy and a direct referendum, which aligns with the \"gist\" of the tweet described by"
+  },
+  {
+   "item_id": "C02006:NPR-14829:26",
+   "canonical_id": "C02006",
+   "arm": "zeroinfo_redacted",
+   "variant": "standard",
+   "correct_index": 3,
+   "frozen": {
+    "parsed": false,
+    "argmax_correct": null,
+    "p_correct": null,
+    "argmax_index": null,
+    "margin": null,
+    "distribution": null
+   },
+   "widened": {
+    "parsed": true,
+    "argmax_correct": true,
+    "p_correct": 0.8,
+    "argmax_index": 3,
+    "margin": 0.7,
+    "distribution": [
+     0.05,
+     0.05,
+     0.1,
+     0.8
+    ]
+   },
+   "recovered_by_widening": true,
+   "widened_reason": "more than one distribution block appears in the reply, so the stated mass falls outside the frozen renormalise window [0.8, 1.2]",
+   "readings_disagree_on_argmax": false,
+   "raw_response": "The host's question asks whether anyone in power wants to \"get out of Brexit\" or \"back away from this.\" \n\nOptions A, B, and C are written in a highly detailed, academic, or policy-heavy style that reads more like a political science essay or a briefing note than a spoken response on a broadcast news program. They contain dense lists of specific government departments, legal articles, and specific regional towns, which is atypical for the flow of a televised interview.\n\nOption D, however, follows the natural cadence of a spoken interview. It addresses the host's question by clarifying the disti"
+  },
+  {
+   "item_id": "C02006:NPR-14829:29",
+   "canonical_id": "C02006",
+   "arm": "zeroinfo_redacted",
+   "variant": "standard",
+   "correct_index": 2,
+   "frozen": {
+    "parsed": true,
+    "argmax_correct": true,
+    "p_correct": 0.6,
+    "argmax_index": 2,
+    "margin": 0.4,
+    "distribution": [
+     0.1,
+     0.2,
+     0.6,
+     0.1
+    ]
+   },
+   "widened": {
+    "parsed": true,
+    "argmax_correct": true,
+    "p_correct": 0.6,
+    "argmax_index": 2,
+    "margin": 0.4,
+    "distribution": [
+     0.1,
+     0.2,
+     0.6,
+     0.1
+    ]
+   },
+   "recovered_by_widening": false,
+   "widened_reason": null,
+   "readings_disagree_on_argmax": false,
+   "raw_response": "The host's question asks if the election result could be \"good, better, [or] less bad,\" which is a leading question inviting a \"yes\" or a qualified positive perspective. \n\nOption C is the only response that directly answers \"It is possible\" and provides a specific rationale (the end of a \"phony war\" and the start of earnest negotiations) for why the result could be viewed as a positive or legitimizing force. Options A, B, and D are primarily pessimistic or dismissive, focusing on fragility, continuity, or instability, which does not align as naturally with the host's specific prompt about the "
+  }
+ ]
+}

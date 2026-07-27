@@ -1,0 +1,58 @@
+{
+ "item_id": "C02013:NPR-9480:45",
+ "canonical_id": "C02013",
+ "built": false,
+ "reason": "only 2 distractors survived the checks",
+ "rejections": [
+  {
+   "text": "What stood out to me most was the framing around youth education and early childhood initiatives, though I would approach the prioritization somewhat differently based on the available research. While programs like the Perry Preschool Project show positive long-term behavioral results, the evidence regarding their immediate impact on adolescent violence is actually quite mixed and often overstated in public debates. In contrast, some of the most compelling data we have right now points toward targeted mental health services and cognitive behavioral therapy programs administered directly to middle and high school students who are already showing early signs of risk. Direct intervention during those critical adolescent transition years often yields more measurable behavioral changes than very early childhood investments, which take over a decade to manifest in public safety outcomes.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "Both answers identify youth education and early childhood initiatives as a key takeaway from the speech, with Answer 2 building on Answer 2's mention of child support to offer a nuanced perspective on intervention timing."
+    }
+   ]
+  },
+  {
+   "text": "I found the most significant part of the address to be the persistent focus on legislative gun control measures, though the empirical picture there is considerably more complicated than is often presented. If you examine cross-state comparisons or urban centers like Chicago versus other major metropolitan areas with different regulatory frameworks, the relationship between specific municipal gun ordinances and homicide rates is notoriously difficult to isolate from other variables like local policing practices or demographic shifts. While closing specific regulatory loopholes at the federal level is a reasonable policy goal, the overarching academic literature suggests that legislative changes alone rarely produce dramatic shifts in urban violence without simultaneous transformations in police deployment strategies and neighborhood-level economic stability. Consequently, elevating gun legislation as the primary solution risks oversimplifying a deeply entrenched set of urban social challenges.",
+   "stage": "contradiction",
+   "ok": false,
+   "reasons": [
+    {
+     "reason": "contradiction_agree",
+     "detail": "While Answer 2 provides additional critical commentary on gun control, both answers agree that a primary focus of the president's speech was on law and legislative gun measures."
+    }
+   ]
+  }
+ ],
+ "style_exemplars": {
+  "texts": [
+   "Oh, yes. A very difficult question. But I would point out the larger picture here, which is that murder last year was up only slightly, about 2 percent overall. And many of the large cities--for example, the big three: New York, LA, and Chicago--homicide continues to decline rather remarkably. So what often gets lost in these sessions is the tremendous stability or durability of a city's relative crime profile. In the case of Boston, the violence right here has been quite low for a number of years, even during the periods of increase and decrease. So even though there is an increase, I think one needs to put it into perspective in terms of the relative low crime standing of the city. That said, there's certainly an increase and certainly a problem. I would be hesitant to blame it all on immigration. In fact, in terms of national statistics, immigration seems to be, if anything, related to lower rates of crime and violence. And some of our most diverse cities with exploding immigrant populations--Los Angeles, Chicago metropolitan area and others--again are experiencing decreases. So it is a complicated picture and one can't point to any single factor like that. And in fact I think the immigration finding is something that needs to be re-enforced because it can lead to stereotypes that suggest that specific race or ethnic groups are somehow inherently more likely to be involved in violence.",
+   "That's an excellent question. That's one of the things that we've looked at in research. It's really hard to disentangle, actually, and that's why I referred to it as kind of a vicious cycle and a trap, really, that communities get into. We think happens is that both are important. It's hard to say it's just this. So you get a cycle whereby you have high concentration of poverty and especially when it is related to particular groups. So for example in the United States, it's the case that African-Americans are disproportionately poor. But even if poor, they're much more likely than, let's say, a poor white to live in a poor neighborhood. And that's what we refer to as a concentration effect. That then leads to all sorts of other conditions. Businesses are less likely to invest. People may be fearful of the violence and as you note move out, which then may make things worse. So what we try to think about is how to intervene in that social system. But we do think, based on good evidence, that the characteristics of the communities do seem to have an independent effect. And likewise, fear among residents is a really important factor in - by the way, not just for moving out of a community, but fear is implicated in anxiety and other kinds of health-related issues.",
+   "Yeah, those are good questions. Let me address a couple ways. First of all, I think the issue of the expectations that kids have and the attitudes, as was just mentioned, is crucially important. If you don't expect to live to age 25, if you don't expect to have a job when you're an adult, then an insult today takes on a greater significance than it might otherwise. And that's why I think that the - a sense in which much of the violence is rooted in insults and revenge. I mean, these are classic motives. And even with strict gun laws, that can be a problem. So we do need a multifaceted approach. I think, on two fronts, the evidence on early intervention is mixed, but there are encouraging signs. And there's evidence, interestingly enough, that early childhood intervention with respect to education - so, for example, Perry Preschool Project - although the evidence on how it affects test scores is mixed, it turns out that kids do better in non-cognitive outcomes, sort of behavioral outcomes. In other words, do better in later life. So that's evidence to suggest that the more holistic approaches, we don't just care about test scores. We care about kids' development in the broadest sense. So, yes, I think there's encouraging evidence there, and that's why I pointed to that second prong of President Obama's approach. The third one on community level interventions, evidence is also mixed, but I would say a couple of things. One, the evidence on policing now, I think, is zeroing in on the idea that certain policies - particularly what's known as hotspot policing, where you're targeting the policing in particular areas, and we have better data now, predictive analytics and other things where we can identify those areas - is promising. And that is also something that can be done without necessarily locking up more people."
+  ],
+  "sources": [
+   "answer_pool:NPR-46234",
+   "same_test_interview:C02013:NPR-9480:49",
+   "same_test_interview:C02013:NPR-9480:70"
+  ],
+  "n": 3,
+  "shortfall": 0
+ },
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B is a direct paraphrase that captures the exact same three-level policy framework and substantive arguments presented in Version A.",
+  "retried": false
+ },
+ "spare": [
+  "What stood out to me most was the framing around youth education and early childhood initiatives, though I would approach the prioritization somewhat differently based on the available research. While programs like the Perry Preschool Project show positive long-term behavioral results, the evidence regarding their immediate impact on adolescent violence is actually quite mixed and often overstated in public debates. In contrast, some of the most compelling data we have right now points toward targeted mental health services and cognitive behavioral therapy programs administered directly to middle and high school students who are already showing early signs of risk. Direct intervention during those critical adolescent transition years often yields more measurable behavioral changes than very early childhood investments, which take over a decade to manifest in public safety outcomes.",
+  "I found the most significant part of the address to be the persistent focus on legislative gun control measures, though the empirical picture there is considerably more complicated than is often presented. If you examine cross-state comparisons or urban centers like Chicago versus other major metropolitan areas with different regulatory frameworks, the relationship between specific municipal gun ordinances and homicide rates is notoriously difficult to isolate from other variables like local policing practices or demographic shifts. While closing specific regulatory loopholes at the federal level is a reasonable policy goal, the overarching academic literature suggests that legislative changes alone rarely produce dramatic shifts in urban violence without simultaneous transformations in police deployment strategies and neighborhood-level economic stability. Consequently, elevating gun legislation as the primary solution risks oversimplifying a deeply entrenched set of urban social challenges."
+ ],
+ "item_type": "subjective",
+ "secondary": false,
+ "tokens_in": 6263,
+ "tokens_out": 1615,
+ "n_api_calls": 13
+}

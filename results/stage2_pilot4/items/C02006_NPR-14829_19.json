@@ -1,0 +1,109 @@
+{
+ "item_id": "C02006:NPR-14829:19",
+ "canonical_id": "C02006",
+ "built": true,
+ "question": "(Laughter) The gist of your tweet, essentially, was your country is in a lot of trouble because of that stupid, bloody referendum. What do you mean?",
+ "true_answer_verbatim": "Well, you know, it was a great mistake to muddle two systems of government. You know, we have a representative democracy. We elect MPs. And the MPs go into the House of Commons. And they choose the laws. We had a referendum, a plebiscite, which overruled Westminster's power. And we have been in a mess ever since.",
+ "true_answer_paraphrased": "It was a mistake to muddle two systems of government. We have a representative democracy. We elect MPs. And the MPs go into the House of Commons. And they choose the laws. We had a referendum, which overruled Westminster's power. And we have been in a mess ever since.",
+ "true_answer_paraphrased_pre_deixis": "It was a mistake to muddle two systems of government. We have a representative democracy. We elect MPs. And the MPs go into the House of Commons. And they choose the laws. We had a referendum, which overruled Westminster's power. And we have been in a mess ever since.",
+ "options": [
+  {
+   "text": "The vote reflected a regional divide across England and Wales that Westminster had ignored for decades, and while the Treasury's economic projections were largely credible, the political establishment failed to address the underlying social grievances that drove voters in places like Sunderland and Cornwall.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 blames the country's trouble on the use of a referendum to overrule representative democracy, whereas Answer 2 blames it on the political establishment's failure to address underlying social grievances.",
+   "plausibility_why": "The answer articulates a standard, widely held political and sociological analysis of the Brexit vote that was common among experts and commentators in June 2017.",
+   "answer_words": 44,
+   "entity_density": 0.13636363636363635,
+   "bucket": "H"
+  },
+  {
+   "text": "The outcome was largely driven by a failure of communication from the Stronger In campaign rather than the referendum mechanism itself, and Cameron and George Osborne relied too heavily on warnings from the International Monetary Fund, which alienated voters who felt that institutions like the Bank of England were out of touch.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 blames the referendum mechanism itself for the country's trouble, whereas Answer 2 argues the outcome was caused by poor campaigning rather than the referendum mechanism.",
+   "plausibility_why": "By June 2017, the political analysis attributing the Brexit referendum outcome to communication failures by the \"Remain\" campaign and voter alienation from establishment economic warnings was a mainstream and widely debated expert view.",
+   "answer_words": 52,
+   "entity_density": 0.19230769230769232,
+   "bucket": "H"
+  },
+  {
+   "text": "It was a mistake to muddle two systems of government. We have a representative democracy. We elect MPs. And the MPs go into the House of Commons. And they choose the laws. We had a referendum, which overruled Westminster's power. And we have been in a mess ever since.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "plausibility_why": null,
+   "answer_words": 49,
+   "entity_density": 0.10204081632653061,
+   "bucket": "H"
+  },
+  {
+   "text": "I think the referendum itself was probably a legitimate exercise in public consultation, but the real difficulty lies in how Whitehall and the Cabinet Office handled the Article 50 notification process afterward, because if Theresa May had managed negotiations with the European Commission differently, we might not be facing this current institutional paralysis.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 views the referendum itself as a fundamental mistake that caused the ongoing mess, whereas Answer 2 considers the referendum to be a legitimate exercise and blames the subsequent handling of negotiations for the current difficulties.",
+   "plausibility_why": "This reflects a standard, mainstream political analysis held by many commentators and experts in June 2017 regarding the handling of Brexit by the UK government following the 2016 vote.",
+   "answer_words": 53,
+   "entity_density": 0.16981132075471697,
+   "bucket": "H"
+  }
+ ],
+ "options_stripped": [
+  "The vote reflected a regional divide across [NAME] and [NAME] that [NAME] had ignored for decades, and while the [NAME] economic projections were largely credible, the political establishment failed to address the underlying social grievances that drove voters in places like [NAME] and [NAME].",
+  "The outcome was largely driven by a failure of communication from the [NAME] campaign rather than the referendum mechanism itself, and [NAME] and [NAME] relied too heavily on warnings from the [NAME], which alienated voters who felt that institutions like the [NAME] of [NAME] were out of touch.",
+  "It was a mistake to muddle two systems of government. We have a representative democracy. We elect [NAME]. And the [NAME] go into the [NAME] of [NAME]. And they choose the laws. We had a referendum, which overruled [NAME] power. And we have been in a mess ever since.",
+  "I think the referendum itself was probably a legitimate exercise in public consultation, but the real difficulty lies in how [NAME] and the [NAME] handled the [NAME] [NUMBER] notification process afterward, because if [NAME] had managed negotiations with the [NAME] differently, we might not be facing this current institutional paralysis."
+ ],
+ "correct_index": 2,
+ "relax_rung": 0,
+ "flags": [
+  "relax_rung_0",
+  "deixis_stripped"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Version B removes conversational fillers and minor phrasing variations while retaining the exact same substantive claims and political position regarding referendums and representative democracy.",
+  "retried": false
+ },
+ "deixis": {
+  "mode": "stripped",
+  "reason": "interviewer address removed from every option",
+  "min_retain_ratio": 0.7,
+  "removed_per_option": [
+   [],
+   [],
+   [],
+   [
+    "DAVID"
+   ]
+  ],
+  "n_options_changed": 1
+ },
+ "style_exemplars": {
+  "texts": [
+   "Well, Nancy, it`s a pleasure to be here. I`m happy to be on your show. I don`t know what my client was thinking at the time, but what I can tell you is this. I have information that leads me to believe he wasn`t there for a booty call, as you suggested, that he was there to collect some money from someone.",
+   "Nancy, I don`t know the specifics of that. Obviously, witness statements can be wrong. I think people are going off of the booking report from the police point of view. It`s one-sided. We`ll have our side to say in court but...",
+   "Well, I was in touch with Tina Brown, Harry's wife, last weekend and she told me that Harry was sinking rather. And so, I was kind of braced for the news. It still is a great shock. He was as unlike a 92-year-old, as you could imagine, a man to be. He was like someone 30 years older. He had a kind of Peter Pan youth about him and vigor. He was a man of great charm and energy and enthusiasm. He was a force of nature and force of life. So, when someone like that dies, it always is a big shock and the world seems a little bit grayer and a little bit sadder without Harry in it tonight."
+  ],
+  "sources": [
+   "answer_pool:CNN-220639",
+   "answer_pool:CNN-220639",
+   "answer_pool:CNN-411756"
+  ],
+  "n": 3,
+  "shortfall": 0
+ },
+ "rejections": [],
+ "spare_generated": [
+  "We have to remember that direct democracy has a place alongside our parliamentary traditions, and the Brexit vote exposed structural weaknesses within both the Labour Party and the Conservative Party. The problem is not that the electorate was asked their view, but that neither party had a coherent plan for leaving."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "template_sha256_v4": "228b900db1496d85672d2b8b9a3fdbeb0b35883f14760081c4d25a76a77a098a",
+ "template_sha256_v3_reused": "adb6fd3b42a5c67ce32cae7a7f20c48756dca8b92e36b2c6cdaf6a873b299e19",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "item_type": "subjective",
+ "secondary": false,
+ "tokens_in": 4083,
+ "tokens_out": 833,
+ "n_api_calls": 13
+}

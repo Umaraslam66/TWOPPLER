@@ -1,0 +1,109 @@
+{
+ "item_id": "C00792:NPR-19884:15",
+ "canonical_id": "C00792",
+ "built": true,
+ "question": "Which international backer has lost most here - the U.S., Turkey, Saudi Arabia, Qatar? I mean who's the outside player who's lost (unintelligible)?",
+ "true_answer_verbatim": "You know, I think, Robert, in terms of external actors who have involved themselves one way or the other in the Syrian crisis, the biggest loser is the United States. The loss in terms of credibility, reputation has been simply enormous.",
+ "true_answer_paraphrased": "Regarding the external actors involved in the Syrian crisis, the biggest loser is the United States, and the loss of credibility and reputation has been enormous.",
+ "true_answer_paraphrased_pre_deixis": "Robert, regarding the external actors involved in the Syrian crisis, the biggest loser is the United States, and the loss of credibility and reputation has been enormous.",
+ "options": [
+  {
+   "text": "I think Qatar has suffered the most severe setback, given how completely their diplomatic strategy in Damascus and across the wider region collapsed over recent months.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 identifies the United States as the biggest loser, whereas Answer 2 asserts that Qatar has suffered the most severe setback.",
+   "plausibility_why": "In December 2016, following major Syrian government advances in Aleppo, a reasonable expert could argue that Qatar—a primary backer of the Syrian opposition—suffered a significant regional setback alongside other Gulf and Western powers.",
+   "answer_words": 26,
+   "entity_density": 0.07692307692307693,
+   "bucket": "L"
+  },
+  {
+   "text": "Saudi Arabia likely lost the most in terms of regional influence, as Riyadh watched its primary objectives in the Levant steadily sidelined by other more active powers.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 identifies the United States as the biggest loser, whereas Answer 2 asserts that Saudi Arabia lost the most in terms of regional influence.",
+   "plausibility_why": "In the context of the Syrian Civil War in late 2016—marked by the fall of Aleppo and the ascendancy of Russia and Iran—assessing Saudi Arabia as a major loser in regional influence was a standard and defensible foreign policy analysis.",
+   "answer_words": 27,
+   "entity_density": 0.14814814814814814,
+   "bucket": "H"
+  },
+  {
+   "text": "Regarding the external actors involved in the Syrian crisis, the biggest loser is the United States, and the loss of credibility and reputation has been enormous.",
+   "kind": "true",
+   "origin": "paraphrased_real",
+   "why": null,
+   "plausibility_why": null,
+   "answer_words": 26,
+   "entity_density": 0.11538461538461539,
+   "bucket": "H"
+  },
+  {
+   "text": "The evidence suggests Turkey has probably incurred the greatest strategic damage, primarily because their southern border security became so profoundly compromised by the ongoing conflict next door.",
+   "kind": "distractor",
+   "origin": "generated",
+   "why": "Answer 1 identifies the United States as the biggest loser, whereas Answer 2 argues that Turkey has incurred the greatest damage.",
+   "plausibility_why": "In December 2016, following the devastating fall of Aleppo to Syrian government forces, arguing that Turkey suffered the greatest strategic loss among the listed powers due to spillover violence, refugee crises, and compromised border security was a mainstream and defensible expert analysis.",
+   "answer_words": 27,
+   "entity_density": 0.037037037037037035,
+   "bucket": "L"
+  }
+ ],
+ "options_stripped": [
+  "I think [NAME] has suffered the most severe setback, given how completely their diplomatic strategy in [NAME] and across the wider region collapsed over recent months.",
+  "[NAME] likely lost the most in terms of regional influence, as [NAME] watched its primary objectives in the [NAME] steadily sidelined by other more active powers.",
+  "Regarding the external actors involved in the [NAME] crisis, the biggest loser is the [NAME], and the loss of credibility and reputation has been enormous.",
+  "The evidence suggests [NAME] has probably incurred the greatest strategic damage, primarily because their southern border security became so profoundly compromised by the ongoing conflict next door."
+ ],
+ "correct_index": 2,
+ "relax_rung": 2,
+ "flags": [
+  "relax_rung_2",
+  "deixis_stripped"
+ ],
+ "position_check": {
+  "verdict": "SAME",
+  "why": "Both versions express the exact same viewpoint that the United States is the biggest loser in the Syrian crisis due to a massive loss of credibility and reputation.",
+  "retried": false
+ },
+ "deixis": {
+  "mode": "stripped",
+  "reason": "interviewer address removed from every option",
+  "min_retain_ratio": 0.7,
+  "removed_per_option": [
+   [
+    "ROBERT"
+   ],
+   [],
+   [],
+   []
+  ],
+  "n_options_changed": 1
+ },
+ "style_exemplars": {
+  "texts": [
+   "I think there's going to be a debate sometime in November. I think what has probably concentrated the attention of the British more than anything else on this issue is this phenomenon of tens of thousands of people now voting with their feet, heading to Western Europe and the United Kingdom, if possible. These are people who have finally come to the conclusion that Syria is hopeless, that it's a place where it's very difficult to raise a family, hold a job, have any kind of respectable living. So I think this has piqued interest in this country, perhaps to an extent that it hasn't before.",
+   "I think in order for there to be even talk of a political solution, one first has to address this crisis of civilian protection in Syria. And, indeed, I suspect a lot of British political leaders are at least interested in the problem from that perspective because it's the failure to protect civilians, a great failure on the part of the West, that is contributing to this enormous migration crisis.",
+   "Well, the president referred, however, to strengthening our alliances. He referred to the reputation of the United States. The United States is at the head of an alliance in which many of our allies are now being touched directly by this problem. So if the humanitarian imperative were not enough, certainly upholding and strengthening our alliances dictates that the United States take another look at steps that could be taken to at least mitigate this problem."
+  ],
+  "sources": [
+   "answer_pool:CNN-267783",
+   "answer_pool:CNN-267783",
+   "answer_pool:CNN-267783"
+  ],
+  "n": 3,
+  "shortfall": 0
+ },
+ "rejections": [],
+ "spare_generated": [
+  "Washington probably kept the most leverage, while outside players like Moscow and Tehran ultimately secured the decisive positions of influence in the region instead."
+ ],
+ "generator": "gemini-3.5-flash-lite",
+ "template_sha256_v4": "228b900db1496d85672d2b8b9a3fdbeb0b35883f14760081c4d25a76a77a098a",
+ "template_sha256_v3_reused": "adb6fd3b42a5c67ce32cae7a7f20c48756dca8b92e36b2c6cdaf6a873b299e19",
+ "scored_claim": "The claim scored is that the twin identifies the person's actual POSITION among plausible alternative positions on the same question -- NOT that it picks a verbatim transcript answer.",
+ "item_type": "subjective",
+ "secondary": false,
+ "tokens_in": 3659,
+ "tokens_out": 596,
+ "n_api_calls": 13
+}

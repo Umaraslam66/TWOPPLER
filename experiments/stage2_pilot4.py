@@ -831,7 +831,8 @@ def main(argv=None) -> int:
     sub.add_parser("plan").set_defaults(fn=P3.cmd_plan)
     sub.add_parser("bootstrap").set_defaults(
         fn=P3.cmd_bootstrap, banner=PILOT_BANNER, contract=CONTRACT,
-        run_name="stage2_pilot4")
+        run_name="stage2_pilot4",
+        node_run=f"{P2.NODE_ROOT}/runs/stage2_pilot4")
 
     p_ig = sub.add_parser("ingest-gate")
     p_ig.add_argument("--nodedir", required=True)
