@@ -98,3 +98,23 @@ this trust gate is itself a freeze precondition. B2.2's ≥10-subject ask
 and the untouched discipline cannot both be satisfied. Either accept 6
 subjects / 120 rows as clearing B2.2 (documented deviation) or amend
 B2.2's subject count. The sheet works under either ruling.
+
+---
+
+## Resolution (owner, 2026-07-27)
+
+1. **GPU GO granted**: submit `stage2_oe1_gen.sbatch`, then the
+   Gemma-side judge + embeddings, then `OE1_PILOT_REPORT.md` with the
+   C4 verdict applied mechanically. STOP at the report.
+2. **B2.2 ruled as a two-part trust gate, documented deviation** — part
+   1: the 6-subject / 120-row sheet is accepted for the freeze
+   precondition (untouchability wins over the ≥10-subject count); part
+   2 (new, binding): after the freeze, a second blind tranche of ≥ 60
+   labels from ≥ 10 confirmatory subjects before any confirmatory H6
+   scoring, same trust bar; failure halts H6 scoring pending rubric
+   revision. Written into the addendum precondition list same day.
+3. **S1's free-standing-intro miss acknowledged** — including that it
+   identifies the imposter DONOR in at least one dev case (the
+   blog-naming line). Symmetric across arms, contamination meter is the
+   backstop, and "free-standing intro sentence handling" is added to
+   the addendum's bar-lock open-questions list rather than dropped.

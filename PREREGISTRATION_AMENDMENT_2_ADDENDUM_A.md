@@ -174,6 +174,15 @@ scoring.
    continuous scales [TO FILL]** — the accuracy-point bars do not transfer
    to similarity scores, and no magnitude claim is made until these are set
    (C5).
+8. **Free-standing intro sentence handling [TO FILL]** — added by owner
+   direction 2026-07-27. S1's frozen scope removes appositive
+   descriptors but not free-standing host-intro sentences; in OE-1 dev
+   prompts this left identifying role descriptions for the subject and,
+   in at least one case, for the imposter DONOR (a blog-naming line).
+   The miss is symmetric across own and imposter arms and the
+   contamination meter is the backstop, but whether a
+   free-standing-intro rule is added, and its exact scope, is decided
+   here on OE-1 evidence — not silently dropped.
 
 H6 parameters likewise per B3: token budget(s) B, segment/chain
 definitions, rich/poor thresholds, flagged-turn threshold **[TO FILL]**.
@@ -208,8 +217,22 @@ definitions, rich/poor thresholds, flagged-turn threshold **[TO FILL]**.
    That rule applies to all future rating and scoring sheets, the
    open-ended judge and the owner's spot-checks included; item sets are
    verified twin-free before any scoring.
-5. H6 classifier trust gate (B2.2): the owner's ≥ 100-classification
-   spot-check has NOT yet been run and remains outstanding.
+5. H6 classifier trust gate (B2.2) — **owner ruling 2026-07-27, a
+   documented deviation, in two parts.**
+   **Part 1 (freeze precondition):** the owner's blind audit of the
+   120-row, 6-subject sheet
+   (`results/stage2_openended/h6_audit_sheet.md`). B2.2's ≥ 10-subject
+   count is unsatisfiable while confirmatory subjects stay untouched by
+   all Stage 2 machinery — the untouchability rule wins — so 6 subjects
+   / 120 rows is accepted as satisfying B2.2's intent for the freeze.
+   The labeling itself remains outstanding.
+   **Part 2 (binding, added 2026-07-27):** after this addendum freezes
+   and the classifier first runs on confirmatory subjects, a second
+   blind audit tranche of ≥ 60 labels drawn from ≥ 10 confirmatory
+   subjects is built for the owner BEFORE any confirmatory H6 scoring —
+   same blind format, the same trust bar carried over. If part 2 fails
+   the bar, H6 scoring halts pending rubric revision. Dev-only evidence
+   gates the freeze; confirmatory-subject evidence gates the science.
 6. Owner's ≥ 50-label judge spot-check (Amendment 3 C4.2), sampled across
    subjects and balanced across SAME/DIFFERENT. It can only run once the
    open-ended dev pilot has produced judge labels, so it is sequenced
