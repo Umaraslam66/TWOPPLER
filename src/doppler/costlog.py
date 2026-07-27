@@ -24,10 +24,18 @@ COST_LOG_FIELDS = (
 #   gemini-3.5-flash-lite: input 0.30, output 2.50
 #   (source: openrouter.ai/google/gemini-3.5-flash-lite and pricepertoken.com,
 #    fetched 2026-07-24)
+#   gemini-3.5-flash: input 0.75, output 4.50
+#   (source: pricepertoken.com/pricing-page/model/google-gemini-3.5-flash,
+#    fetched 2026-07-27. That page lists three providers for the one model:
+#    Google AI Studio at 0.75/4.50, and Google (Vertex) and OpenRouter both at
+#    1.50/9.00. We record the Google AI Studio row because that is the endpoint
+#    doppler actually calls -- src/doppler/gemini.py wraps the google-genai AI
+#    Studio SDK. Anything routed elsewhere costs 2x this and must be repriced.)
 PRICE_IN = 0.30
 PRICE_OUT = 2.50
 MODEL_PRICES = {
     "gemini-3.5-flash-lite": {"in": PRICE_IN, "out": PRICE_OUT},
+    "gemini-3.5-flash": {"in": 0.75, "out": 4.50},
 }
 
 

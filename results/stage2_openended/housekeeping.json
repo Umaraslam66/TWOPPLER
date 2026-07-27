@@ -1,0 +1,93 @@
+{
+  "generated": "2026-07-27",
+  "purpose": "Pre-run housekeeping for the OE-1 dev pilot, per results/stage2_openended/PILOT_SPEC.md sections 3-4. No pilot runs, no API calls.",
+  "torch_version": "2.13.0",
+  "sentence_transformers_version": "5.6.1",
+  "torch_build": {
+    "cuda": null,
+    "cuda_available": false,
+    "note": "macOS arm64 wheel: CPU-only build, no CUDA. MPS backend is present but all OE-1 scoring pins device='cpu'."
+  },
+  "transitive_versions": {
+    "transformers": "5.14.1",
+    "huggingface-hub": "1.25.1",
+    "tokenizers": "0.22.2",
+    "safetensors": "0.8.0"
+  },
+  "test_pair": {
+    "a": "I think the government moved far too slowly on this, and people paid for that delay.",
+    "b": "They were much too slow to act, and ordinary people bore the cost of that hesitation.",
+    "note": "One fixed pair, identical across all four models, so the cosines below are same-input comparisons. Same position, different words."
+  },
+  "models": [
+    {
+      "name": "sentence-transformers/all-mpnet-base-v2",
+      "revision": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+      "test_cosine": 0.562584,
+      "encode_seconds": 0.8559,
+      "load_seconds": 29.2254,
+      "dim": 768,
+      "prefixes_used": null
+    },
+    {
+      "name": "BAAI/bge-large-en-v1.5",
+      "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09",
+      "test_cosine": 0.735866,
+      "encode_seconds": 2.625,
+      "load_seconds": 51.6049,
+      "dim": 1024,
+      "prefixes_used": null
+    },
+    {
+      "name": "intfloat/e5-large-v2",
+      "revision": "f169b11e22de13617baa190a028a32f3493550b6",
+      "test_cosine": 0.863931,
+      "encode_seconds": 1.918,
+      "load_seconds": 50.0467,
+      "dim": 1024,
+      "prefixes_used": "query: / passage: (required by e5; applied as 'query: ' on text a and 'passage: ' on text b)"
+    },
+    {
+      "name": "sentence-transformers/all-MiniLM-L6-v2",
+      "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+      "test_cosine": 0.445923,
+      "encode_seconds": 0.0959,
+      "load_seconds": 3.455,
+      "dim": 384,
+      "prefixes_used": null
+    }
+  ],
+  "models_note": "load_seconds for the first three includes first-time download from HF; MiniLM was already in the local cache. encode_seconds is model-in-memory encode of the 2-sentence pair on CPU, torch threads=4. Absolute cosines are NOT comparable across models (each has its own similarity scale, e5 most compressed toward the high end), so the section 3 selection rule must compare own-minus-imposter separation, never raw cosine level.",
+  "revision_source": "~/.cache/huggingface/hub/models--*/refs/main after download",
+  "judge_price": {
+    "model": "gemini-3.5-flash",
+    "in_per_mtok": 0.75,
+    "out_per_mtok": 4.5,
+    "source_url": "https://pricepertoken.com/pricing-page/model/google-gemini-3.5-flash",
+    "fetched": "2026-07-27",
+    "provider_row": "Google AI Studio",
+    "provider_disagreement": {
+      "google_ai_studio": {"in": 0.75, "out": 4.5},
+      "google_vertex": {"in": 1.5, "out": 9.0},
+      "openrouter": {"in": 1.5, "out": 9.0},
+      "openrouter_url": "https://openrouter.ai/google/gemini-3.5-flash",
+      "resolution": "Recorded the Google AI Studio row because that is the endpoint doppler calls (src/doppler/gemini.py wraps the google-genai AI Studio SDK). Routing elsewhere costs 2x and must be repriced.",
+      "needs_owner_confirmation": true
+    }
+  },
+  "judge_model": "gemini-3.5-flash",
+  "robustness_scorer": "gemini-3.5-flash-lite",
+  "judge_vs_robustness_distinct": true,
+  "judge_vs_robustness_note": "Literal strings 'gemini-3.5-flash' and 'gemini-3.5-flash-lite' are different model versions in the same family, satisfying C2.3's different-version clause. Family overlap is already declared in C3.",
+  "costlog_edit": {
+    "file": "src/doppler/costlog.py",
+    "change": "Added MODEL_PRICES['gemini-3.5-flash'] = {'in': 0.75, 'out': 4.50} with source comment. The gemini-3.5-flash-lite entry and the PRICE_IN/PRICE_OUT constants are untouched.",
+    "tests": "tests/test_costlog.py 2 passed"
+  },
+  "judge_cost_check": {
+    "assumption": "170 judge calls at the spec's section 6 volumes (850 tokens in, 40 out per call)",
+    "cost_usd": 0.139,
+    "spec_band": "0.06-0.19",
+    "verdict": "inside the pre-registered band; the spec's 'up to 3x flash-lite' placeholder holds at AI Studio prices (2.5x in, 1.8x out)"
+  }
+}
