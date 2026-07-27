@@ -58,14 +58,43 @@ C9, C12.
 **The owner's >3 rule TRIGGERED.** The judge disagrees with the
 concordant human+LLM sheet-A line on **4 rows**: A3, A5, A6, A7
 (auditors→judge: DIFFERENT→SAME, SAME→DIFFERENT, DIFFERENT→UNCLEAR,
-SAME→DIFFERENT). Per the owner's rule those rows go to the owner
-verbatim BEFORE any trust bar is proposed, so the addendum's judge
-trust bar slot is **[PENDING]**. For calibration: under the B2.2
-pattern (raw ≥ 0.85, κ ≥ 0.6) the measured concordance would currently
-FAIL on raw agreement for every line — the flagged rows are the
-evidence on which the owner rules whether that reflects a judge
-defect, auditor error, or rubric-boundary behaviour (A6 is a case
-where rubric boundary rule 5 sides with the judge's UNCLEAR).
+SAME→DIFFERENT). Per the owner's rule those rows went to the owner
+verbatim before any trust bar was proposed.
+
+### Adjudication (owner, 2026-07-28 — rows were unblind, so they are
+### adjudicated, not re-scored)
+
+- **A6 → judge correct** (rubric rule 5: the candidate answers a
+  different question and never commits on the central one). This row
+  also exposed an **audit-protocol defect, recorded as the owner's and
+  not the judge's**: the auditors were briefed with a paraphrase of the
+  task, not the frozen rubric text.
+- **A7 → judge correct** under rule 3: the real answer is
+  hedged-but-committed to "inaction aggravated"; the candidate rejects
+  that.
+- **A3 → auditors correct**: the judge keyed on surface framing; the
+  real answer's central claim is the dependency reversal (the US needs
+  Egypt more).
+- **A5 → auditors correct**: both texts land "no one will reverse
+  Brexit"; optimism-vs-doom is secondary.
+- **Net: 2–2.**
+
+### Parameter-5 trust bar — set 2026-07-28, PRE-COMMITTED before its
+### measurement exists
+
+The judge passes iff **raw ≥ 0.80 AND κ ≥ 0.60** against a
+**rubric-briefed** auditor line on a fresh blind tranche. Rationale on
+record: the 51-row audit used rubric-naive auditors, so its 0.76–0.78
+is a lower bound, and two of the four adjudicated disagreements were
+auditor error. The bar was committed before the fresh tranche was
+scored — no bar-shopping. Fresh tranche:
+`fresh_tranche_sheet_{D,E}.md`, 18 rows (9 SAME / 9 DIFFERENT by judge
+label), seed 611, drawn only from generations unused in A/B/C, arms
+3–4 each, both models 9/9, the frozen rubric printed at the top; key
+sealed in `fresh_tranche_key.json`. C01677 is absent (single-item
+subject, rows lost to the two-per-item cap under strict label
+balance — documented in the key). On a fail: rubric/judge iteration on
+dev subjects, re-tranche, same pre-committed bar.
 
 ## 3. Fuzzy-host sheet — LLM co-auditor line (D2)
 

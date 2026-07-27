@@ -23,12 +23,15 @@ freeze. The freeze still requires every precondition below to clear and the
 owner to adopt it.
 
 **Filled 2026-07-28.** The instrument-parameter slots are filled from
-OE-1 measurements, the audit lines are scored, and deviations D1–D3 are
-recorded inline. Two things remain deliberately open: the judge trust
-bar (parameter 5 — pending the owner's ruling on 4 flagged rows) and
-the H6/B3 parameters (unmeasured). Status is unchanged: **DRAFT, NOT
-ADOPTED** — values marked [PROPOSED] and this whole text freeze only
-when the owner approves and adopts it.
+OE-1 measurements, the audit lines are scored, deviations D1–D3 are
+recorded inline, the four flagged judge rows are owner-adjudicated (net
+2–2), and the judge trust bar is **set and pre-committed** (parameter
+5). Two things remain deliberately open: the parameter-5 verdict itself
+(awaiting the owner's rubric-in-hand labels on the fresh 18-row
+tranche) and the H6/B3 parameters (unmeasured). The owner approved the
+[PROPOSED] values in items 6, 7, 8 and 10 on 2026-07-28. Status is
+unchanged: **DRAFT, NOT ADOPTED** — nothing freezes until the owner's
+final freeze review after the parameter-5 verdict.
 
 Evidence base: `results/stage2_pilot2/BARLOCK_MEASUREMENTS.md` (measured
 on dev subjects and pool metadata only), `results/stage2_pilot/
@@ -197,17 +200,31 @@ freezes until the owner adopts the addendum.
    `d8758204009e71b482d36fb7133641f3077b7414df87e5a055f3949cb2ef3d3b`.**
    Measured: 0 truncations at the cap on either scored model; 82/85 and
    85/85 within the word cap.
-5. **Judge trust bar [PENDING — owner ruling required].** The C4.2
-   spot-check ran under deviation D1 (human tranche = sheet A only,
-   17 of 51 rows; LLM co-auditor on all 51; human–LLM concordance 17/17
-   on sheet A). Measured concordance vs the judge: human 0.765 raw /
-   κ 0.556 (n=17); co-auditor 0.784 raw / κ 0.596 (n=51); pooled 0.779
-   / κ 0.586. The judge disagreed with the concordant sheet-A auditor
-   line on 4 rows (> 3), so per the owner's pre-stated rule those rows
-   went to the owner verbatim and **no bar is proposed until the owner
-   rules on them** (`AUDIT_LINES_2026-07-28.md` §2). For calibration:
-   the B2.2 pattern (raw ≥ 0.85, κ ≥ 0.6) would currently fail on raw
-   agreement for every line.
+5. **Judge trust bar — SET 2026-07-28, pre-committed before its
+   measurement exists:** the judge passes iff **raw agreement ≥ 0.80
+   AND Cohen's κ ≥ 0.60** against a **rubric-briefed** auditor line on
+   a fresh blind tranche. Rationale on record: the first C4.2 audit ran
+   under deviation D1 (human tranche = sheet A only, 17 of 51 rows; LLM
+   co-auditor on all 51; concordance 17/17 on A) with **rubric-naive**
+   auditors — briefed with a paraphrase, not the frozen rubric text, an
+   audit-protocol defect recorded as the owner's, not the judge's — so
+   its measured 0.76–0.78 raw / κ 0.56–0.60 is a lower bound. The
+   judge's four sheet-A disagreements with the concordant auditor line
+   were adjudicated by the owner 2026-07-28, unblind, therefore
+   adjudicated rather than re-scored: **A6 judge correct** (rubric rule
+   5; the auditor-protocol defect case), **A7 judge correct** (rule 3,
+   hedged-but-committed), **A3 auditors correct** (judge keyed on
+   surface framing; the real answer's central claim is the dependency
+   reversal), **A5 auditors correct** (both texts land "no one will
+   reverse Brexit"; optimism-vs-doom is secondary). Net 2–2.
+   **Measurement pending:** a fresh 18-row blind tranche
+   (`fresh_tranche_sheet_{D,E}.md`, seed 611, drawn only from
+   generations unused in the A/B/C sample, 9 SAME / 9 DIFFERENT, arms
+   3–4 each, both models 9/9, rubric text printed on the sheet) awaits
+   the owner's rubric-in-hand labels. The judge passes or fails
+   parameter 5 against the bar above; on fail, rubric/judge iteration
+   on dev subjects and a re-tranche, with the same pre-committed bar —
+   no bar-shopping.
 6. **UNCLEAR handling rule — adopted as proposed in C2.3:** UNCLEAR items
    are excluded from the stance-match rate's denominator; every arm's
    UNCLEAR rate is always reported beside its stance-match rate; a
@@ -328,9 +345,9 @@ Full lines, scores, and flags: `results/stage2_openended/AUDIT_LINES_2026-07-28.
 6. Owner's ≥ 50-label judge spot-check (Amendment 3 C4.2), sampled across
    subjects and balanced across SAME/DIFFERENT. **RAN 2026-07-28 under
    D1** (human: sheet A, 17 rows; LLM co-auditor: all 51; concordance
-   17/17 on A). Scores in `AUDIT_LINES_2026-07-28.md` §2. **OPEN
-   REMAINDER:** the judge disagreed with the concordant sheet-A line on
-   4 rows (> 3), so per the owner's pre-stated rule the trust bar
-   (instrument parameter 5) stays unproposed until the owner rules on
-   those rows. This precondition closes when that ruling lands and the
-   trust bar is set.
+   17/17 on A). Scores in `AUDIT_LINES_2026-07-28.md` §2. The four
+   flagged rows were **adjudicated by the owner 2026-07-28** (net 2–2;
+   see instrument parameter 5) and the trust bar is now **set and
+   pre-committed**. **OPEN REMAINDER:** the owner's rubric-in-hand
+   labels on the fresh 18-row tranche, and the resulting parameter-5
+   pass/fail verdict. This precondition closes when that verdict lands.

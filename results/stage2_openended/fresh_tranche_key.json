@@ -1,0 +1,231 @@
+{
+ "purpose": "Parameter-5 fresh tranche (owner-directed 2026-07-28). Do not open until both sheets are labeled.",
+ "bar_pre_committed": "Pre-committed 2026-07-28, before this tranche was scored: the judge passes parameter 5 iff raw agreement >= 0.80 AND Cohen's kappa >= 0.60 against the rubric-briefed auditor line on this tranche.",
+ "seed": 611,
+ "n_rows": 18,
+ "recipe": "same as A/B/C: SAME/DIFFERENT primary balance, UNCLEAR fills shortfall (documented); spread across arms, models, subjects; twin rule per sub-sheet; drawn only from combos unused in A/B/C",
+ "achieved_balance": {
+  "SAME": 9,
+  "DIFFERENT": 9
+ },
+ "shortfall": {},
+ "arms": {
+  "zeroinfo_redacted": 3,
+  "imposter_redacted": 3,
+  "twin_named": 4,
+  "twin_redacted": 4,
+  "zeroinfo_named": 4
+ },
+ "models": {
+  "gemini-3.5-flash-lite": 9,
+  "Gemma-4-31B-it": 9
+ },
+ "subjects": {
+  "C02124": 5,
+  "C02013": 4,
+  "C00792": 5,
+  "C02006": 4
+ },
+ "subjects_note": "C01677 absent: a single-item subject whose fresh-pool rows lost out to the two-rows-per-item cap under strict 9/9 label balance. Documented, not hidden.",
+ "rubric_sha256": "85c7c990af522c2c1e41c116617f406a473496b4c5875f293d687ef62bff64d1",
+ "entries": [
+  {
+   "entry": "D1",
+   "sheet": "D",
+   "position": 1,
+   "item_id": "C02124:NPR-12184:2",
+   "canonical_id": "C02124",
+   "arm": "zeroinfo_redacted",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label": "SAME",
+   "judge_why": "The REAL answer explains his popularity because people are \"longing for stability and security\" under a military general, while the CANDIDATE answer similarly attributes it to the Egyptian people \"yearning for stability, security\" and seeing him as \"a steady hand capable of steering the country away from chaos.\""
+  },
+  {
+   "entry": "D2",
+   "sheet": "D",
+   "position": 2,
+   "item_id": "C02124:NPR-12184:6",
+   "canonical_id": "C02124",
+   "arm": "imposter_redacted",
+   "model": "Gemma-4-31B-it",
+   "judge_label": "SAME",
+   "judge_why": "The REAL answer claims \"the United States needs Egypt more than Egypt needs the United States\" to explain why Egypt can ignore certain pressures, which matches the CANDIDATE's claim that \"these governments are more concerned with their own internal stability... than with the disapproval of Washington.\""
+  },
+  {
+   "entry": "D3",
+   "sheet": "D",
+   "position": 3,
+   "item_id": "C02013:NPR-9480:70",
+   "canonical_id": "C02013",
+   "arm": "twin_named",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label": "SAME",
+   "judge_why": "The REAL answer states \"yes, I think there's encouraging evidence there\" regarding early childhood intervention, while the CANDIDATE answer similarly asserts \"The short answer is yes... early childhood interventions combined with sustained investments in neighborhood social infrastructure make a real difference.\""
+  },
+  {
+   "entry": "D4",
+   "sheet": "D",
+   "position": 4,
+   "item_id": "C00792:NPR-19884:6",
+   "canonical_id": "C00792",
+   "arm": "twin_redacted",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label": "DIFFERENT",
+   "judge_why": "The REAL answer explicitly states \"this is not an American responsibility,\" whereas the CANDIDATE answer directly contradicts this by stating \"I think the United States bears a share of responsibility.\""
+  },
+  {
+   "entry": "D5",
+   "sheet": "D",
+   "position": 5,
+   "item_id": "C00792:NPR-19884:15",
+   "canonical_id": "C00792",
+   "arm": "zeroinfo_redacted",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label": "DIFFERENT",
+   "judge_why": "The REAL answer asserts \"the biggest loser is the United States,\" whereas the CANDIDATE answer claims \"Turkey has lost the most in this calculus.\""
+  },
+  {
+   "entry": "D6",
+   "sheet": "D",
+   "position": 6,
+   "item_id": "C02006:NPR-14829:26",
+   "canonical_id": "C02006",
+   "arm": "twin_named",
+   "model": "Gemma-4-31B-it",
+   "judge_label": "DIFFERENT",
+   "judge_why": "The REAL answer claims there is a majority \"not to stop Brexit, but to go for a different form of Brexit,\" whereas the CANDIDATE answer argues that leaders are trapped by populist momentum and \"to back away now would be to admit that the simplistic promises were a fantasy.\""
+  },
+  {
+   "entry": "D7",
+   "sheet": "D",
+   "position": 7,
+   "item_id": "C02124:NPR-12184:8",
+   "canonical_id": "C02124",
+   "arm": "imposter_redacted",
+   "model": "Gemma-4-31B-it",
+   "judge_label": "SAME",
+   "judge_why": "The REAL answer explains the outcome by stating \"the Mubarak regime and the military as an institution remained in place\" and \"the Brotherhood and Mr. Morsi were miserable in power,\" which matches the CANDIDATE's claim that \"you cannot build democratic institutions in a weekend\" and the Muslim Brotherhood \"viewed the ballot box... as a mandate for total control.\""
+  },
+  {
+   "entry": "D8",
+   "sheet": "D",
+   "position": 8,
+   "item_id": "C02006:NPR-14829:29",
+   "canonical_id": "C02006",
+   "arm": "twin_named",
+   "model": "Gemma-4-31B-it",
+   "judge_label": "DIFFERENT",
+   "judge_why": "The REAL answer says \"It's certainly possible\" that the election result could turn out to be better because it \"would legitimize a different approach,\" whereas the CANDIDATE answer states \"I don't think I could go that far\" and \"I fear the reality will be far less optimistic.\""
+  },
+  {
+   "entry": "D9",
+   "sheet": "D",
+   "position": 9,
+   "item_id": "C02013:NPR-9480:45",
+   "canonical_id": "C02013",
+   "arm": "imposter_redacted",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label": "DIFFERENT",
+   "judge_why": "The REAL answer focuses on President Obama's speech suggesting \"a blend of policies at three distinct levels\" (gun laws, early childhood intervention, and community-level supports), whereas the CANDIDATE answer criticizes a \"continued focus on painting entire immigrant communities with a broad brush\" and addresses immigration system mechanics."
+  },
+  {
+   "entry": "E1",
+   "sheet": "E",
+   "position": 1,
+   "item_id": "C02124:NPR-12184:2",
+   "canonical_id": "C02124",
+   "arm": "twin_named",
+   "model": "Gemma-4-31B-it",
+   "judge_label": "SAME",
+   "judge_why": "The REAL answer explains his popularity because people \"are longing for stability and security\" after a \"disastrous year\" under Morsi, while the CANDIDATE similarly attributes it to people looking \"for a 'strongman' to restore order and stability\" after Morsi's transition \"had become a mess.\""
+  },
+  {
+   "entry": "E2",
+   "sheet": "E",
+   "position": 2,
+   "item_id": "C02013:NPR-9480:45",
+   "canonical_id": "C02013",
+   "arm": "zeroinfo_named",
+   "model": "Gemma-4-31B-it",
+   "judge_label": "DIFFERENT",
+   "judge_why": "The REAL answer identifies the central takeaway as \"a blend of policies at three distinct levels\" focusing on gun laws, early childhood intervention, and community-level supports, whereas the CANDIDATE answer claims the speech's main takeaway was \"the emphasis on unity and the call to move past the divisiveness.\""
+  },
+  {
+   "entry": "E3",
+   "sheet": "E",
+   "position": 3,
+   "item_id": "C02124:NPR-12184:4",
+   "canonical_id": "C02124",
+   "arm": "zeroinfo_named",
+   "model": "Gemma-4-31B-it",
+   "judge_label": "SAME",
+   "judge_why": "The REAL answer states there is \"No doubt whatsoever\" that Sisi could win, while the CANDIDATE answer similarly asserts \"None at all\" and that his victory is \"virtually certain.\""
+  },
+  {
+   "entry": "E4",
+   "sheet": "E",
+   "position": 4,
+   "item_id": "C00792:NPR-19884:10",
+   "canonical_id": "C00792",
+   "arm": "zeroinfo_named",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label": "SAME",
+   "judge_why": "The REAL answer asserts \"There is an opportunity\" to change course by recognizing that Assad's tactics are a \"recruiting tool... for ISIS,\" while the CANDIDATE answer similarly agrees \"There is an opportunity\" but argues it requires addressing \"the Assad regime's systematic brutality\" rather than focusing solely on counter-ISIS."
+  },
+  {
+   "entry": "E5",
+   "sheet": "E",
+   "position": 5,
+   "item_id": "C02013:NPR-9480:82",
+   "canonical_id": "C02013",
+   "arm": "twin_redacted",
+   "model": "Gemma-4-31B-it",
+   "judge_label": "SAME",
+   "judge_why": "The REAL answer states that \"exposure to violence in childhood is related to a number of later outcomes, including increased involvement in violence itself\" and \"lower abilities... in terms of schooling,\" while the CANDIDATE answer similarly claims it leads to \"a higher likelihood of school dropout and, unfortunately, a greater risk of entering that violence curve themselves.\""
+  },
+  {
+   "entry": "E6",
+   "sheet": "E",
+   "position": 6,
+   "item_id": "C02006:NPR-14829:26",
+   "canonical_id": "C02006",
+   "arm": "twin_redacted",
+   "model": "Gemma-4-31B-it",
+   "judge_label": "DIFFERENT",
+   "judge_why": "The REAL answer claims that backing away from a hard Brexit is \"more feasible\" through a softer option like remaining in the single market, whereas the CANDIDATE answer claims that \"to back away now would be seen as a surrender\" and is \"almost impossible to reverse.\""
+  },
+  {
+   "entry": "E7",
+   "sheet": "E",
+   "position": 7,
+   "item_id": "C02006:NPR-14829:29",
+   "canonical_id": "C02006",
+   "arm": "zeroinfo_redacted",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label": "DIFFERENT",
+   "judge_why": "The REAL answer commits to the position that the election result could turn out to be better because \"this election result would legitimize a different approach,\" whereas the CANDIDATE answer rejects this framing, stating, \"my focus isn't on celebrating or despairing over a specific outcome.\""
+  },
+  {
+   "entry": "E8",
+   "sheet": "E",
+   "position": 8,
+   "item_id": "C00792:NPR-19884:6",
+   "canonical_id": "C00792",
+   "arm": "zeroinfo_named",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label": "DIFFERENT",
+   "judge_why": "The REAL answer states \"this is not an American responsibility\" while the CANDIDATE answer asserts \"I think it is a significant American responsibility, primarily through omission.\""
+  },
+  {
+   "entry": "E9",
+   "sheet": "E",
+   "position": 9,
+   "item_id": "C00792:NPR-19884:15",
+   "canonical_id": "C00792",
+   "arm": "twin_redacted",
+   "model": "gemini-3.5-flash-lite",
+   "judge_label": "SAME",
+   "judge_why": "The REAL answer asserts \"the biggest loser is the United States\" due to a loss of \"credibility, reputation,\" while the CANDIDATE similarly commits to this position, stating \"the United States has suffered a significant loss of credibility, not just in the Middle East, but globally.\""
+  }
+ ]
+}

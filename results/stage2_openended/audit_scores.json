@@ -165,7 +165,20 @@
    "A6",
    "A7"
   ],
-  "trust_bar": "PENDING owner ruling"
+  "trust_bar": {
+   "status": "SET 2026-07-28, pre-committed before measurement",
+   "bar": "raw >= 0.80 AND kappa >= 0.60 vs a rubric-briefed auditor line on a fresh blind tranche",
+   "rationale": "51-row audit was rubric-naive (lower bound); 2 of 4 adjudicated disagreements were auditor error",
+   "on_fail": "rubric/judge iteration on dev subjects, re-tranche, same pre-committed bar"
+  },
+  "adjudication_2026-07-28": {
+   "note": "rows were unblind, so adjudicated, not re-scored",
+   "A6": "judge correct (rubric rule 5); audit-protocol defect recorded as owner's: auditors briefed with a paraphrase, not the frozen rubric",
+   "A7": "judge correct (rule 3, hedged-but-committed to 'inaction aggravated')",
+   "A3": "auditors correct (judge keyed on surface framing; central claim is the dependency reversal)",
+   "A5": "auditors correct (both land 'no one will reverse Brexit'; optimism-vs-doom secondary)",
+   "net": "2-2"
+  }
  },
  "fuzzy_host": {
   "coauditor_line": {
@@ -394,5 +407,26 @@
   ],
   "direction_note": "15/16 disagreements are coauditor NEW-TOPIC vs classifier FOLLOW-UP; 11/16 in self-flagged low-confidence rows",
   "rubric_sha256": "053b96cba42ebf03d966db3c22fce2acde3a685d5b4cca9badd556ee248a24da"
+ },
+ "fresh_tranche": {
+  "sheets": [
+   "fresh_tranche_sheet_D.md",
+   "fresh_tranche_sheet_E.md"
+  ],
+  "key": "fresh_tranche_key.json (sealed until labeled)",
+  "seed": 611,
+  "n_rows": 18,
+  "balance": {
+   "SAME": 9,
+   "DIFFERENT": 9
+  },
+  "models": {
+   "Gemma-4-31B-it": 9,
+   "gemini-3.5-flash-lite": 9
+  },
+  "no_overlap_with_ABC": true,
+  "rubric_printed_on_sheet": true,
+  "subjects_note": "C01677 absent (single-item subject, two-per-item cap under strict balance)",
+  "generator": "experiments/oe1_fresh_tranche.py (byte-identical rerun verified)"
  }
 }
