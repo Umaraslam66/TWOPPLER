@@ -1,0 +1,319 @@
+{
+ "pilot": "PILOT -- open-ended instrument validation on dev subjects; no research conclusions.",
+ "contract": "results/stage2_openended/PILOT_SPEC.md (Amendment 3), lineage results/stage2_pilot4/SPEC_v1.10.md",
+ "scored_claim": "The claim scored is that the twin, asked the person's held-out question cold, produces a free-text reply that lands closer to what the person actually said than an imposter twin's reply does -- on embedding similarity (channel 1) and on stance match (channel 2). No forced choice is involved and no option set exists.",
+ "phase": "build",
+ "built_utc": "2026-07-27T14:30:46Z",
+ "runtime_secs": 0.37,
+ "offline": true,
+ "spend": {
+  "api_calls": 0,
+  "cost_usd": 0.0,
+  "node_hours": 0.0
+ },
+ "n_items": 17,
+ "n_arms": 5,
+ "n_prompts": 85,
+ "arms": [
+  "twin_redacted",
+  "twin_named",
+  "zeroinfo_redacted",
+  "zeroinfo_named",
+  "imposter_redacted"
+ ],
+ "item_types": {
+  "factual_explanation": 7,
+  "subjective": 10
+ },
+ "item_type_sources": {
+  "C00792:NPR-19884:2": "hand_final_pilot4",
+  "C00792:NPR-19884:6": "hand_final_pilot4",
+  "C00792:NPR-19884:10": "hand_final_pilot4",
+  "C00792:NPR-19884:13": "hand_final_pilot4",
+  "C00792:NPR-19884:15": "hand_final_pilot4",
+  "C02013:NPR-9480:45": "hand_final_pilot4",
+  "C02013:NPR-9480:49": "hand_final_pilot4",
+  "C02013:NPR-9480:70": "hand_final_pilot4",
+  "C02013:NPR-9480:82": "hand_final_pilot4",
+  "C02124:NPR-12184:2": "cue_rule_fallback",
+  "C02124:NPR-12184:4": "hand_final_pilot4",
+  "C02124:NPR-12184:6": "hand_final_pilot4",
+  "C02124:NPR-12184:8": "cue_rule_fallback",
+  "C01677:NPR-8791:77": "hand_final_pilot4",
+  "C02006:NPR-14829:19": "hand_final_pilot4",
+  "C02006:NPR-14829:26": "hand_final_pilot4",
+  "C02006:NPR-14829:29": "hand_final_pilot4"
+ },
+ "delta_bins_smoke_check": {
+  ">3y": 5,
+  "2-3y": 4,
+  "6-12m": 8
+ },
+ "generation": {
+  "temperature": 0.0,
+  "max_output_tokens": 256,
+  "answer_word_cap": 150,
+  "primary_model": "Gemma-4-31B-it",
+  "robustness_model": "gemini-3.5-flash-lite"
+ },
+ "judge": {
+  "model": "gemini-3.5-flash",
+  "temperature": 0.0,
+  "rubric_file": "rubric_r1.txt (written by `judge`)",
+  "rubric_sha256": "85c7c990af522c2c1e41c116617f406a473496b4c5875f293d687ef62bff64d1",
+  "rubric_chars": 2594,
+  "call_order_seed": 20260727
+ },
+ "embedding_candidates": [
+  {
+   "name": "sentence-transformers/all-mpnet-base-v2",
+   "revision": "e8c3b32edf5434bc2275fc9bab85f82640a19130"
+  },
+  {
+   "name": "BAAI/bge-large-en-v1.5",
+   "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09"
+  },
+  {
+   "name": "intfloat/e5-large-v2",
+   "revision": "f169b11e22de13617baa190a028a32f3493550b6"
+  },
+  {
+   "name": "sentence-transformers/all-MiniLM-L6-v2",
+   "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+  }
+ ],
+ "qa": {
+  "instruction_tail_byte_identical": true,
+  "instruction_tail_sha256": "d8758204009e71b482d36fb7133641f3077b7414df87e5a055f3949cb2ef3d3b",
+  "instruction_tail_text": "Now answer the interviewer's next question as this person would, speaking in their voice, in the first person. Give one spoken reply of at most 150 words. No lists, no stage directions, no commentary about this task.",
+  "n_prompts_checked": 85,
+  "forced_choice_residue": {
+   "n_prompts_with_residue": 0,
+   "checked_for": [
+    "option_line",
+    "choice_line",
+    "distribution_instruction"
+   ]
+  },
+  "twin_free_check": {
+   "ok": true,
+   "rule": "STANDING EVAL RULE (D6-v4.9), added 2026-07-27 after the frontier rater named TWIN-PAIR STANCE INFERENCE as one of six tells on round 3's detectability sheet: no rater and no scorer may ever see both twins of a duplicated question. Round 3's sheet showed five questions twice, once as a real entry and once as a control; the option sets shared nothing, so elimination was impossible, but a reader could still reason across the two stance sets. The rule generalises that: within any single prompt file or rating sheet a question appears AT MOST ONCE. Asserted at export, not assumed.",
+   "n_sets_checked": 5,
+   "per_set": {
+    "prompts_twin_redacted": {
+     "n_rows": 17,
+     "n_distinct_items": 17
+    },
+    "prompts_twin_named": {
+     "n_rows": 17,
+     "n_distinct_items": 17
+    },
+    "prompts_zeroinfo_redacted": {
+     "n_rows": 17,
+     "n_distinct_items": 17
+    },
+    "prompts_zeroinfo_named": {
+     "n_rows": 17,
+     "n_distinct_items": 17
+    },
+    "prompts_imposter_redacted": {
+     "n_rows": 17,
+     "n_distinct_items": 17
+    }
+   }
+  },
+  "grounding_budget_words": 2000,
+  "grounding_speech_words_per_arm": {
+   "twin_redacted": {
+    "n": 17,
+    "min": 1758,
+    "mean": 1902.35,
+    "max": 1984
+   },
+   "twin_named": {
+    "n": 17,
+    "min": 1758,
+    "mean": 1902.35,
+    "max": 1984
+   },
+   "imposter_redacted": {
+    "n": 17,
+    "min": 1969,
+    "mean": 1986.24,
+    "max": 1996
+   }
+  },
+  "grounding_speech_words_all_grounded": {
+   "n": 51,
+   "min": 1758,
+   "mean": 1930.31,
+   "max": 1996
+  },
+  "n_grounded_prompts_over_budget": 0,
+  "zeroinfo_prompts_with_excerpts": 0,
+  "n_zeroinfo_prompts": 34,
+  "s1_note": "S1 (host-intro clause redaction, BARLOCK_MEASUREMENTS section 8.1) is applied to ALL FIVE arms, not only the three '*_redacted' ones. Applying it to the redacted arms alone would make a named arm differ from its redacted counterpart by more than the single name line, which is the one-factor invariant the contamination meter rests on. The build QA reports the check on the redacted arms as required. Note that rounds 1-4 did NOT apply S1 in their render path, so OE-1 prompts are not byte-comparable to round 4's on this dimension.",
+  "s1_redacted_arms_prompts_changed": 22,
+  "s1_redacted_arms_clauses_removed": 33,
+  "s1_all_arms_clauses_removed": 56,
+  "surviving_name_variants_in_redacted_arms": 0,
+  "per_arm_prompt_counts": {
+   "twin_redacted": 17,
+   "twin_named": 17,
+   "zeroinfo_redacted": 17,
+   "zeroinfo_named": 17,
+   "imposter_redacted": 17
+  },
+  "imposter_block_differs_from_twin_block": true,
+  "zeroinfo_preamble_note": "FLAGGED, NOT CHANGED. The frozen v1.10 zero-information preamble still reads 'Predict which answer they gave.', which is forced-choice wording in an open-ended prompt. PILOT_SPEC section 2 explicitly keeps every arm's existing preamble so the instruction tail stays byte-identical across arms, so this driver renders it unchanged. Rewording it is a bar-lock decision for the owner, not an implementation one."
+ },
+ "per_subject": {
+  "C00792": {
+   "canonical_id": "C00792",
+   "canonical_name": "Frederic Hof",
+   "donor_id": "C01316",
+   "test_date": "2016-12-14",
+   "delta_days": 1285,
+   "delta_bin": ">3y",
+   "item_ids": [
+    "C00792:NPR-19884:2",
+    "C00792:NPR-19884:6",
+    "C00792:NPR-19884:10",
+    "C00792:NPR-19884:13",
+    "C00792:NPR-19884:15"
+   ],
+   "n_items": 5
+  },
+  "C02013": {
+   "canonical_id": "C02013",
+   "canonical_name": "Robert Sampson",
+   "donor_id": "C00690",
+   "test_date": "2013-02-19",
+   "delta_days": 993,
+   "delta_bin": "2-3y",
+   "item_ids": [
+    "C02013:NPR-9480:45",
+    "C02013:NPR-9480:49",
+    "C02013:NPR-9480:70",
+    "C02013:NPR-9480:82"
+   ],
+   "n_items": 4
+  },
+  "C02124": {
+   "canonical_id": "C02124",
+   "canonical_name": "Samer Shehata",
+   "donor_id": "C02277",
+   "test_date": "2014-02-01",
+   "delta_days": 210,
+   "delta_bin": "6-12m",
+   "item_ids": [
+    "C02124:NPR-12184:2",
+    "C02124:NPR-12184:4",
+    "C02124:NPR-12184:6",
+    "C02124:NPR-12184:8"
+   ],
+   "n_items": 4
+  },
+  "C01677": {
+   "canonical_id": "C01677",
+   "canonical_name": "Matthew Kroenig",
+   "donor_id": "C01650",
+   "test_date": "2013-04-29",
+   "delta_days": 342,
+   "delta_bin": "6-12m",
+   "item_ids": [
+    "C01677:NPR-8791:77"
+   ],
+   "n_items": 1
+  },
+  "C02006": {
+   "canonical_id": "C02006",
+   "canonical_name": "Robert Harris",
+   "donor_id": "C02510",
+   "test_date": "2017-06-09",
+   "delta_days": 352,
+   "delta_bin": "6-12m",
+   "item_ids": [
+    "C02006:NPR-14829:19",
+    "C02006:NPR-14829:26",
+    "C02006:NPR-14829:29"
+   ],
+   "n_items": 3
+  }
+ },
+ "projection": {
+  "n_calls": 85,
+  "tokens_in_est": 206900,
+  "tokens_out_cap": 21760,
+  "generation_seconds": 32.7,
+  "engine_init_seconds": 225.0,
+  "projected_node_hours": 0.0716,
+  "walltime": "00:20:00",
+  "qos": "boost_qos_dbg",
+  "effective_tokens_per_second": 7000.0,
+  "budget_node_hours": 0.25,
+  "walltime_bounded_worst_case_node_hours": 0.3333,
+  "note": "One engine init dominates: 85 prompts against round 1's 639, same node, same model. Output tokens are counted at the 256-token cap, so the generation term is an upper bound."
+ },
+ "renderer": {
+  "oe_render_template_sha256": "4c4f9e0bdca11ce79ec669a0719d7a71894d587f4e61b54ddda4848f7bb1b785",
+  "oe_render_instruction_sha256": "d8758204009e71b482d36fb7133641f3077b7414df87e5a055f3949cb2ef3d3b",
+  "oe_render_file_sha256": "6e9c3f5d0734f5d78155a58d6c5eccb025f0d3b4208298460f553aa1fc2160bd",
+  "stage2_render_template_sha256": "26def40977f381e732c757bdb16d1c620db415041af59719319cef5434f652b1",
+  "stage2_render_file_sha256": "25a13febf5ee85cf4ef8b4371ecc8162ed0f1685841f518d3399c62151e0425a"
+ },
+ "files": {
+  "prompts_twin_redacted": {
+   "file": "prompts_twin_redacted.jsonl",
+   "n_prompts": 17,
+   "sha256": "b370b59418919f9a3317a3097a5d0aa5d4ac141118b8b913c161da8d7f8615f5",
+   "max_prompt_words": 2134,
+   "total_prompt_words": 34716
+  },
+  "prompts_twin_named": {
+   "file": "prompts_twin_named.jsonl",
+   "n_prompts": 17,
+   "sha256": "227c79e749a57d55c6d85a4cd5280dcd077e3ce9277ec260dc2364c1ace3375a",
+   "max_prompt_words": 2138,
+   "total_prompt_words": 34784
+  },
+  "prompts_zeroinfo_redacted": {
+   "file": "prompts_zeroinfo_redacted.jsonl",
+   "n_prompts": 17,
+   "sha256": "c78e989994b2ada8240dcd321998303a3f7f6ca9e590f2e4b4721ce9b7f2f9d3",
+   "max_prompt_words": 152,
+   "total_prompt_words": 1526
+  },
+  "prompts_zeroinfo_named": {
+   "file": "prompts_zeroinfo_named.jsonl",
+   "n_prompts": 17,
+   "sha256": "efa80c25fde2e6734e84fe748676c0300e9ee4a64bcae32055f02cb51ccf6c7f",
+   "max_prompt_words": 157,
+   "total_prompt_words": 1611
+  },
+  "prompts_imposter_redacted": {
+   "file": "prompts_imposter_redacted.jsonl",
+   "n_prompts": 17,
+   "sha256": "d5f1210392456330c9c50ceb77b6310f5b847cb6944148e1c5084e7f7759773a",
+   "max_prompt_words": 2208,
+   "total_prompt_words": 36256
+  },
+  "leonardo": {
+   "prompts_file": "prompts_oe1.jsonl",
+   "meta_file": "meta_oe1.jsonl",
+   "n_prompts": 85,
+   "prompts_sha256": "7a4cdb03f8f8260670c28da37d5825ab4b8c470aea23d4cee3947a4df35ffdb6",
+   "meta_sha256": "043c6682ac29d25b5da01d05e51a0d3dcd10a84170e9c188a6564ea25a0422f7",
+   "max_output_tokens": 256,
+   "temperature": 0.0
+  }
+ },
+ "sbatch": {
+  "path": "results/stage2_openended/stage2_oe1_gen.sbatch",
+  "submitted": false,
+  "node_outdir": "/leonardo_work/AIFAC_P02_548/DOPPLER/runs/stage2_oe1",
+  "note": "WRITTEN, NEVER SUBMITTED. Standing stop-before-GPU checkpoint: owner reviews prompt_samples.md and the projection first."
+ },
+ "prompt_samples": "results/stage2_openended/prompt_samples.md",
+ "twin_rule": "STANDING EVAL RULE (D6-v4.9), added 2026-07-27 after the frontier rater named TWIN-PAIR STANCE INFERENCE as one of six tells on round 3's detectability sheet: no rater and no scorer may ever see both twins of a duplicated question. Round 3's sheet showed five questions twice, once as a real entry and once as a control; the option sets shared nothing, so elimination was impossible, but a reader could still reason across the two stance sets. The rule generalises that: within any single prompt file or rating sheet a question appears AT MOST ONCE. Asserted at export, not assumed."
+}
