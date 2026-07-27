@@ -363,3 +363,82 @@ def test_a_build_refuses_to_run_on_a_scored_model(tmp_path):
                           pilot3_dir=ROOT / "results/stage2_pilot3",
                           out_dir=tmp_path, client=client, force=False,
                           call_cap=10, skip_cost=True, include_factual=False))
+
+
+# ---------------------------------------------------------------------------
+# Regression: the exact leak the frontier rater found (sheet item 10)
+# ---------------------------------------------------------------------------
+
+# Verbatim from results/stage2_pilot3/items/C00792_NPR-19884_15.json, the item
+# behind sheet entry 10. The rater named "vocative-name leak in item 10" as one
+# of six tells: two options open "Robert," -- the host's first name, carried
+# out of the transcript by the paraphrase -- and the real answer is one of them.
+ITEM10_OPTIONS = [
+    "Robert, regarding foreign backers in Syria, Ankara has taken the heaviest "
+    "hit, especially since President Erdogan failed to remove Assad from power "
+    "in Damascus.",
+    "Looking across all foreign participants in Syria, Doha took the hardest "
+    "blow, with Emir Tamim losing all leverage over the main rebel factions in "
+    "Idlib.",
+    "Robert, regarding external actors involved in the Syrian crisis, the "
+    "biggest loser is the United States, and the loss of credibility and "
+    "reputation has been enormous.",
+    "Among outside powers meddling in Syria, Riyadh suffered the greatest "
+    "defeat, watching King Salman's proxy militias crumble completely across "
+    "the northern provinces last month.",
+]
+ITEM10_HOST_FORMS = ["ROBERT SIEGEL", "SIEGEL", "ROBERT"]
+
+
+def test_the_deixis_pass_removes_the_vocative_the_rater_found_in_item_ten():
+    """Pinned to the real text. This is the leak a frontier rater named, so the
+    fix has to be demonstrated on that text and not on a fixture resembling it.
+    """
+    out, record = C4.apply_deixis_rule(ITEM10_OPTIONS, ITEM10_HOST_FORMS)
+    assert record["mode"] == "stripped"
+    assert record["n_options_changed"] == 2
+    assert not any("Robert" in t for t in out)
+    assert out[2].startswith("Regarding external actors")
+
+
+def test_stripping_item_ten_leaves_no_punctuation_artifact():
+    """A repair that swaps a name tell for a punctuation tell has fixed nothing."""
+    out, _ = C4.apply_deixis_rule(ITEM10_OPTIONS, ITEM10_HOST_FORMS)
+    for text in out:
+        assert " ," not in text and ", ." not in text and ",," not in text
+        assert not text.startswith(",") and text[0].isupper()
+        assert text.endswith(".")
+
+
+def test_the_two_untouched_item_ten_options_are_byte_identical_after_stripping():
+    """Options with no vocative must come through unchanged, or the strip is
+    itself introducing a difference between options."""
+    out, _ = C4.apply_deixis_rule(ITEM10_OPTIONS, ITEM10_HOST_FORMS)
+    assert out[1] == ITEM10_OPTIONS[1]
+    assert out[3] == ITEM10_OPTIONS[3]
+
+
+# ---------------------------------------------------------------------------
+# D6-v4.9 standing eval rule: no cross-visible twins
+# ---------------------------------------------------------------------------
+
+
+def test_a_prompt_file_with_a_repeated_question_is_refused():
+    """The rater used twin-pair stance inference on the round-3 sheet. The rule
+    exists so no scorer is ever handed the same question twice in one pass."""
+    rows = [{"item_id": "C1:T:3"}, {"item_id": "C1:T:9"}, {"item_id": "C1:T:3"}]
+    with pytest.raises(SystemExit, match="cross-visible twin"):
+        P4.assert_no_cross_visible_twins({"gate": rows})
+
+
+def test_a_clean_prompt_file_passes_the_twin_check():
+    rows = [{"item_id": "C1:T:3"}, {"item_id": "C1:T:9"}]
+    got = P4.assert_no_cross_visible_twins({"gate": rows, "pred": rows})
+    assert got["n_sets_checked"] == 2
+    assert got["ok"] is True
+
+
+def test_the_twin_check_reports_which_question_repeated():
+    rows = [{"item_id": "C1:T:3"}, {"item_id": "C1:T:3"}]
+    with pytest.raises(SystemExit, match="C1:T:3"):
+        P4.assert_no_cross_visible_twins({"gate": rows})

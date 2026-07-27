@@ -1,0 +1,258 @@
+{
+  "label": "PRE-GATE PREDICTION",
+  "frozen_utc": "2026-07-27T11:56:01Z",
+  "frozen_before": "the round-4 generation batch and gate job were submitted",
+  "rater": "Claude (frontier LLM, out-of-family from both the generator gemini-3.5-flash-lite and the scorer Gemma-4-31B-it)",
+  "sheet": "results/stage2_pilot3/DETECTABILITY_SHEET.md",
+  "key": "results/stage2_pilot3/DETECTABILITY_KEY.md",
+  "picks_verbatim": "1:A 2:none 3:B 4:none 5:C 6:none 7:D 8:C 9:D 10:C 11:C 12:B 13:B 14:none 15:none 16:none 17:none 18:none 19:C 20:none",
+  "human_line": {
+    "status": "WAIVED",
+    "deviation_from": "PREREGISTRATION_AMENDMENT_2.md B10.8",
+    "decided_by": "owner, 2026-07-27",
+    "reason": "the owner declined to complete the sheet; an out-of-family LLM rater was substituted",
+    "note": "NO HUMAN HIT RATE EXISTS for this instrument. B10.8's human-detectability check is unmet and is recorded as an open deviation, not as satisfied by the LLM line. The LLM line answers a related but different question -- whether a capable model can spot the real answer -- and is the more direct predictor of what a scorer will do, but it is not the human check B10.8 asks for."
+  },
+  "scoring_rule": "A named letter on a REAL entry is a hit only if it is the key letter. 'none' on a real entry is a MISS (non-identification). 'none' on a CONTROL is a correct rejection; any named letter on a control is a false positive. Chance on a real entry, for a rater that always names a letter, is 0.25.",
+  "n_real": 10,
+  "n_control": 10,
+  "n_hits_on_real": 10,
+  "hit_rate_real": 1.0,
+  "n_said_none_on_real": 0,
+  "n_false_positives_on_control": 1,
+  "false_positive_rate_control": 0.1,
+  "correct_rejection_rate_control": 0.9,
+  "n_correct_overall": 19,
+  "overall_accuracy": 0.95,
+  "chance_hit_rate_real": 0.25,
+  "twin_contamination_check": {
+    "why": "Five questions appear twice on the sheet, once as a real entry and once as a control. The controls were given entirely fresh option sets (zero shared option texts), so nothing is recoverable by elimination -- but the rater reported using TWIN-PAIR STANCE INFERENCE, i.e. seeing the same question twice and reasoning across the two option sets. The non-twinned real entries are therefore the clean subset.",
+    "twinned_real_entries": [
+      1,
+      3,
+      5,
+      8,
+      10
+    ],
+    "twinned_hit_rate": 1.0,
+    "clean_real_entries": [
+      9,
+      11,
+      12,
+      13,
+      19
+    ],
+    "clean_hit_rate": 1.0
+  },
+  "rater_stated_tells": [
+    "hedging/register",
+    "stance-vs-premise fit",
+    "world-truth/academic content",
+    "entity density",
+    "twin-pair stance inference",
+    "vocative-name leak in item 10"
+  ],
+  "prediction_for_the_gate": "Recorded before the gate ran. Every tell the rater names is available to any capable scorer reading the same four options with no information about the person. If a frontier model identifies the real answer at this rate, the round-4 zero-information arm is expected to score far above chance, and the four round-4 changes (register conditioning, plausibility, deixis, subjective-only items) are aimed at exactly four of the six tells named. Whether they are enough is what the gate measures.",
+  "results": [
+    {
+      "n": 1,
+      "kind": "real",
+      "item_id": "C00792:NPR-19884:10",
+      "answer": "A",
+      "pick": "A",
+      "identified_real": true,
+      "outcome": "hit",
+      "twinned": true
+    },
+    {
+      "n": 2,
+      "kind": "control",
+      "item_id": "C00792:NPR-19884:2",
+      "answer": "none",
+      "pick": "none",
+      "identified_real": null,
+      "outcome": "correct_rejection",
+      "twinned": false
+    },
+    {
+      "n": 3,
+      "kind": "real",
+      "item_id": "C00792:NPR-19884:6",
+      "answer": "B",
+      "pick": "B",
+      "identified_real": true,
+      "outcome": "hit",
+      "twinned": true
+    },
+    {
+      "n": 4,
+      "kind": "control",
+      "item_id": "C00792:NPR-19884:6",
+      "answer": "none",
+      "pick": "none",
+      "identified_real": null,
+      "outcome": "correct_rejection",
+      "twinned": true
+    },
+    {
+      "n": 5,
+      "kind": "real",
+      "item_id": "C00792:NPR-19884:13",
+      "answer": "C",
+      "pick": "C",
+      "identified_real": true,
+      "outcome": "hit",
+      "twinned": true
+    },
+    {
+      "n": 6,
+      "kind": "control",
+      "item_id": "C02124:NPR-12184:4",
+      "answer": "none",
+      "pick": "none",
+      "identified_real": null,
+      "outcome": "correct_rejection",
+      "twinned": false
+    },
+    {
+      "n": 7,
+      "kind": "control",
+      "item_id": "C02006:NPR-14829:29",
+      "answer": "none",
+      "pick": "D",
+      "identified_real": null,
+      "outcome": "false_positive",
+      "twinned": false
+    },
+    {
+      "n": 8,
+      "kind": "real",
+      "item_id": "C02006:NPR-14829:19",
+      "answer": "C",
+      "pick": "C",
+      "identified_real": true,
+      "outcome": "hit",
+      "twinned": true
+    },
+    {
+      "n": 9,
+      "kind": "real",
+      "item_id": "C02013:NPR-9480:70",
+      "answer": "D",
+      "pick": "D",
+      "identified_real": true,
+      "outcome": "hit",
+      "twinned": false
+    },
+    {
+      "n": 10,
+      "kind": "real",
+      "item_id": "C00792:NPR-19884:15",
+      "answer": "C",
+      "pick": "C",
+      "identified_real": true,
+      "outcome": "hit",
+      "twinned": true
+    },
+    {
+      "n": 11,
+      "kind": "real",
+      "item_id": "C01677:NPR-8791:77",
+      "answer": "C",
+      "pick": "C",
+      "identified_real": true,
+      "outcome": "hit",
+      "twinned": false
+    },
+    {
+      "n": 12,
+      "kind": "real",
+      "item_id": "C02013:NPR-9480:82",
+      "answer": "B",
+      "pick": "B",
+      "identified_real": true,
+      "outcome": "hit",
+      "twinned": false
+    },
+    {
+      "n": 13,
+      "kind": "real",
+      "item_id": "C02013:NPR-9480:49",
+      "answer": "B",
+      "pick": "B",
+      "identified_real": true,
+      "outcome": "hit",
+      "twinned": false
+    },
+    {
+      "n": 14,
+      "kind": "control",
+      "item_id": "C02006:NPR-14829:26",
+      "answer": "none",
+      "pick": "none",
+      "identified_real": null,
+      "outcome": "correct_rejection",
+      "twinned": false
+    },
+    {
+      "n": 15,
+      "kind": "control",
+      "item_id": "C02006:NPR-14829:19",
+      "answer": "none",
+      "pick": "none",
+      "identified_real": null,
+      "outcome": "correct_rejection",
+      "twinned": true
+    },
+    {
+      "n": 16,
+      "kind": "control",
+      "item_id": "C00792:NPR-19884:15",
+      "answer": "none",
+      "pick": "none",
+      "identified_real": null,
+      "outcome": "correct_rejection",
+      "twinned": true
+    },
+    {
+      "n": 17,
+      "kind": "control",
+      "item_id": "C00792:NPR-19884:13",
+      "answer": "none",
+      "pick": "none",
+      "identified_real": null,
+      "outcome": "correct_rejection",
+      "twinned": true
+    },
+    {
+      "n": 18,
+      "kind": "control",
+      "item_id": "C02013:NPR-9480:45",
+      "answer": "none",
+      "pick": "none",
+      "identified_real": null,
+      "outcome": "correct_rejection",
+      "twinned": false
+    },
+    {
+      "n": 19,
+      "kind": "real",
+      "item_id": "C02124:NPR-12184:6",
+      "answer": "C",
+      "pick": "C",
+      "identified_real": true,
+      "outcome": "hit",
+      "twinned": false
+    },
+    {
+      "n": 20,
+      "kind": "control",
+      "item_id": "C00792:NPR-19884:10",
+      "answer": "none",
+      "pick": "none",
+      "identified_real": null,
+      "outcome": "correct_rejection",
+      "twinned": true
+    }
+  ]
+}

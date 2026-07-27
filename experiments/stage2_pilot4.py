@@ -201,6 +201,46 @@ HAND_ITEM_TYPE: dict[str, tuple[str, str]] = {
 }
 
 
+TWIN_RULE = (
+    "STANDING EVAL RULE (D6-v4.9), added 2026-07-27 after the frontier rater "
+    "named TWIN-PAIR STANCE INFERENCE as one of six tells on round 3's "
+    "detectability sheet: no rater and no scorer may ever see both twins of a "
+    "duplicated question. Round 3's sheet showed five questions twice, once as "
+    "a real entry and once as a control; the option sets shared nothing, so "
+    "elimination was impossible, but a reader could still reason across the "
+    "two stance sets. The rule generalises that: within any single prompt file "
+    "or rating sheet a question appears AT MOST ONCE. Asserted at export, not "
+    "assumed.")
+
+
+def assert_no_cross_visible_twins(sets: dict) -> dict:
+    """D6-v4.9 — refuse any prompt set that shows one question twice.
+
+    ``sets`` maps a set name to its rows. A batch file is what one scoring pass
+    consumes, so that is the unit of visibility. Raises rather than warns: a
+    duplicated question inside a scored file is not a thing to note in a
+    report, it is a reason not to run the file.
+    """
+    checked = {}
+    for name, rows in sets.items():
+        seen: dict[str, int] = {}
+        for row in rows:
+            item_id = row.get("item_id")
+            seen[item_id] = seen.get(item_id, 0) + 1
+        repeats = sorted(k for k, v in seen.items() if v > 1)
+        if repeats:
+            raise fatal(
+                f"cross-visible twin in prompt set '{name}': "
+                f"{', '.join(repeats)} appears more than once. {TWIN_RULE}")
+        checked[name] = {"n_rows": len(rows), "n_distinct_items": len(seen)}
+    return {"ok": True, "rule": TWIN_RULE, "n_sets_checked": len(sets),
+            "per_set": checked}
+
+
+def fatal(msg: str) -> "SystemExit":
+    return P3.fatal(msg)
+
+
 def classify_candidates(pilot3_dir: Path) -> dict:
     """Split round 3's built items by question type. Reads only; spends nothing."""
     rows = []
@@ -672,6 +712,43 @@ def build_summary4(out_dir: Path, pilot1_dir: Path, pilot3_dir: Path) -> dict:
 # ---------------------------------------------------------------------------
 
 
+def _exported_sets(out_dir: Path) -> dict:
+    """Every exported prompt set on disk, by name, from its meta file."""
+    export_dir = out_dir / "exports"
+    sets = {}
+    for meta in sorted(export_dir.glob("meta_*.jsonl")):
+        sets[meta.stem.replace("meta_", "", 1)] = S.read_jsonl(meta)
+    return sets
+
+
+def cmd_export_gate_checked(args) -> int:
+    """Round 3's gate export, then the D6-v4.9 twin assertion on what it wrote."""
+    rc = P3.cmd_export_gate(args)
+    if rc != 0:
+        return rc
+    out_dir = Path(getattr(args, "out_dir", None) or PILOT4_DIR)
+    got = assert_no_cross_visible_twins(_exported_sets(out_dir))
+    S.write_json(out_dir / "twin_check.json",
+                 {"checked_utc": P3.now(), "phase": "gate", **got})
+    print(f"[export-gate] D6-v4.9 twin check passed on "
+          f"{got['n_sets_checked']} prompt set(s)")
+    return 0
+
+
+def cmd_export_pred_checked(args) -> int:
+    """Round 2's prediction export, then the D6-v4.9 twin assertion."""
+    rc = P2.cmd_export_pred(args)
+    if rc != 0:
+        return rc
+    out_dir = Path(getattr(args, "out_dir", None) or PILOT4_DIR)
+    got = assert_no_cross_visible_twins(_exported_sets(out_dir))
+    S.write_json(out_dir / "twin_check.json",
+                 {"checked_utc": P3.now(), "phase": "prediction", **got})
+    print(f"[export-pred] D6-v4.9 twin check passed on "
+          f"{got['n_sets_checked']} prompt set(s)")
+    return 0
+
+
 def cmd_ingest_gate_dual(args) -> int:
     """Round 3's gate ingest, plus the both-parser tables (D6-v4.5).
 
@@ -747,7 +824,7 @@ def main(argv=None) -> int:
     # rounds or the gate numbers are not comparable. Only the LABELS differ.
     p_g = sub.add_parser("export-gate")
     p_g.add_argument("--force", action="store_true")
-    p_g.set_defaults(fn=P3.cmd_export_gate, banner=PILOT_BANNER,
+    p_g.set_defaults(fn=cmd_export_gate_checked, banner=PILOT_BANNER,
                      contract=CONTRACT)
 
     sub.add_parser("verify").set_defaults(fn=P3.cmd_verify)
@@ -770,7 +847,7 @@ def main(argv=None) -> int:
     p_ep = sub.add_parser("export-pred")
     p_ep.add_argument("--force", action="store_true")
     p_ep.add_argument("--pre-gate", action="store_true")
-    p_ep.set_defaults(fn=P2.cmd_export_pred, banner=PILOT_BANNER,
+    p_ep.set_defaults(fn=cmd_export_pred_checked, banner=PILOT_BANNER,
                       contract=CONTRACT,
                       extra_renderer={
                           "counterfactuals4_template_sha256":
