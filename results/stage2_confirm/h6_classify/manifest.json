@@ -1,0 +1,860 @@
+{
+ "run_id": "stage2_confirm/h6_classify",
+ "purpose": "H6 follow-up/new-topic classification of the 89 confirmatory survivors' GROUNDING host turns (Amendment 2 B2.1). Grounding only; no test interview is read or classified.",
+ "model": "Gemma-4-31B-it",
+ "rubric_sha256": "053b96cba42ebf03d966db3c22fce2acde3a685d5b4cca9badd556ee248a24da",
+ "followup_render_file_sha256": "37adc0f613343f3734f000eac2ab713d90b6588ba93ad846ef7aca0fcab58fab",
+ "decode": {
+  "temperature": 0.0,
+  "seed": 0,
+  "tp": 4,
+  "max_model_len": 8192,
+  "gpu_mem_util": 0.92,
+  "max_output_tokens": 80
+ },
+ "n_subjects": 89,
+ "n_host_turns": 7322,
+ "n_model_cases": 5287,
+ "n_rule_labels": 2035,
+ "n_unique_prompts": 5268,
+ "n_duplicate_prompt_rows": 19,
+ "prompt_words": {
+  "max": 776,
+  "median": 582,
+  "mean": 586.26
+ },
+ "files": {
+  "prompts": {
+   "path": "results/stage2_confirm/h6_classify/exports/prompts_classify.jsonl",
+   "sha256": "b60361e57d1e39fe93ea471e8e2c08192286fbbd55806a802be3ad346864299d",
+   "n_rows": 5287
+  },
+  "meta": {
+   "path": "results/stage2_confirm/h6_classify/exports/meta_classify.jsonl",
+   "sha256": "718a1badfd2df404e54c9672c54372a48374df98aee6085337398de354f1adb0",
+   "n_rows": 5287
+  },
+  "labels_rule": {
+   "path": "results/stage2_confirm/h6_classify/exports/labels_rule.jsonl",
+   "sha256": "997625ecfeca44c8589ce80fbdc70371ed8bb2eee540d6d4fca61edc948a22ad",
+   "n_rows": 2035
+  }
+ },
+ "per_subject": {
+  "C00032": {
+   "canonical_id": "C00032",
+   "canonical_name": "Abdullah Ii",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 17,
+   "n_rule_labels": 10,
+   "n_host_turns": 27
+  },
+  "C00050": {
+   "canonical_id": "C00050",
+   "canonical_name": "Adam Pertman",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 46,
+   "n_rule_labels": 23,
+   "n_host_turns": 69
+  },
+  "C00087": {
+   "canonical_id": "C00087",
+   "canonical_name": "Alan Schroeder",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 30,
+   "n_rule_labels": 85,
+   "n_host_turns": 115
+  },
+  "C00102": {
+   "canonical_id": "C00102",
+   "canonical_name": "Alex Thier",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 11,
+   "n_rule_labels": 8,
+   "n_host_turns": 19
+  },
+  "C00110": {
+   "canonical_id": "C00110",
+   "canonical_name": "Ali Vaez",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 40,
+   "n_rule_labels": 6,
+   "n_host_turns": 46
+  },
+  "C00145": {
+   "canonical_id": "C00145",
+   "canonical_name": "Amy Howe",
+   "stratum": "article",
+   "n_transcripts": 4,
+   "n_model_cases": 102,
+   "n_rule_labels": 103,
+   "n_host_turns": 205
+  },
+  "C00146": {
+   "canonical_id": "C00146",
+   "canonical_name": "Amy Myers Jaffe",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 45,
+   "n_rule_labels": 5,
+   "n_host_turns": 50
+  },
+  "C00153": {
+   "canonical_id": "C00153",
+   "canonical_name": "Andra Gillespie",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 45,
+   "n_rule_labels": 6,
+   "n_host_turns": 51
+  },
+  "C00163": {
+   "canonical_id": "C00163",
+   "canonical_name": "Andrew Exum",
+   "stratum": "article",
+   "n_transcripts": 3,
+   "n_model_cases": 157,
+   "n_rule_labels": 58,
+   "n_host_turns": 215
+  },
+  "C00169": {
+   "canonical_id": "C00169",
+   "canonical_name": "Andrew Roth",
+   "stratum": "article",
+   "n_transcripts": 3,
+   "n_model_cases": 16,
+   "n_rule_labels": 3,
+   "n_host_turns": 19
+  },
+  "C00203": {
+   "canonical_id": "C00203",
+   "canonical_name": "Anna Greenberg",
+   "stratum": "long-tail",
+   "n_transcripts": 7,
+   "n_model_cases": 339,
+   "n_rule_labels": 241,
+   "n_host_turns": 580
+  },
+  "C00218": {
+   "canonical_id": "C00218",
+   "canonical_name": "Anthony Cordesman",
+   "stratum": "article",
+   "n_transcripts": 3,
+   "n_model_cases": 18,
+   "n_rule_labels": 5,
+   "n_host_turns": 23
+  },
+  "C00344": {
+   "canonical_id": "C00344",
+   "canonical_name": "Bob Meadows",
+   "stratum": "long-tail",
+   "n_transcripts": 32,
+   "n_model_cases": 720,
+   "n_rule_labels": 168,
+   "n_host_turns": 888
+  },
+  "C00427": {
+   "canonical_id": "C00427",
+   "canonical_name": "Carlos Gutierrez",
+   "stratum": "article",
+   "n_transcripts": 4,
+   "n_model_cases": 18,
+   "n_rule_labels": 5,
+   "n_host_turns": 23
+  },
+  "C00440": {
+   "canonical_id": "C00440",
+   "canonical_name": "Carroll Doherty",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 18,
+   "n_rule_labels": 3,
+   "n_host_turns": 21
+  },
+  "C00457": {
+   "canonical_id": "C00457",
+   "canonical_name": "Charles Fishman",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 23,
+   "n_rule_labels": 10,
+   "n_host_turns": 33
+  },
+  "C00522": {
+   "canonical_id": "C00522",
+   "canonical_name": "Courtney Nguyen",
+   "stratum": "long-tail",
+   "n_transcripts": 4,
+   "n_model_cases": 24,
+   "n_rule_labels": 8,
+   "n_host_turns": 32
+  },
+  "C00526": {
+   "canonical_id": "C00526",
+   "canonical_name": "Craig Gilbert",
+   "stratum": "article",
+   "n_transcripts": 2,
+   "n_model_cases": 51,
+   "n_rule_labels": 148,
+   "n_host_turns": 199
+  },
+  "C00563": {
+   "canonical_id": "C00563",
+   "canonical_name": "Danica Coto",
+   "stratum": "long-tail",
+   "n_transcripts": 4,
+   "n_model_cases": 41,
+   "n_rule_labels": 32,
+   "n_host_turns": 73
+  },
+  "C00580": {
+   "canonical_id": "C00580",
+   "canonical_name": "Dave Zirin",
+   "stratum": "article",
+   "n_transcripts": 10,
+   "n_model_cases": 96,
+   "n_rule_labels": 19,
+   "n_host_turns": 115
+  },
+  "C00582": {
+   "canonical_id": "C00582",
+   "canonical_name": "David Champion",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 11,
+   "n_rule_labels": 5,
+   "n_host_turns": 16
+  },
+  "C00593": {
+   "canonical_id": "C00593",
+   "canonical_name": "David Henry Sterry",
+   "stratum": "article",
+   "n_transcripts": 2,
+   "n_model_cases": 16,
+   "n_rule_labels": 4,
+   "n_host_turns": 20
+  },
+  "C00620": {
+   "canonical_id": "C00620",
+   "canonical_name": "David Winston",
+   "stratum": "long-tail",
+   "n_transcripts": 4,
+   "n_model_cases": 46,
+   "n_rule_labels": 14,
+   "n_host_turns": 60
+  },
+  "C00621": {
+   "canonical_id": "C00621",
+   "canonical_name": "Dawn Turner Trice",
+   "stratum": "long-tail",
+   "n_transcripts": 7,
+   "n_model_cases": 188,
+   "n_rule_labels": 31,
+   "n_host_turns": 219
+  },
+  "C00622": {
+   "canonical_id": "C00622",
+   "canonical_name": "De Borchgrave",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 66,
+   "n_rule_labels": 23,
+   "n_host_turns": 89
+  },
+  "C00634": {
+   "canonical_id": "C00634",
+   "canonical_name": "De Torrente",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 51,
+   "n_rule_labels": 44,
+   "n_host_turns": 95
+  },
+  "C00642": {
+   "canonical_id": "C00642",
+   "canonical_name": "Debbie Walsh",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 19,
+   "n_rule_labels": 5,
+   "n_host_turns": 24
+  },
+  "C00673": {
+   "canonical_id": "C00673",
+   "canonical_name": "Diane Brady",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 23,
+   "n_rule_labels": 4,
+   "n_host_turns": 27
+  },
+  "C00697": {
+   "canonical_id": "C00697",
+   "canonical_name": "Doyle Mcmanus",
+   "stratum": "article",
+   "n_transcripts": 2,
+   "n_model_cases": 33,
+   "n_rule_labels": 7,
+   "n_host_turns": 40
+  },
+  "C00698": {
+   "canonical_id": "C00698",
+   "canonical_name": "Drew Kesse",
+   "stratum": "long-tail",
+   "n_transcripts": 4,
+   "n_model_cases": 281,
+   "n_rule_labels": 44,
+   "n_host_turns": 325
+  },
+  "C00746": {
+   "canonical_id": "C00746",
+   "canonical_name": "Emerald Garner",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 35,
+   "n_rule_labels": 34,
+   "n_host_turns": 69
+  },
+  "C00752": {
+   "canonical_id": "C00752",
+   "canonical_name": "Emira Woods",
+   "stratum": "long-tail",
+   "n_transcripts": 9,
+   "n_model_cases": 79,
+   "n_rule_labels": 27,
+   "n_host_turns": 106
+  },
+  "C00789": {
+   "canonical_id": "C00789",
+   "canonical_name": "Fred Goldman",
+   "stratum": "long-tail",
+   "n_transcripts": 4,
+   "n_model_cases": 205,
+   "n_rule_labels": 6,
+   "n_host_turns": 211
+  },
+  "C00812": {
+   "canonical_id": "C00812",
+   "canonical_name": "Gayle Trotter",
+   "stratum": "long-tail",
+   "n_transcripts": 10,
+   "n_model_cases": 221,
+   "n_rule_labels": 32,
+   "n_host_turns": 253
+  },
+  "C00818": {
+   "canonical_id": "C00818",
+   "canonical_name": "George Hobica",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 15,
+   "n_rule_labels": 8,
+   "n_host_turns": 23
+  },
+  "C00819": {
+   "canonical_id": "C00819",
+   "canonical_name": "George Joffe",
+   "stratum": "long-tail",
+   "n_transcripts": 7,
+   "n_model_cases": 214,
+   "n_rule_labels": 59,
+   "n_host_turns": 273
+  },
+  "C00824": {
+   "canonical_id": "C00824",
+   "canonical_name": "George Perkovich",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 15,
+   "n_rule_labels": 4,
+   "n_host_turns": 19
+  },
+  "C00833": {
+   "canonical_id": "C00833",
+   "canonical_name": "Girish Gupta",
+   "stratum": "long-tail",
+   "n_transcripts": 4,
+   "n_model_cases": 20,
+   "n_rule_labels": 12,
+   "n_host_turns": 32
+  },
+  "C00846": {
+   "canonical_id": "C00846",
+   "canonical_name": "Grayson Schaffer",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 14,
+   "n_rule_labels": 3,
+   "n_host_turns": 17
+  },
+  "C00886": {
+   "canonical_id": "C00886",
+   "canonical_name": "Hilda Hutcherson",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 10,
+   "n_rule_labels": 13,
+   "n_host_turns": 23
+  },
+  "C00890": {
+   "canonical_id": "C00890",
+   "canonical_name": "Holloway Twitty",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 204,
+   "n_rule_labels": 12,
+   "n_host_turns": 216
+  },
+  "C00897": {
+   "canonical_id": "C00897",
+   "canonical_name": "Howard Davidowitz",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 14,
+   "n_rule_labels": 4,
+   "n_host_turns": 18
+  },
+  "C01108": {
+   "canonical_id": "C01108",
+   "canonical_name": "Jennifer Duffy",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 27,
+   "n_rule_labels": 6,
+   "n_host_turns": 33
+  },
+  "C01163": {
+   "canonical_id": "C01163",
+   "canonical_name": "Jim Bakker",
+   "stratum": "article",
+   "n_transcripts": 1,
+   "n_model_cases": 67,
+   "n_rule_labels": 9,
+   "n_host_turns": 76
+  },
+  "C01171": {
+   "canonical_id": "C01171",
+   "canonical_name": "Jim Hobart",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 73,
+   "n_rule_labels": 10,
+   "n_host_turns": 83
+  },
+  "C01180": {
+   "canonical_id": "C01180",
+   "canonical_name": "Jimi Izrael",
+   "stratum": "long-tail",
+   "n_transcripts": 9,
+   "n_model_cases": 48,
+   "n_rule_labels": 15,
+   "n_host_turns": 63
+  },
+  "C01247": {
+   "canonical_id": "C01247",
+   "canonical_name": "John Ourand",
+   "stratum": "long-tail",
+   "n_transcripts": 5,
+   "n_model_cases": 36,
+   "n_rule_labels": 17,
+   "n_host_turns": 53
+  },
+  "C01254": {
+   "canonical_id": "C01254",
+   "canonical_name": "John Ulzheimer",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 16,
+   "n_rule_labels": 7,
+   "n_host_turns": 23
+  },
+  "C01296": {
+   "canonical_id": "C01296",
+   "canonical_name": "Joseph Detrani",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 19,
+   "n_rule_labels": 5,
+   "n_host_turns": 24
+  },
+  "C01328": {
+   "canonical_id": "C01328",
+   "canonical_name": "Juan Zarate",
+   "stratum": "article",
+   "n_transcripts": 5,
+   "n_model_cases": 24,
+   "n_rule_labels": 8,
+   "n_host_turns": 32
+  },
+  "C01375": {
+   "canonical_id": "C01375",
+   "canonical_name": "Kareem Fahim",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 8,
+   "n_rule_labels": 2,
+   "n_host_turns": 10
+  },
+  "C01430": {
+   "canonical_id": "C01430",
+   "canonical_name": "Kevin Trenberth",
+   "stratum": "article",
+   "n_transcripts": 3,
+   "n_model_cases": 69,
+   "n_rule_labels": 38,
+   "n_host_turns": 107
+  },
+  "C01442": {
+   "canonical_id": "C01442",
+   "canonical_name": "Kori Schake",
+   "stratum": "article",
+   "n_transcripts": 2,
+   "n_model_cases": 47,
+   "n_rule_labels": 14,
+   "n_host_turns": 61
+  },
+  "C01464": {
+   "canonical_id": "C01464",
+   "canonical_name": "La Salla",
+   "stratum": "article",
+   "n_transcripts": 6,
+   "n_model_cases": 46,
+   "n_rule_labels": 14,
+   "n_host_turns": 60
+  },
+  "C01485": {
+   "canonical_id": "C01485",
+   "canonical_name": "Laurie Roberts",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 14,
+   "n_rule_labels": 3,
+   "n_host_turns": 17
+  },
+  "C01538": {
+   "canonical_id": "C01538",
+   "canonical_name": "Loveday Morris",
+   "stratum": "long-tail",
+   "n_transcripts": 5,
+   "n_model_cases": 29,
+   "n_rule_labels": 10,
+   "n_host_turns": 39
+  },
+  "C01585": {
+   "canonical_id": "C01585",
+   "canonical_name": "Maen Rashid Areikat",
+   "stratum": "article",
+   "n_transcripts": 2,
+   "n_model_cases": 13,
+   "n_rule_labels": 13,
+   "n_host_turns": 26
+  },
+  "C01659": {
+   "canonical_id": "C01659",
+   "canonical_name": "Mary Kate Cary",
+   "stratum": "long-tail",
+   "n_transcripts": 14,
+   "n_model_cases": 217,
+   "n_rule_labels": 38,
+   "n_host_turns": 255
+  },
+  "C01673": {
+   "canonical_id": "C01673",
+   "canonical_name": "Matt Tait",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 16,
+   "n_rule_labels": 6,
+   "n_host_turns": 22
+  },
+  "C01722": {
+   "canonical_id": "C01722",
+   "canonical_name": "Michael Dimock",
+   "stratum": "long-tail",
+   "n_transcripts": 6,
+   "n_model_cases": 73,
+   "n_rule_labels": 92,
+   "n_host_turns": 165
+  },
+  "C01746": {
+   "canonical_id": "C01746",
+   "canonical_name": "Michele Dunne",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 14,
+   "n_rule_labels": 4,
+   "n_host_turns": 18
+  },
+  "C01752": {
+   "canonical_id": "C01752",
+   "canonical_name": "Michelle Faul",
+   "stratum": "long-tail",
+   "n_transcripts": 4,
+   "n_model_cases": 22,
+   "n_rule_labels": 13,
+   "n_host_turns": 35
+  },
+  "C01800": {
+   "canonical_id": "C01800",
+   "canonical_name": "Muhannad Hadi",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 16,
+   "n_rule_labels": 9,
+   "n_host_turns": 25
+  },
+  "C01801": {
+   "canonical_id": "C01801",
+   "canonical_name": "Mujib Mashal",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 19,
+   "n_rule_labels": 6,
+   "n_host_turns": 25
+  },
+  "C01817": {
+   "canonical_id": "C01817",
+   "canonical_name": "Nate Rawlings",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 16,
+   "n_rule_labels": 5,
+   "n_host_turns": 21
+  },
+  "C01842": {
+   "canonical_id": "C01842",
+   "canonical_name": "Noam Levey",
+   "stratum": "long-tail",
+   "n_transcripts": 4,
+   "n_model_cases": 76,
+   "n_rule_labels": 37,
+   "n_host_turns": 113
+  },
+  "C01848": {
+   "canonical_id": "C01848",
+   "canonical_name": "Omer Taspinar",
+   "stratum": "long-tail",
+   "n_transcripts": 4,
+   "n_model_cases": 25,
+   "n_rule_labels": 5,
+   "n_host_turns": 30
+  },
+  "C01883": {
+   "canonical_id": "C01883",
+   "canonical_name": "Peter Neumann",
+   "stratum": "article",
+   "n_transcripts": 3,
+   "n_model_cases": 18,
+   "n_rule_labels": 5,
+   "n_host_turns": 23
+  },
+  "C01891": {
+   "canonical_id": "C01891",
+   "canonical_name": "Peter Sokolowski",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 45,
+   "n_rule_labels": 7,
+   "n_host_turns": 52
+  },
+  "C01897": {
+   "canonical_id": "C01897",
+   "canonical_name": "Philip Gordon",
+   "stratum": "article",
+   "n_transcripts": 4,
+   "n_model_cases": 27,
+   "n_rule_labels": 7,
+   "n_host_turns": 34
+  },
+  "C01904": {
+   "canonical_id": "C01904",
+   "canonical_name": "Puneet Ahluwalia",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 129,
+   "n_rule_labels": 5,
+   "n_host_turns": 134
+  },
+  "C01933": {
+   "canonical_id": "C01933",
+   "canonical_name": "Ramez Maluf",
+   "stratum": "long-tail",
+   "n_transcripts": 5,
+   "n_model_cases": 37,
+   "n_rule_labels": 17,
+   "n_host_turns": 54
+  },
+  "C01967": {
+   "canonical_id": "C01967",
+   "canonical_name": "Rich Jaroslovsky",
+   "stratum": "long-tail",
+   "n_transcripts": 4,
+   "n_model_cases": 42,
+   "n_rule_labels": 10,
+   "n_host_turns": 52
+  },
+  "C02121": {
+   "canonical_id": "C02121",
+   "canonical_name": "Sam Dagher",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 14,
+   "n_rule_labels": 10,
+   "n_host_turns": 24
+  },
+  "C02167": {
+   "canonical_id": "C02167",
+   "canonical_name": "Seth Stoughton",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 9,
+   "n_rule_labels": 3,
+   "n_host_turns": 12
+  },
+  "C02200": {
+   "canonical_id": "C02200",
+   "canonical_name": "Sheila Smith",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 11,
+   "n_rule_labels": 5,
+   "n_host_turns": 16
+  },
+  "C02218": {
+   "canonical_id": "C02218",
+   "canonical_name": "Shuja Nawaz",
+   "stratum": "long-tail",
+   "n_transcripts": 4,
+   "n_model_cases": 24,
+   "n_rule_labels": 7,
+   "n_host_turns": 31
+  },
+  "C02242": {
+   "canonical_id": "C02242",
+   "canonical_name": "Stacy Palmer",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 43,
+   "n_rule_labels": 5,
+   "n_host_turns": 48
+  },
+  "C02248": {
+   "canonical_id": "C02248",
+   "canonical_name": "Stefan Kornelius",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 17,
+   "n_rule_labels": 5,
+   "n_host_turns": 22
+  },
+  "C02256": {
+   "canonical_id": "C02256",
+   "canonical_name": "Stephen Cohen",
+   "stratum": "article",
+   "n_transcripts": 2,
+   "n_model_cases": 13,
+   "n_rule_labels": 3,
+   "n_host_turns": 16
+  },
+  "C02312": {
+   "canonical_id": "C02312",
+   "canonical_name": "Suzanne Maloney",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 43,
+   "n_rule_labels": 8,
+   "n_host_turns": 51
+  },
+  "C02318": {
+   "canonical_id": "C02318",
+   "canonical_name": "Sylvie Kauffmann",
+   "stratum": "article",
+   "n_transcripts": 4,
+   "n_model_cases": 25,
+   "n_rule_labels": 5,
+   "n_host_turns": 30
+  },
+  "C02359": {
+   "canonical_id": "C02359",
+   "canonical_name": "Ted Shaw",
+   "stratum": "article",
+   "n_transcripts": 3,
+   "n_model_cases": 22,
+   "n_rule_labels": 10,
+   "n_host_turns": 32
+  },
+  "C02397": {
+   "canonical_id": "C02397",
+   "canonical_name": "Tim Storey",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 13,
+   "n_rule_labels": 5,
+   "n_host_turns": 18
+  },
+  "C02437": {
+   "canonical_id": "C02437",
+   "canonical_name": "Tony Romm",
+   "stratum": "long-tail",
+   "n_transcripts": 3,
+   "n_model_cases": 48,
+   "n_rule_labels": 54,
+   "n_host_turns": 102
+  },
+  "C02469": {
+   "canonical_id": "C02469",
+   "canonical_name": "Tzemach Lemmon",
+   "stratum": "long-tail",
+   "n_transcripts": 6,
+   "n_model_cases": 9,
+   "n_rule_labels": 49,
+   "n_host_turns": 58
+  },
+  "C02474": {
+   "canonical_id": "C02474",
+   "canonical_name": "Van Boxmeer",
+   "stratum": "article",
+   "n_transcripts": 2,
+   "n_model_cases": 0,
+   "n_rule_labels": 0,
+   "n_host_turns": 0
+  },
+  "C02500": {
+   "canonical_id": "C02500",
+   "canonical_name": "Von Der Leyen",
+   "stratum": "long-tail",
+   "n_transcripts": 5,
+   "n_model_cases": 30,
+   "n_rule_labels": 36,
+   "n_host_turns": 66
+  },
+  "C02502": {
+   "canonical_id": "C02502",
+   "canonical_name": "Von Einsiedel",
+   "stratum": "long-tail",
+   "n_transcripts": 2,
+   "n_model_cases": 1,
+   "n_rule_labels": 52,
+   "n_host_turns": 53
+  }
+ },
+ "projection": {
+  "basis": "results/stage2_pilot/node/completions_classify.jsonl.summary.json",
+  "dev_prompts": 469,
+  "dev_generation_seconds": 10.14,
+  "n_prompts": 5287,
+  "projected_generation_seconds": 114.3,
+  "assumed_engine_init_seconds": 230.0,
+  "assumed_slurm_overhead_seconds": 120.0,
+  "projected_wall_seconds_pass1": 464.3,
+  "projected_node_hours_pass1": 0.129,
+  "projected_node_hours_worst_case_3_passes": 0.3262,
+  "gate_node_hours": 1.5
+ },
+ "max_passes": 3
+}
