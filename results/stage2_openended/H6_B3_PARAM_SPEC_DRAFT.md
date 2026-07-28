@@ -1,7 +1,33 @@
-# H6 / B3 parameters — DRAFT PROPOSAL (2026-07-28)
+# H6 / B3 parameters — APPROVED (2026-07-28)
 
-**Status: PROPOSAL. Nothing here is frozen. Nothing here changes any adopted
-document.** Every number carries **[PROPOSED]**.
+**Status: APPROVED by the owner 2026-07-28, as drafted, with the two rulings
+recorded below.** The body is kept exactly as proposed — the [PROPOSED] tags
+remain as the record of what was put to the owner. Nothing here changes any
+adopted document; gate 2 below (the part-2 confirmatory audit tranche) still
+stands independently.
+
+## Owner rulings at approval (2026-07-28)
+
+1. **Chain roots (the purity flag): B2.3 stays UNCHANGED — no amendment.**
+   Binding wording rule adopted: every write-up says **"follow-up chains
+   including their root"**, never "follow-up material". ADDED by this ruling,
+   pre-specified now so it cannot be chosen after results: a **root-excluded
+   re-analysis as a labeled sensitivity arm** — segments = follow-up turns
+   only, roots dropped, same budgets (B = 1,000 / 400), same selection
+   discipline (deepest-chain-first, skip-not-stop, chronological render) —
+   **reported beside the registered contrast, never substituted for it.**
+   This buys the purer contrast without reopening a frozen design.
+2. **The thin 120-row evidence base: accepted as-is.** The part-2
+   confirmatory audit tranche (≥ 60 labels, ≥ 10 confirmatory subjects, same
+   trust bar) is the thickening mechanism and already gates H6 scoring. The
+   overturn tripwire pre-commitment stands **exactly as drafted** (> 20% →
+   mandatory D_min = 3 sensitivity arm; > 35% → halt). On the record: dev
+   evidence (25.0% FOLLOW-UP overturn) already sits above the 20% line, so
+   the D_min = 3 sensitivity arm is **expected to fire** — it was
+   pre-committed precisely so it cannot be dropped after results.
+
+H6 remains decoupled: nothing in this approval touches the confirmatory
+launch.
 
 This fills the one slot Addendum A deliberately left open on record: the H6
 parameters from Amendment 2 B3 — token budget(s) B, segment and chain
