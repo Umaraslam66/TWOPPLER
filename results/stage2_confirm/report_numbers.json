@@ -1,0 +1,5156 @@
+{
+ "banner": "CONFIRMATORY Stage 2. This is the report: the frozen bars are applied here, once, and nowhere else.",
+ "run": {
+  "generated_utc": "2026-07-28T14:20:57Z",
+  "generator": "experiments/stage2_confirm_report.py",
+  "determinism_note": "Every field outside this `run` block is deterministic: same inputs, same numbers."
+ },
+ "frozen_bars": {
+  "H1": {
+   "source": "PREREGISTRATION.md section 3, Stage 2 pre-registered hypotheses; quoted in STAGE2_LAUNCH_PLAN.md section e.2",
+   "text": "H1 (grounding works): mean lift > 0 across subjects, p < .05 (paired test over subjects)."
+  },
+  "H1_updated": {
+   "source": "PREREGISTRATION_AMENDMENT_1.md A1",
+   "text": "H1 bar (updated): H1 passes iff BOTH mean zero-info lift > 0 AND mean imposter lift > 0, each p < .05 (paired test over subjects)."
+  },
+  "magnitude": {
+   "source": "PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md instrument parameter 7; quoted in STAGE2_LAUNCH_PLAN.md section e.2",
+   "text": "a registered contrast is 'interesting' only if it reaches ≥ +0.05 cosine (channel 1, pinned model) or ≥ +0.09 stance-match points (channel 2)"
+  },
+  "magnitude_scope": {
+   "source": "PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md instrument parameter 7",
+   "text": "Applied to each hypothesis's registered contrast (H1: own-twin − zero-info; H2: between-arm; H7: freshest − stalest Δ bin, beside the unchanged crossover statistic)."
+  },
+  "primary_metric": {
+   "source": "PREREGISTRATION_AMENDMENT_3.md C3",
+   "text": "Primary metric: own-twin minus imposter-twin, per Amendment 1 A1, computed identically in both channels."
+  },
+  "both_channels": {
+   "source": "PREREGISTRATION_AMENDMENT_3.md C2.4",
+   "text": "No claim rests on one channel alone. A headline requires direction agreement across both channels; disagreement between channels is itself reported."
+  },
+  "two_models": {
+   "source": "PREREGISTRATION_AMENDMENT_1.md A3",
+   "text": "Any Stage 2 headline claim must replicate in direction and significance on both Gemma-4-31B-it + v2 (primary) and gemini-3.5-flash-lite + v2 (robustness). A result holding on one model only is reported as model-specific, never as a headline."
+  },
+  "robustness_secondary": {
+   "source": "PREREGISTRATION_AMENDMENT_3.md C3",
+   "text": "Because the stance judge shares a model family with the robustness scorer, robustness-arm absolute scores are explicitly secondary: only the own-minus-imposter contrast carries robustness weight (extending the B10.3 declaration)."
+  },
+  "H7": {
+   "source": "PREREGISTRATION_AMENDMENT_2.md B7, Bars and rules; quoted in STAGE2_LAUNCH_PLAN.md section e.3",
+   "text": "Confirmatory bar: fidelity declines with Δ — per-subject slope of fidelity against Δ, mean slope < 0 across subjects, paired within subject where the chronology allows, p < .05, on the primary model. Direction-robust on the robustness model per A3."
+  },
+  "H7_crossover": {
+   "source": "PREREGISTRATION_AMENDMENT_2.md B7, Pre-declared killer statistic",
+   "text": "The crossover point is the smallest Δ at which the fresh imposter twin matches or beats the stale own twin — \"a stranger's fresh twin beats your Δ-year-old twin.\" It is pre-declared here as H7's headline statistic if it occurs inside the observed Δ range."
+  },
+  "H7_reading_decay": {
+   "source": "PREREGISTRATION_AMENDMENT_2.md B7, Pre-written readings",
+   "text": "Measurable decay, crossover in range: person-models have a shelf life; the curve and the crossover Δ are the headline."
+  },
+  "H7_reading_flat": {
+   "source": "PREREGISTRATION_AMENDMENT_2.md B7, Pre-written readings",
+   "text": "Flat decay across our Δ range: public personas are stable at these horizons — grounding age does not matter within the years this corpus covers. Equally reportable, same prominence."
+  },
+  "H7_within_subject": {
+   "source": "PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md decision 6",
+   "text": "The within-subject sweep is pre-registered as a supporting analysis on the subset that can fill ≥ 3 bins — reported beside the between-subject result, never substituted for it."
+  },
+  "H7_volume_control": {
+   "source": "PREREGISTRATION_AMENDMENT_2.md B7.3",
+   "text": "At every T the grounding context is filled to the same token budget B, newest-first below the cutoff. Only the AGE of the grounding varies, never the amount. A cutoff at which B cannot be filled is excluded (counts reported)."
+  },
+  "unclear": {
+   "source": "PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md instrument parameter 6 (adopting PREREGISTRATION_AMENDMENT_3.md C2.3)",
+   "text": "UNCLEAR items are excluded from the stance-match rate's denominator; every arm's UNCLEAR rate is always reported beside its stance-match rate; a between-arm UNCLEAR-rate difference ≥ 0.10 absolute [PROPOSED] is flagged as material."
+  },
+  "B8": {
+   "source": "PREREGISTRATION_AMENDMENT_2.md B8",
+   "text": "From this amendment on, every fidelity report in this project shows BOTH of these, side by side, in the same table: 1. Individual-level lift — the project's primary metric (own-twin minus baseline and minus imposter, per A1). 2. A population-level distribution-match metric — total variation distance (TVD) or equivalent between predicted and true answer/option distributions, per subject and pooled. 3. Divergences explicitly flagged — wherever the two levels disagree (good population match with poor individual lift, or the reverse), the disagreement is called out in the report body, not in a footnote."
+  },
+  "B8_no_bar": {
+   "source": "PREREGISTRATION_AMENDMENT_2.md B8",
+   "text": "No confirmatory bar attaches to the population metric; it is a mandatory descriptive companion."
+  },
+  "branch": {
+   "source": "PREREGISTRATION_AMENDMENT_1.md A5 and PREREGISTRATION_AMENDMENT_2.md B3 / B7",
+   "text": "≥ 80 → confirmatory as above; 30–79 → exploratory (effect size + CI, no hypothesis-test claim); < 30 → descriptive only."
+  },
+  "contamination_meter": {
+   "source": "PREREGISTRATION.md section 3, Stage 2 contamination controls",
+   "text": "Contamination meter: per subject, (named baseline) − (name-redacted baseline). Reported per subject and as a corpus figure; subjects with a large meter are analyzed separately."
+  },
+  "H3": {
+   "source": "PREREGISTRATION.md section 3, Stage 2 pre-registered hypotheses",
+   "text": "H3 (fame confound, descriptive): lift shrinks as the contamination meter grows."
+  },
+  "lift_primary": {
+   "source": "PREREGISTRATION.md section 2, Core definitions",
+   "text": "Lift is the primary metric everywhere. Raw fidelity alone is never reported without its baseline."
+  },
+  "raw_beside": {
+   "source": "PREREGISTRATION_AMENDMENT_3.md C3",
+   "text": "Effect sizes with confidence intervals, never bare means. Raw per-arm scores always printed beside every difference (the watch-which-arm-moves rule)."
+  }
+ },
+ "status": {
+  "completeness": {
+   "expected_chunks": [
+    "chunk_01",
+    "chunk_02",
+    "chunk_03",
+    "chunk_04",
+    "chunk_05"
+   ],
+   "expected_prompts_per_model": 1911,
+   "generation": {
+    "gemma": {
+     "model": "Gemma-4-31B-it",
+     "chunks_present": [
+      "chunk_01",
+      "chunk_02",
+      "chunk_03",
+      "chunk_04",
+      "chunk_05"
+     ],
+     "chunks_missing": [],
+     "n_rows": 1911,
+     "complete": true
+    },
+    "flashlite": {
+     "model": "gemini-3.5-flash-lite",
+     "chunks_present": [
+      "chunk_01",
+      "chunk_02",
+      "chunk_03",
+      "chunk_04",
+      "chunk_05"
+     ],
+     "chunks_missing": [],
+     "n_rows": 1911,
+     "complete": true
+    }
+   },
+   "channel1": {
+    "gemma": {
+     "model": "Gemma-4-31B-it",
+     "chunks_present": [
+      "chunk_01",
+      "chunk_02",
+      "chunk_03",
+      "chunk_04",
+      "chunk_05"
+     ],
+     "chunks_missing": [],
+     "n_scored": 1911,
+     "n_unscored_prompts": 0,
+     "complete": true
+    },
+    "flashlite": {
+     "model": "gemini-3.5-flash-lite",
+     "chunks_present": [
+      "chunk_01",
+      "chunk_02",
+      "chunk_03",
+      "chunk_04",
+      "chunk_05"
+     ],
+     "chunks_missing": [],
+     "n_scored": 1911,
+     "n_unscored_prompts": 0,
+     "complete": true
+    }
+   },
+   "channel2": {
+    "gemma": {
+     "model": "Gemma-4-31B-it",
+     "chunks_present": [],
+     "chunks_missing": [
+      "chunk_01",
+      "chunk_02",
+      "chunk_03",
+      "chunk_04",
+      "chunk_05"
+     ],
+     "chunks_without_sidecar": [],
+     "n_labelled": 0,
+     "n_unlabelled_prompts": 1911,
+     "n_parse_failures": 0,
+     "complete": false
+    },
+    "flashlite": {
+     "model": "gemini-3.5-flash-lite",
+     "chunks_present": [
+      "chunk_01",
+      "chunk_02",
+      "chunk_03",
+      "chunk_04"
+     ],
+     "chunks_missing": [
+      "chunk_05"
+     ],
+     "chunks_without_sidecar": [
+      "chunk_04"
+     ],
+     "n_labelled": 1268,
+     "n_unlabelled_prompts": 643,
+     "n_parse_failures": 0,
+     "complete": false
+    }
+   },
+   "channel1_complete": true,
+   "channel2_complete": false,
+   "generation_complete": true,
+   "all_complete": false
+  },
+  "verdicts_printed": false,
+  "gate_rule": "No hypothesis verdict is printed while any chunk of either channel is missing. Amendment 3 C2.4: no claim rests on one channel alone."
+ },
+ "cohort": {
+  "n_subjects_drawn": 89,
+  "n_subjects_with_items": 88,
+  "n_items": 355,
+  "n_logical_renders": 2164,
+  "n_unique_prompts": 1911,
+  "subjects": [
+   "C00032",
+   "C00050",
+   "C00087",
+   "C00102",
+   "C00110",
+   "C00145",
+   "C00146",
+   "C00153",
+   "C00163",
+   "C00169",
+   "C00203",
+   "C00218",
+   "C00344",
+   "C00427",
+   "C00440",
+   "C00457",
+   "C00522",
+   "C00526",
+   "C00563",
+   "C00580",
+   "C00582",
+   "C00593",
+   "C00620",
+   "C00621",
+   "C00622",
+   "C00634",
+   "C00642",
+   "C00673",
+   "C00697",
+   "C00698",
+   "C00746",
+   "C00752",
+   "C00789",
+   "C00812",
+   "C00818",
+   "C00819",
+   "C00824",
+   "C00833",
+   "C00846",
+   "C00886",
+   "C00890",
+   "C00897",
+   "C01108",
+   "C01163",
+   "C01171",
+   "C01180",
+   "C01247",
+   "C01254",
+   "C01296",
+   "C01328",
+   "C01375",
+   "C01430",
+   "C01442",
+   "C01464",
+   "C01485",
+   "C01538",
+   "C01585",
+   "C01659",
+   "C01673",
+   "C01722",
+   "C01746",
+   "C01752",
+   "C01800",
+   "C01801",
+   "C01817",
+   "C01842",
+   "C01848",
+   "C01883",
+   "C01891",
+   "C01897",
+   "C01904",
+   "C01933",
+   "C01967",
+   "C02121",
+   "C02167",
+   "C02200",
+   "C02218",
+   "C02242",
+   "C02248",
+   "C02256",
+   "C02312",
+   "C02318",
+   "C02359",
+   "C02397",
+   "C02437",
+   "C02469",
+   "C02474",
+   "C02500"
+  ],
+  "h1_subject_count_branch": "confirmatory",
+  "branch_rule_quoted": "≥ 80 → confirmatory as above; 30–79 → exploratory (effect size + CI, no hypothesis-test claim); < 30 → descriptive only."
+ },
+ "channel1": {
+  "gemma": {
+   "model": "Gemma-4-31B-it",
+   "per_arm_raw": {
+    "imposter_redacted": {
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.506951,
+     "sd_of_subject_means": 0.131384,
+     "min": 0.162964,
+     "max": 0.749579
+    },
+    "twin_named": {
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.584709,
+     "sd_of_subject_means": 0.101492,
+     "min": 0.318803,
+     "max": 0.80083
+    },
+    "twin_redacted": {
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.582077,
+     "sd_of_subject_means": 0.094589,
+     "min": 0.318846,
+     "max": 0.80366
+    },
+    "zeroinfo_named": {
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.55767,
+     "sd_of_subject_means": 0.114967,
+     "min": 0.268561,
+     "max": 0.814948
+    },
+    "zeroinfo_redacted": {
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.5443,
+     "sd_of_subject_means": 0.112064,
+     "min": 0.222474,
+     "max": 0.818493
+    }
+   },
+   "per_subject_per_arm": {
+    "imposter_redacted": {
+     "C00032": 0.387503,
+     "C00050": 0.623475,
+     "C00087": 0.582058,
+     "C00102": 0.635802,
+     "C00110": 0.573091,
+     "C00145": 0.583618,
+     "C00146": 0.431087,
+     "C00153": 0.699569,
+     "C00163": 0.622927,
+     "C00169": 0.509214,
+     "C00203": 0.459211,
+     "C00218": 0.44159,
+     "C00344": 0.533477,
+     "C00427": 0.443527,
+     "C00440": 0.377749,
+     "C00457": 0.621089,
+     "C00522": 0.702814,
+     "C00526": 0.584155,
+     "C00563": 0.401111,
+     "C00580": 0.476246,
+     "C00582": 0.631935,
+     "C00593": 0.392387,
+     "C00620": 0.417981,
+     "C00621": 0.528077,
+     "C00622": 0.248539,
+     "C00634": 0.440615,
+     "C00642": 0.659401,
+     "C00673": 0.551397,
+     "C00697": 0.496957,
+     "C00698": 0.183253,
+     "C00746": 0.162964,
+     "C00752": 0.373719,
+     "C00789": 0.198045,
+     "C00812": 0.522423,
+     "C00818": 0.606177,
+     "C00819": 0.711542,
+     "C00824": 0.641555,
+     "C00833": 0.477335,
+     "C00846": 0.349049,
+     "C00886": 0.471729,
+     "C00890": 0.322398,
+     "C00897": 0.389003,
+     "C01108": 0.56585,
+     "C01163": 0.282716,
+     "C01171": 0.636077,
+     "C01180": 0.467079,
+     "C01247": 0.410993,
+     "C01254": 0.505616,
+     "C01296": 0.59973,
+     "C01328": 0.743612,
+     "C01375": 0.614329,
+     "C01430": 0.445611,
+     "C01442": 0.397204,
+     "C01464": 0.512263,
+     "C01485": 0.617702,
+     "C01538": 0.564726,
+     "C01585": 0.630595,
+     "C01659": 0.493245,
+     "C01673": 0.486776,
+     "C01722": 0.596083,
+     "C01746": 0.749579,
+     "C01752": 0.578987,
+     "C01800": 0.507222,
+     "C01801": 0.538633,
+     "C01817": 0.495292,
+     "C01842": 0.595637,
+     "C01848": 0.661408,
+     "C01883": 0.51655,
+     "C01891": 0.210203,
+     "C01897": 0.662232,
+     "C01904": 0.278783,
+     "C01933": 0.313289,
+     "C01967": 0.412547,
+     "C02121": 0.560641,
+     "C02167": 0.554587,
+     "C02200": 0.560191,
+     "C02218": 0.540999,
+     "C02242": 0.388355,
+     "C02248": 0.668589,
+     "C02256": 0.472371,
+     "C02312": 0.652433,
+     "C02318": 0.529731,
+     "C02359": 0.570522,
+     "C02397": 0.4496,
+     "C02437": 0.582204,
+     "C02469": 0.680661,
+     "C02474": 0.315839,
+     "C02500": 0.528636
+    },
+    "twin_named": {
+     "C00032": 0.462469,
+     "C00050": 0.69836,
+     "C00087": 0.678816,
+     "C00102": 0.612893,
+     "C00110": 0.650135,
+     "C00145": 0.593618,
+     "C00146": 0.47253,
+     "C00153": 0.690866,
+     "C00163": 0.655688,
+     "C00169": 0.667997,
+     "C00203": 0.565864,
+     "C00218": 0.525803,
+     "C00344": 0.602829,
+     "C00427": 0.579741,
+     "C00440": 0.580558,
+     "C00457": 0.745844,
+     "C00522": 0.718815,
+     "C00526": 0.703509,
+     "C00563": 0.509083,
+     "C00580": 0.474016,
+     "C00582": 0.744121,
+     "C00593": 0.61191,
+     "C00620": 0.504294,
+     "C00621": 0.492334,
+     "C00622": 0.408346,
+     "C00634": 0.487432,
+     "C00642": 0.724373,
+     "C00673": 0.570759,
+     "C00697": 0.485079,
+     "C00698": 0.607291,
+     "C00746": 0.4573,
+     "C00752": 0.539921,
+     "C00789": 0.523202,
+     "C00812": 0.55588,
+     "C00818": 0.676322,
+     "C00819": 0.775824,
+     "C00824": 0.668083,
+     "C00833": 0.608595,
+     "C00846": 0.545098,
+     "C00886": 0.539187,
+     "C00890": 0.489453,
+     "C00897": 0.437598,
+     "C01108": 0.628423,
+     "C01163": 0.318803,
+     "C01171": 0.631057,
+     "C01180": 0.458142,
+     "C01247": 0.57315,
+     "C01254": 0.690783,
+     "C01296": 0.780403,
+     "C01328": 0.623587,
+     "C01375": 0.636624,
+     "C01430": 0.595378,
+     "C01442": 0.464268,
+     "C01464": 0.608407,
+     "C01485": 0.715075,
+     "C01538": 0.571222,
+     "C01585": 0.641812,
+     "C01659": 0.517603,
+     "C01673": 0.540001,
+     "C01722": 0.546434,
+     "C01746": 0.80083,
+     "C01752": 0.682101,
+     "C01800": 0.539018,
+     "C01801": 0.597238,
+     "C01817": 0.609256,
+     "C01842": 0.685596,
+     "C01848": 0.574832,
+     "C01883": 0.525391,
+     "C01891": 0.414948,
+     "C01897": 0.634028,
+     "C01904": 0.378642,
+     "C01933": 0.444446,
+     "C01967": 0.51253,
+     "C02121": 0.484465,
+     "C02167": 0.59874,
+     "C02200": 0.670626,
+     "C02218": 0.626822,
+     "C02242": 0.446757,
+     "C02248": 0.700579,
+     "C02256": 0.547226,
+     "C02312": 0.655601,
+     "C02318": 0.555719,
+     "C02359": 0.706362,
+     "C02397": 0.560834,
+     "C02437": 0.701876,
+     "C02469": 0.708854,
+     "C02474": 0.35594,
+     "C02500": 0.552135
+    },
+    "twin_redacted": {
+     "C00032": 0.408992,
+     "C00050": 0.673232,
+     "C00087": 0.612614,
+     "C00102": 0.609186,
+     "C00110": 0.62421,
+     "C00145": 0.669952,
+     "C00146": 0.498016,
+     "C00153": 0.689641,
+     "C00163": 0.636534,
+     "C00169": 0.65408,
+     "C00203": 0.549141,
+     "C00218": 0.489953,
+     "C00344": 0.588498,
+     "C00427": 0.581398,
+     "C00440": 0.583925,
+     "C00457": 0.685164,
+     "C00522": 0.716506,
+     "C00526": 0.659797,
+     "C00563": 0.532176,
+     "C00580": 0.468573,
+     "C00582": 0.709549,
+     "C00593": 0.561122,
+     "C00620": 0.443636,
+     "C00621": 0.510754,
+     "C00622": 0.532924,
+     "C00634": 0.506754,
+     "C00642": 0.729177,
+     "C00673": 0.600838,
+     "C00697": 0.490976,
+     "C00698": 0.555688,
+     "C00746": 0.45924,
+     "C00752": 0.52186,
+     "C00789": 0.47993,
+     "C00812": 0.52662,
+     "C00818": 0.641549,
+     "C00819": 0.756301,
+     "C00824": 0.650648,
+     "C00833": 0.648723,
+     "C00846": 0.57297,
+     "C00886": 0.600225,
+     "C00890": 0.481664,
+     "C00897": 0.567696,
+     "C01108": 0.629823,
+     "C01163": 0.329731,
+     "C01171": 0.595367,
+     "C01180": 0.449254,
+     "C01247": 0.538764,
+     "C01254": 0.687122,
+     "C01296": 0.741486,
+     "C01328": 0.660778,
+     "C01375": 0.675887,
+     "C01430": 0.53283,
+     "C01442": 0.427542,
+     "C01464": 0.582427,
+     "C01485": 0.703016,
+     "C01538": 0.587689,
+     "C01585": 0.588406,
+     "C01659": 0.525842,
+     "C01673": 0.553871,
+     "C01722": 0.566533,
+     "C01746": 0.80366,
+     "C01752": 0.653222,
+     "C01800": 0.567165,
+     "C01801": 0.597308,
+     "C01817": 0.558484,
+     "C01842": 0.650827,
+     "C01848": 0.658922,
+     "C01883": 0.489185,
+     "C01891": 0.431793,
+     "C01897": 0.588817,
+     "C01904": 0.318846,
+     "C01933": 0.517439,
+     "C01967": 0.55804,
+     "C02121": 0.482512,
+     "C02167": 0.612096,
+     "C02200": 0.669385,
+     "C02218": 0.644509,
+     "C02242": 0.419317,
+     "C02248": 0.699247,
+     "C02256": 0.541783,
+     "C02312": 0.621251,
+     "C02318": 0.579969,
+     "C02359": 0.716502,
+     "C02397": 0.524792,
+     "C02437": 0.704412,
+     "C02469": 0.67224,
+     "C02474": 0.472448,
+     "C02500": 0.611822
+    },
+    "zeroinfo_named": {
+     "C00032": 0.470165,
+     "C00050": 0.767269,
+     "C00087": 0.550242,
+     "C00102": 0.65432,
+     "C00110": 0.567579,
+     "C00145": 0.627738,
+     "C00146": 0.586778,
+     "C00153": 0.634826,
+     "C00163": 0.633803,
+     "C00169": 0.604562,
+     "C00203": 0.491859,
+     "C00218": 0.549381,
+     "C00344": 0.620325,
+     "C00427": 0.538384,
+     "C00440": 0.340969,
+     "C00457": 0.617873,
+     "C00522": 0.693576,
+     "C00526": 0.624916,
+     "C00563": 0.486654,
+     "C00580": 0.536148,
+     "C00582": 0.716033,
+     "C00593": 0.55455,
+     "C00620": 0.41537,
+     "C00621": 0.490578,
+     "C00622": 0.4775,
+     "C00634": 0.5517,
+     "C00642": 0.673687,
+     "C00673": 0.610098,
+     "C00697": 0.602899,
+     "C00698": 0.284202,
+     "C00746": 0.361803,
+     "C00752": 0.356166,
+     "C00789": 0.479517,
+     "C00812": 0.513245,
+     "C00818": 0.750192,
+     "C00819": 0.779728,
+     "C00824": 0.544715,
+     "C00833": 0.538833,
+     "C00846": 0.480943,
+     "C00886": 0.504712,
+     "C00890": 0.415653,
+     "C00897": 0.3805,
+     "C01108": 0.602563,
+     "C01163": 0.282288,
+     "C01171": 0.645618,
+     "C01180": 0.465014,
+     "C01247": 0.421411,
+     "C01254": 0.636447,
+     "C01296": 0.685109,
+     "C01328": 0.736614,
+     "C01375": 0.662792,
+     "C01430": 0.61653,
+     "C01442": 0.522281,
+     "C01464": 0.549329,
+     "C01485": 0.683969,
+     "C01538": 0.510876,
+     "C01585": 0.653661,
+     "C01659": 0.468739,
+     "C01673": 0.609295,
+     "C01722": 0.613069,
+     "C01746": 0.814948,
+     "C01752": 0.677075,
+     "C01800": 0.486831,
+     "C01801": 0.535335,
+     "C01817": 0.581873,
+     "C01842": 0.513902,
+     "C01848": 0.698398,
+     "C01883": 0.594929,
+     "C01891": 0.340601,
+     "C01897": 0.661257,
+     "C01904": 0.268561,
+     "C01933": 0.419444,
+     "C01967": 0.591369,
+     "C02121": 0.476371,
+     "C02167": 0.653452,
+     "C02200": 0.560458,
+     "C02218": 0.569811,
+     "C02242": 0.403848,
+     "C02248": 0.680391,
+     "C02256": 0.612059,
+     "C02312": 0.543429,
+     "C02318": 0.534652,
+     "C02359": 0.658743,
+     "C02397": 0.532617,
+     "C02437": 0.612497,
+     "C02469": 0.590383,
+     "C02474": 0.397944,
+     "C02500": 0.618166
+    },
+    "zeroinfo_redacted": {
+     "C00032": 0.449789,
+     "C00050": 0.697756,
+     "C00087": 0.494155,
+     "C00102": 0.554634,
+     "C00110": 0.436422,
+     "C00145": 0.64268,
+     "C00146": 0.607335,
+     "C00153": 0.645082,
+     "C00163": 0.615862,
+     "C00169": 0.569796,
+     "C00203": 0.4612,
+     "C00218": 0.501385,
+     "C00344": 0.622539,
+     "C00427": 0.551338,
+     "C00440": 0.374674,
+     "C00457": 0.532734,
+     "C00522": 0.682133,
+     "C00526": 0.574763,
+     "C00563": 0.44896,
+     "C00580": 0.416958,
+     "C00582": 0.691026,
+     "C00593": 0.596041,
+     "C00620": 0.36956,
+     "C00621": 0.533206,
+     "C00622": 0.382219,
+     "C00634": 0.588502,
+     "C00642": 0.670603,
+     "C00673": 0.628938,
+     "C00697": 0.597291,
+     "C00698": 0.222474,
+     "C00746": 0.359609,
+     "C00752": 0.50967,
+     "C00789": 0.380035,
+     "C00812": 0.526902,
+     "C00818": 0.696899,
+     "C00819": 0.773372,
+     "C00824": 0.613207,
+     "C00833": 0.498296,
+     "C00846": 0.479292,
+     "C00886": 0.503123,
+     "C00890": 0.389743,
+     "C00897": 0.579108,
+     "C01108": 0.611927,
+     "C01163": 0.286547,
+     "C01171": 0.621148,
+     "C01180": 0.507192,
+     "C01247": 0.401041,
+     "C01254": 0.658324,
+     "C01296": 0.492711,
+     "C01328": 0.687244,
+     "C01375": 0.616209,
+     "C01430": 0.52933,
+     "C01442": 0.488938,
+     "C01464": 0.528799,
+     "C01485": 0.686557,
+     "C01538": 0.521882,
+     "C01585": 0.630492,
+     "C01659": 0.447984,
+     "C01673": 0.59782,
+     "C01722": 0.592938,
+     "C01746": 0.818493,
+     "C01752": 0.713414,
+     "C01800": 0.441638,
+     "C01801": 0.545788,
+     "C01817": 0.555403,
+     "C01842": 0.5707,
+     "C01848": 0.572141,
+     "C01883": 0.537532,
+     "C01891": 0.307278,
+     "C01897": 0.598669,
+     "C01904": 0.411403,
+     "C01933": 0.358709,
+     "C01967": 0.523798,
+     "C02121": 0.537681,
+     "C02167": 0.610559,
+     "C02200": 0.584483,
+     "C02218": 0.617554,
+     "C02242": 0.452742,
+     "C02248": 0.681014,
+     "C02256": 0.525311,
+     "C02312": 0.560704,
+     "C02318": 0.654675,
+     "C02359": 0.648237,
+     "C02397": 0.470783,
+     "C02437": 0.607825,
+     "C02469": 0.697866,
+     "C02474": 0.373003,
+     "C02500": 0.544591
+    }
+   }
+  },
+  "flashlite": {
+   "model": "gemini-3.5-flash-lite",
+   "per_arm_raw": {
+    "imposter_redacted": {
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.527136,
+     "sd_of_subject_means": 0.131816,
+     "min": 0.198803,
+     "max": 0.823904
+    },
+    "twin_named": {
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.607306,
+     "sd_of_subject_means": 0.095612,
+     "min": 0.334595,
+     "max": 0.809063
+    },
+    "twin_redacted": {
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.604065,
+     "sd_of_subject_means": 0.088823,
+     "min": 0.394694,
+     "max": 0.821496
+    },
+    "zeroinfo_named": {
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.596511,
+     "sd_of_subject_means": 0.098583,
+     "min": 0.322988,
+     "max": 0.820532
+    },
+    "zeroinfo_redacted": {
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.546253,
+     "sd_of_subject_means": 0.110946,
+     "min": 0.253194,
+     "max": 0.748399
+    }
+   },
+   "per_subject_per_arm": {
+    "imposter_redacted": {
+     "C00032": 0.432299,
+     "C00050": 0.732147,
+     "C00087": 0.644486,
+     "C00102": 0.630228,
+     "C00110": 0.548278,
+     "C00145": 0.579281,
+     "C00146": 0.39796,
+     "C00153": 0.684705,
+     "C00163": 0.642125,
+     "C00169": 0.575233,
+     "C00203": 0.486274,
+     "C00218": 0.409805,
+     "C00344": 0.580922,
+     "C00427": 0.486588,
+     "C00440": 0.433201,
+     "C00457": 0.582494,
+     "C00522": 0.643641,
+     "C00526": 0.617359,
+     "C00563": 0.419689,
+     "C00580": 0.531708,
+     "C00582": 0.588177,
+     "C00593": 0.4463,
+     "C00620": 0.414502,
+     "C00621": 0.514738,
+     "C00622": 0.306431,
+     "C00634": 0.426054,
+     "C00642": 0.719444,
+     "C00673": 0.61482,
+     "C00697": 0.569133,
+     "C00698": 0.217315,
+     "C00746": 0.295848,
+     "C00752": 0.402865,
+     "C00789": 0.19963,
+     "C00812": 0.518706,
+     "C00818": 0.565397,
+     "C00819": 0.757559,
+     "C00824": 0.644254,
+     "C00833": 0.507871,
+     "C00846": 0.421807,
+     "C00886": 0.511283,
+     "C00890": 0.319783,
+     "C00897": 0.461645,
+     "C01108": 0.59434,
+     "C01163": 0.267042,
+     "C01171": 0.660445,
+     "C01180": 0.457627,
+     "C01247": 0.394134,
+     "C01254": 0.557568,
+     "C01296": 0.56126,
+     "C01328": 0.726835,
+     "C01375": 0.609726,
+     "C01430": 0.425675,
+     "C01442": 0.441779,
+     "C01464": 0.494622,
+     "C01485": 0.664273,
+     "C01538": 0.58367,
+     "C01585": 0.569198,
+     "C01659": 0.523716,
+     "C01673": 0.548432,
+     "C01722": 0.557355,
+     "C01746": 0.823904,
+     "C01752": 0.495851,
+     "C01800": 0.56194,
+     "C01801": 0.58714,
+     "C01817": 0.381682,
+     "C01842": 0.618874,
+     "C01848": 0.68285,
+     "C01883": 0.601681,
+     "C01891": 0.265658,
+     "C01897": 0.684805,
+     "C01904": 0.198803,
+     "C01933": 0.424601,
+     "C01967": 0.341453,
+     "C02121": 0.536807,
+     "C02167": 0.572661,
+     "C02200": 0.5924,
+     "C02218": 0.570035,
+     "C02242": 0.398778,
+     "C02248": 0.722502,
+     "C02256": 0.50255,
+     "C02312": 0.635875,
+     "C02318": 0.558863,
+     "C02359": 0.611176,
+     "C02397": 0.527709,
+     "C02437": 0.71013,
+     "C02469": 0.714589,
+     "C02474": 0.371023,
+     "C02500": 0.57398
+    },
+    "twin_named": {
+     "C00032": 0.514119,
+     "C00050": 0.708584,
+     "C00087": 0.632756,
+     "C00102": 0.668799,
+     "C00110": 0.629021,
+     "C00145": 0.65768,
+     "C00146": 0.574685,
+     "C00153": 0.680836,
+     "C00163": 0.693589,
+     "C00169": 0.70114,
+     "C00203": 0.525137,
+     "C00218": 0.530835,
+     "C00344": 0.601088,
+     "C00427": 0.595065,
+     "C00440": 0.580616,
+     "C00457": 0.649552,
+     "C00522": 0.743908,
+     "C00526": 0.700397,
+     "C00563": 0.508329,
+     "C00580": 0.504875,
+     "C00582": 0.736098,
+     "C00593": 0.571973,
+     "C00620": 0.490366,
+     "C00621": 0.406857,
+     "C00622": 0.43335,
+     "C00634": 0.50853,
+     "C00642": 0.691875,
+     "C00673": 0.601683,
+     "C00697": 0.630581,
+     "C00698": 0.639707,
+     "C00746": 0.485345,
+     "C00752": 0.640371,
+     "C00789": 0.514956,
+     "C00812": 0.498364,
+     "C00818": 0.635925,
+     "C00819": 0.806072,
+     "C00824": 0.68187,
+     "C00833": 0.498152,
+     "C00846": 0.612761,
+     "C00886": 0.595098,
+     "C00890": 0.485544,
+     "C00897": 0.534615,
+     "C01108": 0.625074,
+     "C01163": 0.334595,
+     "C01171": 0.570551,
+     "C01180": 0.48541,
+     "C01247": 0.557487,
+     "C01254": 0.710675,
+     "C01296": 0.719728,
+     "C01328": 0.733888,
+     "C01375": 0.598923,
+     "C01430": 0.62864,
+     "C01442": 0.461591,
+     "C01464": 0.622736,
+     "C01485": 0.746318,
+     "C01538": 0.623031,
+     "C01585": 0.598609,
+     "C01659": 0.557109,
+     "C01673": 0.654466,
+     "C01722": 0.582577,
+     "C01746": 0.809063,
+     "C01752": 0.576773,
+     "C01800": 0.676476,
+     "C01801": 0.655612,
+     "C01817": 0.685341,
+     "C01842": 0.70109,
+     "C01848": 0.678604,
+     "C01883": 0.535932,
+     "C01891": 0.469091,
+     "C01897": 0.677679,
+     "C01904": 0.429295,
+     "C01933": 0.455389,
+     "C01967": 0.572011,
+     "C02121": 0.547285,
+     "C02167": 0.684973,
+     "C02200": 0.676072,
+     "C02218": 0.634215,
+     "C02242": 0.482787,
+     "C02248": 0.738453,
+     "C02256": 0.496478,
+     "C02312": 0.629751,
+     "C02318": 0.682472,
+     "C02359": 0.753282,
+     "C02397": 0.612834,
+     "C02437": 0.720061,
+     "C02469": 0.727231,
+     "C02474": 0.604917,
+     "C02500": 0.617247
+    },
+    "twin_redacted": {
+     "C00032": 0.475715,
+     "C00050": 0.737128,
+     "C00087": 0.608222,
+     "C00102": 0.673745,
+     "C00110": 0.646987,
+     "C00145": 0.628392,
+     "C00146": 0.583737,
+     "C00153": 0.674484,
+     "C00163": 0.60539,
+     "C00169": 0.738973,
+     "C00203": 0.577401,
+     "C00218": 0.568489,
+     "C00344": 0.596804,
+     "C00427": 0.609917,
+     "C00440": 0.578825,
+     "C00457": 0.494135,
+     "C00522": 0.784466,
+     "C00526": 0.669881,
+     "C00563": 0.560482,
+     "C00580": 0.551903,
+     "C00582": 0.735908,
+     "C00593": 0.558761,
+     "C00620": 0.491122,
+     "C00621": 0.473485,
+     "C00622": 0.478147,
+     "C00634": 0.545751,
+     "C00642": 0.690719,
+     "C00673": 0.594526,
+     "C00697": 0.587188,
+     "C00698": 0.606066,
+     "C00746": 0.478856,
+     "C00752": 0.600678,
+     "C00789": 0.468055,
+     "C00812": 0.489486,
+     "C00818": 0.680353,
+     "C00819": 0.789993,
+     "C00824": 0.636058,
+     "C00833": 0.66319,
+     "C00846": 0.604246,
+     "C00886": 0.514504,
+     "C00890": 0.468893,
+     "C00897": 0.563312,
+     "C01108": 0.592545,
+     "C01163": 0.394694,
+     "C01171": 0.656249,
+     "C01180": 0.512569,
+     "C01247": 0.589492,
+     "C01254": 0.687504,
+     "C01296": 0.641196,
+     "C01328": 0.664581,
+     "C01375": 0.612266,
+     "C01430": 0.608046,
+     "C01442": 0.484942,
+     "C01464": 0.610405,
+     "C01485": 0.747832,
+     "C01538": 0.602185,
+     "C01585": 0.6849,
+     "C01659": 0.517523,
+     "C01673": 0.544348,
+     "C01722": 0.607261,
+     "C01746": 0.821496,
+     "C01752": 0.615901,
+     "C01800": 0.715164,
+     "C01801": 0.612253,
+     "C01817": 0.675436,
+     "C01842": 0.686214,
+     "C01848": 0.625689,
+     "C01883": 0.540945,
+     "C01891": 0.455498,
+     "C01897": 0.661982,
+     "C01904": 0.482929,
+     "C01933": 0.440552,
+     "C01967": 0.573908,
+     "C02121": 0.546725,
+     "C02167": 0.59474,
+     "C02200": 0.681074,
+     "C02218": 0.633456,
+     "C02242": 0.45317,
+     "C02248": 0.717982,
+     "C02256": 0.543719,
+     "C02312": 0.6561,
+     "C02318": 0.621312,
+     "C02359": 0.752362,
+     "C02397": 0.581321,
+     "C02437": 0.733026,
+     "C02469": 0.66179,
+     "C02474": 0.54618,
+     "C02500": 0.683863
+    },
+    "zeroinfo_named": {
+     "C00032": 0.475374,
+     "C00050": 0.70766,
+     "C00087": 0.597791,
+     "C00102": 0.6679,
+     "C00110": 0.660643,
+     "C00145": 0.584611,
+     "C00146": 0.567215,
+     "C00153": 0.697105,
+     "C00163": 0.690055,
+     "C00169": 0.619474,
+     "C00203": 0.4934,
+     "C00218": 0.511642,
+     "C00344": 0.64027,
+     "C00427": 0.5496,
+     "C00440": 0.554857,
+     "C00457": 0.696741,
+     "C00522": 0.724303,
+     "C00526": 0.695855,
+     "C00563": 0.470125,
+     "C00580": 0.590328,
+     "C00582": 0.715556,
+     "C00593": 0.519797,
+     "C00620": 0.468956,
+     "C00621": 0.526015,
+     "C00622": 0.379251,
+     "C00634": 0.511746,
+     "C00642": 0.725063,
+     "C00673": 0.583874,
+     "C00697": 0.644467,
+     "C00698": 0.64722,
+     "C00746": 0.408964,
+     "C00752": 0.554862,
+     "C00789": 0.509452,
+     "C00812": 0.505176,
+     "C00818": 0.699065,
+     "C00819": 0.815127,
+     "C00824": 0.618616,
+     "C00833": 0.578513,
+     "C00846": 0.573499,
+     "C00886": 0.495348,
+     "C00890": 0.432494,
+     "C00897": 0.498255,
+     "C01108": 0.611402,
+     "C01163": 0.322988,
+     "C01171": 0.624139,
+     "C01180": 0.560864,
+     "C01247": 0.544816,
+     "C01254": 0.641544,
+     "C01296": 0.619805,
+     "C01328": 0.714779,
+     "C01375": 0.645075,
+     "C01430": 0.648517,
+     "C01442": 0.533558,
+     "C01464": 0.511091,
+     "C01485": 0.768166,
+     "C01538": 0.591699,
+     "C01585": 0.66224,
+     "C01659": 0.512446,
+     "C01673": 0.641683,
+     "C01722": 0.619683,
+     "C01746": 0.820532,
+     "C01752": 0.602812,
+     "C01800": 0.634355,
+     "C01801": 0.623648,
+     "C01817": 0.595429,
+     "C01842": 0.637697,
+     "C01848": 0.72612,
+     "C01883": 0.616341,
+     "C01891": 0.447148,
+     "C01897": 0.702524,
+     "C01904": 0.468479,
+     "C01933": 0.456702,
+     "C01967": 0.582741,
+     "C02121": 0.574021,
+     "C02167": 0.673477,
+     "C02200": 0.576074,
+     "C02218": 0.58976,
+     "C02242": 0.501169,
+     "C02248": 0.701019,
+     "C02256": 0.500387,
+     "C02312": 0.649708,
+     "C02318": 0.660041,
+     "C02359": 0.742397,
+     "C02397": 0.546982,
+     "C02437": 0.792856,
+     "C02469": 0.642827,
+     "C02474": 0.42033,
+     "C02500": 0.626631
+    },
+    "zeroinfo_redacted": {
+     "C00032": 0.46338,
+     "C00050": 0.687834,
+     "C00087": 0.552871,
+     "C00102": 0.607258,
+     "C00110": 0.553807,
+     "C00145": 0.525183,
+     "C00146": 0.557229,
+     "C00153": 0.65646,
+     "C00163": 0.584871,
+     "C00169": 0.690377,
+     "C00203": 0.440373,
+     "C00218": 0.500465,
+     "C00344": 0.611787,
+     "C00427": 0.533309,
+     "C00440": 0.392621,
+     "C00457": 0.689298,
+     "C00522": 0.665555,
+     "C00526": 0.632321,
+     "C00563": 0.46002,
+     "C00580": 0.393937,
+     "C00582": 0.692249,
+     "C00593": 0.578392,
+     "C00620": 0.390337,
+     "C00621": 0.525246,
+     "C00622": 0.361598,
+     "C00634": 0.602475,
+     "C00642": 0.698035,
+     "C00673": 0.598215,
+     "C00697": 0.612883,
+     "C00698": 0.272563,
+     "C00746": 0.363142,
+     "C00752": 0.480897,
+     "C00789": 0.383458,
+     "C00812": 0.534504,
+     "C00818": 0.681064,
+     "C00819": 0.705754,
+     "C00824": 0.638184,
+     "C00833": 0.533637,
+     "C00846": 0.492579,
+     "C00886": 0.544718,
+     "C00890": 0.364501,
+     "C00897": 0.431602,
+     "C01108": 0.567266,
+     "C01163": 0.253194,
+     "C01171": 0.648503,
+     "C01180": 0.503287,
+     "C01247": 0.43495,
+     "C01254": 0.604173,
+     "C01296": 0.391,
+     "C01328": 0.68227,
+     "C01375": 0.597083,
+     "C01430": 0.479428,
+     "C01442": 0.457339,
+     "C01464": 0.509007,
+     "C01485": 0.689041,
+     "C01538": 0.552261,
+     "C01585": 0.716687,
+     "C01659": 0.517071,
+     "C01673": 0.481816,
+     "C01722": 0.541785,
+     "C01746": 0.748399,
+     "C01752": 0.727059,
+     "C01800": 0.450223,
+     "C01801": 0.496513,
+     "C01817": 0.54548,
+     "C01842": 0.63225,
+     "C01848": 0.618576,
+     "C01883": 0.597872,
+     "C01891": 0.34221,
+     "C01897": 0.647007,
+     "C01904": 0.385977,
+     "C01933": 0.444624,
+     "C01967": 0.555559,
+     "C02121": 0.505664,
+     "C02167": 0.690855,
+     "C02200": 0.538695,
+     "C02218": 0.593424,
+     "C02242": 0.460604,
+     "C02248": 0.63908,
+     "C02256": 0.437418,
+     "C02312": 0.568489,
+     "C02318": 0.646176,
+     "C02359": 0.671764,
+     "C02397": 0.559861,
+     "C02437": 0.616368,
+     "C02469": 0.660663,
+     "C02474": 0.399513,
+     "C02500": 0.5788
+    }
+   }
+  }
+ },
+ "channel2": {
+  "gemma": {
+   "model": "Gemma-4-31B-it",
+   "complete": false,
+   "n_labelled": 0,
+   "pooled_label_counts": {},
+   "per_arm_raw": {},
+   "partial": true
+  },
+  "flashlite": {
+   "model": "gemini-3.5-flash-lite",
+   "complete": false,
+   "n_labelled": 1268,
+   "pooled_label_counts": {
+    "twin_redacted": {
+     "SAME": 168,
+     "DIFFERENT": 37,
+     "UNCLEAR": 30,
+     "None": 0
+    },
+    "twin_named": {
+     "SAME": 165,
+     "DIFFERENT": 45,
+     "UNCLEAR": 27,
+     "None": 0
+    },
+    "zeroinfo_redacted": {
+     "SAME": 127,
+     "DIFFERENT": 73,
+     "UNCLEAR": 35,
+     "None": 0
+    },
+    "zeroinfo_named": {
+     "SAME": 160,
+     "DIFFERENT": 55,
+     "UNCLEAR": 23,
+     "None": 0
+    },
+    "imposter_redacted": {
+     "SAME": 115,
+     "DIFFERENT": 63,
+     "UNCLEAR": 62,
+     "None": 0
+    }
+   },
+   "per_arm_raw": {
+    "imposter_redacted": {
+     "n_subjects": 64,
+     "mean_of_subject_means": 0.630432,
+     "sd_of_subject_means": 0.355167,
+     "min": 0.0,
+     "max": 1.0
+    },
+    "twin_named": {
+     "n_subjects": 69,
+     "mean_of_subject_means": 0.754589,
+     "sd_of_subject_means": 0.29482,
+     "min": 0.0,
+     "max": 1.0
+    },
+    "twin_redacted": {
+     "n_subjects": 69,
+     "mean_of_subject_means": 0.800725,
+     "sd_of_subject_means": 0.278849,
+     "min": 0.0,
+     "max": 1.0
+    },
+    "zeroinfo_named": {
+     "n_subjects": 68,
+     "mean_of_subject_means": 0.723856,
+     "sd_of_subject_means": 0.296015,
+     "min": 0.0,
+     "max": 1.0
+    },
+    "zeroinfo_redacted": {
+     "n_subjects": 66,
+     "mean_of_subject_means": 0.647583,
+     "sd_of_subject_means": 0.271944,
+     "min": 0.0,
+     "max": 1.0
+    }
+   },
+   "partial": true
+  }
+ },
+ "channel2_rates": {
+  "gemma": {
+   "_gap_flags": []
+  },
+  "flashlite": {
+   "twin_redacted": {
+    "match_rate": 0.819512,
+    "unclear_rate": 0.12766,
+    "denominator": 205,
+    "n_labels": 235,
+    "counts": {
+     "SAME": 168,
+     "DIFFERENT": 37,
+     "UNCLEAR": 30,
+     "None": 0
+    }
+   },
+   "twin_named": {
+    "match_rate": 0.785714,
+    "unclear_rate": 0.113924,
+    "denominator": 210,
+    "n_labels": 237,
+    "counts": {
+     "SAME": 165,
+     "DIFFERENT": 45,
+     "UNCLEAR": 27,
+     "None": 0
+    }
+   },
+   "zeroinfo_redacted": {
+    "match_rate": 0.635,
+    "unclear_rate": 0.148936,
+    "denominator": 200,
+    "n_labels": 235,
+    "counts": {
+     "SAME": 127,
+     "DIFFERENT": 73,
+     "UNCLEAR": 35,
+     "None": 0
+    }
+   },
+   "zeroinfo_named": {
+    "match_rate": 0.744186,
+    "unclear_rate": 0.096639,
+    "denominator": 215,
+    "n_labels": 238,
+    "counts": {
+     "SAME": 160,
+     "DIFFERENT": 55,
+     "UNCLEAR": 23,
+     "None": 0
+    }
+   },
+   "imposter_redacted": {
+    "match_rate": 0.646067,
+    "unclear_rate": 0.258333,
+    "denominator": 178,
+    "n_labels": 240,
+    "counts": {
+     "SAME": 115,
+     "DIFFERENT": 63,
+     "UNCLEAR": 62,
+     "None": 0
+    }
+   },
+   "_gap_flags": [
+    "`twin_redacted` UNCLEAR 0.1277 vs `imposter_redacted` UNCLEAR 0.2583 — gap 0.1307 reaches the frozen ≥ 0.10 threshold and is flagged as material.",
+    "`twin_named` UNCLEAR 0.1139 vs `imposter_redacted` UNCLEAR 0.2583 — gap 0.1444 reaches the frozen ≥ 0.10 threshold and is flagged as material.",
+    "`zeroinfo_redacted` UNCLEAR 0.1489 vs `imposter_redacted` UNCLEAR 0.2583 — gap 0.1094 reaches the frozen ≥ 0.10 threshold and is flagged as material.",
+    "`zeroinfo_named` UNCLEAR 0.0966 vs `imposter_redacted` UNCLEAR 0.2583 — gap 0.1617 reaches the frozen ≥ 0.10 threshold and is flagged as material."
+   ]
+  }
+ },
+ "h1": {
+  "channel1": {
+   "gemma": {
+    "channel": "1",
+    "per_arm_raw": {
+     "imposter_redacted": {
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.506951,
+      "sd_of_subject_means": 0.131384,
+      "min": 0.162964,
+      "max": 0.749579
+     },
+     "twin_named": {
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.584709,
+      "sd_of_subject_means": 0.101492,
+      "min": 0.318803,
+      "max": 0.80083
+     },
+     "twin_redacted": {
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.582077,
+      "sd_of_subject_means": 0.094589,
+      "min": 0.318846,
+      "max": 0.80366
+     },
+     "zeroinfo_named": {
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.55767,
+      "sd_of_subject_means": 0.114967,
+      "min": 0.268561,
+      "max": 0.814948
+     },
+     "zeroinfo_redacted": {
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.5443,
+      "sd_of_subject_means": 0.112064,
+      "min": 0.222474,
+      "max": 0.818493
+     }
+    },
+    "contrasts": {
+     "own_minus_imposter": {
+      "arm_a": "twin_redacted",
+      "arm_b": "imposter_redacted",
+      "n_subjects": 88,
+      "n_subjects_only_a": 0,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.582077,
+      "mean_b": 0.506951,
+      "mean_diff": 0.075126,
+      "median_diff": 0.062375,
+      "sd_diff": 0.085381,
+      "se_diff": 0.009102,
+      "ci95_t": [
+       0.057035,
+       0.093216
+      ],
+      "ci95_bootstrap": [
+       0.057911,
+       0.093266
+      ],
+      "p_paired_t": 1.505e-12,
+      "p_wilcoxon": 1.184e-11,
+      "p_signflip": 5e-05,
+      "n_subjects_a_gt_b": 72,
+      "n_subjects_a_lt_b": 16,
+      "n_subjects_tied": 0,
+      "t_stat": 8.254,
+      "cohens_dz": 0.879884,
+      "role": "PRIMARY (Amendment 3 C3). Like-for-like: both arms are redacted.",
+      "magnitude_bar": 0.05,
+      "meets_magnitude_bar": true,
+      "direction_positive": true,
+      "significant_at_p05": true
+     },
+     "own_named_minus_imposter": {
+      "arm_a": "twin_named",
+      "arm_b": "imposter_redacted",
+      "n_subjects": 88,
+      "n_subjects_only_a": 0,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.584709,
+      "mean_b": 0.506951,
+      "mean_diff": 0.077758,
+      "median_diff": 0.068405,
+      "sd_diff": 0.084996,
+      "se_diff": 0.009061,
+      "ci95_t": [
+       0.059749,
+       0.095767
+      ],
+      "ci95_bootstrap": [
+       0.060569,
+       0.096149
+      ],
+      "p_paired_t": 3.221e-13,
+      "p_wilcoxon": 3.278e-12,
+      "p_signflip": 5e-05,
+      "n_subjects_a_gt_b": 76,
+      "n_subjects_a_lt_b": 12,
+      "n_subjects_tied": 0,
+      "t_stat": 8.5819,
+      "cohens_dz": 0.914837,
+      "role": "Reported beside. Not like-for-like: the twin arm carries a name line the imposter arm does not.",
+      "magnitude_bar": 0.05,
+      "meets_magnitude_bar": true,
+      "direction_positive": true,
+      "significant_at_p05": true
+     },
+     "own_minus_zeroinfo": {
+      "arm_a": "twin_redacted",
+      "arm_b": "zeroinfo_redacted",
+      "n_subjects": 88,
+      "n_subjects_only_a": 0,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.582077,
+      "mean_b": 0.5443,
+      "mean_diff": 0.037777,
+      "median_diff": 0.032151,
+      "sd_diff": 0.078837,
+      "se_diff": 0.008404,
+      "ci95_t": [
+       0.021074,
+       0.054481
+      ],
+      "ci95_bootstrap": [
+       0.022054,
+       0.054668
+      ],
+      "p_paired_t": 2.132e-05,
+      "p_wilcoxon": 5.835e-05,
+      "p_signflip": 5e-05,
+      "n_subjects_a_gt_b": 58,
+      "n_subjects_a_lt_b": 30,
+      "n_subjects_tied": 0,
+      "t_stat": 4.4952,
+      "cohens_dz": 0.479187,
+      "role": "Zero-information lift, like-for-like. This is the contrast the magnitude bar names for H1.",
+      "magnitude_bar": 0.05,
+      "meets_magnitude_bar": false,
+      "direction_positive": true,
+      "significant_at_p05": true
+     },
+     "own_named_minus_zeroinfo_named": {
+      "arm_a": "twin_named",
+      "arm_b": "zeroinfo_named",
+      "n_subjects": 88,
+      "n_subjects_only_a": 0,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.584709,
+      "mean_b": 0.55767,
+      "mean_diff": 0.027039,
+      "median_diff": 0.028153,
+      "sd_diff": 0.078477,
+      "se_diff": 0.008366,
+      "ci95_t": [
+       0.010411,
+       0.043667
+      ],
+      "ci95_bootstrap": [
+       0.011067,
+       0.043967
+      ],
+      "p_paired_t": 0.001736,
+      "p_wilcoxon": 0.003882,
+      "p_signflip": 0.00145,
+      "n_subjects_a_gt_b": 56,
+      "n_subjects_a_lt_b": 32,
+      "n_subjects_tied": 0,
+      "t_stat": 3.2321,
+      "cohens_dz": 0.344548,
+      "role": "Zero-information lift, named-arm pair.",
+      "magnitude_bar": 0.05,
+      "meets_magnitude_bar": false,
+      "direction_positive": true,
+      "significant_at_p05": true
+     }
+    }
+   },
+   "flashlite": {
+    "channel": "1",
+    "per_arm_raw": {
+     "imposter_redacted": {
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.527136,
+      "sd_of_subject_means": 0.131816,
+      "min": 0.198803,
+      "max": 0.823904
+     },
+     "twin_named": {
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.607306,
+      "sd_of_subject_means": 0.095612,
+      "min": 0.334595,
+      "max": 0.809063
+     },
+     "twin_redacted": {
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.604065,
+      "sd_of_subject_means": 0.088823,
+      "min": 0.394694,
+      "max": 0.821496
+     },
+     "zeroinfo_named": {
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.596511,
+      "sd_of_subject_means": 0.098583,
+      "min": 0.322988,
+      "max": 0.820532
+     },
+     "zeroinfo_redacted": {
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.546253,
+      "sd_of_subject_means": 0.110946,
+      "min": 0.253194,
+      "max": 0.748399
+     }
+    },
+    "contrasts": {
+     "own_minus_imposter": {
+      "arm_a": "twin_redacted",
+      "arm_b": "imposter_redacted",
+      "n_subjects": 88,
+      "n_subjects_only_a": 0,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.604065,
+      "mean_b": 0.527136,
+      "mean_diff": 0.076928,
+      "median_diff": 0.058696,
+      "sd_diff": 0.091168,
+      "se_diff": 0.009718,
+      "ci95_t": [
+       0.057612,
+       0.096245
+      ],
+      "ci95_bootstrap": [
+       0.058537,
+       0.096275
+      ],
+      "p_paired_t": 7.341e-12,
+      "p_wilcoxon": 2.61e-10,
+      "p_signflip": 5e-05,
+      "n_subjects_a_gt_b": 68,
+      "n_subjects_a_lt_b": 20,
+      "n_subjects_tied": 0,
+      "t_stat": 7.9157,
+      "cohens_dz": 0.843813,
+      "role": "PRIMARY (Amendment 3 C3). Like-for-like: both arms are redacted.",
+      "magnitude_bar": 0.05,
+      "meets_magnitude_bar": true,
+      "direction_positive": true,
+      "significant_at_p05": true
+     },
+     "own_named_minus_imposter": {
+      "arm_a": "twin_named",
+      "arm_b": "imposter_redacted",
+      "n_subjects": 88,
+      "n_subjects_only_a": 0,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.607306,
+      "mean_b": 0.527136,
+      "mean_diff": 0.08017,
+      "median_diff": 0.074417,
+      "sd_diff": 0.08979,
+      "se_diff": 0.009572,
+      "ci95_t": [
+       0.061145,
+       0.099194
+      ],
+      "ci95_bootstrap": [
+       0.061691,
+       0.099394
+      ],
+      "p_paired_t": 8.498e-13,
+      "p_wilcoxon": 6.074e-12,
+      "p_signflip": 5e-05,
+      "n_subjects_a_gt_b": 71,
+      "n_subjects_a_lt_b": 17,
+      "n_subjects_tied": 0,
+      "t_stat": 8.3757,
+      "cohens_dz": 0.892854,
+      "role": "Reported beside. Not like-for-like: the twin arm carries a name line the imposter arm does not.",
+      "magnitude_bar": 0.05,
+      "meets_magnitude_bar": true,
+      "direction_positive": true,
+      "significant_at_p05": true
+     },
+     "own_minus_zeroinfo": {
+      "arm_a": "twin_redacted",
+      "arm_b": "zeroinfo_redacted",
+      "n_subjects": 88,
+      "n_subjects_only_a": 0,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.604065,
+      "mean_b": 0.546253,
+      "mean_diff": 0.057812,
+      "median_diff": 0.057071,
+      "sd_diff": 0.079854,
+      "se_diff": 0.008512,
+      "ci95_t": [
+       0.040892,
+       0.074731
+      ],
+      "ci95_bootstrap": [
+       0.041538,
+       0.07428
+      ],
+      "p_paired_t": 1.307e-09,
+      "p_wilcoxon": 3.726e-09,
+      "p_signflip": 5e-05,
+      "n_subjects_a_gt_b": 68,
+      "n_subjects_a_lt_b": 20,
+      "n_subjects_tied": 0,
+      "t_stat": 6.7914,
+      "cohens_dz": 0.723968,
+      "role": "Zero-information lift, like-for-like. This is the contrast the magnitude bar names for H1.",
+      "magnitude_bar": 0.05,
+      "meets_magnitude_bar": true,
+      "direction_positive": true,
+      "significant_at_p05": true
+     },
+     "own_named_minus_zeroinfo_named": {
+      "arm_a": "twin_named",
+      "arm_b": "zeroinfo_named",
+      "n_subjects": 88,
+      "n_subjects_only_a": 0,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.607306,
+      "mean_b": 0.596511,
+      "mean_diff": 0.010795,
+      "median_diff": 0.011551,
+      "sd_diff": 0.052052,
+      "se_diff": 0.005549,
+      "ci95_t": [
+       -0.000234,
+       0.021824
+      ],
+      "ci95_bootstrap": [
+       3.1e-05,
+       0.021583
+      ],
+      "p_paired_t": 0.05495,
+      "p_wilcoxon": 0.06115,
+      "p_signflip": 0.05475,
+      "n_subjects_a_gt_b": 52,
+      "n_subjects_a_lt_b": 36,
+      "n_subjects_tied": 0,
+      "t_stat": 1.9455,
+      "cohens_dz": 0.207388,
+      "role": "Zero-information lift, named-arm pair.",
+      "magnitude_bar": 0.05,
+      "meets_magnitude_bar": false,
+      "direction_positive": true,
+      "significant_at_p05": false
+     }
+    }
+   }
+  },
+  "channel2": {
+   "flashlite": {
+    "channel": "2",
+    "per_arm_raw": {
+     "imposter_redacted": {
+      "n_subjects": 64,
+      "mean_of_subject_means": 0.630432,
+      "sd_of_subject_means": 0.355167,
+      "min": 0.0,
+      "max": 1.0
+     },
+     "twin_named": {
+      "n_subjects": 69,
+      "mean_of_subject_means": 0.754589,
+      "sd_of_subject_means": 0.29482,
+      "min": 0.0,
+      "max": 1.0
+     },
+     "twin_redacted": {
+      "n_subjects": 69,
+      "mean_of_subject_means": 0.800725,
+      "sd_of_subject_means": 0.278849,
+      "min": 0.0,
+      "max": 1.0
+     },
+     "zeroinfo_named": {
+      "n_subjects": 68,
+      "mean_of_subject_means": 0.723856,
+      "sd_of_subject_means": 0.296015,
+      "min": 0.0,
+      "max": 1.0
+     },
+     "zeroinfo_redacted": {
+      "n_subjects": 66,
+      "mean_of_subject_means": 0.647583,
+      "sd_of_subject_means": 0.271944,
+      "min": 0.0,
+      "max": 1.0
+     }
+    },
+    "contrasts": {
+     "own_minus_imposter": {
+      "arm_a": "twin_redacted",
+      "arm_b": "imposter_redacted",
+      "n_subjects": 61,
+      "n_subjects_only_a": 8,
+      "n_subjects_only_b": 3,
+      "mean_a": 0.812842,
+      "mean_b": 0.645043,
+      "mean_diff": 0.167799,
+      "median_diff": 0.0,
+      "sd_diff": 0.344385,
+      "se_diff": 0.044094,
+      "ci95_t": [
+       0.079598,
+       0.256
+      ],
+      "ci95_bootstrap": [
+       0.084465,
+       0.257418
+      ],
+      "p_paired_t": 0.0003345,
+      "p_wilcoxon": 0.001061,
+      "p_signflip": 0.00015,
+      "n_subjects_a_gt_b": 29,
+      "n_subjects_a_lt_b": 8,
+      "n_subjects_tied": 24,
+      "t_stat": 3.8055,
+      "cohens_dz": 0.487241,
+      "role": "PRIMARY (Amendment 3 C3). Like-for-like: both arms are redacted.",
+      "magnitude_bar": 0.09,
+      "meets_magnitude_bar": true,
+      "direction_positive": true,
+      "significant_at_p05": true
+     },
+     "own_named_minus_imposter": {
+      "arm_a": "twin_named",
+      "arm_b": "imposter_redacted",
+      "n_subjects": 58,
+      "n_subjects_only_a": 11,
+      "n_subjects_only_b": 6,
+      "mean_a": 0.779885,
+      "mean_b": 0.643924,
+      "mean_diff": 0.135961,
+      "median_diff": 0.0,
+      "sd_diff": 0.379005,
+      "se_diff": 0.049766,
+      "ci95_t": [
+       0.036306,
+       0.235615
+      ],
+      "ci95_bootstrap": [
+       0.039406,
+       0.232801
+      ],
+      "p_paired_t": 0.008366,
+      "p_wilcoxon": 0.01863,
+      "p_signflip": 0.0085,
+      "n_subjects_a_gt_b": 26,
+      "n_subjects_a_lt_b": 10,
+      "n_subjects_tied": 22,
+      "t_stat": 2.732,
+      "cohens_dz": 0.35873,
+      "role": "Reported beside. Not like-for-like: the twin arm carries a name line the imposter arm does not.",
+      "magnitude_bar": 0.09,
+      "meets_magnitude_bar": true,
+      "direction_positive": true,
+      "significant_at_p05": true
+     },
+     "own_minus_zeroinfo": {
+      "arm_a": "twin_redacted",
+      "arm_b": "zeroinfo_redacted",
+      "n_subjects": 63,
+      "n_subjects_only_a": 6,
+      "n_subjects_only_b": 3,
+      "mean_a": 0.822751,
+      "mean_b": 0.630801,
+      "mean_diff": 0.19195,
+      "median_diff": 0.2,
+      "sd_diff": 0.286387,
+      "se_diff": 0.036081,
+      "ci95_t": [
+       0.119824,
+       0.264076
+      ],
+      "ci95_bootstrap": [
+       0.123167,
+       0.26444
+      ],
+      "p_paired_t": 1.513e-06,
+      "p_wilcoxon": 2.031e-05,
+      "p_signflip": 5e-05,
+      "n_subjects_a_gt_b": 39,
+      "n_subjects_a_lt_b": 7,
+      "n_subjects_tied": 17,
+      "t_stat": 5.3199,
+      "cohens_dz": 0.670247,
+      "role": "Zero-information lift, like-for-like. This is the contrast the magnitude bar names for H1.",
+      "magnitude_bar": 0.09,
+      "meets_magnitude_bar": true,
+      "direction_positive": true,
+      "significant_at_p05": true
+     },
+     "own_named_minus_zeroinfo_named": {
+      "arm_a": "twin_named",
+      "arm_b": "zeroinfo_named",
+      "n_subjects": 62,
+      "n_subjects_only_a": 7,
+      "n_subjects_only_b": 6,
+      "mean_a": 0.767204,
+      "mean_b": 0.721326,
+      "mean_diff": 0.045878,
+      "median_diff": 0.0,
+      "sd_diff": 0.343921,
+      "se_diff": 0.043678,
+      "ci95_t": [
+       -0.041461,
+       0.133218
+      ],
+      "ci95_bootstrap": [
+       -0.039247,
+       0.132258
+      ],
+      "p_paired_t": 0.2977,
+      "p_wilcoxon": 0.2237,
+      "p_signflip": 0.3028,
+      "n_subjects_a_gt_b": 18,
+      "n_subjects_a_lt_b": 12,
+      "n_subjects_tied": 32,
+      "t_stat": 1.0504,
+      "cohens_dz": 0.133397,
+      "role": "Zero-information lift, named-arm pair.",
+      "magnitude_bar": 0.09,
+      "meets_magnitude_bar": false,
+      "direction_positive": true,
+      "significant_at_p05": false
+     }
+    }
+   }
+  },
+  "verdict_block": {
+   "bar_quoted": "H1 (grounding works): mean lift > 0 across subjects, p < .05 (paired test over subjects).",
+   "bar_updated_quoted": "H1 bar (updated): H1 passes iff BOTH mean zero-info lift > 0 AND mean imposter lift > 0, each p < .05 (paired test over subjects).",
+   "magnitude_bar_quoted": "a registered contrast is 'interesting' only if it reaches ≥ +0.05 cosine (channel 1, pinned model) or ≥ +0.09 stance-match points (channel 2)",
+   "n_subjects": 88,
+   "subject_count_branch": "confirmatory",
+   "branch_rule_quoted": "≥ 80 → confirmatory as above; 30–79 → exploratory (effect size + CI, no hypothesis-test claim); < 30 → descriptive only.",
+   "primary_model_channel1": {
+    "imposter_leg": {
+     "mean": 0.075126,
+     "p": 1.505e-12,
+     "passes": true
+    },
+    "zeroinfo_leg": {
+     "mean": 0.037777,
+     "p": 2.132e-05,
+     "passes": true
+    }
+   },
+   "primary_model_channel2": null,
+   "robustness_model_channel1": {
+    "imposter_leg": {
+     "mean": 0.076928,
+     "p": 7.341e-12,
+     "passes": true
+    },
+    "zeroinfo_leg": {
+     "mean": 0.057812,
+     "p": 1.307e-09,
+     "passes": true
+    }
+   },
+   "robustness_model_channel2": null,
+   "channel1_primary_passes_A1": true,
+   "verdict": "[AWAITING JUDGE]",
+   "verdict_reason": "Channel 2 is incomplete. Amendment 3 C2.4 requires direction agreement across both channels for any headline, so no H1 verdict is printed. The channel-1 numbers below are real and are labelled PRELIMINARY."
+  }
+ },
+ "h7": {
+  "channel1": {
+   "gemma": {
+    "channel": "1",
+    "model": "Gemma-4-31B-it",
+    "label": "EXPLORATORY",
+    "label_reason": null,
+    "bar_quoted": "Confirmatory bar: fidelity declines with Δ — per-subject slope of fidelity against Δ, mean slope < 0 across subjects, paired within subject where the chronology allows, p < .05, on the primary model. Direction-robust on the robustness model per A3.",
+    "crossover_quoted": "The crossover point is the smallest Δ at which the fresh imposter twin matches or beats the stale own twin — \"a stranger's fresh twin beats your Δ-year-old twin.\" It is pre-declared here as H7's headline statistic if it occurs inside the observed Δ range.",
+    "reading_decay_quoted": "Measurable decay, crossover in range: person-models have a shelf life; the curve and the crossover Δ are the headline.",
+    "reading_flat_quoted": "Flat decay across our Δ range: public personas are stable at these horizons — grounding age does not matter within the years this corpus covers. Equally reportable, same prominence.",
+    "volume_control_quoted": "At every T the grounding context is filled to the same token budget B, newest-first below the cutoff. Only the AGE of the grounding varies, never the amount. A cutoff at which B cannot be filled is excluded (counts reported).",
+    "n_subjects_with_any_bin": 36,
+    "per_bin": {
+     "6-12m": {
+      "n_subjects": 15,
+      "n_items": 59,
+      "stale_own_twin_mean": 0.564659,
+      "fresh_imposter_mean": 0.483002,
+      "mean_delta_days": 261.5,
+      "min_delta_days": 190,
+      "max_delta_days": 350,
+      "own_minus_fresh_imposter": 0.081657
+     },
+     "1-2y": {
+      "n_subjects": 19,
+      "n_items": 76,
+      "stale_own_twin_mean": 0.552013,
+      "fresh_imposter_mean": 0.504839,
+      "mean_delta_days": 534.2,
+      "min_delta_days": 378,
+      "max_delta_days": 722,
+      "own_minus_fresh_imposter": 0.047174
+     },
+     "2-3y": {
+      "n_subjects": 9,
+      "n_items": 38,
+      "stale_own_twin_mean": 0.606594,
+      "fresh_imposter_mean": 0.584998,
+      "mean_delta_days": 906.9,
+      "min_delta_days": 787,
+      "max_delta_days": 1056,
+      "own_minus_fresh_imposter": 0.021597
+     },
+     ">3y": {
+      "n_subjects": 18,
+      "n_items": 74,
+      "stale_own_twin_mean": 0.543569,
+      "fresh_imposter_mean": 0.482328,
+      "mean_delta_days": 1788.2,
+      "min_delta_days": 1151,
+      "max_delta_days": 2928,
+      "own_minus_fresh_imposter": 0.061241
+     }
+    },
+    "per_subject_slope": {
+     "C00145": {
+      "n_bins": 2,
+      "slope_per_day": -3.192e-05,
+      "slope_per_year": -0.011658,
+      "delta_days": [
+       289,
+       1027
+      ],
+      "fidelity": [
+       0.641131,
+       0.617576
+      ]
+     },
+     "C00146": {
+      "n_bins": 2,
+      "slope_per_day": -6.48e-06,
+      "slope_per_year": -0.002367,
+      "delta_days": [
+       422,
+       2102
+      ],
+      "fidelity": [
+       0.498016,
+       0.487129
+      ]
+     },
+     "C00203": {
+      "n_bins": 4,
+      "slope_per_day": -3.336e-05,
+      "slope_per_year": -0.012186,
+      "delta_days": [
+       224,
+       595,
+       973,
+       1190
+      ],
+      "fidelity": [
+       0.549141,
+       0.46252,
+       0.458891,
+       0.525176
+      ]
+     },
+     "C00457": {
+      "n_bins": 2,
+      "slope_per_day": -2.064e-05,
+      "slope_per_year": -0.007539,
+      "delta_days": [
+       722,
+       2327
+      ],
+      "fidelity": [
+       0.685164,
+       0.652035
+      ]
+     },
+     "C00522": {
+      "n_bins": 2,
+      "slope_per_day": 0.00026581,
+      "slope_per_year": 0.097088,
+      "delta_days": [
+       581,
+       787
+      ],
+      "fidelity": [
+       0.716506,
+       0.771264
+      ]
+     },
+     "C00580": {
+      "n_bins": 2,
+      "slope_per_day": 4.29e-05,
+      "slope_per_year": 0.015669,
+      "delta_days": [
+       715,
+       1393
+      ],
+      "fidelity": [
+       0.468573,
+       0.497659
+      ]
+     },
+     "C00621": {
+      "n_bins": 2,
+      "slope_per_day": -7.188e-05,
+      "slope_per_year": -0.026254,
+      "delta_days": [
+       299,
+       1511
+      ],
+      "fidelity": [
+       0.570162,
+       0.483044
+      ]
+     },
+     "C00698": {
+      "n_bins": 2,
+      "slope_per_day": 6.854e-05,
+      "slope_per_year": 0.025035,
+      "delta_days": [
+       336,
+       1849
+      ],
+      "fidelity": [
+       0.555688,
+       0.659392
+      ]
+     },
+     "C00752": {
+      "n_bins": 2,
+      "slope_per_day": -0.00023529,
+      "slope_per_year": -0.08594,
+      "delta_days": [
+       210,
+       378
+      ],
+      "fidelity": [
+       0.52186,
+       0.482331
+      ]
+     },
+     "C00812": {
+      "n_bins": 3,
+      "slope_per_day": 2.409e-05,
+      "slope_per_year": 0.0088,
+      "delta_days": [
+       252,
+       545,
+       818
+      ],
+      "fidelity": [
+       0.509354,
+       0.477478,
+       0.523918
+      ]
+     },
+     "C01328": {
+      "n_bins": 3,
+      "slope_per_day": 2.145e-05,
+      "slope_per_year": 0.007836,
+      "delta_days": [
+       455,
+       1056,
+       1158
+      ],
+      "fidelity": [
+       0.660778,
+       0.694698,
+       0.662825
+      ]
+     },
+     "C01430": {
+      "n_bins": 2,
+      "slope_per_day": 5.933e-05,
+      "slope_per_year": 0.021671,
+      "delta_days": [
+       510,
+       1903
+      ],
+      "fidelity": [
+       0.53283,
+       0.615479
+      ]
+     },
+     "C01659": {
+      "n_bins": 4,
+      "slope_per_day": -6.23e-06,
+      "slope_per_year": -0.002274,
+      "delta_days": [
+       227,
+       458,
+       787,
+       1151
+      ],
+      "fidelity": [
+       0.525842,
+       0.49411,
+       0.543619,
+       0.502358
+      ]
+     },
+     "C01848": {
+      "n_bins": 2,
+      "slope_per_day": 3.696e-05,
+      "slope_per_year": 0.013499,
+      "delta_days": [
+       330,
+       715
+      ],
+      "fidelity": [
+       0.658922,
+       0.67315
+      ]
+     },
+     "C01891": {
+      "n_bins": 2,
+      "slope_per_day": -5.05e-05,
+      "slope_per_year": -0.018447,
+      "delta_days": [
+       428,
+       1674
+      ],
+      "fidelity": [
+       0.431793,
+       0.368864
+      ]
+     },
+     "C01933": {
+      "n_bins": 2,
+      "slope_per_day": -3.768e-05,
+      "slope_per_year": -0.013762,
+      "delta_days": [
+       623,
+       1576
+      ],
+      "fidelity": [
+       0.517439,
+       0.481532
+      ]
+     },
+     "C02312": {
+      "n_bins": 2,
+      "slope_per_day": 1.714e-05,
+      "slope_per_year": 0.006261,
+      "delta_days": [
+       832,
+       2246
+      ],
+      "fidelity": [
+       0.621251,
+       0.64549
+      ]
+     },
+     "C02500": {
+      "n_bins": 3,
+      "slope_per_day": 2.677e-05,
+      "slope_per_year": 0.009776,
+      "delta_days": [
+       664,
+       952,
+       1690
+      ],
+      "fidelity": [
+       0.527211,
+       0.574911,
+       0.564875
+      ]
+     }
+    },
+    "slope_test": {
+     "quantity": "per-subject slope of fidelity vs delta (per day)",
+     "n_subjects": 18,
+     "mean": 4e-06,
+     "median": 5e-06,
+     "sd": 9.4e-05,
+     "ci95_t": [
+      -4.3e-05,
+      5.1e-05
+     ],
+     "ci95_bootstrap": [
+      -3.8e-05,
+      4.7e-05
+     ],
+     "p_paired_t": 0.865,
+     "p_wilcoxon": 0.865,
+     "p_signflip": 0.8414,
+     "n_negative": 9,
+     "n_positive": 9,
+     "mean_slope_per_year": 0.001461,
+     "ci95_t_per_year": [
+      -0.015706,
+      0.018628
+     ],
+     "direction_negative": false,
+     "significant_at_p05": false,
+     "meets_frozen_bar": false,
+     "p_one_sided_decline": 0.5675
+    },
+    "crossover": {
+     "definition": "smallest delta bin at which the fresh same-domain imposter twin matches or beats the stale own twin, pooled over the subjects who filled that bin and restricted to the same items",
+     "pooled_crossover_bin": null,
+     "occurs_in_observed_range": false,
+     "n_subjects_with_crossover": 13,
+     "n_subjects_evaluated": 36,
+     "per_subject_crossover_bin": {
+      "C00153": ">3y",
+      "C00203": "2-3y",
+      "C00580": "1-2y",
+      "C00621": ">3y",
+      "C00697": "1-2y",
+      "C00812": "6-12m",
+      "C01180": ">3y",
+      "C01328": "1-2y",
+      "C01848": "6-12m",
+      "C01883": "6-12m",
+      "C01897": "1-2y",
+      "C02312": "2-3y",
+      "C02500": "1-2y"
+     }
+    },
+    "within_subject_sweep": {
+     "quoted": "The within-subject sweep is pre-registered as a supporting analysis on the subset that can fill ≥ 3 bins — reported beside the between-subject result, never substituted for it.",
+     "subset": [
+      "C00203",
+      "C00812",
+      "C01328",
+      "C01659",
+      "C02500"
+     ],
+     "n_subjects": 5,
+     "status": "SUPPORTING ANALYSIS, never substituted for the between-subject result",
+     "per_subject": {
+      "C00203": {
+       "n_bins": 4,
+       "slope_per_day": -3.336e-05,
+       "slope_per_year": -0.012186,
+       "delta_days": [
+        224,
+        595,
+        973,
+        1190
+       ],
+       "fidelity": [
+        0.549141,
+        0.46252,
+        0.458891,
+        0.525176
+       ]
+      },
+      "C00812": {
+       "n_bins": 3,
+       "slope_per_day": 2.409e-05,
+       "slope_per_year": 0.0088,
+       "delta_days": [
+        252,
+        545,
+        818
+       ],
+       "fidelity": [
+        0.509354,
+        0.477478,
+        0.523918
+       ]
+      },
+      "C01328": {
+       "n_bins": 3,
+       "slope_per_day": 2.145e-05,
+       "slope_per_year": 0.007836,
+       "delta_days": [
+        455,
+        1056,
+        1158
+       ],
+       "fidelity": [
+        0.660778,
+        0.694698,
+        0.662825
+       ]
+      },
+      "C01659": {
+       "n_bins": 4,
+       "slope_per_day": -6.23e-06,
+       "slope_per_year": -0.002274,
+       "delta_days": [
+        227,
+        458,
+        787,
+        1151
+       ],
+       "fidelity": [
+        0.525842,
+        0.49411,
+        0.543619,
+        0.502358
+       ]
+      },
+      "C02500": {
+       "n_bins": 3,
+       "slope_per_day": 2.677e-05,
+       "slope_per_year": 0.009776,
+       "delta_days": [
+        664,
+        952,
+        1690
+       ],
+       "fidelity": [
+        0.527211,
+        0.574911,
+        0.564875
+       ]
+      }
+     },
+     "slope_test": {
+      "quantity": "within-subject-sweep per-subject slope (per day)",
+      "n_subjects": 5,
+      "mean": 7e-06,
+      "median": 2.1e-05,
+      "sd": 2.6e-05,
+      "ci95_t": [
+       -2.6e-05,
+       3.9e-05
+      ],
+      "ci95_bootstrap": [
+       -1.6e-05,
+       2.5e-05
+      ],
+      "p_paired_t": 0.603,
+      "p_wilcoxon": 0.8125,
+      "p_signflip": 0.6303,
+      "n_negative": 2,
+      "n_positive": 3
+     }
+    },
+    "freshest_minus_stalest": {
+     "arm_a": "h7_twin_redacted[6-12m]",
+     "arm_b": "h7_twin_redacted[>3y]",
+     "n_subjects": 4,
+     "n_subjects_only_a": 11,
+     "n_subjects_only_b": 14,
+     "mean_a": 0.550208,
+     "mean_b": 0.542492,
+     "mean_diff": 0.007716,
+     "median_diff": 0.023724,
+     "sd_diff": 0.080066,
+     "se_diff": 0.040033,
+     "ci95_t": [
+      -0.119688,
+      0.135119
+     ],
+     "ci95_bootstrap": [
+      -0.071787,
+      0.07121
+     ],
+     "p_paired_t": 0.8595,
+     "p_wilcoxon": 0.875,
+     "p_signflip": 0.754,
+     "n_subjects_a_gt_b": 3,
+     "n_subjects_a_lt_b": 1,
+     "n_subjects_tied": 0,
+     "t_stat": 0.1927,
+     "cohens_dz": 0.096364,
+     "magnitude_bar": 0.05,
+     "meets_magnitude_bar": false,
+     "note": "Paired over the subjects who filled BOTH the freshest and the stalest bin. The unpaired bin means are in per_bin above."
+    },
+    "n_subjects_with_slope": 18,
+    "n_subjects_single_bin_no_slope": 18,
+    "freshest_minus_stalest_unpaired": {
+     "mean_a": 0.564659,
+     "mean_b": 0.543569,
+     "mean_diff": 0.02109,
+     "n_subjects_a": 15,
+     "n_subjects_b": 18,
+     "note": "Different subjects in each bin; between-subject, not paired."
+    }
+   },
+   "flashlite": {
+    "channel": "1",
+    "model": "gemini-3.5-flash-lite",
+    "label": "EXPLORATORY",
+    "label_reason": null,
+    "bar_quoted": "Confirmatory bar: fidelity declines with Δ — per-subject slope of fidelity against Δ, mean slope < 0 across subjects, paired within subject where the chronology allows, p < .05, on the primary model. Direction-robust on the robustness model per A3.",
+    "crossover_quoted": "The crossover point is the smallest Δ at which the fresh imposter twin matches or beats the stale own twin — \"a stranger's fresh twin beats your Δ-year-old twin.\" It is pre-declared here as H7's headline statistic if it occurs inside the observed Δ range.",
+    "reading_decay_quoted": "Measurable decay, crossover in range: person-models have a shelf life; the curve and the crossover Δ are the headline.",
+    "reading_flat_quoted": "Flat decay across our Δ range: public personas are stable at these horizons — grounding age does not matter within the years this corpus covers. Equally reportable, same prominence.",
+    "volume_control_quoted": "At every T the grounding context is filled to the same token budget B, newest-first below the cutoff. Only the AGE of the grounding varies, never the amount. A cutoff at which B cannot be filled is excluded (counts reported).",
+    "n_subjects_with_any_bin": 36,
+    "per_bin": {
+     "6-12m": {
+      "n_subjects": 15,
+      "n_items": 59,
+      "stale_own_twin_mean": 0.58546,
+      "fresh_imposter_mean": 0.509439,
+      "mean_delta_days": 261.5,
+      "min_delta_days": 190,
+      "max_delta_days": 350,
+      "own_minus_fresh_imposter": 0.076021
+     },
+     "1-2y": {
+      "n_subjects": 19,
+      "n_items": 76,
+      "stale_own_twin_mean": 0.579033,
+      "fresh_imposter_mean": 0.523184,
+      "mean_delta_days": 534.2,
+      "min_delta_days": 378,
+      "max_delta_days": 722,
+      "own_minus_fresh_imposter": 0.055849
+     },
+     "2-3y": {
+      "n_subjects": 9,
+      "n_items": 38,
+      "stale_own_twin_mean": 0.620785,
+      "fresh_imposter_mean": 0.576018,
+      "mean_delta_days": 906.9,
+      "min_delta_days": 787,
+      "max_delta_days": 1056,
+      "own_minus_fresh_imposter": 0.044768
+     },
+     ">3y": {
+      "n_subjects": 18,
+      "n_items": 74,
+      "stale_own_twin_mean": 0.563501,
+      "fresh_imposter_mean": 0.494698,
+      "mean_delta_days": 1788.2,
+      "min_delta_days": 1151,
+      "max_delta_days": 2928,
+      "own_minus_fresh_imposter": 0.068803
+     }
+    },
+    "per_subject_slope": {
+     "C00145": {
+      "n_bins": 2,
+      "slope_per_day": 5.5e-07,
+      "slope_per_year": 0.000202,
+      "delta_days": [
+       289,
+       1027
+      ],
+      "fidelity": [
+       0.670865,
+       0.671273
+      ]
+     },
+     "C00146": {
+      "n_bins": 2,
+      "slope_per_day": -5.841e-05,
+      "slope_per_year": -0.021334,
+      "delta_days": [
+       422,
+       2102
+      ],
+      "fidelity": [
+       0.583737,
+       0.485611
+      ]
+     },
+     "C00203": {
+      "n_bins": 4,
+      "slope_per_day": -5.971e-05,
+      "slope_per_year": -0.021809,
+      "delta_days": [
+       224,
+       595,
+       973,
+       1190
+      ],
+      "fidelity": [
+       0.577401,
+       0.495579,
+       0.501477,
+       0.515488
+      ]
+     },
+     "C00457": {
+      "n_bins": 2,
+      "slope_per_day": 8.017e-05,
+      "slope_per_year": 0.029283,
+      "delta_days": [
+       722,
+       2327
+      ],
+      "fidelity": [
+       0.494135,
+       0.622814
+      ]
+     },
+     "C00522": {
+      "n_bins": 2,
+      "slope_per_day": -0.00037036,
+      "slope_per_year": -0.135274,
+      "delta_days": [
+       581,
+       787
+      ],
+      "fidelity": [
+       0.784466,
+       0.708172
+      ]
+     },
+     "C00580": {
+      "n_bins": 2,
+      "slope_per_day": -5.239e-05,
+      "slope_per_year": -0.019137,
+      "delta_days": [
+       715,
+       1393
+      ],
+      "fidelity": [
+       0.551903,
+       0.516379
+      ]
+     },
+     "C00621": {
+      "n_bins": 2,
+      "slope_per_day": -3.567e-05,
+      "slope_per_year": -0.013027,
+      "delta_days": [
+       299,
+       1511
+      ],
+      "fidelity": [
+       0.558273,
+       0.515045
+      ]
+     },
+     "C00698": {
+      "n_bins": 2,
+      "slope_per_day": -2.267e-05,
+      "slope_per_year": -0.008281,
+      "delta_days": [
+       336,
+       1849
+      ],
+      "fidelity": [
+       0.606066,
+       0.571762
+      ]
+     },
+     "C00752": {
+      "n_bins": 2,
+      "slope_per_day": -0.00024044,
+      "slope_per_year": -0.087821,
+      "delta_days": [
+       210,
+       378
+      ],
+      "fidelity": [
+       0.600678,
+       0.560284
+      ]
+     },
+     "C00812": {
+      "n_bins": 3,
+      "slope_per_day": -1.471e-05,
+      "slope_per_year": -0.005374,
+      "delta_days": [
+       252,
+       545,
+       818
+      ],
+      "fidelity": [
+       0.514207,
+       0.544073,
+       0.505065
+      ]
+     },
+     "C01328": {
+      "n_bins": 3,
+      "slope_per_day": 9.713e-05,
+      "slope_per_year": 0.035476,
+      "delta_days": [
+       455,
+       1056,
+       1158
+      ],
+      "fidelity": [
+       0.664581,
+       0.75588,
+       0.712454
+      ]
+     },
+     "C01430": {
+      "n_bins": 2,
+      "slope_per_day": 4.5e-05,
+      "slope_per_year": 0.016436,
+      "delta_days": [
+       510,
+       1903
+      ],
+      "fidelity": [
+       0.608046,
+       0.670731
+      ]
+     },
+     "C01659": {
+      "n_bins": 4,
+      "slope_per_day": 4.672e-05,
+      "slope_per_year": 0.017065,
+      "delta_days": [
+       227,
+       458,
+       787,
+       1151
+      ],
+      "fidelity": [
+       0.517523,
+       0.497014,
+       0.555775,
+       0.544992
+      ]
+     },
+     "C01848": {
+      "n_bins": 2,
+      "slope_per_day": 9.428e-05,
+      "slope_per_year": 0.034436,
+      "delta_days": [
+       330,
+       715
+      ],
+      "fidelity": [
+       0.625689,
+       0.661987
+      ]
+     },
+     "C01891": {
+      "n_bins": 2,
+      "slope_per_day": 1.943e-05,
+      "slope_per_year": 0.007098,
+      "delta_days": [
+       428,
+       1674
+      ],
+      "fidelity": [
+       0.455498,
+       0.479711
+      ]
+     },
+     "C01933": {
+      "n_bins": 2,
+      "slope_per_day": 5.221e-05,
+      "slope_per_year": 0.019069,
+      "delta_days": [
+       623,
+       1576
+      ],
+      "fidelity": [
+       0.440552,
+       0.490307
+      ]
+     },
+     "C02312": {
+      "n_bins": 2,
+      "slope_per_day": 1.504e-05,
+      "slope_per_year": 0.005494,
+      "delta_days": [
+       832,
+       2246
+      ],
+      "fidelity": [
+       0.6561,
+       0.677368
+      ]
+     },
+     "C02500": {
+      "n_bins": 3,
+      "slope_per_day": 1.061e-05,
+      "slope_per_year": 0.003875,
+      "delta_days": [
+       664,
+       952,
+       1690
+      ],
+      "fidelity": [
+       0.585329,
+       0.617425,
+       0.603622
+      ]
+     }
+    },
+    "slope_test": {
+     "quantity": "per-subject slope of fidelity vs delta (per day)",
+     "n_subjects": 18,
+     "mean": -2.2e-05,
+     "median": 6e-06,
+     "sd": 0.000116,
+     "ci95_t": [
+      -8e-05,
+      3.6e-05
+     ],
+     "ci95_bootstrap": [
+      -7.9e-05,
+      2.4e-05
+     ],
+     "p_paired_t": 0.4371,
+     "p_wilcoxon": 0.9661,
+     "p_signflip": 0.481,
+     "n_negative": 8,
+     "n_positive": 10,
+     "mean_slope_per_year": -0.008035,
+     "ci95_t_per_year": [
+      -0.02922,
+      0.013149
+     ],
+     "direction_negative": true,
+     "significant_at_p05": false,
+     "meets_frozen_bar": false,
+     "p_one_sided_decline": 0.2185
+    },
+    "crossover": {
+     "definition": "smallest delta bin at which the fresh same-domain imposter twin matches or beats the stale own twin, pooled over the subjects who filled that bin and restricted to the same items",
+     "pooled_crossover_bin": null,
+     "occurs_in_observed_range": false,
+     "n_subjects_with_crossover": 11,
+     "n_subjects_evaluated": 36,
+     "per_subject_crossover_bin": {
+      "C00153": ">3y",
+      "C00163": ">3y",
+      "C00457": "1-2y",
+      "C00580": ">3y",
+      "C00673": "6-12m",
+      "C00812": "6-12m",
+      "C01328": "1-2y",
+      "C01659": "6-12m",
+      "C01848": "6-12m",
+      "C01883": "6-12m",
+      "C01897": "1-2y"
+     }
+    },
+    "within_subject_sweep": {
+     "quoted": "The within-subject sweep is pre-registered as a supporting analysis on the subset that can fill ≥ 3 bins — reported beside the between-subject result, never substituted for it.",
+     "subset": [
+      "C00203",
+      "C00812",
+      "C01328",
+      "C01659",
+      "C02500"
+     ],
+     "n_subjects": 5,
+     "status": "SUPPORTING ANALYSIS, never substituted for the between-subject result",
+     "per_subject": {
+      "C00203": {
+       "n_bins": 4,
+       "slope_per_day": -5.971e-05,
+       "slope_per_year": -0.021809,
+       "delta_days": [
+        224,
+        595,
+        973,
+        1190
+       ],
+       "fidelity": [
+        0.577401,
+        0.495579,
+        0.501477,
+        0.515488
+       ]
+      },
+      "C00812": {
+       "n_bins": 3,
+       "slope_per_day": -1.471e-05,
+       "slope_per_year": -0.005374,
+       "delta_days": [
+        252,
+        545,
+        818
+       ],
+       "fidelity": [
+        0.514207,
+        0.544073,
+        0.505065
+       ]
+      },
+      "C01328": {
+       "n_bins": 3,
+       "slope_per_day": 9.713e-05,
+       "slope_per_year": 0.035476,
+       "delta_days": [
+        455,
+        1056,
+        1158
+       ],
+       "fidelity": [
+        0.664581,
+        0.75588,
+        0.712454
+       ]
+      },
+      "C01659": {
+       "n_bins": 4,
+       "slope_per_day": 4.672e-05,
+       "slope_per_year": 0.017065,
+       "delta_days": [
+        227,
+        458,
+        787,
+        1151
+       ],
+       "fidelity": [
+        0.517523,
+        0.497014,
+        0.555775,
+        0.544992
+       ]
+      },
+      "C02500": {
+       "n_bins": 3,
+       "slope_per_day": 1.061e-05,
+       "slope_per_year": 0.003875,
+       "delta_days": [
+        664,
+        952,
+        1690
+       ],
+       "fidelity": [
+        0.585329,
+        0.617425,
+        0.603622
+       ]
+      }
+     },
+     "slope_test": {
+      "quantity": "within-subject-sweep per-subject slope (per day)",
+      "n_subjects": 5,
+      "mean": 1.6e-05,
+      "median": 1.1e-05,
+      "sd": 6e-05,
+      "ci95_t": [
+       -5.8e-05,
+       9e-05
+      ],
+      "ci95_bootstrap": [
+       -2.9e-05,
+       6.5e-05
+      ],
+      "p_paired_t": 0.5808,
+      "p_wilcoxon": 0.8125,
+      "p_signflip": 0.6857,
+      "n_negative": 2,
+      "n_positive": 3
+     }
+    },
+    "freshest_minus_stalest": {
+     "arm_a": "h7_twin_redacted[6-12m]",
+     "arm_b": "h7_twin_redacted[>3y]",
+     "n_subjects": 4,
+     "n_subjects_only_a": 11,
+     "n_subjects_only_b": 14,
+     "mean_a": 0.564816,
+     "mean_b": 0.536822,
+     "mean_diff": 0.027994,
+     "median_diff": 0.038766,
+     "sd_diff": 0.038723,
+     "se_diff": 0.019362,
+     "ci95_t": [
+      -0.033624,
+      0.089611
+     ],
+     "ci95_bootstrap": [
+      -0.009795,
+      0.055011
+     ],
+     "p_paired_t": 0.244,
+     "p_wilcoxon": 0.25,
+     "p_signflip": 0.2441,
+     "n_subjects_a_gt_b": 3,
+     "n_subjects_a_lt_b": 1,
+     "n_subjects_tied": 0,
+     "t_stat": 1.4458,
+     "cohens_dz": 0.722913,
+     "magnitude_bar": 0.05,
+     "meets_magnitude_bar": false,
+     "note": "Paired over the subjects who filled BOTH the freshest and the stalest bin. The unpaired bin means are in per_bin above."
+    },
+    "n_subjects_with_slope": 18,
+    "n_subjects_single_bin_no_slope": 18,
+    "freshest_minus_stalest_unpaired": {
+     "mean_a": 0.58546,
+     "mean_b": 0.563501,
+     "mean_diff": 0.021959,
+     "n_subjects_a": 15,
+     "n_subjects_b": 18,
+     "note": "Different subjects in each bin; between-subject, not paired."
+    }
+   }
+  },
+  "channel2": {
+   "flashlite": {
+    "channel": "2",
+    "model": "gemini-3.5-flash-lite",
+    "label": "EXPLORATORY",
+    "label_reason": null,
+    "bar_quoted": "Confirmatory bar: fidelity declines with Δ — per-subject slope of fidelity against Δ, mean slope < 0 across subjects, paired within subject where the chronology allows, p < .05, on the primary model. Direction-robust on the robustness model per A3.",
+    "crossover_quoted": "The crossover point is the smallest Δ at which the fresh imposter twin matches or beats the stale own twin — \"a stranger's fresh twin beats your Δ-year-old twin.\" It is pre-declared here as H7's headline statistic if it occurs inside the observed Δ range.",
+    "reading_decay_quoted": "Measurable decay, crossover in range: person-models have a shelf life; the curve and the crossover Δ are the headline.",
+    "reading_flat_quoted": "Flat decay across our Δ range: public personas are stable at these horizons — grounding age does not matter within the years this corpus covers. Equally reportable, same prominence.",
+    "volume_control_quoted": "At every T the grounding context is filled to the same token budget B, newest-first below the cutoff. Only the AGE of the grounding varies, never the amount. A cutoff at which B cannot be filled is excluded (counts reported).",
+    "n_subjects_with_any_bin": 28,
+    "per_bin": {
+     "6-12m": {
+      "n_subjects": 10,
+      "n_items": 24,
+      "stale_own_twin_mean": 0.691667,
+      "fresh_imposter_mean": 0.607143,
+      "mean_delta_days": 269.3,
+      "min_delta_days": 199,
+      "max_delta_days": 350,
+      "own_minus_fresh_imposter": null
+     },
+     "1-2y": {
+      "n_subjects": 15,
+      "n_items": 44,
+      "stale_own_twin_mean": 0.872222,
+      "fresh_imposter_mean": 0.772222,
+      "mean_delta_days": 527.6,
+      "min_delta_days": 378,
+      "max_delta_days": 715,
+      "own_minus_fresh_imposter": 0.1
+     },
+     "2-3y": {
+      "n_subjects": 6,
+      "n_items": 22,
+      "stale_own_twin_mean": 0.847222,
+      "fresh_imposter_mean": 0.744444,
+      "mean_delta_days": 921.7,
+      "min_delta_days": 787,
+      "max_delta_days": 1056,
+      "own_minus_fresh_imposter": 0.102778
+     },
+     ">3y": {
+      "n_subjects": 12,
+      "n_items": 33,
+      "stale_own_twin_mean": 0.784722,
+      "fresh_imposter_mean": 0.722222,
+      "mean_delta_days": 1787.2,
+      "min_delta_days": 1158,
+      "max_delta_days": 2928,
+      "own_minus_fresh_imposter": null
+     }
+    },
+    "per_subject_slope": {
+     "C00203": {
+      "n_bins": 4,
+      "slope_per_day": -0.00013941,
+      "slope_per_year": -0.05092,
+      "delta_days": [
+       224,
+       595,
+       973,
+       1190
+      ],
+      "fidelity": [
+       1.0,
+       1.0,
+       0.666667,
+       1.0
+      ]
+     },
+     "C00522": {
+      "n_bins": 2,
+      "slope_per_day": -0.00161812,
+      "slope_per_year": -0.591019,
+      "delta_days": [
+       581,
+       787
+      ],
+      "fidelity": [
+       1.0,
+       0.666667
+      ]
+     },
+     "C00580": {
+      "n_bins": 2,
+      "slope_per_day": 0.0,
+      "slope_per_year": 0.0,
+      "delta_days": [
+       715,
+       1393
+      ],
+      "fidelity": [
+       0.666667,
+       0.666667
+      ]
+     },
+     "C00621": {
+      "n_bins": 2,
+      "slope_per_day": 0.00041254,
+      "slope_per_year": 0.150681,
+      "delta_days": [
+       299,
+       1511
+      ],
+      "fidelity": [
+       0.5,
+       1.0
+      ]
+     },
+     "C00698": {
+      "n_bins": 2,
+      "slope_per_day": 0.00022031,
+      "slope_per_year": 0.080469,
+      "delta_days": [
+       336,
+       1849
+      ],
+      "fidelity": [
+       0.666667,
+       1.0
+      ]
+     },
+     "C00752": {
+      "n_bins": 2,
+      "slope_per_day": 0.0,
+      "slope_per_year": 0.0,
+      "delta_days": [
+       210,
+       378
+      ],
+      "fidelity": [
+       1.0,
+       1.0
+      ]
+     },
+     "C01328": {
+      "n_bins": 3,
+      "slope_per_day": 0.0,
+      "slope_per_year": 0.0,
+      "delta_days": [
+       455,
+       1056,
+       1158
+      ],
+      "fidelity": [
+       1.0,
+       1.0,
+       1.0
+      ]
+     },
+     "C01848": {
+      "n_bins": 2,
+      "slope_per_day": 0.0,
+      "slope_per_year": 0.0,
+      "delta_days": [
+       330,
+       715
+      ],
+      "fidelity": [
+       0.75,
+       0.75
+      ]
+     },
+     "C01891": {
+      "n_bins": 2,
+      "slope_per_day": 0.00026752,
+      "slope_per_year": 0.097713,
+      "delta_days": [
+       428,
+       1674
+      ],
+      "fidelity": [
+       0.666667,
+       1.0
+      ]
+     },
+     "C02312": {
+      "n_bins": 2,
+      "slope_per_day": 0.0,
+      "slope_per_year": 0.0,
+      "delta_days": [
+       832,
+       2246
+      ],
+      "fidelity": [
+       0.75,
+       0.75
+      ]
+     },
+     "C02500": {
+      "n_bins": 3,
+      "slope_per_day": 0.0,
+      "slope_per_year": 0.0,
+      "delta_days": [
+       664,
+       952,
+       1690
+      ],
+      "fidelity": [
+       1.0,
+       1.0,
+       1.0
+      ]
+     }
+    },
+    "slope_test": {
+     "quantity": "per-subject slope of fidelity vs delta (per day)",
+     "n_subjects": 11,
+     "mean": -7.8e-05,
+     "median": 0.0,
+     "sd": 0.000535,
+     "ci95_t": [
+      -0.000437,
+      0.000281
+     ],
+     "ci95_bootstrap": [
+      -0.000427,
+      0.00015
+     ],
+     "p_paired_t": 0.6394,
+     "p_wilcoxon": 0.8125,
+     "p_signflip": 0.9392,
+     "n_negative": 2,
+     "n_positive": 3,
+     "mean_slope_per_year": -0.02849,
+     "ci95_t_per_year": [
+      -0.159614,
+      0.102635
+     ],
+     "direction_negative": true,
+     "significant_at_p05": false,
+     "meets_frozen_bar": false,
+     "p_one_sided_decline": 0.3197
+    },
+    "crossover": {
+     "definition": "smallest delta bin at which the fresh same-domain imposter twin matches or beats the stale own twin, pooled over the subjects who filled that bin and restricted to the same items",
+     "pooled_crossover_bin": null,
+     "occurs_in_observed_range": false,
+     "n_subjects_with_crossover": 17,
+     "n_subjects_evaluated": 28,
+     "per_subject_crossover_bin": {
+      "C00146": "1-2y",
+      "C00153": ">3y",
+      "C00522": "2-3y",
+      "C00620": ">3y",
+      "C00673": "6-12m",
+      "C00697": "1-2y",
+      "C00752": "6-12m",
+      "C01247": "1-2y",
+      "C01328": "1-2y",
+      "C01752": "2-3y",
+      "C01801": "6-12m",
+      "C01842": "1-2y",
+      "C01848": "6-12m",
+      "C01891": "1-2y",
+      "C01897": "1-2y",
+      "C01933": "1-2y",
+      "C02500": ">3y"
+     }
+    },
+    "within_subject_sweep": {
+     "quoted": "The within-subject sweep is pre-registered as a supporting analysis on the subset that can fill ≥ 3 bins — reported beside the between-subject result, never substituted for it.",
+     "subset": [
+      "C00203",
+      "C00812",
+      "C01328",
+      "C01659",
+      "C02500"
+     ],
+     "n_subjects": 5,
+     "status": "SUPPORTING ANALYSIS, never substituted for the between-subject result",
+     "per_subject": {
+      "C00203": {
+       "n_bins": 4,
+       "slope_per_day": -0.00013941,
+       "slope_per_year": -0.05092,
+       "delta_days": [
+        224,
+        595,
+        973,
+        1190
+       ],
+       "fidelity": [
+        1.0,
+        1.0,
+        0.666667,
+        1.0
+       ]
+      },
+      "C01328": {
+       "n_bins": 3,
+       "slope_per_day": 0.0,
+       "slope_per_year": 0.0,
+       "delta_days": [
+        455,
+        1056,
+        1158
+       ],
+       "fidelity": [
+        1.0,
+        1.0,
+        1.0
+       ]
+      },
+      "C02500": {
+       "n_bins": 3,
+       "slope_per_day": 0.0,
+       "slope_per_year": 0.0,
+       "delta_days": [
+        664,
+        952,
+        1690
+       ],
+       "fidelity": [
+        1.0,
+        1.0,
+        1.0
+       ]
+      }
+     },
+     "slope_test": {
+      "quantity": "within-subject-sweep per-subject slope (per day)",
+      "n_subjects": 3,
+      "mean": -4.6e-05,
+      "median": 0.0,
+      "sd": 8e-05,
+      "ci95_t": [
+       -0.000246,
+       0.000153
+      ],
+      "ci95_bootstrap": [
+       -0.000139,
+       0.0
+      ],
+      "p_paired_t": 0.4226,
+      "p_wilcoxon": 1.0,
+      "p_signflip": 1.0,
+      "n_negative": 1,
+      "n_positive": 0
+     }
+    },
+    "freshest_minus_stalest": {
+     "arm_a": "h7_twin_redacted[6-12m]",
+     "arm_b": "h7_twin_redacted[>3y]",
+     "n_subjects": 3,
+     "n_subjects_only_a": 7,
+     "n_subjects_only_b": 9,
+     "mean_a": 0.722222,
+     "mean_b": 1.0,
+     "mean_diff": -0.277778,
+     "median_diff": -0.333333,
+     "sd_diff": 0.254588,
+     "se_diff": 0.146986,
+     "ci95_t": [
+      -0.910208,
+      0.354653
+     ],
+     "ci95_bootstrap": [
+      -0.5,
+      0.0
+     ],
+     "p_paired_t": 0.1994,
+     "p_wilcoxon": 0.5,
+     "p_signflip": 0.4919,
+     "n_subjects_a_gt_b": 0,
+     "n_subjects_a_lt_b": 2,
+     "n_subjects_tied": 1,
+     "t_stat": -1.8898,
+     "cohens_dz": -1.091089,
+     "magnitude_bar": 0.09,
+     "meets_magnitude_bar": false,
+     "note": "Paired over the subjects who filled BOTH the freshest and the stalest bin. The unpaired bin means are in per_bin above."
+    },
+    "n_subjects_with_slope": 11,
+    "n_subjects_single_bin_no_slope": 17,
+    "freshest_minus_stalest_unpaired": {
+     "mean_a": 0.691667,
+     "mean_b": 0.784722,
+     "mean_diff": -0.093055,
+     "n_subjects_a": 10,
+     "n_subjects_b": 12,
+     "note": "Different subjects in each bin; between-subject, not paired."
+    }
+   }
+  },
+  "counts": {
+   "n_eligible": 68,
+   "n_usable": 36,
+   "usable_note": "USABLE = fills at least one Delta bin after the B7.3 volume control, i.e. can contribute a point to the fidelity-vs-Delta curve. This is the count the H7 subject-count branch should be read against, not the eligibility flag: an eligible subject that fills no bin contributes nothing to the slope.",
+   "branch_at_usable": "exploratory",
+   "branch_at_eligible": "exploratory",
+   "both_counts_in_same_band": true,
+   "per_bin_subject_counts": {
+    "6-12m": 15,
+    "1-2y": 19,
+    "2-3y": 9,
+    ">3y": 18
+   },
+   "cutoffs_unfillable": 100,
+   "cutoffs_dropped_lt_6m": 18,
+   "cutoffs_bin_already_filled": 68,
+   "n_eligible_filling_zero_bins": 32,
+   "eligible_filling_zero_bins": [
+    "C00032",
+    "C00050",
+    "C00087",
+    "C00102",
+    "C00110",
+    "C00169",
+    "C00218",
+    "C00440",
+    "C00582",
+    "C00593",
+    "C00622",
+    "C00634",
+    "C00642",
+    "C00746",
+    "C00818",
+    "C00824",
+    "C00833",
+    "C00886",
+    "C01108",
+    "C01442",
+    "C01585",
+    "C01746",
+    "C01904",
+    "C02121",
+    "C02167",
+    "C02200",
+    "C02248",
+    "C02256",
+    "C02359",
+    "C02397",
+    "C02469",
+    "C02502"
+   ]
+  }
+ },
+ "contamination": {
+  "channel1": {
+   "gemma": {
+    "channel": "1",
+    "definition_quoted": "Contamination meter: per subject, (named baseline) − (name-redacted baseline). Reported per subject and as a corpus figure; subjects with a large meter are analyzed separately.",
+    "method_note": "Per-subject: mean(zeroinfo_named) - mean(zeroinfo_redacted) over that subject's items. Pooled: the OE-1 method -- the difference of the two arm means taken over all items at once (experiments/stage2_oe1.py, _paired_block 'contamination_meter').",
+    "per_subject": {
+     "C00032": 0.020377,
+     "C00050": 0.069513,
+     "C00087": 0.056088,
+     "C00102": 0.099686,
+     "C00110": 0.131157,
+     "C00145": -0.014941,
+     "C00146": -0.020557,
+     "C00153": -0.010256,
+     "C00163": 0.01794,
+     "C00169": 0.034766,
+     "C00203": 0.030659,
+     "C00218": 0.047996,
+     "C00344": -0.002214,
+     "C00427": -0.012954,
+     "C00440": -0.033704,
+     "C00457": 0.085139,
+     "C00522": 0.011443,
+     "C00526": 0.050153,
+     "C00563": 0.037694,
+     "C00580": 0.11919,
+     "C00582": 0.025008,
+     "C00593": -0.041491,
+     "C00620": 0.04581,
+     "C00621": -0.042628,
+     "C00622": 0.095282,
+     "C00634": -0.036802,
+     "C00642": 0.003084,
+     "C00673": -0.01884,
+     "C00697": 0.005608,
+     "C00698": 0.061728,
+     "C00746": 0.002195,
+     "C00752": -0.153503,
+     "C00789": 0.099483,
+     "C00812": -0.013656,
+     "C00818": 0.053293,
+     "C00819": 0.006356,
+     "C00824": -0.068493,
+     "C00833": 0.040537,
+     "C00846": 0.001652,
+     "C00886": 0.00159,
+     "C00890": 0.02591,
+     "C00897": -0.198608,
+     "C01108": -0.009363,
+     "C01163": -0.004258,
+     "C01171": 0.02447,
+     "C01180": -0.042178,
+     "C01247": 0.020369,
+     "C01254": -0.021877,
+     "C01296": 0.192398,
+     "C01328": 0.049371,
+     "C01375": 0.046583,
+     "C01430": 0.087199,
+     "C01442": 0.033343,
+     "C01464": 0.02053,
+     "C01485": -0.002588,
+     "C01538": -0.011006,
+     "C01585": 0.023168,
+     "C01659": 0.020755,
+     "C01673": 0.011475,
+     "C01722": 0.020131,
+     "C01746": -0.003545,
+     "C01752": -0.036338,
+     "C01800": 0.045194,
+     "C01801": -0.010453,
+     "C01817": 0.02647,
+     "C01842": -0.056798,
+     "C01848": 0.126257,
+     "C01883": 0.057397,
+     "C01891": 0.033323,
+     "C01897": 0.062589,
+     "C01904": -0.142842,
+     "C01933": 0.060735,
+     "C01967": 0.067571,
+     "C02121": -0.06131,
+     "C02167": 0.042893,
+     "C02200": -0.024025,
+     "C02218": -0.047743,
+     "C02242": -0.048894,
+     "C02248": -0.000623,
+     "C02256": 0.086748,
+     "C02312": -0.017275,
+     "C02318": -0.120024,
+     "C02359": 0.010505,
+     "C02397": 0.061833,
+     "C02437": 0.004672,
+     "C02469": -0.107483,
+     "C02474": 0.024941,
+     "C02500": 0.073574
+    },
+    "pooled_item_level": 0.016476,
+    "paired_test": {
+     "arm_a": "zeroinfo_named",
+     "arm_b": "zeroinfo_redacted",
+     "n_subjects": 88,
+     "n_subjects_only_a": 0,
+     "n_subjects_only_b": 0,
+     "mean_a": 0.55767,
+     "mean_b": 0.5443,
+     "mean_diff": 0.01337,
+     "median_diff": 0.019036,
+     "sd_diff": 0.061286,
+     "se_diff": 0.006533,
+     "ci95_t": [
+      0.000385,
+      0.026355
+     ],
+     "ci95_bootstrap": [
+      0.00045,
+      0.025836
+     ],
+     "p_paired_t": 0.04373,
+     "p_wilcoxon": 0.007371,
+     "p_signflip": 0.0412,
+     "n_subjects_a_gt_b": 55,
+     "n_subjects_a_lt_b": 33,
+     "n_subjects_tied": 0,
+     "t_stat": 2.0465,
+     "cohens_dz": 0.218157
+    },
+    "flag": true,
+    "summary": {
+     "n_subjects": 88,
+     "mean": 0.01337,
+     "median": 0.019036,
+     "sd": 0.061286,
+     "min": -0.198608,
+     "max": 0.192398,
+     "n_positive": 55,
+     "n_negative": 33
+    },
+    "large_meter_cutoff_p90": 0.085622,
+    "large_meter_subjects": [
+     "C00102",
+     "C00110",
+     "C00580",
+     "C00622",
+     "C00789",
+     "C01296",
+     "C01430",
+     "C01848",
+     "C02256"
+    ],
+    "pooled_arm_means": {
+     "zeroinfo_named": 0.554132,
+     "zeroinfo_redacted": 0.537655
+    },
+    "flag_note": "LIVE FLAG: the named zero-information arm scores above the redacted one, which is what a contamination meter is built to detect. OE-1 measured this descriptively at +0.016 (Gemma) and +0.048 (flash-lite)."
+   },
+   "flashlite": {
+    "channel": "1",
+    "definition_quoted": "Contamination meter: per subject, (named baseline) − (name-redacted baseline). Reported per subject and as a corpus figure; subjects with a large meter are analyzed separately.",
+    "method_note": "Per-subject: mean(zeroinfo_named) - mean(zeroinfo_redacted) over that subject's items. Pooled: the OE-1 method -- the difference of the two arm means taken over all items at once (experiments/stage2_oe1.py, _paired_block 'contamination_meter').",
+    "per_subject": {
+     "C00032": 0.011994,
+     "C00050": 0.019826,
+     "C00087": 0.04492,
+     "C00102": 0.060642,
+     "C00110": 0.106836,
+     "C00145": 0.059427,
+     "C00146": 0.009987,
+     "C00153": 0.040645,
+     "C00163": 0.105184,
+     "C00169": -0.070903,
+     "C00203": 0.053027,
+     "C00218": 0.011176,
+     "C00344": 0.028483,
+     "C00427": 0.016291,
+     "C00440": 0.162236,
+     "C00457": 0.007444,
+     "C00522": 0.058748,
+     "C00526": 0.063534,
+     "C00563": 0.010106,
+     "C00580": 0.196391,
+     "C00582": 0.023307,
+     "C00593": -0.058595,
+     "C00620": 0.078619,
+     "C00621": 0.000769,
+     "C00622": 0.017653,
+     "C00634": -0.090729,
+     "C00642": 0.027027,
+     "C00673": -0.014341,
+     "C00697": 0.031584,
+     "C00698": 0.374657,
+     "C00746": 0.045822,
+     "C00752": 0.073965,
+     "C00789": 0.125994,
+     "C00812": -0.029328,
+     "C00818": 0.018001,
+     "C00819": 0.109373,
+     "C00824": -0.019567,
+     "C00833": 0.044876,
+     "C00846": 0.08092,
+     "C00886": -0.04937,
+     "C00890": 0.067993,
+     "C00897": 0.066654,
+     "C01108": 0.044137,
+     "C01163": 0.069794,
+     "C01171": -0.024363,
+     "C01180": 0.057577,
+     "C01247": 0.109866,
+     "C01254": 0.037371,
+     "C01296": 0.228804,
+     "C01328": 0.032509,
+     "C01375": 0.047992,
+     "C01430": 0.169088,
+     "C01442": 0.076219,
+     "C01464": 0.002083,
+     "C01485": 0.079124,
+     "C01538": 0.039438,
+     "C01585": -0.054447,
+     "C01659": -0.004625,
+     "C01673": 0.159866,
+     "C01722": 0.077898,
+     "C01746": 0.072133,
+     "C01752": -0.124247,
+     "C01800": 0.184132,
+     "C01801": 0.127135,
+     "C01817": 0.049949,
+     "C01842": 0.005447,
+     "C01848": 0.107544,
+     "C01883": 0.018469,
+     "C01891": 0.104938,
+     "C01897": 0.055517,
+     "C01904": 0.082501,
+     "C01933": 0.012078,
+     "C01967": 0.027182,
+     "C02121": 0.068357,
+     "C02167": -0.017377,
+     "C02200": 0.037379,
+     "C02218": -0.003664,
+     "C02242": 0.040565,
+     "C02248": 0.061939,
+     "C02256": 0.062969,
+     "C02312": 0.081219,
+     "C02318": 0.013865,
+     "C02359": 0.070634,
+     "C02397": -0.012879,
+     "C02437": 0.176488,
+     "C02469": -0.017836,
+     "C02474": 0.020818,
+     "C02500": 0.047831
+    },
+    "pooled_item_level": 0.050953,
+    "paired_test": {
+     "arm_a": "zeroinfo_named",
+     "arm_b": "zeroinfo_redacted",
+     "n_subjects": 88,
+     "n_subjects_only_a": 0,
+     "n_subjects_only_b": 0,
+     "mean_a": 0.596511,
+     "mean_b": 0.546253,
+     "mean_diff": 0.050258,
+     "median_diff": 0.044898,
+     "sd_diff": 0.07087,
+     "se_diff": 0.007555,
+     "ci95_t": [
+      0.035242,
+      0.065274
+     ],
+     "ci95_bootstrap": [
+      0.035898,
+      0.065303
+     ],
+     "p_paired_t": 2.448e-09,
+     "p_wilcoxon": 1.008e-09,
+     "p_signflip": 5e-05,
+     "n_subjects_a_gt_b": 73,
+     "n_subjects_a_lt_b": 15,
+     "n_subjects_tied": 0,
+     "t_stat": 6.6525,
+     "cohens_dz": 0.709155
+    },
+    "flag": true,
+    "summary": {
+     "n_subjects": 88,
+     "mean": 0.050258,
+     "median": 0.044898,
+     "sd": 0.07087,
+     "min": -0.124247,
+     "max": 0.374657,
+     "n_positive": 73,
+     "n_negative": 15
+    },
+    "large_meter_cutoff_p90": 0.126337,
+    "large_meter_subjects": [
+     "C00440",
+     "C00580",
+     "C00698",
+     "C01296",
+     "C01430",
+     "C01673",
+     "C01800",
+     "C01801",
+     "C02437"
+    ],
+    "pooled_arm_means": {
+     "zeroinfo_named": 0.590544,
+     "zeroinfo_redacted": 0.539591
+    },
+    "flag_note": "LIVE FLAG: the named zero-information arm scores above the redacted one, which is what a contamination meter is built to detect. OE-1 measured this descriptively at +0.016 (Gemma) and +0.048 (flash-lite)."
+   }
+  },
+  "channel2": {
+   "flashlite": {
+    "channel": "2",
+    "definition_quoted": "Contamination meter: per subject, (named baseline) − (name-redacted baseline). Reported per subject and as a corpus figure; subjects with a large meter are analyzed separately.",
+    "method_note": "Per-subject: mean(zeroinfo_named) - mean(zeroinfo_redacted) over that subject's items. Pooled: the OE-1 method -- the difference of the two arm means taken over all items at once (experiments/stage2_oe1.py, _paired_block 'contamination_meter').",
+    "per_subject": {
+     "C00050": 0.0,
+     "C00087": 0.0,
+     "C00102": -0.107143,
+     "C00110": 0.666667,
+     "C00153": 0.0,
+     "C00163": 0.0,
+     "C00169": 0.166667,
+     "C00203": 0.0,
+     "C00344": 0.0,
+     "C00427": -0.083333,
+     "C00522": 0.333333,
+     "C00526": 0.0,
+     "C00563": 0.35,
+     "C00580": 0.333333,
+     "C00593": 0.333333,
+     "C00620": -0.5,
+     "C00621": 0.5,
+     "C00634": 0.0,
+     "C00673": 0.0,
+     "C00697": 0.333333,
+     "C00746": 0.0,
+     "C00752": 0.666667,
+     "C00789": 0.083333,
+     "C00818": -0.333333,
+     "C00819": 0.05,
+     "C00824": 0.0,
+     "C00833": 0.166667,
+     "C00846": -0.25,
+     "C00890": 0.222222,
+     "C00897": 0.0,
+     "C01163": 0.25,
+     "C01180": -0.333333,
+     "C01247": 0.0,
+     "C01254": 0.0,
+     "C01296": -0.083333,
+     "C01328": 0.0,
+     "C01375": 0.0,
+     "C01442": 0.333333,
+     "C01464": 0.0,
+     "C01673": 0.166667,
+     "C01722": 0.166667,
+     "C01746": 0.333333,
+     "C01752": 0.0,
+     "C01800": 0.3,
+     "C01801": 0.0,
+     "C01842": 0.166667,
+     "C01848": 0.0,
+     "C01891": -0.333333,
+     "C01897": 0.0,
+     "C01904": 0.5,
+     "C01933": 0.5,
+     "C02121": 0.666667,
+     "C02200": 0.0,
+     "C02218": 0.0,
+     "C02248": 0.0,
+     "C02256": -0.166667,
+     "C02312": 0.083333,
+     "C02318": 0.333333,
+     "C02359": 0.333333,
+     "C02397": 0.25,
+     "C02469": 0.25,
+     "C02500": 0.5
+    },
+    "pooled_item_level": null,
+    "paired_test": {
+     "arm_a": "zeroinfo_named",
+     "arm_b": "zeroinfo_redacted",
+     "n_subjects": 62,
+     "n_subjects_only_a": 6,
+     "n_subjects_only_b": 4,
+     "mean_a": 0.740143,
+     "mean_b": 0.624846,
+     "mean_diff": 0.115297,
+     "median_diff": 0.0,
+     "sd_diff": 0.246339,
+     "se_diff": 0.031285,
+     "ci95_t": [
+      0.052738,
+      0.177855
+     ],
+     "ci95_bootstrap": [
+      0.055619,
+      0.175538
+     ],
+     "p_paired_t": 0.0004872,
+     "p_wilcoxon": 0.0009248,
+     "p_signflip": 0.0007,
+     "n_subjects_a_gt_b": 29,
+     "n_subjects_a_lt_b": 9,
+     "n_subjects_tied": 24,
+     "t_stat": 3.6854,
+     "cohens_dz": 0.468041
+    },
+    "flag": null,
+    "summary": {
+     "n_subjects": 62,
+     "mean": 0.115297,
+     "median": 0.0,
+     "sd": 0.246339,
+     "min": -0.5,
+     "max": 0.666667,
+     "n_positive": 29,
+     "n_negative": 9
+    },
+    "large_meter_cutoff_p90": 0.485,
+    "large_meter_subjects": [
+     "C00110",
+     "C00621",
+     "C00752",
+     "C01904",
+     "C01933",
+     "C02121",
+     "C02500"
+    ]
+   }
+  }
+ },
+ "h3": {
+  "channel1": {
+   "gemma": {
+    "channel": "1",
+    "label": "DESCRIPTIVE (H3 is registered as descriptive, not confirmatory)",
+    "bar_quoted": "H3 (fame confound, descriptive): lift shrinks as the contamination meter grows.",
+    "estimator_note": "Pearson and Spearman correlation between a subject's lift and that subject's contamination meter. No estimator is frozen for H3 -- this choice is declared here, not inherited.",
+    "shared_term_warning": "READ THIS BEFORE THE NUMBERS. The meter is zeroinfo_named - zeroinfo_redacted and the zero-information lift is own - zeroinfo_redacted. They share the zeroinfo_redacted term with the same sign, so a subject whose redacted baseline happens to be low gets a large meter AND a large lift for that reason alone. The own-minus-zeroinfo row is therefore mechanically coupled to the meter and cannot test H3. The own-minus-imposter row shares no term with the meter and is the confound-free reading.",
+    "correlations": {
+     "own_minus_imposter": {
+      "n_subjects": 88,
+      "shares_a_term_with_the_meter": false,
+      "usable_for_H3": true,
+      "pearson_r": 0.056292,
+      "pearson_p": 0.6024,
+      "spearman_rho": 0.06097,
+      "spearman_p": 0.5726,
+      "reading": "non-negative correlation: lift does not shrink as the meter grows in this data"
+     },
+     "own_minus_zeroinfo": {
+      "n_subjects": 88,
+      "shares_a_term_with_the_meter": true,
+      "usable_for_H3": false,
+      "pearson_r": 0.454149,
+      "pearson_p": 8.817e-06,
+      "spearman_rho": 0.41006,
+      "spearman_p": 7.258e-05,
+      "reading": "non-negative correlation: lift does not shrink as the meter grows in this data"
+     }
+    }
+   },
+   "flashlite": {
+    "channel": "1",
+    "label": "DESCRIPTIVE (H3 is registered as descriptive, not confirmatory)",
+    "bar_quoted": "H3 (fame confound, descriptive): lift shrinks as the contamination meter grows.",
+    "estimator_note": "Pearson and Spearman correlation between a subject's lift and that subject's contamination meter. No estimator is frozen for H3 -- this choice is declared here, not inherited.",
+    "shared_term_warning": "READ THIS BEFORE THE NUMBERS. The meter is zeroinfo_named - zeroinfo_redacted and the zero-information lift is own - zeroinfo_redacted. They share the zeroinfo_redacted term with the same sign, so a subject whose redacted baseline happens to be low gets a large meter AND a large lift for that reason alone. The own-minus-zeroinfo row is therefore mechanically coupled to the meter and cannot test H3. The own-minus-imposter row shares no term with the meter and is the confound-free reading.",
+    "correlations": {
+     "own_minus_imposter": {
+      "n_subjects": 88,
+      "shares_a_term_with_the_meter": false,
+      "usable_for_H3": true,
+      "pearson_r": 0.270966,
+      "pearson_p": 0.01066,
+      "spearman_rho": 0.192262,
+      "spearman_p": 0.07272,
+      "reading": "non-negative correlation: lift does not shrink as the meter grows in this data"
+     },
+     "own_minus_zeroinfo": {
+      "n_subjects": 88,
+      "shares_a_term_with_the_meter": true,
+      "usable_for_H3": false,
+      "pearson_r": 0.739259,
+      "pearson_p": 1.965e-16,
+      "spearman_rho": 0.669226,
+      "spearman_p": 1.023e-12,
+      "reading": "non-negative correlation: lift does not shrink as the meter grows in this data"
+     }
+    }
+   }
+  },
+  "channel2": {}
+ },
+ "sensitivity": {
+  "n_rows_flagged": 3,
+  "n_items_dropped": 2,
+  "items_dropped": [
+   "C01171:NPR-15497:7",
+   "C01485:NPR-4616:3"
+  ],
+  "channel1": {
+   "gemma": {
+    "full": 0.075126,
+    "dropped": 0.075714,
+    "shift": 0.000588
+   },
+   "flashlite": {
+    "full": 0.076928,
+    "dropped": 0.076403,
+    "shift": -0.000525
+   }
+  }
+ },
+ "b8": {
+  "rule_quoted": "From this amendment on, every fidelity report in this project shows BOTH of these, side by side, in the same table: 1. Individual-level lift — the project's primary metric (own-twin minus baseline and minus imposter, per A1). 2. A population-level distribution-match metric — total variation distance (TVD) or equivalent between predicted and true answer/option distributions, per subject and pooled. 3. Divergences explicitly flagged — wherever the two levels disagree (good population match with poor individual lift, or the reverse), the disagreement is called out in the report body, not in a footnote.",
+  "no_bar_quoted": "No confirmatory bar attaches to the population metric; it is a mandatory descriptive companion.",
+  "population_metric_definition": "TVD over the stance categories {SAME, DIFFERENT, UNCLEAR} between two arms' pooled label distributions. The real answer carries no stance label of its own, so there is no reference distribution to compare an arm against; the registered metric is therefore taken between arms, the same reading the dev pilot used (experiments/stage2_oe1.py, 'tvd_vs_own_arm').",
+  "channel1_note": "Channel 1 is a continuous cosine and has no stance categories, so the registered population metric does not apply to it. Its individual-level lift is printed here so the two levels sit in one table, as B8 requires.",
+  "individual_level": {
+   "own_minus_imposter": {
+    "channel1_mean_diff": 0.075126,
+    "channel1_ci95": [
+     0.057035,
+     0.093216
+    ],
+    "channel1_p": 1.505e-12,
+    "channel2_mean_diff": "[AWAITING JUDGE]"
+   },
+   "own_named_minus_imposter": {
+    "channel1_mean_diff": 0.077758,
+    "channel1_ci95": [
+     0.059749,
+     0.095767
+    ],
+    "channel1_p": 3.221e-13,
+    "channel2_mean_diff": "[AWAITING JUDGE]"
+   },
+   "own_minus_zeroinfo": {
+    "channel1_mean_diff": 0.037777,
+    "channel1_ci95": [
+     0.021074,
+     0.054481
+    ],
+    "channel1_p": 2.132e-05,
+    "channel2_mean_diff": "[AWAITING JUDGE]"
+   },
+   "own_named_minus_zeroinfo_named": {
+    "channel1_mean_diff": 0.027039,
+    "channel1_ci95": [
+     0.010411,
+     0.043667
+    ],
+    "channel1_p": 0.001736,
+    "channel2_mean_diff": "[AWAITING JUDGE]"
+   }
+  },
+  "population_level": "[AWAITING JUDGE]",
+  "divergences": "[AWAITING JUDGE]"
+ },
+ "health": {
+  "generation_per_chunk": {
+   "gemma": {
+    "chunk_01": {
+     "n_rows": 497,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 3,
+     "n_empty": 0,
+     "n_retries": null,
+     "n_missing_completions": 0,
+     "complete": true
+    },
+    "chunk_02": {
+     "n_rows": 144,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 3,
+     "n_empty": 0,
+     "n_retries": null,
+     "n_missing_completions": 0,
+     "complete": true
+    },
+    "chunk_03": {
+     "n_rows": 499,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 1,
+     "n_empty": 0,
+     "n_retries": null,
+     "n_missing_completions": 0,
+     "complete": true
+    },
+    "chunk_04": {
+     "n_rows": 492,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 1,
+     "n_empty": 0,
+     "n_retries": null,
+     "n_missing_completions": 0,
+     "complete": true
+    },
+    "chunk_05": {
+     "n_rows": 279,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 0,
+     "n_empty": 0,
+     "n_retries": null,
+     "n_missing_completions": 0,
+     "complete": true
+    }
+   },
+   "flashlite": {
+    "chunk_01": {
+     "n_rows": 497,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 19,
+     "n_empty": 0,
+     "n_retries": 0,
+     "n_missing_completions": null,
+     "complete": null
+    },
+    "chunk_02": {
+     "n_rows": 144,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 8,
+     "n_empty": 0,
+     "n_retries": 8,
+     "n_missing_completions": null,
+     "complete": null
+    },
+    "chunk_03": {
+     "n_rows": 499,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 20,
+     "n_empty": 0,
+     "n_retries": 0,
+     "n_missing_completions": null,
+     "complete": null
+    },
+    "chunk_04": {
+     "n_rows": 492,
+     "n_truncated": 0,
+     "n_era_violations": 2,
+     "n_over_word_cap": 16,
+     "n_empty": 0,
+     "n_retries": 0,
+     "n_missing_completions": null,
+     "complete": null
+    },
+    "chunk_05": {
+     "n_rows": 279,
+     "n_truncated": 0,
+     "n_era_violations": 1,
+     "n_over_word_cap": 12,
+     "n_empty": 0,
+     "n_retries": 0,
+     "n_missing_completions": null,
+     "complete": null
+    }
+   }
+  },
+  "generation_per_arm": {
+   "gemma": {
+    "h7_twin_redacted": {
+     "n": 136,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 1,
+     "n_empty": 0
+    },
+    "imposter_redacted": {
+     "n": 355,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 4,
+     "n_empty": 0
+    },
+    "twin_named": {
+     "n": 355,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 1,
+     "n_empty": 0
+    },
+    "twin_redacted": {
+     "n": 355,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 2,
+     "n_empty": 0
+    },
+    "zeroinfo_named": {
+     "n": 355,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 0,
+     "n_empty": 0
+    },
+    "zeroinfo_redacted": {
+     "n": 355,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 0,
+     "n_empty": 0
+    }
+   },
+   "flashlite": {
+    "h7_twin_redacted": {
+     "n": 136,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 8,
+     "n_empty": 0
+    },
+    "imposter_redacted": {
+     "n": 355,
+     "n_truncated": 0,
+     "n_era_violations": 1,
+     "n_over_word_cap": 15,
+     "n_empty": 0
+    },
+    "twin_named": {
+     "n": 355,
+     "n_truncated": 0,
+     "n_era_violations": 1,
+     "n_over_word_cap": 18,
+     "n_empty": 0
+    },
+    "twin_redacted": {
+     "n": 355,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 16,
+     "n_empty": 0
+    },
+    "zeroinfo_named": {
+     "n": 355,
+     "n_truncated": 0,
+     "n_era_violations": 0,
+     "n_over_word_cap": 8,
+     "n_empty": 0
+    },
+    "zeroinfo_redacted": {
+     "n": 355,
+     "n_truncated": 0,
+     "n_era_violations": 1,
+     "n_over_word_cap": 10,
+     "n_empty": 0
+    }
+   }
+  },
+  "era_violations": {
+   "rows": [
+    {
+     "gen_dir": "flashlite",
+     "model": "gemini-3.5-flash-lite",
+     "chunk": "chunk_04",
+     "item_id": "C01485:NPR-4616:3",
+     "canonical_id": "C01485",
+     "arm": "zeroinfo_redacted",
+     "era_violations": [
+      "2020"
+     ]
+    },
+    {
+     "gen_dir": "flashlite",
+     "model": "gemini-3.5-flash-lite",
+     "chunk": "chunk_04",
+     "item_id": "C01485:NPR-4616:3",
+     "canonical_id": "C01485",
+     "arm": "imposter_redacted",
+     "era_violations": [
+      "2020"
+     ]
+    },
+    {
+     "gen_dir": "flashlite",
+     "model": "gemini-3.5-flash-lite",
+     "chunk": "chunk_05",
+     "item_id": "C01171:NPR-15497:7",
+     "canonical_id": "C01171",
+     "arm": "twin_named",
+     "era_violations": [
+      "2018"
+     ]
+    }
+   ],
+   "treatment": "OE-1's treatment carried forward: an era-flagged generation is counted and named, never silently dropped. This report adds a sensitivity line recomputing the primary contrasts with the affected ITEMS removed -- an addition to OE-1, not part of it."
+  },
+  "guard_exclusions": {
+   "n_renders_attempted": 2176,
+   "n_renders_excluded": 12,
+   "exclusion_rate": 0.005515,
+   "stop_rate": 0.05,
+   "stopped": false,
+   "by_subject": {
+    "C00833": {
+     "n_items": 1,
+     "item_ids": [
+      "C00833:NPR-16862:10"
+     ]
+    },
+    "C02502": {
+     "n_items": 11,
+     "item_ids": [
+      "C02502:CNN-388758:103",
+      "C02502:CNN-388758:105",
+      "C02502:CNN-388758:107",
+      "C02502:CNN-388758:126",
+      "C02502:CNN-388758:128",
+      "C02502:CNN-388758:132",
+      "C02502:CNN-388758:141",
+      "C02502:CNN-388758:143",
+      "C02502:CNN-388758:145",
+      "C02502:CNN-388758:158",
+      "C02502:CNN-388758:99"
+     ]
+    }
+   },
+   "scope_rule": "A guard failure on any of the five H1 arms excludes the whole ITEM (all five arms and all of its H7 renders): the primary metric is paired own-minus-imposter on one item, so a half-built item is not scoreable. A guard failure on an H7 cutoff render excludes that (item, bin) render only. Every exclusion is counted with its arm and its reason; none passes silently."
+  },
+  "same_event_leak_scan": {
+   "what": "DESCRIPTIVE contamination scan, no exclusion attached: share of the test interview's 10-word guest shingles that also appear in one grounding transcript. Frozen convention (stage2_render._norm_tokens, SHINGLE_WORDS).",
+   "why": "The per-item answer-leak assert only sees the 2,000-word rendered block, so a re-aired interview whose overlap falls outside the budget window would leave no trace. This scan sees the whole grounding side.",
+   "n_subjects_scanned": 89,
+   "n_subjects_with_any_overlap": 4,
+   "subjects_over_10pct": [
+    [
+     "C02502",
+     0.4948
+    ]
+   ],
+   "finding": "C02502 is a re-aired interview: CNN-381362 (2019-09-25) replays 47% of the test transcript CNN-388758 (2019-12-25, Christmas Day) on the same programme. The two sit in different dedup clusters, so D2's same-event guard never saw them; the answer-leak assert caught it downstream and every one of the subject's 11 items was excluded, dropping the subject. Reported because the clustering, not the split logic, is what missed it -- that is an owner call, not this file's.",
+   "per_subject": [
+    {
+     "test_guest_words": 539,
+     "n_test_10grams": 530,
+     "max_share_of_test_in_one_grounding_transcript": 0.0019,
+     "grounding_transcripts_with_overlap": {
+      "NPR-27774": {
+       "guest_words": 493,
+       "shared_10grams": 1,
+       "share_of_test": 0.0019
+      }
+     },
+     "canonical_id": "C00833"
+    },
+    {
+     "test_guest_words": 1453,
+     "n_test_10grams": 1386,
+     "max_share_of_test_in_one_grounding_transcript": 0.0361,
+     "grounding_transcripts_with_overlap": {
+      "CNN-102580": {
+       "guest_words": 325,
+       "shared_10grams": 30,
+       "share_of_test": 0.0216
+      },
+      "CNN-102987": {
+       "guest_words": 421,
+       "shared_10grams": 50,
+       "share_of_test": 0.0361
+      },
+      "CNN-103159": {
+       "guest_words": 506,
+       "shared_10grams": 30,
+       "share_of_test": 0.0216
+      }
+     },
+     "canonical_id": "C00698"
+    },
+    {
+     "test_guest_words": 2129,
+     "n_test_10grams": 2120,
+     "max_share_of_test_in_one_grounding_transcript": 0.4948,
+     "grounding_transcripts_with_overlap": {
+      "CNN-381362": {
+       "guest_words": 1854,
+       "shared_10grams": 1049,
+       "share_of_test": 0.4948
+      }
+     },
+     "canonical_id": "C02502"
+    },
+    {
+     "test_guest_words": 386,
+     "n_test_10grams": 377,
+     "max_share_of_test_in_one_grounding_transcript": 0.0027,
+     "grounding_transcripts_with_overlap": {
+      "CNN-112158": {
+       "guest_words": 513,
+       "shared_10grams": 1,
+       "share_of_test": 0.0027
+      }
+     },
+     "canonical_id": "C00789"
+    }
+   ]
+  },
+  "judge_canary": {
+   "rule": "10-row D/E canary at the start of every judging session; any label flip against the recorded r2 line halts judging (launch plan, risk 2).",
+   "runs": [
+    {
+     "file": "results/stage2_confirm/judge/canary_20260728-133534_summary.json",
+     "n": 10,
+     "n_flips": 0,
+     "passed": true,
+     "max_flips_allowed": 0,
+     "checked_utc": "2026-07-28T13:35:34Z",
+     "cost_usd": 0.012653
+    },
+    {
+     "file": "results/stage2_confirm/judge/canary_20260728-133557_summary.json",
+     "n": 10,
+     "n_flips": 0,
+     "passed": true,
+     "max_flips_allowed": 0,
+     "checked_utc": "2026-07-28T13:35:57Z",
+     "cost_usd": 0.012671
+    }
+   ],
+   "all_passed": true,
+   "total_flips": 0
+  },
+  "donor_concentration": {
+   "n_distinct_donors": 25,
+   "n_subjects": 89,
+   "max_subjects_per_donor": 11,
+   "n_eligible_donors": 54,
+   "table": [
+    {
+     "donor_id": "C02040",
+     "n_subjects": 11,
+     "subjects": [
+      "C00163",
+      "C00563",
+      "C00622",
+      "C00642",
+      "C00752",
+      "C00812",
+      "C01375",
+      "C01933",
+      "C02167",
+      "C02218",
+      "C02256"
+     ]
+    },
+    {
+     "donor_id": "C01302",
+     "n_subjects": 10,
+     "subjects": [
+      "C00203",
+      "C00344",
+      "C00427",
+      "C00522",
+      "C00580",
+      "C00593",
+      "C00620",
+      "C01171",
+      "C01659",
+      "C01801"
+     ]
+    },
+    {
+     "donor_id": "C01696",
+     "n_subjects": 9,
+     "subjects": [
+      "C00050",
+      "C00457",
+      "C00582",
+      "C00673",
+      "C01464",
+      "C01673",
+      "C02248",
+      "C02318",
+      "C02437"
+     ]
+    },
+    {
+     "donor_id": "C01316",
+     "n_subjects": 8,
+     "subjects": [
+      "C00032",
+      "C00146",
+      "C00819",
+      "C01538",
+      "C01800",
+      "C01883",
+      "C02121",
+      "C02469"
+     ]
+    },
+    {
+     "donor_id": "C02496",
+     "n_subjects": 8,
+     "subjects": [
+      "C00087",
+      "C00153",
+      "C00440",
+      "C00526",
+      "C01108",
+      "C01485",
+      "C01722",
+      "C02397"
+     ]
+    },
+    {
+     "donor_id": "C00144",
+     "n_subjects": 7,
+     "subjects": [
+      "C00698",
+      "C00746",
+      "C00890",
+      "C01904",
+      "C01967",
+      "C02242",
+      "C02502"
+     ]
+    },
+    {
+     "donor_id": "C01650",
+     "n_subjects": 5,
+     "subjects": [
+      "C00110",
+      "C00824",
+      "C01585",
+      "C01897",
+      "C02312"
+     ]
+    },
+    {
+     "donor_id": "C01698",
+     "n_subjects": 5,
+     "subjects": [
+      "C00818",
+      "C00846",
+      "C00897",
+      "C01254",
+      "C01891"
+     ]
+    },
+    {
+     "donor_id": "C01005",
+     "n_subjects": 4,
+     "subjects": [
+      "C00169",
+      "C01296",
+      "C01442",
+      "C02500"
+     ]
+    },
+    {
+     "donor_id": "C02510",
+     "n_subjects": 3,
+     "subjects": [
+      "C00621",
+      "C01180",
+      "C01817"
+     ]
+    },
+    {
+     "donor_id": "C02277",
+     "n_subjects": 2,
+     "subjects": [
+      "C01746",
+      "C01848"
+     ]
+    },
+    {
+     "donor_id": "C02425",
+     "n_subjects": 2,
+     "subjects": [
+      "C00218",
+      "C01328"
+     ]
+    },
+    {
+     "donor_id": "C02495",
+     "n_subjects": 2,
+     "subjects": [
+      "C00789",
+      "C01163"
+     ]
+    },
+    {
+     "donor_id": "C02529",
+     "n_subjects": 2,
+     "subjects": [
+      "C00697",
+      "C02474"
+     ]
+    },
+    {
+     "donor_id": "C00077",
+     "n_subjects": 1,
+     "subjects": [
+      "C00634"
+     ]
+    },
+    {
+     "donor_id": "C00460",
+     "n_subjects": 1,
+     "subjects": [
+      "C00145"
+     ]
+    },
+    {
+     "donor_id": "C00603",
+     "n_subjects": 1,
+     "subjects": [
+      "C00833"
+     ]
+    },
+    {
+     "donor_id": "C00695",
+     "n_subjects": 1,
+     "subjects": [
+      "C02359"
+     ]
+    },
+    {
+     "donor_id": "C02070",
+     "n_subjects": 1,
+     "subjects": [
+      "C00886"
+     ]
+    },
+    {
+     "donor_id": "C02253",
+     "n_subjects": 1,
+     "subjects": [
+      "C01752"
+     ]
+    },
+    {
+     "donor_id": "C02264",
+     "n_subjects": 1,
+     "subjects": [
+      "C00102"
+     ]
+    },
+    {
+     "donor_id": "C02266",
+     "n_subjects": 1,
+     "subjects": [
+      "C02200"
+     ]
+    },
+    {
+     "donor_id": "C02315",
+     "n_subjects": 1,
+     "subjects": [
+      "C01430"
+     ]
+    },
+    {
+     "donor_id": "C02426",
+     "n_subjects": 1,
+     "subjects": [
+      "C01842"
+     ]
+    },
+    {
+     "donor_id": "C02428",
+     "n_subjects": 1,
+     "subjects": [
+      "C01247"
+     ]
+    }
+   ],
+   "caveat": "25 donors ground 89 subjects' imposter arms, and the busiest donor grounds 11. The imposter arm is therefore not 89 independent strangers; a donor whose speech happens to sit close to several subjects moves several rows at once. Declared beside every own-minus-imposter number."
+  },
+  "name_resolution_failures": {
+   "rows": [
+    {
+     "canonical_id": "C02240",
+     "draw_pos": 20,
+     "canonical_name": "St. John",
+     "test_role_counts": {
+      "host": 14,
+      "other": 26
+     },
+     "scan_cache_says_guest_words": [
+      552,
+      473,
+      304,
+      373,
+      312,
+      365,
+      759,
+      424
+     ]
+    },
+    {
+     "canonical_id": "C02521",
+     "draw_pos": 123,
+     "canonical_name": "Wong Ulrich",
+     "test_role_counts": {
+      "host": 56,
+      "other": 53
+     },
+     "scan_cache_says_guest_words": [
+      440,
+      704,
+      511
+     ]
+    }
+   ],
+   "note": "Subjects whose test transcript yielded zero guest turns because the canonical name did not resolve to a speaker. Both failed the build and never reached generation; recorded so the attrition is not silent."
+  },
+  "item_flags": {
+   "note": "Flags recorded on the item at build time."
+  },
+  "labels_present_per_model": {
+   "gemma": 0,
+   "flashlite": 1268
+  }
+ },
+ "costs": {
+  "source": "results/cost_log.jsonl",
+  "run_id_filter": "stage2_confirm/*",
+  "n_entries": 15,
+  "api_usd_spent": 3.15582,
+  "api_cap_usd": 15.0,
+  "api_headroom_usd": 11.84418,
+  "api_cap_breached": false,
+  "node_hours_spent": 0.6028,
+  "node_hours_cap": 8.0,
+  "node_hours_headroom": 7.3972,
+  "node_hours_cap_breached": false,
+  "by_run_id": {
+   "stage2_confirm/gen_flashlite": {
+    "n_entries": 5,
+    "n_calls": 1911,
+    "cost_usd": 1.676161,
+    "node_hours": 0.0,
+    "tokens_in": 3260926,
+    "tokens_out": 279153,
+    "n_parse_failures": 0
+   },
+   "stage2_confirm/gen_gemma": {
+    "n_entries": 5,
+    "n_calls": 1911,
+    "cost_usd": 0.0,
+    "node_hours": 0.6028,
+    "tokens_in": 3283858,
+    "tokens_out": 277697,
+    "n_parse_failures": 0
+   },
+   "stage2_confirm/judge_r2_canary": {
+    "n_entries": 2,
+    "n_calls": 20,
+    "cost_usd": 0.025324,
+    "node_hours": 0.0,
+    "tokens_in": 24970,
+    "tokens_out": 1466,
+    "n_parse_failures": 0
+   },
+   "stage2_confirm/judge_r2": {
+    "n_entries": 3,
+    "n_calls": 1140,
+    "cost_usd": 1.454335,
+    "node_hours": 0.0,
+    "tokens_in": 1422250,
+    "tokens_out": 86144,
+    "n_parse_failures": 0
+   }
+  },
+  "sacct_accounting": {
+   "total_node_hours": 0.6028,
+   "unattributed_node_hours": 0.0,
+   "n_attempts": 7,
+   "n_failed_or_cancelled_attempts": 2,
+   "note": "Billing comes from sacct, not from a watcher; cancelled attempts are counted at their billed elapsed time."
+  },
+  "note": "The judge is still spending while this report renders, so the API figure is a running total, not a final one."
+ },
+ "provenance": {
+  "report_generator": "experiments/stage2_confirm_report.py",
+  "git_head": "bb525ab82e3cd49e18003c12954436fb37967a31",
+  "git_dirty": true,
+  "seed": 20260728,
+  "n_bootstrap": 10000,
+  "n_signflip": 20000,
+  "draw_seed": 20260728,
+  "instrument_channel1": {
+   "model": "sentence-transformers/all-mpnet-base-v2",
+   "revision": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+   "revision_asserted": true,
+   "contract": "PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md parameter 1"
+  },
+  "instrument_channel2": {
+   "judge_model": "gemini-3.5-flash",
+   "rubric_sha256": "ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464",
+   "temperature": 0.0,
+   "thinking_budget": 0,
+   "max_output_tokens": 512,
+   "contract": "PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md parameters 2, 3 and 5"
+  },
+  "generation_config": {
+   "primary_model": "Gemma-4-31B-it",
+   "robustness_model": "gemini-3.5-flash-lite",
+   "temperature": 0.0,
+   "max_output_tokens": 256,
+   "answer_word_cap": 150,
+   "grounding_budget_words": 2000,
+   "instruction_tail_sha256": "d8758204009e71b482d36fb7133641f3077b7414df87e5a055f3949cb2ef3d3b",
+   "instruction_tail_text": "Now answer the interviewer's next question as this person would, speaking in their voice, in the first person. Give one spoken reply of at most 150 words. No lists, no stage directions, no commentary about this task.",
+   "same_prompts_both_models": true
+  },
+  "governance_documents": [
+   "PREREGISTRATION.md",
+   "PREREGISTRATION_AMENDMENT_1.md",
+   "PREREGISTRATION_AMENDMENT_1_ADDENDUM_A.md",
+   "PREREGISTRATION_AMENDMENT_2.md",
+   "PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md",
+   "PREREGISTRATION_AMENDMENT_3.md"
+  ],
+  "governance_document_sha256": {
+   "PREREGISTRATION.md": "cf63d90b301859b60d174738bfdffc1d2ba8aa32e28394973f836ae9dd2df046",
+   "PREREGISTRATION_AMENDMENT_1.md": "b0e284d40cb36a1a4335a6b0c1716a9b512a9bb4e7949fb473c634965d6b44cc",
+   "PREREGISTRATION_AMENDMENT_1_ADDENDUM_A.md": "5ccd445b753bcc4c32481e3c0ca5d09386b91d481ce2ab139ed244fa156b4172",
+   "PREREGISTRATION_AMENDMENT_2.md": "f0f52730b5be8363045b99a48fefffeff4f905f881db3f6b96ce03a76217fd4d",
+   "PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md": "6e33fa228a55a3ada65c8f841aab866c81f9983dac9c3c46ae43deb3fbf5f8ff",
+   "PREREGISTRATION_AMENDMENT_3.md": "5e9340d7cb91d1f212480784e8296d258c1e3a2b2aae9a9610b38c1ed04f9aee",
+   "STAGE2_LAUNCH_PLAN.md": "d69f4a20be5f6783e64fb9a445e48bb096376b5afb007ea43ccd4c533b247caa"
+  },
+  "osf_snapshot": "results/osf_preregistration_snapshot_v4.md",
+  "files": [
+   {
+    "file": "results/stage2_confirm/items_confirm.jsonl",
+    "generator": "experiments/stage2_confirm_build.py -> experiments/stage2_confirm_render.py",
+    "exists": true,
+    "sha256": "b7ea8ea0eceb008d92bc10bd0a6a62a75f05c5b64b231c339090a1e49d61aaa1",
+    "last_commit": "334a155106a35fab252c8a1ae405428a963abac3",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/render_index.jsonl",
+    "generator": "experiments/stage2_confirm_render.py",
+    "exists": true,
+    "sha256": "0d0994d0a822bb63919d5ef49f9e53b87c4d49b2e8f9657e1ba2bf7297d29144",
+    "last_commit": "334a155106a35fab252c8a1ae405428a963abac3",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/render_manifest.json",
+    "generator": "experiments/stage2_confirm_render.py",
+    "exists": true,
+    "sha256": "7c2c7c5e7c19154c17782bd7abd5923858cad966ca4d355ad217d11ff165767e",
+    "last_commit": "334a155106a35fab252c8a1ae405428a963abac3",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/imposter_pairs_confirm.json",
+    "generator": "experiments/stage2_confirm_render.py (rule D7-CONF)",
+    "exists": true,
+    "sha256": "0b896f7cfd1d908c5e3886ce9dd8622175d5680808054803268bfc64c2f33e6b",
+    "last_commit": "334a155106a35fab252c8a1ae405428a963abac3",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/build_full140.json",
+    "generator": "experiments/stage2_confirm_build.py",
+    "exists": true,
+    "sha256": "e6135cb1b3ca0e4baedc199d61cca0cd42f4601396b325f14cce10399133559c",
+    "last_commit": "5dc35521798f50d80b1a74a3aec9067facf52ee4",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm_draw_provisional.json",
+    "generator": "experiments/stage2_confirm_draw.py, seed 20260728",
+    "exists": true,
+    "sha256": "7ba970a0306b98b6b3a97c614fe82eecb4fccbf06936b7e4b8756b8045ca5c52",
+    "last_commit": "14901238df40a13a1966f7e50038eca0bf585039",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/embed/embed_summary.json",
+    "generator": "experiments/stage2_confirm_embed.py",
+    "exists": true,
+    "sha256": "218e140aff90f3d28c87b8ca3c6ca84ab977f8064570bff1698946a55770468e",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/cost_log.jsonl",
+    "generator": "every run driver, appended per chunk",
+    "exists": true,
+    "sha256": "b9992d19eda5d4c8e691d1db3e7cac924d4700baaadaaea9f627138c3515373f",
+    "last_commit": "bb525ab82e3cd49e18003c12954436fb37967a31",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/gen/gemma/node_hours_accounting.json",
+    "generator": "experiments/stage2_confirm_ingest.py, from sacct",
+    "exists": true,
+    "sha256": "e26dd1231bfc12614f03982eb9a5437c89b3686a6dc68f4c6d5d25d81aa18b49",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/gen/gemma/completions_chunk_01.jsonl",
+    "generator": "experiments/stage2_confirm_gen.sbatch on Leonardo, ingested by experiments/stage2_confirm_ingest.py",
+    "exists": true,
+    "sha256": "50557d29c3d87cafcfe2c9d0f531609fc810cef9a9172c767bf749350abc69e2",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/embed/cosines_gemma_chunk_01.jsonl",
+    "generator": "experiments/stage2_confirm_embed.py",
+    "exists": true,
+    "sha256": "7f55a178ec4f212cf2a720a40712660e8b6b71b54df48568952591a57eb5e242",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/gen/gemma/completions_chunk_02.jsonl",
+    "generator": "experiments/stage2_confirm_gen.sbatch on Leonardo, ingested by experiments/stage2_confirm_ingest.py",
+    "exists": true,
+    "sha256": "7cbf4dda30adab1034e8f0b9ab8e1a682b7779123b8dd1f3385e5673be93a99b",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/embed/cosines_gemma_chunk_02.jsonl",
+    "generator": "experiments/stage2_confirm_embed.py",
+    "exists": true,
+    "sha256": "cdb6aaaccabe33715bd10037898d6195c3363ab1a82cc129247f51b08a3a2aae",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/gen/gemma/completions_chunk_03.jsonl",
+    "generator": "experiments/stage2_confirm_gen.sbatch on Leonardo, ingested by experiments/stage2_confirm_ingest.py",
+    "exists": true,
+    "sha256": "0489d2eb4c5fddc2cca09ba5da61128b4ad0b63c9aa92ef937f96580ff6d23fe",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/embed/cosines_gemma_chunk_03.jsonl",
+    "generator": "experiments/stage2_confirm_embed.py",
+    "exists": true,
+    "sha256": "05b21ac8beeabf876a91d6243b626f7e51ee5a0b74669e3b11a0af7eb187f048",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/gen/gemma/completions_chunk_04.jsonl",
+    "generator": "experiments/stage2_confirm_gen.sbatch on Leonardo, ingested by experiments/stage2_confirm_ingest.py",
+    "exists": true,
+    "sha256": "cd3618e5775edf25db00a076215dcdcdcab9e70c7a16f144719ae31a4ea183b7",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/embed/cosines_gemma_chunk_04.jsonl",
+    "generator": "experiments/stage2_confirm_embed.py",
+    "exists": true,
+    "sha256": "2629bf3c178cd0fdbfe87175f91bd0f84a86e148d78f394fff63a6bf586edd63",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/gen/gemma/completions_chunk_05.jsonl",
+    "generator": "experiments/stage2_confirm_gen.sbatch on Leonardo, ingested by experiments/stage2_confirm_ingest.py",
+    "exists": true,
+    "sha256": "66796f9034a46921e5c3d09d31f15c9ed6b7eaa2881dad0c690e7660a79de4b8",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/embed/cosines_gemma_chunk_05.jsonl",
+    "generator": "experiments/stage2_confirm_embed.py",
+    "exists": true,
+    "sha256": "b1a9036132a33d7487197b8d917356b42d6de7352e00e3b792ba8c7391e7fb32",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/gen/flashlite/completions_chunk_01.jsonl",
+    "generator": "experiments/stage2_confirm_gen_flashlite.py",
+    "exists": true,
+    "sha256": "99f6f4fb4a5bf6e30e35e67ece46bef24f61cc8dde7a57d095f72b9b81c122b5",
+    "last_commit": "41be6df3e8ebf277545eece8ebce22b94f61742f",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/embed/cosines_flashlite_chunk_01.jsonl",
+    "generator": "experiments/stage2_confirm_embed.py",
+    "exists": true,
+    "sha256": "b8edce022c57ec2f8ed540e577a03cfc32301d4a95e31e7d2d3941d7e4e092de",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/judge/judgements_flashlite_chunk_01.jsonl",
+    "generator": "experiments/stage2_confirm_judge.py",
+    "exists": true,
+    "sha256": "fa4ec161ba7e3fc9f7f5d00285af86b75a415fb5a7ae993b0ac9aaba1b4695dc",
+    "last_commit": null,
+    "tracked": false
+   },
+   {
+    "file": "results/stage2_confirm/gen/flashlite/completions_chunk_02.jsonl",
+    "generator": "experiments/stage2_confirm_gen_flashlite.py",
+    "exists": true,
+    "sha256": "c051d92f9bf95721958aad35fe630f2064aca1d859516e9724a73602759511ed",
+    "last_commit": "41be6df3e8ebf277545eece8ebce22b94f61742f",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/embed/cosines_flashlite_chunk_02.jsonl",
+    "generator": "experiments/stage2_confirm_embed.py",
+    "exists": true,
+    "sha256": "3f05b05461a0e39ab7c5f1bb59162dedadd36b6423ae7fe03311a3674146e2e4",
+    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/judge/judgements_flashlite_chunk_02.jsonl",
+    "generator": "experiments/stage2_confirm_judge.py",
+    "exists": true,
+    "sha256": "6ff10b1f420c39193ae349eeb387b55aaefe00a676d5548e2003c2780bdff5d2",
+    "last_commit": null,
+    "tracked": false
+   },
+   {
+    "file": "results/stage2_confirm/gen/flashlite/completions_chunk_03.jsonl",
+    "generator": "experiments/stage2_confirm_gen_flashlite.py",
+    "exists": true,
+    "sha256": "b3af35c129960390134aa0709d8b78ddb734d57abc0d914b061c7786d6bbc771",
+    "last_commit": "bb525ab82e3cd49e18003c12954436fb37967a31",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/embed/cosines_flashlite_chunk_03.jsonl",
+    "generator": "experiments/stage2_confirm_embed.py",
+    "exists": true,
+    "sha256": "6cc1cf77e4b31103317207273d946833af74c5aec18075f6a8fbe51dadb93e74",
+    "last_commit": null,
+    "tracked": false
+   },
+   {
+    "file": "results/stage2_confirm/judge/judgements_flashlite_chunk_03.jsonl",
+    "generator": "experiments/stage2_confirm_judge.py",
+    "exists": true,
+    "sha256": "48cc24758e477e96dad0a554a057ff13c54bad52fec8c84d74a0eaab2013ab3c",
+    "last_commit": null,
+    "tracked": false
+   },
+   {
+    "file": "results/stage2_confirm/gen/flashlite/completions_chunk_04.jsonl",
+    "generator": "experiments/stage2_confirm_gen_flashlite.py",
+    "exists": true,
+    "sha256": "05f156fe87583f5bb3a5f7d869a96e3af54e1f2cb18d505856b3cabcd08000fb",
+    "last_commit": "bb525ab82e3cd49e18003c12954436fb37967a31",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/embed/cosines_flashlite_chunk_04.jsonl",
+    "generator": "experiments/stage2_confirm_embed.py",
+    "exists": true,
+    "sha256": "b4c0707384db02978c90c04f61cfd3d62eaaa24206aa574e32d201de84ba0b88",
+    "last_commit": null,
+    "tracked": false
+   },
+   {
+    "file": "results/stage2_confirm/judge/judgements_flashlite_chunk_04.jsonl",
+    "generator": "experiments/stage2_confirm_judge.py",
+    "exists": true,
+    "sha256": "78f7f44e014606c98d6fc20a770172ad4f950f42e1e0b2a9b88987d4913064e8",
+    "last_commit": null,
+    "tracked": false
+   },
+   {
+    "file": "results/stage2_confirm/gen/flashlite/completions_chunk_05.jsonl",
+    "generator": "experiments/stage2_confirm_gen_flashlite.py",
+    "exists": true,
+    "sha256": "58fad776fe12194171b401d878d1ae6c492c324108835a36273225aa16995b17",
+    "last_commit": "bb525ab82e3cd49e18003c12954436fb37967a31",
+    "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/embed/cosines_flashlite_chunk_05.jsonl",
+    "generator": "experiments/stage2_confirm_embed.py",
+    "exists": true,
+    "sha256": "7acffb9e6135724968771b25b561e455b7403aa5b033f5e3de19997cf9f6b421",
+    "last_commit": null,
+    "tracked": false
+   }
+  ]
+ },
+ "deviations": [
+  {
+   "id": "D1",
+   "date": "2026-07-28",
+   "text": "The C4.2 human judge tranche is sheet A only (17 of 51 rows, owner time constraint); the full 51 rows carry an out-of-family LLM co-auditor line. The two lines are reported separately, never pooled; their sheet-A concordance (17/17) is stated wherever either is cited.",
+   "owner_decision": "Owner-directed, recorded in PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md."
+  },
+  {
+   "id": "D2",
+   "date": "2026-07-28",
+   "text": "The fuzzy-host 20-row spot-check is fully substituted by the out-of-family LLM co-auditor; no human line exists for it.",
+   "owner_decision": "Owner-directed; the blind co-audit matched the census key 20/20 and overturned nothing."
+  },
+  {
+   "id": "D3",
+   "date": "2026-07-28",
+   "text": "The H6 trust audit runs as a blind LLM co-audit (Opus 5) with a disagreement-triggered human tranche. Result over 120 rows: raw 0.8667, kappa 0.7333 -- clears the B2.2 bar, so no human tranche was built.",
+   "owner_decision": "Owner-directed. Gates H6 only; H6 is not scored in this report."
+  },
+  {
+   "id": "D4",
+   "date": "2026-07-28",
+   "text": "The parameter-5 auditor line on the fresh D/E tranche is a rubric-briefed out-of-family LLM line (Claude; frozen rubric read in full, key never opened) in place of the owner's own rubric-in-hand labels. Reported as its own line, never pooled with a human line.",
+   "owner_decision": "Owner-directed. The r1 round FAILED (raw 0.7778 / kappa 0.5789); the pre-committed iteration produced rubric r2, which PASSED on the fresh F/G tranche (raw 0.8889 / kappa 0.7978) against the unchanged bar."
+  },
+  {
+   "id": "IN-RUN: D7 re-fit",
+   "date": "2026-07-28",
+   "text": "The imposter donor match (SPEC D7) was re-fitted for the confirmatory run under rules D7-CONF and D7-GUARD: the frozen seed-48 200-id bank is kept byte-identical, but the 6 dev subjects and all 140 drawn confirmatory subjects are removed from ELIGIBILITY (45 removed, 155 permitted, 54 clear the frozen 2,500-word floor), and a donor that would trip a frozen leakage assert is excluded from the argmax instead of winning and then tripping it. The asserts themselves are unchanged and still run on the winner. 8 subjects' winners moved against the unmodified reference matcher; every non-excluded reference winner matches.",
+   "owner_decision": "Recorded in render_manifest.json derived_rules D7-CONF / D7-GUARD, on the record before generation."
+  },
+  {
+   "id": "IN-RUN: C02502 drop",
+   "date": "2026-07-28",
+   "text": "Subject C02502 was dropped entirely. Its test transcript (CNN-388758, 2019-12-25) is a re-airing of CNN-381362 (2019-09-25) on the same programme, replaying 47% of the test guest text. The two sit in different dedup clusters, so the same-event guard never saw them; the downstream answer-leak assert caught it and excluded all 11 of the subject's items. The draw rendered 89 survivors; 88 subjects carry items.",
+   "owner_decision": "Mechanical consequence of the frozen guard (GUARD-SCOPE: a guard failure on any H1 arm excludes the whole item). The clustering gap is flagged for the owner, not fixed here."
+  },
+  {
+   "id": "IN-RUN: name-resolution failures",
+   "date": "2026-07-28",
+   "text": "C02240 ('St. John') and C02521 ('Wong Ulrich') yielded zero guest turns in their test transcript because the canonical name did not resolve to a speaker, despite the pool's scan cache recording hundreds of guest words. Both failed the build and never reached generation. Recorded so the attrition is visible rather than absorbed into the survival rate.",
+   "owner_decision": "Recorded in build_full140.json tripwires (zero_guest_turns_in_test, subject_key_single_token)."
+  },
+  {
+   "id": "IN-RUN: H7 B = 2,000 words",
+   "date": "2026-07-28",
+   "text": "B7.3's volume-control budget B is read as 2,000 words -- the frozen H1 grounding budget (stage2_render.GROUNDING_BUDGET_WORDS). No other B exists in the frozen documents or the code. A cutoff is fillable only if the grounding speech available at that cutoff reaches B; 100 cutoffs were dropped as unfillable, 18 as under 6 months, and 68 because their bin was already filled by a newer cutoff.",
+   "owner_decision": "Recorded as derived rule H7-R4 before generation."
+  },
+  {
+   "id": "IN-RUN: donor concentration caveat",
+   "date": "2026-07-28",
+   "text": "25 distinct donors ground the imposter arms of 89 subjects; the busiest donor grounds 11. The imposter arm is not a set of independent strangers, so own-minus-imposter carries correlated noise across the subjects sharing a donor. Declared beside every own-minus-imposter number rather than corrected for.",
+   "owner_decision": "Declared. The 2,500-word floor that causes the concentration is frozen and was not relaxed."
+  },
+  {
+   "id": "IN-RUN: H7 exploratory band",
+   "date": "2026-07-28",
+   "text": "H7 runs at 36 usable subjects (those filling at least one delta bin after the B7.3 volume control) out of 68 flagged eligible. Both counts fall in the 30-79 band, so the branch rule returns EXPLORATORY either way and the choice between them does not change the label. H1 runs at 88 subjects and is confirmatory.",
+   "owner_decision": "Mechanical application of A5 / B3 / B7."
+  }
+ ],
+ "runtime_secs": 1.5
+}
