@@ -1,0 +1,2128 @@
+{
+ "generated_utc": "2026-07-28T11:32:43Z",
+ "tranche": {
+  "draw_positions": [
+   1,
+   40
+  ],
+  "n_subjects": 40,
+  "draw_file": "results/stage2_confirm_draw_provisional.json",
+  "draw_seed": 20260728
+ },
+ "rule": {
+  "floor": "a subject survives only if its test-interview cluster yields >= 3 D4-eligible Q-A items (PREREGISTRATION_AMENDMENT_2_ADDENDUM_A item 4, frozen)",
+  "split": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+  "extraction": "doppler.qa_extract.extract_qa_verbose, unmodified: intro host turn dropped, question >= 5 words, '?' or interrogative/imperative cue word, answer >= 30 words, > 400 words truncated to ~300 at a sentence boundary, near-duplicate questions (Jaccard >= 0.8) dropped, first 20 survivors kept",
+  "turns": "doppler.stage2_data.extract_turns, unmodified (D3 + D3.1-r2 surname resolution + D3.2 programme-host)"
+ },
+ "ambiguity_choices": [
+  {
+   "id": "A1",
+   "rule": "Addendum A item 4, clause 2: 'one-on-one interview programmes are preferred in the draw order before panels/roundtables'",
+   "ambiguity": "Generalized beyond dev, this could be read as a TEST-CLUSTER SELECTION rule (pick a one-on-one cluster as the test interview when the subject has one) rather than an ordering remark.",
+   "choice": "Test cluster = the chronologically last cluster, full stop (frozen D2, doppler.stage2_data.chronological_split). one_on_one is RECORDED as a per-subject flag, never used to select.",
+   "why_this_reading": "It is the reading the dev pipeline's code already embodies. chronological_split contains no one-on-one term anywhere; the string 'one_on_one' occurs in exactly one file in the repository, experiments/barlock_eligibility.py, where it is computed POST HOC from the already-selected test transcript's role counts and used only to report a pass-rate breakdown (88.6% one-on-one vs 44.0% panels). Critically, the 70% survival expectation (95% CI 57.5-80.1) that this tranche is scored against was measured that same way, so selecting on one-on-one here would raise survival above its own benchmark and make the comparison meaningless.",
+   "impact": "None on which cluster is tested; the flag is reported."
+  },
+  {
+   "id": "A2",
+   "rule": "one_on_one definition",
+   "ambiguity": "MediaSum has no programme-format field, so 'one-on-one' has to be operationalized.",
+   "choice": "The dev proxy, copied verbatim from experiments/barlock_eligibility.py: a test transcript whose D3 role counts have zero 'other' turns and at least one 'host' turn and at least one 'guest' turn.",
+   "why_this_reading": "It is the only definition the dev pipeline ever used, and it is the definition under which the 88.6%/44.0% split was measured.",
+   "impact": "Reported flag only."
+  },
+  {
+   "id": "A3",
+   "rule": "D2 invariant failures (dev: build_subject raises SystemExit)",
+   "ambiguity": "The dev pipeline aborted the whole run on a broken subject; at 140 confirmatory subjects that would let one bad row halt the tranche.",
+   "choice": "The same invariants are checked in the same order, but a violation marks THAT subject failed with the reason and the run continues. No invariant was weakened, and no subject is ever substituted for another.",
+   "why_this_reading": "Task constraint: 'if a subject's data is broken, mark failed with reason and continue (never silently substitute)'. The checks themselves are unchanged.",
+   "impact": "Failure taxonomy gains split_invariant_violated, transcript_missing_from_corpus, transcript_unparsable and turn_extraction_failed."
+  },
+  {
+   "id": "A4",
+   "rule": "Item-floor failure reasons",
+   "ambiguity": "Item 4 gives one floor (>= 3), so a plain reading has a single failure reason.",
+   "choice": "Split into zero_d4_items (n_items == 0) and below_item_floor (1 or 2 items). Both are failures; the floor is unchanged.",
+   "why_this_reading": "A zero-item subject is a named tripwire for this tranche, and it is also the exact dev pathology (C00292, DIPLOMATIC LICENSE roundtable). Separating them makes the tripwire legible in the histogram rather than hidden inside a generic bucket.",
+   "impact": "Reporting only; identical survivor set either way."
+  }
+ ],
+ "n_survived": 30,
+ "n_failed": 10,
+ "survival_rate": 0.75,
+ "survival_wilson95": [
+  0.5981,
+  0.8581
+ ],
+ "vs_preregistered_expectation": {
+  "expected_rate": 0.7,
+  "expected_ci95": [
+   0.575,
+   0.801
+  ],
+  "observed_rate": 0.75,
+  "observed_inside_expected_ci": true,
+  "expected_inside_observed_ci": true,
+  "below_ci_floor_0.575": false,
+  "delta_vs_expected": 0.05,
+  "projected_survivors_of_140_at_this_rate": 105.0,
+  "projected_of_140_wilson95": [
+   83.7,
+   120.1
+  ],
+  "note": "The expectation was measured on a seeded 60-candidate sample (experiments/barlock_eligibility.py, seed 73) drawn from the same eligible pool minus the dev subjects, using this same D2/D3/D4 code. It is a different sample from this tranche, so agreement is a check, not a tautology."
+ },
+ "failure_reason_histogram": {
+  "below_item_floor": 4,
+  "zero_d4_items": 6
+ },
+ "item_count_histogram": {
+  "0": 6,
+  "1": 2,
+  "2": 2,
+  "3": 17,
+  "4": 5,
+  "5": 6,
+  "7": 1,
+  "10": 1
+ },
+ "running_survival_every_20": [
+  {
+   "through_draw_pos": 20,
+   "n": 20,
+   "n_survived": 14,
+   "rate": 0.7,
+   "below_ci_floor_0.575": false
+  },
+  {
+   "through_draw_pos": 40,
+   "n": 40,
+   "n_survived": 30,
+   "rate": 0.75,
+   "below_ci_floor_0.575": false
+  }
+ ],
+ "programme_shape": {
+  "one_on_one": {
+   "n": 17,
+   "n_survived": 15,
+   "rate": 0.8824,
+   "mean_items": 3.29
+  },
+  "multi_speaker": {
+   "n": 23,
+   "n_survived": 15,
+   "rate": 0.6522,
+   "mean_items": 2.96
+  },
+  "note": "Descriptive only — one_on_one never selects a test cluster (ambiguity choice A1)."
+ },
+ "by_stratum": {
+  "long-tail": {
+   "n": 30,
+   "n_survived": 24,
+   "rate": 0.8,
+   "mean_items": 3.33
+  },
+  "article": {
+   "n": 10,
+   "n_survived": 6,
+   "rate": 0.6,
+   "mean_items": 2.4
+  }
+ },
+ "h7_eligible_survivors": 21,
+ "tripwires": {
+  "transcripts_failed_to_parse": [],
+  "zero_d4_items": [
+   {
+    "canonical_id": "C00192",
+    "draw_pos": 1,
+    "programme": "Morning Edition",
+    "one_on_one": false,
+    "n_qa_candidates": 6,
+    "drop_reasons": {
+     "not_interrogative": 4,
+     "question_too_short": 2
+    }
+   },
+   {
+    "canonical_id": "C00185",
+    "draw_pos": 4,
+    "programme": "Day to Day",
+    "one_on_one": false,
+    "n_qa_candidates": 0,
+    "drop_reasons": {}
+   },
+   {
+    "canonical_id": "C00737",
+    "draw_pos": 15,
+    "programme": "All Things Considered",
+    "one_on_one": true,
+    "n_qa_candidates": 1,
+    "drop_reasons": {
+     "intro_host_turn": 1
+    }
+   },
+   {
+    "canonical_id": "C00623",
+    "draw_pos": 19,
+    "programme": "CNN NEWSROOM",
+    "one_on_one": false,
+    "n_qa_candidates": 0,
+    "drop_reasons": {}
+   },
+   {
+    "canonical_id": "C02240",
+    "draw_pos": 20,
+    "programme": "AROUND THE WORLD",
+    "one_on_one": false,
+    "n_qa_candidates": 0,
+    "drop_reasons": {}
+   },
+   {
+    "canonical_id": "C02280",
+    "draw_pos": 22,
+    "programme": "News & Notes",
+    "one_on_one": false,
+    "n_qa_candidates": 1,
+    "drop_reasons": {
+     "intro_host_turn": 1
+    }
+   }
+  ],
+  "date_disagreements_pool_vs_corpus": [],
+  "split_invariant_violations": [],
+  "guest_word_warnings": [
+   {
+    "canonical_id": "C00890",
+    "draw_pos": 2,
+    "warnings": [
+     {
+      "transcript_id": "CNN-96355",
+      "extracted": 873,
+      "scan_cache": 751
+     },
+     {
+      "transcript_id": "CNN-96415",
+      "extracted": 393,
+      "scan_cache": 345
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00623",
+    "draw_pos": 19,
+    "warnings": [
+     {
+      "transcript_id": "CNN-104099",
+      "extracted": 538,
+      "scan_cache": 417
+     }
+    ]
+   },
+   {
+    "canonical_id": "C02240",
+    "draw_pos": 20,
+    "warnings": [
+     {
+      "transcript_id": "CNN-19755",
+      "extracted": 0,
+      "scan_cache": 552
+     },
+     {
+      "transcript_id": "CNN-87083",
+      "extracted": 0,
+      "scan_cache": 473
+     },
+     {
+      "transcript_id": "CNN-101147",
+      "extracted": 0,
+      "scan_cache": 304
+     },
+     {
+      "transcript_id": "CNN-129599",
+      "extracted": 0,
+      "scan_cache": 373
+     },
+     {
+      "transcript_id": "CNN-132128",
+      "extracted": 0,
+      "scan_cache": 312
+     },
+     {
+      "transcript_id": "CNN-162296",
+      "extracted": 0,
+      "scan_cache": 365
+     },
+     {
+      "transcript_id": "CNN-186635",
+      "extracted": 0,
+      "scan_cache": 759
+     },
+     {
+      "transcript_id": "CNN-206956",
+      "extracted": 0,
+      "scan_cache": 424
+     }
+    ]
+   },
+   {
+    "canonical_id": "C02500",
+    "draw_pos": 38,
+    "warnings": [
+     {
+      "transcript_id": "CNN-395445",
+      "extracted": 1499,
+      "scan_cache": 1131
+     }
+    ]
+   }
+  ],
+  "zero_guest_turns_in_test": [
+   {
+    "canonical_id": "C02240",
+    "draw_pos": 20,
+    "canonical_name": "St. John",
+    "test_role_counts": {
+     "host": 14,
+     "other": 26
+    },
+    "scan_cache_says_guest_words": [
+     552,
+     473,
+     304,
+     373,
+     312,
+     365,
+     759,
+     424
+    ]
+   }
+  ],
+  "subject_key_single_token": [
+   {
+    "canonical_id": "C02240",
+    "draw_pos": 20,
+    "canonical_name": "St. John",
+    "particle_surname": "True",
+    "comparison_tokens": [
+     [
+      "john"
+     ]
+    ],
+    "n_items": 0,
+    "survived": false
+   }
+  ]
+ },
+ "tripwires_fired": [
+  "guest_word_warnings",
+  "subject_key_single_token",
+  "zero_d4_items",
+  "zero_guest_turns_in_test"
+ ],
+ "cost": {
+  "api_calls": 0,
+  "gpu_hours": 0.0,
+  "cost_usd": 0.0,
+  "note": "CPU only. No model call, no network fetch, no GPU. $0.00."
+ },
+ "runtime_secs": 5.8,
+ "n_subjects_built_this_run": 40,
+ "n_subjects_reused": 0,
+ "subjects": [
+  {
+   "schema_version": 1,
+   "canonical_id": "C00192",
+   "canonical_name": "Anita Elash",
+   "draw_pos": 1,
+   "stratum": "long-tail",
+   "h7_eligible": false,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 580,
+   "item_floor": 3,
+   "survived": false,
+   "n_items": 0,
+   "failure_reason": "zero_d4_items",
+   "failure_detail": "0 D4-eligible item(s), floor is 3",
+   "test_cluster": {
+    "cluster_id": "cl4",
+    "transcript_id": "NPR-35217",
+    "date": "2008-04-25",
+    "programme": "Morning Edition",
+    "title": "French Artists' English-Language Songs Top Charts",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2008-04-25"
+    ],
+    "guest_words": 300
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 9,
+    "host": 8,
+    "other": 3
+   },
+   "n_grounding_clusters": 3,
+   "grounding_guest_words": 1139,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 6,
+   "drop_reasons": {
+    "not_interrogative": 4,
+    "question_too_short": 2
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00890",
+   "canonical_name": "Holloway Twitty",
+   "draw_pos": 2,
+   "stratum": "long-tail",
+   "h7_eligible": false,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 213,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 10,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl1",
+    "transcript_id": "CNN-103187",
+    "date": "2006-02-23",
+    "programme": "CNN LARRY KING LIVE",
+    "title": "",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2006-02-23"
+    ],
+    "guest_words": 1040
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 15,
+    "host": 60,
+    "other": 114
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 1266,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 12,
+   "drop_reasons": {
+    "answer_too_short": 1,
+    "question_too_short": 1
+   },
+   "guest_word_warnings": [
+    {
+     "transcript_id": "CNN-96355",
+     "extracted": 873,
+     "scan_cache": 751
+    },
+    {
+     "transcript_id": "CNN-96415",
+     "extracted": 393,
+     "scan_cache": 345
+    }
+   ],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00110",
+   "canonical_name": "Ali Vaez",
+   "draw_pos": 3,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 28,
+   "span_days_dedup": 1457,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl28",
+    "transcript_id": "NPR-8519",
+    "date": "2019-09-17",
+    "programme": "All Things Considered",
+    "title": "Understanding The Latest In Iran-Saudi Tensions",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2019-09-17"
+    ],
+    "guest_words": 510
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 8,
+    "host": 10
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 852,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 7,
+   "drop_reasons": {
+    "not_interrogative": 3,
+    "question_too_short": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00185",
+   "canonical_name": "Angela Shelton",
+   "draw_pos": 4,
+   "stratum": "article",
+   "h7_eligible": false,
+   "wiki_status": "has-page",
+   "n_dedup_clusters": 11,
+   "span_days_dedup": 532,
+   "item_floor": 3,
+   "survived": false,
+   "n_items": 0,
+   "failure_reason": "zero_d4_items",
+   "failure_detail": "0 D4-eligible item(s), floor is 3",
+   "test_cluster": {
+    "cluster_id": "cl11",
+    "transcript_id": "NPR-8829",
+    "date": "2009-02-06",
+    "programme": "Day to Day",
+    "title": "Is Romance Recession-Proof?",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2009-02-06"
+    ],
+    "guest_words": 595
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 34,
+    "host": 2,
+    "other": 45
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 1161,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 0,
+   "drop_reasons": {},
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C01842",
+   "canonical_name": "Noam Levey",
+   "draw_pos": 5,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 2746,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 4,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl6",
+    "transcript_id": "NPR-9944",
+    "date": "2019-07-09",
+    "programme": "Morning Edition",
+    "title": "News Brief: Jeffrey Epstein, Hong Kong Bill, Obamacare Trial",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2019-07-09"
+    ],
+    "guest_words": 337
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 6,
+    "host": 42,
+    "other": 3
+   },
+   "n_grounding_clusters": 4,
+   "grounding_guest_words": 2023,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 6,
+   "drop_reasons": {
+    "not_interrogative": 2
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00621",
+   "canonical_name": "Dawn Turner Trice",
+   "draw_pos": 6,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 11,
+   "span_days_dedup": 1656,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl4",
+    "transcript_id": "NPR-46211",
+    "date": "2009-12-08",
+    "programme": "Talk of the Nation",
+    "title": "Talking Race: Disney's Princess Tiana",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2009-12-08"
+    ],
+    "guest_words": 1078
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 21,
+    "host": 31,
+    "other": 16
+   },
+   "n_grounding_clusters": 7,
+   "grounding_guest_words": 7153,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 13,
+   "drop_reasons": {
+    "not_interrogative": 5,
+    "question_too_short": 5
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00203",
+   "canonical_name": "Anna Greenberg",
+   "draw_pos": 7,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 22,
+   "span_days_dedup": 2312,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 5,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl21",
+    "transcript_id": "NPR-8117",
+    "date": "2013-06-26",
+    "programme": "Talk of the Nation",
+    "title": "A Look Ahead And A Farewell To The Political Junkie",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2013-06-26"
+    ],
+    "guest_words": 1840
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 36,
+    "host": 156,
+    "other": 53
+   },
+   "n_grounding_clusters": 7,
+   "grounding_guest_words": 8984,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 19,
+   "drop_reasons": {
+    "answer_too_short": 1,
+    "not_interrogative": 9,
+    "question_too_short": 4
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C01464",
+   "canonical_name": "La Salla",
+   "draw_pos": 8,
+   "stratum": "article",
+   "h7_eligible": false,
+   "wiki_status": "has-page",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 277,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 5,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl7",
+    "transcript_id": "CNN-29425",
+    "date": "2001-05-01",
+    "programme": "CNN AHEAD OF THE CURVE",
+    "title": "",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2001-05-01"
+    ],
+    "guest_words": 669
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 10,
+    "host": 11
+   },
+   "n_grounding_clusters": 6,
+   "grounding_guest_words": 4611,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 10,
+   "drop_reasons": {
+    "not_interrogative": 5
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C01746",
+   "canonical_name": "Michele Dunne",
+   "draw_pos": 9,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 12,
+   "span_days_dedup": 1251,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl7",
+    "transcript_id": "NPR-26727",
+    "date": "2014-07-21",
+    "programme": "All Things Considered",
+    "title": "Can The Egyptian Regime Still Play Peace Broker In Gaza Strife?",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2014-07-21"
+    ],
+    "guest_words": 515
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 7,
+    "host": 9,
+    "other": 2
+   },
+   "n_grounding_clusters": 3,
+   "grounding_guest_words": 1015,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 7,
+   "drop_reasons": {
+    "answer_too_short": 1,
+    "not_interrogative": 3
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00846",
+   "canonical_name": "Grayson Schaffer",
+   "draw_pos": 10,
+   "stratum": "long-tail",
+   "h7_eligible": false,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 498,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 4,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl2",
+    "transcript_id": "NPR-11851",
+    "date": "2015-08-29",
+    "programme": "Weekend Edition Saturday",
+    "title": "Months After Deadly Quake, Climbers Again May Go Up Mt. Everest",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2015-08-29"
+    ],
+    "guest_words": 518
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 8,
+    "host": 8
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 1191,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 7,
+   "drop_reasons": {
+    "answer_too_short": 1,
+    "intro_host_turn": 1,
+    "not_interrogative": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00746",
+   "canonical_name": "Emerald Garner",
+   "draw_pos": 11,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 23,
+   "span_days_dedup": 1716,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl23",
+    "transcript_id": "NPR-6604",
+    "date": "2019-08-20",
+    "programme": "All Things Considered",
+    "title": "Eric Garner's Daughter Reacts To NYPD's Firing Of Officer Involved In 2014 Death",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2019-08-20"
+    ],
+    "guest_words": 386
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 9,
+    "host": 10,
+    "other": 1
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 737,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 8,
+   "drop_reasons": {
+    "not_interrogative": 4,
+    "question_too_short": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C01255",
+   "canonical_name": "John Yoo",
+   "draw_pos": 12,
+   "stratum": "article",
+   "h7_eligible": false,
+   "wiki_status": "has-page",
+   "n_dedup_clusters": 34,
+   "span_days_dedup": 457,
+   "item_floor": 3,
+   "survived": false,
+   "n_items": 2,
+   "failure_reason": "below_item_floor",
+   "failure_detail": "2 D4-eligible item(s), floor is 3",
+   "test_cluster": {
+    "cluster_id": "cl34",
+    "transcript_id": "NPR-5865",
+    "date": "2006-09-18",
+    "programme": "Talk of the Nation",
+    "title": "In Defense of a Strong Executive Branch",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2006-09-18"
+    ],
+    "guest_words": 1582
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 21,
+    "host": 33,
+    "other": 12
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 1174,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 12,
+   "drop_reasons": {
+    "not_interrogative": 9,
+    "question_too_short": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00522",
+   "canonical_name": "Courtney Nguyen",
+   "draw_pos": 13,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 1181,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl4",
+    "transcript_id": "NPR-4597",
+    "date": "2018-09-01",
+    "programme": "All Things Considered",
+    "title": "The US Open Accused Of Double Standards For Tennis Players",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2018-09-01"
+    ],
+    "guest_words": 1026
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 11,
+    "host": 7
+   },
+   "n_grounding_clusters": 4,
+   "grounding_guest_words": 1811,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 7,
+   "drop_reasons": {
+    "intro_host_turn": 1,
+    "not_interrogative": 3
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00620",
+   "canonical_name": "David Winston",
+   "draw_pos": 14,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 31,
+   "span_days_dedup": 5003,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 5,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl24",
+    "transcript_id": "NPR-1009",
+    "date": "2019-01-24",
+    "programme": "All Things Considered",
+    "title": "Republican Strategist David Winston Discusses Trump's Strategy Amid The Shutdown",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2019-01-24"
+    ],
+    "guest_words": 586
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 10,
+    "host": 9
+   },
+   "n_grounding_clusters": 4,
+   "grounding_guest_words": 2191,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 8,
+   "drop_reasons": {
+    "answer_too_short": 2,
+    "not_interrogative": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00737",
+   "canonical_name": "Elissa Ely",
+   "draw_pos": 15,
+   "stratum": "long-tail",
+   "h7_eligible": false,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 393,
+   "item_floor": 3,
+   "survived": false,
+   "n_items": 0,
+   "failure_reason": "zero_d4_items",
+   "failure_detail": "0 D4-eligible item(s), floor is 3",
+   "test_cluster": {
+    "cluster_id": "cl1",
+    "transcript_id": "NPR-41897",
+    "date": "2006-09-08",
+    "programme": "All Things Considered",
+    "title": "Tarot vs. Psychiatry in the Hope for Help",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2006-09-08"
+    ],
+    "guest_words": 371
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 8,
+    "host": 2
+   },
+   "n_grounding_clusters": 3,
+   "grounding_guest_words": 1101,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 1,
+   "drop_reasons": {
+    "intro_host_turn": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00169",
+   "canonical_name": "Andrew Roth",
+   "draw_pos": 16,
+   "stratum": "article",
+   "h7_eligible": true,
+   "wiki_status": "has-page",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 2014,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl6",
+    "transcript_id": "NPR-7849",
+    "date": "2019-06-09",
+    "programme": "Weekend Edition Sunday",
+    "title": "Journalist Arrested In Moscow",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2019-06-09"
+    ],
+    "guest_words": 688
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 9,
+    "host": 7
+   },
+   "n_grounding_clusters": 3,
+   "grounding_guest_words": 1353,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 6,
+   "drop_reasons": {
+    "intro_host_turn": 1,
+    "not_interrogative": 1,
+    "question_too_short": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C01800",
+   "canonical_name": "Muhannad Hadi",
+   "draw_pos": 17,
+   "stratum": "long-tail",
+   "h7_eligible": false,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 538,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 5,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl4",
+    "transcript_id": "NPR-23471",
+    "date": "2014-09-24",
+    "programme": "Morning Edition",
+    "title": "Syrian Refugees Overwhelm World Food Program's Resources",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2014-09-24"
+    ],
+    "guest_words": 538
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 8,
+    "host": 8
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 1050,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 8,
+   "drop_reasons": {
+    "answer_too_short": 1,
+    "intro_host_turn": 1,
+    "not_interrogative": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00897",
+   "canonical_name": "Howard Davidowitz",
+   "draw_pos": 18,
+   "stratum": "long-tail",
+   "h7_eligible": false,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 23,
+   "span_days_dedup": 465,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl20",
+    "transcript_id": "NPR-46601",
+    "date": "2006-11-27",
+    "programme": "Day to Day",
+    "title": "Retail Weekend: Penney's Shines, Wal-Mart Weak",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2006-11-27"
+    ],
+    "guest_words": 427
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 7,
+    "host": 9
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 816,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 6,
+   "drop_reasons": {
+    "not_interrogative": 2,
+    "question_too_short": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00623",
+   "canonical_name": "De Hoop Scheffer",
+   "draw_pos": 19,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 8,
+   "span_days_dedup": 964,
+   "item_floor": 3,
+   "survived": false,
+   "n_items": 0,
+   "failure_reason": "zero_d4_items",
+   "failure_detail": "0 D4-eligible item(s), floor is 3",
+   "test_cluster": {
+    "cluster_id": "cl2",
+    "transcript_id": "CNN-110494",
+    "date": "2006-09-20",
+    "programme": "CNN NEWSROOM",
+    "title": "",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2006-09-20"
+    ],
+    "guest_words": 624
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 9,
+    "other": 15
+   },
+   "n_grounding_clusters": 3,
+   "grounding_guest_words": 2155,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 0,
+   "drop_reasons": {},
+   "guest_word_warnings": [
+    {
+     "transcript_id": "CNN-104099",
+     "extracted": 538,
+     "scan_cache": 417
+    }
+   ],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C02240",
+   "canonical_name": "St. John",
+   "draw_pos": 20,
+   "stratum": "article",
+   "h7_eligible": true,
+   "wiki_status": "has-page",
+   "n_dedup_clusters": 26,
+   "span_days_dedup": 4570,
+   "item_floor": 3,
+   "survived": false,
+   "n_items": 0,
+   "failure_reason": "zero_d4_items",
+   "failure_detail": "0 D4-eligible item(s), floor is 3",
+   "test_cluster": {
+    "cluster_id": "cl20",
+    "transcript_id": "CNN-206956",
+    "date": "2013-05-17",
+    "programme": "AROUND THE WORLD",
+    "title": "",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2013-05-17"
+    ],
+    "guest_words": 0
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "host": 14,
+    "other": 26
+   },
+   "n_grounding_clusters": 7,
+   "grounding_guest_words": 0,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 0,
+   "drop_reasons": {},
+   "guest_word_warnings": [
+    {
+     "transcript_id": "CNN-19755",
+     "extracted": 0,
+     "scan_cache": 552
+    },
+    {
+     "transcript_id": "CNN-87083",
+     "extracted": 0,
+     "scan_cache": 473
+    },
+    {
+     "transcript_id": "CNN-101147",
+     "extracted": 0,
+     "scan_cache": 304
+    },
+    {
+     "transcript_id": "CNN-129599",
+     "extracted": 0,
+     "scan_cache": 373
+    },
+    {
+     "transcript_id": "CNN-132128",
+     "extracted": 0,
+     "scan_cache": 312
+    },
+    {
+     "transcript_id": "CNN-162296",
+     "extracted": 0,
+     "scan_cache": 365
+    },
+    {
+     "transcript_id": "CNN-186635",
+     "extracted": 0,
+     "scan_cache": 759
+    },
+    {
+     "transcript_id": "CNN-206956",
+     "extracted": 0,
+     "scan_cache": 424
+    }
+   ],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C01904",
+   "canonical_name": "Puneet Ahluwalia",
+   "draw_pos": 21,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 784,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 4,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl5",
+    "transcript_id": "NPR-48459",
+    "date": "2018-03-10",
+    "programme": "All Things Considered",
+    "title": "Barbershop: Stormy Daniels Scandal, GOP Midterms Outlook",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2018-03-10"
+    ],
+    "guest_words": 383
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 11,
+    "host": 25,
+    "other": 14
+   },
+   "n_grounding_clusters": 3,
+   "grounding_guest_words": 1233,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 10,
+   "drop_reasons": {
+    "intro_host_turn": 1,
+    "not_interrogative": 3,
+    "question_too_short": 2
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C02280",
+   "canonical_name": "Steven Ivory",
+   "draw_pos": 22,
+   "stratum": "long-tail",
+   "h7_eligible": false,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 429,
+   "item_floor": 3,
+   "survived": false,
+   "n_items": 0,
+   "failure_reason": "zero_d4_items",
+   "failure_detail": "0 D4-eligible item(s), floor is 3",
+   "test_cluster": {
+    "cluster_id": "cl2",
+    "transcript_id": "NPR-2194",
+    "date": "2007-02-28",
+    "programme": "News & Notes",
+    "title": "A Black History Month Pop Quiz",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2007-02-28"
+    ],
+    "guest_words": 478
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 22,
+    "host": 3,
+    "other": 23
+   },
+   "n_grounding_clusters": 3,
+   "grounding_guest_words": 1674,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 1,
+   "drop_reasons": {
+    "intro_host_turn": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00818",
+   "canonical_name": "George Hobica",
+   "draw_pos": 23,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 10,
+   "span_days_dedup": 1742,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl9",
+    "transcript_id": "NPR-35642",
+    "date": "2010-04-20",
+    "programme": "All Things Considered",
+    "title": "In Ash Aftermath, The Great Travel Unwind",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2010-04-20"
+    ],
+    "guest_words": 423
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 7,
+    "host": 8
+   },
+   "n_grounding_clusters": 3,
+   "grounding_guest_words": 1459,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 7,
+   "drop_reasons": {
+    "intro_host_turn": 1,
+    "not_interrogative": 2,
+    "question_too_short": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C01867",
+   "canonical_name": "Paul Barrett",
+   "draw_pos": 24,
+   "stratum": "article",
+   "h7_eligible": true,
+   "wiki_status": "has-page",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 2368,
+   "item_floor": 3,
+   "survived": false,
+   "n_items": 1,
+   "failure_reason": "below_item_floor",
+   "failure_detail": "1 D4-eligible item(s), floor is 3",
+   "test_cluster": {
+    "cluster_id": "cl4",
+    "transcript_id": "NPR-8840",
+    "date": "2019-09-08",
+    "programme": "All Things Considered",
+    "title": "Troll Watch: Deepfakes And 2020",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2019-09-08"
+    ],
+    "guest_words": 455
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 8,
+    "host": 9,
+    "other": 1
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 1056,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 6,
+   "drop_reasons": {
+    "intro_host_turn": 1,
+    "not_interrogative": 4
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00830",
+   "canonical_name": "Gideon Long",
+   "draw_pos": 25,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 2595,
+   "item_floor": 3,
+   "survived": false,
+   "n_items": 1,
+   "failure_reason": "below_item_floor",
+   "failure_detail": "1 D4-eligible item(s), floor is 3",
+   "test_cluster": {
+    "cluster_id": "cl1",
+    "transcript_id": "NPR-14048",
+    "date": "2017-08-04",
+    "programme": "Morning Edition",
+    "title": "New 'Constituent Assembly' To Sit In Venezuela",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2017-08-04"
+    ],
+    "guest_words": 441
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 9,
+    "host": 6
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 735,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 5,
+   "drop_reasons": {
+    "not_interrogative": 4
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C01891",
+   "canonical_name": "Peter Sokolowski",
+   "draw_pos": 26,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 1747,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl3",
+    "transcript_id": "NPR-47564",
+    "date": "2017-12-25",
+    "programme": "Morning Edition",
+    "title": "Merriam-Webster's Word Of The Year Is Feminism",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2017-12-25"
+    ],
+    "guest_words": 431
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 9,
+    "host": 10
+   },
+   "n_grounding_clusters": 3,
+   "grounding_guest_words": 3262,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 8,
+   "drop_reasons": {
+    "answer_too_short": 2,
+    "not_interrogative": 1,
+    "question_too_short": 2
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00673",
+   "canonical_name": "Diane Brady",
+   "draw_pos": 27,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 25,
+   "span_days_dedup": 834,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl22",
+    "transcript_id": "NPR-34093",
+    "date": "2010-12-28",
+    "programme": "All Things Considered",
+    "title": "Holiday Shoppers Push Up Retail Sales",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2010-12-28"
+    ],
+    "guest_words": 390
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 11,
+    "host": 8,
+    "other": 1
+   },
+   "n_grounding_clusters": 3,
+   "grounding_guest_words": 1661,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 6,
+   "drop_reasons": {
+    "not_interrogative": 3
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C02359",
+   "canonical_name": "Ted Shaw",
+   "draw_pos": 28,
+   "stratum": "article",
+   "h7_eligible": true,
+   "wiki_status": "has-page",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 770,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl5",
+    "transcript_id": "NPR-481",
+    "date": "2007-10-15",
+    "programme": "News & Notes",
+    "title": "Fighting for Civil Rights in the Courts",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2007-10-15"
+    ],
+    "guest_words": 733
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 12,
+    "host": 17,
+    "other": 24
+   },
+   "n_grounding_clusters": 3,
+   "grounding_guest_words": 1642,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 4,
+   "drop_reasons": {
+    "not_interrogative": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00819",
+   "canonical_name": "George Joffe",
+   "draw_pos": 29,
+   "stratum": "long-tail",
+   "h7_eligible": false,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 700,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 5,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl8",
+    "transcript_id": "NPR-5806",
+    "date": "2013-02-04",
+    "programme": "Talk of the Nation",
+    "title": "The Role Of The Colonizer: France's Intervention In Mali",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2013-02-04"
+    ],
+    "guest_words": 1140
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 20,
+    "host": 41,
+    "other": 48
+   },
+   "n_grounding_clusters": 7,
+   "grounding_guest_words": 12567,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 6,
+   "drop_reasons": {
+    "not_interrogative": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00050",
+   "canonical_name": "Adam Pertman",
+   "draw_pos": 30,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 13,
+   "span_days_dedup": 2268,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 4,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl10",
+    "transcript_id": "NPR-30179",
+    "date": "2012-12-28",
+    "programme": "All Things Considered",
+    "title": "International Adoptions On Downward Trend",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2012-12-28"
+    ],
+    "guest_words": 483
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 11,
+    "host": 8
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 1785,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 6,
+   "drop_reasons": {
+    "not_interrogative": 2
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C01752",
+   "canonical_name": "Michelle Faul",
+   "draw_pos": 31,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 1404,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl1",
+    "transcript_id": "NPR-14833",
+    "date": "2017-11-19",
+    "programme": "All Things Considered",
+    "title": "Who is Emmerson Mnangagwa? Zimabawe Cautious Of Potential Next President",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2017-11-19"
+    ],
+    "guest_words": 427
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 6,
+    "host": 7
+   },
+   "n_grounding_clusters": 4,
+   "grounding_guest_words": 2027,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 6,
+   "drop_reasons": {
+    "not_interrogative": 3
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00593",
+   "canonical_name": "David Henry Sterry",
+   "draw_pos": 32,
+   "stratum": "article",
+   "h7_eligible": true,
+   "wiki_status": "has-page",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 2779,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 4,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl4",
+    "transcript_id": "NPR-8091",
+    "date": "2018-07-01",
+    "programme": "Weekend Edition Sunday",
+    "title": "The Art Of 'Flopping' In Soccer",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2018-07-01"
+    ],
+    "guest_words": 395
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 11,
+    "host": 13,
+    "other": 1
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 871,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 11,
+   "drop_reasons": {
+    "answer_too_short": 3,
+    "not_interrogative": 2,
+    "question_too_short": 2
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00344",
+   "canonical_name": "Bob Meadows",
+   "draw_pos": 33,
+   "stratum": "long-tail",
+   "h7_eligible": false,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 36,
+   "span_days_dedup": 691,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl2",
+    "transcript_id": "NPR-1896",
+    "date": "2007-04-03",
+    "programme": "News & Notes",
+    "title": "Roundtable: Foreclosures Rise, Big Easy Reconstruction",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2007-04-03"
+    ],
+    "guest_words": 552
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 9,
+    "host": 29,
+    "other": 36
+   },
+   "n_grounding_clusters": 32,
+   "grounding_guest_words": 17600,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 3,
+   "drop_reasons": {},
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00563",
+   "canonical_name": "Danica Coto",
+   "draw_pos": 34,
+   "stratum": "long-tail",
+   "h7_eligible": false,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 237,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 5,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl1",
+    "transcript_id": "NPR-13943",
+    "date": "2017-12-30",
+    "programme": "All Things Considered",
+    "title": "As Puerto Rico Rebuilds, Police Protest Working Conditions",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2017-12-30"
+    ],
+    "guest_words": 430
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 7,
+    "host": 7
+   },
+   "n_grounding_clusters": 4,
+   "grounding_guest_words": 1715,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 7,
+   "drop_reasons": {
+    "intro_host_turn": 1,
+    "not_interrogative": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C01180",
+   "canonical_name": "Jimi Izrael",
+   "draw_pos": 35,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 15,
+   "span_days_dedup": 3827,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl7",
+    "transcript_id": "NPR-23445",
+    "date": "2015-12-05",
+    "programme": "All Things Considered",
+    "title": "Barbershop: San Bernardino, Chicago And The Yellow Brick Road",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2015-12-05"
+    ],
+    "guest_words": 659
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 10,
+    "host": 19,
+    "other": 20
+   },
+   "n_grounding_clusters": 9,
+   "grounding_guest_words": 5035,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 6,
+   "drop_reasons": {
+    "answer_too_short": 1,
+    "not_interrogative": 1,
+    "question_too_short": 1
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C02318",
+   "canonical_name": "Sylvie Kauffmann",
+   "draw_pos": 36,
+   "stratum": "article",
+   "h7_eligible": true,
+   "wiki_status": "has-page",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 2157,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl3",
+    "transcript_id": "NPR-18528",
+    "date": "2017-05-08",
+    "programme": "All Things Considered",
+    "title": "Emmanuel Macron Declared French President After Running Pro-European Campaign",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2017-05-08"
+    ],
+    "guest_words": 451
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 9,
+    "host": 6
+   },
+   "n_grounding_clusters": 4,
+   "grounding_guest_words": 1839,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 6,
+   "drop_reasons": {
+    "intro_host_turn": 1,
+    "not_interrogative": 2
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C01673",
+   "canonical_name": "Matt Tait",
+   "draw_pos": 37,
+   "stratum": "long-tail",
+   "h7_eligible": false,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 556,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl6",
+    "transcript_id": "NPR-45663",
+    "date": "2018-07-14",
+    "programme": "All Things Considered",
+    "title": "Cybersecurity Expert Explains Takeways From The Russia Indictments",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2018-07-14"
+    ],
+    "guest_words": 458
+   },
+   "one_on_one": true,
+   "test_role_counts": {
+    "guest": 8,
+    "host": 6
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 1214,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 5,
+   "drop_reasons": {
+    "not_interrogative": 2
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C02500",
+   "canonical_name": "Von Der Leyen",
+   "draw_pos": 38,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 10,
+   "span_days_dedup": 1689,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 7,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl9",
+    "transcript_id": "CNN-399235",
+    "date": "2020-05-04",
+    "programme": "CNN'S AMANPOUR",
+    "title": "",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2020-05-04"
+    ],
+    "guest_words": 1585
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 14,
+    "host": 48,
+    "other": 29
+   },
+   "n_grounding_clusters": 5,
+   "grounding_guest_words": 5526,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 14,
+   "drop_reasons": {
+    "answer_too_short": 1,
+    "intro_host_turn": 1,
+    "not_interrogative": 5
+   },
+   "guest_word_warnings": [
+    {
+     "transcript_id": "CNN-395445",
+     "extracted": 1499,
+     "scan_cache": 1131
+    }
+   ],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00854",
+   "canonical_name": "Gregory Johnsen",
+   "draw_pos": 39,
+   "stratum": "long-tail",
+   "h7_eligible": true,
+   "wiki_status": "long-tail",
+   "n_dedup_clusters": 17,
+   "span_days_dedup": 2052,
+   "item_floor": 3,
+   "survived": false,
+   "n_items": 2,
+   "failure_reason": "below_item_floor",
+   "failure_detail": "2 D4-eligible item(s), floor is 3",
+   "test_cluster": {
+    "cluster_id": "cl10",
+    "transcript_id": "NPR-26278",
+    "date": "2014-09-11",
+    "programme": "All Things Considered",
+    "title": "Yemen May Not Offer Best Model For Obama's ISIS Plan",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2014-09-11"
+    ],
+    "guest_words": 513
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 5,
+    "host": 7,
+    "other": 1
+   },
+   "n_grounding_clusters": 7,
+   "grounding_guest_words": 5928,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 5,
+   "drop_reasons": {
+    "not_interrogative": 3
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  },
+  {
+   "schema_version": 1,
+   "canonical_id": "C00697",
+   "canonical_name": "Doyle Mcmanus",
+   "draw_pos": 40,
+   "stratum": "article",
+   "h7_eligible": true,
+   "wiki_status": "has-page-fuzzy",
+   "n_dedup_clusters": 20,
+   "span_days_dedup": 2587,
+   "item_floor": 3,
+   "survived": true,
+   "n_items": 3,
+   "failure_reason": null,
+   "failure_detail": null,
+   "test_cluster": {
+    "cluster_id": "cl19",
+    "transcript_id": "NPR-28633",
+    "date": "2013-07-27",
+    "programme": "All Things Considered",
+    "title": "Week In News: Economic State, Power Of NSA",
+    "n_transcripts_in_cluster": 1,
+    "member_dates": [
+     "2013-07-27"
+    ],
+    "guest_words": 441
+   },
+   "one_on_one": false,
+   "test_role_counts": {
+    "guest": 8,
+    "host": 7,
+    "other": 1
+   },
+   "n_grounding_clusters": 2,
+   "grounding_guest_words": 2182,
+   "n_excluded_clusters": 0,
+   "n_qa_candidates": 6,
+   "drop_reasons": {
+    "not_interrogative": 3
+   },
+   "guest_word_warnings": [],
+   "date_disagreements": []
+  }
+ ]
+}

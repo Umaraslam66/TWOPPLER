@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00846",
+ "canonical_name": "Grayson Schaffer",
+ "draw_pos": 10,
+ "stratum": "long-tail",
+ "h7_eligible": false,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 5,
+ "span_days_dedup": 498,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 4,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl2",
+  "transcript_id": "NPR-11851",
+  "date": "2015-08-29",
+  "programme": "Weekend Edition Saturday",
+  "title": "Months After Deadly Quake, Climbers Again May Go Up Mt. Everest",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2015-08-29"
+  ],
+  "guest_words": 518
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 8,
+  "host": 8
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 1191,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 7,
+ "drop_reasons": {
+  "answer_too_short": 1,
+  "intro_host_turn": 1,
+  "not_interrogative": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

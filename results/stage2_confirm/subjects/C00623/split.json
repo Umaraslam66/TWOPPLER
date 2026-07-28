@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C00623",
+ "canonical_name": "De Hoop Scheffer",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "CNN-81606",
+   "date": "2004-01-30",
+   "program": "NEWS FROM CNN",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2004-01-30"
+   ],
+   "guest_words": 748
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "CNN-95071",
+   "date": "2005-06-03",
+   "program": "NEWS FROM CNN",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-06-03"
+   ],
+   "guest_words": 869
+  },
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "CNN-104099",
+   "date": "2006-03-21",
+   "program": "YOUR WORLD TODAY",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-03-21"
+   ],
+   "guest_words": 538
+  }
+ ],
+ "test": {
+  "cluster_id": "cl2",
+  "transcript_id": "CNN-110494",
+  "date": "2006-09-20",
+  "program": "CNN NEWSROOM",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2006-09-20"
+  ],
+  "guest_words": 624
+ },
+ "excluded_same_date": []
+}

@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C02280",
+ "canonical_name": "Steven Ivory",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-46218",
+   "date": "2005-12-26",
+   "program": "News & Notes",
+   "title": "Roundtable: Holiday Music",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-12-26"
+   ],
+   "guest_words": 443
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-45184",
+   "date": "2006-03-24",
+   "program": "News & Notes",
+   "title": "Remembering a Job that Opened Doors",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-03-24"
+   ],
+   "guest_words": 599
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-4830",
+   "date": "2006-06-30",
+   "program": "News & Notes",
+   "title": "A Controversial Word with Steven Ivory",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-06-30"
+   ],
+   "guest_words": 632
+  }
+ ],
+ "test": {
+  "cluster_id": "cl2",
+  "transcript_id": "NPR-2194",
+  "date": "2007-02-28",
+  "program": "News & Notes",
+  "title": "A Black History Month Pop Quiz",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2007-02-28"
+  ],
+  "guest_words": 478
+ },
+ "excluded_same_date": []
+}

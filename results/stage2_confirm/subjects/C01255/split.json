@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C01255",
+ "canonical_name": "John Yoo",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl30",
+   "transcript_id": "NPR-19516",
+   "date": "2005-06-18",
+   "program": "Weekend Edition Saturday",
+   "title": "Debating Conditions at Guantanamo",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-06-18"
+   ],
+   "guest_words": 594
+  },
+  {
+   "cluster_id": "cl32",
+   "transcript_id": "NPR-38331",
+   "date": "2006-07-13",
+   "program": "Morning Edition",
+   "title": "Yoo Downplays Importance of Supreme Court Ruling",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-07-13"
+   ],
+   "guest_words": 580
+  }
+ ],
+ "test": {
+  "cluster_id": "cl34",
+  "transcript_id": "NPR-5865",
+  "date": "2006-09-18",
+  "program": "Talk of the Nation",
+  "title": "In Defense of a Strong Executive Branch",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2006-09-18"
+  ],
+  "guest_words": 1582
+ },
+ "excluded_same_date": []
+}

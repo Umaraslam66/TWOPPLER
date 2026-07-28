@@ -1,0 +1,104 @@
+{
+ "canonical_id": "C00621",
+ "canonical_name": "Dawn Turner Trice",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-47919",
+   "date": "2005-05-27",
+   "program": "News & Notes",
+   "title": "Roundtable: Veterans Sue Rumsfeld, 'Moral Retards'",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-05-27"
+   ],
+   "guest_words": 559
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-47844",
+   "date": "2005-06-08",
+   "program": "News & Notes",
+   "title": "Roundtable: African Debt, Anti-Lynching Apology",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-06-08"
+   ],
+   "guest_words": 624
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-46603",
+   "date": "2005-10-19",
+   "program": "News & Notes",
+   "title": "Roundtable: School Segregation, Gulf Coast Immigration",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-10-19"
+   ],
+   "guest_words": 662
+  },
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-48474",
+   "date": "2008-12-30",
+   "program": "Talk of the Nation",
+   "title": "Satire, Race And The 'Magic Negro'",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-12-30"
+   ],
+   "guest_words": 1492
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-48179",
+   "date": "2009-02-12",
+   "program": "Talk of the Nation",
+   "title": "Do We Need A Black History Month?",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2009-02-12"
+   ],
+   "guest_words": 1338
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-46652",
+   "date": "2009-07-28",
+   "program": "Talk of the Nation",
+   "title": "Graves Violated At Burr Oak Cemetery",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2009-07-28"
+   ],
+   "guest_words": 1185
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-46366",
+   "date": "2009-11-17",
+   "program": "Talk of the Nation",
+   "title": "Modern Blackface: Offensive Or Just Irreverent?",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2009-11-17"
+   ],
+   "guest_words": 1293
+  }
+ ],
+ "test": {
+  "cluster_id": "cl4",
+  "transcript_id": "NPR-46211",
+  "date": "2009-12-08",
+  "program": "Talk of the Nation",
+  "title": "Talking Race: Disney's Princess Tiana",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2009-12-08"
+  ],
+  "guest_words": 1078
+ },
+ "excluded_same_date": []
+}

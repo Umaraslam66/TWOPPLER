@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00697",
+ "canonical_name": "Doyle Mcmanus",
+ "draw_pos": 40,
+ "stratum": "article",
+ "h7_eligible": true,
+ "wiki_status": "has-page-fuzzy",
+ "n_dedup_clusters": 20,
+ "span_days_dedup": 2587,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 3,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl19",
+  "transcript_id": "NPR-28633",
+  "date": "2013-07-27",
+  "programme": "All Things Considered",
+  "title": "Week In News: Economic State, Power Of NSA",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-07-27"
+  ],
+  "guest_words": 441
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 8,
+  "host": 7,
+  "other": 1
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 2182,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 6,
+ "drop_reasons": {
+  "not_interrogative": 3
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

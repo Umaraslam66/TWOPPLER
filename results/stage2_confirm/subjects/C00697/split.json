@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C00697",
+ "canonical_name": "Doyle Mcmanus",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl20",
+   "transcript_id": "NPR-48881",
+   "date": "2006-06-27",
+   "program": "Day to Day",
+   "title": "Financial Snooping Stories Put Media in Spotlight",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-06-27"
+   ],
+   "guest_words": 359
+  },
+  {
+   "cluster_id": "cl18",
+   "transcript_id": "NPR-10759",
+   "date": "2012-06-18",
+   "program": "Talk of the Nation",
+   "title": "Personal Stories Behind Europe's Fiscal Instability",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-06-18"
+   ],
+   "guest_words": 1823
+  }
+ ],
+ "test": {
+  "cluster_id": "cl19",
+  "transcript_id": "NPR-28633",
+  "date": "2013-07-27",
+  "program": "All Things Considered",
+  "title": "Week In News: Economic State, Power Of NSA",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-07-27"
+  ],
+  "guest_words": 441
+ },
+ "excluded_same_date": []
+}

@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C00737",
+ "canonical_name": "Elissa Ely",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-43863",
+   "date": "2005-08-11",
+   "program": "All Things Considered",
+   "title": "The Hard Way to Get Board-Certified",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-08-11"
+   ],
+   "guest_words": 378
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-43008",
+   "date": "2006-01-16",
+   "program": "All Things Considered",
+   "title": "The Endodontist",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-01-16"
+   ],
+   "guest_words": 359
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-42328",
+   "date": "2006-05-31",
+   "program": "All Things Considered",
+   "title": "Answering Yuri, Questioning Oneself",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-05-31"
+   ],
+   "guest_words": 364
+  }
+ ],
+ "test": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-41897",
+  "date": "2006-09-08",
+  "program": "All Things Considered",
+  "title": "Tarot vs. Psychiatry in the Hope for Help",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2006-09-08"
+  ],
+  "guest_words": 371
+ },
+ "excluded_same_date": []
+}

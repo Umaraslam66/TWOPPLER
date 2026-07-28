@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01255",
+ "canonical_name": "John Yoo",
+ "draw_pos": 12,
+ "stratum": "article",
+ "h7_eligible": false,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 34,
+ "span_days_dedup": 457,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 2,
+ "failure_reason": "below_item_floor",
+ "failure_detail": "2 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl34",
+  "transcript_id": "NPR-5865",
+  "date": "2006-09-18",
+  "programme": "Talk of the Nation",
+  "title": "In Defense of a Strong Executive Branch",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2006-09-18"
+  ],
+  "guest_words": 1582
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 21,
+  "host": 33,
+  "other": 12
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 1174,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 12,
+ "drop_reasons": {
+  "not_interrogative": 9,
+  "question_too_short": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

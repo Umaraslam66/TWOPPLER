@@ -1,0 +1,51 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00203",
+ "canonical_name": "Anna Greenberg",
+ "draw_pos": 7,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 22,
+ "span_days_dedup": 2312,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 5,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl21",
+  "transcript_id": "NPR-8117",
+  "date": "2013-06-26",
+  "programme": "Talk of the Nation",
+  "title": "A Look Ahead And A Farewell To The Political Junkie",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-06-26"
+  ],
+  "guest_words": 1840
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 36,
+  "host": 156,
+  "other": 53
+ },
+ "n_grounding_clusters": 7,
+ "grounding_guest_words": 8984,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 19,
+ "drop_reasons": {
+  "answer_too_short": 1,
+  "not_interrogative": 9,
+  "question_too_short": 4
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

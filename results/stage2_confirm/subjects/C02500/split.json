@@ -1,0 +1,80 @@
+{
+ "canonical_id": "C02500",
+ "canonical_name": "Von Der Leyen",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "CNN-264704",
+   "date": "2015-09-16",
+   "program": "CNN'S AMANPOUR",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-09-16"
+   ],
+   "guest_words": 1081
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "CNN-264844",
+   "date": "2015-09-18",
+   "program": "CNN'S AMANPOUR",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-09-18"
+   ],
+   "guest_words": 1046
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "CNN-322043",
+   "date": "2017-09-25",
+   "program": "CNN'S AMANPOUR",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-09-25"
+   ],
+   "guest_words": 868
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "CNN-344818",
+   "date": "2018-07-10",
+   "program": "CNN'S AMANPOUR",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-07-10"
+   ],
+   "guest_words": 1032
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "CNN-395445",
+   "date": "2020-03-17",
+   "program": "QUEST MEANS BUSINESS",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2020-03-17"
+   ],
+   "guest_words": 1499
+  }
+ ],
+ "test": {
+  "cluster_id": "cl9",
+  "transcript_id": "CNN-399235",
+  "date": "2020-05-04",
+  "program": "CNN'S AMANPOUR",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2020-05-04"
+  ],
+  "guest_words": 1585
+ },
+ "excluded_same_date": []
+}

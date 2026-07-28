@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C00169",
+ "canonical_name": "Andrew Roth",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-28203",
+   "date": "2013-12-03",
+   "program": "All Things Considered",
+   "title": "Bolshoi Dancer Sentenced To Russian Penal Colony For Acid Attack",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-12-03"
+   ],
+   "guest_words": 500
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-18953",
+   "date": "2017-04-03",
+   "program": "All Things Considered",
+   "title": "Investigations Continue Into Deadly Metro Explosion In St. Petersburg",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-04-03"
+   ],
+   "guest_words": 502
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-15125",
+   "date": "2017-04-21",
+   "program": "Morning Edition",
+   "title": "Russia Labels Jehovah's Witnesses An Extremist Group",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-04-21"
+   ],
+   "guest_words": 351
+  }
+ ],
+ "test": {
+  "cluster_id": "cl6",
+  "transcript_id": "NPR-7849",
+  "date": "2019-06-09",
+  "program": "Weekend Edition Sunday",
+  "title": "Journalist Arrested In Moscow",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-06-09"
+  ],
+  "guest_words": 688
+ },
+ "excluded_same_date": []
+}

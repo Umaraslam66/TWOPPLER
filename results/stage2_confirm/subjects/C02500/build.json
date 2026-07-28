@@ -1,0 +1,57 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C02500",
+ "canonical_name": "Von Der Leyen",
+ "draw_pos": 38,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 10,
+ "span_days_dedup": 1689,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 7,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl9",
+  "transcript_id": "CNN-399235",
+  "date": "2020-05-04",
+  "programme": "CNN'S AMANPOUR",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2020-05-04"
+  ],
+  "guest_words": 1585
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 14,
+  "host": 48,
+  "other": 29
+ },
+ "n_grounding_clusters": 5,
+ "grounding_guest_words": 5526,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 14,
+ "drop_reasons": {
+  "answer_too_short": 1,
+  "intro_host_turn": 1,
+  "not_interrogative": 5
+ },
+ "guest_word_warnings": [
+  {
+   "transcript_id": "CNN-395445",
+   "extracted": 1499,
+   "scan_cache": 1131
+  }
+ ],
+ "date_disagreements": []
+}

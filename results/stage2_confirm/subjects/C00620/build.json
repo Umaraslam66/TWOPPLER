@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00620",
+ "canonical_name": "David Winston",
+ "draw_pos": 14,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 31,
+ "span_days_dedup": 5003,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 5,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl24",
+  "transcript_id": "NPR-1009",
+  "date": "2019-01-24",
+  "programme": "All Things Considered",
+  "title": "Republican Strategist David Winston Discusses Trump's Strategy Amid The Shutdown",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-01-24"
+  ],
+  "guest_words": 586
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 10,
+  "host": 9
+ },
+ "n_grounding_clusters": 4,
+ "grounding_guest_words": 2191,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 8,
+ "drop_reasons": {
+  "answer_too_short": 2,
+  "not_interrogative": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

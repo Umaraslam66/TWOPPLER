@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00819",
+ "canonical_name": "George Joffe",
+ "draw_pos": 29,
+ "stratum": "long-tail",
+ "h7_eligible": false,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 9,
+ "span_days_dedup": 700,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 5,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl8",
+  "transcript_id": "NPR-5806",
+  "date": "2013-02-04",
+  "programme": "Talk of the Nation",
+  "title": "The Role Of The Colonizer: France's Intervention In Mali",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-02-04"
+  ],
+  "guest_words": 1140
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 20,
+  "host": 41,
+  "other": 48
+ },
+ "n_grounding_clusters": 7,
+ "grounding_guest_words": 12567,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 6,
+ "drop_reasons": {
+  "not_interrogative": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

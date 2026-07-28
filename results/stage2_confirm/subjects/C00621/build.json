@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00621",
+ "canonical_name": "Dawn Turner Trice",
+ "draw_pos": 6,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 11,
+ "span_days_dedup": 1656,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 3,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl4",
+  "transcript_id": "NPR-46211",
+  "date": "2009-12-08",
+  "programme": "Talk of the Nation",
+  "title": "Talking Race: Disney's Princess Tiana",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2009-12-08"
+  ],
+  "guest_words": 1078
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 21,
+  "host": 31,
+  "other": 16
+ },
+ "n_grounding_clusters": 7,
+ "grounding_guest_words": 7153,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 13,
+ "drop_reasons": {
+  "not_interrogative": 5,
+  "question_too_short": 5
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

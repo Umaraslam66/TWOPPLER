@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C00818",
+ "canonical_name": "George Hobica",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-16514",
+   "date": "2005-07-13",
+   "program": "Day to Day",
+   "title": "AirfareWatchdog.com: Cheap Seats on the Web",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-07-13"
+   ],
+   "guest_words": 532
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-14180",
+   "date": "2006-03-17",
+   "program": "Day to Day",
+   "title": "Tips on Cutting Your Flight Costs",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-03-17"
+   ],
+   "guest_words": 496
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-40373",
+   "date": "2008-04-12",
+   "program": "All Things Considered",
+   "title": "Airline Mess Leaves Fliers in the Lurch",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-04-12"
+   ],
+   "guest_words": 431
+  }
+ ],
+ "test": {
+  "cluster_id": "cl9",
+  "transcript_id": "NPR-35642",
+  "date": "2010-04-20",
+  "program": "All Things Considered",
+  "title": "In Ash Aftermath, The Great Travel Unwind",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2010-04-20"
+  ],
+  "guest_words": 423
+ },
+ "excluded_same_date": []
+}

@@ -1,0 +1,128 @@
+{
+ "canonical_id": "C01180",
+ "canonical_name": "Jimi Izrael",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-16981",
+   "date": "2005-06-13",
+   "program": "Day to Day",
+   "title": "'Mississippi Burning,' 41 Years Too Late",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-06-13"
+   ],
+   "guest_words": 460
+  },
+  {
+   "cluster_id": "cl14",
+   "transcript_id": "NPR-47606",
+   "date": "2005-07-05",
+   "program": "News & Notes",
+   "title": "'Stella' Author Terry McMillan and Divorce",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-07-05"
+   ],
+   "guest_words": 423
+  },
+  {
+   "cluster_id": "cl13",
+   "transcript_id": "NPR-4559",
+   "date": "2006-07-25",
+   "program": "News & Notes",
+   "title": "Nagin Blamed for Crescent City's Rising Crime",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-07-25"
+   ],
+   "guest_words": 479
+  },
+  {
+   "cluster_id": "cl12",
+   "transcript_id": "NPR-4223",
+   "date": "2006-08-15",
+   "program": "News & Notes",
+   "title": "'Crackheads' Documentary Has Serious Message",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-08-15"
+   ],
+   "guest_words": 544
+  },
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-3806",
+   "date": "2006-09-25",
+   "program": "News & Notes",
+   "title": "Whitney Split Prompts Respect for Bobby Brown",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-09-25"
+   ],
+   "guest_words": 569
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-3438",
+   "date": "2006-10-30",
+   "program": "News & Notes",
+   "title": "Reality TV's 'Flavor' Leaves Bad Taste",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-10-30"
+   ],
+   "guest_words": 515
+  },
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-2465",
+   "date": "2007-01-31",
+   "program": "News & Notes",
+   "title": "LL Cool J and the Buffest Generation",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-01-31"
+   ],
+   "guest_words": 415
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-2280",
+   "date": "2007-02-20",
+   "program": "News & Notes",
+   "title": "Articulate This",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-02-20"
+   ],
+   "guest_words": 451
+  },
+  {
+   "cluster_id": "cl15",
+   "transcript_id": "NPR-7138",
+   "date": "2010-12-02",
+   "program": "Talk of the Nation",
+   "title": "James Should Expect Chilly Return To Cleveland",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-12-02"
+   ],
+   "guest_words": 1179
+  }
+ ],
+ "test": {
+  "cluster_id": "cl7",
+  "transcript_id": "NPR-23445",
+  "date": "2015-12-05",
+  "program": "All Things Considered",
+  "title": "Barbershop: San Bernardino, Chicago And The Yellow Brick Road",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2015-12-05"
+  ],
+  "guest_words": 659
+ },
+ "excluded_same_date": []
+}

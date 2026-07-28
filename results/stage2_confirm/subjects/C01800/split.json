@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C01800",
+ "canonical_name": "Muhannad Hadi",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-26275",
+   "date": "2013-04-04",
+   "program": "Morning Edition",
+   "title": "Risks Increase For Humanitarian Aid Workers In Syria",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-04-04"
+   ],
+   "guest_words": 565
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-25479",
+   "date": "2013-07-23",
+   "program": "Morning Edition",
+   "title": "In Syria, A Humanitarian Crisis Deepens",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-07-23"
+   ],
+   "guest_words": 485
+  }
+ ],
+ "test": {
+  "cluster_id": "cl4",
+  "transcript_id": "NPR-23471",
+  "date": "2014-09-24",
+  "program": "Morning Edition",
+  "title": "Syrian Refugees Overwhelm World Food Program's Resources",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2014-09-24"
+  ],
+  "guest_words": 538
+ },
+ "excluded_same_date": []
+}

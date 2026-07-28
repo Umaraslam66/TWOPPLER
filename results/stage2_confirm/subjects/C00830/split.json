@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C00830",
+ "canonical_name": "Gideon Long",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-35221",
+   "date": "2010-06-27",
+   "program": "All Things Considered",
+   "title": "World Cup Turning Into South American Fiesta",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-06-27"
+   ],
+   "guest_words": 368
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-14065",
+   "date": "2017-08-01",
+   "program": "Morning Edition",
+   "title": "Morning News Brief: Kelly's Power At The White House, U.S. Sanctions Venezuela's Maduro",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-08-01"
+   ],
+   "guest_words": 367
+  }
+ ],
+ "test": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-14048",
+  "date": "2017-08-04",
+  "program": "Morning Edition",
+  "title": "New 'Constituent Assembly' To Sit In Venezuela",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-08-04"
+  ],
+  "guest_words": 441
+ },
+ "excluded_same_date": []
+}

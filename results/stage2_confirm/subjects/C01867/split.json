@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C01867",
+ "canonical_name": "Paul Barrett",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-26378",
+   "date": "2013-03-15",
+   "program": "Morning Edition",
+   "title": "How Close Are The NRA And Gunmakers, Really?",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-03-15"
+   ],
+   "guest_words": 473
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-24350",
+   "date": "2014-03-06",
+   "program": "Morning Edition",
+   "title": "U.S. Judge Sides With Chevron In Amazon Pollution Case",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-03-06"
+   ],
+   "guest_words": 583
+  }
+ ],
+ "test": {
+  "cluster_id": "cl4",
+  "transcript_id": "NPR-8840",
+  "date": "2019-09-08",
+  "program": "All Things Considered",
+  "title": "Troll Watch: Deepfakes And 2020",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-09-08"
+  ],
+  "guest_words": 455
+ },
+ "excluded_same_date": []
+}

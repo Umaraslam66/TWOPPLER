@@ -1,0 +1,87 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C02240",
+ "canonical_name": "St. John",
+ "draw_pos": 20,
+ "stratum": "article",
+ "h7_eligible": true,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 26,
+ "span_days_dedup": 4570,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 0,
+ "failure_reason": "zero_d4_items",
+ "failure_detail": "0 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl20",
+  "transcript_id": "CNN-206956",
+  "date": "2013-05-17",
+  "programme": "AROUND THE WORLD",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-05-17"
+  ],
+  "guest_words": 0
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "host": 14,
+  "other": 26
+ },
+ "n_grounding_clusters": 7,
+ "grounding_guest_words": 0,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 0,
+ "drop_reasons": {},
+ "guest_word_warnings": [
+  {
+   "transcript_id": "CNN-19755",
+   "extracted": 0,
+   "scan_cache": 552
+  },
+  {
+   "transcript_id": "CNN-87083",
+   "extracted": 0,
+   "scan_cache": 473
+  },
+  {
+   "transcript_id": "CNN-101147",
+   "extracted": 0,
+   "scan_cache": 304
+  },
+  {
+   "transcript_id": "CNN-129599",
+   "extracted": 0,
+   "scan_cache": 373
+  },
+  {
+   "transcript_id": "CNN-132128",
+   "extracted": 0,
+   "scan_cache": 312
+  },
+  {
+   "transcript_id": "CNN-162296",
+   "extracted": 0,
+   "scan_cache": 365
+  },
+  {
+   "transcript_id": "CNN-186635",
+   "extracted": 0,
+   "scan_cache": 759
+  },
+  {
+   "transcript_id": "CNN-206956",
+   "extracted": 0,
+   "scan_cache": 424
+  }
+ ],
+ "date_disagreements": []
+}

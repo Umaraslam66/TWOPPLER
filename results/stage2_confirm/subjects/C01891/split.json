@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C01891",
+ "canonical_name": "Peter Sokolowski",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-9277",
+   "date": "2013-03-14",
+   "program": "Talk of the Nation",
+   "title": "How Dictionary Searches Define Readers",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-03-14"
+   ],
+   "guest_words": 2149
+  },
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-29149",
+   "date": "2013-05-26",
+   "program": "All Things Considered",
+   "title": "Clarification Please: Why Do We Still Have Spelling Bees?",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-05-26"
+   ],
+   "guest_words": 619
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-42",
+   "date": "2016-10-23",
+   "program": "Weekend Edition Sunday",
+   "title": "From 'Unproud' To 'Hombre,' Election 2016 Is Testing Our Vocabulary",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-10-23"
+   ],
+   "guest_words": 494
+  }
+ ],
+ "test": {
+  "cluster_id": "cl3",
+  "transcript_id": "NPR-47564",
+  "date": "2017-12-25",
+  "program": "Morning Edition",
+  "title": "Merriam-Webster's Word Of The Year Is Feminism",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-12-25"
+  ],
+  "guest_words": 431
+ },
+ "excluded_same_date": []
+}

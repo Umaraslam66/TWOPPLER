@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01891",
+ "canonical_name": "Peter Sokolowski",
+ "draw_pos": 26,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 5,
+ "span_days_dedup": 1747,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 3,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl3",
+  "transcript_id": "NPR-47564",
+  "date": "2017-12-25",
+  "programme": "Morning Edition",
+  "title": "Merriam-Webster's Word Of The Year Is Feminism",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-12-25"
+  ],
+  "guest_words": 431
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 9,
+  "host": 10
+ },
+ "n_grounding_clusters": 3,
+ "grounding_guest_words": 3262,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 8,
+ "drop_reasons": {
+  "answer_too_short": 2,
+  "not_interrogative": 1,
+  "question_too_short": 2
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

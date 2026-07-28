@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C00673",
+ "canonical_name": "Diane Brady",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl25",
+   "transcript_id": "NPR-38910",
+   "date": "2008-09-15",
+   "program": "All Things Considered",
+   "title": "AIG Gets OK To Borrow From Subsidiaries",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-09-15"
+   ],
+   "guest_words": 440
+  },
+  {
+   "cluster_id": "cl24",
+   "transcript_id": "NPR-38901",
+   "date": "2008-09-17",
+   "program": "All Things Considered",
+   "title": "Impact Of AIG Bailout Examined",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-09-17"
+   ],
+   "guest_words": 706
+  },
+  {
+   "cluster_id": "cl23",
+   "transcript_id": "NPR-36182",
+   "date": "2010-01-12",
+   "program": "All Things Considered",
+   "title": "N.Y. Fed Under Scrutiny Over AIG Bailout Decisions",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-01-12"
+   ],
+   "guest_words": 515
+  }
+ ],
+ "test": {
+  "cluster_id": "cl22",
+  "transcript_id": "NPR-34093",
+  "date": "2010-12-28",
+  "program": "All Things Considered",
+  "title": "Holiday Shoppers Push Up Retail Sales",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2010-12-28"
+  ],
+  "guest_words": 390
+ },
+ "excluded_same_date": []
+}

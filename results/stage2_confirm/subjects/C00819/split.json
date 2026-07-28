@@ -1,0 +1,104 @@
+{
+ "canonical_id": "C00819",
+ "canonical_name": "George Joffe",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-2667",
+   "date": "2011-03-07",
+   "program": "Talk of the Nation",
+   "title": "Libya's History Sheds Light On Current Conflict",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-03-07"
+   ],
+   "guest_words": 2188
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-2590",
+   "date": "2011-03-14",
+   "program": "Talk of the Nation",
+   "title": "Ongoing Debate Over U.S. Intervention In Libya",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-03-14"
+   ],
+   "guest_words": 1460
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-2164",
+   "date": "2011-04-21",
+   "program": "Talk of the Nation",
+   "title": "Fears Of Libyan Stalemate Grow",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-04-21"
+   ],
+   "guest_words": 2121
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-1527",
+   "date": "2011-08-17",
+   "program": "Talk of the Nation",
+   "title": "Rebels And Gadhafi Forces Battle For Zawiya",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-08-17"
+   ],
+   "guest_words": 1595
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-1487",
+   "date": "2011-08-22",
+   "program": "Talk of the Nation",
+   "title": "Rebels Advance Toward Final Battle In Tripoli",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-08-22"
+   ],
+   "guest_words": 1515
+  },
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-11164",
+   "date": "2012-05-09",
+   "program": "Talk of the Nation",
+   "title": "The Unintended Consequences Of Libya's Revolution",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-05-09"
+   ],
+   "guest_words": 1709
+  },
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-9752",
+   "date": "2013-01-17",
+   "program": "Talk of the Nation",
+   "title": "The Evolving Hostage Crisis In Algeria",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-01-17"
+   ],
+   "guest_words": 1979
+  }
+ ],
+ "test": {
+  "cluster_id": "cl8",
+  "transcript_id": "NPR-5806",
+  "date": "2013-02-04",
+  "program": "Talk of the Nation",
+  "title": "The Role Of The Colonizer: France's Intervention In Mali",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-02-04"
+  ],
+  "guest_words": 1140
+ },
+ "excluded_same_date": []
+}

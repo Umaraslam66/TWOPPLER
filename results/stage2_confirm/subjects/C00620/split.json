@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C00620",
+ "canonical_name": "David Winston",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl26",
+   "transcript_id": "NPR-19595",
+   "date": "2005-05-14",
+   "program": "Weekend Edition Saturday",
+   "title": "Republicans Contemplate a 'Center-Right' Nation",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-05-14"
+   ],
+   "guest_words": 418
+  },
+  {
+   "cluster_id": "cl27",
+   "transcript_id": "NPR-2545",
+   "date": "2007-01-23",
+   "program": "News & Notes",
+   "title": "Bush Faces Challenges in State of the Union Address",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-01-23"
+   ],
+   "guest_words": 679
+  },
+  {
+   "cluster_id": "cl25",
+   "transcript_id": "NPR-16660",
+   "date": "2008-06-07",
+   "program": "Weekend Edition Saturday",
+   "title": "McCain's Strategy vs. Obama",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-06-07"
+   ],
+   "guest_words": 534
+  },
+  {
+   "cluster_id": "cl29",
+   "transcript_id": "NPR-30198",
+   "date": "2011-01-18",
+   "program": "Morning Edition",
+   "title": "GOP Ready For Hot Button Issues Like Health Care",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-01-18"
+   ],
+   "guest_words": 560
+  }
+ ],
+ "test": {
+  "cluster_id": "cl24",
+  "transcript_id": "NPR-1009",
+  "date": "2019-01-24",
+  "program": "All Things Considered",
+  "title": "Republican Strategist David Winston Discusses Trump's Strategy Amid The Shutdown",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-01-24"
+  ],
+  "guest_words": 586
+ },
+ "excluded_same_date": []
+}

@@ -1,0 +1,48 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01464",
+ "canonical_name": "La Salla",
+ "draw_pos": 8,
+ "stratum": "article",
+ "h7_eligible": false,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 7,
+ "span_days_dedup": 277,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 5,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl7",
+  "transcript_id": "CNN-29425",
+  "date": "2001-05-01",
+  "programme": "CNN AHEAD OF THE CURVE",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2001-05-01"
+  ],
+  "guest_words": 669
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 10,
+  "host": 11
+ },
+ "n_grounding_clusters": 6,
+ "grounding_guest_words": 4611,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 10,
+ "drop_reasons": {
+  "not_interrogative": 5
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

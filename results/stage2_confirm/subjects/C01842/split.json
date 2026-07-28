@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C01842",
+ "canonical_name": "Noam Levey",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-48256",
+   "date": "2012-01-01",
+   "program": "Weekend Edition Sunday",
+   "title": "A New Year's Forecast For The Health Care Bill",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-01-01"
+   ],
+   "guest_words": 771
+  },
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-11430",
+   "date": "2017-06-24",
+   "program": "Weekend Edition Saturday",
+   "title": "What's In The GOP Health Care Bill",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-06-24"
+   ],
+   "guest_words": 635
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-48657",
+   "date": "2017-10-26",
+   "program": "Morning Edition",
+   "title": "Morning News Brief: Opioid Crisis, Senate Budget Resolution",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-10-26"
+   ],
+   "guest_words": 317
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-46558",
+   "date": "2018-03-01",
+   "program": "Morning Edition",
+   "title": "News Brief: Trump Changes On Gun Policy, Opioids, USOC CEO Resigns",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-03-01"
+   ],
+   "guest_words": 300
+  }
+ ],
+ "test": {
+  "cluster_id": "cl6",
+  "transcript_id": "NPR-9944",
+  "date": "2019-07-09",
+  "program": "Morning Edition",
+  "title": "News Brief: Jeffrey Epstein, Hong Kong Bill, Obamacare Trial",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-07-09"
+  ],
+  "guest_words": 337
+ },
+ "excluded_same_date": []
+}

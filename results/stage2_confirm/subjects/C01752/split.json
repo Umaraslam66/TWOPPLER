@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C01752",
+ "canonical_name": "Michelle Faul",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-28024",
+   "date": "2014-01-15",
+   "program": "All Things Considered",
+   "title": "Reports Of Arrests And Torture Under Nigeria's Anti-Gay Law",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-01-15"
+   ],
+   "guest_words": 428
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-27499",
+   "date": "2014-04-22",
+   "program": "All Things Considered",
+   "title": "Search Efforts For Nigerian Schoolgirls Dogged By Shifting Numbers",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-04-22"
+   ],
+   "guest_words": 595
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-24168",
+   "date": "2014-05-07",
+   "program": "Morning Edition",
+   "title": "Kidnapped Nigerian School Girl Escapes, Talks About Ordeal",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-05-07"
+   ],
+   "guest_words": 512
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-24493",
+   "date": "2015-05-04",
+   "program": "All Things Considered",
+   "title": "Rescued Boko Haram Captives Recall Their Ordeal",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-05-04"
+   ],
+   "guest_words": 492
+  }
+ ],
+ "test": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-14833",
+  "date": "2017-11-19",
+  "program": "All Things Considered",
+  "title": "Who is Emmerson Mnangagwa? Zimabawe Cautious Of Potential Next President",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-11-19"
+  ],
+  "guest_words": 427
+ },
+ "excluded_same_date": []
+}

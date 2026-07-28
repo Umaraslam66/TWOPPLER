@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C00110",
+ "canonical_name": "Ali Vaez",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl15",
+   "transcript_id": "NPR-21063",
+   "date": "2015-09-21",
+   "program": "Morning Edition",
+   "title": "The Long, Strange History Of The U.S., The Atom And Iran",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-09-21"
+   ],
+   "guest_words": 351
+  },
+  {
+   "cluster_id": "cl20",
+   "transcript_id": "NPR-2505",
+   "date": "2018-11-04",
+   "program": "All Things Considered",
+   "title": "U.S. Reimposes Sanctions Expected To Cripple Iranian Economy",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-11-04"
+   ],
+   "guest_words": 501
+  }
+ ],
+ "test": {
+  "cluster_id": "cl28",
+  "transcript_id": "NPR-8519",
+  "date": "2019-09-17",
+  "program": "All Things Considered",
+  "title": "Understanding The Latest In Iran-Saudi Tensions",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-09-17"
+  ],
+  "guest_words": 510
+ },
+ "excluded_same_date": []
+}

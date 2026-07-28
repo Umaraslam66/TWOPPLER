@@ -1,0 +1,404 @@
+{
+ "canonical_id": "C00344",
+ "canonical_name": "Bob Meadows",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl32",
+   "transcript_id": "NPR-48138",
+   "date": "2005-05-12",
+   "program": "News & Notes",
+   "title": "Roundtable: D.C. Evacuation, 'Big Mac Tax'",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-05-12"
+   ],
+   "guest_words": 684
+  },
+  {
+   "cluster_id": "cl31",
+   "transcript_id": "NPR-47919",
+   "date": "2005-05-27",
+   "program": "News & Notes",
+   "title": "Roundtable: Veterans Sue Rumsfeld, 'Moral Retards'",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-05-27"
+   ],
+   "guest_words": 575
+  },
+  {
+   "cluster_id": "cl30",
+   "transcript_id": "NPR-47542",
+   "date": "2005-07-12",
+   "program": "News & Notes",
+   "title": "Roundtable: NAACP Conference, Karl Rove",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-07-12"
+   ],
+   "guest_words": 634
+  },
+  {
+   "cluster_id": "cl29",
+   "transcript_id": "NPR-47305",
+   "date": "2005-08-04",
+   "program": "News & Notes",
+   "title": "Roundtable: The Clinton Legacy",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-08-04"
+   ],
+   "guest_words": 493
+  },
+  {
+   "cluster_id": "cl28",
+   "transcript_id": "NPR-47234",
+   "date": "2005-08-12",
+   "program": "News & Notes",
+   "title": "Roundtable: Airline Troubles, Gangsters Paroled",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-08-12"
+   ],
+   "guest_words": 436
+  },
+  {
+   "cluster_id": "cl26",
+   "transcript_id": "NPR-47071",
+   "date": "2005-08-30",
+   "program": "News & Notes",
+   "title": "Roundtable: Death Row Appeals, CIA Discipline",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-08-30"
+   ],
+   "guest_words": 594
+  },
+  {
+   "cluster_id": "cl25",
+   "transcript_id": "NPR-46618",
+   "date": "2005-10-07",
+   "program": "News & Notes",
+   "title": "Roundtable: War on Terror, Army Recruits Dropouts",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-10-07"
+   ],
+   "guest_words": 400
+  },
+  {
+   "cluster_id": "cl24",
+   "transcript_id": "NPR-46449",
+   "date": "2005-11-22",
+   "program": "News & Notes",
+   "title": "Roundtable: Dangerous U.S. Cities, Detainee Torture",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-11-22"
+   ],
+   "guest_words": 403
+  },
+  {
+   "cluster_id": "cl35",
+   "transcript_id": "NPR-5438",
+   "date": "2006-01-19",
+   "program": "News & Notes",
+   "title": "Roundtable: New Orleans Demolition, D.C. Lobbying",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-01-19"
+   ],
+   "guest_words": 370
+  },
+  {
+   "cluster_id": "cl22",
+   "transcript_id": "NPR-45680",
+   "date": "2006-02-15",
+   "program": "News & Notes",
+   "title": "Roundtable: Katrina Fraud, Cheney Shooting",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-02-15"
+   ],
+   "guest_words": 419
+  },
+  {
+   "cluster_id": "cl21",
+   "transcript_id": "NPR-45456",
+   "date": "2006-03-02",
+   "program": "News & Notes",
+   "title": "Roundtable: Darfur Violence, Condi's Health Plan",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-03-02"
+   ],
+   "guest_words": 524
+  },
+  {
+   "cluster_id": "cl20",
+   "transcript_id": "NPR-45182",
+   "date": "2006-03-24",
+   "program": "News & Notes",
+   "title": "Roundtable: DJ Booted for Rice Slur, Drug-Free Zones",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-03-24"
+   ],
+   "guest_words": 394
+  },
+  {
+   "cluster_id": "cl19",
+   "transcript_id": "NPR-44978",
+   "date": "2006-04-06",
+   "program": "News & Notes",
+   "title": "Roundtable: Insurance Profits, Urban Wal-Marts",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-04-06"
+   ],
+   "guest_words": 459
+  },
+  {
+   "cluster_id": "cl17",
+   "transcript_id": "NPR-44556",
+   "date": "2006-05-15",
+   "program": "News & Notes",
+   "title": "Roundtable: New Orleans Election, Bush Speech",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-05-15"
+   ],
+   "guest_words": 718
+  },
+  {
+   "cluster_id": "cl33",
+   "transcript_id": "NPR-4833",
+   "date": "2006-06-29",
+   "program": "News & Notes",
+   "title": "Roundtable: Obama on Faith, Texas Redistricting",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-06-29"
+   ],
+   "guest_words": 679
+  },
+  {
+   "cluster_id": "cl27",
+   "transcript_id": "NPR-4710",
+   "date": "2006-07-11",
+   "program": "News & Notes",
+   "title": "Roundtable: Jefferson Raid Ruled Legal, Reparations",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-07-11"
+   ],
+   "guest_words": 419
+  },
+  {
+   "cluster_id": "cl18",
+   "transcript_id": "NPR-4479",
+   "date": "2006-07-27",
+   "program": "News & Notes",
+   "title": "Roundtable: Rice's Impact, Pessimistic America",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-07-27"
+   ],
+   "guest_words": 589
+  },
+  {
+   "cluster_id": "cl16",
+   "transcript_id": "NPR-4207",
+   "date": "2006-08-17",
+   "program": "News & Notes",
+   "title": "Roundtable: Jon Benet Arrest, $15 Court Shoe",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-08-17"
+   ],
+   "guest_words": 670
+  },
+  {
+   "cluster_id": "cl15",
+   "transcript_id": "NPR-4182",
+   "date": "2006-08-24",
+   "program": "News & Notes",
+   "title": "Roundtable: American's Terrorism Worries, 'Survivor'",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-08-24"
+   ],
+   "guest_words": 584
+  },
+  {
+   "cluster_id": "cl14",
+   "transcript_id": "NPR-3925",
+   "date": "2006-09-19",
+   "program": "News & Notes",
+   "title": "Roundtable: Ann Richards' Legacy, Nancy Grace Controversy",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-09-19"
+   ],
+   "guest_words": 1055
+  },
+  {
+   "cluster_id": "cl36",
+   "transcript_id": "NPR-7405",
+   "date": "2006-09-21",
+   "program": "News & Notes",
+   "title": "Roundtable: Florida Execution, 'Whiteness' Study",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-09-21"
+   ],
+   "guest_words": 575
+  },
+  {
+   "cluster_id": "cl13",
+   "transcript_id": "NPR-3655",
+   "date": "2006-10-03",
+   "program": "News & Notes",
+   "title": "Roundtable: Wal-Mart, Woodward, Enrollment",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-10-03"
+   ],
+   "guest_words": 601
+  },
+  {
+   "cluster_id": "cl12",
+   "transcript_id": "NPR-3648",
+   "date": "2006-10-10",
+   "program": "News & Notes",
+   "title": "Roundtable: Combating Gun Violence; Challenging Racial Casting",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-10-10"
+   ],
+   "guest_words": 470
+  },
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-3417",
+   "date": "2006-11-01",
+   "program": "News & Notes",
+   "title": "Roundtable: Pentagon PR, Kerry's Iraq Joke Falls Flat",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-11-01"
+   ],
+   "guest_words": 486
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-3162",
+   "date": "2006-11-16",
+   "program": "News & Notes",
+   "title": "Roundtable: Blair on Iran, Newspapers Cutting Back",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-11-16"
+   ],
+   "guest_words": 697
+  },
+  {
+   "cluster_id": "cl34",
+   "transcript_id": "NPR-5314",
+   "date": "2006-11-20",
+   "program": "News & Notes",
+   "title": "Roundtable: Hospitals and the Homeless; O.J.'s Return",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-11-20"
+   ],
+   "guest_words": 485
+  },
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-2930",
+   "date": "2006-12-15",
+   "program": "News & Notes",
+   "title": "Roundtable: Malaria, Darfur, Desegregation Case",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-12-15"
+   ],
+   "guest_words": 437
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-2625",
+   "date": "2007-01-11",
+   "program": "News & Notes",
+   "title": "Roundtable: Bush's Plan to Boost Troops, Sentencing Revisited",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-01-11"
+   ],
+   "guest_words": 376
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-2473",
+   "date": "2007-01-30",
+   "program": "News & Notes",
+   "title": "Roundtable: Bush on Katrina, Terror-Free Gas",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-01-30"
+   ],
+   "guest_words": 602
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-2282",
+   "date": "2007-02-20",
+   "program": "News & Notes",
+   "title": "Roundtable: Rice in Mideast, Tenn. Abortion Bill",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-02-20"
+   ],
+   "guest_words": 491
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-2162",
+   "date": "2007-02-28",
+   "program": "News & Notes",
+   "title": "Roundtable: Katrina Housing; Governors at the White House",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-02-28"
+   ],
+   "guest_words": 477
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-2134",
+   "date": "2007-03-06",
+   "program": "News & Notes",
+   "title": "Roundtable: Janitor's Rights, Race and Pep Rallies",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-03-06"
+   ],
+   "guest_words": 804
+  }
+ ],
+ "test": {
+  "cluster_id": "cl2",
+  "transcript_id": "NPR-1896",
+  "date": "2007-04-03",
+  "program": "News & Notes",
+  "title": "Roundtable: Foreclosures Rise, Big Easy Reconstruction",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2007-04-03"
+  ],
+  "guest_words": 552
+ },
+ "excluded_same_date": []
+}

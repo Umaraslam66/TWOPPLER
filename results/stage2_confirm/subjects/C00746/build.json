@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00746",
+ "canonical_name": "Emerald Garner",
+ "draw_pos": 11,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 23,
+ "span_days_dedup": 1716,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 3,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl23",
+  "transcript_id": "NPR-6604",
+  "date": "2019-08-20",
+  "programme": "All Things Considered",
+  "title": "Eric Garner's Daughter Reacts To NYPD's Firing Of Officer Involved In 2014 Death",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-08-20"
+  ],
+  "guest_words": 386
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 9,
+  "host": 10,
+  "other": 1
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 737,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 8,
+ "drop_reasons": {
+  "not_interrogative": 4,
+  "question_too_short": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

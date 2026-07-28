@@ -1,0 +1,104 @@
+{
+ "canonical_id": "C02240",
+ "canonical_name": "St. John",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl19",
+   "transcript_id": "CNN-19755",
+   "date": "2000-11-11",
+   "program": "Special Event",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2000-11-11"
+   ],
+   "guest_words": 0
+  },
+  {
+   "cluster_id": "cl26",
+   "transcript_id": "CNN-87083",
+   "date": "2004-08-12",
+   "program": "PAULA ZAHN NOW",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2004-08-12"
+   ],
+   "guest_words": 0
+  },
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "CNN-101147",
+   "date": "2005-12-28",
+   "program": "LOU DOBBS TONIGHT",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-12-28"
+   ],
+   "guest_words": 0
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "CNN-129599",
+   "date": "2008-08-11",
+   "program": "NANCY GRACE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-08-11"
+   ],
+   "guest_words": 0
+  },
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "CNN-132128",
+   "date": "2008-11-04",
+   "program": "NANCY GRACE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-11-04"
+   ],
+   "guest_words": 0
+  },
+  {
+   "cluster_id": "cl17",
+   "transcript_id": "CNN-162296",
+   "date": "2011-02-19",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-02-19"
+   ],
+   "guest_words": 0
+  },
+  {
+   "cluster_id": "cl18",
+   "transcript_id": "CNN-186635",
+   "date": "2012-05-24",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-05-24"
+   ],
+   "guest_words": 0
+  }
+ ],
+ "test": {
+  "cluster_id": "cl20",
+  "transcript_id": "CNN-206956",
+  "date": "2013-05-17",
+  "program": "AROUND THE WORLD",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-05-17"
+  ],
+  "guest_words": 0
+ },
+ "excluded_same_date": []
+}
