@@ -1,0 +1,101 @@
+{
+ "banner": "CONFIRMATORY. Primary-model generations, ingested from Leonardo. No scoring and no verdict in this file.",
+ "run_id": "stage2_confirm/gen_gemma",
+ "chunk": "chunk_03",
+ "model": "Gemma-4-31B-it",
+ "temperature": 0.0,
+ "max_output_tokens": 256,
+ "max_answer_words": 150,
+ "join_key": "prompt_sha256",
+ "join_note": "idx is used only inside the sha-verified node prompt file to recover each completion's prompt text; every cross-file link is by hash.",
+ "node_prompts_sha256": "018f634e536a4ad8785acce35cb8f5c581a1a65affe4c4a8d6d7d29dabcfc568",
+ "node_prompts_sha256_verified_on_node": false,
+ "n_prompts_expected": 499,
+ "n_rows": 499,
+ "n_missing_completions": 0,
+ "n_stale_node_rows_dropped": 0,
+ "complete": true,
+ "tokens_in": 844287,
+ "tokens_out": 71969,
+ "n_truncated": 0,
+ "n_era_violations": 0,
+ "n_over_word_cap": 1,
+ "n_empty": 0,
+ "per_arm": {
+  "h7_twin_redacted": {
+   "n": 29,
+   "n_truncated": 0,
+   "truncation_rate": 0.0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 0,
+   "n_empty": 0,
+   "tokens_in": 78617,
+   "tokens_out": 4505
+  },
+  "imposter_redacted": {
+   "n": 94,
+   "n_truncated": 0,
+   "truncation_rate": 0.0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 1,
+   "n_empty": 0,
+   "tokens_in": 268086,
+   "tokens_out": 14539
+  },
+  "twin_named": {
+   "n": 94,
+   "n_truncated": 0,
+   "truncation_rate": 0.0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 0,
+   "n_empty": 0,
+   "tokens_in": 236546,
+   "tokens_out": 14698
+  },
+  "twin_redacted": {
+   "n": 94,
+   "n_truncated": 0,
+   "truncation_rate": 0.0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 0,
+   "n_empty": 0,
+   "tokens_in": 235788,
+   "tokens_out": 14766
+  },
+  "zeroinfo_named": {
+   "n": 94,
+   "n_truncated": 0,
+   "truncation_rate": 0.0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 0,
+   "n_empty": 0,
+   "tokens_in": 13004,
+   "tokens_out": 11782
+  },
+  "zeroinfo_redacted": {
+   "n": 94,
+   "n_truncated": 0,
+   "truncation_rate": 0.0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 0,
+   "n_empty": 0,
+   "tokens_in": 12246,
+   "tokens_out": 11679
+  }
+ },
+ "node_hours_this_chunk": 0.1228,
+ "node_hours_attempts": [
+  {
+   "job_id": "50559938",
+   "state": "COMPLETED",
+   "elapsed_raw": 442,
+   "n_nodes": 1,
+   "start": "2026-07-28T14:42:17",
+   "end": "2026-07-28T14:49:39"
+  }
+ ],
+ "runtime_secs": 0.0,
+ "ingested_utc": "2026-07-28T12:54:20Z",
+ "cost_logged": false,
+ "cost_skip_reason": "already billed"
+}

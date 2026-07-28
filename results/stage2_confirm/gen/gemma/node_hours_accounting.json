@@ -1,0 +1,97 @@
+{
+ "banner": "CONFIRMATORY. GPU accounting for the primary-model generation jobs. Whole-node billing; every attempt counted.",
+ "run_id": "stage2_confirm/gen_gemma",
+ "job_name": "dop-s2confirm-gen",
+ "sacct_query": "sacct -X --name=dop-s2confirm-gen --starttime=now-14days ElapsedRaw",
+ "node_hour_budget": 8.0,
+ "attempts": [
+  {
+   "job_id": "50557920",
+   "state": "CANCELLED by 132662",
+   "elapsed_raw_s": 0,
+   "n_nodes": 1,
+   "chunk": null,
+   "node_hours": 0.0,
+   "submit": "2026-07-28T14:06:46",
+   "start": "None",
+   "end": "2026-07-28T14:20:49"
+  },
+  {
+   "job_id": "50557921",
+   "state": "CANCELLED by 132662",
+   "elapsed_raw_s": 0,
+   "n_nodes": 1,
+   "chunk": null,
+   "node_hours": 0.0,
+   "submit": "2026-07-28T14:06:46",
+   "start": "None",
+   "end": "2026-07-28T14:20:49"
+  },
+  {
+   "job_id": "50559936",
+   "state": "COMPLETED",
+   "elapsed_raw_s": 455,
+   "n_nodes": 1,
+   "chunk": "chunk_01",
+   "node_hours": 0.1264,
+   "submit": "2026-07-28T14:20:52",
+   "start": "2026-07-28T14:42:17",
+   "end": "2026-07-28T14:49:52"
+  },
+  {
+   "job_id": "50559937",
+   "state": "COMPLETED",
+   "elapsed_raw_s": 414,
+   "n_nodes": 1,
+   "chunk": "chunk_02",
+   "node_hours": 0.115,
+   "submit": "2026-07-28T14:20:52",
+   "start": "2026-07-28T14:42:17",
+   "end": "2026-07-28T14:49:11"
+  },
+  {
+   "job_id": "50559938",
+   "state": "COMPLETED",
+   "elapsed_raw_s": 442,
+   "n_nodes": 1,
+   "chunk": "chunk_03",
+   "node_hours": 0.1228,
+   "submit": "2026-07-28T14:20:52",
+   "start": "2026-07-28T14:42:17",
+   "end": "2026-07-28T14:49:39"
+  },
+  {
+   "job_id": "50559939",
+   "state": "COMPLETED",
+   "elapsed_raw_s": 436,
+   "n_nodes": 1,
+   "chunk": "chunk_04",
+   "node_hours": 0.1211,
+   "submit": "2026-07-28T14:20:53",
+   "start": "2026-07-28T14:42:17",
+   "end": "2026-07-28T14:49:33"
+  },
+  {
+   "job_id": "50559940",
+   "state": "COMPLETED",
+   "elapsed_raw_s": 423,
+   "n_nodes": 1,
+   "chunk": "chunk_05",
+   "node_hours": 0.1175,
+   "submit": "2026-07-28T14:20:53",
+   "start": "2026-07-28T14:42:17",
+   "end": "2026-07-28T14:49:20"
+  }
+ ],
+ "per_chunk_node_hours": {
+  "chunk_01": 0.1264,
+  "chunk_02": 0.115,
+  "chunk_03": 0.1228,
+  "chunk_04": 0.1211,
+  "chunk_05": 0.1175
+ },
+ "total_node_hours": 0.6028,
+ "unattributed_node_hours": 0.0,
+ "node_hours_already_logged": 0.6028,
+ "recorded_utc": "2026-07-28T12:54:20Z"
+}
