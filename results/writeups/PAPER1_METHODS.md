@@ -713,23 +713,49 @@ control before the data was touched".
 The whole programme reported in this paper, from
 [`results/cost_log.jsonl`](../cost_log.jsonl), one line per run:
 
-| item | compute (node-hours) | API |
-|---|---|---|
-| Round 1 | 0.3544 | $0.00 (639 model calls, no API) |
-| Round 2 | 0.2633 | $0.00 (30 model calls) |
-| Round 3 | 0.1156 | $0.0999 (239 calls) |
-| Round 4 | 0.1064 | $0.0447 (137 calls) |
-| Open-ended dev pilot (OE-1) | 0.1053 | $0.3177 |
-| Judge r2 round (re-judge + re-score) | — | $0.0459 |
-| **total** | **≈ 0.945** | **≈ $0.51** |
+| item | compute (node-hours) | API spend | calls the spend covers | all ledger calls |
+|---|---|---|---|---|
+| Round 1 | 0.3544 | $0.00 | 639 scored cluster calls | 661 |
+| Round 2 | 0.2633 | $0.00 | 30 scored cluster calls | 30 |
+| Round 3 | 0.1156 | $0.0999 | 239 priced API calls | 305 |
+| Round 4 | 0.1064 | $0.0447 | 137 priced API calls | 145 |
+| Open-ended dev pilot (OE-1) | 0.1053 | $0.3177 | 340 priced API calls | 425 |
+| Judge r2 round (re-judge + re-score) | — | $0.0459 | 36 priced API calls | 36 |
+| **total** | **0.945** | **$0.508** | | **1,602** |
 
-Two notes the ledger insists on. GPU time is billed from the scheduler's own
+**The two call columns differ on purpose, and here is exactly how.** The fourth
+column counts only the calls the dollar figure beside it pays for, which is why
+every dollar figure matches the ledger to the cent. The fifth column is the raw
+sum of `n_calls` for that run prefix in
+[`results/cost_log.jsonl`](../cost_log.jsonl). Four rows differ:
+
+- **Round 1** — 639 is prediction (170) plus classifier (469). The ledger's 661
+  adds a **22-call smoke slice** that produced no scientific output. Note the
+  asymmetry in that row: the smoke slice carries 0.2280 of the 0.3544
+  node-hours, so the compute column *does* include it while the scored-call
+  column does not.
+- **Round 3** — 239 is the priced flash-lite work (build 175, budget probe 15,
+  controls 49). The ledger's 305 adds the **51-call abandoned Pro generator
+  line** (superseded, unpriced) and the **15 cluster gate calls** (no API cost).
+- **Round 4** — 137 is the priced flash-lite build. The ledger's 145 adds the
+  **8 cluster gate calls** (no API cost).
+- **OE-1** — 340 is the four priced API runs (flash-lite generation, and three
+  judge passes at 85 calls each). The ledger's 425 adds the **85 cluster
+  generation calls** for the primary model, which are billed in node-hours, not
+  dollars.
+
+Round 2 and the r2 round have no such gap; their two columns agree.
+
+Three notes the ledger insists on. GPU time is billed from the scheduler's own
 accounting, never from the in-process wall clock — a node is billed whole from
 allocation, so a failed attempt costs what a successful one of the same length
-costs (round 2 wasted 0.0558 node-hours to a node fault, and it is billed). And
-one abandoned generator line carries a **null** cost because the price table has
-no entry for that model: **a missing price, not a zero cost.** Real money was
-spent on it.
+costs (round 2 wasted 0.0558 node-hours to a node fault, and it is billed). One
+abandoned generator line carries a **null** cost because the price table has no
+entry for that model: **a missing price, not a zero cost.** Real money was spent
+on it, and that is why 51 of round 3's calls sit outside the priced column
+rather than inside it at zero. And the totals row is a sum of measured lines,
+not a budget: 0.3544 + 0.2633 + 0.1156 + 0.1064 + 0.1053 node-hours, and
+$0.09988 + $0.044708 + $0.317696 + $0.045888 across the priced runs.
 
 Killing an instrument after four rounds cost under a node-hour and under a
 dollar. The expensive resource in this project is owner review time.
