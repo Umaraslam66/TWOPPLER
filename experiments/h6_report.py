@@ -976,32 +976,48 @@ def verdict_block(data: dict) -> dict:
         "primary_channel2_direction": direction(p2),
         "channels_agree": channels_agree,
     }
-    # (e) the two pre-written readings, applied mechanically
+    # (e) the two pre-written readings.
+    #
+    # Both readings are HYPOTHESIS-LEVEL claims -- the positive one asserts an
+    # effect, the null one asserts a publishable absence of one. A branch that
+    # forbids a hypothesis-test claim therefore forbids BOTH, not just the
+    # positive. Applying the null reading to a descriptive result would be an
+    # overclaim: a publishable null has to be earned by a powered null, and
+    # this run has neither the subject count nor a direction that points that
+    # way. (Orchestrator-review correction, 2026-07-28.)
+    n_elig = data["branch"]["n_eligible_primary_budget"]
     if p1 is None or p2 is None:
         applied, why = None, "scores are not complete on the primary model"
-    elif sig(p1) and sig(p2) and branch == "confirmatory":
+    elif branch != "confirmatory":
+        applied, why = None, (
+            f"the branch rule returns {branch.upper()} at the primary budget "
+            f"({n_elig} eligible subjects), and BOTH pre-written readings are "
+            f"hypothesis-level claims — the positive one asserts an effect, "
+            f"the null one asserts a publishable absence of one. A "
+            f"{branch} result supports neither")
+    elif sig(p1) and sig(p2):
         applied, why = "positive", ("both channels clear the confirmatory bar "
                                     "on the primary model and the branch "
                                     "permits the claim")
-    elif branch != "confirmatory":
-        applied, why = "null", (
-            f"the branch rule returns {branch.upper()} at the primary budget, "
-            "so no hypothesis-test claim is made; the applicable reading is "
-            "the null one, and the measured direction is reported beside it "
-            "as a descriptive number")
     else:
         applied, why = "null", ("the confirmatory bar is not cleared on both "
-                                "channels of the primary model")
+                                "channels of the primary model, at a branch "
+                                "that permits a hypothesis-level claim")
     bar_e = {"quotes": ["B2_reading_positive", "B2_reading_null"],
-             "applied": applied, "why": why}
+             "applied": applied, "why": why,
+             "neither_reading_applied": applied is None,
+             "unresolved": branch != "confirmatory"}
 
     if branch == "confirmatory":
         headline = ("PASS" if (sig(p1) and sig(p2) and channels_agree
                                and robust_dir_holds) else "NO HEADLINE")
     elif branch == "exploratory":
-        headline = "EXPLORATORY — no hypothesis-test claim"
+        headline = ("EXPLORATORY — no hypothesis-test claim; H6 UNRESOLVED "
+                    "at confirmatory scale on this corpus")
     else:
-        headline = "DESCRIPTIVE ONLY — no hypothesis-test claim"
+        headline = ("DESCRIPTIVE ONLY — neither pre-written reading is "
+                    "applied; H6 UNRESOLVED at confirmatory scale on this "
+                    "corpus")
 
     return {"headline": headline, "branch": branch, "a_confirmatory": bar_a,
             "b_magnitude": bar_b, "c_robustness": bar_c, "d_channels": bar_d,
@@ -1435,8 +1451,48 @@ def render_markdown(data: dict) -> str:
     add("### (e) The two pre-written readings, at equal prominence\n")
     add(q("B2_reading_positive"))
     add(q("B2_reading_null"))
-    add(f"**Applied mechanically: the {str(v['e_readings']['applied']).upper()} "
-        f"reading.** Why: {v['e_readings']['why']}.\n")
+    if v["e_readings"]["applied"] is None:
+        n_elig = data["branch"]["n_eligible_primary_budget"]
+        dev_share = "roughly two thirds (4 of 6)"
+        got_share = (f"{n_elig} of "
+                     f"{data['classifier']['n_subjects'] - 1} "
+                     f"({n_elig / (data['classifier']['n_subjects'] - 1):.0%})")
+        add("**Neither reading is applied.** Why: "
+            f"{v['e_readings']['why']}. Both stay quoted above at equal "
+            "prominence with no claim attached to either, and the measured "
+            "directions and confidence intervals sit beside them as "
+            "descriptive numbers.\n")
+        add("The null reading in particular has to be EARNED, not defaulted "
+            "to. It asserts a publishable absence of an effect, which takes a "
+            "powered null. This run is not one: the primary model's "
+            f"registered contrast is "
+            f"{CR.fmt(v['a_confirmatory']['channel1']['mean_diff'], plus=True)} "
+            f"cosine at p = {CR.fmt_p(v['a_confirmatory']['channel1']['p'])} "
+            f"over {n_elig} subjects, and the direction is POSITIVE in all "
+            "four model × channel cells at the primary budget. A "
+            "non-significant positive point estimate on a small sample is an "
+            "absence of evidence, not evidence of absence.\n")
+        add("The dose check cuts against a null reading from the other side "
+            "as well: the primary model's sign REVERSES at B = 400 "
+            f"({CR.fmt(data['results'][PRIMARY]['channel1']['rich_minus_poor_b400']['mean_diff'], plus=True)} "
+            "cosine, "
+            f"p = {CR.fmt_p(data['results'][PRIMARY]['channel1']['rich_minus_poor_b400']['p_paired_t'])}). "
+            "A contrast that changes direction with the budget is not a "
+            "settled null either — even at a higher branch, neither reading "
+            "could have been applied on this evidence without more of it.\n")
+        add(f"**The operative fact of this H6 run is the eligibility "
+            f"shortfall itself.** Development supply implied {dev_share} of "
+            f"the pool would be eligible at B = 1,000; the confirmatory "
+            f"corpus delivered {got_share}. H6 is therefore **UNRESOLVED at "
+            f"confirmatory scale on this corpus** — not answered positive, "
+            f"not answered null. What this run establishes is that the "
+            f"registered H6 design does not reach confirmatory power on "
+            f"MediaSum-derived grounding transcripts at the frozen budget, "
+            f"and that is the finding to carry forward.\n")
+    else:
+        add(f"**Applied mechanically: the "
+            f"{str(v['e_readings']['applied']).upper()} reading.** Why: "
+            f"{v['e_readings']['why']}.\n")
 
     # ---- 9. the confound and the rest of the record ----
     add("## 9. The declared confound and the rest of the record\n")

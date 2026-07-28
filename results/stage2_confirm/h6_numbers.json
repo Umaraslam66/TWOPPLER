@@ -1,10 +1,10 @@
 {
  "banner": "CONFIRMATORY-TRACK H6 report. The frozen H6 bars are applied here, once, and nowhere else.",
- "generated_utc": "2026-07-28T20:29:24Z",
+ "generated_utc": "2026-07-28T20:32:58Z",
  "seed": 20260728,
  "n_bootstrap": 10000,
  "n_signflip": 20000,
- "git_commit": "b2f3f81b46f194b8719580ceb064ef4d894ce2a8",
+ "git_commit": "f73c4ae7d3d75f4dfc53e6de4ed19e81798b8b9e",
  "manifest": {
   "contract": "results/stage2_openended/H6_B3_PARAM_SPEC_DRAFT.md, APPROVED 2026-07-28",
   "rich_arm_wording": "follow-up chains including their root",
@@ -2479,7 +2479,7 @@
   ]
  },
  "verdict": {
-  "headline": "DESCRIPTIVE ONLY — no hypothesis-test claim",
+  "headline": "DESCRIPTIVE ONLY — neither pre-written reading is applied; H6 UNRESOLVED at confirmatory scale on this corpus",
   "branch": "descriptive",
   "a_confirmatory": {
    "quote": {
@@ -2562,8 +2562,10 @@
     "B2_reading_positive",
     "B2_reading_null"
    ],
-   "applied": "null",
-   "why": "the branch rule returns DESCRIPTIVE at the primary budget, so no hypothesis-test claim is made; the applicable reading is the null one, and the measured direction is reported beside it as a descriptive number"
+   "applied": null,
+   "why": "the branch rule returns DESCRIPTIVE at the primary budget (24 eligible subjects), and BOTH pre-written readings are hypothesis-level claims — the positive one asserts an effect, the null one asserts a publishable absence of one. A descriptive result supports neither",
+   "neither_reading_applied": true,
+   "unresolved": true
   }
  }
 }
