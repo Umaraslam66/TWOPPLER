@@ -243,15 +243,23 @@ generation, dual-channel scoring, own-minus-imposter primary.
    budget-dependent; pinned to thinking-off, 512 tokens). Next: the
    owner's ≥50-label judge spot-check (sheets A/B/C ready), then the
    addendum's [TO FILL] slots.
-2. **The bar-lock addendum** ([`PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md`](../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md)),
-   revised 2026-07-27 to Amendment-3 terms, still a DRAFT. On 2026-07-28 its
-   slots were filled, the audits ran under documented deviations D1–D4, and
-   the pre-committed judge trust bar (parameter 5: raw ≥ 0.80 AND κ ≥ 0.60)
-   was measured on the fresh 18-row tranche: **FAIL** (raw 0.7778, κ 0.5789).
-   The pre-committed on-fail path is running — rubric r2 proposed, re-tranche
-   (sheets F/G) built from unused generations, same bar, no bar movement.
-   Record: [`results/stage2_openended/AUDIT_LINES_2026-07-28.md`](stage2_openended/AUDIT_LINES_2026-07-28.md).
-   Awaiting the owner: the r1→r2 diff decision, the r2 judge run, F/G labels.
+2. **The bar-lock addendum is ADOPTED** ([`PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md`](../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md),
+   commit `bcd1d51`, 2026-07-28). The road there, all on the record in
+   [`results/stage2_openended/AUDIT_LINES_2026-07-28.md`](stage2_openended/AUDIT_LINES_2026-07-28.md):
+   slots filled from OE-1; audits under documented deviations D1–D4; the
+   pre-committed judge trust bar (raw ≥ 0.80 AND κ ≥ 0.60) **FAILED on the
+   first tranche** (0.7778 / 0.5789); the pre-committed iteration ran once —
+   rubric r2 (three edits matching the three adjudicated judge failure
+   modes), regression broke 0 of 14 previously-correct rows, and the fresh
+   F/G tranche **PASSED** (0.8889 / 0.7978), verdicts mechanical, bar never
+   moved. Judge pinned: gemini-3.5-flash + rubric r2 + widened parser.
+   OSF snapshot v4 covers all six documents
+   ([`results/osf_preregistration_snapshot_v4.md`](osf_preregistration_snapshot_v4.md));
+   the upload remains on the owner. **A confirmatory launch plan now awaits
+   the owner's explicit GO:** [`STAGE2_LAUNCH_PLAN.md`](../STAGE2_LAUNCH_PLAN.md)
+   (provisional seeded draw of 140 with printed disjointness proof, H1+H7
+   batched generation, caps, risk table, report skeleton). The H6/B3
+   parameter spec is being drafted separately and gates H6 scoring only.
 3. **Three owner human tasks gating the freeze:** the 20-row fuzzy-host
    spot-check (sheet ready at
    [`results/stage2_pilot2/barlock/fuzzy_host_spotcheck_sheet.md`](stage2_pilot2/barlock/fuzzy_host_spotcheck_sheet.md)),

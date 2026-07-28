@@ -1,0 +1,1152 @@
+{
+ "status": "PROVISIONAL \u2014 no drawn subject is touched by any Stage 2 machinery until the owner's explicit GO on the launch plan",
+ "seed": 20260728,
+ "draw_depth": 140,
+ "ratio_longtail_to_article": "3:1",
+ "expected_survival": "0.70 (95% CI 57.5-80.1%) against the >= 3-item build-time floor -> ~98 expected of 140, >= 80 branch holds",
+ "composition": {
+  "long-tail": 105,
+  "article": 35
+ },
+ "h7_eligible_in_draw": 98,
+ "clusters_ge4_in_draw": 140,
+ "disjointness_proof": {
+  "dev_ids_excluded": [
+   "C00292",
+   "C00792",
+   "C01677",
+   "C02006",
+   "C02013",
+   "C02124"
+  ],
+  "dev_intersection_with_draw": [],
+  "n_eligible_pool": 578,
+  "n_after_dev_exclusion": 572,
+  "n_drawn": 140,
+  "drawn_all_qualify_clean_unambiguous": true,
+  "drawn_with_staff_evidence": [],
+  "reserve_note": "the 292-subject staff reserve is not in the clean/qualifying pool (dropped at curation) and so is excluded by construction; re-admission still gates on the owner's 20-dossier spot-check"
+ },
+ "subjects": [
+  {
+   "draw_pos": 1,
+   "canonical_id": "C00192",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 580,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 2,
+   "canonical_id": "C00890",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 213,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 3,
+   "canonical_id": "C00110",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 28,
+   "span_days_dedup": 1457,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 4,
+   "canonical_id": "C00185",
+   "stratum": "article",
+   "n_dedup_clusters": 11,
+   "span_days_dedup": 532,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 5,
+   "canonical_id": "C01842",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 2746,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 6,
+   "canonical_id": "C00621",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 11,
+   "span_days_dedup": 1656,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 7,
+   "canonical_id": "C00203",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 22,
+   "span_days_dedup": 2312,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 8,
+   "canonical_id": "C01464",
+   "stratum": "article",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 277,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 9,
+   "canonical_id": "C01746",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 12,
+   "span_days_dedup": 1251,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 10,
+   "canonical_id": "C00846",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 498,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 11,
+   "canonical_id": "C00746",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 23,
+   "span_days_dedup": 1716,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 12,
+   "canonical_id": "C01255",
+   "stratum": "article",
+   "n_dedup_clusters": 34,
+   "span_days_dedup": 457,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 13,
+   "canonical_id": "C00522",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 1181,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 14,
+   "canonical_id": "C00620",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 31,
+   "span_days_dedup": 5003,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 15,
+   "canonical_id": "C00737",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 393,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 16,
+   "canonical_id": "C00169",
+   "stratum": "article",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 2014,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 17,
+   "canonical_id": "C01800",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 538,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 18,
+   "canonical_id": "C00897",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 23,
+   "span_days_dedup": 465,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 19,
+   "canonical_id": "C00623",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 8,
+   "span_days_dedup": 964,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 20,
+   "canonical_id": "C02240",
+   "stratum": "article",
+   "n_dedup_clusters": 26,
+   "span_days_dedup": 4570,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 21,
+   "canonical_id": "C01904",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 784,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 22,
+   "canonical_id": "C02280",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 429,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 23,
+   "canonical_id": "C00818",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 10,
+   "span_days_dedup": 1742,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 24,
+   "canonical_id": "C01867",
+   "stratum": "article",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 2368,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 25,
+   "canonical_id": "C00830",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 2595,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 26,
+   "canonical_id": "C01891",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 1747,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 27,
+   "canonical_id": "C00673",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 25,
+   "span_days_dedup": 834,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 28,
+   "canonical_id": "C02359",
+   "stratum": "article",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 770,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 29,
+   "canonical_id": "C00819",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 700,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 30,
+   "canonical_id": "C00050",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 13,
+   "span_days_dedup": 2268,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 31,
+   "canonical_id": "C01752",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 1404,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 32,
+   "canonical_id": "C00593",
+   "stratum": "article",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 2779,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 33,
+   "canonical_id": "C00344",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 36,
+   "span_days_dedup": 691,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 34,
+   "canonical_id": "C00563",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 237,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 35,
+   "canonical_id": "C01180",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 15,
+   "span_days_dedup": 3827,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 36,
+   "canonical_id": "C02318",
+   "stratum": "article",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 2157,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 37,
+   "canonical_id": "C01673",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 556,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 38,
+   "canonical_id": "C02500",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 10,
+   "span_days_dedup": 1689,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 39,
+   "canonical_id": "C00854",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 17,
+   "span_days_dedup": 2052,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 40,
+   "canonical_id": "C00697",
+   "stratum": "article",
+   "n_dedup_clusters": 20,
+   "span_days_dedup": 2587,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 41,
+   "canonical_id": "C02469",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 24,
+   "span_days_dedup": 1396,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 42,
+   "canonical_id": "C02345",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 469,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 43,
+   "canonical_id": "C00833",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 1251,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 44,
+   "canonical_id": "C00427",
+   "stratum": "article",
+   "n_dedup_clusters": 77,
+   "span_days_dedup": 5209,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 45,
+   "canonical_id": "C01397",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 980,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 46,
+   "canonical_id": "C02122",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 563,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 47,
+   "canonical_id": "C00634",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 1694,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 48,
+   "canonical_id": "C01742",
+   "stratum": "article",
+   "n_dedup_clusters": 13,
+   "span_days_dedup": 2498,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 49,
+   "canonical_id": "C00824",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 10,
+   "span_days_dedup": 1980,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 50,
+   "canonical_id": "C01247",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 2958,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 51,
+   "canonical_id": "C00451",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 8,
+   "span_days_dedup": 3440,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 52,
+   "canonical_id": "C01163",
+   "stratum": "article",
+   "n_dedup_clusters": 12,
+   "span_days_dedup": 391,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 53,
+   "canonical_id": "C00102",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 3342,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 54,
+   "canonical_id": "C00698",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 13,
+   "span_days_dedup": 1864,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 55,
+   "canonical_id": "C01688",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 500,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 56,
+   "canonical_id": "C01504",
+   "stratum": "article",
+   "n_dedup_clusters": 18,
+   "span_days_dedup": 2133,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 57,
+   "canonical_id": "C02248",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 778,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 58,
+   "canonical_id": "C00552",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 237,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 59,
+   "canonical_id": "C00888",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 57,
+   "span_days_dedup": 648,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 60,
+   "canonical_id": "C01328",
+   "stratum": "article",
+   "n_dedup_clusters": 31,
+   "span_days_dedup": 2236,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 61,
+   "canonical_id": "C02502",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 2073,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 62,
+   "canonical_id": "C01848",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 2660,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 63,
+   "canonical_id": "C00179",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 11,
+   "span_days_dedup": 1855,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 64,
+   "canonical_id": "C02256",
+   "stratum": "article",
+   "n_dedup_clusters": 46,
+   "span_days_dedup": 1022,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 65,
+   "canonical_id": "C00153",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 2777,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 66,
+   "canonical_id": "C02121",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 1935,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 67,
+   "canonical_id": "C01470",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 770,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 68,
+   "canonical_id": "C01818",
+   "stratum": "article",
+   "n_dedup_clusters": 22,
+   "span_days_dedup": 1657,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 69,
+   "canonical_id": "C01296",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 25,
+   "span_days_dedup": 503,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 70,
+   "canonical_id": "C02397",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 2178,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 71,
+   "canonical_id": "C02312",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 2246,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 72,
+   "canonical_id": "C01740",
+   "stratum": "article",
+   "n_dedup_clusters": 12,
+   "span_days_dedup": 1039,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 73,
+   "canonical_id": "C00256",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 10,
+   "span_days_dedup": 3648,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 74,
+   "canonical_id": "C00555",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 26,
+   "span_days_dedup": 490,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 75,
+   "canonical_id": "C01801",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 867,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 76,
+   "canonical_id": "C01442",
+   "stratum": "article",
+   "n_dedup_clusters": 23,
+   "span_days_dedup": 2959,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 77,
+   "canonical_id": "C00756",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 300,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 78,
+   "canonical_id": "C00592",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 307,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 79,
+   "canonical_id": "C00752",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 17,
+   "span_days_dedup": 1138,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 80,
+   "canonical_id": "C00580",
+   "stratum": "article",
+   "n_dedup_clusters": 29,
+   "span_days_dedup": 4591,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 81,
+   "canonical_id": "C01012",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 288,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 82,
+   "canonical_id": "C01722",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 11,
+   "span_days_dedup": 512,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 83,
+   "canonical_id": "C02283",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 1558,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 84,
+   "canonical_id": "C00793",
+   "stratum": "article",
+   "n_dedup_clusters": 14,
+   "span_days_dedup": 3349,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 85,
+   "canonical_id": "C00642",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 1448,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 86,
+   "canonical_id": "C01599",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 11,
+   "span_days_dedup": 1796,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 87,
+   "canonical_id": "C01490",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 14,
+   "span_days_dedup": 1245,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 88,
+   "canonical_id": "C01897",
+   "stratum": "article",
+   "n_dedup_clusters": 20,
+   "span_days_dedup": 1459,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 89,
+   "canonical_id": "C00892",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 6426,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 90,
+   "canonical_id": "C00453",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 573,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 91,
+   "canonical_id": "C01254",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 40,
+   "span_days_dedup": 363,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 92,
+   "canonical_id": "C01585",
+   "stratum": "article",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 1396,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 93,
+   "canonical_id": "C02437",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 270,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 94,
+   "canonical_id": "C00622",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 895,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 95,
+   "canonical_id": "C00886",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 1480,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 96,
+   "canonical_id": "C01883",
+   "stratum": "article",
+   "n_dedup_clusters": 62,
+   "span_days_dedup": 856,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 97,
+   "canonical_id": "C01375",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 549,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 98,
+   "canonical_id": "C00457",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 2423,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 99,
+   "canonical_id": "C01404",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 8,
+   "span_days_dedup": 3000,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 100,
+   "canonical_id": "C02474",
+   "stratum": "article",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 547,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 101,
+   "canonical_id": "C02478",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 19,
+   "span_days_dedup": 878,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 102,
+   "canonical_id": "C02200",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 11,
+   "span_days_dedup": 1371,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 103,
+   "canonical_id": "C00364",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 37,
+   "span_days_dedup": 485,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 104,
+   "canonical_id": "C00526",
+   "stratum": "article",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 451,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 105,
+   "canonical_id": "C00087",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 12,
+   "span_days_dedup": 1362,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 106,
+   "canonical_id": "C02475",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 51,
+   "span_days_dedup": 1883,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 107,
+   "canonical_id": "C00789",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 52,
+   "span_days_dedup": 998,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 108,
+   "canonical_id": "C00498",
+   "stratum": "article",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 521,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 109,
+   "canonical_id": "C01933",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 1911,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 110,
+   "canonical_id": "C00653",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 13,
+   "span_days_dedup": 276,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 111,
+   "canonical_id": "C02482",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 43,
+   "span_days_dedup": 426,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 112,
+   "canonical_id": "C00218",
+   "stratum": "article",
+   "n_dedup_clusters": 54,
+   "span_days_dedup": 4474,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 113,
+   "canonical_id": "C01485",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 4,
+   "span_days_dedup": 228,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 114,
+   "canonical_id": "C00032",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 52,
+   "span_days_dedup": 1275,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 115,
+   "canonical_id": "C01967",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 524,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 116,
+   "canonical_id": "C00817",
+   "stratum": "article",
+   "n_dedup_clusters": 23,
+   "span_days_dedup": 1566,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 117,
+   "canonical_id": "C00582",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 15,
+   "span_days_dedup": 1302,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 118,
+   "canonical_id": "C02218",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 8,
+   "span_days_dedup": 1621,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 119,
+   "canonical_id": "C00700",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 1379,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 120,
+   "canonical_id": "C02088",
+   "stratum": "article",
+   "n_dedup_clusters": 29,
+   "span_days_dedup": 1183,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 121,
+   "canonical_id": "C00629",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 16,
+   "span_days_dedup": 1706,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 122,
+   "canonical_id": "C00657",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 1777,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 123,
+   "canonical_id": "C02521",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 12,
+   "span_days_dedup": 966,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 124,
+   "canonical_id": "C00163",
+   "stratum": "article",
+   "n_dedup_clusters": 14,
+   "span_days_dedup": 2292,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 125,
+   "canonical_id": "C00146",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 14,
+   "span_days_dedup": 2102,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 126,
+   "canonical_id": "C02167",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 1141,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 127,
+   "canonical_id": "C00836",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 435,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 128,
+   "canonical_id": "C00145",
+   "stratum": "article",
+   "n_dedup_clusters": 9,
+   "span_days_dedup": 3229,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 129,
+   "canonical_id": "C00440",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 11,
+   "span_days_dedup": 3486,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 130,
+   "canonical_id": "C02242",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 10,
+   "span_days_dedup": 3449,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 131,
+   "canonical_id": "C00812",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 15,
+   "span_days_dedup": 1028,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 132,
+   "canonical_id": "C00777",
+   "stratum": "article",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 717,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 133,
+   "canonical_id": "C01659",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 35,
+   "span_days_dedup": 3255,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 134,
+   "canonical_id": "C01171",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 341,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 135,
+   "canonical_id": "C01538",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 1313,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 136,
+   "canonical_id": "C01430",
+   "stratum": "article",
+   "n_dedup_clusters": 5,
+   "span_days_dedup": 1903,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 137,
+   "canonical_id": "C02207",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 6,
+   "span_days_dedup": 1067,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 138,
+   "canonical_id": "C01108",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 27,
+   "span_days_dedup": 4394,
+   "h7_eligible": true
+  },
+  {
+   "draw_pos": 139,
+   "canonical_id": "C01817",
+   "stratum": "long-tail",
+   "n_dedup_clusters": 7,
+   "span_days_dedup": 258,
+   "h7_eligible": false
+  },
+  {
+   "draw_pos": 140,
+   "canonical_id": "C01873",
+   "stratum": "article",
+   "n_dedup_clusters": 15,
+   "span_days_dedup": 2802,
+   "h7_eligible": true
+  }
+ ]
+}
