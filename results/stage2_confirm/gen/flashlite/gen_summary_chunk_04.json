@@ -1,0 +1,89 @@
+{
+ "banner": "CONFIRMATORY. Robustness (secondary) generations; absolute scores from this model are secondary per C3.",
+ "run_id": "stage2_confirm/gen_flashlite",
+ "chunk": "chunk_04",
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 0.0,
+ "max_output_tokens": 256,
+ "max_answer_words": 150,
+ "n_rows": 492,
+ "n_calls_this_process": 492,
+ "n_retries_this_process": 0,
+ "resumed": false,
+ "n_stale_dropped": 0,
+ "sha_verified_against_prompt_file": true,
+ "tokens_in": 793812,
+ "tokens_out": 71960,
+ "cost_usd_this_process": 0.418044,
+ "cost_logged": true,
+ "confirmatory_spend_after_usd": 1.4227,
+ "confirmatory_budget_usd": 15.0,
+ "n_truncated": 0,
+ "n_era_violations": 2,
+ "n_over_word_cap": 16,
+ "n_empty": 0,
+ "per_arm": {
+  "h7_twin_redacted": {
+   "n": 17,
+   "n_truncated": 0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 2,
+   "n_empty": 0,
+   "tokens_in": 46947,
+   "tokens_out": 2648,
+   "truncation_rate": 0.0
+  },
+  "imposter_redacted": {
+   "n": 95,
+   "n_truncated": 0,
+   "n_era_violations": 1,
+   "n_over_word_cap": 5,
+   "n_empty": 0,
+   "tokens_in": 268899,
+   "tokens_out": 13755,
+   "truncation_rate": 0.0
+  },
+  "twin_named": {
+   "n": 95,
+   "n_truncated": 0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 4,
+   "n_empty": 0,
+   "tokens_in": 227794,
+   "tokens_out": 14547,
+   "truncation_rate": 0.0
+  },
+  "twin_redacted": {
+   "n": 95,
+   "n_truncated": 0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 3,
+   "n_empty": 0,
+   "tokens_in": 227035,
+   "tokens_out": 14143,
+   "truncation_rate": 0.0
+  },
+  "zeroinfo_named": {
+   "n": 95,
+   "n_truncated": 0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 1,
+   "n_empty": 0,
+   "tokens_in": 11948,
+   "tokens_out": 13358,
+   "truncation_rate": 0.0
+  },
+  "zeroinfo_redacted": {
+   "n": 95,
+   "n_truncated": 0,
+   "n_era_violations": 1,
+   "n_over_word_cap": 1,
+   "n_empty": 0,
+   "tokens_in": 11189,
+   "tokens_out": 13509,
+   "truncation_rate": 0.0
+  }
+ },
+ "runtime_secs": 630.9,
+ "generated_utc": "2026-07-28T13:21:32Z"
+}

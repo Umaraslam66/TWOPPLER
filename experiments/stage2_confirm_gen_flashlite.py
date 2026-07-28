@@ -93,10 +93,13 @@ CONFIRM_API_BUDGET_USD = 15.0
 #: Run-id prefix that counts against that cap.
 CONFIRM_RUN_PREFIX = "stage2_confirm"
 
-#: One outer retry on a transient failure, on top of the 5 attempts
-#: ``GeminiClient.generate`` already makes internally.
-OUTER_RETRIES = 1
-OUTER_BACKOFF_S = 20.0
+#: Outer retries on a transient failure, on top of the 5 attempts
+#: ``GeminiClient.generate`` already makes internally. Widened from 1x20s after
+#: the 2026-07-28 block: the AI Studio account's prepayment credits ran out
+#: mid-tranche and every inner attempt returned 429 RESOURCE_EXHAUSTED, so the
+#: run needs to survive a longer credit/quota dip before declaring a block.
+OUTER_RETRIES = 3
+OUTER_BACKOFF_S = 60.0
 
 #: Check the running spend against the cap this often inside a chunk.
 BUDGET_CHECK_EVERY = 25

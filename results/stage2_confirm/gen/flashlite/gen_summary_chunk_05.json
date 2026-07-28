@@ -1,0 +1,89 @@
+{
+ "banner": "CONFIRMATORY. Robustness (secondary) generations; absolute scores from this model are secondary per C3.",
+ "run_id": "stage2_confirm/gen_flashlite",
+ "chunk": "chunk_05",
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 0.0,
+ "max_output_tokens": 256,
+ "max_answer_words": 150,
+ "n_rows": 279,
+ "n_calls_this_process": 279,
+ "n_retries_this_process": 0,
+ "resumed": false,
+ "n_stale_dropped": 0,
+ "sha_verified_against_prompt_file": true,
+ "tokens_in": 501403,
+ "tokens_out": 41216,
+ "cost_usd_this_process": 0.253461,
+ "cost_logged": true,
+ "confirmatory_spend_after_usd": 1.676161,
+ "confirmatory_budget_usd": 15.0,
+ "n_truncated": 0,
+ "n_era_violations": 1,
+ "n_over_word_cap": 12,
+ "n_empty": 0,
+ "per_arm": {
+  "h7_twin_redacted": {
+   "n": 39,
+   "n_truncated": 0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 1,
+   "n_empty": 0,
+   "tokens_in": 111469,
+   "tokens_out": 5581,
+   "truncation_rate": 0.0
+  },
+  "imposter_redacted": {
+   "n": 48,
+   "n_truncated": 0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 1,
+   "n_empty": 0,
+   "tokens_in": 138686,
+   "tokens_out": 7254,
+   "truncation_rate": 0.0
+  },
+  "twin_named": {
+   "n": 48,
+   "n_truncated": 0,
+   "n_era_violations": 1,
+   "n_over_word_cap": 1,
+   "n_empty": 0,
+   "tokens_in": 119799,
+   "tokens_out": 7164,
+   "truncation_rate": 0.0
+  },
+  "twin_redacted": {
+   "n": 48,
+   "n_truncated": 0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 1,
+   "n_empty": 0,
+   "tokens_in": 119434,
+   "tokens_out": 7134,
+   "truncation_rate": 0.0
+  },
+  "zeroinfo_named": {
+   "n": 48,
+   "n_truncated": 0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 4,
+   "n_empty": 0,
+   "tokens_in": 6190,
+   "tokens_out": 6988,
+   "truncation_rate": 0.0
+  },
+  "zeroinfo_redacted": {
+   "n": 48,
+   "n_truncated": 0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 4,
+   "n_empty": 0,
+   "tokens_in": 5825,
+   "tokens_out": 7095,
+   "truncation_rate": 0.0
+  }
+ },
+ "runtime_secs": 350.4,
+ "generated_utc": "2026-07-28T13:27:22Z"
+}
