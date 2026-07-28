@@ -1,0 +1,92 @@
+%% DOPPLER — shared preamble for the shareable PDF build.
+%% Injected via pandoc --include-in-header, so it lands after the document
+%% class and font setup but before hyperref is configured. Engine is tectonic
+%% (XeTeX), fonts are resolved by name from the ones macOS already ships.
+
+\usepackage{etoolbox}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{newunicodechar}
+\usepackage{caption}
+
+% ---------------------------------------------------------------- palette --
+% Restrained: one accent used for headings, rules and links; a muted grey for
+% captions and page numbers; body text near-black rather than pure black.
+\definecolor{dopplerink}{HTML}{18262E}
+\definecolor{dopplaccent}{HTML}{1F5C7A}
+\definecolor{dopplermuted}{HTML}{5A6B75}
+\definecolor{dopplerule}{HTML}{C8D5DC}
+
+\AtBeginDocument{\color{dopplerink}}
+
+% -------------------------------------------------------- glyph fallbacks --
+% Charter has no U+2192. Route it through the math font so it renders as a
+% real arrow instead of a missing-glyph box.
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+
+% --------------------------------------------------------------- headings --
+% Sans headings against a serif body. The source documents number their own
+% sections ("## 1. The headline"), so LaTeX section numbering stays switched
+% off and \titleformat* changes only the fonts, never the numbering logic.
+\titleformat*{\section}{\sffamily\bfseries\large\color{dopplaccent}}
+\titleformat*{\subsection}{\sffamily\bfseries\normalsize\color{dopplaccent}}
+\titleformat*{\subsubsection}{\sffamily\bfseries\small\color{dopplermuted}}
+\titlespacing*{\section}{0pt}{2.1ex plus 0.7ex minus 0.2ex}{1.0ex plus 0.2ex}
+\titlespacing*{\subsection}{0pt}{1.6ex plus 0.5ex minus 0.2ex}{0.7ex plus 0.2ex}
+\titlespacing*{\subsubsection}{0pt}{1.4ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+% ------------------------------------------------------------ running feet --
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\sffamily\footnotesize\color{dopplermuted}\thepage}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+  \fancyfoot[C]{\sffamily\footnotesize\color{dopplermuted}\thepage}%
+}
+
+% ----------------------------------------------------------------- tables --
+% Paper 2 carries tables up to eight columns wide. Pandoc gives them
+% proportional p{} columns that wrap, and shrinking the type keeps the wrapped
+% result inside the text block instead of spilling into the margin.
+\AtBeginEnvironment{longtable}{\footnotesize}
+\AtBeginEnvironment{tabular}{\footnotesize}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.18}
+
+% --------------------------------------------------------------- captions --
+\captionsetup{
+  font={sf,small,color=dopplermuted},
+  labelfont={sf,small,bf,color=dopplaccent},
+  labelsep=period,
+  skip=9pt,
+  justification=raggedright,
+  singlelinecheck=false
+}
+
+% ------------------------------------------------------------ title block --
+% Replaces the centred Computer-Modern-era \maketitle with a flush-left block:
+% accent rule, title, then the registration line every one of these documents
+% carries.
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begingroup
+  \raggedright
+  {\color{dopplaccent}\rule{\linewidth}{2.2pt}}\par
+  \vspace{1.5em}
+  {\sffamily\bfseries\fontsize{21}{26}\selectfont\color{dopplerink}\@title\par}
+  \vspace{1.35em}
+  {\sffamily\fontsize{10}{14}\selectfont\color{dopplermuted}%
+    Project DOPPLER (registered on OSF as TWOPPLER)\par
+    \vspace{0.45em}
+    2026-07-29\enspace\textperiodcentered\enspace
+    \href{https://osf.io/qz28m}{https://osf.io/qz28m}\par}
+  \vspace{1.2em}
+  {\color{dopplerule}\rule{\linewidth}{0.7pt}}\par
+  \vspace{2.3em}
+  \endgroup
+}
+\makeatother
