@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00179",
+ "canonical_name": "Andy Kohut",
+ "draw_pos": 63,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 11,
+ "span_days_dedup": 1855,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 2,
+ "failure_reason": "below_item_floor",
+ "failure_detail": "2 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl8",
+  "transcript_id": "NPR-33264",
+  "date": "2011-05-04",
+  "programme": "All Things Considered",
+  "title": "Bin Laden's Death Impacts Obama's Approval Rating",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2011-05-04"
+  ],
+  "guest_words": 411
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 10,
+  "host": 11
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 974,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 8,
+ "drop_reasons": {
+  "answer_too_short": 1,
+  "not_interrogative": 5
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

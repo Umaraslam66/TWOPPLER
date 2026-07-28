@@ -1,0 +1,80 @@
+{
+ "canonical_id": "C01247",
+ "canonical_name": "John Ourand",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-37286",
+   "date": "2009-03-21",
+   "program": "All Things Considered",
+   "title": "While Economy Dribbles, NCAA Ad Sales Score",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2009-03-21"
+   ],
+   "guest_words": 379
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-22793",
+   "date": "2015-01-07",
+   "program": "Morning Edition",
+   "title": "ESPN, Other Networks To Be Streamed On Dish Network's Sling TV",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-01-07"
+   ],
+   "guest_words": 517
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-23194",
+   "date": "2016-01-01",
+   "program": "All Things Considered",
+   "title": "ESPN's College Football Playoff Ratings Plummet On New Year's Eve",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-01-01"
+   ],
+   "guest_words": 406
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-20278",
+   "date": "2016-01-15",
+   "program": "Morning Edition",
+   "title": "NFL Team Lured To LA With Bigger Fan Base, Multi-Billion Dollar Stadium",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-01-15"
+   ],
+   "guest_words": 385
+  },
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-12777",
+   "date": "2017-03-19",
+   "program": "Weekend Edition Sunday",
+   "title": "Out Of Bounds: Competitive Video Gaming And Scholarships",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-03-19"
+   ],
+   "guest_words": 402
+  }
+ ],
+ "test": {
+  "cluster_id": "cl2",
+  "transcript_id": "NPR-18733",
+  "date": "2017-04-26",
+  "program": "All Things Considered",
+  "title": "Cord-Cutting Leads ESPN To Target On-Air Personalities In Massive Layoffs",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-04-26"
+  ],
+  "guest_words": 442
+ },
+ "excluded_same_date": []
+}

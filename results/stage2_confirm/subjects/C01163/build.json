@@ -1,0 +1,51 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01163",
+ "canonical_name": "Jim Bakker",
+ "draw_pos": 52,
+ "stratum": "article",
+ "h7_eligible": false,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 12,
+ "span_days_dedup": 391,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 7,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl8",
+  "transcript_id": "CNN-33247",
+  "date": "2001-06-24",
+  "programme": "CNN LARRY KING WEEKEND",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2001-06-24"
+  ],
+  "guest_words": 1720
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 48,
+  "host": 212,
+  "other": 199
+ },
+ "n_grounding_clusters": 1,
+ "grounding_guest_words": 2007,
+ "n_excluded_clusters": 1,
+ "n_qa_candidates": 37,
+ "drop_reasons": {
+  "answer_too_short": 13,
+  "not_interrogative": 4,
+  "question_too_short": 13
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

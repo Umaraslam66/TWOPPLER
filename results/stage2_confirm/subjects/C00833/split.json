@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C00833",
+ "canonical_name": "Girish Gupta",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-24371",
+   "date": "2014-02-25",
+   "program": "Morning Edition",
+   "title": "Opposition Blocks Traffic In Venezuelan Capital Caracas",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-02-25"
+   ],
+   "guest_words": 511
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-27774",
+   "date": "2014-03-02",
+   "program": "All Things Considered",
+   "title": "In Defiance Of Arrests, Protests Erupt Again In Venezuela",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-03-02"
+   ],
+   "guest_words": 493
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-18756",
+   "date": "2017-04-22",
+   "program": "All Things Considered",
+   "title": "Protests Against President Maduro In Venezuela Near Breaking Point",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-04-22"
+   ],
+   "guest_words": 448
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-18309",
+   "date": "2017-05-21",
+   "program": "All Things Considered",
+   "title": "Food Shortages At The Heart Of Venezuelan Economic And Political Crisis",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-05-21"
+   ],
+   "guest_words": 447
+  }
+ ],
+ "test": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-16862",
+  "date": "2017-07-30",
+  "program": "All Things Considered",
+  "title": "Venezuelans Opposed To President Maduro Boycott Elections",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-07-30"
+  ],
+  "guest_words": 553
+ },
+ "excluded_same_date": []
+}

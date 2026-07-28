@@ -1,0 +1,92 @@
+{
+ "canonical_id": "C01722",
+ "canonical_name": "Michael Dimock",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-9774",
+   "date": "2013-01-16",
+   "program": "Talk of the Nation",
+   "title": "The President's Plans To Reduce Gun Violence",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-01-16"
+   ],
+   "guest_words": 719
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-29661",
+   "date": "2013-03-12",
+   "program": "All Things Considered",
+   "title": "Pew Poll: Most American Gun Owners Say They Own A Firearm For Protection",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-03-12"
+   ],
+   "guest_words": 639
+  },
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-29075",
+   "date": "2013-06-06",
+   "program": "All Things Considered",
+   "title": "Supporters, Opponents Of Gay Marriage Find Legality Inevitable",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-06-06"
+   ],
+   "guest_words": 489
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-28378",
+   "date": "2013-09-09",
+   "program": "All Things Considered",
+   "title": "Pew: American Opposition To Air Strikes In Syria Is Rising",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-09-09"
+   ],
+   "guest_words": 574
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-28329",
+   "date": "2013-10-07",
+   "program": "All Things Considered",
+   "title": "Irked By Shutdown And Stalemate, Most Still Oppose Compromise",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-10-07"
+   ],
+   "guest_words": 509
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-28206",
+   "date": "2013-12-03",
+   "program": "All Things Considered",
+   "title": "For First Time, Americans Say U.S. Power In The World Is Declining",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-12-03"
+   ],
+   "guest_words": 524
+  }
+ ],
+ "test": {
+  "cluster_id": "cl3",
+  "transcript_id": "NPR-27055",
+  "date": "2014-06-12",
+  "program": "All Things Considered",
+  "title": "Stark Report: Left-Right Divide Is At Its Worst In Recent Memory",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2014-06-12"
+  ],
+  "guest_words": 691
+ },
+ "excluded_same_date": []
+}

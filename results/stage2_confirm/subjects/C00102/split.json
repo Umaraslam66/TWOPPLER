@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C00102",
+ "canonical_name": "Alex Thier",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-14208",
+   "date": "2010-06-20",
+   "program": "Weekend Edition Sunday",
+   "title": "Mineral Wealth May Impact Afghanistan's Future",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-06-20"
+   ],
+   "guest_words": 476
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-34610",
+   "date": "2010-10-12",
+   "program": "All Things Considered",
+   "title": "A Closer Look At How U.S. Aid To Pakistan Is Spent",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-10-12"
+   ],
+   "guest_words": 356
+  }
+ ],
+ "test": {
+  "cluster_id": "cl5",
+  "transcript_id": "NPR-9323",
+  "date": "2019-08-14",
+  "program": "Morning Edition",
+  "title": "Are Afghans Ready To Compromise With The Taliban To Maintain Peace?",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-08-14"
+  ],
+  "guest_words": 878
+ },
+ "excluded_same_date": []
+}

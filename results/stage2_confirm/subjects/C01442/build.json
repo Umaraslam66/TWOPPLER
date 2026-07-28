@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01442",
+ "canonical_name": "Kori Schake",
+ "draw_pos": 76,
+ "stratum": "article",
+ "h7_eligible": true,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 23,
+ "span_days_dedup": 2959,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 3,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl23",
+  "transcript_id": "NPR-9945",
+  "date": "2018-12-22",
+  "programme": "Weekend Edition Saturday",
+  "title": "What Mattis' Resignation Could Mean For Global Politics",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2018-12-22"
+  ],
+  "guest_words": 390
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 8,
+  "host": 8
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 1419,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 8,
+ "drop_reasons": {
+  "intro_host_turn": 1,
+  "not_interrogative": 3,
+  "question_too_short": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

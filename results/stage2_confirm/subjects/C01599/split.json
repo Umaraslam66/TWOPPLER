@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C01599",
+ "canonical_name": "Mann Leverett",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "CNN-248795",
+   "date": "2015-02-06",
+   "program": "NEW DAY",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-02-06"
+   ],
+   "guest_words": 643
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "CNN-252574",
+   "date": "2015-04-03",
+   "program": "NEW DAY",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-04-03"
+   ],
+   "guest_words": 511
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "CNN-255581",
+   "date": "2015-05-20",
+   "program": "NEW DAY",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-05-20"
+   ],
+   "guest_words": 0
+  }
+ ],
+ "test": {
+  "cluster_id": "cl11",
+  "transcript_id": "CNN-389688",
+  "date": "2020-01-07",
+  "program": "CNN NEWSROOM",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2020-01-07"
+  ],
+  "guest_words": 505
+ },
+ "excluded_same_date": []
+}

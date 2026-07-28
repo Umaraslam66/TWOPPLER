@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C02502",
+ "canonical_name": "Von Einsiedel",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "CNN-228945",
+   "date": "2014-04-22",
+   "program": "CNN'S AMANPOUR",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-04-22"
+   ],
+   "guest_words": 644
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "CNN-381362",
+   "date": "2019-09-25",
+   "program": "CNN'S AMANPOUR",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-09-25"
+   ],
+   "guest_words": 1874
+  }
+ ],
+ "test": {
+  "cluster_id": "cl5",
+  "transcript_id": "CNN-388758",
+  "date": "2019-12-25",
+  "program": "CNN'S AMANPOUR",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-12-25"
+  ],
+  "guest_words": 2173
+ },
+ "excluded_same_date": []
+}

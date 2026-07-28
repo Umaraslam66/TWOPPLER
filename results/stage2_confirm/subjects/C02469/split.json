@@ -1,0 +1,92 @@
+{
+ "canonical_id": "C02469",
+ "canonical_name": "Tzemach Lemmon",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "CNN-283084",
+   "date": "2016-05-03",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-05-03"
+   ],
+   "guest_words": 487
+  },
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "CNN-290989",
+   "date": "2016-08-10",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-08-10"
+   ],
+   "guest_words": 428
+  },
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "CNN-303760",
+   "date": "2017-01-24",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-01-24"
+   ],
+   "guest_words": 587
+  },
+  {
+   "cluster_id": "cl18",
+   "transcript_id": "CNN-328738",
+   "date": "2017-12-19",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-12-19"
+   ],
+   "guest_words": 0
+  },
+  {
+   "cluster_id": "cl19",
+   "transcript_id": "CNN-330261",
+   "date": "2018-01-11",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-01-11"
+   ],
+   "guest_words": 0
+  },
+  {
+   "cluster_id": "cl20",
+   "transcript_id": "CNN-333402",
+   "date": "2018-02-22",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-02-22"
+   ],
+   "guest_words": 0
+  }
+ ],
+ "test": {
+  "cluster_id": "cl24",
+  "transcript_id": "CNN-393969",
+  "date": "2020-02-28",
+  "program": "CNN NEWSROOM",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2020-02-28"
+  ],
+  "guest_words": 651
+ },
+ "excluded_same_date": []
+}

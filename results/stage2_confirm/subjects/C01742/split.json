@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C01742",
+ "canonical_name": "Michael Young",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-42007",
+   "date": "2006-08-14",
+   "program": "All Things Considered",
+   "title": "What the Lebanese Public Thinks of Hezbollah",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-08-14"
+   ],
+   "guest_words": 474
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-41660",
+   "date": "2006-11-13",
+   "program": "All Things Considered",
+   "title": "Lebanon Approves U.N. Report on Hariri Murder",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-11-13"
+   ],
+   "guest_words": 513
+  }
+ ],
+ "test": {
+  "cluster_id": "cl13",
+  "transcript_id": "NPR-45618",
+  "date": "2013-06-16",
+  "program": "Weekend Edition Sunday",
+  "title": "Lebanon Feels The Pain Of Syrian War Spillover",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-06-16"
+  ],
+  "guest_words": 395
+ },
+ "excluded_same_date": []
+}

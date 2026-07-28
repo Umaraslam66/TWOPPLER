@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C00427",
+ "canonical_name": "Carlos Gutierrez",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl69",
+   "transcript_id": "NPR-17209",
+   "date": "2005-05-20",
+   "program": "Day to Day",
+   "title": "U.S. Puts Trade Limits on Chinese Textile Imports",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-05-20"
+   ],
+   "guest_words": 385
+  },
+  {
+   "cluster_id": "cl35",
+   "transcript_id": "CNN-188324",
+   "date": "2012-06-24",
+   "program": "STATE OF THE UNION WITH CANDY CROWLEY",
+   "title": "",
+   "n_transcripts_in_cluster": 2,
+   "member_dates": [
+    "2012-06-24"
+   ],
+   "guest_words": 343
+  },
+  {
+   "cluster_id": "cl70",
+   "transcript_id": "NPR-21764",
+   "date": "2016-06-12",
+   "program": "All Things Considered",
+   "title": "Republican Former Commerce Secretary Calls On GOP To Oppose Trump",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-06-12"
+   ],
+   "guest_words": 557
+  },
+  {
+   "cluster_id": "cl75",
+   "transcript_id": "NPR-48675",
+   "date": "2018-03-04",
+   "program": "All Things Considered",
+   "title": "'Protectionism Harms,' Says Former Ex-Commerce Secretary On Steel Tariff Decision",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-03-04"
+   ],
+   "guest_words": 435
+  }
+ ],
+ "test": {
+  "cluster_id": "cl77",
+  "transcript_id": "NPR-9080",
+  "date": "2019-08-24",
+  "program": "All Things Considered",
+  "title": "The U.S.-China Trade War's Blow To American Business Owners",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-08-24"
+  ],
+  "guest_words": 408
+ },
+ "excluded_same_date": []
+}

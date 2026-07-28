@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01328",
+ "canonical_name": "Juan Zarate",
+ "draw_pos": 60,
+ "stratum": "article",
+ "h7_eligible": true,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 31,
+ "span_days_dedup": 2236,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 4,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl18",
+  "transcript_id": "NPR-11397",
+  "date": "2017-08-19",
+  "programme": "Weekend Edition Saturday",
+  "title": "Counterterrorism Efforts In Spain",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-08-19"
+  ],
+  "guest_words": 503
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 9,
+  "host": 6
+ },
+ "n_grounding_clusters": 5,
+ "grounding_guest_words": 2509,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 6,
+ "drop_reasons": {
+  "intro_host_turn": 1,
+  "not_interrogative": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

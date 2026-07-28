@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C02397",
+ "canonical_name": "Tim Storey",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-34456",
+   "date": "2010-11-04",
+   "program": "All Things Considered",
+   "title": "State Legislatures See Big Changes",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-11-04"
+   ],
+   "guest_words": 509
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-34155",
+   "date": "2010-12-21",
+   "program": "All Things Considered",
+   "title": "Census Figures Could Launch Redistricting Wars",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-12-21"
+   ],
+   "guest_words": 621
+  }
+ ],
+ "test": {
+  "cluster_id": "cl2",
+  "transcript_id": "NPR-18265",
+  "date": "2016-10-21",
+  "program": "Morning Edition",
+  "title": "Republican Candidates Strain To Hold On To Senate Seats",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2016-10-21"
+  ],
+  "guest_words": 436
+ },
+ "excluded_same_date": []
+}

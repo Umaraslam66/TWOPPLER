@@ -1,0 +1,80 @@
+{
+ "canonical_id": "C01328",
+ "canonical_name": "Juan Zarate",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl29",
+   "transcript_id": "NPR-32820",
+   "date": "2011-07-06",
+   "program": "All Things Considered",
+   "title": "Case Of Terrorism Suspect Raises Legal Questions",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-07-06"
+   ],
+   "guest_words": 746
+  },
+  {
+   "cluster_id": "cl23",
+   "transcript_id": "NPR-26196",
+   "date": "2013-04-16",
+   "program": "Morning Edition",
+   "title": "Authorities Comb Intelligence For Clues To Boston Blasts",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-04-16"
+   ],
+   "guest_words": 539
+  },
+  {
+   "cluster_id": "cl25",
+   "transcript_id": "NPR-26970",
+   "date": "2014-06-18",
+   "program": "All Things Considered",
+   "title": "How ISIS, Endowed By Conquest, Stocks Its War Chest",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-06-18"
+   ],
+   "guest_words": 378
+  },
+  {
+   "cluster_id": "cl22",
+   "transcript_id": "NPR-26167",
+   "date": "2014-09-28",
+   "program": "All Things Considered",
+   "title": "To Fight ISIS, U.S. Treasury Targets Their Wallet",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-09-28"
+   ],
+   "guest_words": 408
+  },
+  {
+   "cluster_id": "cl20",
+   "transcript_id": "NPR-21956",
+   "date": "2016-05-21",
+   "program": "All Things Considered",
+   "title": "Terrorism Or Mechanical Failure? Here Are The Clues Investigators Look For",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-05-21"
+   ],
+   "guest_words": 438
+  }
+ ],
+ "test": {
+  "cluster_id": "cl18",
+  "transcript_id": "NPR-11397",
+  "date": "2017-08-19",
+  "program": "Weekend Edition Saturday",
+  "title": "Counterterrorism Efforts In Spain",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-08-19"
+  ],
+  "guest_words": 503
+ },
+ "excluded_same_date": []
+}

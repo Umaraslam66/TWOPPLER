@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C02312",
+ "canonical_name": "Suzanne Maloney",
+ "draw_pos": 71,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 7,
+ "span_days_dedup": 2246,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 4,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl7",
+  "transcript_id": "NPR-46773",
+  "date": "2018-04-30",
+  "programme": "All Things Considered",
+  "title": "Israel's Prime Minister Levies New Accusations Against Iran On Nuclear Weapons",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2018-04-30"
+  ],
+  "guest_words": 486
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 6,
+  "host": 6
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 1991,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 6,
+ "drop_reasons": {
+  "intro_host_turn": 1,
+  "not_interrogative": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

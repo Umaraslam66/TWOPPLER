@@ -85,6 +85,10 @@ ITEM_FLOOR = 3
 EXPECTED_SURVIVAL = 0.70
 EXPECTED_CI = (0.575, 0.801)
 
+#: Launch-plan risk-table row 4: cumulative survival below the pre-registered
+#: CI floor is an item-yield collapse and stops the build for an owner call.
+CI_FLOOR = EXPECTED_CI[0]
+
 #: Bumped whenever the artifact contract changes, so stale build.json files
 #: rebuild instead of being trusted.
 SCHEMA_VERSION = 1
@@ -432,8 +436,8 @@ def already_built(cid: str, fp: dict) -> dict | None:
     return doc
 
 
-def parse_args(argv: list[str]) -> tuple[int, int, bool]:
-    args, lo, hi, force = argv[1:], 1, 40, False
+def parse_args(argv: list[str]) -> tuple[int, int, bool, str | None]:
+    args, lo, hi, force, out = argv[1:], 1, 40, False, None
     i = 0
     while i < len(args):
         a = args[i]
@@ -445,17 +449,22 @@ def parse_args(argv: list[str]) -> tuple[int, int, bool]:
         elif a == "--to":
             i += 1
             hi = int(args[i])
+        elif a == "--out":
+            i += 1
+            out = args[i]
         else:
             raise SystemExit(f"unknown argument: {a!r}. Accepted: --from N "
-                             "--to M --force")
+                             "--to M --out NAME --force")
         i += 1
     if lo < 1 or hi < lo:
         raise SystemExit(f"bad position range {lo}..{hi}")
-    return lo, hi, force
+    if out is not None and ("/" in out or not out.endswith(".json")):
+        raise SystemExit(f"--out must be a bare .json filename, got {out!r}")
+    return lo, hi, force, out
 
 
 def main(argv: list[str]) -> int:
-    lo, hi, force = parse_args(argv)
+    lo, hi, force, out_name = parse_args(argv)
     t0 = time.time()
     for path in (POOL_CSV, RAW_JSON, SCAN_CACHE, DRAW):
         if not Path(path).exists():
@@ -520,6 +529,7 @@ def main(argv: list[str]) -> int:
 
     # --- build --------------------------------------------------------------
     built: dict[str, dict] = {}
+    halted: dict | None = None
     for s in todo:
         cid = s["canonical_id"]
         row = by_id[cid]
@@ -550,8 +560,8 @@ def main(argv: list[str]) -> int:
         files = rec.pop("files", None)
         d = SUBJECTS / cid
         if files:
-            for name, text in files.items():
-                write_text(d / name, text)
+            for fname, text in files.items():
+                write_text(d / fname, text)
         write_json(d / "build.json", rec)
         built[cid] = rec
         flag = "ok " if rec["survived"] else "FAIL"
@@ -560,11 +570,49 @@ def main(argv: list[str]) -> int:
         print(f"  [{rec['draw_pos']:>3}] {cid} {rec['canonical_name'][:24]:<24} "
               f"{flag} items={rec['n_items']:>2}  {extra}")
 
-    # --- summary over the whole range (built + reused) ----------------------
+        # Launch-plan risk-table row 4. Cumulative survival over EVERY position
+        # built so far, re-checked after each subject. A breach finishes the
+        # position in hand (this one) and stops the run: extending the draw or
+        # invoking the A5 subject-count branch is an owner decision, not one a
+        # build script may make by carrying on.
+        done_now = {**reused, **built}
+        seen = [x for x in wanted_rows
+                if x["draw_pos"] <= s["draw_pos"] and x["canonical_id"] in done_now]
+        n_cum = len(seen)
+        k_cum = sum(1 for x in seen if done_now[x["canonical_id"]]["survived"])
+        cum = k_cum / n_cum if n_cum else 0.0
+        if s["draw_pos"] % 20 == 0:
+            print(f"      -- checkpoint @ pos {s['draw_pos']}: cumulative "
+                  f"{k_cum}/{n_cum} = {cum:.1%}"
+                  + ("   *** BELOW THE 57.5% CI FLOOR ***"
+                     if cum < CI_FLOOR else f"   (floor {CI_FLOOR:.1%}, ok)"))
+        if cum < CI_FLOOR:
+            halted = {
+                "halted": True,
+                "at_draw_pos": s["draw_pos"],
+                "cumulative_n": n_cum,
+                "cumulative_survived": k_cum,
+                "cumulative_rate": round(cum, 4),
+                "ci_floor": CI_FLOOR,
+                "rule": "launch plan risk-table row 4 (item-yield collapse): "
+                        "cumulative survival fell below the pre-registered "
+                        "95% CI floor of 57.5%. The current position was "
+                        "finished and the run stopped. Extending the draw in "
+                        "the same seeded order, or invoking the A5 "
+                        "subject-count branch, is the owner's call.",
+            }
+            print(f"\n[HALT] cumulative survival {k_cum}/{n_cum} = {cum:.1%} is "
+                  f"below the {CI_FLOOR:.1%} CI floor. Finished position "
+                  f"{s['draw_pos']} and stopped — risk-table row 4, owner "
+                  "decision required.")
+            break
+
+    # --- summary over the positions actually completed ----------------------
+    done = {**reused, **built}
+    completed_rows = [s for s in wanted_rows if s["canonical_id"] in done]
     per_subject = []
-    for s in wanted_rows:
-        cid = s["canonical_id"]
-        rec = built.get(cid) or reused[cid]
+    for s in completed_rows:
+        rec = done[s["canonical_id"]]
         per_subject.append({k: v for k, v in rec.items() if k != "fingerprint"})
     per_subject.sort(key=lambda r: r["draw_pos"])
 
@@ -580,13 +628,17 @@ def main(argv: list[str]) -> int:
 
     # Running survival every 20 positions — the launch plan's kill-rule check.
     running = []
-    for cut in range(20, n + 1, 20):
+    cuts = list(range(20, n + 1, 20))
+    if n and (not cuts or cuts[-1] != n):
+        cuts.append(n)                       # always close on the final position
+    for cut in cuts:
         head = per_subject[:cut]
         kk = sum(1 for r in head if r["survived"])
         running.append({"through_draw_pos": head[-1]["draw_pos"],
                         "n": cut, "n_survived": kk,
                         "rate": round(kk / cut, 4),
-                        "below_ci_floor_0.575": (kk / cut) < EXPECTED_CI[0]})
+                        "below_ci_floor_0.575": (kk / cut) < CI_FLOOR,
+                        "partial_checkpoint": cut % 20 != 0})
 
     oo = [r for r in per_subject if r.get("one_on_one")]
     non_oo = [r for r in per_subject
@@ -668,9 +720,18 @@ def main(argv: list[str]) -> int:
     runtime = round(time.time() - t0, 1)
     summary = {
         "generated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "tranche": {"draw_positions": [lo, hi], "n_subjects": n,
+        "tranche": {"draw_positions_requested": [lo, hi],
+                    "n_subjects_requested": len(wanted_rows),
+                    "n_subjects_completed": n,
+                    "draw_positions_completed": (
+                        [completed_rows[0]["draw_pos"],
+                         completed_rows[-1]["draw_pos"]] if completed_rows
+                        else []),
+                    "not_built": [s["draw_pos"] for s in wanted_rows
+                                  if s["canonical_id"] not in done],
                     "draw_file": str(DRAW.relative_to(ROOT)),
                     "draw_seed": draw["seed"]},
+        "halted_early": halted,
         "rule": {
             "floor": f"a subject survives only if its test-interview cluster "
                      f"yields >= {ITEM_FLOOR} D4-eligible Q-A items "
@@ -729,8 +790,8 @@ def main(argv: list[str]) -> int:
         "n_subjects_reused": len(reused),
         "subjects": per_subject,
     }
-    name = (f"build_first{hi}.json" if lo == 1
-            else f"build_pos{lo}_{hi}.json")
+    name = out_name or (f"build_first{hi}.json" if lo == 1
+                        else f"build_pos{lo}_{hi}.json")
     write_json(OUT / name, summary)
 
     print(f"\nsurvived {k}/{n} = {rate:.1%}  "

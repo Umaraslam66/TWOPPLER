@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C00256",
+ "canonical_name": "Asli Aydintasbas",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-36596",
+   "date": "2009-07-19",
+   "program": "All Things Considered",
+   "title": "Smoking Ban Takes Effect In Turkey",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2009-07-19"
+   ],
+   "guest_words": 447
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-22632",
+   "date": "2016-03-07",
+   "program": "All Things Considered",
+   "title": "European Council Hosts Migration Summit With Turkey",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-03-07"
+   ],
+   "guest_words": 432
+  }
+ ],
+ "test": {
+  "cluster_id": "cl10",
+  "transcript_id": "NPR-7032",
+  "date": "2019-07-15",
+  "program": "All Things Considered",
+  "title": "U.S.-Turkey Relations Threatened After Turkey Accepts Air Defense System From Russia",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-07-15"
+  ],
+  "guest_words": 491
+ },
+ "excluded_same_date": []
+}

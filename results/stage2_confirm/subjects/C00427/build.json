@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00427",
+ "canonical_name": "Carlos Gutierrez",
+ "draw_pos": 44,
+ "stratum": "article",
+ "h7_eligible": true,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 77,
+ "span_days_dedup": 5209,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 4,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl77",
+  "transcript_id": "NPR-9080",
+  "date": "2019-08-24",
+  "programme": "All Things Considered",
+  "title": "The U.S.-China Trade War's Blow To American Business Owners",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-08-24"
+  ],
+  "guest_words": 408
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 8,
+  "host": 12
+ },
+ "n_grounding_clusters": 4,
+ "grounding_guest_words": 1720,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 8,
+ "drop_reasons": {
+  "not_interrogative": 3,
+  "question_too_short": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C02248",
+ "canonical_name": "Stefan Kornelius",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-22591",
+   "date": "2016-03-10",
+   "program": "All Things Considered",
+   "title": "Leaked Documents Reveal Information About ISIS Recruits",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-03-10"
+   ],
+   "guest_words": 432
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-21372",
+   "date": "2016-07-22",
+   "program": "All Things Considered",
+   "title": "At Least 6 Dead After Shopping Mall Shooting In Munich, Germany",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-07-22"
+   ],
+   "guest_words": 378
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-19855",
+   "date": "2016-12-20",
+   "program": "All Things Considered",
+   "title": "Berlin Attack Sparks Debate Over German Refugee Policy",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-12-20"
+   ],
+   "guest_words": 395
+  }
+ ],
+ "test": {
+  "cluster_id": "cl5",
+  "transcript_id": "NPR-45561",
+  "date": "2018-04-27",
+  "program": "Morning Edition",
+  "title": "Merkel Visits The U.S.",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2018-04-27"
+  ],
+  "guest_words": 328
+ },
+ "excluded_same_date": []
+}

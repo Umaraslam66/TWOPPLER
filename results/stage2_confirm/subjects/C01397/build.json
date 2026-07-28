@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01397",
+ "canonical_name": "Katia Dunn",
+ "draw_pos": 45,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 7,
+ "span_days_dedup": 980,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 0,
+ "failure_reason": "zero_d4_items",
+ "failure_detail": "0 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-32530",
+  "date": "2009-07-14",
+  "programme": "Morning Edition",
+  "title": "Web Sites: Weight Loss Tactical Support",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2009-07-14"
+  ],
+  "guest_words": 303
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 9,
+  "host": 1,
+  "other": 7
+ },
+ "n_grounding_clusters": 3,
+ "grounding_guest_words": 1199,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 1,
+ "drop_reasons": {
+  "intro_host_turn": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

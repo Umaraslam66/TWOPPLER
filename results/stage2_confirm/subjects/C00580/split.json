@@ -1,0 +1,140 @@
+{
+ "canonical_id": "C00580",
+ "canonical_name": "Dave Zirin",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl21",
+   "transcript_id": "NPR-16778",
+   "date": "2007-01-29",
+   "program": "Talk of the Nation",
+   "title": "NFL Still Needs More Black Coaches",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-01-29"
+   ],
+   "guest_words": 1135
+  },
+  {
+   "cluster_id": "cl20",
+   "transcript_id": "NPR-1625",
+   "date": "2007-05-31",
+   "program": "News & Notes",
+   "title": "Black Athletes Juggle Fame, Social Responsibility",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-05-31"
+   ],
+   "guest_words": 1312
+  },
+  {
+   "cluster_id": "cl26",
+   "transcript_id": "NPR-32332",
+   "date": "2011-12-11",
+   "program": "All Things Considered",
+   "title": "Baylor's Griffin Wins Heisman",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-12-11"
+   ],
+   "guest_words": 522
+  },
+  {
+   "cluster_id": "cl25",
+   "transcript_id": "NPR-30888",
+   "date": "2012-09-10",
+   "program": "All Things Considered",
+   "title": "Same-Sex Marriage Debate Collides With NFL",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-09-10"
+   ],
+   "guest_words": 448
+  },
+  {
+   "cluster_id": "cl24",
+   "transcript_id": "NPR-29060",
+   "date": "2013-06-09",
+   "program": "All Things Considered",
+   "title": "Baseball Prepares For Suspensions",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-06-09"
+   ],
+   "guest_words": 431
+  },
+  {
+   "cluster_id": "cl28",
+   "transcript_id": "NPR-6986",
+   "date": "2014-06-15",
+   "program": "All Things Considered",
+   "title": "On The Field And In Politics, Socrates' Legacy Lives On",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-06-15"
+   ],
+   "guest_words": 537
+  },
+  {
+   "cluster_id": "cl23",
+   "transcript_id": "NPR-25621",
+   "date": "2014-12-09",
+   "program": "All Things Considered",
+   "title": "More Professional Athletes Starting To Find Their Political Voices",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-12-09"
+   ],
+   "guest_words": 546
+  },
+  {
+   "cluster_id": "cl22",
+   "transcript_id": "NPR-24499",
+   "date": "2015-05-02",
+   "program": "All Things Considered",
+   "title": "The Orioles Won 8-2, But No Fans Were There To Watch",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-05-02"
+   ],
+   "guest_words": 416
+  },
+  {
+   "cluster_id": "cl27",
+   "transcript_id": "NPR-6223",
+   "date": "2015-11-01",
+   "program": "All Things Considered",
+   "title": "World Series Game 5: Will The Royals Claim Their Second Championship?",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-11-01"
+   ],
+   "guest_words": 587
+  },
+  {
+   "cluster_id": "cl19",
+   "transcript_id": "NPR-15792",
+   "date": "2017-09-09",
+   "program": "All Things Considered",
+   "title": "Barbershop: DACA Decision Fallout And More",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-09-09"
+   ],
+   "guest_words": 678
+  }
+ ],
+ "test": {
+  "cluster_id": "cl29",
+  "transcript_id": "NPR-9068",
+  "date": "2019-08-25",
+  "program": "All Things Considered",
+  "title": "Colts Star Andrew Luck Stuns NFL Fans With Retirement Announcement",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-08-25"
+  ],
+  "guest_words": 351
+ },
+ "excluded_same_date": []
+}

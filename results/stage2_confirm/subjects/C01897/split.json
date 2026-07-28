@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C01897",
+ "canonical_name": "Philip Gordon",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl12",
+   "transcript_id": "NPR-11834",
+   "date": "2015-10-03",
+   "program": "Weekend Edition Saturday",
+   "title": "As Refugees Leave And Russian Airstrikes Land, What Are The Options In Syria?",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-10-03"
+   ],
+   "guest_words": 550
+  },
+  {
+   "cluster_id": "cl17",
+   "transcript_id": "NPR-47739",
+   "date": "2018-04-09",
+   "program": "All Things Considered",
+   "title": "Former Obama Adviser Says Chemical Weapons Attack In Syria Must Have Consequences",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-04-09"
+   ],
+   "guest_words": 600
+  },
+  {
+   "cluster_id": "cl16",
+   "transcript_id": "NPR-46675",
+   "date": "2018-05-08",
+   "program": "All Things Considered",
+   "title": "Iran Nuclear Deal Negotiator Philip Gordon Reacts To Trump's Decision To Leave Deal",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-05-08"
+   ],
+   "guest_words": 1059
+  },
+  {
+   "cluster_id": "cl15",
+   "transcript_id": "NPR-45360",
+   "date": "2018-07-24",
+   "program": "All Things Considered",
+   "title": "Former Iran Nuclear Deal Negotiator Weighs In On Current U.S.-Iran Tensions",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-07-24"
+   ],
+   "guest_words": 571
+  }
+ ],
+ "test": {
+  "cluster_id": "cl18",
+  "transcript_id": "NPR-5160",
+  "date": "2019-10-01",
+  "program": "All Things Considered",
+  "title": "President Trump Faces Criticism For Recalling U.S. Ambassador To Ukraine",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-10-01"
+  ],
+  "guest_words": 559
+ },
+ "excluded_same_date": []
+}

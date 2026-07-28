@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01504",
+ "canonical_name": "Leslie Gelb",
+ "draw_pos": 56,
+ "stratum": "article",
+ "h7_eligible": true,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 18,
+ "span_days_dedup": 2133,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 1,
+ "failure_reason": "below_item_floor",
+ "failure_detail": "1 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl12",
+  "transcript_id": "NPR-33033",
+  "date": "2011-06-14",
+  "programme": "All Things Considered",
+  "title": "Analyst Assigned To Compile Pentagon Papers Discusses Their Release",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2011-06-14"
+  ],
+  "guest_words": 437
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 12,
+  "host": 13,
+  "other": 1
+ },
+ "n_grounding_clusters": 5,
+ "grounding_guest_words": 3091,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 6,
+ "drop_reasons": {
+  "answer_too_short": 1,
+  "not_interrogative": 4
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

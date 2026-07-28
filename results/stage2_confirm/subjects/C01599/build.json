@@ -1,0 +1,71 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01599",
+ "canonical_name": "Mann Leverett",
+ "draw_pos": 86,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 11,
+ "span_days_dedup": 1796,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 2,
+ "failure_reason": "below_item_floor",
+ "failure_detail": "2 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl11",
+  "transcript_id": "CNN-389688",
+  "date": "2020-01-07",
+  "programme": "CNN NEWSROOM",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2020-01-07"
+  ],
+  "guest_words": 505
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 8,
+  "host": 20,
+  "other": 32
+ },
+ "n_grounding_clusters": 3,
+ "grounding_guest_words": 1154,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 8,
+ "drop_reasons": {
+  "not_interrogative": 2,
+  "question_too_short": 4
+ },
+ "guest_word_warnings": [
+  {
+   "transcript_id": "CNN-248795",
+   "extracted": 643,
+   "scan_cache": 566
+  },
+  {
+   "transcript_id": "CNN-252574",
+   "extracted": 511,
+   "scan_cache": 364
+  },
+  {
+   "transcript_id": "CNN-255581",
+   "extracted": 0,
+   "scan_cache": 697
+  },
+  {
+   "transcript_id": "CNN-389688",
+   "extracted": 505,
+   "scan_cache": 392
+  }
+ ],
+ "date_disagreements": []
+}

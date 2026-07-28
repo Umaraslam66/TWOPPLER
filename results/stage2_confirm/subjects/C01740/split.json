@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C01740",
+ "canonical_name": "Michael Thompson",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-36291",
+   "date": "2009-12-06",
+   "program": "All Things Considered",
+   "title": "Celebrating 350 Years Of Notable Scientific Papers",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2009-12-06"
+   ],
+   "guest_words": 342
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-1554",
+   "date": "2011-08-08",
+   "program": "Talk of the Nation",
+   "title": "School Discipline Often Meted Out Unevenly",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-08-08"
+   ],
+   "guest_words": 1615
+  }
+ ],
+ "test": {
+  "cluster_id": "cl11",
+  "transcript_id": "NPR-5378",
+  "date": "2012-10-10",
+  "program": "Talk of the Nation",
+  "title": "Programs Keep Inmates From Returning To Prison",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2012-10-10"
+  ],
+  "guest_words": 529
+ },
+ "excluded_same_date": []
+}

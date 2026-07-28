@@ -1,0 +1,92 @@
+{
+ "canonical_id": "C00592",
+ "canonical_name": "David Gorn",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-35667",
+   "date": "2008-02-12",
+   "program": "Morning Edition",
+   "title": "Battle Pits Solar Energy Against Trees",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-02-12"
+   ],
+   "guest_words": 548
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-1592",
+   "date": "2008-02-21",
+   "program": "Day to Day",
+   "title": "San Francisco Zoo Reopens Tiger Exhibit",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-02-21"
+   ],
+   "guest_words": 423
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-40500",
+   "date": "2008-03-29",
+   "program": "All Things Considered",
+   "title": "Elephant Seals Blanket California Beaches",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-03-29"
+   ],
+   "guest_words": 500
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-455",
+   "date": "2008-05-14",
+   "program": "Day to Day",
+   "title": "San Francisco Responds to Chinese Tragedy",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-05-14"
+   ],
+   "guest_words": 458
+  },
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "NPR-13139",
+   "date": "2008-07-03",
+   "program": "Day to Day",
+   "title": "Calif. Property Owners Join The Fire-Fight",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-07-03"
+   ],
+   "guest_words": 435
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-38515",
+   "date": "2008-10-25",
+   "program": "All Things Considered",
+   "title": "High-Speed Rail On California Ballot",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-10-25"
+   ],
+   "guest_words": 378
+  }
+ ],
+ "test": {
+  "cluster_id": "cl7",
+  "transcript_id": "NPR-9767",
+  "date": "2008-12-15",
+  "program": "Day to Day",
+  "title": "California Passes Strict Diesel Emissions Guidelines",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2008-12-15"
+  ],
+  "guest_words": 472
+ },
+ "excluded_same_date": []
+}

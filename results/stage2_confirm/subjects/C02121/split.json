@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C02121",
+ "canonical_name": "Sam Dagher",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-27850",
+   "date": "2014-02-10",
+   "program": "All Things Considered",
+   "title": "Troubled Cease-Fire In Syria Still Leaves Some Evacuees Dead",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-02-10"
+   ],
+   "guest_words": 434
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-27442",
+   "date": "2014-04-27",
+   "program": "All Things Considered",
+   "title": "Aleppo Now A De Facto 'Partition City' In Syria",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-04-27"
+   ],
+   "guest_words": 379
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-27149",
+   "date": "2014-06-03",
+   "program": "All Things Considered",
+   "title": "In Syria, A Tense Election Day With Winner Little In Doubt",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-06-03"
+   ],
+   "guest_words": 396
+  }
+ ],
+ "test": {
+  "cluster_id": "cl3",
+  "transcript_id": "NPR-10330",
+  "date": "2019-05-30",
+  "program": "Morning Edition",
+  "title": "Dagher Explains Brutal Syrian Regimes In 'Assad Or We Burn The Country'",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-05-30"
+  ],
+  "guest_words": 746
+ },
+ "excluded_same_date": []
+}

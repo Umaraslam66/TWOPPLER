@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C01688",
+ "canonical_name": "Mcmorris Rodgers",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "CNN-186026",
+   "date": "2012-05-14",
+   "program": "JOHN KING, USA",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-05-14"
+   ],
+   "guest_words": 418
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "CNN-199414",
+   "date": "2013-01-15",
+   "program": "THE SITUATION ROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-01-15"
+   ],
+   "guest_words": 774
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "CNN-214959",
+   "date": "2013-09-20",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-09-20"
+   ],
+   "guest_words": 727
+  }
+ ],
+ "test": {
+  "cluster_id": "cl5",
+  "transcript_id": "CNN-215402",
+  "date": "2013-09-26",
+  "program": "THE LEAD WITH JAKE TAPPER",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-09-26"
+  ],
+  "guest_words": 778
+ },
+ "excluded_same_date": []
+}

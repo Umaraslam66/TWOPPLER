@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C02122",
+ "canonical_name": "Sam Eaton",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-44404",
+   "date": "2007-04-23",
+   "program": "Day to Day",
+   "title": "Marketplace Report: European Bank Deal",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-04-23"
+   ],
+   "guest_words": 331
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-44397",
+   "date": "2007-04-24",
+   "program": "Day to Day",
+   "title": "Marketplace Report: Toyota Passes GM",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-04-24"
+   ],
+   "guest_words": 344
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-2939",
+   "date": "2007-08-31",
+   "program": "Day to Day",
+   "title": "'Marketplace' Report: Housing Market Woes",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-08-31"
+   ],
+   "guest_words": 389
+  }
+ ],
+ "test": {
+  "cluster_id": "cl2",
+  "transcript_id": "NPR-10187",
+  "date": "2008-11-06",
+  "program": "Day to Day",
+  "title": "Walmart Thrives On Candy And Costumes",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2008-11-06"
+  ],
+  "guest_words": 359
+ },
+ "excluded_same_date": []
+}

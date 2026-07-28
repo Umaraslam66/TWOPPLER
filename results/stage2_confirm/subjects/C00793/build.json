@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00793",
+ "canonical_name": "Frederick Kagan",
+ "draw_pos": 84,
+ "stratum": "article",
+ "h7_eligible": true,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 14,
+ "span_days_dedup": 3349,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 2,
+ "failure_reason": "below_item_floor",
+ "failure_detail": "2 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl10",
+  "transcript_id": "NPR-21070",
+  "date": "2015-09-22",
+  "programme": "Morning Edition",
+  "title": "From 'Brinksmanship' To 'Hope,' Here's What Might Result From U.S.-Iran Deal",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2015-09-22"
+  ],
+  "guest_words": 461
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 8,
+  "host": 23,
+  "other": 13
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 1958,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 7,
+ "drop_reasons": {
+  "not_interrogative": 4,
+  "question_too_short": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

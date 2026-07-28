@@ -1,0 +1,60 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00634",
+ "canonical_name": "De Torrente",
+ "draw_pos": 47,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 9,
+ "span_days_dedup": 1694,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 3,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl1",
+  "transcript_id": "CNN-105964",
+  "date": "2006-05-13",
+  "programme": "INSIDE AFRICA",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2006-05-13"
+  ],
+  "guest_words": 684
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 6,
+  "host": 11,
+  "other": 7
+ },
+ "n_grounding_clusters": 3,
+ "grounding_guest_words": 966,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 6,
+ "drop_reasons": {
+  "not_interrogative": 3
+ },
+ "guest_word_warnings": [
+  {
+   "transcript_id": "CNN-40228",
+   "extracted": 0,
+   "scan_cache": 535
+  },
+  {
+   "transcript_id": "CNN-105964",
+   "extracted": 684,
+   "scan_cache": 597
+  }
+ ],
+ "date_disagreements": []
+}

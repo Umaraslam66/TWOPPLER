@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C02312",
+ "canonical_name": "Suzanne Maloney",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-12784",
+   "date": "2012-03-06",
+   "program": "Talk of the Nation",
+   "title": "Weighing A Policy Of Containment For Iran",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-03-06"
+   ],
+   "guest_words": 1599
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-23054",
+   "date": "2016-01-19",
+   "program": "All Things Considered",
+   "title": "After Nuclear Implementation Day, What's Next For U.S.-Iranian Relations?",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-01-19"
+   ],
+   "guest_words": 392
+  }
+ ],
+ "test": {
+  "cluster_id": "cl7",
+  "transcript_id": "NPR-46773",
+  "date": "2018-04-30",
+  "program": "All Things Considered",
+  "title": "Israel's Prime Minister Levies New Accusations Against Iran On Nuclear Weapons",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2018-04-30"
+  ],
+  "guest_words": 486
+ },
+ "excluded_same_date": []
+}

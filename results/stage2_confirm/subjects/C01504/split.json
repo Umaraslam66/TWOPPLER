@@ -1,0 +1,80 @@
+{
+ "canonical_id": "C01504",
+ "canonical_name": "Leslie Gelb",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl18",
+   "transcript_id": "NPR-43868",
+   "date": "2005-08-11",
+   "program": "All Things Considered",
+   "title": "Debating the Form of Iraq's New Government",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-08-11"
+   ],
+   "guest_words": 327
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-14970",
+   "date": "2005-12-14",
+   "program": "Day to Day",
+   "title": "Grading the Effectiveness of Bush's Iraq Blitz",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-12-14"
+   ],
+   "guest_words": 555
+  },
+  {
+   "cluster_id": "cl14",
+   "transcript_id": "NPR-33698",
+   "date": "2009-01-01",
+   "program": "Morning Edition",
+   "title": "Gaza Conflict May Affect Obama Peacekeeping Vow",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2009-01-01"
+   ],
+   "guest_words": 467
+  },
+  {
+   "cluster_id": "cl17",
+   "transcript_id": "NPR-3986",
+   "date": "2010-10-11",
+   "program": "Talk of the Nation",
+   "title": "Op-Ed: Talking To The Taliban Will Yield Little",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-10-11"
+   ],
+   "guest_words": 1397
+  },
+  {
+   "cluster_id": "cl15",
+   "transcript_id": "NPR-34189",
+   "date": "2010-12-16",
+   "program": "All Things Considered",
+   "title": "A Critical Assessment Of The Afghan War Review",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-12-16"
+   ],
+   "guest_words": 345
+  }
+ ],
+ "test": {
+  "cluster_id": "cl12",
+  "transcript_id": "NPR-33033",
+  "date": "2011-06-14",
+  "program": "All Things Considered",
+  "title": "Analyst Assigned To Compile Pentagon Papers Discusses Their Release",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2011-06-14"
+  ],
+  "guest_words": 437
+ },
+ "excluded_same_date": []
+}

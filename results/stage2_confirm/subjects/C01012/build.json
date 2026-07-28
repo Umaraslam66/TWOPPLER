@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01012",
+ "canonical_name": "Jamila Trindle",
+ "draw_pos": 81,
+ "stratum": "long-tail",
+ "h7_eligible": false,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 5,
+ "span_days_dedup": 288,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 0,
+ "failure_reason": "zero_d4_items",
+ "failure_detail": "0 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl5",
+  "transcript_id": "NPR-6818",
+  "date": "2009-03-03",
+  "programme": "Day to Day",
+  "title": "Casino Finds Foes In Philly's Chinatown",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2009-03-03"
+  ],
+  "guest_words": 364
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 10,
+  "host": 2,
+  "other": 10
+ },
+ "n_grounding_clusters": 4,
+ "grounding_guest_words": 1494,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 1,
+ "drop_reasons": {
+  "intro_host_turn": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

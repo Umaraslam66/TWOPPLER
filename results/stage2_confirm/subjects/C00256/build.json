@@ -1,0 +1,51 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00256",
+ "canonical_name": "Asli Aydintasbas",
+ "draw_pos": 73,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 10,
+ "span_days_dedup": 3648,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 2,
+ "failure_reason": "below_item_floor",
+ "failure_detail": "2 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl10",
+  "transcript_id": "NPR-7032",
+  "date": "2019-07-15",
+  "programme": "All Things Considered",
+  "title": "U.S.-Turkey Relations Threatened After Turkey Accepts Air Defense System From Russia",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-07-15"
+  ],
+  "guest_words": 491
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 10,
+  "host": 27,
+  "other": 5
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 879,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 7,
+ "drop_reasons": {
+  "answer_too_short": 1,
+  "not_interrogative": 2,
+  "question_too_short": 2
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

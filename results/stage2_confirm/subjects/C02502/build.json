@@ -1,0 +1,67 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C02502",
+ "canonical_name": "Von Einsiedel",
+ "draw_pos": 61,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 5,
+ "span_days_dedup": 2073,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 11,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl5",
+  "transcript_id": "CNN-388758",
+  "date": "2019-12-25",
+  "programme": "CNN'S AMANPOUR",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-12-25"
+  ],
+  "guest_words": 2173
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 28,
+  "host": 65,
+  "other": 76
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 2518,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 25,
+ "drop_reasons": {
+  "answer_too_short": 3,
+  "not_interrogative": 8,
+  "question_too_short": 3
+ },
+ "guest_word_warnings": [
+  {
+   "transcript_id": "CNN-228945",
+   "extracted": 644,
+   "scan_cache": 556
+  },
+  {
+   "transcript_id": "CNN-381362",
+   "extracted": 1874,
+   "scan_cache": 1612
+  },
+  {
+   "transcript_id": "CNN-388758",
+   "extracted": 2173,
+   "scan_cache": 1831
+  }
+ ],
+ "date_disagreements": []
+}

@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C02397",
+ "canonical_name": "Tim Storey",
+ "draw_pos": 70,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 4,
+ "span_days_dedup": 2178,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 6,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl2",
+  "transcript_id": "NPR-18265",
+  "date": "2016-10-21",
+  "programme": "Morning Edition",
+  "title": "Republican Candidates Strain To Hold On To Senate Seats",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2016-10-21"
+  ],
+  "guest_words": 436
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 12,
+  "host": 11,
+  "other": 1
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 1130,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 9,
+ "drop_reasons": {
+  "answer_too_short": 1,
+  "not_interrogative": 2
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

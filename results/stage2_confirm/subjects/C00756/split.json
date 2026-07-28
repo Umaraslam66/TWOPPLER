@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C00756",
+ "canonical_name": "Eric Copage",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-46157",
+   "date": "2005-12-29",
+   "program": "News & Notes",
+   "title": "'Fruits of the Harvest': A Taste of Kwanzaa",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-12-29"
+   ],
+   "guest_words": 479
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-3547",
+   "date": "2006-10-17",
+   "program": "News & Notes",
+   "title": "Managing Resources in the Dating World",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-10-17"
+   ],
+   "guest_words": 567
+  }
+ ],
+ "test": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-3447",
+  "date": "2006-10-25",
+  "program": "News & Notes",
+  "title": "Living in the Present Means Taking Focus off Past",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2006-10-25"
+  ],
+  "guest_words": 606
+ },
+ "excluded_same_date": []
+}

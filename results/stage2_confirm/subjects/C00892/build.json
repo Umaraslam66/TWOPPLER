@@ -1,0 +1,57 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00892",
+ "canonical_name": "Holmes Norton",
+ "draw_pos": 89,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 9,
+ "span_days_dedup": 6426,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 0,
+ "failure_reason": "zero_d4_items",
+ "failure_detail": "0 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl8",
+  "transcript_id": "CNN-368975",
+  "date": "2019-05-07",
+  "programme": "CNN RIGHT NOW",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-05-07"
+  ],
+  "guest_words": 536
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 6,
+  "other": 12
+ },
+ "n_grounding_clusters": 5,
+ "grounding_guest_words": 3141,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 0,
+ "drop_reasons": {},
+ "guest_word_warnings": [
+  {
+   "transcript_id": "CNN-209527",
+   "extracted": 614,
+   "scan_cache": 512
+  },
+  {
+   "transcript_id": "CNN-351358",
+   "extracted": 572,
+   "scan_cache": 412
+  }
+ ],
+ "date_disagreements": []
+}

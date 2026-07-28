@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C01848",
+ "canonical_name": "Omer Taspinar",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-32473",
+   "date": "2011-09-06",
+   "program": "All Things Considered",
+   "title": "Taspinar Discusses Israeli-Turkish Relations",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-09-06"
+   ],
+   "guest_words": 359
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-19092",
+   "date": "2016-07-22",
+   "program": "Morning Edition",
+   "title": "A Check On Turkey, A Week After A Failed Coup Rocked The Country",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-07-22"
+   ],
+   "guest_words": 508
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-19719",
+   "date": "2017-01-02",
+   "program": "All Things Considered",
+   "title": "Civilian Attack In Istanbul Marks Shift In Turkey-ISIS Dynamic",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-01-02"
+   ],
+   "guest_words": 568
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-13438",
+   "date": "2018-01-22",
+   "program": "All Things Considered",
+   "title": "Turkey Has Attacked A Syrian City Controlled By Kurdish Forces",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-01-22"
+   ],
+   "guest_words": 452
+  }
+ ],
+ "test": {
+  "cluster_id": "cl4",
+  "transcript_id": "NPR-1685",
+  "date": "2018-12-18",
+  "program": "All Things Considered",
+  "title": "Brookings Institution Senior Fellow On Michael Flynn's Contacts With Turkey",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2018-12-18"
+  ],
+  "guest_words": 453
+ },
+ "excluded_same_date": []
+}

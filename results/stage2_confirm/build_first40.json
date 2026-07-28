@@ -1,14 +1,21 @@
 {
- "generated_utc": "2026-07-28T11:32:43Z",
+ "generated_utc": "2026-07-28T11:36:46Z",
  "tranche": {
-  "draw_positions": [
+  "draw_positions_requested": [
    1,
    40
   ],
-  "n_subjects": 40,
+  "n_subjects_requested": 40,
+  "n_subjects_completed": 40,
+  "draw_positions_completed": [
+   1,
+   40
+  ],
+  "not_built": [],
   "draw_file": "results/stage2_confirm_draw_provisional.json",
   "draw_seed": 20260728
  },
+ "halted_early": null,
  "rule": {
   "floor": "a subject survives only if its test-interview cluster yields >= 3 D4-eligible Q-A items (PREREGISTRATION_AMENDMENT_2_ADDENDUM_A item 4, frozen)",
   "split": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
@@ -94,14 +101,16 @@
    "n": 20,
    "n_survived": 14,
    "rate": 0.7,
-   "below_ci_floor_0.575": false
+   "below_ci_floor_0.575": false,
+   "partial_checkpoint": false
   },
   {
    "through_draw_pos": 40,
    "n": 40,
    "n_survived": 30,
    "rate": 0.75,
-   "below_ci_floor_0.575": false
+   "below_ci_floor_0.575": false,
+   "partial_checkpoint": false
   }
  ],
  "programme_shape": {
@@ -330,9 +339,9 @@
   "cost_usd": 0.0,
   "note": "CPU only. No model call, no network fetch, no GPU. $0.00."
  },
- "runtime_secs": 5.8,
- "n_subjects_built_this_run": 40,
- "n_subjects_reused": 0,
+ "runtime_secs": 0.0,
+ "n_subjects_built_this_run": 0,
+ "n_subjects_reused": 40,
  "subjects": [
   {
    "schema_version": 1,

@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01897",
+ "canonical_name": "Philip Gordon",
+ "draw_pos": 88,
+ "stratum": "article",
+ "h7_eligible": true,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 20,
+ "span_days_dedup": 1459,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 3,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl18",
+  "transcript_id": "NPR-5160",
+  "date": "2019-10-01",
+  "programme": "All Things Considered",
+  "title": "President Trump Faces Criticism For Recalling U.S. Ambassador To Ukraine",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-10-01"
+  ],
+  "guest_words": 559
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 7,
+  "host": 6
+ },
+ "n_grounding_clusters": 4,
+ "grounding_guest_words": 2780,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 6,
+ "drop_reasons": {
+  "intro_host_turn": 1,
+  "not_interrogative": 2
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

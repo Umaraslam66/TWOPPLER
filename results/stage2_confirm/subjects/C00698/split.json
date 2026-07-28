@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C00698",
+ "canonical_name": "Drew Kesse",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "CNN-102580",
+   "date": "2006-02-07",
+   "program": "NANCY GRACE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-02-07"
+   ],
+   "guest_words": 327
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "CNN-102987",
+   "date": "2006-02-17",
+   "program": "NANCY GRACE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-02-17"
+   ],
+   "guest_words": 423
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "CNN-103159",
+   "date": "2006-02-22",
+   "program": "NANCY GRACE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-02-22"
+   ],
+   "guest_words": 509
+  },
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "CNN-150077",
+   "date": "2010-04-15",
+   "program": "ISSUES WITH JANE VELEZ-MITCHELL",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-04-15"
+   ],
+   "guest_words": 314
+  }
+ ],
+ "test": {
+  "cluster_id": "cl12",
+  "transcript_id": "CNN-163483",
+  "date": "2011-03-17",
+  "program": "NANCY GRACE",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2011-03-17"
+  ],
+  "guest_words": 1494
+ },
+ "excluded_same_date": []
+}

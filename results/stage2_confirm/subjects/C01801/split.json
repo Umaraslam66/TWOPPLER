@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C01801",
+ "canonical_name": "Mujib Mashal",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-24482",
+   "date": "2014-01-10",
+   "program": "Morning Edition",
+   "title": "'Pious Spy' Article Casts Doubt On Taliban Chief's Death",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-01-10"
+   ],
+   "guest_words": 588
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-23946",
+   "date": "2014-07-01",
+   "program": "Morning Edition",
+   "title": "Journalist Reflects On Karzai's Legacy After Rare Access To Afghan Leader",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-07-01"
+   ],
+   "guest_words": 732
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-21043",
+   "date": "2015-09-29",
+   "program": "Morning Edition",
+   "title": "Taliban Seize A Major City, A Sign Of The Group's Resurgence",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-09-29"
+   ],
+   "guest_words": 465
+  }
+ ],
+ "test": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-19391",
+  "date": "2016-05-26",
+  "program": "Morning Edition",
+  "title": "Leader's Death Revives Question: What Is Pakistan's Relationship With The Taliban?",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2016-05-26"
+  ],
+  "guest_words": 466
+ },
+ "excluded_same_date": []
+}

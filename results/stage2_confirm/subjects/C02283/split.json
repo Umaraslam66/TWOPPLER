@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C02283",
+ "canonical_name": "Steven Lee Myers",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-5089",
+   "date": "2014-03-02",
+   "program": "Weekend Edition Sunday",
+   "title": "Russian Troops Move Toward Ukraine's Crimea Region",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-03-02"
+   ],
+   "guest_words": 355
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-11844",
+   "date": "2015-09-19",
+   "program": "Weekend Edition Saturday",
+   "title": "Russia's Military Deployment In Syria Reignites Contact With U.S.",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-09-19"
+   ],
+   "guest_words": 457
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-17237",
+   "date": "2016-12-26",
+   "program": "Morning Edition",
+   "title": "Looking Ahead To 2017 And The Role Russia Will Play",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-12-26"
+   ],
+   "guest_words": 844
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-11492",
+   "date": "2017-04-08",
+   "program": "Weekend Edition Saturday",
+   "title": "Why Putin Continues To Back The Assad Regime",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-04-08"
+   ],
+   "guest_words": 732
+  }
+ ],
+ "test": {
+  "cluster_id": "cl6",
+  "transcript_id": "NPR-46426",
+  "date": "2018-06-07",
+  "program": "All Things Considered",
+  "title": "U.S. Diplomats In China Exhibiting Signs Of Minor Brain Injury After Hearing Strange Sounds",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2018-06-07"
+  ],
+  "guest_words": 358
+ },
+ "excluded_same_date": []
+}

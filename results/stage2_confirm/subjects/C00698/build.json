@@ -1,0 +1,51 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00698",
+ "canonical_name": "Drew Kesse",
+ "draw_pos": 54,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 13,
+ "span_days_dedup": 1864,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 3,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl12",
+  "transcript_id": "CNN-163483",
+  "date": "2011-03-17",
+  "programme": "NANCY GRACE",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2011-03-17"
+  ],
+  "guest_words": 1494
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 26,
+  "host": 64,
+  "other": 98
+ },
+ "n_grounding_clusters": 4,
+ "grounding_guest_words": 1573,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 14,
+ "drop_reasons": {
+  "answer_too_short": 4,
+  "not_interrogative": 6,
+  "question_too_short": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

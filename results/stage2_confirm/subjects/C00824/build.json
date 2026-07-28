@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00824",
+ "canonical_name": "George Perkovich",
+ "draw_pos": 49,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 10,
+ "span_days_dedup": 1980,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 5,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl3",
+  "transcript_id": "NPR-12220",
+  "date": "2013-11-23",
+  "programme": "Weekend Edition Saturday",
+  "title": "What An Iran Deal Will Do For Nonproliferation",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-11-23"
+  ],
+  "guest_words": 540
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 11,
+  "host": 11
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 895,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 11,
+ "drop_reasons": {
+  "answer_too_short": 1,
+  "intro_host_turn": 1,
+  "not_interrogative": 4
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

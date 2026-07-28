@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C01490",
+ "canonical_name": "Le Sommier",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "CNN-269391",
+   "date": "2015-11-18",
+   "program": "EARLY START",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-11-18"
+   ],
+   "guest_words": 733
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "CNN-269643",
+   "date": "2015-11-23",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-11-23"
+   ],
+   "guest_words": 567
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "CNN-288868",
+   "date": "2016-07-14",
+   "program": "ANDERSON COOPER 360 DEGREES",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-07-14"
+   ],
+   "guest_words": 725
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "CNN-316830",
+   "date": "2017-07-16",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-07-16"
+   ],
+   "guest_words": 570
+  }
+ ],
+ "test": {
+  "cluster_id": "cl14",
+  "transcript_id": "CNN-367338",
+  "date": "2019-04-16",
+  "program": "QUEST MEANS BUSINESS",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-04-16"
+  ],
+  "guest_words": 479
+ },
+ "excluded_same_date": []
+}
