@@ -482,8 +482,14 @@ Three qualifications were published with the verdict, not after it.
    score on the pinned encoder. The design anticipated this — which is why no
    claim rests on channel 1 alone, and why the stance channel, which topic
    overlap cannot satisfy by itself, has to agree. The diagnostic itself is
-   partial: the grounding block is ~2,000 words and the encoder window is 512
-   tokens, so the number describes the head of the grounding, not all of it.
+   partial: the grounding block is ~2,000 words and the encoder truncates it, so
+   the number describes the head of the grounding, not all of it. Two figures for
+   that window sit on the project's record and both are right about different
+   things — OE-1's caveat quotes the 512-token limit of the candidate encoders
+   generally, while the later H7 diagnostics quote **384 tokens**, which is the
+   pinned `all-mpnet-base-v2`'s configured sequence length and so is the operative
+   truncation here ([`h7_diagnostics.md` §2](../stage2_confirm/h7_diagnostics.md)).
+   The smaller number makes the caveat stronger, not weaker.
 
 ### 9.3 A judge defect, found and pinned
 
@@ -584,9 +590,15 @@ do to unfreeze the bars.
 
 It has **not** established anything about twin fidelity in this paper. The
 confirmatory run of the replacement instrument is a separate result with its own
-report ([Stage 2 confirmatory report](../stage2_confirm/STAGE2_CONFIRM_REPORT.md))
-and belongs to a different paper; it is named here only so a reader does not
-assume the instrument went untested at scale.
+reports — [H1 and H7](../stage2_confirm/STAGE2_CONFIRM_REPORT.md) and
+[H6](../stage2_confirm/H6_REPORT.md) — written up in
+[the main results paper](PAPER2_MAIN.md); they are named here only so a reader does
+not assume the instrument went untested at scale. In brief, so the handoff is
+honest about outcomes as well as existence: the instrument separated own twin from
+imposter twin at confirmatory scale on 88 subjects in both channels and on both
+models, while H7 ended with the two channels disagreeing and H6 with too few
+eligible subjects to license any claim. The details, the misses and the magnitude
+bars belong to that paper, not this one.
 
 ---
 
