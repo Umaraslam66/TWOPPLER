@@ -873,3 +873,29 @@ Random sample, seed 42, stratified 10 long-tail / 10 with a Wikipedia page. Read
 **Human verdict:**  [ ] RE-ADMIT   [ ] KEEP-EXCLUDED   [ ] UNSURE
 
 ---
+
+## CLOSED AS MOOT — 2026-07-28
+
+**Owner ruling, stop point iii** ([`results/stage2_confirm/RULINGS_STOPPOINT3_20260728.md`](stage2_confirm/RULINGS_STOPPOINT3_20260728.md),
+decision 5). **This sheet is closed as moot for this project version. The
+20-subject human spot-check is not owed.**
+
+Three reasons:
+
+- **It gates one thing only: re-admission of the 292-subject reserve.** Nothing
+  else in the project depends on it. No number, no bar and no verdict anywhere
+  in Stage 2 waits on it.
+- **The corpus is final for this version.** The confirmatory draw is made and
+  the run is complete. Re-admitting anyone now would change the drawn cohort
+  after the draw, which is exactly what the frozen draw procedure exists to
+  prevent — the same reasoning that deferred the two name-resolution defects in
+  [`RULINGS_20260728.md`](stage2_confirm/RULINGS_20260728.md).
+- **Nothing is discarded.** The **106 auto-re-admit candidates**, the 110
+  ambiguous and the 76 keep-excluded stay recorded here and in
+  [`staff_reserve_dossiers.csv`](staff_reserve_dossiers.csv), available as an
+  input to **any future corpus revision**.
+
+**Closed as moot is not "skipped" and is not a deviation.** There is no decision
+left for this sheet to gate in this version, so there is no obligation left
+unmet. If the corpus is ever rebuilt, this sheet is where that work starts, and
+the human check would be owed again at that point.
