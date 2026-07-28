@@ -690,14 +690,31 @@ def build() -> dict:
     }
 
     # --- the contrasts, per model per channel -------------------------------
+    sensitivity_arms = {a for a, spec in manifest["arms"].items()
+                        if spec["kind"] == "rich_nr"}
     for gen_dir, model in GEN_DIRS.items():
         cos = load_scores(gen_dir, "embed")
         lab = load_scores(gen_dir, "judge")
         if not cos and not lab:
             continue
+        # The sensitivity arm exists on the PRIMARY model only. A few of its
+        # prompts hash identically to a rich-arm prompt, so without this
+        # filter the robustness model would appear to carry a two- or
+        # three-subject shadow of an arm it never generated.
+        rows = ([r for r in logical_rows() if r["arm"] not in sensitivity_arms]
+                if model != PRIMARY else logical_rows())
         block: dict = {"model": model, "channel1": {}, "channel2": {},
-                       "n_cosines": len(cos), "n_labels": len(lab)}
+                       "n_cosines": len(cos), "n_labels": len(lab),
+                       "sensitivity_arms_scored": model == PRIMARY}
         for key, arm_a, arm_b, budget, role in CONTRASTS:
+            # The sensitivity arm was generated on the PRIMARY model only. A
+            # handful of its prompts are byte-identical to a rich-arm prompt
+            # (see ``identical_sensitivity_blocks``), so joining by hash would
+            # otherwise surface two or three robustness-model rows that were
+            # never generated as a sensitivity arm. Excluded outright: a
+            # three-subject shadow of an arm is not that arm.
+            if key in SENSITIVITY_KEYS and model != PRIMARY:
+                continue
             if cos:
                 c1 = contrast_block(rows, cos, cosine_of, arm_a, arm_b,
                                     "1 embedding")
@@ -731,10 +748,50 @@ def build() -> dict:
             block["pooled_counts"] = channel2_pooled(rows, lab)
         data["results"][model] = block
 
+    data["consistency"] = consistency_block(data)
     data["b8"] = b8_block(data)
     data["flags"] = flag_block(data, arms)
     data["verdict"] = verdict_block(data)
     return data
+
+
+def consistency_block(data: dict) -> dict:
+    """Where the rich−poor sign agrees and where it does not.
+
+    Purely mechanical: it reads the signs already printed in section 3 and
+    reports which cells agree. Added after the scores existed and changes no
+    bar, no branch and no verdict — it only stops a sign reversal that is
+    visible in the tables from going unremarked in the prose.
+    """
+    cells = []
+    for model, block in data["results"].items():
+        for ch in ("channel1", "channel2"):
+            for key, _a, _b, budget, _r in CONTRASTS:
+                c = block[ch].get(key)
+                if c is None or c["mean_diff"] is None:
+                    continue
+                cells.append({"model": model, "channel": ch, "key": key,
+                              "budget": budget, "diff": c["mean_diff"],
+                              "p": c["p_paired_t"],
+                              "sign": ("+" if c["mean_diff"] > 0 else
+                                       ("-" if c["mean_diff"] < 0 else "0"))})
+    registered = [c for c in cells if c["key"] == REGISTERED_KEY]
+    dose = [c for c in cells if c["key"] == "rich_minus_poor_b400"]
+    return {
+        "cells": cells,
+        "registered_signs": sorted({c["sign"] for c in registered}),
+        "dose_signs": sorted({c["sign"] for c in dose}),
+        "registered_all_positive": all(c["sign"] == "+" for c in registered),
+        "sign_flips_between_budgets": sorted(
+            {c["model"] + "/" + c["channel"] for c in registered
+             for d in dose
+             if d["model"] == c["model"] and d["channel"] == c["channel"]
+             and d["sign"] != c["sign"]}),
+        "nominally_significant": [
+            f"{c['model']} / {c['channel']} / {c['key']}: "
+            f"{c['diff']:+.4f}, p = {c['p']}"
+            for c in cells if c["p"] is not None and c["p"] < 0.05],
+    }
 
 
 def b8_block(data: dict) -> dict:
@@ -1088,6 +1145,35 @@ def render_markdown(data: dict) -> str:
             L.extend(contrast_table(block["channel2"], keys))
             add("\nUnits: stance-match points. UNCLEAR is out of the "
                 "denominator; per-arm UNCLEAR rates are in section 6.\n")
+
+    # ---- 3b. where the sign holds and where it does not ----
+    cons = data["consistency"]
+    add("### Where the sign holds, and where it does not\n")
+    add("This block reads the signs in the tables above. It changes no bar "
+        "and no verdict; it exists so a reversal that is visible in the "
+        "numbers is not left unremarked in the prose.\n")
+    add(f"- At the primary budget B = 1,000 the rich−poor difference is "
+        f"**{'positive in all four cells' if cons['registered_all_positive'] else 'not one-signed'}** "
+        f"(signs seen: {', '.join(cons['registered_signs'])}) — two models × "
+        f"two channels.")
+    add(f"- At the dose-check budget B = 400 the signs seen are "
+        f"**{', '.join(cons['dose_signs'])}**.")
+    if cons["sign_flips_between_budgets"]:
+        add(f"- **The sign REVERSES between the two budgets** in "
+            f"{len(cons['sign_flips_between_budgets'])} of 4 model×channel "
+            f"cells: {', '.join(cons['sign_flips_between_budgets'])}. A "
+            f"contrast whose direction depends on the budget is not a "
+            f"stable effect, and the dose check is what exposed it.")
+    else:
+        add("- The sign is the same at both budgets in every model×channel "
+            "cell.")
+    if cons["nominally_significant"]:
+        add(f"- Cells reaching p < .05 on the paired t (no multiplicity "
+            f"correction, and the branch forbids a hypothesis-test claim "
+            f"anyway): {'; '.join(cons['nominally_significant'])}.")
+    else:
+        add("- No cell reaches p < .05 on the paired t.")
+    add("")
 
     # ---- 4. sensitivity arm ----
     add("## 4. Sensitivity arm — the rich arm with its roots removed\n")
