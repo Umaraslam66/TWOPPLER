@@ -691,12 +691,14 @@ relaxed.
 
 ## 9. Costs, reported as results
 
-Caps signed off at GO were 8 node-hours GPU and $15 API for the H1 run. It spent **0.6028
-node-hours and $6.552869** — neither cap breached, headroom 7.3972 node-hours and $8.447131
-([confirm report §7](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). That figure was a running
-total at report render because the stance judge was still spending;
-**the ledger ([`cost_log.jsonl`](../cost_log.jsonl)) carries the final figure, and it landed
-on the same number.**
+Caps signed off at GO were 8 node-hours GPU and $15 API. **The H1 run itself spent 0.6028
+node-hours and $6.552869**; everything booked under the confirmatory phase — H1, H6, and the
+exploratory D_min = 3 arm — comes to **1.139 node-hours and $8.817063**, still inside both
+caps, headroom 6.861 node-hours and $6.182937
+([confirm report §7](../stage2_confirm/STAGE2_CONFIRM_REPORT.md), which checks the GO caps
+against every `stage2_confirm/*` ledger row and prints each one separately). H6 and the
+exploratory arm also carry their own sub-caps, reported below and in the H6 report; nothing
+is charged twice, the same rows are simply totalled two ways.
 
 | run | calls | API $ | node-hours |
 |---|---|---|---|
@@ -709,18 +711,27 @@ on the same number.**
 | H6 generation, primary model (Gemma on Leonardo) | 729 | $0 | 0.2531 |
 | H6 stance judging | 1,271 | $1.617427 | 0 |
 | H6 judge canary | 30 | $0.038122 | 0 |
-| **Stage 2 confirmatory, all of it** | | **$8.560267** | **1.0140** |
+| D_min = 3 arm, generation (Gemma on Leonardo) | 182 | $0 | 0.125 |
+| D_min = 3 arm, stance judging | 182 | $0.231422 | 0 |
+| D_min = 3 arm, judge canary | 20 | $0.025374 | 0 |
+| **Stage 2 confirmatory, all of it** | | **$8.817063** | **1.139** |
 
 H6 added **$2.007398 API and 0.4112 node-hours** this phase, against its own caps of $6.00 and
 3.0 node-hours — neither breached, and both projections ($2.07 and ≤ 0.4 node-hours) were
 computed and checked before the first call ([H6 report §10](../stage2_confirm/H6_REPORT.md)).
+The exploratory D_min = 3 arm added **$0.256796 and 0.125 node-hours** under its own separate
+cap of $0.75 and 0.2 node-hours, again neither breached
+([H6 report §11](../stage2_confirm/H6_REPORT.md)). Those lines are deliberately kept out of
+H6's own §10 projection, which describes the registered run's pre-spend estimate and would
+otherwise be made to describe numbers it never covered; **combined H6 totals including the
+exploratory arm are $2.264194 API and 0.5362 node-hours.**
 
 GPU billing comes from `sacct`, not a watcher: 7 job attempts, **2 of them cancelled or
 failed and still billed**, counted at their billed elapsed time. That is the honest number
 and it is the one reported.
 
 **Project totals across every run ever logged**
-([`cost_log.jsonl`](../cost_log.jsonl), 101 entries): **$12.34 API** and **13.75 Leonardo
+([`cost_log.jsonl`](../cost_log.jsonl), 105 entries): **$12.60 API** and **13.88 Leonardo
 node-hours**. Five rows carry a null cost field — unpriced models, not zero — and are
 excluded from the API sum rather than counted as $0. The single largest compute line in the
 project is not Stage 2 at all: it is Stage 1E's confirm run at 5.27 node-hours, of which the
