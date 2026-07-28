@@ -136,7 +136,7 @@ Five arms per item — twin redacted, twin named, zero-info redacted, zero-info 
 imposter redacted — at an identical 2,000-word grounding budget and an identical 150-word
 answer cap ([confirm report §1](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). The
 confirmatory draw was 140 seeded subjects; 89 survived the ≥ 3-item floor; one was dropped
-by a guard (§7.5 below), leaving **88 scored subjects and 355 items**
+by a guard (§8.5 below), leaving **88 scored subjects and 355 items**
 ([`report_numbers.json`](../stage2_confirm/report_numbers.json), `cohort`).
 
 ---
@@ -230,7 +230,7 @@ it, and it is printed rather than dropped.
 
 **Caveats printed where the numbers are.** Channel-2 per-bin stance denominators are thin
 (31–65 items per bin, spread over 9–19 subjects) and are thinned further by the
-imposter-arm UNCLEAR asymmetry in §7.3 — the imposter arm's answers are judged UNCLEAR far
+imposter-arm UNCLEAR asymmetry in §8.3 — the imposter arm's answers are judged UNCLEAR far
 more often than any other arm's, so the imposter's stance-match rate is computed on a
 smaller and differently-selected denominator. Channel-2 H7 numbers carry wider uncertainty
 than their channel-1 counterparts
@@ -263,7 +263,24 @@ come.
 
 ---
 
-## 5. B8 — individual level beside population level
+## 5. Registered hypotheses not run in this cycle
+
+Two hypotheses are on the frozen record and have no data in this cycle. Neither is withdrawn,
+and neither is reported anywhere in this paper.
+
+- **H2 (selection matters)** — model-selected context beats random-segment context at matched
+  budget ([`PREREGISTRATION.md`](../../PREREGISTRATION.md) §3, confirmatory at ≥ 80 subjects
+  under the [Amendment 1 A5](../../PREREGISTRATION_AMENDMENT_1.md) branch). **No confirmatory
+  selection-policy arms were ever generated**, so H2 has no data at all — not a null, not a
+  weak effect, nothing.
+- **H5 (calibration)** — twin confidence calibrated to ECE ≤ 0.10, re-scoped from Stages 2–3
+  to Stage 2 predictions alone by [Amendment 2 B9.b](../../PREREGISTRATION_AMENDMENT_2.md).
+  **No calibration analysis exists on Stage 2 predictions.**
+
+Both remain outstanding registered hypotheses. Their disposition — run in a later cycle, or
+withdraw as a documented deviation — is an owner decision and is currently pending.
+
+## 6. B8 — individual level beside population level
 
 The standing rule ([Amendment 2 B8](../../PREREGISTRATION_AMENDMENT_2.md)) requires every
 fidelity report to print individual-level lift beside a population-level distribution
@@ -292,7 +309,7 @@ part of the rule; a divergence would have been reported the same way.
 
 ---
 
-## 6. Stage 1 and Stage 1E — elicitation groundwork, not a headline
+## 7. Stage 1 and Stage 1E — elicitation groundwork, not a headline
 
 Stage 1 is development only. Stage 1E is confirmatory within its own frozen bars, but those
 bars are about elicitation policy on a survey corpus, not about twin fidelity. Neither
@@ -363,9 +380,9 @@ ever since: watch which arm moves, and print both.
 
 ---
 
-## 7. Supporting apparatus
+## 8. Supporting apparatus
 
-### 7.1 The contamination meter is LIVE on both models
+### 8.1 The contamination meter is LIVE on both models
 
 Per subject, (named zero-info baseline) − (name-redacted zero-info baseline). This is the
 instrument that detects the model already knowing the person
@@ -383,10 +400,13 @@ analysed separately; the confirm report **identifies** them — cutoffs ≥ 0.08
 subjects) and ≥ 0.1263 (flash-lite, 9 subjects), listed by ID
 ([confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)) — but does not yet print a
 separate lift recomputed on that subset. **That separate analysis is outstanding, and this
-paper does not claim it was done.** The dev pilot measured the meter at +0.016 and +0.048, so
-the confirmatory run reproduced the dev magnitude rather than surprising us.
+paper does not claim it was done.** It is being added to the confirm report driver in
+parallel with this draft and will appear as a top-decile-meter-versus-rest subsection of
+[`STAGE2_CONFIRM_REPORT.md`](../stage2_confirm/STAGE2_CONFIRM_REPORT.md); this paper does not
+wait on it and quotes no number from it. The dev pilot measured the meter at +0.016 and
++0.048, so the confirmatory run reproduced the dev magnitude rather than surprising us.
 
-### 7.2 H3 (descriptive) — and the coupling that makes half of it unusable
+### 8.2 H3 (descriptive) — and the coupling that makes half of it unusable
 
 H3 is registered as descriptive: *"lift shrinks as the contamination meter grows"*
 ([`PREREGISTRATION.md`](../../PREREGISTRATION.md) §3). **Only the own − imposter row can
@@ -409,7 +429,7 @@ predicts, and anyone quoting them as support for H3 would be quoting an artifact
 estimator was frozen for H3; the choice of Pearson and Spearman is declared in the report,
 not inherited.
 
-### 7.3 Imposter-arm UNCLEAR asymmetry — flagged on both models
+### 8.3 Imposter-arm UNCLEAR asymmetry — flagged on both models
 
 The frozen UNCLEAR rule excludes UNCLEAR items from the stance-match denominator, requires
 every arm's UNCLEAR rate beside its match rate, and flags a between-arm gap ≥ 0.10 as
@@ -422,7 +442,7 @@ stated rather than absorbed: the imposter arm's stance-match rate is computed on
 items where the other arms use ~303–326, and those denominators are not a random subset —
 they are the items where the judge could read a position at all.
 
-### 7.4 Donor concentration
+### 8.4 Donor concentration
 
 **25 distinct donors ground 89 subjects' imposter arms, and the busiest donor grounds 11**
 (54 donors cleared the frozen 2,500-word floor)
@@ -433,7 +453,7 @@ subjects sharing a donor. This is declared beside every own − imposter number 
 corrected for; the 2,500-word floor that causes the concentration is frozen and was not
 relaxed.
 
-### 7.5 Guards, the dropped subject, and the rest of the instrument health record
+### 8.5 Guards, the dropped subject, and the rest of the instrument health record
 
 - **Guard exclusion rate 12 of 2,176 renders = 0.0055**, against a stop rate of 0.05 that
   was never reached ([confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)).
@@ -464,11 +484,13 @@ relaxed.
 
 ---
 
-## 8. Costs, reported as results
+## 9. Costs, reported as results
 
 Caps signed off at GO were 8 node-hours GPU and $15 API. The confirmatory Stage 2 run spent
-**0.6028 node-hours and $6.552869** — neither cap breached, headroom 7.3972 node-hours and
-$8.447131 ([confirm report §7](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)):
+**0.6028 node-hours and $6.552869 at report render** — neither cap breached, headroom 7.3972
+node-hours and $8.447131 ([confirm report §7](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)).
+The stance judge was still spending as the report rendered, so the API figure is a running
+total; **the ledger ([`cost_log.jsonl`](../cost_log.jsonl)) carries the final figure.**
 
 | run | calls | API $ | node-hours |
 |---|---|---|---|
@@ -492,7 +514,7 @@ on this project; owner review time was.
 
 ---
 
-## 9. Limitations, written the way a hostile reviewer would write them
+## 10. Limitations, written the way a hostile reviewer would write them
 
 **Public personas only.** Stage 2 measures the public persona, not the private individual.
 Every subject is someone performing in a broadcast interview, with a publicist's framing, a
@@ -522,8 +544,8 @@ denominators run 31–65 items. One of the four cells reports a confidence inter
 [−1.3760, +1.1538]. Nothing in §3 should be read as a decay curve, in either direction.
 
 **The imposter arm is flagged twice.** Its UNCLEAR rate is materially higher than every other
-arm's on both models (§7.3), and its donors are concentrated — 25 donors for 89 arms, busiest
-donor 11 (§7.4). Since own − imposter is the primary metric, both flags land directly on the
+arm's on both models (§8.3), and its donors are concentrated — 25 donors for 89 arms, busiest
+donor 11 (§8.4). Since own − imposter is the primary metric, both flags land directly on the
 headline. Neither was corrected for; both were declared.
 
 **"Pre-registered" is currently weaker than it sounds.** The OSF upload is still outstanding.
@@ -566,14 +588,14 @@ lower than owner labels.
 **Nulls and misses, listed together so they are not scattered:** the H1 magnitude bar missed
 on its own named contrast, primary model, channel 1 (§1.1); H7 produced no headline reading
 in any cell (§3); H7's magnitude bar missed in all four cells (§3.4); H3's confound-free row
-shows no shrinkage of lift with contamination (§7.2); Stage 1E's primary adaptive bar C1
-failed (§6); the forced-choice instrument was killed outright after four rounds (§2); the
+shows no shrinkage of lift with contamination (§8.2); Stage 1E's primary adaptive bar C1
+failed (§7); the forced-choice instrument was killed outright after four rounds (§2); the
 16PF replication was cancelled (above). None of these is a footnote in this paper and none of
 them should become one downstream.
 
 ---
 
-## 10. Ethics and scope
+## 11. Ethics and scope
 
 All material is **public broadcast interview transcript** — words these people chose to say
 on NPR and CNN, already published, already archived. No private data, no participants, no
@@ -582,7 +604,7 @@ consent burden, and nothing was collected from anyone for this study.
 The subject pool is **deliberately biased toward the long tail** rather than celebrities: of
 578 qualifying candidates, 137 are confirmed long-tail with no Wikipedia article under any
 spelling we could find ([`stage2_curation_report.md`](../stage2_curation_report.md)). The
-reason is scientific — famous subjects are contaminated, and the contamination meter (§7.1)
+reason is scientific — famous subjects are contaminated, and the contamination meter (§8.1)
 exists to measure exactly that — but it has an ethical consequence worth naming: this study
 models people who are *less* able to notice or object. The mitigation is that nothing
 individuating is published. **Subjects appear in the repository only as pseudonymous IDs**
@@ -596,7 +618,7 @@ claiming a clean cutoff we do not have.
 
 ---
 
-## 11. Where every number in this paper comes from
+## 12. Where every number in this paper comes from
 
 | what | source |
 |---|---|
