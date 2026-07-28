@@ -771,12 +771,12 @@ given; the amendment names them only by short description.
 
 Two further works are cited in the text and are not part of B9's list:
 
-- **[REF TO SUPPLY: Park et al. (2024), "Generative Agent Simulations of 1,000
-  People" — the design target named in
-  [PREREGISTRATION.md §1](../../PREREGISTRATION.md), commercialised by Simile.]**
-  Cited by title and year in §2 of this paper. No full reference exists anywhere
-  in the project record and this one was not verified by search, so it is marked
-  rather than guessed.
+- Park, J. S., Zou, C. Q., Shaw, A., Hill, B. M., Cai, C., Morris, M. R.,
+  Willer, R., Liang, P., & Bernstein, M. S. (2024). *Generative Agent
+  Simulations of 1,000 People.* arXiv:2411.10109.
+  https://arxiv.org/abs/2411.10109 — the design target named in
+  [PREREGISTRATION.md §1](../../PREREGISTRATION.md), commercialised by Simile.
+  Verified against the arXiv listing 2026-07-28.
 - Santurkar, S., Durmus, E., Ladhak, F., Lee, C., Liang, P., & Hashimoto, T.
   (2023). *Whose Opinions Do Language Models Reflect?* ICML 2023.
   arXiv:2303.17548. https://arxiv.org/abs/2303.17548 — the origin of OpinionQA,
