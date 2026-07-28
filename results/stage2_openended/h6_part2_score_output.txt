@@ -1,0 +1,35 @@
+H6 classifier trust gate -- PART 2 (confirmatory subjects)
+==================================================================
+key            : results/stage2_openended/h6_part2_key.json (seed 62)
+auditor labels : results/stage2_openended/h6_part2_coaudit_labels.json
+classifier     : Gemma-4-31B-it
+rubric sha256  : 053b96cba42ebf03d966db3c22fce2acde3a685d5b4cca9badd556ee248a24da
+
+rows in key    : 120
+rows scored    : 120
+subjects       : 60
+
+AGREEMENT
+  raw agreement : 0.8833
+  Cohen's kappa : 0.7667
+  disagreements : 14
+    classifier FOLLOW-UP / auditor NEW-TOPIC : 11
+    classifier NEW-TOPIC / auditor FOLLOW-UP : 3
+
+OVERTURN RATES (classifier label overturned by the auditor)
+  FOLLOW-UP    11 / 60   = 0.183333
+  NEW-TOPIC     3 / 60   = 0.05
+
+THE BAR, VERBATIM
+  Amendment 2 B2.2, carried to part 2 by Addendum A precondition 5 part 2: ">= 85% raw agreement AND Cohen's kappa >= 0.6". On failure: "If part 2 fails the bar, H6 scoring halts pending rubric revision."
+  VERDICT: trust gate PASS (raw 0.8833 vs >= 0.85; kappa 0.7667 vs >= 0.6)
+  -> part 2 satisfied; H6 arm building may proceed
+
+THE TRIPWIRE, VERBATIM
+  H6/B3 appendix section 4.3(c), APPROVED 2026-07-28: "Part-2 FOLLOW-UP overturn rate > 20% -> H6's rich arm is additionally built at D_min = 3 as a pre-committed sensitivity arm, and both results are reported side by side. Direction must survive both for any headline." "> 35% -> H6 scoring halts pending rubric revision."
+  VERDICT: no tripwire fired
+
+H6 SCORING HALTS: no
+D_min = 3 SENSITIVITY ARM REQUIRED: no
+
+For context only, never a verdict input -- dev part 1: raw 0.8667, kappa 0.7333, FOLLOW-UP overturn 0.25
