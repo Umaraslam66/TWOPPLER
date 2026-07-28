@@ -1,0 +1,726 @@
+{
+  "auditor": "claude-opus-5 blind co-audit, D3-pattern substitution",
+  "date": "2026-07-28",
+  "rows": [
+    {
+      "row": 1,
+      "central": "NEW-TOPIC clause 'a segment transition' / 'sign-off': break announcement plus network ID and a teaser; takes nothing from GUEST's ammunition point.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 2,
+      "central": "NEW-TOPIC clause 'going back to the interviewer's own earlier line': 'as I just said' cites the host's own Rod Laver fact, not GUEST's Wawrinka answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 3,
+      "central": "Hard case 2: shares the SOFA subject, but 'I've also read' introduces a host-supplied Green Zone item and takes nothing from GUEST's timeline answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 4,
+      "central": "NEW-TOPIC clause 'a sign-off': outro identification of the departing guest.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 5,
+      "central": "NEW-TOPIC clause 'a prepared or agenda question': quotes an earlier guest's immigration-reform argument, nothing from GUEST's party-unity answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 6,
+      "central": "FOLLOW-UP clause 'quotes ... something in GUEST': 'you said something very important there ... in your words, screwed up' quotes the answer verbatim.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 7,
+      "central": "NEW-TOPIC clause 'a sign-off': full outro credit and closing thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 8,
+      "central": "NEW-TOPIC 'acknowledge-then-pivot': 'OK. OK. Good point.' is filler, then an audience appeal built on the host's own photo rather than on GUEST's plea.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 9,
+      "central": "FOLLOW-UP clause 'probes': paraphrases GUEST's Dabiq/propaganda point back as a check.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 10,
+      "central": "Hard case 4: 'his son was with him' takes the convoy GUEST just described and adds one new detail.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 11,
+      "central": "NEW-TOPIC clause 'a sign-off': closing thanks to the whole panel plus a Congress-hearings aside, even though it echoes GUEST's 'communicate those ideas'.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 12,
+      "central": "NEW-TOPIC clause 'a sign-off': guest credit and thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 13,
+      "central": "Hard case 4: 'tell us more about him' takes Wawrinka straight from GUEST, then adds new biography.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 14,
+      "central": "FOLLOW-UP clause 'references ... something in GUEST': extends GUEST's own 'take your business elsewhere' advice with the same thread.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 15,
+      "central": "NEW-TOPIC 'material that does not come from GUEST': GUEST is a bare greeting; the host introduces his own Mets/Brooklyn material.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 16,
+      "central": "NEW-TOPIC clause 'a sign-off': credit, book title, and thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 17,
+      "central": "FOLLOW-UP clause 'probes': paraphrases GUEST's lepo-/Aleppo spelling point back for confirmation.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 18,
+      "central": "Hard case 4: 'Is there worry also' picks up the concerns GUEST just reported and adds extremism as new material.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 19,
+      "central": "NEW-TOPIC clause 'a prepared or agenda question': GUEST is only 'Thanks for having me', so the opening question can take nothing from it.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 20,
+      "central": "FOLLOW-UP clause 'quotes': 'You said that there's a big partisan divide here' quotes GUEST, then asks GUEST to spell it out.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 21,
+      "central": "NEW-TOPIC 'material that does not come from GUEST': a bare proper name introduces a new referent absent from GUEST's answer about the nominee.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 22,
+      "central": "Hard case 1 plus 'quotes': the framing is filler, the question probes the protesters GUEST described and says 'sustaining them, as you say'.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 23,
+      "central": "Hard case 4: the question names Lesko and Tipirneni and leans on the profiles GUEST just supplied, adding Trump and national Democrats as new material.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 24,
+      "central": "FOLLOW-UP clause 'references ... something in GUEST': the fragment's only content, 'is suggesting that', is deictic back to GUEST's assertion and brings in nothing new.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 25,
+      "central": "NEW-TOPIC clause 'a segment transition': break announcement and a tease for a different guest's argument.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 26,
+      "central": "NEW-TOPIC clause 'a question to someone else': wrap-up credits, then a question to Lawrence Korb about his organization.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 27,
+      "central": "FOLLOW-UP clause 'references': 'this latest diplomatic disagreement' refers to the ADIZ contest GUEST had just laid out.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 28,
+      "central": "NEW-TOPIC 'material that does not come from GUEST': GUEST is a bare 'Yes', so the question's material cannot have come from it.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 29,
+      "central": "NEW-TOPIC clause 'a sign-off': credit, location, and thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 30,
+      "central": "Hard case 4: 'those pamphlets you mentioned' quotes GUEST directly, with a new prevalence question attached.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 31,
+      "central": "Hard case 2: same Libya subject, but the no-fly-zone calls are a fresh agenda item taking nothing from GUEST's defections answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 32,
+      "central": "FOLLOW-UP clause 'probes': 'You mean ...' paraphrases GUEST's wet-sand metaphor back for confirmation.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 33,
+      "central": "FOLLOW-UP clause 'pushback that disputes it': 'Well, but then' disputes GUEST's benefit-of-the-doubt defence of FEMA.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 34,
+      "central": "FOLLOW-UP clause 'references ... something in GUEST': 'different points of view on that' points at GUEST's objection and introduces no new material.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 35,
+      "central": "NEW-TOPIC clause 'a prepared or agenda question': 'And finally' pivots to how Merkel takes Trump's tweets, nothing from GUEST's summit answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 36,
+      "central": "NEW-TOPIC clause 'a sign-off': bare outro credit after the guest's thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 37,
+      "central": "FOLLOW-UP clause 'minimal continuers': a bare affirmation mid-anecdote that asks for more of the same answer and brings in no material.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 38,
+      "central": "Hard case 4: 'such a fragile regime' takes GUEST's doubt about a workable organisation and adds the unfrozen assets.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 39,
+      "central": "NEW-TOPIC clause 'a question to someone else': new donation material and the question is explicitly handed to Puneet.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 40,
+      "central": "Hard case 2: same Pakistan subject, but the money-poured-in/leverage premise is host-supplied and quotes nothing from GUEST.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 41,
+      "central": "NEW-TOPIC clause 'a prepared or agenda question': 'her story' refers to the host's own intro; GUEST is only a greeting.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 42,
+      "central": "NEW-TOPIC clause 'a prepared or agenda question': 'Last question' pivots to the Geneva talks, taking nothing from GUEST's Obama-position answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 43,
+      "central": "Hard case 2: same book subject, but the closure angle is entirely host-supplied and takes nothing from GUEST's answer about the money.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 44,
+      "central": "NEW-TOPIC clause 'a sign-off': credit and thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 45,
+      "central": "FOLLOW-UP clause 'pushback that disputes it': 'But they are all ...' disputes GUEST's FOX/publisher charge, with 'they' anaphoric to GUEST.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 46,
+      "central": "FOLLOW-UP clause 'probes': 'You wouldn't consider that the case this year?' draws the inference straight out of GUEST's mixed verdict on women's gains.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 47,
+      "central": "NEW-TOPIC clause 'a segment transition': introduces and greets a new guest, despite the 'one of those black Republicans' bridge phrase.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 48,
+      "central": "NEW-TOPIC clause 'a prepared or agenda question': 'You've said' cites the guest's outside position, not GUEST, and pivots from conversion to policing.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 49,
+      "central": "FOLLOW-UP clause 'challenges': contrasts mug shots with martyr images to challenge GUEST's 'legal pictures' answer.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 50,
+      "central": "NEW-TOPIC clause 'a sign-off': closing pleasantry plus the start of an outro credit.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 51,
+      "central": "FOLLOW-UP clause 'challenges': 'that sounds logical what you're saying, but ...' names and disputes GUEST's argument.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 52,
+      "central": "NEW-TOPIC clause 'a question to someone else': thanks directed to a caller, Kyle, not to GUEST, and takes nothing from the budget answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 53,
+      "central": "Hard case 4: 'I am doing well' answers GUEST's question directly, then 'So many words' adds the host's own lead-in.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 54,
+      "central": "Hard case 2: the host supplies the ceasefire/Geneva premise himself and the sidelining question takes nothing from GUEST's Turkey answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 55,
+      "central": "FOLLOW-UP clause 'asking the guest to explain ... something they just said': 'So what does this mean?' asks GUEST to spell out the consequences of the suit just described.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 56,
+      "central": "NEW-TOPIC clause 'a prepared or agenda question': opening Card Act question after a bare greeting.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 57,
+      "central": "Hard case 4: 'The situation that you've described' references GUEST, then adds a new comparison to other conflict zones.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 58,
+      "central": "NEW-TOPIC clause 'a sign-off': a bare thanks closing the exchange, with no material drawn from GUEST's New Jersey answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 59,
+      "central": "FOLLOW-UP clause 'references': 'that's a term' is anaphoric to the term GUEST described candidates quoting.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 60,
+      "central": "NEW-TOPIC clause 'a sign-off': credit and thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 61,
+      "central": "FOLLOW-UP clause 'probes': asks whether the expert skiers and human factors GUEST just described amount to people pushing themselves more.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 62,
+      "central": "Hard case 2: the Aruban-police question takes nothing from GUEST's reward figures and returns to the interviewer's own line.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 63,
+      "central": "FOLLOW-UP clause 'probes': 'let me get this straight' paraphrases GUEST's interface description back for confirmation.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 64,
+      "central": "NEW-TOPIC clause 'a segment transition': outro and promo for a different interview entirely.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 65,
+      "central": "Hard case 1: the caller thanks is filler and the question picks up GUEST's 'terrain' assessment, adding the July 12 date as new material.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 66,
+      "central": "Hard case 2: same peacekeeping-force subject, but Rice's statement is host-supplied news and nothing is taken from GUEST's UNIFIL answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 67,
+      "central": "NEW-TOPIC 'material that does not come from GUEST': GUEST is a bare thanks; the Boston Globe commentary is host material.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 68,
+      "central": "NEW-TOPIC clause 'going back to the interviewer's own earlier line of questioning': explicit 'again, I go back to the idea', and GUEST is only 'Yeah'.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 69,
+      "central": "NEW-TOPIC clause 'a sign-off': credit and thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 70,
+      "central": "NEW-TOPIC clause 'a prepared or agenda question': the Scaramucci/Priebus question follows a bare greeting and takes nothing from GUEST.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 71,
+      "central": "FOLLOW-UP clause 'references': 'Yet, with all of that' sets the hope question against the division GUEST just described.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 72,
+      "central": "FOLLOW-UP clause 'probes': 'the money' and 'they' refer to the advertisers and companies GUEST just named.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 73,
+      "central": "FOLLOW-UP clause 'pushback that disputes it': disputes GUEST's claim that Abbas's mandate reaches Gaza.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 74,
+      "central": "FOLLOW-UP clause 'probes': draws the inference directly from GUEST's oil-boom explanation.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 75,
+      "central": "NEW-TOPIC clause 'a sign-off': credit and thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 76,
+      "central": "NEW-TOPIC clause 'a question to someone else': hands off to caller Sammy in San Francisco.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 77,
+      "central": "FOLLOW-UP clause 'asking the guest to explain ... something they just said': asks GUEST to narrow the journalism interest just stated.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 78,
+      "central": "Hard case 4: 'in that process, as we've heard' anchors on GUEST's internet-changed-adoption answer, then adds the selectivity point.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 79,
+      "central": "FOLLOW-UP clause 'probes': asks whether the training emphasis GUEST just quantified has shifted.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 80,
+      "central": "Hard case 2: same Pakistan subject, but the pivot to US planning takes nothing from GUEST's answer about Bhutto and rival politicians.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 81,
+      "central": "NEW-TOPIC clause 'a sign-off': credit and thanks for a correspondent, on a subject absent from GUEST.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 82,
+      "central": "FOLLOW-UP clause 'quotes': picks the 'December 9' detail straight out of GUEST and asks it to be backed up.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 83,
+      "central": "FOLLOW-UP clause 'references': 'a double whammy' summarises GUEST's Irma-plus-Maria point back at the guest.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 84,
+      "central": "NEW-TOPIC clause 'a sign-off': credit and thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 85,
+      "central": "NEW-TOPIC 'material that does not come from GUEST': new Senate-seat arithmetic after a bare closing pleasantry.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 86,
+      "central": "NEW-TOPIC 'acknowledge-then-pivot': 'Yes, absolutely. Now let's go to AFRICOM' follows a bare greeting.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 87,
+      "central": "NEW-TOPIC clause 'a segment transition': network identification and a scripted topic read.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 88,
+      "central": "Hard case 1: the comment summarises GUEST but the question, flagged 'Here's another point', is new self-perception material.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 89,
+      "central": "NEW-TOPIC clause 'a prepared or agenda question': opening evidence question after a bare greeting.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 90,
+      "central": "Hard case 4: the 'bucked the political trend' premise is taken from GUEST's realignment answer, with the Landrieu question added.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 91,
+      "central": "FOLLOW-UP clause 'challenges': 'why are you talking like that' challenges GUEST's just-spoken words and introduces no material.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 92,
+      "central": "NEW-TOPIC clause 'a question to someone else': aimed at Jim Hobart on new tribalism material; GUEST is only 'Right'.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 93,
+      "central": "Hard case 2: same district subject, but the Pennsylvania-upset comparison is host-supplied and takes nothing from GUEST's immigration answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 94,
+      "central": "Hard case 4: 'as you said' explicitly quotes GUEST, with the Mosul question added as new material.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 95,
+      "central": "FOLLOW-UP clause 'pushback that disputes it': quotes GUEST's 'hope it never happens' and pushes back on it.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 96,
+      "central": "NEW-TOPIC clause 'a sign-off': hotline notice and programme close.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 97,
+      "central": "NEW-TOPIC clause 'a sign-off': guest credit and closing courtesy, taking nothing from GUEST's market answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 98,
+      "central": "Hard case 2: same Iran subject, but the North Korea template is host-supplied and quotes nothing from GUEST.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 99,
+      "central": "FOLLOW-UP clause 'asking the guest to explain ... something they just said': probes GUEST's 'it can be a very political process' for how odd districts result.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 100,
+      "central": "Hard case 3: a near-verbatim repeat of PREV's question that neither names the dodge nor quotes the answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 101,
+      "central": "FOLLOW-UP clause 'asking the guest to ... back up something they just said': 'you say that he ... will swing the court further right. What makes you believe that?'",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 102,
+      "central": "FOLLOW-UP clause 'references': 'attacks like this in Russia' picks up GUEST's own 'past attacks of this nature in Russia'.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 103,
+      "central": "NEW-TOPIC clause 'a sign-off': credit, article title, location, and thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 104,
+      "central": "NEW-TOPIC clause 'going back to the interviewer's own earlier line': restarts the host's own agenda with a fresh Trump complaint, quoting nothing from GUEST.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 105,
+      "central": "NEW-TOPIC 'material that does not come from GUEST': continues the host's own PREV sentence; GUEST is only 'Right'.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 106,
+      "central": "NEW-TOPIC clause 'a question to someone else': aimed at a government representative about a new uranium proposal, not at GUEST's narrative point.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 107,
+      "central": "FOLLOW-UP by exclusion: a bare receipt token brings in no material at all, so it cannot satisfy the NEW-TOPIC test of material that does not come from GUEST.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 108,
+      "central": "FOLLOW-UP clause 'references': 'the messy solution you're talking about' names GUEST's own formulation.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 109,
+      "central": "Hard case 2: same Kunduz subject, but the population-sympathy question takes nothing from GUEST's government-failure answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 110,
+      "central": "NEW-TOPIC clause 'a prepared or agenda question': 'Now, briefly' pivots to negotiations, material absent from GUEST's regime-change answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "low"
+    },
+    {
+      "row": 111,
+      "central": "FOLLOW-UP clause 'references ... something in GUEST': the question takes its content from GUEST's 'the term radicalization isn't really defined', though it is put to another panelist.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 112,
+      "central": "Hard case 4: 'the president seems to agree with that' references GUEST's world-trade-system point, then challenges it with the tweet.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 113,
+      "central": "NEW-TOPIC 'material that does not come from GUEST': a post-sign-off editorial note about Kaspersky; GUEST is a bare thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 114,
+      "central": "NEW-TOPIC clause 'a sign-off': credit and thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 115,
+      "central": "FOLLOW-UP clause 'references': asks for one of the stories GUEST just said she had heard from the women who escaped.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 116,
+      "central": "Hard case 4: 'his home state' picks up GUEST's 'the city and state that made Donald Trump', adding his remark as new material.",
+      "label": "FOLLOW-UP",
+      "confidence": "low"
+    },
+    {
+      "row": 117,
+      "central": "Hard case 2: same North Korea subject, but the China question is new material and takes nothing from GUEST's capability answer.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 118,
+      "central": "Hard case 1: the comment expands GUEST's 'specifications' point and the question asks whether that surprised the guest.",
+      "label": "FOLLOW-UP",
+      "confidence": "high"
+    },
+    {
+      "row": 119,
+      "central": "NEW-TOPIC clause 'a prepared or agenda question': opening question after a bare greeting.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    },
+    {
+      "row": 120,
+      "central": "NEW-TOPIC clause 'a sign-off': credit and thanks.",
+      "label": "NEW-TOPIC",
+      "confidence": "high"
+    }
+  ]
+}
