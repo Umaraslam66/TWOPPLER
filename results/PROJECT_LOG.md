@@ -43,6 +43,16 @@ moved. Later documents override earlier ones where they conflict.
 | [`PREREGISTRATION_AMENDMENT_3.md`](../PREREGISTRATION_AMENDMENT_3.md) | **Adopted 2026-07-27**, commit `7548bc3`. C1 declares forced choice dead by pre-committed kill rule (four dev-pilot rounds, zero-info solved every item; a claimable, scoped negative finding); C2 the replacement instrument — open-ended generation, scored by a pinned local embedding model and a rubric-locked stance judge, no claim on one channel alone; C3 own-minus-imposter primary, robustness absolute scores explicitly secondary; C4 a dev validation gate with a pause-for-design-review branch; C5 hypotheses transfer, magnitude bars re-set at bar-lock. | frozen |
 | [`PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md`](../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md) | **Adopted 2026-07-28**, commit `bcd1d51`. The bar lock: instrument parameters filled from the dev pilot, the judge pinned (gemini-3.5-flash + rubric r2 + widened parser), the magnitude units re-set for continuous scales (≥ +0.05 cosine, ≥ +0.09 stance points), and the two-part classifier trust gate. | frozen |
 
+**Errata.** Frozen documents are never edited, so corrections go in one place:
+[`PREREGISTRATION_ERRATA.md`](../PREREGISTRATION_ERRATA.md) at the repository
+root. Two entries so far, both filed 2026-07-28: **E1**, Amendment 3 C1 cites
+`results/stage2_pilot3/PILOT_REPORT_4.md` when the file is in
+`results/stage2_pilot4/` (a path typo; the cited content is correct); **E2**,
+B7's pre-declared pooled crossover statistic compares bin-level arm means
+without the equal-subject-set guard the same driver applies before printing a
+per-bin difference (the frozen definition was applied as written for this
+project; the caveat is recorded for any future use).
+
 **External timestamping.** [`results/osf_preregistration_snapshot.md`](osf_preregistration_snapshot.md)
 is a frozen copy of the pre-registration plus Amendment 1, prepared for OSF.
 [`results/osf_preregistration_snapshot_v4.md`](osf_preregistration_snapshot_v4.md)
