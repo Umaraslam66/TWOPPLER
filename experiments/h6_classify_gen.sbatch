@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --gpus-per-node=4
 #SBATCH --cpus-per-task=32
-#SBATCH --time=00:40:00
+#SBATCH --time=00:20:00
 #SBATCH --output=/leonardo_work/AIFAC_P02_548/DOPPLER/logs/%x-%j.out
 #
 # H6 follow-up classifier over the 89 CONFIRMATORY survivors' GROUNDING turns.
