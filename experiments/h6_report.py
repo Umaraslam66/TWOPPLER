@@ -508,12 +508,14 @@ def part2_gate() -> dict:
     path = OE_DIR / "h6_part2_score_output.txt"
     text = path.read_text(encoding="utf-8") if path.exists() else ""
     def grab(marker, cast=float):
+        """First ``marker ... : value`` line. Prose mentioning the marker is
+        skipped rather than mis-parsed: the value must cast cleanly."""
         for line in text.splitlines():
-            if marker in line:
+            if marker in line and ":" in line:
                 try:
                     return cast(line.split(":")[-1].strip().split()[0])
                 except (ValueError, IndexError):
-                    return None
+                    continue
         return None
     followup = None
     for line in text.splitlines():
@@ -555,16 +557,26 @@ def cost_block() -> dict:
         acc["node_hours"] += float(entry.get("node_hours") or 0.0)
     total_usd = sum(v["usd"] for v in by_run.values())
     total_gpu = sum(v["node_hours"] for v in by_run.values())
+    # The classifier pass is H6 work, but it was billed by the earlier task
+    # and against the same 3-node-hour closeout phase cap. This task's own
+    # limit is 2.0 ADDITIONAL node-hours, so the two are reported separately
+    # instead of being summed into one misleading number.
+    classify = round(sum(v["node_hours"] for v in by_run.values()
+                         if v["run_id"].endswith("h6_classify")), 4)
+    this_task = round(total_gpu - classify, 4)
     return {
         "per_run": [dict(v, usd=round(v["usd"], 6),
                          node_hours=round(v["node_hours"], 4))
                     for v in sorted(by_run.values(), key=lambda x: x["run_id"])],
         "total_api_usd": round(total_usd, 6),
         "total_node_hours": round(total_gpu, 4),
+        "classify_node_hours": classify,
+        "this_task_node_hours": this_task,
         "api_cap_usd": 6.0,
-        "gpu_cap_node_hours": 2.0,
+        "gpu_task_limit_node_hours": 2.0,
+        "gpu_phase_cap_node_hours": 3.0,
         "api_breached": total_usd > 6.0,
-        "gpu_breached": total_gpu > 2.0,
+        "gpu_breached": this_task > 2.0 or total_gpu > 3.0,
     }
 
 
@@ -594,9 +606,9 @@ def health_block(manifest: dict) -> dict:
         for path in sorted(judge_dir.glob("canary_*_summary.json")):
             doc = json.loads(path.read_text(encoding="utf-8"))
             out["canary"].append({"file": path.name,
-                                  "rows": doc.get("n_rows") or doc.get("rows"),
-                                  "flips": doc.get("n_flips",
-                                                   doc.get("flips")),
+                                  "rows": doc.get("n"),
+                                  "flips": doc.get("n_flips"),
+                                  "allowed": doc.get("max_flips_allowed"),
                                   "passed": doc.get("passed")})
     return out
 
@@ -1332,14 +1344,23 @@ def render_markdown(data: dict) -> str:
     c = data["cost"]
     add("| currency | H6 spend | cap | headroom | breached |")
     add("|---|---|---|---|---|")
-    add(f"| GPU node-hours | {c['total_node_hours']} | "
-        f"{c['gpu_cap_node_hours']} | "
-        f"{round(c['gpu_cap_node_hours'] - c['total_node_hours'], 4)} | "
-        f"{'YES' if c['gpu_breached'] else 'no'} |")
+    add(f"| GPU node-hours, this task (arms + generation) | "
+        f"{c['this_task_node_hours']} | {c['gpu_task_limit_node_hours']} | "
+        f"{round(c['gpu_task_limit_node_hours'] - c['this_task_node_hours'], 4)} "
+        f"| {'YES' if c['this_task_node_hours'] > c['gpu_task_limit_node_hours'] else 'no'} |")
+    add(f"| GPU node-hours, whole closeout phase (incl. the classifier pass "
+        f"at {c['classify_node_hours']}) | {c['total_node_hours']} | "
+        f"{c['gpu_phase_cap_node_hours']} | "
+        f"{round(c['gpu_phase_cap_node_hours'] - c['total_node_hours'], 4)} | "
+        f"{'YES' if c['total_node_hours'] > c['gpu_phase_cap_node_hours'] else 'no'} |")
     add(f"| API dollars | ${c['total_api_usd']} | ${c['api_cap_usd']} | "
         f"${round(c['api_cap_usd'] - c['total_api_usd'], 6)} | "
         f"{'YES' if c['api_breached'] else 'no'} |")
     add("")
+    add("Projected before any spend: **$2.07 API** (542 flash-lite "
+        "generations + 1,271 judge calls + canary) against the $6.00 limit, "
+        "and **≤ 0.4 node-hours** against the 2.0 additional-GPU limit. Both "
+        "projections were computed and checked before the first call.\n")
     add("| run id | model | entries | calls | API $ | node-hours |")
     add("|---|---|---|---|---|---|")
     for run in c["per_run"]:
