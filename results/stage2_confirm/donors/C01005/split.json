@@ -1,0 +1,104 @@
+{
+ "canonical_id": "C01005",
+ "canonical_name": "James Stavridis",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl36",
+   "transcript_id": "NPR-26328",
+   "date": "2014-09-04",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-09-04"
+   ],
+   "guest_words": 475
+  },
+  {
+   "cluster_id": "cl34",
+   "transcript_id": "NPR-1619",
+   "date": "2015-11-15",
+   "program": "Weekend Edition Sunday",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-11-15"
+   ],
+   "guest_words": 429
+  },
+  {
+   "cluster_id": "cl35",
+   "transcript_id": "NPR-16222",
+   "date": "2017-02-16",
+   "program": "Morning Edition",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-02-16"
+   ],
+   "guest_words": 593
+  },
+  {
+   "cluster_id": "cl33",
+   "transcript_id": "NPR-14900",
+   "date": "2017-06-06",
+   "program": "Morning Edition",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-06-06"
+   ],
+   "guest_words": 666
+  },
+  {
+   "cluster_id": "cl39",
+   "transcript_id": "NPR-48368",
+   "date": "2017-11-13",
+   "program": "Morning Edition",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-11-13"
+   ],
+   "guest_words": 341
+  },
+  {
+   "cluster_id": "cl38",
+   "transcript_id": "NPR-47659",
+   "date": "2018-04-14",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-04-14"
+   ],
+   "guest_words": 568
+  },
+  {
+   "cluster_id": "cl40",
+   "transcript_id": "NPR-6295",
+   "date": "2019-02-03",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-02-03"
+   ],
+   "guest_words": 483
+  }
+ ],
+ "test": {
+  "cluster_id": "cl32",
+  "transcript_id": "NPR-12626",
+  "date": "2019-03-12",
+  "program": "Morning Edition",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-03-12"
+  ],
+  "guest_words": 419
+ },
+ "excluded_same_date": []
+}

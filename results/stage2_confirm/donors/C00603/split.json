@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C00603",
+ "canonical_name": "David Leonhardt",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-38512",
+   "date": "2008-10-25",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-10-25"
+   ],
+   "guest_words": 867
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-44924",
+   "date": "2010-05-12",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-05-12"
+   ],
+   "guest_words": 1376
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-49111",
+   "date": "2010-12-18",
+   "program": "Weekend Edition Saturday",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-12-18"
+   ],
+   "guest_words": 695
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-12379",
+   "date": "2013-02-16",
+   "program": "Weekend Edition Saturday",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-02-16"
+   ],
+   "guest_words": 667
+  }
+ ],
+ "test": {
+  "cluster_id": "cl5",
+  "transcript_id": "NPR-1256",
+  "date": "2019-01-06",
+  "program": "All Things Considered",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-01-06"
+  ],
+  "guest_words": 533
+ },
+ "excluded_same_date": []
+}

@@ -1,0 +1,1417 @@
+{
+ "method": "SPEC D7 with the v1.2 amendment (D7-r2). Each subject is represented by its concatenated guest-role text from GROUNDING clusters only (dev subjects: the committed grounding_turns.jsonl; donors: D2 applied to their pool row, guest turns of every grounding cluster's representative transcript). Donor pool = the seed-48 sample of 200 eligible subjects (qualifies AND clean AND NOT ambiguous_identity), drawn with random.Random(48).sample over the lexicographically sorted eligible ids with ALL dev-subject ids removed first; the same derivation the distractor bank uses. Eligible donors are those with >= 2500 words of grounding text and no name conflict with the subject (shared name token, or difflib ratio >= 0.7 between any pair of name variants, honorific-stripped and casefolded). Similarity = cosine between L2-normalised TF-IDF vectors, word unigrams, lowercase, token pattern (?u)\\b\\w\\w+\\b, smoothed idf ln((1+n)/(1+df))+1, fitted once on all eligible donor documents plus all subject documents, with terms whose document frequency exceeds 0.9 of that corpus DROPPED (v1.2 amendment; TfidfVectorizer(max_df=0.9) semantics). donor(X) = argmax similarity, rounded to 6 decimals, ties broken by lexicographic canonical_id. runner_up_top5 holds ranks 2-6 (the winner is in pairs).",
+ "confirmatory_method_delta": "Identical to the frozen method above, with the eligibility filter extended by D7-GUARD: a donor that shares a transcript with the subject (raw rows or D2 splits) or whose grounding text carries the subject's name is excluded from the argmax instead of being allowed to win and then trip the leakage assert. The asserts themselves are unchanged and still run on the winner.",
+ "donor_seed": 48,
+ "n_donor_sample": 155,
+ "donor_sample_sha256": "b39f7eaafbc31d529c37728ec91defc29407313346d11920684bdac68c6cdcdf",
+ "n_donor_texts": 155,
+ "word_floor": 2500,
+ "name_ratio": 0.7,
+ "max_df": 0.9,
+ "vocabulary_terms": 16079,
+ "n_eligible_donors": 54,
+ "donor_multiplicity": {
+  "distinct_donors": 18,
+  "n_subjects": 30,
+  "max_subjects_per_donor": 4,
+  "subjects_by_donor": {
+   "C00144": [
+    "C00344",
+    "C00746",
+    "C00890",
+    "C01904"
+   ],
+   "C00603": [
+    "C00897"
+   ],
+   "C00695": [
+    "C02359"
+   ],
+   "C01005": [
+    "C00169",
+    "C01673",
+    "C02500"
+   ],
+   "C01302": [
+    "C00203"
+   ],
+   "C01316": [
+    "C00819",
+    "C01800"
+   ],
+   "C01650": [
+    "C00110"
+   ],
+   "C01696": [
+    "C00673",
+    "C02318"
+   ],
+   "C01698": [
+    "C00818",
+    "C00846",
+    "C01891"
+   ],
+   "C01837": [
+    "C00593"
+   ],
+   "C02040": [
+    "C00563"
+   ],
+   "C02253": [
+    "C00522",
+    "C01752"
+   ],
+   "C02277": [
+    "C01746"
+   ],
+   "C02426": [
+    "C01842"
+   ],
+   "C02495": [
+    "C00050"
+   ],
+   "C02496": [
+    "C00620"
+   ],
+   "C02510": [
+    "C00621",
+    "C01180"
+   ],
+   "C02529": [
+    "C00697",
+    "C01464"
+   ]
+  },
+  "shared_donors": [
+   "C00144",
+   "C01005",
+   "C01316",
+   "C01696",
+   "C01698",
+   "C02253",
+   "C02510",
+   "C02529"
+  ]
+ },
+ "pairs": {
+  "C00050": "C02495",
+  "C00110": "C01650",
+  "C00169": "C01005",
+  "C00203": "C01302",
+  "C00344": "C00144",
+  "C00522": "C02253",
+  "C00563": "C02040",
+  "C00593": "C01837",
+  "C00620": "C02496",
+  "C00621": "C02510",
+  "C00673": "C01696",
+  "C00697": "C02529",
+  "C00746": "C00144",
+  "C00818": "C01698",
+  "C00819": "C01316",
+  "C00846": "C01698",
+  "C00890": "C00144",
+  "C00897": "C00603",
+  "C01180": "C02510",
+  "C01464": "C02529",
+  "C01673": "C01005",
+  "C01746": "C02277",
+  "C01752": "C02253",
+  "C01800": "C01316",
+  "C01842": "C02426",
+  "C01891": "C01698",
+  "C01904": "C00144",
+  "C02318": "C01696",
+  "C02359": "C00695",
+  "C02500": "C01005"
+ },
+ "similarity": {
+  "C00050": 0.143849,
+  "C00110": 0.234142,
+  "C00169": 0.141346,
+  "C00203": 0.486428,
+  "C00344": 0.419376,
+  "C00522": 0.164322,
+  "C00563": 0.096072,
+  "C00593": 0.068364,
+  "C00620": 0.37441,
+  "C00621": 0.332651,
+  "C00673": 0.118644,
+  "C00697": 0.337769,
+  "C00746": 0.122874,
+  "C00818": 0.105379,
+  "C00819": 0.234204,
+  "C00846": 0.109386,
+  "C00890": 0.158963,
+  "C00897": 0.119835,
+  "C01180": 0.29032,
+  "C01464": 0.179927,
+  "C01673": 0.102976,
+  "C01746": 0.332248,
+  "C01752": 0.288573,
+  "C01800": 0.334323,
+  "C01842": 0.310096,
+  "C01891": 0.142763,
+  "C01904": 0.27372,
+  "C02318": 0.143627,
+  "C02359": 0.321465,
+  "C02500": 0.321735
+ },
+ "runner_up_top5": {
+  "C00050": [
+   [
+    "C02040",
+    0.135686
+   ],
+   [
+    "C01696",
+    0.130143
+   ],
+   [
+    "C02253",
+    0.129731
+   ],
+   [
+    "C02030",
+    0.12891
+   ],
+   [
+    "C01698",
+    0.125051
+   ]
+  ],
+  "C00110": [
+   [
+    "C01316",
+    0.160564
+   ],
+   [
+    "C02040",
+    0.115229
+   ],
+   [
+    "C02266",
+    0.102598
+   ],
+   [
+    "C01005",
+    0.097666
+   ],
+   [
+    "C00077",
+    0.096233
+   ]
+  ],
+  "C00169": [
+   [
+    "C01874",
+    0.116453
+   ],
+   [
+    "C00031",
+    0.112451
+   ],
+   [
+    "C02040",
+    0.108018
+   ],
+   [
+    "C01698",
+    0.104243
+   ],
+   [
+    "C00144",
+    0.100541
+   ]
+  ],
+  "C00203": [
+   [
+    "C02040",
+    0.367941
+   ],
+   [
+    "C00199",
+    0.354726
+   ],
+   [
+    "C01696",
+    0.329092
+   ],
+   [
+    "C02030",
+    0.252726
+   ],
+   [
+    "C00603",
+    0.24585
+   ]
+  ],
+  "C00344": [
+   [
+    "C02040",
+    0.4078
+   ],
+   [
+    "C01302",
+    0.393669
+   ],
+   [
+    "C02030",
+    0.373515
+   ],
+   [
+    "C02510",
+    0.364724
+   ],
+   [
+    "C02496",
+    0.347036
+   ]
+  ],
+  "C00522": [
+   [
+    "C00144",
+    0.156845
+   ],
+   [
+    "C02030",
+    0.138093
+   ],
+   [
+    "C00173",
+    0.137476
+   ],
+   [
+    "C00903",
+    0.134414
+   ],
+   [
+    "C02371",
+    0.131042
+   ]
+  ],
+  "C00563": [
+   [
+    "C00603",
+    0.092084
+   ],
+   [
+    "C02030",
+    0.088974
+   ],
+   [
+    "C01302",
+    0.083867
+   ],
+   [
+    "C02496",
+    0.078335
+   ],
+   [
+    "C01696",
+    0.075858
+   ]
+  ],
+  "C00593": [
+   [
+    "C01698",
+    0.067436
+   ],
+   [
+    "C02510",
+    0.063542
+   ],
+   [
+    "C00144",
+    0.063523
+   ],
+   [
+    "C02040",
+    0.059129
+   ],
+   [
+    "C00903",
+    0.056775
+   ]
+  ],
+  "C00620": [
+   [
+    "C01302",
+    0.336937
+   ],
+   [
+    "C02040",
+    0.313242
+   ],
+   [
+    "C02426",
+    0.223573
+   ],
+   [
+    "C01696",
+    0.218662
+   ],
+   [
+    "C00144",
+    0.188536
+   ]
+  ],
+  "C00621": [
+   [
+    "C00144",
+    0.305989
+   ],
+   [
+    "C02040",
+    0.276587
+   ],
+   [
+    "C01501",
+    0.267054
+   ],
+   [
+    "C01302",
+    0.263502
+   ],
+   [
+    "C02496",
+    0.261098
+   ]
+  ],
+  "C00673": [
+   [
+    "C00603",
+    0.106006
+   ],
+   [
+    "C02529",
+    0.092152
+   ],
+   [
+    "C02040",
+    0.084298
+   ],
+   [
+    "C02030",
+    0.078346
+   ],
+   [
+    "C01302",
+    0.072753
+   ]
+  ],
+  "C00697": [
+   [
+    "C02496",
+    0.186811
+   ],
+   [
+    "C00603",
+    0.185433
+   ],
+   [
+    "C01696",
+    0.155654
+   ],
+   [
+    "C02040",
+    0.152816
+   ],
+   [
+    "C00031",
+    0.138839
+   ]
+  ],
+  "C00746": [
+   [
+    "C02495",
+    0.118081
+   ],
+   [
+    "C00903",
+    0.11576
+   ],
+   [
+    "C02510",
+    0.105342
+   ],
+   [
+    "C00460",
+    0.099098
+   ],
+   [
+    "C00312",
+    0.087921
+   ]
+  ],
+  "C00818": [
+   [
+    "C02495",
+    0.083111
+   ],
+   [
+    "C02070",
+    0.080248
+   ],
+   [
+    "C02428",
+    0.080034
+   ],
+   [
+    "C00603",
+    0.072104
+   ],
+   [
+    "C02510",
+    0.071095
+   ]
+  ],
+  "C00819": [
+   [
+    "C01005",
+    0.224934
+   ],
+   [
+    "C02277",
+    0.196553
+   ],
+   [
+    "C00031",
+    0.19333
+   ],
+   [
+    "C02264",
+    0.191602
+   ],
+   [
+    "C00077",
+    0.158367
+   ]
+  ],
+  "C00846": [
+   [
+    "C00144",
+    0.09885
+   ],
+   [
+    "C01696",
+    0.086039
+   ],
+   [
+    "C00553",
+    0.080789
+   ],
+   [
+    "C01662",
+    0.077321
+   ],
+   [
+    "C00603",
+    0.073609
+   ]
+  ],
+  "C00890": [
+   [
+    "C00312",
+    0.154452
+   ],
+   [
+    "C02495",
+    0.142976
+   ],
+   [
+    "C02371",
+    0.140246
+   ],
+   [
+    "C02253",
+    0.136789
+   ],
+   [
+    "C01696",
+    0.133498
+   ]
+  ],
+  "C00897": [
+   [
+    "C01698",
+    0.115913
+   ],
+   [
+    "C02529",
+    0.104592
+   ],
+   [
+    "C01696",
+    0.101829
+   ],
+   [
+    "C02040",
+    0.095461
+   ],
+   [
+    "C00312",
+    0.087087
+   ]
+  ],
+  "C01180": [
+   [
+    "C00144",
+    0.288806
+   ],
+   [
+    "C02495",
+    0.242038
+   ],
+   [
+    "C02040",
+    0.23006
+   ],
+   [
+    "C00460",
+    0.228321
+   ],
+   [
+    "C02030",
+    0.226609
+   ]
+  ],
+  "C01464": [
+   [
+    "C01696",
+    0.168637
+   ],
+   [
+    "C00603",
+    0.166828
+   ],
+   [
+    "C02496",
+    0.163112
+   ],
+   [
+    "C02040",
+    0.145995
+   ],
+   [
+    "C00144",
+    0.134752
+   ]
+  ],
+  "C01673": [
+   [
+    "C01696",
+    0.098513
+   ],
+   [
+    "C00144",
+    0.074161
+   ],
+   [
+    "C02040",
+    0.073616
+   ],
+   [
+    "C01936",
+    0.073219
+   ],
+   [
+    "C02426",
+    0.069435
+   ]
+  ],
+  "C01746": [
+   [
+    "C01316",
+    0.206585
+   ],
+   [
+    "C02264",
+    0.198137
+   ],
+   [
+    "C00031",
+    0.172366
+   ],
+   [
+    "C00078",
+    0.128673
+   ],
+   [
+    "C02496",
+    0.106606
+   ]
+  ],
+  "C01752": [
+   [
+    "C02030",
+    0.161304
+   ],
+   [
+    "C00282",
+    0.15398
+   ],
+   [
+    "C02040",
+    0.146155
+   ],
+   [
+    "C02371",
+    0.142973
+   ],
+   [
+    "C00460",
+    0.140691
+   ]
+  ],
+  "C01800": [
+   [
+    "C00031",
+    0.18014
+   ],
+   [
+    "C01507",
+    0.169187
+   ],
+   [
+    "C02040",
+    0.10665
+   ],
+   [
+    "C01005",
+    0.104971
+   ],
+   [
+    "C02070",
+    0.103151
+   ]
+  ],
+  "C01842": [
+   [
+    "C02040",
+    0.187051
+   ],
+   [
+    "C02496",
+    0.184625
+   ],
+   [
+    "C02508",
+    0.175031
+   ],
+   [
+    "C00603",
+    0.171689
+   ],
+   [
+    "C01302",
+    0.148211
+   ]
+  ],
+  "C01891": [
+   [
+    "C02428",
+    0.134771
+   ],
+   [
+    "C00144",
+    0.127044
+   ],
+   [
+    "C01501",
+    0.118649
+   ],
+   [
+    "C01936",
+    0.107455
+   ],
+   [
+    "C01696",
+    0.10699
+   ]
+  ],
+  "C01904": [
+   [
+    "C01696",
+    0.227132
+   ],
+   [
+    "C02040",
+    0.211424
+   ],
+   [
+    "C01302",
+    0.201392
+   ],
+   [
+    "C00460",
+    0.194277
+   ],
+   [
+    "C02495",
+    0.191609
+   ]
+  ],
+  "C02318": [
+   [
+    "C02040",
+    0.143416
+   ],
+   [
+    "C00031",
+    0.138399
+   ],
+   [
+    "C00144",
+    0.136412
+   ],
+   [
+    "C02253",
+    0.135615
+   ],
+   [
+    "C02030",
+    0.129475
+   ]
+  ],
+  "C02359": [
+   [
+    "C02040",
+    0.205092
+   ],
+   [
+    "C02425",
+    0.138817
+   ],
+   [
+    "C02496",
+    0.133849
+   ],
+   [
+    "C02508",
+    0.125579
+   ],
+   [
+    "C02277",
+    0.12367
+   ]
+  ],
+  "C02500": [
+   [
+    "C02040",
+    0.238329
+   ],
+   [
+    "C00031",
+    0.227088
+   ],
+   [
+    "C01316",
+    0.209635
+   ],
+   [
+    "C02264",
+    0.208881
+   ],
+   [
+    "C00077",
+    0.192892
+   ]
+  ]
+ },
+ "subject_words": {
+  "C00050": 1785,
+  "C00110": 852,
+  "C00169": 1353,
+  "C00203": 8984,
+  "C00344": 17600,
+  "C00522": 1811,
+  "C00563": 1715,
+  "C00593": 871,
+  "C00620": 2191,
+  "C00621": 7153,
+  "C00673": 1661,
+  "C00697": 2182,
+  "C00746": 737,
+  "C00818": 1459,
+  "C00819": 12567,
+  "C00846": 1191,
+  "C00890": 1266,
+  "C00897": 816,
+  "C01180": 5035,
+  "C01464": 4611,
+  "C01673": 1214,
+  "C01746": 1015,
+  "C01752": 2027,
+  "C01800": 1050,
+  "C01842": 2023,
+  "C01891": 3262,
+  "C01904": 1233,
+  "C02318": 1839,
+  "C02359": 1642,
+  "C02500": 5526
+ },
+ "donor_words": {
+  "C00031": 4204,
+  "C00077": 2627,
+  "C00078": 3863,
+  "C00144": 14135,
+  "C00173": 3096,
+  "C00199": 3066,
+  "C00282": 4060,
+  "C00312": 3860,
+  "C00460": 5696,
+  "C00553": 5530,
+  "C00603": 3605,
+  "C00695": 2960,
+  "C00903": 4382,
+  "C01005": 3555,
+  "C01302": 9171,
+  "C01316": 5586,
+  "C01501": 3356,
+  "C01507": 3985,
+  "C01650": 4407,
+  "C01662": 5882,
+  "C01696": 5664,
+  "C01698": 6351,
+  "C01837": 5004,
+  "C01874": 3880,
+  "C01936": 8167,
+  "C02030": 4936,
+  "C02040": 13832,
+  "C02070": 6339,
+  "C02253": 2828,
+  "C02264": 2959,
+  "C02266": 2975,
+  "C02277": 4735,
+  "C02371": 4825,
+  "C02425": 3460,
+  "C02426": 3199,
+  "C02428": 4012,
+  "C02495": 3487,
+  "C02496": 7546,
+  "C02508": 2667,
+  "C02510": 5309,
+  "C02529": 3120
+ },
+ "excluded_by_name": {
+  "C00593": [
+   {
+    "donor": "C00603",
+    "reason": "shared name token: david"
+   }
+  ],
+  "C00620": [
+   {
+    "donor": "C00603",
+    "reason": "shared name token: david"
+   }
+  ],
+  "C00897": [
+   {
+    "donor": "C00899",
+    "reason": "shared name token: howard"
+   }
+  ]
+ },
+ "excluded_by_leakage_guard": {
+  "C00050": [
+   {
+    "donor": "C00144",
+    "reason": "shares transcript(s) ['CNN-150694']"
+   },
+   {
+    "donor": "C01662",
+    "reason": "donor text carries the subject's name token(s) ['adam']"
+   }
+  ],
+  "C00110": [
+   {
+    "donor": "C02253",
+    "reason": "donor text carries the subject's name token(s) ['ali']"
+   },
+   {
+    "donor": "C02277",
+    "reason": "donor text carries the subject's name token(s) ['ali']"
+   }
+  ],
+  "C00169": [
+   {
+    "donor": "C00312",
+    "reason": "donor text carries the subject's name token(s) ['andrew']"
+   },
+   {
+    "donor": "C01936",
+    "reason": "donor text carries the subject's name token(s) ['andrew']"
+   }
+  ],
+  "C00203": [
+   {
+    "donor": "C00719",
+    "reason": "shares transcript(s) ['NPR-16493']"
+   },
+   {
+    "donor": "C02496",
+    "reason": "shares transcript(s) ['NPR-10074', 'NPR-10664', 'NPR-45301']"
+   }
+  ],
+  "C00344": [
+   {
+    "donor": "C00199",
+    "reason": "donor text carries the subject's name token(s) ['bob']"
+   },
+   {
+    "donor": "C00899",
+    "reason": "donor text carries the subject's name token(s) ['bob']"
+   },
+   {
+    "donor": "C01005",
+    "reason": "donor text carries the subject's name token(s) ['bob']"
+   },
+   {
+    "donor": "C02266",
+    "reason": "donor text carries the subject's name token(s) ['bob']"
+   }
+  ],
+  "C00522": [
+   {
+    "donor": "C00312",
+    "reason": "donor text carries the subject's name token(s) ['nguyen']"
+   }
+  ],
+  "C00593": [
+   {
+    "donor": "C00282",
+    "reason": "donor text carries the subject's name token(s) ['henry']"
+   },
+   {
+    "donor": "C00312",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C00460",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C00553",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C00719",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C00899",
+    "reason": "donor text carries the subject's name token(s) ['henry']"
+   },
+   {
+    "donor": "C01005",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C01501",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C01650",
+    "reason": "donor text carries the subject's name token(s) ['henry']"
+   },
+   {
+    "donor": "C01936",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C02266",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C02428",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C02529",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   }
+  ],
+  "C00620": [
+   {
+    "donor": "C00312",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C00460",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C00553",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C00719",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C01005",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C01501",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C01936",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C02266",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C02428",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   },
+   {
+    "donor": "C02529",
+    "reason": "donor text carries the subject's name token(s) ['david']"
+   }
+  ],
+  "C00621": [
+   {
+    "donor": "C01488",
+    "reason": "donor text carries the subject's name token(s) ['dawn']"
+   },
+   {
+    "donor": "C02477",
+    "reason": "donor text carries the subject's name token(s) ['dawn']"
+   }
+  ],
+  "C00818": [
+   {
+    "donor": "C00144",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C00199",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C00460",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C01302",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C01528",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C01696",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C01874",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C01936",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C02010",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C02030",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C02040",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C02496",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   }
+  ],
+  "C00819": [
+   {
+    "donor": "C00144",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C00199",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C00460",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C01302",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C01528",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C01696",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C01874",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C01936",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C02010",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C02030",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C02040",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   },
+   {
+    "donor": "C02425",
+    "reason": "shares transcript(s) ['NPR-2590']"
+   },
+   {
+    "donor": "C02496",
+    "reason": "donor text carries the subject's name token(s) ['george']"
+   }
+  ],
+  "C00897": [
+   {
+    "donor": "C00199",
+    "reason": "donor text carries the subject's name token(s) ['howard']"
+   }
+  ],
+  "C01746": [
+   {
+    "donor": "C00199",
+    "reason": "donor text carries the subject's name token(s) ['michele']"
+   },
+   {
+    "donor": "C01650",
+    "reason": "shares transcript(s) ['NPR-26727']"
+   },
+   {
+    "donor": "C02266",
+    "reason": "shares transcript(s) ['NPR-33798']"
+   }
+  ],
+  "C01752": [
+   {
+    "donor": "C00144",
+    "reason": "donor text carries the subject's name token(s) ['michelle']"
+   }
+  ],
+  "C01891": [
+   {
+    "donor": "C00899",
+    "reason": "donor text carries the subject's name token(s) ['peter']"
+   },
+   {
+    "donor": "C02508",
+    "reason": "donor text carries the subject's name token(s) ['peter']"
+   }
+  ],
+  "C02359": [
+   {
+    "donor": "C00144",
+    "reason": "donor text carries the subject's name token(s) ['shaw']"
+   },
+   {
+    "donor": "C00460",
+    "reason": "shares transcript(s) ['NPR-47034']"
+   },
+   {
+    "donor": "C01302",
+    "reason": "donor text carries the subject's name token(s) ['ted']"
+   },
+   {
+    "donor": "C01696",
+    "reason": "donor text carries the subject's name token(s) ['ted']"
+   },
+   {
+    "donor": "C01874",
+    "reason": "donor text carries the subject's name token(s) ['ted']"
+   },
+   {
+    "donor": "C01936",
+    "reason": "donor text carries the subject's name token(s) ['shaw']"
+   },
+   {
+    "donor": "C02315",
+    "reason": "donor text carries the subject's name token(s) ['ted']"
+   }
+  ]
+ },
+ "donors_recorded": [
+  "C00031",
+  "C00077",
+  "C00078",
+  "C00144",
+  "C00173",
+  "C00199",
+  "C00282",
+  "C00312",
+  "C00460",
+  "C00553",
+  "C00603",
+  "C00695",
+  "C00903",
+  "C01005",
+  "C01302",
+  "C01316",
+  "C01501",
+  "C01507",
+  "C01650",
+  "C01662",
+  "C01696",
+  "C01698",
+  "C01837",
+  "C01874",
+  "C01936",
+  "C02030",
+  "C02040",
+  "C02070",
+  "C02253",
+  "C02264",
+  "C02266",
+  "C02277",
+  "C02371",
+  "C02425",
+  "C02426",
+  "C02428",
+  "C02495",
+  "C02496",
+  "C02508",
+  "C02510",
+  "C02529"
+ ],
+ "confirmatory": {
+  "rule_ids": [
+   "D7-CONF",
+   "D7-GUARD"
+  ],
+  "frozen_bank_sha256": "e06f7d7276435b97dbf59c2342ba41e247eab98c1f45bce029ea750de241de2e",
+  "frozen_bank_size": 200,
+  "n_removed_as_study_subjects": 45,
+  "removed_as_study_subjects": [
+   "C00032",
+   "C00102",
+   "C00110",
+   "C00153",
+   "C00163",
+   "C00169",
+   "C00203",
+   "C00364",
+   "C00440",
+   "C00453",
+   "C00555",
+   "C00592",
+   "C00623",
+   "C00629",
+   "C00642",
+   "C00657",
+   "C00697",
+   "C00700",
+   "C00737",
+   "C00746",
+   "C00812",
+   "C00836",
+   "C00854",
+   "C01108",
+   "C01328",
+   "C01485",
+   "C01490",
+   "C01585",
+   "C01599",
+   "C01673",
+   "C01848",
+   "C01883",
+   "C01891",
+   "C01933",
+   "C02200",
+   "C02207",
+   "C02218",
+   "C02240",
+   "C02242",
+   "C02256",
+   "C02312",
+   "C02318",
+   "C02345",
+   "C02482",
+   "C02502"
+  ],
+  "n_permitted_donors": 155,
+  "permitted_bank_sha256": "b39f7eaafbc31d529c37728ec91defc29407313346d11920684bdac68c6cdcdf",
+  "reference_matcher": {
+   "source": "doppler.imposter2.match_donors, unmodified",
+   "n_subjects_whose_winner_moved": 6,
+   "subjects_whose_winner_moved": [
+    "C00050",
+    "C00203",
+    "C00818",
+    "C00819",
+    "C01891",
+    "C02359"
+   ],
+   "reference_pairs_for_moved": {
+    "C00050": "C00144",
+    "C00203": "C02496",
+    "C00818": "C00144",
+    "C00819": "C02425",
+    "C01891": "C00899",
+    "C02359": "C00460"
+   },
+   "equivalence_checked": "every subject whose reference winner was not D7-GUARD-excluded matches"
+  },
+  "subject_turnfile_sha256": {
+   "C00050": "02616e3cb0ea117d",
+   "C00110": "680a395978aa487e",
+   "C00169": "21d4f608ead1ecee",
+   "C00203": "e3be024c4f772ace",
+   "C00344": "baace7a8397c0cbe",
+   "C00522": "41b320d843277ef3",
+   "C00563": "0fcb9c05863ee61c",
+   "C00593": "1846bf52636babdb",
+   "C00620": "2b33ef9c09fd0f13",
+   "C00621": "7977d58d0c5860f6",
+   "C00673": "6cffe28920f45181",
+   "C00697": "56f32268a21d63bc",
+   "C00746": "5fcdd9973da96a78",
+   "C00818": "15f9fac8d38175a1",
+   "C00819": "9848f0f7e9c5cf84",
+   "C00846": "32f786939ca01b58",
+   "C00890": "97634f55ddf14266",
+   "C00897": "a81ff8b64dca2611",
+   "C01180": "5f59ed0be4edbb2e",
+   "C01464": "f9fb7eb9b1afaeb9",
+   "C01673": "debe96d91515f520",
+   "C01746": "482d002e542670eb",
+   "C01752": "9ba4542a540fb3a8",
+   "C01800": "ceb6efc5420b7c39",
+   "C01842": "af1882b5144320b6",
+   "C01891": "2f2f4c3d28d57682",
+   "C01904": "0d343a257c97591f",
+   "C02318": "3b0e6050c57b14b0",
+   "C02359": "7b0aeb99623dba15",
+   "C02500": "b9254954c65f6aac"
+  },
+  "guards": {
+   "check_no_shared_transcripts": "passed for every pair",
+   "check_no_subject_name_in_text": "passed for every pair"
+  }
+ }
+}

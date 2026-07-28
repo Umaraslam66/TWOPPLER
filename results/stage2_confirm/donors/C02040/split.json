@@ -1,0 +1,284 @@
+{
+ "canonical_id": "C02040",
+ "canonical_name": "Ron Christie",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl59",
+   "transcript_id": "NPR-3440",
+   "date": "2006-10-26",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-10-26"
+   ],
+   "guest_words": 779
+  },
+  {
+   "cluster_id": "cl57",
+   "transcript_id": "NPR-3297",
+   "date": "2006-11-08",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-11-08"
+   ],
+   "guest_words": 448
+  },
+  {
+   "cluster_id": "cl56",
+   "transcript_id": "NPR-3154",
+   "date": "2006-11-22",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-11-22"
+   ],
+   "guest_words": 740
+  },
+  {
+   "cluster_id": "cl53",
+   "transcript_id": "NPR-2739",
+   "date": "2007-01-02",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-01-02"
+   ],
+   "guest_words": 600
+  },
+  {
+   "cluster_id": "cl52",
+   "transcript_id": "NPR-2565",
+   "date": "2007-01-18",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-01-18"
+   ],
+   "guest_words": 679
+  },
+  {
+   "cluster_id": "cl51",
+   "transcript_id": "NPR-2533",
+   "date": "2007-01-24",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-01-24"
+   ],
+   "guest_words": 605
+  },
+  {
+   "cluster_id": "cl49",
+   "transcript_id": "NPR-2394",
+   "date": "2007-02-07",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-02-07"
+   ],
+   "guest_words": 603
+  },
+  {
+   "cluster_id": "cl50",
+   "transcript_id": "NPR-2403",
+   "date": "2007-02-08",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-02-08"
+   ],
+   "guest_words": 393
+  },
+  {
+   "cluster_id": "cl48",
+   "transcript_id": "NPR-2303",
+   "date": "2007-02-14",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-02-14"
+   ],
+   "guest_words": 884
+  },
+  {
+   "cluster_id": "cl47",
+   "transcript_id": "NPR-2212",
+   "date": "2007-02-22",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-02-22"
+   ],
+   "guest_words": 804
+  },
+  {
+   "cluster_id": "cl46",
+   "transcript_id": "NPR-2160",
+   "date": "2007-03-01",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-03-01"
+   ],
+   "guest_words": 666
+  },
+  {
+   "cluster_id": "cl45",
+   "transcript_id": "NPR-2100",
+   "date": "2007-03-08",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-03-08"
+   ],
+   "guest_words": 571
+  },
+  {
+   "cluster_id": "cl43",
+   "transcript_id": "NPR-2015",
+   "date": "2007-03-15",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-03-15"
+   ],
+   "guest_words": 782
+  },
+  {
+   "cluster_id": "cl41",
+   "transcript_id": "NPR-1899",
+   "date": "2007-03-29",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-03-29"
+   ],
+   "guest_words": 546
+  },
+  {
+   "cluster_id": "cl40",
+   "transcript_id": "NPR-1813",
+   "date": "2007-04-19",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-04-19"
+   ],
+   "guest_words": 776
+  },
+  {
+   "cluster_id": "cl38",
+   "transcript_id": "NPR-1542",
+   "date": "2007-06-20",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-06-20"
+   ],
+   "guest_words": 822
+  },
+  {
+   "cluster_id": "cl37",
+   "transcript_id": "NPR-1389",
+   "date": "2007-07-04",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-07-04"
+   ],
+   "guest_words": 642
+  },
+  {
+   "cluster_id": "cl35",
+   "transcript_id": "NPR-1078",
+   "date": "2007-08-13",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-08-13"
+   ],
+   "guest_words": 309
+  },
+  {
+   "cluster_id": "cl36",
+   "transcript_id": "NPR-12923",
+   "date": "2007-12-26",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-12-26"
+   ],
+   "guest_words": 810
+  },
+  {
+   "cluster_id": "cl58",
+   "transcript_id": "NPR-33196",
+   "date": "2011-05-13",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-05-13"
+   ],
+   "guest_words": 540
+  },
+  {
+   "cluster_id": "cl44",
+   "transcript_id": "NPR-20742",
+   "date": "2016-09-24",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-09-24"
+   ],
+   "guest_words": 442
+  },
+  {
+   "cluster_id": "cl42",
+   "transcript_id": "NPR-19870",
+   "date": "2016-12-17",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-12-17"
+   ],
+   "guest_words": 391
+  }
+ ],
+ "test": {
+  "cluster_id": "cl39",
+  "transcript_id": "NPR-16871",
+  "date": "2017-07-29",
+  "program": "All Things Considered",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-07-29"
+  ],
+  "guest_words": 444
+ },
+ "excluded_same_date": []
+}

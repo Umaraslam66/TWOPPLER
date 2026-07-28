@@ -1,0 +1,92 @@
+{
+ "canonical_id": "C00695",
+ "canonical_name": "Douglas Kmiec",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl18",
+   "transcript_id": "NPR-6621",
+   "date": "2005-07-01",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-07-01"
+   ],
+   "guest_words": 421
+  },
+  {
+   "cluster_id": "cl15",
+   "transcript_id": "NPR-40927",
+   "date": "2005-07-04",
+   "program": "Morning Edition",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-07-04"
+   ],
+   "guest_words": 540
+  },
+  {
+   "cluster_id": "cl17",
+   "transcript_id": "NPR-43725",
+   "date": "2005-09-05",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-09-05"
+   ],
+   "guest_words": 436
+  },
+  {
+   "cluster_id": "cl14",
+   "transcript_id": "NPR-39126",
+   "date": "2006-03-22",
+   "program": "Morning Edition",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-03-22"
+   ],
+   "guest_words": 463
+  },
+  {
+   "cluster_id": "cl12",
+   "transcript_id": "NPR-13408",
+   "date": "2006-05-04",
+   "program": "Day to Day",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-05-04"
+   ],
+   "guest_words": 558
+  },
+  {
+   "cluster_id": "cl16",
+   "transcript_id": "NPR-41840",
+   "date": "2006-09-23",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-09-23"
+   ],
+   "guest_words": 542
+  }
+ ],
+ "test": {
+  "cluster_id": "cl11",
+  "transcript_id": "NPR-1224",
+  "date": "2008-03-25",
+  "program": "Day to Day",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2008-03-25"
+  ],
+  "guest_words": 468
+ },
+ "excluded_same_date": []
+}

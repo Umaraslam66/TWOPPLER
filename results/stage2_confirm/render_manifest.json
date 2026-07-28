@@ -1,0 +1,2326 @@
+{
+ "banner": "CONFIRMATORY. Rendered only; nothing here has been generated, judged or scored. No GPU submission, no API call, $0.00.",
+ "phase": "render",
+ "contract": [
+  "STAGE2_LAUNCH_PLAN.md section b",
+  "PREREGISTRATION_AMENDMENT_2.md B7",
+  "PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md item 6"
+ ],
+ "tranche": {
+  "source": "results/stage2_confirm/build_first40.json",
+  "source_sha256": "63b253a48976684e514eb740b9054436ff0d04263981d1370fcb3b550d3fb6c7",
+  "draw_file": "results/stage2_confirm_draw_provisional.json",
+  "draw_seed": 20260728,
+  "draw_positions": [
+   1,
+   40
+  ],
+  "n_survivors_rendered": 30,
+  "subjects": [
+   "C00890",
+   "C00110",
+   "C01842",
+   "C00621",
+   "C00203",
+   "C01464",
+   "C01746",
+   "C00846",
+   "C00746",
+   "C00522",
+   "C00620",
+   "C00169",
+   "C01800",
+   "C00897",
+   "C01904",
+   "C00818",
+   "C01891",
+   "C00673",
+   "C02359",
+   "C00819",
+   "C00050",
+   "C01752",
+   "C00593",
+   "C00344",
+   "C00563",
+   "C01180",
+   "C02318",
+   "C01673",
+   "C02500",
+   "C00697"
+  ],
+  "note": "Positions 41-140 and build_full140.json belong to another agent and are not read by this file."
+ },
+ "generation_config": {
+  "primary_model": "Gemma-4-31B-it",
+  "robustness_model": "gemini-3.5-flash-lite",
+  "temperature": 0.0,
+  "max_output_tokens": 256,
+  "answer_word_cap": 150,
+  "grounding_budget_words": 2000,
+  "instruction_tail_sha256": "d8758204009e71b482d36fb7133641f3077b7414df87e5a055f3949cb2ef3d3b",
+  "instruction_tail_text": "Now answer the interviewer's next question as this person would, speaking in their voice, in the first person. Give one spoken reply of at most 150 words. No lists, no stage directions, no commentary about this task.",
+  "same_prompts_both_models": true
+ },
+ "renderer": {
+  "oe_render_template_sha256": "4c4f9e0bdca11ce79ec669a0719d7a71894d587f4e61b54ddda4848f7bb1b785",
+  "oe_render_file_sha256": "49707ebe052d77e73b0b5046567ab9289cf09e0b7a4a27209a84bbaa39a65398",
+  "s1_extension_commit": "56bfc860ef0431a39e70df9261e6318f81bbef97",
+  "stage2_render_template_sha256": "26def40977f381e732c757bdb16d1c620db415041af59719319cef5434f652b1",
+  "stage2_render_file_sha256": "25a13febf5ee85cf4ef8b4371ecc8162ed0f1685841f518d3399c62151e0425a",
+  "stage2_data_file_sha256": "140dd02b5f31c11bac4e2548436690136828d158ef1c1b1bf8df9cacb3ad596a",
+  "render_call": "stage2_oe1.render_and_guard_open (unmodified)"
+ },
+ "derived_rules": [
+  {
+   "id": "D7-CONF",
+   "topic": "Which donors may ground a confirmatory imposter arm",
+   "frozen_text": "SPEC_v1.10 D7: 'Donor pool: the same 200-subject bank sample (their grounding-side text), plus the other 4 dev subjects are NOT eligible donors (keeps dev arms independent).'",
+   "ambiguity": "The dev code removes the study's own subjects BEFORE drawing the seed-48 sample; the spec sentence removes them from ELIGIBILITY after the sample is drawn. On dev the two readings produced the committed artifact. On confirmatory they differ: 45 of the 200 banked donors are themselves confirmatory drawn subjects.",
+   "choice": "The frozen seed-48 200-id bank is kept EXACTLY as committed (donor_sample_sha256 asserted equal to results/stage2_pilot/imposter_pairs.json), and the 6 dev subjects plus all 140 confirmatory drawn subjects are removed from ELIGIBILITY, alongside the frozen 2,500-word floor and the frozen name-conflict exclusion. Removals are counted.",
+   "why_this_reading": "It is the spec sentence's own shape, and it is the only reading that leaves the frozen bank untouched: re-drawing the sample with 140 more ids removed would produce a different 200 and retire a sha that is committed in a dev artifact. The research property the rule exists for -- no study subject grounds another study subject's imposter arm -- holds identically under both.",
+   "impact": "155 of the 200 banked donors remain permitted; 54 clear the 2,500-word floor (dev had 70 of 200)."
+  },
+  {
+   "id": "D7-GUARD",
+   "topic": "What happens when a D7 winner trips a frozen leakage guard",
+   "frozen_text": "SPEC_v1.10 D8 LEAKAGE GUARDS and imposter2's asserts: the subject and its donor must never have shared a transcript, and the donor's grounding text must not carry the subject's name.",
+   "ambiguity": "On six dev subjects the argmax winner never tripped either assert, so the frozen machinery has no recorded behaviour for the case. At 30 confirmatory subjects it fires: C00050's highest-similarity donor shares broadcast CNN-150694 with them.",
+   "choice": "Both conditions become ELIGIBILITY exclusions inside the D7 argmax, exactly like the frozen name-conflict exclusion: a donor that would trip either assert is not scored, and the argmax runs over what is left. The asserts themselves are unchanged, are NOT relaxed, and still run on the winner -- where they can no longer fire. Every exclusion is recorded per subject in imposter_pairs_confirm.json under excluded_by_leakage_guard.",
+   "why_this_reading": "The name-conflict exclusion the spec already carries is the same rule of the same shape -- 'do not pick a donor that would leak the subject's identity' -- applied before the argmax rather than after it. The alternative readings are worse: aborting the run makes the confirmatory imposter arm unbuildable, and waving the assert through would put the subject's own broadcast inside the control arm. The unmodified matcher is run alongside and every subject whose reference winner was not guard-excluded is asserted to match, so the change is provably confined."
+  },
+  {
+   "id": "H7-R1",
+   "topic": "Test interview and items at every cutoff",
+   "frozen_text": "B7.2: 'The test interview stays the subject's chronologically LAST interview -- the same test set as H1, identical items at every cutoff.'",
+   "choice": "Test cluster and D4 items are taken unchanged from the committed build (D2 chronological split); every filled bin renders the same item set.",
+   "why_this_reading": "Stated mechanically in B7.2; no judgment needed."
+  },
+  {
+   "id": "H7-R2",
+   "topic": "Which cutoffs T exist",
+   "frozen_text": "B7.2: 'A grounding cutoff T restricts grounding to interviews dated <= T. Staleness Delta = date(test) - date(newest interview available under T). Delta is swept by moving T.'",
+   "ambiguity": "B7 does not enumerate the cutoffs; T is continuous.",
+   "choice": "Candidate cutoffs = the distinct DATES of the subject's D2 GROUNDING clusters, one candidate per date, with T = that date. At T = date(g) the newest available interview is g itself, so Delta(g) = date(test) - date(g).",
+   "why_this_reading": "Both quantities B7 defines -- Delta and the available set -- change only when T crosses a grounding cluster date, so the distinct (Delta, available-set) pairs are exactly indexed by those dates. Any other T duplicates one of them. This is arithmetic, not a preference."
+  },
+  {
+   "id": "H7-R3",
+   "topic": "The bin of a cutoff",
+   "frozen_text": "Addendum A item 6: 'four Delta bins: 6-12 months, 1-2 years, 2-3 years, > 3 years (the < 6-month bin is dropped)'.",
+   "choice": "The bin edges are taken byte-for-byte from the dev code (stage2_oe1.DELTA_BINS, cited there as 'Spec section 9 / addendum item 6'): 6-12m = [183, 365) days, 1-2y = [365, 730), 2-3y = [730, 1095), >3y = [1095, inf). Delta < 183 days falls in the dropped <6m band: such a cutoff is NOT rendered and is counted as dropped_lt_6m.",
+   "why_this_reading": "It is the reading the dev code embodies, and it is the only numeric expression of item 6 that exists in the repository."
+  },
+  {
+   "id": "H7-R4",
+   "topic": "B7.3 volume control -- when a cutoff is unfillable",
+   "frozen_text": "B7.3: 'At every T the grounding context is filled to the same token budget B, newest-first below the cutoff. Only the AGE of the grounding varies, never the amount. A cutoff at which B cannot be filled is excluded (counts reported).'",
+   "ambiguity": "'B cannot be filled' is not operationalized, and exchanges are atomic so a rendered block never lands exactly on B.",
+   "choice": "B = 2,000 words = the frozen H1 grounding budget (stage2_render.GROUNDING_BUDGET_WORDS); there is no other B in the frozen documents or the code. A cutoff is FILLABLE iff the total grounding speech words available at that cutoff -- host + guest words of every exchange in clusters dated <= T, the same accounting render_grounding budgets against -- is >= B. Unfillable cutoffs are excluded and counted.",
+   "why_this_reading": "It is the only test that can be applied before rendering and that makes 'the same amount at every T' true rather than aspirational. The words actually achieved by the greedy fill are recorded per cutoff so a reviewer can see the realized volume match; NO extra bar is imposed on that number, because inventing a fill-ratio threshold would be a new parameter, not a reading.",
+   "flag_for_review": "This rule is what excludes most H7 renders in this tranche: a subject whose entire grounding side is under 2,000 words cannot fill B at any cutoff and contributes no H7 bin at all. The counts are in h7.exclusions."
+  },
+  {
+   "id": "H7-R5",
+   "topic": "Which cutoff represents a bin",
+   "ambiguity": "Several cutoffs can fall in one bin; the frozen text does not say which one is rendered, and item 6 speaks of a subject 'filling' a bin, i.e. one render per bin.",
+   "choice": "The cutoff with the SMALLEST Delta inside the bin (equivalently: the newest grounding cluster whose Delta lands in that bin). Ties cannot occur -- one cutoff per distinct date.",
+   "why_this_reading": "Availability is monotone non-decreasing in T, so the smallest-Delta cutoff in a bin is fillable whenever ANY cutoff in that bin is. It is therefore the choice that minimises the B7.3 exclusion count, which is the thing B7.3 asks to be kept and reported. That is a mechanical argument, not a taste."
+  },
+  {
+   "id": "H7-R6",
+   "topic": "Which arm gets the staleness sweep",
+   "frozen_text": "STAGE2_LAUNCH_PLAN b: 'the staleness renders'; B7.4: 'the same Stage 2 harness with all Amendment 1 controls (A1 arms ...)'.",
+   "choice": "twin_redacted only, rendered as arm 'h7_twin_redacted'. The named and zero-information arms carry no grounding and therefore no staleness axis.",
+   "why_this_reading": "twin_redacted is the dev scorer's OWN_ARM and the arm the H1 primary contrast is measured on; aging an arm that has no grounding is undefined."
+  },
+  {
+   "id": "H7-R7",
+   "topic": "The crossover comparison's fresh imposter",
+   "frozen_text": "B7: 'At each Delta bin, the STALE true-person twin is compared against a FRESH same-domain imposter twin: the A1 imposter pipeline, grounded on the donor's interviews closest in time to the test date, same budget B.'",
+   "choice": "The fresh imposter is rendered as arm 'h7_imposter_fresh': the D7 donor's grounding filled newest-first at budget B. That render is byte-identical to the item's H1 imposter_redacted prompt; the script ASSERTS the sha equality, emits the prompt once, and reuses it at every Delta bin of that subject. Both the logical row count and the unique-prompt count are reported.",
+   "why_this_reading": "'The donor's interviews closest in time to the test date' is exactly what render_grounding's most-recent-first greedy fill selects, which is the A1 imposter pipeline as the dev code implements it. The imposter is not aged, so its value is constant across bins: generating the identical string more than once at temperature 0 would buy nothing and cost node-hours. Nothing is dropped -- every logical (item, bin) crossover row is in render_index.jsonl, pointing at the one prompt."
+  },
+  {
+   "id": "H7-R8",
+   "topic": "H7 eligibility",
+   "frozen_text": "B7.1: 'subjects with >= 4 dated interview clusters spanning >= 2 years'.",
+   "choice": "The GATE is n_dedup_clusters >= 4 AND span_days_dedup >= 730 from the pool row -- the derivation stage2_confirm_draw.py froze. It is cross-checked against a second derivation straight from the SUBSTANTIVE cluster dates, and every disagreement is logged under h7.eligibility.",
+   "why_this_reading": "It is the derivation the committed draw embodies and the launch plan quotes (98 of 140); 2 years is read as 730 days, the same number the 1-2y bin edge uses. It is also the more permissive of the two, so it cannot drop a subject the stricter reading would keep.",
+   "flag_for_review": "The two derivations disagree, and the disagreement is material. n_dedup_clusters counts non-substantive mentions too, so a subject can be flagged H7-eligible on 28 clusters while owning 3 usable interviews. Counts and the affected subject list are in h7.eligibility; nothing was changed on this file's authority."
+  },
+  {
+   "id": "GUARD-SCOPE",
+   "topic": "What a guard failure excludes",
+   "choice": "A guard failure on any of the five H1 arms excludes the whole ITEM (all five arms and all of its H7 renders): the primary metric is paired own-minus-imposter on one item, so a half-built item is not scoreable. A guard failure on an H7 cutoff render excludes that (item, bin) render only. Every exclusion is counted with its arm and its reason; none passes silently.",
+   "why_this_reading": "The pairing is what the metric is; C3 makes own-minus-imposter the primary everywhere."
+  },
+  {
+   "id": "TWIN-RULE-SCOPE",
+   "topic": "Where the D6-v4.9 twin rule is asserted",
+   "frozen_text": "STANDING EVAL RULE (D6-v4.9), added 2026-07-27 after the frontier rater named TWIN-PAIR STANCE INFERENCE as one of six tells on round 3's detectability sheet: no rater and no scorer may ever see both twins of a duplicated question. Round 3's sheet showed five questions twice, once as a real entry and once as a control; the option sets shared nothing, so elimination was impossible, but a reader could still reason across the two stance sets. The rule generalises that: within any single prompt file or rating sheet a question appears AT MOST ONCE. Asserted at export, not assumed.",
+   "ambiguity": "H7 shows one question at several cutoffs, so a file holding a subject's whole block necessarily repeats it.",
+   "choice": "Asserted on the per-(arm, Delta-bin) logical sets, each of which holds a question at most once -- the same unit OE-1 asserted it on (its per-arm prompt_<arm>.jsonl sets). The chunk and node files interleave arms exactly as OE-1's own node file did (prompts_oe1.jsonl carried each of its 17 items five times).",
+   "why_this_reading": "It is the reading the dev code embodies, and the rule's own words bind what a RATER or SCORER sees, not what one generation batch contains."
+  }
+ ],
+ "counts": {
+  "n_subjects": 30,
+  "n_items_built": 118,
+  "n_logical_renders": 718,
+  "n_unique_prompts": 641,
+  "n_unique_prompts_h1": 590,
+  "n_unique_prompts_h7": 51,
+  "n_unique_prompts_per_model": 641,
+  "n_generations_both_models": 1282,
+  "logical_renders_per_arm": {
+   "twin_redacted": 118,
+   "twin_named": 118,
+   "zeroinfo_redacted": 118,
+   "zeroinfo_named": 118,
+   "imposter_redacted": 118,
+   "h7_twin_redacted": 83,
+   "h7_imposter_fresh": 45
+  },
+  "unique_prompts_per_arm": {
+   "twin_redacted": 118,
+   "twin_named": 118,
+   "zeroinfo_redacted": 118,
+   "zeroinfo_named": 118,
+   "imposter_redacted": 118,
+   "h7_twin_redacted": 51
+  },
+  "deduplicated_logical_renders": 77,
+  "dedup_note": "A logical render collapses only on byte-identical prompt text (H7-R5, H7-R7). Every logical row survives in render_index.jsonl with the prompt it is answered by."
+ },
+ "h7": {
+  "rule_ids": [
+   "H7-R1",
+   "H7-R2",
+   "H7-R3",
+   "H7-R4",
+   "H7-R5",
+   "H7-R6",
+   "H7-R7",
+   "H7-R8"
+  ],
+  "bins": [
+   {
+    "name": "6-12m",
+    "lo_days": 183,
+    "hi_days": 365
+   },
+   {
+    "name": "1-2y",
+    "lo_days": 365,
+    "hi_days": 730
+   },
+   {
+    "name": "2-3y",
+    "lo_days": 730,
+    "hi_days": 1095
+   },
+   {
+    "name": ">3y",
+    "lo_days": 1095,
+    "hi_days": null
+   }
+  ],
+  "budget_B_words": 2000,
+  "n_eligible_survivors": 21,
+  "n_subjects_with_at_least_one_bin": 12,
+  "n_bin_renders": 20,
+  "per_bin_subject_counts": {
+   "6-12m": 4,
+   "1-2y": 6,
+   "2-3y": 4,
+   ">3y": 6
+  },
+  "per_bin_subjects": {
+   "6-12m": [
+    "C00203",
+    "C00621",
+    "C00673",
+    "C02318"
+   ],
+   "1-2y": [
+    "C00203",
+    "C00522",
+    "C00697",
+    "C01842",
+    "C01891",
+    "C02500"
+   ],
+   "2-3y": [
+    "C00203",
+    "C00522",
+    "C01752",
+    "C02500"
+   ],
+   ">3y": [
+    "C00203",
+    "C00620",
+    "C00621",
+    "C01180",
+    "C01891",
+    "C02500"
+   ]
+  },
+  "within_subject_sweep_subset": [
+   "C00203",
+   "C02500"
+  ],
+  "n_within_subject_sweep_subset": 2,
+  "exclusions": {
+   "cutoffs_dropped_lt_6m": 7,
+   "cutoffs_dropped_unfillable_B7_3": 31,
+   "cutoffs_dropped_bin_already_filled": 21,
+   "eligible_subjects_filling_zero_bins": [
+    "C00050",
+    "C00110",
+    "C00169",
+    "C00593",
+    "C00746",
+    "C00818",
+    "C01746",
+    "C01904",
+    "C02359"
+   ]
+  },
+  "eligibility": {
+   "gate_used": "pool_derived (n_dedup_clusters >= 4 AND span_days_dedup >= 730) -- the committed draw's own rule, per rule H7-R8",
+   "n_agreeing_with_draw_flag": 30,
+   "n_disagreeing_with_draw_flag": 0,
+   "n_eligible_pool_derived": 21,
+   "n_eligible_substantive_derived": 16,
+   "finding": "n_dedup_clusters counts every dedup cluster, including non-substantive mentions, while only flag-S transcripts ever enter a D2 split. Subjects therefore carry the H7-eligible flag on cluster counts the pipeline cannot ground on -- which is the mechanism behind the B7.3 unfillable exclusions below. Reported, not acted on: the flag is committed in the draw and quoted in the launch plan (98 of 140), so changing the gate is an owner call.",
+   "subjects_eligible_only_under_the_draw_rule": [
+    "C00050",
+    "C00110",
+    "C00593",
+    "C00697",
+    "C00746"
+   ],
+   "bin_renders_that_would_be_lost_under_the_strict_reading": 1,
+   "per_subject_mismatches": [
+    {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": false,
+     "n_dedup_clusters": 28,
+     "span_days_dedup": 1457,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 1457,
+     "agrees_with_draw": true,
+     "derivations_agree": false,
+     "canonical_id": "C00110"
+    },
+    {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": false,
+     "n_dedup_clusters": 23,
+     "span_days_dedup": 1716,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 1716,
+     "agrees_with_draw": true,
+     "derivations_agree": false,
+     "canonical_id": "C00746"
+    },
+    {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": false,
+     "n_dedup_clusters": 13,
+     "span_days_dedup": 2268,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 2268,
+     "agrees_with_draw": true,
+     "derivations_agree": false,
+     "canonical_id": "C00050"
+    },
+    {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": false,
+     "n_dedup_clusters": 4,
+     "span_days_dedup": 2779,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 2779,
+     "agrees_with_draw": true,
+     "derivations_agree": false,
+     "canonical_id": "C00593"
+    },
+    {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": false,
+     "n_dedup_clusters": 20,
+     "span_days_dedup": 2587,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 2587,
+     "agrees_with_draw": true,
+     "derivations_agree": false,
+     "canonical_id": "C00697"
+    }
+   ]
+  },
+  "crossover_check": {
+   "rule": "H7-R7",
+   "n_checked": 45,
+   "n_byte_identical_to_h1_imposter": 45
+  },
+  "per_subject": [
+   {
+    "canonical_id": "C00890",
+    "draw_pos": 2,
+    "h7_eligible": false,
+    "eligibility": {
+     "draw_flag": false,
+     "pool_derived": false,
+     "substantive_derived": false,
+     "n_dedup_clusters": 5,
+     "span_days_dedup": 213,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 213,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2006-02-23",
+    "n_grounding_clusters": 2,
+    "grounding_words_total": 1703,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 0,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": []
+   },
+   {
+    "canonical_id": "C00110",
+    "draw_pos": 3,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": false,
+     "n_dedup_clusters": 28,
+     "span_days_dedup": 1457,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 1457,
+     "agrees_with_draw": true,
+     "derivations_agree": false
+    },
+    "test_date": "2019-09-17",
+    "n_grounding_clusters": 2,
+    "grounding_words_total": 1448,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 2,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 2,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2015-09-21",
+      "delta_days": 1457,
+      "delta_bin": ">3y",
+      "available_words": 712,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2018-11-04",
+      "delta_days": 317,
+      "delta_bin": "6-12m",
+      "available_words": 1448,
+      "fillable": false
+     }
+    ]
+   },
+   {
+    "canonical_id": "C01842",
+    "draw_pos": 5,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 6,
+     "span_days_dedup": 2746,
+     "n_substantive_dated_clusters": 5,
+     "span_days_substantive": 2746,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2019-07-09",
+    "n_grounding_clusters": 4,
+    "grounding_words_total": 2797,
+    "bins_filled": [
+     "1-2y"
+    ],
+    "n_bins_filled": 1,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {
+     "1-2y": {
+      "cutoff_date": "2018-03-01",
+      "delta_days": 495,
+      "delta_bin": "1-2y",
+      "available_words": 2797,
+      "fillable": true,
+      "rendered_words": 1989,
+      "n_grounding_clusters": 4
+     }
+    },
+    "n_cutoffs_considered": 4,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 2,
+    "dropped_bin_already_filled": 1,
+    "cutoffs": [
+     {
+      "cutoff_date": "2012-01-01",
+      "delta_days": 2746,
+      "delta_bin": ">3y",
+      "available_words": 1130,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2017-06-24",
+      "delta_days": 745,
+      "delta_bin": "2-3y",
+      "available_words": 1977,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2017-10-26",
+      "delta_days": 621,
+      "delta_bin": "1-2y",
+      "available_words": 2420,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2018-03-01",
+      "delta_days": 495,
+      "delta_bin": "1-2y",
+      "available_words": 2797,
+      "fillable": true,
+      "rendered_words": 1989,
+      "n_grounding_clusters": 4
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00621",
+    "draw_pos": 6,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 11,
+     "span_days_dedup": 1656,
+     "n_substantive_dated_clusters": 8,
+     "span_days_substantive": 1656,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2009-12-08",
+    "n_grounding_clusters": 7,
+    "grounding_words_total": 9770,
+    "bins_filled": [
+     "6-12m",
+     ">3y"
+    ],
+    "n_bins_filled": 2,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {
+     "6-12m": {
+      "cutoff_date": "2009-02-12",
+      "delta_days": 299,
+      "delta_bin": "6-12m",
+      "available_words": 6715,
+      "fillable": true,
+      "rendered_words": 1990,
+      "n_grounding_clusters": 5
+     },
+     ">3y": {
+      "cutoff_date": "2005-10-19",
+      "delta_days": 1511,
+      "delta_bin": ">3y",
+      "available_words": 2877,
+      "fillable": true,
+      "rendered_words": 1992,
+      "n_grounding_clusters": 3
+     }
+    },
+    "n_cutoffs_considered": 7,
+    "dropped_lt_6m": 2,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 3,
+    "cutoffs": [
+     {
+      "cutoff_date": "2005-05-27",
+      "delta_days": 1656,
+      "delta_bin": ">3y",
+      "available_words": 958,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2005-06-08",
+      "delta_days": 1644,
+      "delta_bin": ">3y",
+      "available_words": 1793,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2005-10-19",
+      "delta_days": 1511,
+      "delta_bin": ">3y",
+      "available_words": 2877,
+      "fillable": true,
+      "rendered_words": 1992,
+      "n_grounding_clusters": 3
+     },
+     {
+      "cutoff_date": "2008-12-30",
+      "delta_days": 343,
+      "delta_bin": "6-12m",
+      "available_words": 4889,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2009-02-12",
+      "delta_days": 299,
+      "delta_bin": "6-12m",
+      "available_words": 6715,
+      "fillable": true,
+      "rendered_words": 1990,
+      "n_grounding_clusters": 5
+     },
+     {
+      "cutoff_date": "2009-07-28",
+      "delta_days": 133,
+      "delta_bin": "<6m",
+      "available_words": 8182,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2009-11-17",
+      "delta_days": 21,
+      "delta_bin": "<6m",
+      "available_words": 9770,
+      "fillable": true
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00203",
+    "draw_pos": 7,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 22,
+     "span_days_dedup": 2312,
+     "n_substantive_dated_clusters": 8,
+     "span_days_substantive": 2312,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2013-06-26",
+    "n_grounding_clusters": 7,
+    "grounding_words_total": 11133,
+    "bins_filled": [
+     "6-12m",
+     "1-2y",
+     "2-3y",
+     ">3y"
+    ],
+    "n_bins_filled": 4,
+    "within_subject_sweep_subset": true,
+    "chosen_cutoffs": {
+     "6-12m": {
+      "cutoff_date": "2012-11-14",
+      "delta_days": 224,
+      "delta_bin": "6-12m",
+      "available_words": 11133,
+      "fillable": true,
+      "rendered_words": 1995,
+      "n_grounding_clusters": 7
+     },
+     "1-2y": {
+      "cutoff_date": "2011-11-09",
+      "delta_days": 595,
+      "delta_bin": "1-2y",
+      "available_words": 8149,
+      "fillable": true,
+      "rendered_words": 1995,
+      "n_grounding_clusters": 5
+     },
+     "2-3y": {
+      "cutoff_date": "2010-10-27",
+      "delta_days": 973,
+      "delta_bin": "2-3y",
+      "available_words": 6019,
+      "fillable": true,
+      "rendered_words": 1996,
+      "n_grounding_clusters": 4
+     },
+     ">3y": {
+      "cutoff_date": "2010-03-24",
+      "delta_days": 1190,
+      "delta_bin": ">3y",
+      "available_words": 3487,
+      "fillable": true,
+      "rendered_words": 1991,
+      "n_grounding_clusters": 2
+     }
+    },
+    "n_cutoffs_considered": 7,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 3,
+    "cutoffs": [
+     {
+      "cutoff_date": "2007-02-26",
+      "delta_days": 2312,
+      "delta_bin": ">3y",
+      "available_words": 2415,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2010-03-24",
+      "delta_days": 1190,
+      "delta_bin": ">3y",
+      "available_words": 3487,
+      "fillable": true,
+      "rendered_words": 1991,
+      "n_grounding_clusters": 2
+     },
+     {
+      "cutoff_date": "2010-09-01",
+      "delta_days": 1029,
+      "delta_bin": "2-3y",
+      "available_words": 4944,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2010-10-27",
+      "delta_days": 973,
+      "delta_bin": "2-3y",
+      "available_words": 6019,
+      "fillable": true,
+      "rendered_words": 1996,
+      "n_grounding_clusters": 4
+     },
+     {
+      "cutoff_date": "2011-11-09",
+      "delta_days": 595,
+      "delta_bin": "1-2y",
+      "available_words": 8149,
+      "fillable": true,
+      "rendered_words": 1995,
+      "n_grounding_clusters": 5
+     },
+     {
+      "cutoff_date": "2012-06-27",
+      "delta_days": 364,
+      "delta_bin": "6-12m",
+      "available_words": 9328,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2012-11-14",
+      "delta_days": 224,
+      "delta_bin": "6-12m",
+      "available_words": 11133,
+      "fillable": true,
+      "rendered_words": 1995,
+      "n_grounding_clusters": 7
+     }
+    ]
+   },
+   {
+    "canonical_id": "C01464",
+    "draw_pos": 8,
+    "h7_eligible": false,
+    "eligibility": {
+     "draw_flag": false,
+     "pool_derived": false,
+     "substantive_derived": false,
+     "n_dedup_clusters": 7,
+     "span_days_dedup": 277,
+     "n_substantive_dated_clusters": 7,
+     "span_days_substantive": 277,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2001-05-01",
+    "n_grounding_clusters": 6,
+    "grounding_words_total": 5674,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 0,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": []
+   },
+   {
+    "canonical_id": "C01746",
+    "draw_pos": 9,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 12,
+     "span_days_dedup": 1251,
+     "n_substantive_dated_clusters": 4,
+     "span_days_substantive": 1251,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2014-07-21",
+    "n_grounding_clusters": 3,
+    "grounding_words_total": 1467,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 3,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 3,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2011-02-16",
+      "delta_days": 1251,
+      "delta_bin": ">3y",
+      "available_words": 581,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2011-05-31",
+      "delta_days": 1147,
+      "delta_bin": ">3y",
+      "available_words": 907,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2012-07-10",
+      "delta_days": 741,
+      "delta_bin": "2-3y",
+      "available_words": 1467,
+      "fillable": false
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00846",
+    "draw_pos": 10,
+    "h7_eligible": false,
+    "eligibility": {
+     "draw_flag": false,
+     "pool_derived": false,
+     "substantive_derived": false,
+     "n_dedup_clusters": 5,
+     "span_days_dedup": 498,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 498,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2015-08-29",
+    "n_grounding_clusters": 2,
+    "grounding_words_total": 1588,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 0,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": []
+   },
+   {
+    "canonical_id": "C00746",
+    "draw_pos": 11,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": false,
+     "n_dedup_clusters": 23,
+     "span_days_dedup": 1716,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 1716,
+     "agrees_with_draw": true,
+     "derivations_agree": false
+    },
+    "test_date": "2019-08-20",
+    "n_grounding_clusters": 2,
+    "grounding_words_total": 1006,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 2,
+    "dropped_lt_6m": 1,
+    "dropped_unfillable": 1,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2014-12-08",
+      "delta_days": 1716,
+      "delta_bin": ">3y",
+      "available_words": 589,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2019-08-02",
+      "delta_days": 18,
+      "delta_bin": "<6m",
+      "available_words": 1006,
+      "fillable": false
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00522",
+    "draw_pos": 13,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 5,
+     "span_days_dedup": 1181,
+     "n_substantive_dated_clusters": 5,
+     "span_days_substantive": 1181,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2018-09-01",
+    "n_grounding_clusters": 4,
+    "grounding_words_total": 2529,
+    "bins_filled": [
+     "1-2y",
+     "2-3y"
+    ],
+    "n_bins_filled": 2,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {
+     "1-2y": {
+      "cutoff_date": "2017-01-28",
+      "delta_days": 581,
+      "delta_bin": "1-2y",
+      "available_words": 2529,
+      "fillable": true,
+      "rendered_words": 1941,
+      "n_grounding_clusters": 4
+     },
+     "2-3y": {
+      "cutoff_date": "2016-07-06",
+      "delta_days": 787,
+      "delta_bin": "2-3y",
+      "available_words": 2007,
+      "fillable": true,
+      "rendered_words": 1950,
+      "n_grounding_clusters": 3
+     }
+    },
+    "n_cutoffs_considered": 4,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 1,
+    "dropped_bin_already_filled": 1,
+    "cutoffs": [
+     {
+      "cutoff_date": "2015-06-08",
+      "delta_days": 1181,
+      "delta_bin": ">3y",
+      "available_words": 643,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2016-06-06",
+      "delta_days": 817,
+      "delta_bin": "2-3y",
+      "available_words": 1318,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2016-07-06",
+      "delta_days": 787,
+      "delta_bin": "2-3y",
+      "available_words": 2007,
+      "fillable": true,
+      "rendered_words": 1950,
+      "n_grounding_clusters": 3
+     },
+     {
+      "cutoff_date": "2017-01-28",
+      "delta_days": 581,
+      "delta_bin": "1-2y",
+      "available_words": 2529,
+      "fillable": true,
+      "rendered_words": 1941,
+      "n_grounding_clusters": 4
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00620",
+    "draw_pos": 14,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 31,
+     "span_days_dedup": 5003,
+     "n_substantive_dated_clusters": 5,
+     "span_days_substantive": 5003,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2019-01-24",
+    "n_grounding_clusters": 4,
+    "grounding_words_total": 2892,
+    "bins_filled": [
+     ">3y"
+    ],
+    "n_bins_filled": 1,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {
+     ">3y": {
+      "cutoff_date": "2011-01-18",
+      "delta_days": 2928,
+      "delta_bin": ">3y",
+      "available_words": 2892,
+      "fillable": true,
+      "rendered_words": 1990,
+      "n_grounding_clusters": 4
+     }
+    },
+    "n_cutoffs_considered": 4,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 3,
+    "cutoffs": [
+     {
+      "cutoff_date": "2005-05-14",
+      "delta_days": 5003,
+      "delta_bin": ">3y",
+      "available_words": 517,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2007-01-23",
+      "delta_days": 4384,
+      "delta_bin": ">3y",
+      "available_words": 1429,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2008-06-07",
+      "delta_days": 3883,
+      "delta_bin": ">3y",
+      "available_words": 2120,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2011-01-18",
+      "delta_days": 2928,
+      "delta_bin": ">3y",
+      "available_words": 2892,
+      "fillable": true,
+      "rendered_words": 1990,
+      "n_grounding_clusters": 4
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00169",
+    "draw_pos": 16,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 6,
+     "span_days_dedup": 2014,
+     "n_substantive_dated_clusters": 4,
+     "span_days_substantive": 2014,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2019-06-09",
+    "n_grounding_clusters": 3,
+    "grounding_words_total": 1921,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 3,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 3,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2013-12-03",
+      "delta_days": 2014,
+      "delta_bin": ">3y",
+      "available_words": 713,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2017-04-03",
+      "delta_days": 797,
+      "delta_bin": "2-3y",
+      "available_words": 1353,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2017-04-21",
+      "delta_days": 779,
+      "delta_bin": "2-3y",
+      "available_words": 1921,
+      "fillable": false
+     }
+    ]
+   },
+   {
+    "canonical_id": "C01800",
+    "draw_pos": 17,
+    "h7_eligible": false,
+    "eligibility": {
+     "draw_flag": false,
+     "pool_derived": false,
+     "substantive_derived": false,
+     "n_dedup_clusters": 6,
+     "span_days_dedup": 538,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 538,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2014-09-24",
+    "n_grounding_clusters": 2,
+    "grounding_words_total": 1621,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 0,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": []
+   },
+   {
+    "canonical_id": "C00897",
+    "draw_pos": 18,
+    "h7_eligible": false,
+    "eligibility": {
+     "draw_flag": false,
+     "pool_derived": false,
+     "substantive_derived": false,
+     "n_dedup_clusters": 23,
+     "span_days_dedup": 465,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 465,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2006-11-27",
+    "n_grounding_clusters": 2,
+    "grounding_words_total": 1123,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 0,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": []
+   },
+   {
+    "canonical_id": "C01904",
+    "draw_pos": 21,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 5,
+     "span_days_dedup": 784,
+     "n_substantive_dated_clusters": 4,
+     "span_days_substantive": 784,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2018-03-10",
+    "n_grounding_clusters": 3,
+    "grounding_words_total": 1927,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 3,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 3,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2016-01-16",
+      "delta_days": 784,
+      "delta_bin": "2-3y",
+      "available_words": 668,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2016-12-03",
+      "delta_days": 462,
+      "delta_bin": "1-2y",
+      "available_words": 1185,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2017-01-14",
+      "delta_days": 420,
+      "delta_bin": "1-2y",
+      "available_words": 1927,
+      "fillable": false
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00818",
+    "draw_pos": 23,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 10,
+     "span_days_dedup": 1742,
+     "n_substantive_dated_clusters": 4,
+     "span_days_substantive": 1742,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2010-04-20",
+    "n_grounding_clusters": 3,
+    "grounding_words_total": 1964,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 3,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 3,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2005-07-13",
+      "delta_days": 1742,
+      "delta_bin": ">3y",
+      "available_words": 589,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2006-03-17",
+      "delta_days": 1495,
+      "delta_bin": ">3y",
+      "available_words": 1318,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2008-04-12",
+      "delta_days": 738,
+      "delta_bin": "2-3y",
+      "available_words": 1964,
+      "fillable": false
+     }
+    ]
+   },
+   {
+    "canonical_id": "C01891",
+    "draw_pos": 26,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 5,
+     "span_days_dedup": 1747,
+     "n_substantive_dated_clusters": 4,
+     "span_days_substantive": 1747,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2017-12-25",
+    "n_grounding_clusters": 3,
+    "grounding_words_total": 3894,
+    "bins_filled": [
+     "1-2y",
+     ">3y"
+    ],
+    "n_bins_filled": 2,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {
+     "1-2y": {
+      "cutoff_date": "2016-10-23",
+      "delta_days": 428,
+      "delta_bin": "1-2y",
+      "available_words": 3894,
+      "fillable": true,
+      "rendered_words": 1974,
+      "n_grounding_clusters": 3
+     },
+     ">3y": {
+      "cutoff_date": "2013-05-26",
+      "delta_days": 1674,
+      "delta_bin": ">3y",
+      "available_words": 3177,
+      "fillable": true,
+      "rendered_words": 1967,
+      "n_grounding_clusters": 2
+     }
+    },
+    "n_cutoffs_considered": 3,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 1,
+    "cutoffs": [
+     {
+      "cutoff_date": "2013-03-14",
+      "delta_days": 1747,
+      "delta_bin": ">3y",
+      "available_words": 2431,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2013-05-26",
+      "delta_days": 1674,
+      "delta_bin": ">3y",
+      "available_words": 3177,
+      "fillable": true,
+      "rendered_words": 1967,
+      "n_grounding_clusters": 2
+     },
+     {
+      "cutoff_date": "2016-10-23",
+      "delta_days": 428,
+      "delta_bin": "1-2y",
+      "available_words": 3894,
+      "fillable": true,
+      "rendered_words": 1974,
+      "n_grounding_clusters": 3
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00673",
+    "draw_pos": 27,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 25,
+     "span_days_dedup": 834,
+     "n_substantive_dated_clusters": 4,
+     "span_days_substantive": 834,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2010-12-28",
+    "n_grounding_clusters": 3,
+    "grounding_words_total": 2320,
+    "bins_filled": [
+     "6-12m"
+    ],
+    "n_bins_filled": 1,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {
+     "6-12m": {
+      "cutoff_date": "2010-01-12",
+      "delta_days": 350,
+      "delta_bin": "6-12m",
+      "available_words": 2320,
+      "fillable": true,
+      "rendered_words": 1989,
+      "n_grounding_clusters": 3
+     }
+    },
+    "n_cutoffs_considered": 3,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 2,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2008-09-15",
+      "delta_days": 834,
+      "delta_bin": "2-3y",
+      "available_words": 699,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2008-09-17",
+      "delta_days": 832,
+      "delta_bin": "2-3y",
+      "available_words": 1579,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2010-01-12",
+      "delta_days": 350,
+      "delta_bin": "6-12m",
+      "available_words": 2320,
+      "fillable": true,
+      "rendered_words": 1989,
+      "n_grounding_clusters": 3
+     }
+    ]
+   },
+   {
+    "canonical_id": "C02359",
+    "draw_pos": 28,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 5,
+     "span_days_dedup": 770,
+     "n_substantive_dated_clusters": 4,
+     "span_days_substantive": 770,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2007-10-15",
+    "n_grounding_clusters": 3,
+    "grounding_words_total": 2130,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 3,
+    "dropped_lt_6m": 1,
+    "dropped_unfillable": 2,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2005-09-05",
+      "delta_days": 770,
+      "delta_bin": "2-3y",
+      "available_words": 1063,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2006-04-18",
+      "delta_days": 545,
+      "delta_bin": "1-2y",
+      "available_words": 1520,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2007-06-28",
+      "delta_days": 109,
+      "delta_bin": "<6m",
+      "available_words": 2130,
+      "fillable": true
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00819",
+    "draw_pos": 29,
+    "h7_eligible": false,
+    "eligibility": {
+     "draw_flag": false,
+     "pool_derived": false,
+     "substantive_derived": false,
+     "n_dedup_clusters": 9,
+     "span_days_dedup": 700,
+     "n_substantive_dated_clusters": 8,
+     "span_days_substantive": 700,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2013-02-04",
+    "n_grounding_clusters": 7,
+    "grounding_words_total": 15644,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 0,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": []
+   },
+   {
+    "canonical_id": "C00050",
+    "draw_pos": 30,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": false,
+     "n_dedup_clusters": 13,
+     "span_days_dedup": 2268,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 2268,
+     "agrees_with_draw": true,
+     "derivations_agree": false
+    },
+    "test_date": "2012-12-28",
+    "n_grounding_clusters": 2,
+    "grounding_words_total": 2282,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 2,
+    "dropped_lt_6m": 1,
+    "dropped_unfillable": 1,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2006-10-13",
+      "delta_days": 2268,
+      "delta_bin": ">3y",
+      "available_words": 486,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2012-12-19",
+      "delta_days": 9,
+      "delta_bin": "<6m",
+      "available_words": 2282,
+      "fillable": true
+     }
+    ]
+   },
+   {
+    "canonical_id": "C01752",
+    "draw_pos": 31,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 5,
+     "span_days_dedup": 1404,
+     "n_substantive_dated_clusters": 5,
+     "span_days_substantive": 1404,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2017-11-19",
+    "n_grounding_clusters": 4,
+    "grounding_words_total": 2627,
+    "bins_filled": [
+     "2-3y"
+    ],
+    "n_bins_filled": 1,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {
+     "2-3y": {
+      "cutoff_date": "2015-05-04",
+      "delta_days": 930,
+      "delta_bin": "2-3y",
+      "available_words": 2627,
+      "fillable": true,
+      "rendered_words": 1945,
+      "n_grounding_clusters": 4
+     }
+    },
+    "n_cutoffs_considered": 4,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 3,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2014-01-15",
+      "delta_days": 1404,
+      "delta_bin": ">3y",
+      "available_words": 600,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2014-04-22",
+      "delta_days": 1307,
+      "delta_bin": ">3y",
+      "available_words": 1305,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2014-05-07",
+      "delta_days": 1292,
+      "delta_bin": ">3y",
+      "available_words": 1968,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2015-05-04",
+      "delta_days": 930,
+      "delta_bin": "2-3y",
+      "available_words": 2627,
+      "fillable": true,
+      "rendered_words": 1945,
+      "n_grounding_clusters": 4
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00593",
+    "draw_pos": 32,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": false,
+     "n_dedup_clusters": 4,
+     "span_days_dedup": 2779,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 2779,
+     "agrees_with_draw": true,
+     "derivations_agree": false
+    },
+    "test_date": "2018-07-01",
+    "n_grounding_clusters": 2,
+    "grounding_words_total": 1152,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 2,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 2,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2010-11-21",
+      "delta_days": 2779,
+      "delta_bin": ">3y",
+      "available_words": 448,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2011-12-11",
+      "delta_days": 2394,
+      "delta_bin": ">3y",
+      "available_words": 1152,
+      "fillable": false
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00344",
+    "draw_pos": 33,
+    "h7_eligible": false,
+    "eligibility": {
+     "draw_flag": false,
+     "pool_derived": false,
+     "substantive_derived": false,
+     "n_dedup_clusters": 36,
+     "span_days_dedup": 691,
+     "n_substantive_dated_clusters": 33,
+     "span_days_substantive": 691,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2007-04-03",
+    "n_grounding_clusters": 32,
+    "grounding_words_total": 24355,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 0,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": []
+   },
+   {
+    "canonical_id": "C00563",
+    "draw_pos": 34,
+    "h7_eligible": false,
+    "eligibility": {
+     "draw_flag": false,
+     "pool_derived": false,
+     "substantive_derived": false,
+     "n_dedup_clusters": 6,
+     "span_days_dedup": 237,
+     "n_substantive_dated_clusters": 5,
+     "span_days_substantive": 237,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2017-12-30",
+    "n_grounding_clusters": 4,
+    "grounding_words_total": 2568,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 0,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": []
+   },
+   {
+    "canonical_id": "C01180",
+    "draw_pos": 35,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 15,
+     "span_days_dedup": 3827,
+     "n_substantive_dated_clusters": 10,
+     "span_days_substantive": 3827,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2015-12-05",
+    "n_grounding_clusters": 9,
+    "grounding_words_total": 6126,
+    "bins_filled": [
+     ">3y"
+    ],
+    "n_bins_filled": 1,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {
+     ">3y": {
+      "cutoff_date": "2010-12-02",
+      "delta_days": 1829,
+      "delta_bin": ">3y",
+      "available_words": 6126,
+      "fillable": true,
+      "rendered_words": 1920,
+      "n_grounding_clusters": 9
+     }
+    },
+    "n_cutoffs_considered": 9,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 8,
+    "cutoffs": [
+     {
+      "cutoff_date": "2005-06-13",
+      "delta_days": 3827,
+      "delta_bin": ">3y",
+      "available_words": 525,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2005-07-05",
+      "delta_days": 3805,
+      "delta_bin": ">3y",
+      "available_words": 1003,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2006-07-25",
+      "delta_days": 3420,
+      "delta_bin": ">3y",
+      "available_words": 1555,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2006-08-15",
+      "delta_days": 3399,
+      "delta_bin": ">3y",
+      "available_words": 2146,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2006-09-25",
+      "delta_days": 3358,
+      "delta_bin": ">3y",
+      "available_words": 2751,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2006-10-30",
+      "delta_days": 3323,
+      "delta_bin": ">3y",
+      "available_words": 3303,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2007-01-31",
+      "delta_days": 3230,
+      "delta_bin": ">3y",
+      "available_words": 3741,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2007-02-20",
+      "delta_days": 3210,
+      "delta_bin": ">3y",
+      "available_words": 4207,
+      "fillable": true
+     },
+     {
+      "cutoff_date": "2010-12-02",
+      "delta_days": 1829,
+      "delta_bin": ">3y",
+      "available_words": 6126,
+      "fillable": true,
+      "rendered_words": 1920,
+      "n_grounding_clusters": 9
+     }
+    ]
+   },
+   {
+    "canonical_id": "C02318",
+    "draw_pos": 36,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 7,
+     "span_days_dedup": 2157,
+     "n_substantive_dated_clusters": 5,
+     "span_days_substantive": 2157,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2017-05-08",
+    "n_grounding_clusters": 4,
+    "grounding_words_total": 2662,
+    "bins_filled": [
+     "6-12m"
+    ],
+    "n_bins_filled": 1,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {
+     "6-12m": {
+      "cutoff_date": "2016-07-29",
+      "delta_days": 283,
+      "delta_bin": "6-12m",
+      "available_words": 2139,
+      "fillable": true,
+      "rendered_words": 1948,
+      "n_grounding_clusters": 3
+     }
+    },
+    "n_cutoffs_considered": 4,
+    "dropped_lt_6m": 1,
+    "dropped_unfillable": 2,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2011-06-12",
+      "delta_days": 2157,
+      "delta_bin": ">3y",
+      "available_words": 611,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2015-01-08",
+      "delta_days": 851,
+      "delta_bin": "2-3y",
+      "available_words": 1594,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2016-07-29",
+      "delta_days": 283,
+      "delta_bin": "6-12m",
+      "available_words": 2139,
+      "fillable": true,
+      "rendered_words": 1948,
+      "n_grounding_clusters": 3
+     },
+     {
+      "cutoff_date": "2016-11-12",
+      "delta_days": 177,
+      "delta_bin": "<6m",
+      "available_words": 2662,
+      "fillable": true
+     }
+    ]
+   },
+   {
+    "canonical_id": "C01673",
+    "draw_pos": 37,
+    "h7_eligible": false,
+    "eligibility": {
+     "draw_flag": false,
+     "pool_derived": false,
+     "substantive_derived": false,
+     "n_dedup_clusters": 6,
+     "span_days_dedup": 556,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 556,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2018-07-14",
+    "n_grounding_clusters": 2,
+    "grounding_words_total": 1659,
+    "bins_filled": [],
+    "n_bins_filled": 0,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {},
+    "n_cutoffs_considered": 0,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": []
+   },
+   {
+    "canonical_id": "C02500",
+    "draw_pos": 38,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": true,
+     "n_dedup_clusters": 10,
+     "span_days_dedup": 1689,
+     "n_substantive_dated_clusters": 6,
+     "span_days_substantive": 1692,
+     "agrees_with_draw": true,
+     "derivations_agree": true
+    },
+    "test_date": "2020-05-04",
+    "n_grounding_clusters": 5,
+    "grounding_words_total": 6587,
+    "bins_filled": [
+     "1-2y",
+     "2-3y",
+     ">3y"
+    ],
+    "n_bins_filled": 3,
+    "within_subject_sweep_subset": true,
+    "chosen_cutoffs": {
+     "1-2y": {
+      "cutoff_date": "2018-07-10",
+      "delta_days": 664,
+      "delta_bin": "1-2y",
+      "available_words": 4910,
+      "fillable": true,
+      "rendered_words": 1990,
+      "n_grounding_clusters": 4
+     },
+     "2-3y": {
+      "cutoff_date": "2017-09-25",
+      "delta_days": 952,
+      "delta_bin": "2-3y",
+      "available_words": 3487,
+      "fillable": true,
+      "rendered_words": 1996,
+      "n_grounding_clusters": 3
+     },
+     ">3y": {
+      "cutoff_date": "2015-09-18",
+      "delta_days": 1690,
+      "delta_bin": ">3y",
+      "available_words": 2127,
+      "fillable": true,
+      "rendered_words": 1997,
+      "n_grounding_clusters": 2
+     }
+    },
+    "n_cutoffs_considered": 5,
+    "dropped_lt_6m": 1,
+    "dropped_unfillable": 0,
+    "dropped_bin_already_filled": 1,
+    "cutoffs": [
+     {
+      "cutoff_date": "2015-09-16",
+      "delta_days": 1692,
+      "delta_bin": ">3y",
+      "available_words": 1081,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2015-09-18",
+      "delta_days": 1690,
+      "delta_bin": ">3y",
+      "available_words": 2127,
+      "fillable": true,
+      "rendered_words": 1997,
+      "n_grounding_clusters": 2
+     },
+     {
+      "cutoff_date": "2017-09-25",
+      "delta_days": 952,
+      "delta_bin": "2-3y",
+      "available_words": 3487,
+      "fillable": true,
+      "rendered_words": 1996,
+      "n_grounding_clusters": 3
+     },
+     {
+      "cutoff_date": "2018-07-10",
+      "delta_days": 664,
+      "delta_bin": "1-2y",
+      "available_words": 4910,
+      "fillable": true,
+      "rendered_words": 1990,
+      "n_grounding_clusters": 4
+     },
+     {
+      "cutoff_date": "2020-03-17",
+      "delta_days": 48,
+      "delta_bin": "<6m",
+      "available_words": 6587,
+      "fillable": true
+     }
+    ]
+   },
+   {
+    "canonical_id": "C00697",
+    "draw_pos": 40,
+    "h7_eligible": true,
+    "eligibility": {
+     "draw_flag": true,
+     "pool_derived": true,
+     "substantive_derived": false,
+     "n_dedup_clusters": 20,
+     "span_days_dedup": 2587,
+     "n_substantive_dated_clusters": 3,
+     "span_days_substantive": 2587,
+     "agrees_with_draw": true,
+     "derivations_agree": false
+    },
+    "test_date": "2013-07-27",
+    "n_grounding_clusters": 2,
+    "grounding_words_total": 2827,
+    "bins_filled": [
+     "1-2y"
+    ],
+    "n_bins_filled": 1,
+    "within_subject_sweep_subset": false,
+    "chosen_cutoffs": {
+     "1-2y": {
+      "cutoff_date": "2012-06-18",
+      "delta_days": 404,
+      "delta_bin": "1-2y",
+      "available_words": 2827,
+      "fillable": true,
+      "rendered_words": 1979,
+      "n_grounding_clusters": 2
+     }
+    },
+    "n_cutoffs_considered": 2,
+    "dropped_lt_6m": 0,
+    "dropped_unfillable": 1,
+    "dropped_bin_already_filled": 0,
+    "cutoffs": [
+     {
+      "cutoff_date": "2006-06-27",
+      "delta_days": 2587,
+      "delta_bin": ">3y",
+      "available_words": 493,
+      "fillable": false
+     },
+     {
+      "cutoff_date": "2012-06-18",
+      "delta_days": 404,
+      "delta_bin": "1-2y",
+      "available_words": 2827,
+      "fillable": true,
+      "rendered_words": 1979,
+      "n_grounding_clusters": 2
+     }
+    ]
+   }
+  ]
+ },
+ "guards": {
+  "run_on_every_prompt": [
+   "R.assert_redacted(subject variants) on every arm",
+   "R.assert_redacted(donor variants) on the imposter arms",
+   "R.surviving_variants == 0 (subject, and donor where present)",
+   "named arm == its redacted counterpart plus one name line",
+   "R.assert_no_answer_leak on every grounded arm",
+   "zero-information arms carry no excerpt block",
+   "OE.assert_open_ended: frozen tail present, no forced-choice residue",
+   "grounding speech words <= the 2,000-word budget",
+   "instruction tail sha == the frozen tail sha"
+  ],
+  "n_renders_attempted": 718,
+  "n_renders_excluded": 0,
+  "exclusion_rate": 0.0,
+  "stop_rate": 0.05,
+  "stopped": false,
+  "failures": [],
+  "excluded_items_by_subject": {},
+  "twin_free_check": {
+   "ok": true,
+   "rule": "STANDING EVAL RULE (D6-v4.9), added 2026-07-27 after the frontier rater named TWIN-PAIR STANCE INFERENCE as one of six tells on round 3's detectability sheet: no rater and no scorer may ever see both twins of a duplicated question. Round 3's sheet showed five questions twice, once as a real entry and once as a control; the option sets shared nothing, so elimination was impossible, but a reader could still reason across the two stance sets. The rule generalises that: within any single prompt file or rating sheet a question appears AT MOST ONCE. Asserted at export, not assumed.",
+   "n_sets_checked": 10,
+   "per_set": {
+    "twin_redacted": {
+     "n_rows": 118,
+     "n_distinct_items": 118
+    },
+    "twin_named": {
+     "n_rows": 118,
+     "n_distinct_items": 118
+    },
+    "zeroinfo_redacted": {
+     "n_rows": 118,
+     "n_distinct_items": 118
+    },
+    "zeroinfo_named": {
+     "n_rows": 118,
+     "n_distinct_items": 118
+    },
+    "imposter_redacted": {
+     "n_rows": 118,
+     "n_distinct_items": 118
+    },
+    "h7_twin_redacted@1-2y": {
+     "n_rows": 25,
+     "n_distinct_items": 25
+    },
+    "h7_imposter_fresh": {
+     "n_rows": 45,
+     "n_distinct_items": 45
+    },
+    "h7_twin_redacted@6-12m": {
+     "n_rows": 14,
+     "n_distinct_items": 14
+    },
+    "h7_twin_redacted@>3y": {
+     "n_rows": 26,
+     "n_distinct_items": 26
+    },
+    "h7_twin_redacted@2-3y": {
+     "n_rows": 18,
+     "n_distinct_items": 18
+    }
+   }
+  }
+ },
+ "donors": {
+  "rule_id": "D7-CONF",
+  "pairs_file": "results/stage2_confirm/imposter_pairs_confirm.json",
+  "pairs_sha256": "ec11db4d3a4466815159360f172aac45e332bb41aa6222f574486fca638bc5c2",
+  "n_distinct_donors": 18,
+  "n_eligible_donors": 54,
+  "frozen_bank_sha256": "e06f7d7276435b97dbf59c2342ba41e247eab98c1f45bce029ea750de241de2e",
+  "permitted_bank_sha256": "b39f7eaafbc31d529c37728ec91defc29407313346d11920684bdac68c6cdcdf",
+  "n_removed_as_study_subjects": 45,
+  "artifacts": {
+   "n_donors": 18,
+   "files": {
+    "C00144": {
+     "split_sha256": "8aca62fdd67fe98c",
+     "turns_sha256": "084c98b2452692b8"
+    },
+    "C00603": {
+     "split_sha256": "6021f74b05bdf78c",
+     "turns_sha256": "95ebaf0f8e31a1d3"
+    },
+    "C00695": {
+     "split_sha256": "e0ed349c669ac8f0",
+     "turns_sha256": "d5de147484e97d89"
+    },
+    "C01005": {
+     "split_sha256": "4c3aada0d3b73e40",
+     "turns_sha256": "ff3fd8e54b9716ae"
+    },
+    "C01302": {
+     "split_sha256": "947f9fc342403f51",
+     "turns_sha256": "d247f977e0f45e42"
+    },
+    "C01316": {
+     "split_sha256": "dbb69bda764b5003",
+     "turns_sha256": "716c647e4ea0d4ee"
+    },
+    "C01650": {
+     "split_sha256": "fb2ed1ff32f105ab",
+     "turns_sha256": "bcc7f5f5e261119f"
+    },
+    "C01696": {
+     "split_sha256": "aba92911c66709a1",
+     "turns_sha256": "378737f6e5a9a33c"
+    },
+    "C01698": {
+     "split_sha256": "c34ac184f4570e89",
+     "turns_sha256": "40d5b21d1a03fcdb"
+    },
+    "C01837": {
+     "split_sha256": "f91a8e7225ee1661",
+     "turns_sha256": "4255f17eca3c784e"
+    },
+    "C02040": {
+     "split_sha256": "53fa62d9e82ad9bb",
+     "turns_sha256": "567ca1b3cc85f0de"
+    },
+    "C02253": {
+     "split_sha256": "3bcde15455260b6d",
+     "turns_sha256": "ee589495a2438c89"
+    },
+    "C02277": {
+     "split_sha256": "ad0e7b2fc25d12f9",
+     "turns_sha256": "398898102f198794"
+    },
+    "C02426": {
+     "split_sha256": "ae1e7e44c16ca422",
+     "turns_sha256": "5ae7225d04b4cd6e"
+    },
+    "C02495": {
+     "split_sha256": "8b3cd86d032bcbc2",
+     "turns_sha256": "041de726a462a2a8"
+    },
+    "C02496": {
+     "split_sha256": "3186916bbe32910c",
+     "turns_sha256": "76556f1b18b4a231"
+    },
+    "C02510": {
+     "split_sha256": "68dc73dd230a00b2",
+     "turns_sha256": "9da960d8a771a526"
+    },
+    "C02529": {
+     "split_sha256": "f3ebd93dcf189d85",
+     "turns_sha256": "3ca2c315211fcf47"
+    }
+   }
+  },
+  "pairs": {
+   "C00050": "C02495",
+   "C00110": "C01650",
+   "C00169": "C01005",
+   "C00203": "C01302",
+   "C00344": "C00144",
+   "C00522": "C02253",
+   "C00563": "C02040",
+   "C00593": "C01837",
+   "C00620": "C02496",
+   "C00621": "C02510",
+   "C00673": "C01696",
+   "C00697": "C02529",
+   "C00746": "C00144",
+   "C00818": "C01698",
+   "C00819": "C01316",
+   "C00846": "C01698",
+   "C00890": "C00144",
+   "C00897": "C00603",
+   "C01180": "C02510",
+   "C01464": "C02529",
+   "C01673": "C01005",
+   "C01746": "C02277",
+   "C01752": "C02253",
+   "C01800": "C01316",
+   "C01842": "C02426",
+   "C01891": "C01698",
+   "C01904": "C00144",
+   "C02318": "C01696",
+   "C02359": "C00695",
+   "C02500": "C01005"
+  }
+ },
+ "chunking": {
+  "target_prompts_per_chunk": 500,
+  "rule": "whole subjects only; a chunk is closed before a subject that would take it past the target. Blocks are independent and may be submitted in parallel.",
+  "chunks": [
+   {
+    "chunk": "chunk_01",
+    "subjects": [
+     "C00890",
+     "C00110",
+     "C01842",
+     "C00621",
+     "C00203",
+     "C01464",
+     "C01746",
+     "C00846",
+     "C00746",
+     "C00522",
+     "C00620",
+     "C00169",
+     "C01800",
+     "C00897",
+     "C01904",
+     "C00818",
+     "C01891",
+     "C00673",
+     "C02359",
+     "C00819",
+     "C00050",
+     "C01752",
+     "C00593",
+     "C00344"
+    ],
+    "n_subjects": 24,
+    "n_prompts": 497,
+    "n_logical_renders": 552,
+    "tokens_in_est": 1211113,
+    "tokens_out_cap": 127232,
+    "api_file": "results/stage2_confirm/prompts/chunk_01.jsonl",
+    "api_sha256": "e2da9d3899eb6c987a798af707dc36175c12d94e1f8096e1ef9c109279e74b60",
+    "node_prompts_file": "results/stage2_confirm/node/chunk_01.prompts.jsonl",
+    "node_prompts_sha256": "4cd305aaf7318167a634d0b82da3a47956a1e20fd744e79863c83b143d038b9f",
+    "node_meta_file": "results/stage2_confirm/node/chunk_01.meta.jsonl",
+    "node_meta_sha256": "29bfef4b4ce6a2b70d2a193fdf0538ac69d99fbbe684a54d08ac2710690d234a"
+   },
+   {
+    "chunk": "chunk_02",
+    "subjects": [
+     "C00563",
+     "C01180",
+     "C02318",
+     "C01673",
+     "C02500",
+     "C00697"
+    ],
+    "n_subjects": 6,
+    "n_prompts": 144,
+    "n_logical_renders": 166,
+    "tokens_in_est": 399385,
+    "tokens_out_cap": 36864,
+    "api_file": "results/stage2_confirm/prompts/chunk_02.jsonl",
+    "api_sha256": "a5c9355f27d3c44897d5ebc771d9bc2e6ce137c1fb21e50a76b17febb9697d09",
+    "node_prompts_file": "results/stage2_confirm/node/chunk_02.prompts.jsonl",
+    "node_prompts_sha256": "1b9abb77c2fcd53a365b31c0d8aaceeb7227f46f0c50f5ecbccd72b6314df094",
+    "node_meta_file": "results/stage2_confirm/node/chunk_02.meta.jsonl",
+    "node_meta_sha256": "55780aa7ed3acb6d83d99115cbc8275cb21ff4abff9888b67acb085cf44547d0"
+   }
+  ],
+  "n_chunks": 2,
+  "index_file": "results/stage2_confirm/render_index.jsonl",
+  "index_sha256": "e7ced08c30c82baad9eba98877bf438a45742cc7c6ffa013b093be393fdf2e16",
+  "n_logical_renders": 718
+ },
+ "files": {
+  "items": "results/stage2_confirm/items_confirm.jsonl",
+  "items_sha256": "cad13b492524294d6da69aa0242135fb086cb627e22730280c5aea735bc4a0dd"
+ },
+ "submission": {
+  "submitted": false,
+  "sbatch_written": false,
+  "note": "STOP. Nothing here has been submitted or called. The sbatch is deliberately NOT written: submission is the next owner-gated step and the derived H7 rules above are reviewed first."
+ },
+ "cost": {
+  "api_calls": 0,
+  "gpu_hours": 0.0,
+  "cost_usd": 0.0,
+  "note": "CPU only. No model call, no network fetch beyond the local corpus file, no GPU. $0.00."
+ }
+}

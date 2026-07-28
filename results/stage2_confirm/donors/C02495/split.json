@@ -1,0 +1,58 @@
+{
+ "canonical_id": "C02495",
+ "canonical_name": "Victoria Osteen",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "CNN-95816",
+   "date": "2005-07-03",
+   "program": "CNN LARRY KING LIVE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-07-03"
+   ],
+   "guest_words": 724
+  },
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "CNN-113115",
+   "date": "2006-12-22",
+   "program": "CNN LARRY KING LIVE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-12-22"
+   ],
+   "guest_words": 1476
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "CNN-120675",
+   "date": "2007-10-16",
+   "program": "CNN LARRY KING LIVE",
+   "title": "",
+   "n_transcripts_in_cluster": 3,
+   "member_dates": [
+    "2007-10-16",
+    "2007-10-21",
+    "2007-12-26"
+   ],
+   "guest_words": 1287
+  }
+ ],
+ "test": {
+  "cluster_id": "cl3",
+  "transcript_id": "CNN-133057",
+  "date": "2008-12-08",
+  "program": "CNN LARRY KING LIVE",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2008-12-08"
+  ],
+  "guest_words": 927
+ },
+ "excluded_same_date": []
+}

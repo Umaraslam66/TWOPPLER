@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C01316",
+ "canonical_name": "Joshua Landis",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl14",
+   "transcript_id": "NPR-2251",
+   "date": "2011-04-13",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-04-13"
+   ],
+   "guest_words": 1502
+  },
+  {
+   "cluster_id": "cl12",
+   "transcript_id": "NPR-10912",
+   "date": "2012-05-29",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-05-29"
+   ],
+   "guest_words": 1552
+  },
+  {
+   "cluster_id": "cl18",
+   "transcript_id": "NPR-9780",
+   "date": "2013-01-15",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-01-15"
+   ],
+   "guest_words": 1045
+  },
+  {
+   "cluster_id": "cl17",
+   "transcript_id": "NPR-8895",
+   "date": "2013-04-23",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-04-23"
+   ],
+   "guest_words": 1487
+  }
+ ],
+ "test": {
+  "cluster_id": "cl15",
+  "transcript_id": "NPR-29286",
+  "date": "2013-05-01",
+  "program": "All Things Considered",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-05-01"
+  ],
+  "guest_words": 595
+ },
+ "excluded_same_date": []
+}

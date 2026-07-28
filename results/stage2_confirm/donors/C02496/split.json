@@ -1,0 +1,116 @@
+{
+ "canonical_id": "C02496",
+ "canonical_name": "Vin Weber",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl49",
+   "transcript_id": "NPR-37046",
+   "date": "2009-05-03",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2009-05-03"
+   ],
+   "guest_words": 485
+  },
+  {
+   "cluster_id": "cl54",
+   "transcript_id": "NPR-45773",
+   "date": "2010-02-01",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-02-01"
+   ],
+   "guest_words": 1249
+  },
+  {
+   "cluster_id": "cl53",
+   "transcript_id": "NPR-45301",
+   "date": "2010-03-24",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-03-24"
+   ],
+   "guest_words": 1071
+  },
+  {
+   "cluster_id": "cl42",
+   "transcript_id": "NPR-12512",
+   "date": "2012-04-11",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-04-11"
+   ],
+   "guest_words": 745
+  },
+  {
+   "cluster_id": "cl41",
+   "transcript_id": "NPR-10664",
+   "date": "2012-06-27",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-06-27"
+   ],
+   "guest_words": 1153
+  },
+  {
+   "cluster_id": "cl46",
+   "transcript_id": "NPR-31096",
+   "date": "2012-08-11",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-08-11"
+   ],
+   "guest_words": 550
+  },
+  {
+   "cluster_id": "cl44",
+   "transcript_id": "NPR-30556",
+   "date": "2012-11-03",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-11-03"
+   ],
+   "guest_words": 461
+  },
+  {
+   "cluster_id": "cl40",
+   "transcript_id": "NPR-10074",
+   "date": "2012-11-14",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-11-14"
+   ],
+   "guest_words": 1832
+  }
+ ],
+ "test": {
+  "cluster_id": "cl55",
+  "transcript_id": "NPR-8117",
+  "date": "2013-06-26",
+  "program": "Talk of the Nation",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-06-26"
+  ],
+  "guest_words": 1906
+ },
+ "excluded_same_date": []
+}

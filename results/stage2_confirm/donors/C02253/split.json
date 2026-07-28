@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C02253",
+ "canonical_name": "Stephanie Sinclair",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-45585",
+   "date": "2010-02-17",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-02-17"
+   ],
+   "guest_words": 1361
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-607",
+   "date": "2011-12-12",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-12-12"
+   ],
+   "guest_words": 1467
+  }
+ ],
+ "test": {
+  "cluster_id": "cl2",
+  "transcript_id": "NPR-13076",
+  "date": "2017-01-29",
+  "program": "Weekend Edition Sunday",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-01-29"
+  ],
+  "guest_words": 782
+ },
+ "excluded_same_date": []
+}

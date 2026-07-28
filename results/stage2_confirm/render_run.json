@@ -1,0 +1,8 @@
+{
+ "banner": "CONFIRMATORY. Rendered only; nothing here has been generated, judged or scored. No GPU submission, no API call, $0.00.",
+ "generated_utc": "2026-07-28T12:01:14Z",
+ "runtime_secs": 2.8,
+ "n_donor_artifacts_built_this_run": 0,
+ "manifest_sha256": "6f8c42bf24a9208b0cd484682a58e7d42f785fd2b065a98ddc68cd6faad58743",
+ "note": "The only artifact with wall-clock fields. render_manifest.json and every prompt file are byte-identical on a re-run."
+}

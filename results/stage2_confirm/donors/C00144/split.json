@@ -1,0 +1,152 @@
+{
+ "canonical_id": "C00144",
+ "canonical_name": "Amy Dickinson",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-16882",
+   "date": "2007-01-08",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-01-08"
+   ],
+   "guest_words": 1091
+  },
+  {
+   "cluster_id": "cl13",
+   "transcript_id": "NPR-41455",
+   "date": "2007-01-11",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-01-11"
+   ],
+   "guest_words": 497
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-16675",
+   "date": "2007-02-01",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-02-01"
+   ],
+   "guest_words": 1343
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-16525",
+   "date": "2007-02-15",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-02-15"
+   ],
+   "guest_words": 1469
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-16208",
+   "date": "2007-04-05",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-04-05"
+   ],
+   "guest_words": 1462
+  },
+  {
+   "cluster_id": "cl19",
+   "transcript_id": "NPR-6097",
+   "date": "2008-09-18",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-09-18"
+   ],
+   "guest_words": 1423
+  },
+  {
+   "cluster_id": "cl18",
+   "transcript_id": "NPR-46352",
+   "date": "2009-11-25",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2009-11-25"
+   ],
+   "guest_words": 1310
+  },
+  {
+   "cluster_id": "cl16",
+   "transcript_id": "NPR-45046",
+   "date": "2010-04-21",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-04-21"
+   ],
+   "guest_words": 1808
+  },
+  {
+   "cluster_id": "cl15",
+   "transcript_id": "NPR-44711",
+   "date": "2010-06-03",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-06-03"
+   ],
+   "guest_words": 1343
+  },
+  {
+   "cluster_id": "cl12",
+   "transcript_id": "NPR-3836",
+   "date": "2010-10-28",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-10-28"
+   ],
+   "guest_words": 1352
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-3235",
+   "date": "2010-12-23",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-12-23"
+   ],
+   "guest_words": 1037
+  }
+ ],
+ "test": {
+  "cluster_id": "cl20",
+  "transcript_id": "NPR-704",
+  "date": "2011-11-23",
+  "program": "Talk of the Nation",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2011-11-23"
+  ],
+  "guest_words": 959
+ },
+ "excluded_same_date": []
+}

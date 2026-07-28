@@ -1,0 +1,92 @@
+{
+ "canonical_id": "C02510",
+ "canonical_name": "Walter Mosley",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-46827",
+   "date": "2005-09-21",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-09-21"
+   ],
+   "guest_words": 833
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-474",
+   "date": "2007-10-17",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-10-17"
+   ],
+   "guest_words": 849
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-5148",
+   "date": "2010-07-05",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-07-05"
+   ],
+   "guest_words": 1414
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-8755",
+   "date": "2013-05-13",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-05-13"
+   ],
+   "guest_words": 1175
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-21325",
+   "date": "2015-08-13",
+   "program": "Morning Edition",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-08-13"
+   ],
+   "guest_words": 724
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-5979",
+   "date": "2016-07-28",
+   "program": "Morning Edition",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-07-28"
+   ],
+   "guest_words": 314
+  }
+ ],
+ "test": {
+  "cluster_id": "cl6",
+  "transcript_id": "NPR-49020",
+  "date": "2018-02-17",
+  "program": "All Things Considered",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2018-02-17"
+  ],
+  "guest_words": 612
+ },
+ "excluded_same_date": []
+}

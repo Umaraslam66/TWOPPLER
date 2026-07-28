@@ -1,0 +1,104 @@
+{
+ "canonical_id": "C01696",
+ "canonical_name": "Megan Mcardle",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-1824",
+   "date": "2011-06-07",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-06-07"
+   ],
+   "guest_words": 1660
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-12006",
+   "date": "2014-11-15",
+   "program": "Weekend Edition Saturday",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-11-15"
+   ],
+   "guest_words": 701
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-11712",
+   "date": "2016-04-16",
+   "program": "Weekend Edition Saturday",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-04-16"
+   ],
+   "guest_words": 781
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-21695",
+   "date": "2016-06-19",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-06-19"
+   ],
+   "guest_words": 487
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-11559",
+   "date": "2016-12-24",
+   "program": "Weekend Edition Saturday",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-12-24"
+   ],
+   "guest_words": 640
+  },
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-4334",
+   "date": "2018-09-08",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-09-08"
+   ],
+   "guest_words": 629
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-10133",
+   "date": "2018-10-06",
+   "program": "Weekend Edition Saturday",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-10-06"
+   ],
+   "guest_words": 766
+  }
+ ],
+ "test": {
+  "cluster_id": "cl10",
+  "transcript_id": "NPR-808",
+  "date": "2019-02-02",
+  "program": "All Things Considered",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-02-02"
+  ],
+  "guest_words": 589
+ },
+ "excluded_same_date": []
+}
