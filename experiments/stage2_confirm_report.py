@@ -967,6 +967,54 @@ def contamination_block(subject_arm: dict, item_level: dict,
     return out
 
 
+#: The two contrasts the separate large-meter analysis recomputes.
+SEPARATE_CONTRASTS = (
+    ("own_minus_imposter", OWN_ARM, IMPOSTER_ARM),
+    ("own_minus_zeroinfo", OWN_ARM, ZERO_RED),
+)
+
+
+def separate_large_meter_block(subject_arm: dict, large: list,
+                               channel: str) -> dict:
+    """The frozen 'analyzed separately' look, run rather than only named.
+
+    PREREGISTRATION.md's contamination controls say subjects with a large meter
+    are analyzed separately. The report already names them; this recomputes the
+    primary contrasts inside and outside that group so the mandated separate
+    analysis exists as numbers. Descriptive, no bar attached: the split is made
+    after the fact, on a top-decile cut, and the groups are small.
+    """
+    large_set = set(large or [])
+    out = {"channel": channel, "n_large": 0, "n_rest": 0,
+           "large_meter_subjects": sorted(large_set), "contrasts": {}}
+    for key, arm_a, arm_b in SEPARATE_CONTRASTS:
+        if arm_a not in subject_arm or arm_b not in subject_arm:
+            continue
+        a_all, b_all = subject_arm[arm_a], subject_arm[arm_b]
+        paired = sorted(set(a_all) & set(b_all))
+        groups = {
+            "large_meter": [s for s in paired if s in large_set],
+            "rest": [s for s in paired if s not in large_set],
+        }
+        out["n_large"] = len(groups["large_meter"])
+        out["n_rest"] = len(groups["rest"])
+        blk = {}
+        for gname, subs in groups.items():
+            if not subs:
+                blk[gname] = {"n_subjects": 0}
+                continue
+            blk[gname] = paired_contrast({s: a_all[s] for s in subs},
+                                         {s: b_all[s] for s in subs},
+                                         arm_a, arm_b)
+        a, b = (blk["large_meter"].get("mean_diff"), blk["rest"].get("mean_diff"))
+        blk["large_minus_rest"] = (None if a is None or b is None else r(a - b))
+        blk["note"] = ("Two independent groups of subjects, not a paired "
+                       "comparison between them: the difference of the two "
+                       "group means carries no test and none is run.")
+        out["contrasts"][key] = blk
+    return out
+
+
 def h3_block(subject_arm: dict, meters: dict, channel: str) -> dict:
     """H3, descriptive: does lift shrink as the meter grows?"""
     out = {"channel": channel, "label": "DESCRIPTIVE (H3 is registered as "
@@ -1765,6 +1813,10 @@ def render_markdown(data: dict) -> str:
              f"{'COMPLETE' if ch1_ok else 'INCOMPLETE'}.")
     A.append(f"- Channel 2 (stance judge): "
              f"{'COMPLETE' if ch2_ok else 'INCOMPLETE — still running'}.")
+    A.append(f"- **OUTSTANDING ON THE OWNER: the OSF snapshot v4 upload has not "
+             f"been made.** `{data['provenance']['osf_snapshot']}` is written "
+             f"and hashed below, but it is not yet timestamped externally. That "
+             f"is the project's one open external timestamp.")
     if not ch2_ok:
         A.append("")
         A.append(f"**No hypothesis verdict is printed in this render.** "
@@ -2336,6 +2388,78 @@ def render_markdown(data: dict) -> str:
                      f"separately per the frozen text: "
                      f"{', '.join(cm['large_meter_subjects'])}.")
     A.append("")
+
+    # ---- the mandated separate analysis, run rather than only named ---------
+    sep = data["contamination"].get("separate_large_meter") or {}
+    if sep.get("channel1"):
+        n_large = sorted({b["n_large"] for b in sep["channel1"].values()
+                          if b.get("n_large")})
+        n_large_txt = " and ".join(str(n) for n in n_large) or "small"
+        A.append("#### Large-meter subjects, analysed separately")
+        A.append("")
+        A.append(f"**Completing the mandated separate analysis. Added at "
+                 f"closeout, 2026-07-28.** The frozen text says subjects with a "
+                 f"large meter are analysed separately. The block above named "
+                 f"them; until this subsection existed, the separate analysis "
+                 f"itself was never run. It is run here: the two primary "
+                 f"contrasts, recomputed inside and outside the top-decile "
+                 f"group. **Descriptive. No bar is attached to any number "
+                 f"below.** The split is made after the fact on a top-decile "
+                 f"cut, the large group is {n_large_txt} subjects, and the two "
+                 f"groups are different people — so the last column is a "
+                 f"difference of two group means, not a test.")
+        A.append("")
+        A.append("Group membership is the CHANNEL-1 meter's top decile in both "
+                 "channels, so \"large meter\" means one thing throughout. Raw "
+                 "arm means sit beside every difference, per the "
+                 "watch-which-arm-moves rule.")
+        A.append("")
+        A.append("| model | channel | contrast | group | n | arm A | arm B | "
+                 "difference | 95% CI | p |")
+        A.append("|---|---|---|---|---|---|---|---|---|---|")
+        for ch, ch_label in (("channel1", "1 embedding"),
+                             ("channel2", "2 stance")):
+            for gen_dir, model in GEN_DIRS.items():
+                blk = sep.get(ch, {}).get(gen_dir)
+                if not blk:
+                    continue
+                for key, cblk in blk["contrasts"].items():
+                    for gname, glabel in (("large_meter", "large meter"),
+                                          ("rest", "the rest")):
+                        g = cblk.get(gname) or {}
+                        if not g.get("n_subjects"):
+                            A.append(f"| {model} | {ch_label} | `{key}` | "
+                                     f"{glabel} | 0 | — | — | — | — | — |")
+                            continue
+                        ci = g.get("ci95_t") or [None, None]
+                        A.append(
+                            f"| {model} | {ch_label} | `{key}` | {glabel} | "
+                            f"{g['n_subjects']} | {fmt(g.get('mean_a'))} | "
+                            f"{fmt(g.get('mean_b'))} | "
+                            f"**{fmt(g.get('mean_diff'), plus=True)}** | "
+                            f"[{fmt(ci[0], plus=True)}, {fmt(ci[1], plus=True)}] "
+                            f"| {fmt_p(g.get('p_paired_t'))} |")
+        A.append("")
+        A.append("| model | channel | contrast | large-meter minus rest |")
+        A.append("|---|---|---|---|")
+        for ch, ch_label in (("channel1", "1 embedding"),
+                             ("channel2", "2 stance")):
+            for gen_dir, model in GEN_DIRS.items():
+                blk = sep.get(ch, {}).get(gen_dir)
+                if not blk:
+                    continue
+                for key, cblk in blk["contrasts"].items():
+                    A.append(f"| {model} | {ch_label} | `{key}` | "
+                             f"{fmt(cblk.get('large_minus_rest'), plus=True)} |")
+        A.append("")
+        A.append("Reading rule that travels with this table: `own_minus_zeroinfo` "
+                 "shares the `zeroinfo_redacted` term with the meter that "
+                 "defines the split, exactly as flagged in the H3 subsection "
+                 "below, so its group difference is mechanically coupled to the "
+                 "grouping and says nothing about contamination. "
+                 "`own_minus_imposter` shares no term with the meter and is the "
+                 "row to read.")
+        A.append("")
     A.append("### H3, descriptive — lift against the meter")
     A.append("")
     A.append(_quote("H3"))
@@ -2523,7 +2647,9 @@ def build_report() -> dict:
         "channel1": {}, "channel2": {}, "channel2_rates": {},
         "h1": {"channel1": {}, "channel2": {}},
         "h7": {"channel1": {}, "channel2": {}, "counts": {}},
-        "contamination": {"channel1": {}, "channel2": {}},
+        "contamination": {"channel1": {}, "channel2": {},
+                          "separate_large_meter": {"channel1": {},
+                                                   "channel2": {}}},
         "h3": {"channel1": {}, "channel2": {}},
         "sensitivity": {"n_rows_flagged": len(era_rows),
                         "n_items_dropped": len(era_items),
@@ -2553,6 +2679,8 @@ def build_report() -> dict:
             manifest, "1", GEN_DIRS[gen_dir])
         cm = contamination_block(sa, il, "1")
         data["contamination"]["channel1"][gen_dir] = cm
+        data["contamination"]["separate_large_meter"]["channel1"][gen_dir] = (
+            separate_large_meter_block(sa, cm.get("large_meter_subjects"), "1"))
         meters = {s: v for s, v in ((s, named - red) for s, named, red in (
             (s, sa.get(ZERO_NAMED, {}).get(s), sa.get(ZERO_RED, {}).get(s))
             for s in subjects) if named is not None and red is not None)}
@@ -2629,6 +2757,14 @@ def build_report() -> dict:
                 manifest, "2", GEN_DIRS[gen_dir])
             data["contamination"]["channel2"][gen_dir] = contamination_block(
                 rates, {}, "2")
+            # Split by the channel-1 meter, the meter this report prints, so
+            # "large meter" means one thing in both channels.
+            data["contamination"]["separate_large_meter"]["channel2"][gen_dir] = (
+                separate_large_meter_block(
+                    rates,
+                    data["contamination"]["channel1"][gen_dir].get(
+                        "large_meter_subjects"),
+                    "2"))
 
     h7m = manifest.get("h7", {})
     excl = h7m.get("exclusions", {})

@@ -1,7 +1,7 @@
 {
  "banner": "CONFIRMATORY Stage 2. This is the report: the frozen bars are applied here, once, and nowhere else.",
  "run": {
-  "generated_utc": "2026-07-28T18:05:38Z",
+  "generated_utc": "2026-07-28T18:35:45Z",
   "generator": "experiments/stage2_confirm_report.py",
   "determinism_note": "Every field outside this `run` block is deterministic: same inputs, same numbers."
  },
@@ -5070,6 +5070,580 @@
      "C02500"
     ]
    }
+  },
+  "separate_large_meter": {
+   "channel1": {
+    "gemma": {
+     "channel": "1",
+     "n_large": 9,
+     "n_rest": 79,
+     "large_meter_subjects": [
+      "C00102",
+      "C00110",
+      "C00580",
+      "C00622",
+      "C00789",
+      "C01296",
+      "C01430",
+      "C01848",
+      "C02256"
+     ],
+     "contrasts": {
+      "own_minus_imposter": {
+       "large_meter": {
+        "arm_a": "twin_redacted",
+        "arm_b": "imposter_redacted",
+        "n_subjects": 9,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.576649,
+        "mean_b": 0.478983,
+        "mean_diff": 0.097667,
+        "median_diff": 0.069411,
+        "sd_diff": 0.117469,
+        "se_diff": 0.039156,
+        "ci95_t": [
+         0.007372,
+         0.187961
+        ],
+        "ci95_bootstrap": [
+         0.030056,
+         0.17371
+        ],
+        "p_paired_t": 0.03727,
+        "p_wilcoxon": 0.05469,
+        "p_signflip": 0.03275,
+        "n_subjects_a_gt_b": 6,
+        "n_subjects_a_lt_b": 3,
+        "n_subjects_tied": 0,
+        "t_stat": 2.4943,
+        "cohens_dz": 0.831426
+       },
+       "rest": {
+        "arm_a": "twin_redacted",
+        "arm_b": "imposter_redacted",
+        "n_subjects": 79,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.582696,
+        "mean_b": 0.510138,
+        "mean_diff": 0.072558,
+        "median_diff": 0.061558,
+        "sd_diff": 0.081551,
+        "se_diff": 0.009175,
+        "ci95_t": [
+         0.054291,
+         0.090824
+        ],
+        "ci95_bootstrap": [
+         0.05483,
+         0.091308
+        ],
+        "p_paired_t": 1.418e-11,
+        "p_wilcoxon": 1.485e-10,
+        "p_signflip": 5e-05,
+        "n_subjects_a_gt_b": 66,
+        "n_subjects_a_lt_b": 13,
+        "n_subjects_tied": 0,
+        "t_stat": 7.908,
+        "cohens_dz": 0.889724
+       },
+       "large_minus_rest": 0.025109,
+       "note": "Two independent groups of subjects, not a paired comparison between them: the difference of the two group means carries no test and none is run."
+      },
+      "own_minus_zeroinfo": {
+       "large_meter": {
+        "arm_a": "twin_redacted",
+        "arm_b": "zeroinfo_redacted",
+        "n_subjects": 9,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.576649,
+        "mean_b": 0.47664,
+        "mean_diff": 0.100009,
+        "median_diff": 0.086781,
+        "sd_diff": 0.081611,
+        "se_diff": 0.027204,
+        "ci95_t": [
+         0.037278,
+         0.162741
+        ],
+        "ci95_bootstrap": [
+         0.053697,
+         0.153306
+        ],
+        "p_paired_t": 0.006252,
+        "p_wilcoxon": 0.003906,
+        "p_signflip": 0.0048,
+        "n_subjects_a_gt_b": 9,
+        "n_subjects_a_lt_b": 0,
+        "n_subjects_tied": 0,
+        "t_stat": 3.6763,
+        "cohens_dz": 1.225442
+       },
+       "rest": {
+        "arm_a": "twin_redacted",
+        "arm_b": "zeroinfo_redacted",
+        "n_subjects": 79,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.582696,
+        "mean_b": 0.552008,
+        "mean_diff": 0.030688,
+        "median_diff": 0.027272,
+        "sd_diff": 0.075838,
+        "se_diff": 0.008532,
+        "ci95_t": [
+         0.013701,
+         0.047675
+        ],
+        "ci95_bootstrap": [
+         0.014327,
+         0.047932
+        ],
+        "p_paired_t": 0.0005635,
+        "p_wilcoxon": 0.001115,
+        "p_signflip": 0.0007,
+        "n_subjects_a_gt_b": 49,
+        "n_subjects_a_lt_b": 30,
+        "n_subjects_tied": 0,
+        "t_stat": 3.5966,
+        "cohens_dz": 0.404646
+       },
+       "large_minus_rest": 0.069321,
+       "note": "Two independent groups of subjects, not a paired comparison between them: the difference of the two group means carries no test and none is run."
+      }
+     }
+    },
+    "flashlite": {
+     "channel": "1",
+     "n_large": 9,
+     "n_rest": 79,
+     "large_meter_subjects": [
+      "C00440",
+      "C00580",
+      "C00698",
+      "C01296",
+      "C01430",
+      "C01673",
+      "C01800",
+      "C01801",
+      "C02437"
+     ],
+     "contrasts": {
+      "own_minus_imposter": {
+       "large_meter": {
+        "arm_a": "twin_redacted",
+        "arm_b": "imposter_redacted",
+        "n_subjects": 9,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.621203,
+        "mean_b": 0.508533,
+        "mean_diff": 0.11267,
+        "median_diff": 0.079936,
+        "sd_diff": 0.12389,
+        "se_diff": 0.041297,
+        "ci95_t": [
+         0.017439,
+         0.2079
+        ],
+        "ci95_bootstrap": [
+         0.045742,
+         0.196422
+        ],
+        "p_paired_t": 0.02591,
+        "p_wilcoxon": 0.007812,
+        "p_signflip": 0.00845,
+        "n_subjects_a_gt_b": 8,
+        "n_subjects_a_lt_b": 1,
+        "n_subjects_tied": 0,
+        "t_stat": 2.7283,
+        "cohens_dz": 0.909434
+       },
+       "rest": {
+        "arm_a": "twin_redacted",
+        "arm_b": "imposter_redacted",
+        "n_subjects": 79,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.602112,
+        "mean_b": 0.529256,
+        "mean_diff": 0.072857,
+        "median_diff": 0.054942,
+        "sd_diff": 0.086788,
+        "se_diff": 0.009764,
+        "ci95_t": [
+         0.053417,
+         0.092296
+        ],
+        "ci95_bootstrap": [
+         0.054291,
+         0.091975
+        ],
+        "p_paired_t": 1.031e-10,
+        "p_wilcoxon": 5.068e-09,
+        "p_signflip": 5e-05,
+        "n_subjects_a_gt_b": 60,
+        "n_subjects_a_lt_b": 19,
+        "n_subjects_tied": 0,
+        "t_stat": 7.4615,
+        "cohens_dz": 0.839479
+       },
+       "large_minus_rest": 0.039813,
+       "note": "Two independent groups of subjects, not a paired comparison between them: the difference of the two group means carries no test and none is run."
+      },
+      "own_minus_zeroinfo": {
+       "large_meter": {
+        "arm_a": "twin_redacted",
+        "arm_b": "zeroinfo_redacted",
+        "n_subjects": 9,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.621203,
+        "mean_b": 0.441608,
+        "mean_diff": 0.179595,
+        "median_diff": 0.157966,
+        "sd_diff": 0.087184,
+        "se_diff": 0.029061,
+        "ci95_t": [
+         0.11258,
+         0.246611
+        ],
+        "ci95_bootstrap": [
+         0.127937,
+         0.23503
+        ],
+        "p_paired_t": 0.0002652,
+        "p_wilcoxon": 0.003906,
+        "p_signflip": 0.0048,
+        "n_subjects_a_gt_b": 9,
+        "n_subjects_a_lt_b": 0,
+        "n_subjects_tied": 0,
+        "t_stat": 6.1799,
+        "cohens_dz": 2.059955
+       },
+       "rest": {
+        "arm_a": "twin_redacted",
+        "arm_b": "zeroinfo_redacted",
+        "n_subjects": 79,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.602112,
+        "mean_b": 0.558175,
+        "mean_diff": 0.043938,
+        "median_diff": 0.048596,
+        "sd_diff": 0.066532,
+        "se_diff": 0.007485,
+        "ci95_t": [
+         0.029035,
+         0.05884
+        ],
+        "ci95_bootstrap": [
+         0.029267,
+         0.05829
+        ],
+        "p_paired_t": 1.008e-07,
+        "p_wilcoxon": 3.108e-07,
+        "p_signflip": 5e-05,
+        "n_subjects_a_gt_b": 59,
+        "n_subjects_a_lt_b": 20,
+        "n_subjects_tied": 0,
+        "t_stat": 5.8697,
+        "cohens_dz": 0.660394
+       },
+       "large_minus_rest": 0.135657,
+       "note": "Two independent groups of subjects, not a paired comparison between them: the difference of the two group means carries no test and none is run."
+      }
+     }
+    }
+   },
+   "channel2": {
+    "gemma": {
+     "channel": "2",
+     "n_large": 9,
+     "n_rest": 79,
+     "large_meter_subjects": [
+      "C00102",
+      "C00110",
+      "C00580",
+      "C00622",
+      "C00789",
+      "C01296",
+      "C01430",
+      "C01848",
+      "C02256"
+     ],
+     "contrasts": {
+      "own_minus_imposter": {
+       "large_meter": {
+        "arm_a": "twin_redacted",
+        "arm_b": "imposter_redacted",
+        "n_subjects": 9,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.57963,
+        "mean_b": 0.496296,
+        "mean_diff": 0.083333,
+        "median_diff": 0.0,
+        "sd_diff": 0.246503,
+        "se_diff": 0.082168,
+        "ci95_t": [
+         -0.106146,
+         0.272813
+        ],
+        "ci95_bootstrap": [
+         -0.064815,
+         0.231713
+        ],
+        "p_paired_t": 0.3402,
+        "p_wilcoxon": 0.4688,
+        "p_signflip": 0.4399,
+        "n_subjects_a_gt_b": 4,
+        "n_subjects_a_lt_b": 2,
+        "n_subjects_tied": 3,
+        "t_stat": 1.0142,
+        "cohens_dz": 0.338062
+       },
+       "rest": {
+        "arm_a": "twin_redacted",
+        "arm_b": "imposter_redacted",
+        "n_subjects": 76,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.70459,
+        "mean_b": 0.57901,
+        "mean_diff": 0.12558,
+        "median_diff": 0.0,
+        "sd_diff": 0.298914,
+        "se_diff": 0.034288,
+        "ci95_t": [
+         0.057275,
+         0.193884
+        ],
+        "ci95_bootstrap": [
+         0.058819,
+         0.192027
+        ],
+        "p_paired_t": 0.0004628,
+        "p_wilcoxon": 0.0005827,
+        "p_signflip": 0.0007,
+        "n_subjects_a_gt_b": 36,
+        "n_subjects_a_lt_b": 14,
+        "n_subjects_tied": 26,
+        "t_stat": 3.6625,
+        "cohens_dz": 0.42012
+       },
+       "large_minus_rest": -0.042247,
+       "note": "Two independent groups of subjects, not a paired comparison between them: the difference of the two group means carries no test and none is run."
+      },
+      "own_minus_zeroinfo": {
+       "large_meter": {
+        "arm_a": "twin_redacted",
+        "arm_b": "zeroinfo_redacted",
+        "n_subjects": 9,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.57963,
+        "mean_b": 0.464815,
+        "mean_diff": 0.114815,
+        "median_diff": 0.166667,
+        "sd_diff": 0.280556,
+        "se_diff": 0.093519,
+        "ci95_t": [
+         -0.100839,
+         0.330469
+        ],
+        "ci95_bootstrap": [
+         -0.055556,
+         0.287037
+        ],
+        "p_paired_t": 0.2544,
+        "p_wilcoxon": 0.2109,
+        "p_signflip": 0.2801,
+        "n_subjects_a_gt_b": 5,
+        "n_subjects_a_lt_b": 3,
+        "n_subjects_tied": 1,
+        "t_stat": 1.2277,
+        "cohens_dz": 0.409241
+       },
+       "rest": {
+        "arm_a": "twin_redacted",
+        "arm_b": "zeroinfo_redacted",
+        "n_subjects": 79,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.707369,
+        "mean_b": 0.591772,
+        "mean_diff": 0.115597,
+        "median_diff": 0.0,
+        "sd_diff": 0.291393,
+        "se_diff": 0.032784,
+        "ci95_t": [
+         0.050328,
+         0.180865
+        ],
+        "ci95_bootstrap": [
+         0.050934,
+         0.178572
+        ],
+        "p_paired_t": 0.0007099,
+        "p_wilcoxon": 0.001107,
+        "p_signflip": 0.00055,
+        "n_subjects_a_gt_b": 37,
+        "n_subjects_a_lt_b": 14,
+        "n_subjects_tied": 28,
+        "t_stat": 3.526,
+        "cohens_dz": 0.396704
+       },
+       "large_minus_rest": -0.000782,
+       "note": "Two independent groups of subjects, not a paired comparison between them: the difference of the two group means carries no test and none is run."
+      }
+     }
+    },
+    "flashlite": {
+     "channel": "2",
+     "n_large": 8,
+     "n_rest": 79,
+     "large_meter_subjects": [
+      "C00440",
+      "C00580",
+      "C00698",
+      "C01296",
+      "C01430",
+      "C01673",
+      "C01800",
+      "C01801",
+      "C02437"
+     ],
+     "contrasts": {
+      "own_minus_imposter": {
+       "large_meter": {
+        "arm_a": "twin_redacted",
+        "arm_b": "imposter_redacted",
+        "n_subjects": 7,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.757143,
+        "mean_b": 0.559524,
+        "mean_diff": 0.197619,
+        "median_diff": 0.166667,
+        "sd_diff": 0.472624,
+        "se_diff": 0.178635,
+        "ci95_t": [
+         -0.239485,
+         0.634723
+        ],
+        "ci95_bootstrap": [
+         -0.111905,
+         0.530952
+        ],
+        "p_paired_t": 0.311,
+        "p_wilcoxon": 0.4531,
+        "p_signflip": 0.345,
+        "n_subjects_a_gt_b": 5,
+        "n_subjects_a_lt_b": 2,
+        "n_subjects_tied": 0,
+        "t_stat": 1.1063,
+        "cohens_dz": 0.418132
+       },
+       "rest": {
+        "arm_a": "twin_redacted",
+        "arm_b": "imposter_redacted",
+        "n_subjects": 79,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.758439,
+        "mean_b": 0.651658,
+        "mean_diff": 0.106781,
+        "median_diff": 0.0,
+        "sd_diff": 0.322694,
+        "se_diff": 0.036306,
+        "ci95_t": [
+         0.034502,
+         0.179061
+        ],
+        "ci95_bootstrap": [
+         0.037734,
+         0.180085
+        ],
+        "p_paired_t": 0.004303,
+        "p_wilcoxon": 0.009527,
+        "p_signflip": 0.00365,
+        "n_subjects_a_gt_b": 34,
+        "n_subjects_a_lt_b": 16,
+        "n_subjects_tied": 29,
+        "t_stat": 2.9411,
+        "cohens_dz": 0.330905
+       },
+       "large_minus_rest": 0.090838,
+       "note": "Two independent groups of subjects, not a paired comparison between them: the difference of the two group means carries no test and none is run."
+      },
+      "own_minus_zeroinfo": {
+       "large_meter": {
+        "arm_a": "twin_redacted",
+        "arm_b": "zeroinfo_redacted",
+        "n_subjects": 8,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.7875,
+        "mean_b": 0.5375,
+        "mean_diff": 0.25,
+        "median_diff": 0.166667,
+        "sd_diff": 0.408248,
+        "se_diff": 0.144338,
+        "ci95_t": [
+         -0.091304,
+         0.591304
+        ],
+        "ci95_bootstrap": [
+         -0.0,
+         0.520833
+        ],
+        "p_paired_t": 0.1269,
+        "p_wilcoxon": 0.1562,
+        "p_signflip": 0.1529,
+        "n_subjects_a_gt_b": 5,
+        "n_subjects_a_lt_b": 1,
+        "n_subjects_tied": 2,
+        "t_stat": 1.7321,
+        "cohens_dz": 0.612372
+       },
+       "rest": {
+        "arm_a": "twin_redacted",
+        "arm_b": "zeroinfo_redacted",
+        "n_subjects": 79,
+        "n_subjects_only_a": 0,
+        "n_subjects_only_b": 0,
+        "mean_a": 0.758439,
+        "mean_b": 0.63047,
+        "mean_diff": 0.127969,
+        "median_diff": 0.166667,
+        "sd_diff": 0.286933,
+        "se_diff": 0.032282,
+        "ci95_t": [
+         0.063699,
+         0.192238
+        ],
+        "ci95_bootstrap": [
+         0.066154,
+         0.188939
+        ],
+        "p_paired_t": 0.0001622,
+        "p_wilcoxon": 0.0007933,
+        "p_signflip": 0.0001,
+        "n_subjects_a_gt_b": 45,
+        "n_subjects_a_lt_b": 13,
+        "n_subjects_tied": 21,
+        "t_stat": 3.964,
+        "cohens_dz": 0.445988
+       },
+       "large_minus_rest": 0.122031,
+       "note": "Two independent groups of subjects, not a paired comparison between them: the difference of the two group means carries no test and none is run."
+      }
+     }
+    }
+   }
   }
  },
  "h3": {
@@ -6000,7 +6574,7 @@
  },
  "provenance": {
   "report_generator": "experiments/stage2_confirm_report.py",
-  "git_head": "4f3d6b067355bc5cc10d28ff538291c12aa77694",
+  "git_head": "b9cbcf7d8e5eb5ba6852fb0d25324e0fcba37215",
   "git_dirty": true,
   "seed": 20260728,
   "n_bootstrap": 10000,
@@ -6103,7 +6677,7 @@
     "generator": "experiments/stage2_confirm_embed.py",
     "exists": true,
     "sha256": "218e140aff90f3d28c87b8ca3c6ca84ab977f8064570bff1698946a55770468e",
-    "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
+    "last_commit": "848526fc9aa7be7466cef46b5c1a205c6205fef7",
     "tracked": true
    },
    {
@@ -6111,7 +6685,7 @@
     "generator": "every run driver, appended per chunk",
     "exists": true,
     "sha256": "514ec3160d7c4cabdb083605dc1b675037aaa5ce902911669601578b66064f3c",
-    "last_commit": "bb525ab82e3cd49e18003c12954436fb37967a31",
+    "last_commit": "0410024bfc27dda8978c82c4fce11658ba365b79",
     "tracked": true
    },
    {
@@ -6143,8 +6717,8 @@
     "generator": "experiments/stage2_confirm_judge.py",
     "exists": true,
     "sha256": "e531820cb4d8586fddf304e7a90aebe875196424d6dd6c1928671d9355854d06",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "0410024bfc27dda8978c82c4fce11658ba365b79",
+    "tracked": true
    },
    {
     "file": "results/stage2_confirm/gen/gemma/completions_chunk_02.jsonl",
@@ -6167,8 +6741,8 @@
     "generator": "experiments/stage2_confirm_judge.py",
     "exists": true,
     "sha256": "869e001fdf63dc02486254eae6643cffa8e33fe589e16cc2abe3715d8e0f77bf",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "0410024bfc27dda8978c82c4fce11658ba365b79",
+    "tracked": true
    },
    {
     "file": "results/stage2_confirm/gen/gemma/completions_chunk_03.jsonl",
@@ -6191,8 +6765,8 @@
     "generator": "experiments/stage2_confirm_judge.py",
     "exists": true,
     "sha256": "7cb8fd3379edc55ed6262a413826c1b83eb54588838a5fef88fc91295d368695",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "0410024bfc27dda8978c82c4fce11658ba365b79",
+    "tracked": true
    },
    {
     "file": "results/stage2_confirm/gen/gemma/completions_chunk_04.jsonl",
@@ -6215,8 +6789,8 @@
     "generator": "experiments/stage2_confirm_judge.py",
     "exists": true,
     "sha256": "22187beecd16a1bed9b95e50b6ab4e4fd0b21dc00c6e5911813f3b4af6af61da",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "0410024bfc27dda8978c82c4fce11658ba365b79",
+    "tracked": true
    },
    {
     "file": "results/stage2_confirm/gen/gemma/completions_chunk_05.jsonl",
@@ -6239,8 +6813,8 @@
     "generator": "experiments/stage2_confirm_judge.py",
     "exists": true,
     "sha256": "098d65d79264cf3f320f1439d8c1b274f206a3e7e000d0213b824167219bf21d",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "0410024bfc27dda8978c82c4fce11658ba365b79",
+    "tracked": true
    },
    {
     "file": "results/stage2_confirm/gen/flashlite/completions_chunk_01.jsonl",
@@ -6263,8 +6837,8 @@
     "generator": "experiments/stage2_confirm_judge.py",
     "exists": true,
     "sha256": "fa4ec161ba7e3fc9f7f5d00285af86b75a415fb5a7ae993b0ac9aaba1b4695dc",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "0410024bfc27dda8978c82c4fce11658ba365b79",
+    "tracked": true
    },
    {
     "file": "results/stage2_confirm/gen/flashlite/completions_chunk_02.jsonl",
@@ -6287,8 +6861,8 @@
     "generator": "experiments/stage2_confirm_judge.py",
     "exists": true,
     "sha256": "6ff10b1f420c39193ae349eeb387b55aaefe00a676d5548e2003c2780bdff5d2",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "0410024bfc27dda8978c82c4fce11658ba365b79",
+    "tracked": true
    },
    {
     "file": "results/stage2_confirm/gen/flashlite/completions_chunk_03.jsonl",
@@ -6303,16 +6877,16 @@
     "generator": "experiments/stage2_confirm_embed.py",
     "exists": true,
     "sha256": "6cc1cf77e4b31103317207273d946833af74c5aec18075f6a8fbe51dadb93e74",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "848526fc9aa7be7466cef46b5c1a205c6205fef7",
+    "tracked": true
    },
    {
     "file": "results/stage2_confirm/judge/judgements_flashlite_chunk_03.jsonl",
     "generator": "experiments/stage2_confirm_judge.py",
     "exists": true,
     "sha256": "48cc24758e477e96dad0a554a057ff13c54bad52fec8c84d74a0eaab2013ab3c",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "0410024bfc27dda8978c82c4fce11658ba365b79",
+    "tracked": true
    },
    {
     "file": "results/stage2_confirm/gen/flashlite/completions_chunk_04.jsonl",
@@ -6327,16 +6901,16 @@
     "generator": "experiments/stage2_confirm_embed.py",
     "exists": true,
     "sha256": "b4c0707384db02978c90c04f61cfd3d62eaaa24206aa574e32d201de84ba0b88",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "848526fc9aa7be7466cef46b5c1a205c6205fef7",
+    "tracked": true
    },
    {
     "file": "results/stage2_confirm/judge/judgements_flashlite_chunk_04.jsonl",
     "generator": "experiments/stage2_confirm_judge.py",
     "exists": true,
     "sha256": "e3ecc87fc6d803c2bfe003df4466b90ade54cc636df75bf9344d33baa90bf1bd",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "0410024bfc27dda8978c82c4fce11658ba365b79",
+    "tracked": true
    },
    {
     "file": "results/stage2_confirm/gen/flashlite/completions_chunk_05.jsonl",
@@ -6351,16 +6925,16 @@
     "generator": "experiments/stage2_confirm_embed.py",
     "exists": true,
     "sha256": "7acffb9e6135724968771b25b561e455b7403aa5b033f5e3de19997cf9f6b421",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "848526fc9aa7be7466cef46b5c1a205c6205fef7",
+    "tracked": true
    },
    {
     "file": "results/stage2_confirm/judge/judgements_flashlite_chunk_05.jsonl",
     "generator": "experiments/stage2_confirm_judge.py",
     "exists": true,
     "sha256": "e44d5882227d5af06d0115bfa3773b2253d59ffe426326785b559853ba8f9273",
-    "last_commit": null,
-    "tracked": false
+    "last_commit": "0410024bfc27dda8978c82c4fce11658ba365b79",
+    "tracked": true
    }
   ]
  },
