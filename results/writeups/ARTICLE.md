@@ -36,9 +36,9 @@ the work, and most of this article is about getting it right.
 ### The people
 
 We needed people who had been interviewed many times, in public, over years. Public radio and
-TV interview archives are ideal: a large public collection of 463,596 NPR and CNN interview
-transcripts from 2000 to 2020. Filtering it for people who appear at least three separate
-times, months apart, with real substance each time, left 578 usable candidates — mostly expert
+TV interview archives are ideal: a large public collection called MediaSum — 463,596 NPR and
+CNN interview transcripts from 2000 to 2020. Filtering it for people who appear at least three
+separate times, months apart, with real substance each time, left 578 usable candidates — mostly expert
 guests being asked to explain something. Of those, 137 have no encyclopedia page under any
 spelling we could find. That was deliberate: famous people are exactly the people a large AI
 model may already know, which would let it cheat.
@@ -374,9 +374,10 @@ reason for being there. Nothing here tells you what these people are like in pri
 they believe, or what they would say to a friend. That was declared before any data was
 collected and it is the ceiling on the entire result.
 
-**One collection of material.** Every confirmatory number rests on one archive of NPR and CNN
-interviews. Whether any of it holds for podcasts, court testimony, workplace conversation, or a
-different country is untested. The project has form here: a planned second-dataset replication
+**One collection of material.** Every confirmatory number rests on one archive — MediaSum, the
+NPR and CNN interviews described in section 2. Whether any of it holds for podcasts, court
+testimony, workplace conversation, or a different country is untested. The project has form
+here: a planned second-dataset replication
 for the earlier questioning experiment was cancelled once we inspected the data and found it
 could not support the test.
 
@@ -436,7 +437,7 @@ bars quoted word for word.
 
 | Number in this article | Source |
 |---|---|
-| 463,596 transcripts; 578 candidates; 137 with no encyclopedia page | [`stage2_curation_report.md`](../stage2_curation_report.md) |
+| MediaSum: 463,596 transcripts; 578 candidates; 137 with no encyclopedia page | [`stage2_curation_report.md`](../stage2_curation_report.md) |
 | 88 people, 355 questions | [`STAGE2_CONFIRM_REPORT.md`](../stage2_confirm/STAGE2_CONFIRM_REPORT.md) §2; [`report_numbers.json`](../stage2_confirm/report_numbers.json) (`cohort`) |
 | Position grader: 69% / 57% / 58%; gap +0.121, range +0.058 to +0.184 | [`STAGE2_CONFIRM_REPORT.md`](../stage2_confirm/STAGE2_CONFIRM_REPORT.md) §2, §4 |
 | Meaning grader: 0.58 / 0.51 / 0.54; gap +0.075, range +0.057 to +0.093 | [`STAGE2_CONFIRM_REPORT.md`](../stage2_confirm/STAGE2_CONFIRM_REPORT.md) §2, §4 |
