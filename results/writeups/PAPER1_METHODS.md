@@ -597,11 +597,17 @@ published results. No document in this project may claim otherwise
 ([Amendment 2 B9.a](../../PREREGISTRATION_AMENDMENT_2.md), binding). The record
 we cite instead:
 
-- **BED-LLM (ICLR 2026)** — Bayesian experimental design for adaptive LLM
-  questioning. Our Stage 1E entropy rule corresponds to their weak baseline.
-- **Wang et al. (ICML 2025)** — adaptive elicitation on OpinionQA.
-- **A May 2026 preprint** on adaptive interviewing for persona simulation — small
-  effect, small scale; the flag is planted and is cited.
+- **BED-LLM** (Choudhury et al., ICLR 2026) — Bayesian experimental design for
+  adaptive LLM questioning: pick the next question by expected information gain
+  about the thing you are trying to learn. Our Stage 1E entropy rule corresponds
+  to their weak baseline.
+- **Wang et al. (ICML 2025)** — adaptive elicitation in natural language,
+  evaluated on OpinionQA among other tasks.
+- **Su et al. (May 2026 preprint)** — adaptive interviewing for persona
+  simulation; small effect, small scale (follow-up-grounded predictions 45.5%
+  against 39.3% for core-only). The flag is planted and is cited.
+
+Full references in §14.
 
 This project claims two contributions, and this paper adds a third:
 
@@ -737,6 +743,45 @@ dollar. The expensive resource in this project is owner review time.
 | Kill record (C1), replacement (C2), validation gate (C4) | [`PREREGISTRATION_AMENDMENT_3.md`](../../PREREGISTRATION_AMENDMENT_3.md) | frozen |
 | Frozen instrument parameters and judge trust bar | [`PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md`](../../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md) | frozen |
 | Cost ledger | [`cost_log.jsonl`](../cost_log.jsonl) | every run driver |
+
+---
+
+## 14. References
+
+The three works named in
+[Amendment 2 B9.a](../../PREREGISTRATION_AMENDMENT_2.md), resolved to full
+citations. Each was confirmed against the arXiv listing page for the identifier
+given; the amendment names them only by short description.
+
+- Choudhury, D., Williamson, S., Goliński, A., Miao, N., Bickford Smith, F.,
+  Kirchhof, M., Zhang, Y., & Rainforth, T. (2026). *BED-LLM: Intelligent
+  Information Gathering with LLMs and Bayesian Experimental Design.*
+  International Conference on Learning Representations (ICLR) 2026.
+  arXiv:2508.21184. https://arxiv.org/abs/2508.21184
+- Wang, J., Zollo, T., Zemel, R., & Namkoong, H. (2025). *Adaptive Elicitation of
+  Latent Information Using Natural Language.* International Conference on Machine
+  Learning (ICML) 2025. arXiv:2504.04204. https://arxiv.org/abs/2504.04204 —
+  evaluated on the Twenty Questions game, adaptive student assessment, and
+  dynamic opinion polling on **OpinionQA** (Santurkar et al., 2023), which is the
+  evaluation B9 refers to.
+- Su, R., Liu, Y., & Hu, J. (2026). *Adaptive Interviewing for Persona Simulation
+  in LLMs: Evidence-Grounded Reasoning Improves Decision Alignment.* Preprint,
+  submitted 28 May 2026. arXiv:2605.29458. https://arxiv.org/abs/2605.29458 —
+  not peer-reviewed at time of writing.
+
+Two further works are cited in the text and are not part of B9's list:
+
+- **[REF TO SUPPLY: Park et al. (2024), "Generative Agent Simulations of 1,000
+  People" — the design target named in
+  [PREREGISTRATION.md §1](../../PREREGISTRATION.md), commercialised by Simile.]**
+  Cited by title and year in §2 of this paper. No full reference exists anywhere
+  in the project record and this one was not verified by search, so it is marked
+  rather than guessed.
+- Santurkar, S., Durmus, E., Ladhak, F., Lee, C., Liang, P., & Hashimoto, T.
+  (2023). *Whose Opinions Do Language Models Reflect?* ICML 2023.
+  arXiv:2303.17548. https://arxiv.org/abs/2303.17548 — the origin of OpinionQA,
+  already on the project's record in
+  [`results/lit_check.md`](../lit_check.md).
 
 ---
 
