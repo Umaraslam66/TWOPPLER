@@ -14,6 +14,10 @@ then have it answer questions from a later, held-out one.
 This repository holds the data loaders, experiment scaffolding, evaluation code,
 and the frozen record of what was pre-registered and what came out.
 
+The pre-registration is registered on OSF as **TWOPPLER** (2026-07-28):
+https://osf.io/qz28m — see `results/PROJECT_LOG.md` for which parts of the work
+it precedes and which parts it postdates.
+
 ## Status
 
 Stage 2's confirmatory run is complete. In one line each:

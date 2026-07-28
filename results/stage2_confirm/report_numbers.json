@@ -1,7 +1,7 @@
 {
  "banner": "CONFIRMATORY Stage 2. This is the report: the frozen bars are applied here, once, and nowhere else.",
  "run": {
-  "generated_utc": "2026-07-28T18:35:45Z",
+  "generated_utc": "2026-07-28T21:35:57Z",
   "generator": "experiments/stage2_confirm_report.py",
   "determinism_note": "Every field outside this `run` block is deterministic: same inputs, same numbers."
  },
@@ -6516,14 +6516,14 @@
  "costs": {
   "source": "results/cost_log.jsonl",
   "run_id_filter": "stage2_confirm/*",
-  "n_entries": 22,
-  "api_usd_spent": 6.552869,
+  "n_entries": 35,
+  "api_usd_spent": 8.817063,
   "api_cap_usd": 15.0,
-  "api_headroom_usd": 8.447131,
+  "api_headroom_usd": 6.182937,
   "api_cap_breached": false,
-  "node_hours_spent": 0.6028,
+  "node_hours_spent": 1.139,
   "node_hours_cap": 8.0,
-  "node_hours_headroom": 7.3972,
+  "node_hours_headroom": 6.861,
   "node_hours_cap_breached": false,
   "by_run_id": {
    "stage2_confirm/gen_flashlite": {
@@ -6561,6 +6561,78 @@
     "tokens_in": 4730223,
     "tokens_out": 289715,
     "n_parse_failures": 0
+   },
+   "stage2_confirm/h6_classify": {
+    "n_entries": 1,
+    "n_calls": 5287,
+    "cost_usd": 0.0,
+    "node_hours": 0.1581,
+    "tokens_in": 4666582,
+    "tokens_out": 152594,
+    "n_parse_failures": 0
+   },
+   "stage2_confirm/h6_gen_gemma": {
+    "n_entries": 1,
+    "n_calls": 729,
+    "cost_usd": 0.0,
+    "node_hours": 0.2531,
+    "tokens_in": 759242,
+    "tokens_out": 102442,
+    "n_parse_failures": 0
+   },
+   "stage2_confirm/h6_judge_r2_canary": {
+    "n_entries": 3,
+    "n_calls": 30,
+    "cost_usd": 0.038122,
+    "node_hours": 0.0,
+    "tokens_in": 37455,
+    "tokens_out": 2229,
+    "n_parse_failures": 0
+   },
+   "stage2_confirm/h6_gen_flashlite": {
+    "n_entries": 1,
+    "n_calls": 542,
+    "cost_usd": 0.351849,
+    "node_hours": 0.0,
+    "tokens_in": 556990,
+    "tokens_out": 73901,
+    "n_parse_failures": 2
+   },
+   "stage2_confirm/h6_judge_r2": {
+    "n_entries": 3,
+    "n_calls": 1271,
+    "cost_usd": 1.617427,
+    "node_hours": 0.0,
+    "tokens_in": 1571904,
+    "tokens_out": 97444,
+    "n_parse_failures": 1
+   },
+   "stage2_confirm/h6_d3_gen_gemma": {
+    "n_entries": 1,
+    "n_calls": 182,
+    "cost_usd": 0.0,
+    "node_hours": 0.125,
+    "tokens_in": 177634,
+    "tokens_out": 25952,
+    "n_parse_failures": 0
+   },
+   "stage2_confirm/h6_d3_judge_r2_canary": {
+    "n_entries": 2,
+    "n_calls": 20,
+    "cost_usd": 0.025374,
+    "node_hours": 0.0,
+    "tokens_in": 24970,
+    "tokens_out": 1477,
+    "n_parse_failures": 0
+   },
+   "stage2_confirm/h6_d3_judge_r2": {
+    "n_entries": 1,
+    "n_calls": 182,
+    "cost_usd": 0.231422,
+    "node_hours": 0.0,
+    "tokens_in": 225889,
+    "tokens_out": 13779,
+    "n_parse_failures": 0
    }
   },
   "sacct_accounting": {
@@ -6574,7 +6646,7 @@
  },
  "provenance": {
   "report_generator": "experiments/stage2_confirm_report.py",
-  "git_head": "b9cbcf7d8e5eb5ba6852fb0d25324e0fcba37215",
+  "git_head": "8ddba5795bfd1db634c018fe3739dcb77c26ecb4",
   "git_dirty": true,
   "seed": 20260728,
   "n_bootstrap": 10000,
@@ -6623,6 +6695,10 @@
    "STAGE2_LAUNCH_PLAN.md": "d69f4a20be5f6783e64fb9a445e48bb096376b5afb007ea43ccd4c533b247caa"
   },
   "osf_snapshot": "results/osf_preregistration_snapshot_v4.md",
+  "osf_registration_url": "https://osf.io/qz28m",
+  "osf_project_url": "https://osf.io/74bq3",
+  "osf_registration_name": "TWOPPLER",
+  "osf_registration_date": "2026-07-28",
   "files": [
    {
     "file": "results/stage2_confirm/items_confirm.jsonl",
@@ -6684,8 +6760,8 @@
     "file": "results/cost_log.jsonl",
     "generator": "every run driver, appended per chunk",
     "exists": true,
-    "sha256": "514ec3160d7c4cabdb083605dc1b675037aaa5ce902911669601578b66064f3c",
-    "last_commit": "0410024bfc27dda8978c82c4fce11658ba365b79",
+    "sha256": "04de8e9f5c8bf7ec6651080ef23dc3ce728dc1d894d15adbf672512cb30c9cbb",
+    "last_commit": "a5665692b0bb141809e0ce1f64190faaad95756e",
     "tracked": true
    },
    {
@@ -7000,5 +7076,5 @@
    "owner_decision": "Mechanical application of A5 / B3 / B7."
   }
  ],
- "runtime_secs": 1.8
+ "runtime_secs": 2.0
 }

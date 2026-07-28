@@ -1657,6 +1657,10 @@ def provenance_block(inputs: dict) -> dict:
                 "STAGE2_LAUNCH_PLAN.md")
         },
         "osf_snapshot": "results/osf_preregistration_snapshot_v4.md",
+        "osf_registration_url": "https://osf.io/qz28m",
+        "osf_project_url": "https://osf.io/74bq3",
+        "osf_registration_name": "TWOPPLER",
+        "osf_registration_date": "2026-07-28",
         "files": files,
     }
 
@@ -1813,10 +1817,17 @@ def render_markdown(data: dict) -> str:
              f"{'COMPLETE' if ch1_ok else 'INCOMPLETE'}.")
     A.append(f"- Channel 2 (stance judge): "
              f"{'COMPLETE' if ch2_ok else 'INCOMPLETE — still running'}.")
-    A.append(f"- **OUTSTANDING ON THE OWNER: the OSF snapshot v4 upload has not "
-             f"been made.** `{data['provenance']['osf_snapshot']}` is written "
-             f"and hashed below, but it is not yet timestamped externally. That "
-             f"is the project's one open external timestamp.")
+    A.append(f"- **Pre-registration REGISTERED "
+             f"{data['provenance']['osf_registration_date']} at "
+             f"{data['provenance']['osf_registration_url']}** (project "
+             f"{data['provenance']['osf_project_url']}), under the name "
+             f"**{data['provenance']['osf_registration_name']}** — DOPPLER is "
+             f"the internal codename for the same project. The deposited "
+             f"snapshot is `{data['provenance']['osf_snapshot']}`, hashed "
+             f"below. It postdates the H1/H7 confirmatory run, so for the "
+             f"numbers in this report the registration is a retrospective "
+             f"external timestamp and the before-data evidence stays the "
+             f"per-document git commits and sha256es.")
     if not ch2_ok:
         A.append("")
         A.append(f"**No hypothesis verdict is printed in this render.** "

@@ -57,9 +57,23 @@ project; the caveat is recorded for any future use).
 is a frozen copy of the pre-registration plus Amendment 1, prepared for OSF.
 [`results/osf_preregistration_snapshot_v4.md`](osf_preregistration_snapshot_v4.md)
 is the current one, covering all six documents with per-document commit and
-sha256 provenance; v3, v2 and the original are kept verbatim. **The OSF upload
-itself is still outstanding on the owner.** Until it happens, "pre-registered"
-means "committed to git before the data was touched", which is weaker.
+sha256 provenance; v3, v2 and the original are kept verbatim.
+
+**Snapshot v4 is now REGISTERED: 2026-07-28 at https://osf.io/qz28m**, on the
+associated project https://osf.io/74bq3. The registration carries the name
+**TWOPPLER**; **DOPPLER** is the internal codename used in the pre-registration,
+this log and the `src/doppler` package — same project. Note the two names when
+searching for it.
+
+**The "pre-registered" caveat is now split rather than blanket.** The
+registration **postdates** Stage 1, Stage 1E and the Stage 2 H1/H7 confirmatory
+run, so for those it is a **retrospective** external timestamp and the
+before-data evidence stays the **per-document git commits and sha256es** in
+snapshot v4. It **predates** the H6 confirmatory-subject scoring, the H5
+substituted analysis and the D_min = 3 arm, so for those it is **prospective**.
+The registration summary itself is not quotable yet — it is inside OSF's
+approval window and not publicly readable, and it is never paraphrased as a
+quote.
 
 ## 4. Stage 1 — development and tuning (24–25 July)
 

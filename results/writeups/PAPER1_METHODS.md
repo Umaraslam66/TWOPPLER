@@ -700,11 +700,16 @@ misattribute speech to the wrong speaker, which would silently break the one
 property the same-subject design exists to guarantee. It was flagged and not
 audited ([round 2 §4](../stage2_pilot2/PILOT_REPORT_2.md)).
 
-**"Pre-registered" is currently weaker than it sounds.** The governance documents
-are frozen in git with per-document commit and sha256 provenance, and an OSF
-snapshot covering all six is prepared — but **the external upload is still
-outstanding**. Until it happens, "pre-registered" means "committed to version
-control before the data was touched".
+**"Pre-registered" means two different things here, and the registration is
+retrospective for this paper.** The governance documents are frozen in git with
+per-document commit and sha256 provenance, and the OSF registration is now live
+(§13). But the registration was made on **2026-07-28**, after every round
+reported in this paper had run. For the four forced-choice rounds and the
+open-ended dev pilot, "pre-registered" therefore means **"committed to version
+control before the data was touched"** — the per-document git commits and
+sha256es in snapshot v4 are the before-data evidence, and the OSF deposit is an
+external timestamp added afterwards. That is weaker than a registration made in
+advance, and it is stated rather than blurred.
 
 ---
 
@@ -781,6 +786,25 @@ dollar. The expensive resource in this project is owner review time.
 | Kill record (C1), replacement (C2), validation gate (C4) | [`PREREGISTRATION_AMENDMENT_3.md`](../../PREREGISTRATION_AMENDMENT_3.md) | frozen |
 | Frozen instrument parameters and judge trust bar | [`PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md`](../../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md) | frozen |
 | Cost ledger | [`cost_log.jsonl`](../cost_log.jsonl) | every run driver |
+| Governance snapshot deposited for timestamping | [`osf_preregistration_snapshot_v4.md`](../osf_preregistration_snapshot_v4.md) | frozen |
+| Errata against the frozen documents | [`PREREGISTRATION_ERRATA.md`](../../PREREGISTRATION_ERRATA.md) | appended, never edited |
+
+**Pre-registration deposit.** Registered **2026-07-28** at
+https://osf.io/qz28m, on the associated project https://osf.io/74bq3. The
+registration carries the name **TWOPPLER**; **DOPPLER** is the internal codename
+used throughout the pre-registration, the results record and the `src/doppler`
+package. They are the same project.
+
+**What the deposit covers, stated from the repository record.** The registration
+**postdates** Stage 1, Stage 1E and the Stage 2 H1/H7 confirmatory run — for
+those it is **retrospective**, and the before-data evidence remains snapshot
+v4's per-document git commits and sha256es. It **predates** the H6
+confirmatory-subject scoring, the H5 substituted analysis and the D_min = 3 arm
+— for those it is **prospective**. Everything in *this* paper falls in the first
+group.
+
+*[registration summary, verbatim: pending — the registration is inside OSF's
+approval window and not yet publicly readable; to be pasted by the owner]*
 
 ---
 

@@ -764,12 +764,16 @@ arm's on both models (§8.3), and its donors are concentrated — 25 donors for 
 donor 11 (§8.4). Since own − imposter is the primary metric, both flags land directly on the
 headline. Neither was corrected for; both were declared.
 
-**"Pre-registered" is currently weaker than it sounds.** The OSF upload is still outstanding.
-Until it happens, "pre-registered" means "committed to git before the data was touched",
-which is a weaker guarantee than an external timestamp. The full snapshot is prepared and
-covers all six governance documents
-([`osf_preregistration_snapshot_v4.md`](../osf_preregistration_snapshot_v4.md)); it has not
-been uploaded.
+**"Pre-registered" means two different things in this paper, and the split matters.** The OSF
+registration is live — 2026-07-28, https://osf.io/qz28m (§12) — but it was made **after** the
+H1/H7 confirmatory run had already produced its numbers. For **H1 and H7**, the registration
+is therefore **retrospective**: the only before-data guarantee is "committed to git before
+the data was touched", evidenced by the per-document commits and sha256es in
+[`osf_preregistration_snapshot_v4.md`](../osf_preregistration_snapshot_v4.md), which is a
+weaker guarantee than an external timestamp made in advance. For the **H6
+confirmatory-subject scoring, the H5 substituted analysis and the D_min = 3 arm**, the
+registration predates the work and is prospective. A reviewer should apply the weaker reading
+to the headline and the stronger one only to the closeout analyses.
 
 **No comparability with the accuracy numbers this project set out beside.** The original
 motivation cited Park et al.'s ~0.85 normalized accuracy on survey replay. **Forced-choice
@@ -889,6 +893,25 @@ claiming a clean cutoff we do not have.
 | Cost ledger | [`cost_log.jsonl`](../cost_log.jsonl) |
 | Frozen contract | [`PREREGISTRATION.md`](../../PREREGISTRATION.md) + [A1](../../PREREGISTRATION_AMENDMENT_1.md), [A1-Add-A](../../PREREGISTRATION_AMENDMENT_1_ADDENDUM_A.md), [A2](../../PREREGISTRATION_AMENDMENT_2.md), [A2-Add-A](../../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md), [A3](../../PREREGISTRATION_AMENDMENT_3.md) |
 | Governance snapshot for timestamping | [`osf_preregistration_snapshot_v4.md`](../osf_preregistration_snapshot_v4.md) |
+| H5 substituted calibration analysis | [`stage2_confirm/H5_CALIBRATION.md`](../stage2_confirm/H5_CALIBRATION.md), artifacts under [`stage2_confirm/h5/`](../stage2_confirm/h5/), from `experiments/h5_calibration.py` |
+| Exploratory D_min = 3 arm | [`stage2_confirm/H6_REPORT.md` §11](../stage2_confirm/H6_REPORT.md), from `experiments/h6_d3_arms.py` |
+| Owner rulings, stop point iii | [`stage2_confirm/RULINGS_STOPPOINT3_20260728.md`](../stage2_confirm/RULINGS_STOPPOINT3_20260728.md) |
+| Errata against the frozen documents | [`PREREGISTRATION_ERRATA.md`](../../PREREGISTRATION_ERRATA.md) |
+
+**Pre-registration deposit.** Registered **2026-07-28** at https://osf.io/qz28m, on the
+associated project https://osf.io/74bq3. The registration carries the name **TWOPPLER**;
+**DOPPLER** is the internal codename used throughout the pre-registration, the results record
+and the `src/doppler` package. They are the same project.
+
+**What the deposit covers, stated from the repository record.** The registration **postdates**
+Stage 1, Stage 1E and the Stage 2 H1/H7 confirmatory run — for those it is **retrospective**,
+and the before-data evidence remains snapshot v4's per-document git commits and sha256es. It
+**predates** the H6 confirmatory-subject scoring, the H5 substituted analysis and the
+D_min = 3 arm — for those it is **prospective**. The consequence for reading the headline is
+spelled out in §10.
+
+*[registration summary, verbatim: pending — the registration is inside OSF's approval window
+and not yet publicly readable; to be pasted by the owner]*
 
 Repository commit at report render: `4f3d6b067355bc5cc10d28ff538291c12aa77694` (working tree
 dirty at render time; recorded rather than hidden). Governance documents are pinned by
