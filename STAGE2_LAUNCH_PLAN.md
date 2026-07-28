@@ -1,9 +1,19 @@
 # Stage 2 confirmatory launch plan
 
-Status: **AWAITING THE OWNER'S EXPLICIT GO. Nothing below runs until it
-is given.** Prepared 2026-07-28, the same day the bar-lock addendum was
-adopted (commit `bcd1d51`) after parameter 5 passed its pre-committed
-gate on the second tranche. Every bar quoted below is quoted verbatim
+Status: **GO GIVEN BY THE OWNER 2026-07-28.** Caps confirmed as
+proposed: **8 node-hours GPU / $15 API** (expected ~4 nh / ~$10; caps
+are brakes, not targets). Owner wall-clock compression rules, same caps
+and tripwires: generation chunks submitted in PARALLEL (independent
+per-subject blocks, serial fallback if the queue starves them);
+judge + embedding at verified Tier-1 concurrency respecting the
+1,000 RPM client guard, chunk ledger unchanged; the 10-row D/E judge
+canary runs at the START OF EVERY JUDGING SESSION (not per calendar
+day), same halt-on-flip rule; target: full pipeline inside ~24h of
+queue cooperation. First interim report: the S1 re-measure result +
+build survival after the first 40 subjects; the only stop before
+completion is a nonzero S1 collateral. Prepared 2026-07-28, the same
+day the bar-lock addendum was adopted (commit `bcd1d51`) after
+parameter 5 passed its pre-committed gate on the second tranche. Every bar quoted below is quoted verbatim
 from a frozen document; everything marked [PLAN] is an operational
 choice inside those bars, not a new rule. No confirmatory subject's
 transcript is opened, rendered, or scored before the GO.
