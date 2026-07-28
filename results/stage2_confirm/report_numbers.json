@@ -1,7 +1,7 @@
 {
  "banner": "CONFIRMATORY Stage 2. This is the report: the frozen bars are applied here, once, and nowhere else.",
  "run": {
-  "generated_utc": "2026-07-28T14:20:57Z",
+  "generated_utc": "2026-07-28T18:05:38Z",
   "generator": "experiments/stage2_confirm_report.py",
   "determinism_note": "Every field outside this `run` block is deterministic: same inputs, same numbers."
  },
@@ -166,19 +166,19 @@
    "channel2": {
     "gemma": {
      "model": "Gemma-4-31B-it",
-     "chunks_present": [],
-     "chunks_missing": [
+     "chunks_present": [
       "chunk_01",
       "chunk_02",
       "chunk_03",
       "chunk_04",
       "chunk_05"
      ],
+     "chunks_missing": [],
      "chunks_without_sidecar": [],
-     "n_labelled": 0,
-     "n_unlabelled_prompts": 1911,
+     "n_labelled": 1911,
+     "n_unlabelled_prompts": 0,
      "n_parse_failures": 0,
-     "complete": false
+     "complete": true
     },
     "flashlite": {
      "model": "gemini-3.5-flash-lite",
@@ -186,26 +186,23 @@
       "chunk_01",
       "chunk_02",
       "chunk_03",
-      "chunk_04"
-     ],
-     "chunks_missing": [
+      "chunk_04",
       "chunk_05"
      ],
-     "chunks_without_sidecar": [
-      "chunk_04"
-     ],
-     "n_labelled": 1268,
-     "n_unlabelled_prompts": 643,
+     "chunks_missing": [],
+     "chunks_without_sidecar": [],
+     "n_labelled": 1911,
+     "n_unlabelled_prompts": 0,
      "n_parse_failures": 0,
-     "complete": false
+     "complete": true
     }
    },
    "channel1_complete": true,
-   "channel2_complete": false,
+   "channel2_complete": true,
    "generation_complete": true,
-   "all_complete": false
+   "all_complete": true
   },
-  "verdicts_printed": false,
+  "verdicts_printed": true,
   "gate_rule": "No hypothesis verdict is printed while any chunk of either channel is missing. Amendment 3 C2.4: no claim rests on one channel alone."
  },
  "cohort": {
@@ -1296,158 +1293,290 @@
  "channel2": {
   "gemma": {
    "model": "Gemma-4-31B-it",
-   "complete": false,
-   "n_labelled": 0,
-   "pooled_label_counts": {},
-   "per_arm_raw": {},
-   "partial": true
-  },
-  "flashlite": {
-   "model": "gemini-3.5-flash-lite",
-   "complete": false,
-   "n_labelled": 1268,
+   "complete": true,
+   "n_labelled": 1911,
    "pooled_label_counts": {
     "twin_redacted": {
-     "SAME": 168,
-     "DIFFERENT": 37,
-     "UNCLEAR": 30,
+     "SAME": 221,
+     "DIFFERENT": 82,
+     "UNCLEAR": 52,
      "None": 0
     },
     "twin_named": {
-     "SAME": 165,
-     "DIFFERENT": 45,
-     "UNCLEAR": 27,
+     "SAME": 232,
+     "DIFFERENT": 79,
+     "UNCLEAR": 44,
      "None": 0
     },
     "zeroinfo_redacted": {
-     "SAME": 127,
-     "DIFFERENT": 73,
-     "UNCLEAR": 35,
+     "SAME": 192,
+     "DIFFERENT": 131,
+     "UNCLEAR": 32,
      "None": 0
     },
     "zeroinfo_named": {
-     "SAME": 160,
-     "DIFFERENT": 55,
-     "UNCLEAR": 23,
+     "SAME": 209,
+     "DIFFERENT": 114,
+     "UNCLEAR": 32,
      "None": 0
     },
     "imposter_redacted": {
-     "SAME": 115,
-     "DIFFERENT": 63,
-     "UNCLEAR": 62,
+     "SAME": 151,
+     "DIFFERENT": 99,
+     "UNCLEAR": 105,
      "None": 0
     }
    },
    "per_arm_raw": {
     "imposter_redacted": {
-     "n_subjects": 64,
-     "mean_of_subject_means": 0.630432,
-     "sd_of_subject_means": 0.355167,
+     "n_subjects": 85,
+     "mean_of_subject_means": 0.570252,
+     "sd_of_subject_means": 0.358015,
      "min": 0.0,
      "max": 1.0
     },
     "twin_named": {
-     "n_subjects": 69,
-     "mean_of_subject_means": 0.754589,
-     "sd_of_subject_means": 0.29482,
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.705682,
+     "sd_of_subject_means": 0.27956,
      "min": 0.0,
      "max": 1.0
     },
     "twin_redacted": {
-     "n_subjects": 69,
-     "mean_of_subject_means": 0.800725,
-     "sd_of_subject_means": 0.278849,
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.694305,
+     "sd_of_subject_means": 0.288226,
      "min": 0.0,
      "max": 1.0
     },
     "zeroinfo_named": {
-     "n_subjects": 68,
-     "mean_of_subject_means": 0.723856,
-     "sd_of_subject_means": 0.296015,
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.608554,
+     "sd_of_subject_means": 0.303091,
      "min": 0.0,
      "max": 1.0
     },
     "zeroinfo_redacted": {
-     "n_subjects": 66,
-     "mean_of_subject_means": 0.647583,
-     "sd_of_subject_means": 0.271944,
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.578788,
+     "sd_of_subject_means": 0.281493,
      "min": 0.0,
      "max": 1.0
     }
    },
-   "partial": true
+   "partial": false
+  },
+  "flashlite": {
+   "model": "gemini-3.5-flash-lite",
+   "complete": true,
+   "n_labelled": 1911,
+   "pooled_label_counts": {
+    "twin_redacted": {
+     "SAME": 244,
+     "DIFFERENT": 69,
+     "UNCLEAR": 42,
+     "None": 0
+    },
+    "twin_named": {
+     "SAME": 250,
+     "DIFFERENT": 66,
+     "UNCLEAR": 39,
+     "None": 0
+    },
+    "zeroinfo_redacted": {
+     "SAME": 196,
+     "DIFFERENT": 113,
+     "UNCLEAR": 46,
+     "None": 0
+    },
+    "zeroinfo_named": {
+     "SAME": 238,
+     "DIFFERENT": 88,
+     "UNCLEAR": 29,
+     "None": 0
+    },
+    "imposter_redacted": {
+     "SAME": 174,
+     "DIFFERENT": 91,
+     "UNCLEAR": 90,
+     "None": 0
+    }
+   },
+   "per_arm_raw": {
+    "imposter_redacted": {
+     "n_subjects": 86,
+     "mean_of_subject_means": 0.644158,
+     "sd_of_subject_means": 0.333971,
+     "min": 0.0,
+     "max": 1.0
+    },
+    "twin_named": {
+     "n_subjects": 86,
+     "mean_of_subject_means": 0.766667,
+     "sd_of_subject_means": 0.235675,
+     "min": 0.0,
+     "max": 1.0
+    },
+    "twin_redacted": {
+     "n_subjects": 88,
+     "mean_of_subject_means": 0.760038,
+     "sd_of_subject_means": 0.266146,
+     "min": 0.0,
+     "max": 1.0
+    },
+    "zeroinfo_named": {
+     "n_subjects": 87,
+     "mean_of_subject_means": 0.715964,
+     "sd_of_subject_means": 0.255183,
+     "min": 0.0,
+     "max": 1.0
+    },
+    "zeroinfo_redacted": {
+     "n_subjects": 87,
+     "mean_of_subject_means": 0.621921,
+     "sd_of_subject_means": 0.258602,
+     "min": 0.0,
+     "max": 1.0
+    }
+   },
+   "partial": false
   }
  },
  "channel2_rates": {
   "gemma": {
-   "_gap_flags": []
-  },
-  "flashlite": {
    "twin_redacted": {
-    "match_rate": 0.819512,
-    "unclear_rate": 0.12766,
-    "denominator": 205,
-    "n_labels": 235,
+    "match_rate": 0.729373,
+    "unclear_rate": 0.146479,
+    "denominator": 303,
+    "n_labels": 355,
     "counts": {
-     "SAME": 168,
-     "DIFFERENT": 37,
-     "UNCLEAR": 30,
+     "SAME": 221,
+     "DIFFERENT": 82,
+     "UNCLEAR": 52,
      "None": 0
     }
    },
    "twin_named": {
-    "match_rate": 0.785714,
-    "unclear_rate": 0.113924,
-    "denominator": 210,
-    "n_labels": 237,
+    "match_rate": 0.745981,
+    "unclear_rate": 0.123944,
+    "denominator": 311,
+    "n_labels": 355,
     "counts": {
-     "SAME": 165,
-     "DIFFERENT": 45,
-     "UNCLEAR": 27,
+     "SAME": 232,
+     "DIFFERENT": 79,
+     "UNCLEAR": 44,
      "None": 0
     }
    },
    "zeroinfo_redacted": {
-    "match_rate": 0.635,
-    "unclear_rate": 0.148936,
-    "denominator": 200,
-    "n_labels": 235,
+    "match_rate": 0.594427,
+    "unclear_rate": 0.090141,
+    "denominator": 323,
+    "n_labels": 355,
     "counts": {
-     "SAME": 127,
-     "DIFFERENT": 73,
-     "UNCLEAR": 35,
+     "SAME": 192,
+     "DIFFERENT": 131,
+     "UNCLEAR": 32,
      "None": 0
     }
    },
    "zeroinfo_named": {
-    "match_rate": 0.744186,
-    "unclear_rate": 0.096639,
-    "denominator": 215,
-    "n_labels": 238,
+    "match_rate": 0.647059,
+    "unclear_rate": 0.090141,
+    "denominator": 323,
+    "n_labels": 355,
     "counts": {
-     "SAME": 160,
-     "DIFFERENT": 55,
-     "UNCLEAR": 23,
+     "SAME": 209,
+     "DIFFERENT": 114,
+     "UNCLEAR": 32,
      "None": 0
     }
    },
    "imposter_redacted": {
-    "match_rate": 0.646067,
-    "unclear_rate": 0.258333,
-    "denominator": 178,
-    "n_labels": 240,
+    "match_rate": 0.604,
+    "unclear_rate": 0.295775,
+    "denominator": 250,
+    "n_labels": 355,
     "counts": {
-     "SAME": 115,
-     "DIFFERENT": 63,
-     "UNCLEAR": 62,
+     "SAME": 151,
+     "DIFFERENT": 99,
+     "UNCLEAR": 105,
      "None": 0
     }
    },
    "_gap_flags": [
-    "`twin_redacted` UNCLEAR 0.1277 vs `imposter_redacted` UNCLEAR 0.2583 — gap 0.1307 reaches the frozen ≥ 0.10 threshold and is flagged as material.",
-    "`twin_named` UNCLEAR 0.1139 vs `imposter_redacted` UNCLEAR 0.2583 — gap 0.1444 reaches the frozen ≥ 0.10 threshold and is flagged as material.",
-    "`zeroinfo_redacted` UNCLEAR 0.1489 vs `imposter_redacted` UNCLEAR 0.2583 — gap 0.1094 reaches the frozen ≥ 0.10 threshold and is flagged as material.",
-    "`zeroinfo_named` UNCLEAR 0.0966 vs `imposter_redacted` UNCLEAR 0.2583 — gap 0.1617 reaches the frozen ≥ 0.10 threshold and is flagged as material."
+    "`twin_redacted` UNCLEAR 0.1465 vs `imposter_redacted` UNCLEAR 0.2958 — gap 0.1493 reaches the frozen ≥ 0.10 threshold and is flagged as material.",
+    "`twin_named` UNCLEAR 0.1239 vs `imposter_redacted` UNCLEAR 0.2958 — gap 0.1718 reaches the frozen ≥ 0.10 threshold and is flagged as material.",
+    "`zeroinfo_redacted` UNCLEAR 0.0901 vs `imposter_redacted` UNCLEAR 0.2958 — gap 0.2056 reaches the frozen ≥ 0.10 threshold and is flagged as material.",
+    "`zeroinfo_named` UNCLEAR 0.0901 vs `imposter_redacted` UNCLEAR 0.2958 — gap 0.2056 reaches the frozen ≥ 0.10 threshold and is flagged as material."
+   ]
+  },
+  "flashlite": {
+   "twin_redacted": {
+    "match_rate": 0.779553,
+    "unclear_rate": 0.11831,
+    "denominator": 313,
+    "n_labels": 355,
+    "counts": {
+     "SAME": 244,
+     "DIFFERENT": 69,
+     "UNCLEAR": 42,
+     "None": 0
+    }
+   },
+   "twin_named": {
+    "match_rate": 0.791139,
+    "unclear_rate": 0.109859,
+    "denominator": 316,
+    "n_labels": 355,
+    "counts": {
+     "SAME": 250,
+     "DIFFERENT": 66,
+     "UNCLEAR": 39,
+     "None": 0
+    }
+   },
+   "zeroinfo_redacted": {
+    "match_rate": 0.634304,
+    "unclear_rate": 0.129577,
+    "denominator": 309,
+    "n_labels": 355,
+    "counts": {
+     "SAME": 196,
+     "DIFFERENT": 113,
+     "UNCLEAR": 46,
+     "None": 0
+    }
+   },
+   "zeroinfo_named": {
+    "match_rate": 0.730061,
+    "unclear_rate": 0.08169,
+    "denominator": 326,
+    "n_labels": 355,
+    "counts": {
+     "SAME": 238,
+     "DIFFERENT": 88,
+     "UNCLEAR": 29,
+     "None": 0
+    }
+   },
+   "imposter_redacted": {
+    "match_rate": 0.656604,
+    "unclear_rate": 0.253521,
+    "denominator": 265,
+    "n_labels": 355,
+    "counts": {
+     "SAME": 174,
+     "DIFFERENT": 91,
+     "UNCLEAR": 90,
+     "None": 0
+    }
+   },
+   "_gap_flags": [
+    "`twin_redacted` UNCLEAR 0.1183 vs `imposter_redacted` UNCLEAR 0.2535 — gap 0.1352 reaches the frozen ≥ 0.10 threshold and is flagged as material.",
+    "`twin_named` UNCLEAR 0.1099 vs `imposter_redacted` UNCLEAR 0.2535 — gap 0.1437 reaches the frozen ≥ 0.10 threshold and is flagged as material.",
+    "`zeroinfo_redacted` UNCLEAR 0.1296 vs `imposter_redacted` UNCLEAR 0.2535 — gap 0.1239 reaches the frozen ≥ 0.10 threshold and is flagged as material.",
+    "`zeroinfo_named` UNCLEAR 0.0817 vs `imposter_redacted` UNCLEAR 0.2535 — gap 0.1718 reaches the frozen ≥ 0.10 threshold and is flagged as material."
    ]
   }
  },
@@ -1811,41 +1940,41 @@
    }
   },
   "channel2": {
-   "flashlite": {
+   "gemma": {
     "channel": "2",
     "per_arm_raw": {
      "imposter_redacted": {
-      "n_subjects": 64,
-      "mean_of_subject_means": 0.630432,
-      "sd_of_subject_means": 0.355167,
+      "n_subjects": 85,
+      "mean_of_subject_means": 0.570252,
+      "sd_of_subject_means": 0.358015,
       "min": 0.0,
       "max": 1.0
      },
      "twin_named": {
-      "n_subjects": 69,
-      "mean_of_subject_means": 0.754589,
-      "sd_of_subject_means": 0.29482,
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.705682,
+      "sd_of_subject_means": 0.27956,
       "min": 0.0,
       "max": 1.0
      },
      "twin_redacted": {
-      "n_subjects": 69,
-      "mean_of_subject_means": 0.800725,
-      "sd_of_subject_means": 0.278849,
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.694305,
+      "sd_of_subject_means": 0.288226,
       "min": 0.0,
       "max": 1.0
      },
      "zeroinfo_named": {
-      "n_subjects": 68,
-      "mean_of_subject_means": 0.723856,
-      "sd_of_subject_means": 0.296015,
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.608554,
+      "sd_of_subject_means": 0.303091,
       "min": 0.0,
       "max": 1.0
      },
      "zeroinfo_redacted": {
-      "n_subjects": 66,
-      "mean_of_subject_means": 0.647583,
-      "sd_of_subject_means": 0.271944,
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.578788,
+      "sd_of_subject_means": 0.281493,
       "min": 0.0,
       "max": 1.0
      }
@@ -1854,31 +1983,31 @@
      "own_minus_imposter": {
       "arm_a": "twin_redacted",
       "arm_b": "imposter_redacted",
-      "n_subjects": 61,
-      "n_subjects_only_a": 8,
-      "n_subjects_only_b": 3,
-      "mean_a": 0.812842,
-      "mean_b": 0.645043,
-      "mean_diff": 0.167799,
+      "n_subjects": 85,
+      "n_subjects_only_a": 3,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.691359,
+      "mean_b": 0.570252,
+      "mean_diff": 0.121106,
       "median_diff": 0.0,
-      "sd_diff": 0.344385,
-      "se_diff": 0.044094,
+      "sd_diff": 0.292804,
+      "se_diff": 0.031759,
       "ci95_t": [
-       0.079598,
-       0.256
+       0.05795,
+       0.184263
       ],
       "ci95_bootstrap": [
-       0.084465,
-       0.257418
+       0.058431,
+       0.183459
       ],
-      "p_paired_t": 0.0003345,
-      "p_wilcoxon": 0.001061,
-      "p_signflip": 0.00015,
-      "n_subjects_a_gt_b": 29,
-      "n_subjects_a_lt_b": 8,
-      "n_subjects_tied": 24,
-      "t_stat": 3.8055,
-      "cohens_dz": 0.487241,
+      "p_paired_t": 0.0002608,
+      "p_wilcoxon": 0.0003751,
+      "p_signflip": 0.00025,
+      "n_subjects_a_gt_b": 40,
+      "n_subjects_a_lt_b": 16,
+      "n_subjects_tied": 29,
+      "t_stat": 3.8133,
+      "cohens_dz": 0.413609,
       "role": "PRIMARY (Amendment 3 C3). Like-for-like: both arms are redacted.",
       "magnitude_bar": 0.09,
       "meets_magnitude_bar": true,
@@ -1888,31 +2017,31 @@
      "own_named_minus_imposter": {
       "arm_a": "twin_named",
       "arm_b": "imposter_redacted",
-      "n_subjects": 58,
-      "n_subjects_only_a": 11,
-      "n_subjects_only_b": 6,
-      "mean_a": 0.779885,
-      "mean_b": 0.643924,
-      "mean_diff": 0.135961,
-      "median_diff": 0.0,
-      "sd_diff": 0.379005,
-      "se_diff": 0.049766,
+      "n_subjects": 85,
+      "n_subjects_only_a": 3,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.71098,
+      "mean_b": 0.570252,
+      "mean_diff": 0.140728,
+      "median_diff": 0.033333,
+      "sd_diff": 0.330616,
+      "se_diff": 0.03586,
       "ci95_t": [
-       0.036306,
-       0.235615
+       0.069416,
+       0.212041
       ],
       "ci95_bootstrap": [
-       0.039406,
-       0.232801
+       0.069409,
+       0.210532
       ],
-      "p_paired_t": 0.008366,
-      "p_wilcoxon": 0.01863,
-      "p_signflip": 0.0085,
-      "n_subjects_a_gt_b": 26,
-      "n_subjects_a_lt_b": 10,
-      "n_subjects_tied": 22,
-      "t_stat": 2.732,
-      "cohens_dz": 0.35873,
+      "p_paired_t": 0.0001773,
+      "p_wilcoxon": 0.0005665,
+      "p_signflip": 0.0002,
+      "n_subjects_a_gt_b": 43,
+      "n_subjects_a_lt_b": 15,
+      "n_subjects_tied": 27,
+      "t_stat": 3.9243,
+      "cohens_dz": 0.425654,
       "role": "Reported beside. Not like-for-like: the twin arm carries a name line the imposter arm does not.",
       "magnitude_bar": 0.09,
       "meets_magnitude_bar": true,
@@ -1922,31 +2051,31 @@
      "own_minus_zeroinfo": {
       "arm_a": "twin_redacted",
       "arm_b": "zeroinfo_redacted",
-      "n_subjects": 63,
-      "n_subjects_only_a": 6,
-      "n_subjects_only_b": 3,
-      "mean_a": 0.822751,
-      "mean_b": 0.630801,
-      "mean_diff": 0.19195,
-      "median_diff": 0.2,
-      "sd_diff": 0.286387,
-      "se_diff": 0.036081,
+      "n_subjects": 88,
+      "n_subjects_only_a": 0,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.694305,
+      "mean_b": 0.578788,
+      "mean_diff": 0.115517,
+      "median_diff": 0.0,
+      "sd_diff": 0.288728,
+      "se_diff": 0.030779,
       "ci95_t": [
-       0.119824,
-       0.264076
+       0.054341,
+       0.176692
       ],
       "ci95_bootstrap": [
-       0.123167,
-       0.26444
+       0.055952,
+       0.175934
       ],
-      "p_paired_t": 1.513e-06,
-      "p_wilcoxon": 2.031e-05,
-      "p_signflip": 5e-05,
-      "n_subjects_a_gt_b": 39,
-      "n_subjects_a_lt_b": 7,
-      "n_subjects_tied": 17,
-      "t_stat": 5.3199,
-      "cohens_dz": 0.670247,
+      "p_paired_t": 0.0003145,
+      "p_wilcoxon": 0.0004354,
+      "p_signflip": 0.0004,
+      "n_subjects_a_gt_b": 42,
+      "n_subjects_a_lt_b": 17,
+      "n_subjects_tied": 29,
+      "t_stat": 3.7532,
+      "cohens_dz": 0.400088,
       "role": "Zero-information lift, like-for-like. This is the contrast the magnitude bar names for H1.",
       "magnitude_bar": 0.09,
       "meets_magnitude_bar": true,
@@ -1956,36 +2085,214 @@
      "own_named_minus_zeroinfo_named": {
       "arm_a": "twin_named",
       "arm_b": "zeroinfo_named",
-      "n_subjects": 62,
-      "n_subjects_only_a": 7,
-      "n_subjects_only_b": 6,
-      "mean_a": 0.767204,
-      "mean_b": 0.721326,
-      "mean_diff": 0.045878,
-      "median_diff": 0.0,
-      "sd_diff": 0.343921,
-      "se_diff": 0.043678,
+      "n_subjects": 88,
+      "n_subjects_only_a": 0,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.705682,
+      "mean_b": 0.608554,
+      "mean_diff": 0.097128,
+      "median_diff": 0.05,
+      "sd_diff": 0.290628,
+      "se_diff": 0.030981,
       "ci95_t": [
-       -0.041461,
-       0.133218
+       0.035549,
+       0.158706
       ],
       "ci95_bootstrap": [
-       -0.039247,
-       0.132258
+       0.038004,
+       0.157166
       ],
-      "p_paired_t": 0.2977,
-      "p_wilcoxon": 0.2237,
-      "p_signflip": 0.3028,
-      "n_subjects_a_gt_b": 18,
-      "n_subjects_a_lt_b": 12,
-      "n_subjects_tied": 32,
-      "t_stat": 1.0504,
-      "cohens_dz": 0.133397,
+      "p_paired_t": 0.002343,
+      "p_wilcoxon": 0.001649,
+      "p_signflip": 0.0026,
+      "n_subjects_a_gt_b": 44,
+      "n_subjects_a_lt_b": 22,
+      "n_subjects_tied": 22,
+      "t_stat": 3.1351,
+      "cohens_dz": 0.334198,
+      "role": "Zero-information lift, named-arm pair.",
+      "magnitude_bar": 0.09,
+      "meets_magnitude_bar": true,
+      "direction_positive": true,
+      "significant_at_p05": true
+     }
+    }
+   },
+   "flashlite": {
+    "channel": "2",
+    "per_arm_raw": {
+     "imposter_redacted": {
+      "n_subjects": 86,
+      "mean_of_subject_means": 0.644158,
+      "sd_of_subject_means": 0.333971,
+      "min": 0.0,
+      "max": 1.0
+     },
+     "twin_named": {
+      "n_subjects": 86,
+      "mean_of_subject_means": 0.766667,
+      "sd_of_subject_means": 0.235675,
+      "min": 0.0,
+      "max": 1.0
+     },
+     "twin_redacted": {
+      "n_subjects": 88,
+      "mean_of_subject_means": 0.760038,
+      "sd_of_subject_means": 0.266146,
+      "min": 0.0,
+      "max": 1.0
+     },
+     "zeroinfo_named": {
+      "n_subjects": 87,
+      "mean_of_subject_means": 0.715964,
+      "sd_of_subject_means": 0.255183,
+      "min": 0.0,
+      "max": 1.0
+     },
+     "zeroinfo_redacted": {
+      "n_subjects": 87,
+      "mean_of_subject_means": 0.621921,
+      "sd_of_subject_means": 0.258602,
+      "min": 0.0,
+      "max": 1.0
+     }
+    },
+    "contrasts": {
+     "own_minus_imposter": {
+      "arm_a": "twin_redacted",
+      "arm_b": "imposter_redacted",
+      "n_subjects": 86,
+      "n_subjects_only_a": 2,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.758333,
+      "mean_b": 0.644158,
+      "mean_diff": 0.114175,
+      "median_diff": 0.0,
+      "sd_diff": 0.334586,
+      "se_diff": 0.036079,
+      "ci95_t": [
+       0.04244,
+       0.18591
+      ],
+      "ci95_bootstrap": [
+       0.0451,
+       0.186269
+      ],
+      "p_paired_t": 0.002156,
+      "p_wilcoxon": 0.006699,
+      "p_signflip": 0.00195,
+      "n_subjects_a_gt_b": 39,
+      "n_subjects_a_lt_b": 18,
+      "n_subjects_tied": 29,
+      "t_stat": 3.1646,
+      "cohens_dz": 0.341242,
+      "role": "PRIMARY (Amendment 3 C3). Like-for-like: both arms are redacted.",
+      "magnitude_bar": 0.09,
+      "meets_magnitude_bar": true,
+      "direction_positive": true,
+      "significant_at_p05": true
+     },
+     "own_named_minus_imposter": {
+      "arm_a": "twin_named",
+      "arm_b": "imposter_redacted",
+      "n_subjects": 85,
+      "n_subjects_only_a": 1,
+      "n_subjects_only_b": 1,
+      "mean_a": 0.775686,
+      "mean_b": 0.651737,
+      "mean_diff": 0.12395,
+      "median_diff": 0.0,
+      "sd_diff": 0.362711,
+      "se_diff": 0.039341,
+      "ci95_t": [
+       0.045715,
+       0.202184
+      ],
+      "ci95_bootstrap": [
+       0.047618,
+       0.200729
+      ],
+      "p_paired_t": 0.002258,
+      "p_wilcoxon": 0.009055,
+      "p_signflip": 0.00235,
+      "n_subjects_a_gt_b": 42,
+      "n_subjects_a_lt_b": 18,
+      "n_subjects_tied": 25,
+      "t_stat": 3.1506,
+      "cohens_dz": 0.341731,
+      "role": "Reported beside. Not like-for-like: the twin arm carries a name line the imposter arm does not.",
+      "magnitude_bar": 0.09,
+      "meets_magnitude_bar": true,
+      "direction_positive": true,
+      "significant_at_p05": true
+     },
+     "own_minus_zeroinfo": {
+      "arm_a": "twin_redacted",
+      "arm_b": "zeroinfo_redacted",
+      "n_subjects": 87,
+      "n_subjects_only_a": 1,
+      "n_subjects_only_b": 0,
+      "mean_a": 0.761111,
+      "mean_b": 0.621921,
+      "mean_diff": 0.13919,
+      "median_diff": 0.166667,
+      "sd_diff": 0.299158,
+      "se_diff": 0.032073,
+      "ci95_t": [
+       0.075431,
+       0.202949
+      ],
+      "ci95_bootstrap": [
+       0.076542,
+       0.202874
+      ],
+      "p_paired_t": 3.872e-05,
+      "p_wilcoxon": 0.0002784,
+      "p_signflip": 5e-05,
+      "n_subjects_a_gt_b": 50,
+      "n_subjects_a_lt_b": 14,
+      "n_subjects_tied": 23,
+      "t_stat": 4.3398,
+      "cohens_dz": 0.465272,
+      "role": "Zero-information lift, like-for-like. This is the contrast the magnitude bar names for H1.",
+      "magnitude_bar": 0.09,
+      "meets_magnitude_bar": true,
+      "direction_positive": true,
+      "significant_at_p05": true
+     },
+     "own_named_minus_zeroinfo_named": {
+      "arm_a": "twin_named",
+      "arm_b": "zeroinfo_named",
+      "n_subjects": 85,
+      "n_subjects_only_a": 1,
+      "n_subjects_only_b": 2,
+      "mean_a": 0.775686,
+      "mean_b": 0.715163,
+      "mean_diff": 0.060523,
+      "median_diff": 0.0,
+      "sd_diff": 0.223574,
+      "se_diff": 0.02425,
+      "ci95_t": [
+       0.012299,
+       0.108747
+      ],
+      "ci95_bootstrap": [
+       0.013136,
+       0.107647
+      ],
+      "p_paired_t": 0.01452,
+      "p_wilcoxon": 0.0216,
+      "p_signflip": 0.01375,
+      "n_subjects_a_gt_b": 28,
+      "n_subjects_a_lt_b": 13,
+      "n_subjects_tied": 44,
+      "t_stat": 2.4958,
+      "cohens_dz": 0.270706,
       "role": "Zero-information lift, named-arm pair.",
       "magnitude_bar": 0.09,
       "meets_magnitude_bar": false,
       "direction_positive": true,
-      "significant_at_p05": false
+      "significant_at_p05": true
      }
     }
    }
@@ -2009,7 +2316,18 @@
      "passes": true
     }
    },
-   "primary_model_channel2": null,
+   "primary_model_channel2": {
+    "imposter_leg": {
+     "mean": 0.121106,
+     "p": 0.0002608,
+     "passes": true
+    },
+    "zeroinfo_leg": {
+     "mean": 0.115517,
+     "p": 0.0003145,
+     "passes": true
+    }
+   },
    "robustness_model_channel1": {
     "imposter_leg": {
      "mean": 0.076928,
@@ -2022,10 +2340,23 @@
      "passes": true
     }
    },
-   "robustness_model_channel2": null,
+   "robustness_model_channel2": {
+    "imposter_leg": {
+     "mean": 0.114175,
+     "p": 0.002156,
+     "passes": true
+    },
+    "zeroinfo_leg": {
+     "mean": 0.13919,
+     "p": 3.872e-05,
+     "passes": true
+    }
+   },
    "channel1_primary_passes_A1": true,
-   "verdict": "[AWAITING JUDGE]",
-   "verdict_reason": "Channel 2 is incomplete. Amendment 3 C2.4 requires direction agreement across both channels for any headline, so no H1 verdict is printed. The channel-1 numbers below are real and are labelled PRELIMINARY."
+   "channel_direction_agreement_primary_model": true,
+   "robustness_model_direction_holds": true,
+   "verdict": "PASS",
+   "verdict_reason": "A1's two legs both clear p < .05 in the pre-registered direction on the primary model in both channels; the channels agree in direction; A3's robustness model holds direction."
   }
  },
  "h7": {
@@ -3050,6 +3381,511 @@
    }
   },
   "channel2": {
+   "gemma": {
+    "channel": "2",
+    "model": "Gemma-4-31B-it",
+    "label": "EXPLORATORY",
+    "label_reason": null,
+    "bar_quoted": "Confirmatory bar: fidelity declines with Δ — per-subject slope of fidelity against Δ, mean slope < 0 across subjects, paired within subject where the chronology allows, p < .05, on the primary model. Direction-robust on the robustness model per A3.",
+    "crossover_quoted": "The crossover point is the smallest Δ at which the fresh imposter twin matches or beats the stale own twin — \"a stranger's fresh twin beats your Δ-year-old twin.\" It is pre-declared here as H7's headline statistic if it occurs inside the observed Δ range.",
+    "reading_decay_quoted": "Measurable decay, crossover in range: person-models have a shelf life; the curve and the crossover Δ are the headline.",
+    "reading_flat_quoted": "Flat decay across our Δ range: public personas are stable at these horizons — grounding age does not matter within the years this corpus covers. Equally reportable, same prominence.",
+    "volume_control_quoted": "At every T the grounding context is filled to the same token budget B, newest-first below the cutoff. Only the AGE of the grounding varies, never the amount. A cutoff at which B cannot be filled is excluded (counts reported).",
+    "n_subjects_with_any_bin": 36,
+    "per_bin": {
+     "6-12m": {
+      "n_subjects": 14,
+      "n_items": 41,
+      "stale_own_twin_mean": 0.566667,
+      "fresh_imposter_mean": 0.611538,
+      "mean_delta_days": 258.9,
+      "min_delta_days": 190,
+      "max_delta_days": 350,
+      "own_minus_fresh_imposter": null
+     },
+     "1-2y": {
+      "n_subjects": 19,
+      "n_items": 65,
+      "stale_own_twin_mean": 0.650877,
+      "fresh_imposter_mean": 0.508772,
+      "mean_delta_days": 534.2,
+      "min_delta_days": 378,
+      "max_delta_days": 722,
+      "own_minus_fresh_imposter": 0.142105
+     },
+     "2-3y": {
+      "n_subjects": 9,
+      "n_items": 31,
+      "stale_own_twin_mean": 0.703704,
+      "fresh_imposter_mean": 0.751852,
+      "mean_delta_days": 906.9,
+      "min_delta_days": 787,
+      "max_delta_days": 1056,
+      "own_minus_fresh_imposter": -0.048148
+     },
+     ">3y": {
+      "n_subjects": 18,
+      "n_items": 63,
+      "stale_own_twin_mean": 0.726323,
+      "fresh_imposter_mean": 0.565625,
+      "mean_delta_days": 1788.2,
+      "min_delta_days": 1151,
+      "max_delta_days": 2928,
+      "own_minus_fresh_imposter": null
+     }
+    },
+    "per_subject_slope": {
+     "C00145": {
+      "n_bins": 2,
+      "slope_per_day": 0.00045167,
+      "slope_per_year": 0.164973,
+      "delta_days": [
+       289,
+       1027
+      ],
+      "fidelity": [
+       0.0,
+       0.333333
+      ]
+     },
+     "C00146": {
+      "n_bins": 2,
+      "slope_per_day": 0.00014881,
+      "slope_per_year": 0.054353,
+      "delta_days": [
+       422,
+       2102
+      ],
+      "fidelity": [
+       0.75,
+       1.0
+      ]
+     },
+     "C00203": {
+      "n_bins": 4,
+      "slope_per_day": -0.00013405,
+      "slope_per_year": -0.048962,
+      "delta_days": [
+       224,
+       595,
+       973,
+       1190
+      ],
+      "fidelity": [
+       1.0,
+       0.5,
+       1.0,
+       0.666667
+      ]
+     },
+     "C00457": {
+      "n_bins": 2,
+      "slope_per_day": -0.00015576,
+      "slope_per_year": -0.056893,
+      "delta_days": [
+       722,
+       2327
+      ],
+      "fidelity": [
+       0.25,
+       0.0
+      ]
+     },
+     "C00522": {
+      "n_bins": 2,
+      "slope_per_day": 0.0,
+      "slope_per_year": 0.0,
+      "delta_days": [
+       581,
+       787
+      ],
+      "fidelity": [
+       0.666667,
+       0.666667
+      ]
+     },
+     "C00580": {
+      "n_bins": 2,
+      "slope_per_day": 0.00049164,
+      "slope_per_year": 0.179572,
+      "delta_days": [
+       715,
+       1393
+      ],
+      "fidelity": [
+       0.0,
+       0.333333
+      ]
+     },
+     "C00698": {
+      "n_bins": 2,
+      "slope_per_day": 0.00044063,
+      "slope_per_year": 0.160939,
+      "delta_days": [
+       336,
+       1849
+      ],
+      "fidelity": [
+       0.333333,
+       1.0
+      ]
+     },
+     "C00752": {
+      "n_bins": 2,
+      "slope_per_day": 0.0,
+      "slope_per_year": 0.0,
+      "delta_days": [
+       210,
+       378
+      ],
+      "fidelity": [
+       0.0,
+       0.0
+      ]
+     },
+     "C00812": {
+      "n_bins": 3,
+      "slope_per_day": 0.00068978,
+      "slope_per_year": 0.251942,
+      "delta_days": [
+       252,
+       545,
+       818
+      ],
+      "fidelity": [
+       0.6,
+       0.4,
+       1.0
+      ]
+     },
+     "C01328": {
+      "n_bins": 3,
+      "slope_per_day": 8.836e-05,
+      "slope_per_year": 0.032272,
+      "delta_days": [
+       455,
+       1056,
+       1158
+      ],
+      "fidelity": [
+       0.75,
+       0.5,
+       1.0
+      ]
+     },
+     "C01430": {
+      "n_bins": 2,
+      "slope_per_day": 2.393e-05,
+      "slope_per_year": 0.00874,
+      "delta_days": [
+       510,
+       1903
+      ],
+      "fidelity": [
+       0.8,
+       0.833333
+      ]
+     },
+     "C01659": {
+      "n_bins": 4,
+      "slope_per_day": 0.0,
+      "slope_per_year": 0.0,
+      "delta_days": [
+       227,
+       458,
+       787,
+       1151
+      ],
+      "fidelity": [
+       0.666667,
+       0.666667,
+       0.666667,
+       0.666667
+      ]
+     },
+     "C01848": {
+      "n_bins": 2,
+      "slope_per_day": 0.00064935,
+      "slope_per_year": 0.237175,
+      "delta_days": [
+       330,
+       715
+      ],
+      "fidelity": [
+       0.5,
+       0.75
+      ]
+     },
+     "C01891": {
+      "n_bins": 2,
+      "slope_per_day": -0.00013376,
+      "slope_per_year": -0.048856,
+      "delta_days": [
+       428,
+       1674
+      ],
+      "fidelity": [
+       0.666667,
+       0.5
+      ]
+     },
+     "C01933": {
+      "n_bins": 2,
+      "slope_per_day": 0.00034977,
+      "slope_per_year": 0.127754,
+      "delta_days": [
+       623,
+       1576
+      ],
+      "fidelity": [
+       0.666667,
+       1.0
+      ]
+     },
+     "C02312": {
+      "n_bins": 2,
+      "slope_per_day": 0.0001768,
+      "slope_per_year": 0.064577,
+      "delta_days": [
+       832,
+       2246
+      ],
+      "fidelity": [
+       0.5,
+       0.75
+      ]
+     },
+     "C02500": {
+      "n_bins": 3,
+      "slope_per_day": -6.07e-05,
+      "slope_per_year": -0.022172,
+      "delta_days": [
+       664,
+       952,
+       1690
+      ],
+      "fidelity": [
+       1.0,
+       0.666667,
+       0.857143
+      ]
+     }
+    },
+    "slope_test": {
+     "quantity": "per-subject slope of fidelity vs delta (per day)",
+     "n_subjects": 17,
+     "mean": 0.000178,
+     "median": 8.8e-05,
+     "sd": 0.000279,
+     "ci95_t": [
+      3.5e-05,
+      0.000322
+     ],
+     "ci95_bootstrap": [
+      5.4e-05,
+      0.000315
+     ],
+     "p_paired_t": 0.0182,
+     "p_wilcoxon": 0.03033,
+     "p_signflip": 0.0199,
+     "n_negative": 4,
+     "n_positive": 10,
+     "mean_slope_per_year": 0.065015,
+     "ci95_t_per_year": [
+      0.012784,
+      0.117611
+     ],
+     "direction_negative": false,
+     "significant_at_p05": true,
+     "meets_frozen_bar": false,
+     "p_one_sided_decline": 0.9909
+    },
+    "crossover": {
+     "definition": "smallest delta bin at which the fresh same-domain imposter twin matches or beats the stale own twin, pooled over the subjects who filled that bin and restricted to the same items",
+     "pooled_crossover_bin": "6-12m",
+     "occurs_in_observed_range": true,
+     "n_subjects_with_crossover": 21,
+     "n_subjects_evaluated": 36,
+     "per_subject_crossover_bin": {
+      "C00145": "6-12m",
+      "C00163": ">3y",
+      "C00203": "6-12m",
+      "C00457": ">3y",
+      "C00522": "1-2y",
+      "C00580": "1-2y",
+      "C00621": ">3y",
+      "C00673": "6-12m",
+      "C00752": "6-12m",
+      "C01328": "1-2y",
+      "C01430": "1-2y",
+      "C01538": "6-12m",
+      "C01659": "6-12m",
+      "C01752": "2-3y",
+      "C01842": "1-2y",
+      "C01883": "6-12m",
+      "C01897": "1-2y",
+      "C02218": "6-12m",
+      "C02242": ">3y",
+      "C02312": "2-3y",
+      "C02318": "6-12m"
+     }
+    },
+    "within_subject_sweep": {
+     "quoted": "The within-subject sweep is pre-registered as a supporting analysis on the subset that can fill ≥ 3 bins — reported beside the between-subject result, never substituted for it.",
+     "subset": [
+      "C00203",
+      "C00812",
+      "C01328",
+      "C01659",
+      "C02500"
+     ],
+     "n_subjects": 5,
+     "status": "SUPPORTING ANALYSIS, never substituted for the between-subject result",
+     "per_subject": {
+      "C00203": {
+       "n_bins": 4,
+       "slope_per_day": -0.00013405,
+       "slope_per_year": -0.048962,
+       "delta_days": [
+        224,
+        595,
+        973,
+        1190
+       ],
+       "fidelity": [
+        1.0,
+        0.5,
+        1.0,
+        0.666667
+       ]
+      },
+      "C00812": {
+       "n_bins": 3,
+       "slope_per_day": 0.00068978,
+       "slope_per_year": 0.251942,
+       "delta_days": [
+        252,
+        545,
+        818
+       ],
+       "fidelity": [
+        0.6,
+        0.4,
+        1.0
+       ]
+      },
+      "C01328": {
+       "n_bins": 3,
+       "slope_per_day": 8.836e-05,
+       "slope_per_year": 0.032272,
+       "delta_days": [
+        455,
+        1056,
+        1158
+       ],
+       "fidelity": [
+        0.75,
+        0.5,
+        1.0
+       ]
+      },
+      "C01659": {
+       "n_bins": 4,
+       "slope_per_day": 0.0,
+       "slope_per_year": 0.0,
+       "delta_days": [
+        227,
+        458,
+        787,
+        1151
+       ],
+       "fidelity": [
+        0.666667,
+        0.666667,
+        0.666667,
+        0.666667
+       ]
+      },
+      "C02500": {
+       "n_bins": 3,
+       "slope_per_day": -6.07e-05,
+       "slope_per_year": -0.022172,
+       "delta_days": [
+        664,
+        952,
+        1690
+       ],
+       "fidelity": [
+        1.0,
+        0.666667,
+        0.857143
+       ]
+      }
+     },
+     "slope_test": {
+      "quantity": "within-subject-sweep per-subject slope (per day)",
+      "n_subjects": 5,
+      "mean": 0.000117,
+      "median": 0.0,
+      "sd": 0.000331,
+      "ci95_t": [
+       -0.000294,
+       0.000527
+      ],
+      "ci95_bootstrap": [
+       -7.8e-05,
+       0.000414
+      ],
+      "p_paired_t": 0.4742,
+      "p_wilcoxon": 0.875,
+      "p_signflip": 0.7537,
+      "n_negative": 2,
+      "n_positive": 2
+     }
+    },
+    "freshest_minus_stalest": {
+     "arm_a": "h7_twin_redacted[6-12m]",
+     "arm_b": "h7_twin_redacted[>3y]",
+     "n_subjects": 3,
+     "n_subjects_only_a": 11,
+     "n_subjects_only_b": 15,
+     "mean_a": 0.666667,
+     "mean_b": 0.777778,
+     "mean_diff": -0.111111,
+     "median_diff": 0.0,
+     "sd_diff": 0.509175,
+     "se_diff": 0.293972,
+     "ci95_t": [
+      -1.375972,
+      1.15375
+     ],
+     "ci95_bootstrap": [
+      -0.666667,
+      0.333333
+     ],
+     "p_paired_t": 0.7418,
+     "p_wilcoxon": 1.0,
+     "p_signflip": 1.0,
+     "n_subjects_a_gt_b": 1,
+     "n_subjects_a_lt_b": 1,
+     "n_subjects_tied": 1,
+     "t_stat": -0.378,
+     "cohens_dz": -0.218218,
+     "magnitude_bar": 0.09,
+     "meets_magnitude_bar": false,
+     "note": "Paired over the subjects who filled BOTH the freshest and the stalest bin. The unpaired bin means are in per_bin above."
+    },
+    "n_subjects_with_slope": 17,
+    "n_subjects_single_bin_no_slope": 19,
+    "freshest_minus_stalest_unpaired": {
+     "mean_a": 0.566667,
+     "mean_b": 0.726323,
+     "mean_diff": -0.159656,
+     "n_subjects_a": 14,
+     "n_subjects_b": 18,
+     "note": "Different subjects in each bin; between-subject, not paired."
+    }
+   },
    "flashlite": {
     "channel": "2",
     "model": "gemini-3.5-flash-lite",
@@ -3060,50 +3896,76 @@
     "reading_decay_quoted": "Measurable decay, crossover in range: person-models have a shelf life; the curve and the crossover Δ are the headline.",
     "reading_flat_quoted": "Flat decay across our Δ range: public personas are stable at these horizons — grounding age does not matter within the years this corpus covers. Equally reportable, same prominence.",
     "volume_control_quoted": "At every T the grounding context is filled to the same token budget B, newest-first below the cutoff. Only the AGE of the grounding varies, never the amount. A cutoff at which B cannot be filled is excluded (counts reported).",
-    "n_subjects_with_any_bin": 28,
+    "n_subjects_with_any_bin": 36,
     "per_bin": {
      "6-12m": {
-      "n_subjects": 10,
-      "n_items": 24,
-      "stale_own_twin_mean": 0.691667,
-      "fresh_imposter_mean": 0.607143,
-      "mean_delta_days": 269.3,
-      "min_delta_days": 199,
+      "n_subjects": 15,
+      "n_items": 47,
+      "stale_own_twin_mean": 0.714444,
+      "fresh_imposter_mean": 0.511905,
+      "mean_delta_days": 261.5,
+      "min_delta_days": 190,
       "max_delta_days": 350,
       "own_minus_fresh_imposter": null
      },
      "1-2y": {
-      "n_subjects": 15,
-      "n_items": 44,
-      "stale_own_twin_mean": 0.872222,
-      "fresh_imposter_mean": 0.772222,
-      "mean_delta_days": 527.6,
+      "n_subjects": 19,
+      "n_items": 65,
+      "stale_own_twin_mean": 0.792105,
+      "fresh_imposter_mean": 0.732456,
+      "mean_delta_days": 534.2,
       "min_delta_days": 378,
-      "max_delta_days": 715,
-      "own_minus_fresh_imposter": 0.1
+      "max_delta_days": 722,
+      "own_minus_fresh_imposter": 0.059649
      },
      "2-3y": {
-      "n_subjects": 6,
-      "n_items": 22,
-      "stale_own_twin_mean": 0.847222,
-      "fresh_imposter_mean": 0.744444,
-      "mean_delta_days": 921.7,
+      "n_subjects": 9,
+      "n_items": 31,
+      "stale_own_twin_mean": 0.75,
+      "fresh_imposter_mean": 0.625926,
+      "mean_delta_days": 906.9,
       "min_delta_days": 787,
       "max_delta_days": 1056,
-      "own_minus_fresh_imposter": 0.102778
+      "own_minus_fresh_imposter": 0.124074
      },
      ">3y": {
-      "n_subjects": 12,
-      "n_items": 33,
-      "stale_own_twin_mean": 0.784722,
-      "fresh_imposter_mean": 0.722222,
-      "mean_delta_days": 1787.2,
-      "min_delta_days": 1158,
+      "n_subjects": 18,
+      "n_items": 58,
+      "stale_own_twin_mean": 0.731481,
+      "fresh_imposter_mean": 0.708333,
+      "mean_delta_days": 1788.2,
+      "min_delta_days": 1151,
       "max_delta_days": 2928,
       "own_minus_fresh_imposter": null
      }
     },
     "per_subject_slope": {
+     "C00145": {
+      "n_bins": 2,
+      "slope_per_day": -0.00045167,
+      "slope_per_year": -0.164973,
+      "delta_days": [
+       289,
+       1027
+      ],
+      "fidelity": [
+       0.666667,
+       0.333333
+      ]
+     },
+     "C00146": {
+      "n_bins": 2,
+      "slope_per_day": -0.00014881,
+      "slope_per_year": -0.054353,
+      "delta_days": [
+       422,
+       2102
+      ],
+      "fidelity": [
+       1.0,
+       0.75
+      ]
+     },
      "C00203": {
       "n_bins": 4,
       "slope_per_day": -0.00013941,
@@ -3119,6 +3981,19 @@
        1.0,
        0.666667,
        1.0
+      ]
+     },
+     "C00457": {
+      "n_bins": 2,
+      "slope_per_day": 0.0,
+      "slope_per_year": 0.0,
+      "delta_days": [
+       722,
+       2327
+      ],
+      "fidelity": [
+       0.0,
+       0.0
       ]
      },
      "C00522": {
@@ -3186,6 +4061,21 @@
        1.0
       ]
      },
+     "C00812": {
+      "n_bins": 3,
+      "slope_per_day": 0.00057482,
+      "slope_per_year": 0.209951,
+      "delta_days": [
+       252,
+       545,
+       818
+      ],
+      "fidelity": [
+       0.666667,
+       0.5,
+       1.0
+      ]
+     },
      "C01328": {
       "n_bins": 3,
       "slope_per_day": 0.0,
@@ -3198,6 +4088,36 @@
       "fidelity": [
        1.0,
        1.0,
+       1.0
+      ]
+     },
+     "C01430": {
+      "n_bins": 2,
+      "slope_per_day": 2.393e-05,
+      "slope_per_year": 0.00874,
+      "delta_days": [
+       510,
+       1903
+      ],
+      "fidelity": [
+       0.8,
+       0.833333
+      ]
+     },
+     "C01659": {
+      "n_bins": 4,
+      "slope_per_day": 0.00075375,
+      "slope_per_year": 0.275309,
+      "delta_days": [
+       227,
+       458,
+       787,
+       1151
+      ],
+      "fidelity": [
+       0.25,
+       0.333333,
+       0.333333,
        1.0
       ]
      },
@@ -3225,6 +4145,19 @@
       "fidelity": [
        0.666667,
        1.0
+      ]
+     },
+     "C01933": {
+      "n_bins": 2,
+      "slope_per_day": 0.0,
+      "slope_per_year": 0.0,
+      "delta_days": [
+       623,
+       1576
+      ],
+      "fidelity": [
+       0.333333,
+       0.333333
       ]
      },
      "C02312": {
@@ -3258,42 +4191,45 @@
     },
     "slope_test": {
      "quantity": "per-subject slope of fidelity vs delta (per day)",
-     "n_subjects": 11,
-     "mean": -7.8e-05,
+     "n_subjects": 18,
+     "mean": -6e-06,
      "median": 0.0,
-     "sd": 0.000535,
+     "sd": 0.000488,
      "ci95_t": [
-      -0.000437,
-      0.000281
+      -0.000249,
+      0.000237
      ],
      "ci95_bootstrap": [
-      -0.000427,
-      0.00015
+      -0.000254,
+      0.000193
      ],
-     "p_paired_t": 0.6394,
-     "p_wilcoxon": 0.8125,
-     "p_signflip": 0.9392,
-     "n_negative": 2,
-     "n_positive": 3,
-     "mean_slope_per_year": -0.02849,
+     "p_paired_t": 0.9601,
+     "p_wilcoxon": 0.5751,
+     "p_signflip": 0.9725,
+     "n_negative": 4,
+     "n_positive": 6,
+     "mean_slope_per_year": -0.002191,
      "ci95_t_per_year": [
-      -0.159614,
-      0.102635
+      -0.090947,
+      0.086564
      ],
      "direction_negative": true,
      "significant_at_p05": false,
      "meets_frozen_bar": false,
-     "p_one_sided_decline": 0.3197
+     "p_one_sided_decline": 0.48
     },
     "crossover": {
      "definition": "smallest delta bin at which the fresh same-domain imposter twin matches or beats the stale own twin, pooled over the subjects who filled that bin and restricted to the same items",
      "pooled_crossover_bin": null,
      "occurs_in_observed_range": false,
-     "n_subjects_with_crossover": 17,
-     "n_subjects_evaluated": 28,
+     "n_subjects_with_crossover": 22,
+     "n_subjects_evaluated": 36,
      "per_subject_crossover_bin": {
+      "C00145": "2-3y",
       "C00146": "1-2y",
       "C00153": ">3y",
+      "C00163": ">3y",
+      "C00457": "1-2y",
       "C00522": "2-3y",
       "C00620": ">3y",
       "C00673": "6-12m",
@@ -3301,6 +4237,7 @@
       "C00752": "6-12m",
       "C01247": "1-2y",
       "C01328": "1-2y",
+      "C01659": "6-12m",
       "C01752": "2-3y",
       "C01801": "6-12m",
       "C01842": "1-2y",
@@ -3308,6 +4245,7 @@
       "C01891": "1-2y",
       "C01897": "1-2y",
       "C01933": "1-2y",
+      "C02242": ">3y",
       "C02500": ">3y"
      }
     },
@@ -3340,6 +4278,21 @@
         1.0
        ]
       },
+      "C00812": {
+       "n_bins": 3,
+       "slope_per_day": 0.00057482,
+       "slope_per_year": 0.209951,
+       "delta_days": [
+        252,
+        545,
+        818
+       ],
+       "fidelity": [
+        0.666667,
+        0.5,
+        1.0
+       ]
+      },
       "C01328": {
        "n_bins": 3,
        "slope_per_day": 0.0,
@@ -3352,6 +4305,23 @@
        "fidelity": [
         1.0,
         1.0,
+        1.0
+       ]
+      },
+      "C01659": {
+       "n_bins": 4,
+       "slope_per_day": 0.00075375,
+       "slope_per_year": 0.275309,
+       "delta_days": [
+        227,
+        458,
+        787,
+        1151
+       ],
+       "fidelity": [
+        0.25,
+        0.333333,
+        0.333333,
         1.0
        ]
       },
@@ -3373,65 +4343,65 @@
      },
      "slope_test": {
       "quantity": "within-subject-sweep per-subject slope (per day)",
-      "n_subjects": 3,
-      "mean": -4.6e-05,
+      "n_subjects": 5,
+      "mean": 0.000238,
       "median": 0.0,
-      "sd": 8e-05,
+      "sd": 0.000398,
       "ci95_t": [
-       -0.000246,
-       0.000153
+       -0.000257,
+       0.000733
       ],
       "ci95_bootstrap": [
-       -0.000139,
-       0.0
+       -5.6e-05,
+       0.000567
       ],
-      "p_paired_t": 0.4226,
-      "p_wilcoxon": 1.0,
-      "p_signflip": 1.0,
+      "p_paired_t": 0.2529,
+      "p_wilcoxon": 0.5,
+      "p_signflip": 0.5032,
       "n_negative": 1,
-      "n_positive": 0
+      "n_positive": 2
      }
     },
     "freshest_minus_stalest": {
      "arm_a": "h7_twin_redacted[6-12m]",
      "arm_b": "h7_twin_redacted[>3y]",
-     "n_subjects": 3,
-     "n_subjects_only_a": 7,
-     "n_subjects_only_b": 9,
-     "mean_a": 0.722222,
+     "n_subjects": 4,
+     "n_subjects_only_a": 11,
+     "n_subjects_only_b": 14,
+     "mean_a": 0.604167,
      "mean_b": 1.0,
-     "mean_diff": -0.277778,
-     "median_diff": -0.333333,
-     "sd_diff": 0.254588,
-     "se_diff": 0.146986,
+     "mean_diff": -0.395833,
+     "median_diff": -0.416667,
+     "sd_diff": 0.314576,
+     "se_diff": 0.157288,
      "ci95_t": [
-      -0.910208,
-      0.354653
+      -0.896395,
+      0.104728
      ],
      "ci95_bootstrap": [
-      -0.5,
-      0.0
+      -0.645833,
+      -0.125
      ],
-     "p_paired_t": 0.1994,
-     "p_wilcoxon": 0.5,
-     "p_signflip": 0.4919,
+     "p_paired_t": 0.08643,
+     "p_wilcoxon": 0.25,
+     "p_signflip": 0.2475,
      "n_subjects_a_gt_b": 0,
-     "n_subjects_a_lt_b": 2,
+     "n_subjects_a_lt_b": 3,
      "n_subjects_tied": 1,
-     "t_stat": -1.8898,
-     "cohens_dz": -1.091089,
+     "t_stat": -2.5166,
+     "cohens_dz": -1.258306,
      "magnitude_bar": 0.09,
      "meets_magnitude_bar": false,
      "note": "Paired over the subjects who filled BOTH the freshest and the stalest bin. The unpaired bin means are in per_bin above."
     },
-    "n_subjects_with_slope": 11,
-    "n_subjects_single_bin_no_slope": 17,
+    "n_subjects_with_slope": 18,
+    "n_subjects_single_bin_no_slope": 18,
     "freshest_minus_stalest_unpaired": {
-     "mean_a": 0.691667,
-     "mean_b": 0.784722,
-     "mean_diff": -0.093055,
-     "n_subjects_a": 10,
-     "n_subjects_b": 12,
+     "mean_a": 0.714444,
+     "mean_b": 0.731481,
+     "mean_diff": -0.017037,
+     "n_subjects_a": 15,
+     "n_subjects_b": 18,
      "note": "Different subjects in each bin; between-subject, not paired."
     }
    }
@@ -3799,122 +4769,303 @@
    }
   },
   "channel2": {
+   "gemma": {
+    "channel": "2",
+    "definition_quoted": "Contamination meter: per subject, (named baseline) − (name-redacted baseline). Reported per subject and as a corpus figure; subjects with a large meter are analyzed separately.",
+    "method_note": "Per-subject: mean(zeroinfo_named) - mean(zeroinfo_redacted) over that subject's items. Pooled: the OE-1 method -- the difference of the two arm means taken over all items at once (experiments/stage2_oe1.py, _paired_block 'contamination_meter').",
+    "per_subject": {
+     "C00032": 0.2,
+     "C00050": -0.25,
+     "C00087": 0.333333,
+     "C00102": -0.125,
+     "C00110": 0.333333,
+     "C00145": 0.0,
+     "C00146": 0.0,
+     "C00153": 0.0,
+     "C00163": 0.0,
+     "C00169": 0.333333,
+     "C00203": -0.333333,
+     "C00218": 0.333333,
+     "C00344": 0.0,
+     "C00427": 0.0,
+     "C00440": 0.0,
+     "C00457": 0.333333,
+     "C00522": 0.333333,
+     "C00526": -0.25,
+     "C00563": 0.0,
+     "C00580": 0.333333,
+     "C00582": 0.0,
+     "C00593": 0.0,
+     "C00620": -0.166667,
+     "C00621": -0.5,
+     "C00622": 0.166667,
+     "C00634": 0.333333,
+     "C00642": 0.25,
+     "C00673": 0.166667,
+     "C00697": 0.333333,
+     "C00698": -0.5,
+     "C00746": -1.0,
+     "C00752": 0.0,
+     "C00789": 0.1,
+     "C00812": 0.0,
+     "C00818": -0.166667,
+     "C00819": 0.05,
+     "C00824": -0.35,
+     "C00833": -0.166667,
+     "C00846": 0.166667,
+     "C00886": -0.25,
+     "C00890": 0.027778,
+     "C00897": 0.0,
+     "C01108": 0.0,
+     "C01163": 0.2,
+     "C01171": 0.2,
+     "C01180": 0.0,
+     "C01247": 0.0,
+     "C01254": 0.2,
+     "C01296": 0.0,
+     "C01328": 0.0,
+     "C01375": 0.25,
+     "C01430": 0.233333,
+     "C01442": 0.0,
+     "C01464": -0.3,
+     "C01485": -0.333333,
+     "C01538": -0.166667,
+     "C01585": 0.0,
+     "C01659": 0.083333,
+     "C01673": 0.333333,
+     "C01722": 0.166667,
+     "C01746": 0.0,
+     "C01752": 0.0,
+     "C01800": 0.2,
+     "C01801": 0.166667,
+     "C01817": 0.0,
+     "C01842": 0.0,
+     "C01848": 0.0,
+     "C01883": 0.166667,
+     "C01891": 0.166667,
+     "C01897": 0.333333,
+     "C01904": -0.333333,
+     "C01933": 0.666667,
+     "C01967": 0.333333,
+     "C02121": 0.0,
+     "C02167": 0.0,
+     "C02200": 0.0,
+     "C02218": 0.4,
+     "C02242": 0.0,
+     "C02248": -0.333333,
+     "C02256": 0.0,
+     "C02312": 0.25,
+     "C02318": 0.0,
+     "C02359": 0.0,
+     "C02397": 0.0,
+     "C02437": 0.0,
+     "C02469": -0.333333,
+     "C02474": -0.333333,
+     "C02500": 0.333333
+    },
+    "pooled_item_level": null,
+    "paired_test": {
+     "arm_a": "zeroinfo_named",
+     "arm_b": "zeroinfo_redacted",
+     "n_subjects": 88,
+     "n_subjects_only_a": 0,
+     "n_subjects_only_b": 0,
+     "mean_a": 0.608554,
+     "mean_b": 0.578788,
+     "mean_diff": 0.029766,
+     "median_diff": 0.0,
+     "sd_diff": 0.247306,
+     "se_diff": 0.026363,
+     "ci95_t": [
+      -0.022633,
+      0.082165
+     ],
+     "ci95_bootstrap": [
+      -0.02339,
+      0.078978
+     ],
+     "p_paired_t": 0.262,
+     "p_wilcoxon": 0.2602,
+     "p_signflip": 0.2642,
+     "n_subjects_a_gt_b": 35,
+     "n_subjects_a_lt_b": 19,
+     "n_subjects_tied": 34,
+     "t_stat": 1.1291,
+     "cohens_dz": 0.120363
+    },
+    "flag": null,
+    "summary": {
+     "n_subjects": 88,
+     "mean": 0.029766,
+     "median": 0.0,
+     "sd": 0.247306,
+     "min": -1.0,
+     "max": 0.666667,
+     "n_positive": 35,
+     "n_negative": 19
+    },
+    "large_meter_cutoff_p90": 0.333333,
+    "large_meter_subjects": [
+     "C00087",
+     "C00110",
+     "C00169",
+     "C00218",
+     "C00457",
+     "C00522",
+     "C00580",
+     "C00634",
+     "C00697",
+     "C01673",
+     "C01897",
+     "C01933",
+     "C01967",
+     "C02218",
+     "C02500"
+    ]
+   },
    "flashlite": {
     "channel": "2",
     "definition_quoted": "Contamination meter: per subject, (named baseline) − (name-redacted baseline). Reported per subject and as a corpus figure; subjects with a large meter are analyzed separately.",
     "method_note": "Per-subject: mean(zeroinfo_named) - mean(zeroinfo_redacted) over that subject's items. Pooled: the OE-1 method -- the difference of the two arm means taken over all items at once (experiments/stage2_oe1.py, _paired_block 'contamination_meter').",
     "per_subject": {
+     "C00032": 0.2,
      "C00050": 0.0,
      "C00087": 0.0,
      "C00102": -0.107143,
      "C00110": 0.666667,
+     "C00145": 0.166667,
+     "C00146": 0.0,
      "C00153": 0.0,
      "C00163": 0.0,
      "C00169": 0.166667,
      "C00203": 0.0,
+     "C00218": 0.0,
      "C00344": 0.0,
      "C00427": -0.083333,
+     "C00440": 0.5,
+     "C00457": -0.25,
      "C00522": 0.333333,
      "C00526": 0.0,
      "C00563": 0.35,
      "C00580": 0.333333,
+     "C00582": 0.25,
      "C00593": 0.333333,
      "C00620": -0.5,
      "C00621": 0.5,
+     "C00622": -0.166667,
      "C00634": 0.0,
+     "C00642": -0.25,
      "C00673": 0.0,
      "C00697": 0.333333,
      "C00746": 0.0,
      "C00752": 0.666667,
-     "C00789": 0.083333,
+     "C00789": 0.233333,
+     "C00812": 0.4,
      "C00818": -0.333333,
      "C00819": 0.05,
      "C00824": 0.0,
      "C00833": 0.166667,
      "C00846": -0.25,
+     "C00886": -0.083333,
      "C00890": 0.222222,
      "C00897": 0.0,
+     "C01108": -0.166667,
      "C01163": 0.25,
+     "C01171": 0.1,
      "C01180": -0.333333,
      "C01247": 0.0,
      "C01254": 0.0,
      "C01296": -0.083333,
      "C01328": 0.0,
-     "C01375": 0.0,
+     "C01375": 0.25,
+     "C01430": 0.033333,
      "C01442": 0.333333,
      "C01464": 0.0,
+     "C01485": 0.0,
+     "C01538": 0.1,
+     "C01585": 0.333333,
+     "C01659": 0.166667,
      "C01673": 0.166667,
      "C01722": 0.166667,
      "C01746": 0.333333,
      "C01752": 0.0,
      "C01800": 0.3,
      "C01801": 0.0,
+     "C01817": 0.0,
      "C01842": 0.166667,
      "C01848": 0.0,
+     "C01883": 0.333333,
      "C01891": -0.333333,
      "C01897": 0.0,
      "C01904": 0.5,
-     "C01933": 0.5,
+     "C01933": 0.0,
+     "C01967": 0.0,
      "C02121": 0.666667,
-     "C02200": 0.0,
-     "C02218": 0.0,
+     "C02167": -0.333333,
+     "C02200": -0.15,
+     "C02218": -0.05,
+     "C02242": 0.0,
      "C02248": 0.0,
      "C02256": -0.166667,
      "C02312": 0.083333,
      "C02318": 0.333333,
      "C02359": 0.333333,
      "C02397": 0.25,
+     "C02437": 0.0,
      "C02469": 0.25,
+     "C02474": 0.0,
      "C02500": 0.5
     },
     "pooled_item_level": null,
     "paired_test": {
      "arm_a": "zeroinfo_named",
      "arm_b": "zeroinfo_redacted",
-     "n_subjects": 62,
-     "n_subjects_only_a": 6,
-     "n_subjects_only_b": 4,
-     "mean_a": 0.740143,
-     "mean_b": 0.624846,
-     "mean_diff": 0.115297,
+     "n_subjects": 87,
+     "n_subjects_only_a": 0,
+     "n_subjects_only_b": 0,
+     "mean_a": 0.715964,
+     "mean_b": 0.621921,
+     "mean_diff": 0.094043,
      "median_diff": 0.0,
-     "sd_diff": 0.246339,
-     "se_diff": 0.031285,
+     "sd_diff": 0.235051,
+     "se_diff": 0.0252,
      "ci95_t": [
-      0.052738,
-      0.177855
+      0.043947,
+      0.144139
      ],
      "ci95_bootstrap": [
-      0.055619,
-      0.175538
+      0.045848,
+      0.143598
      ],
-     "p_paired_t": 0.0004872,
-     "p_wilcoxon": 0.0009248,
-     "p_signflip": 0.0007,
-     "n_subjects_a_gt_b": 29,
-     "n_subjects_a_lt_b": 9,
-     "n_subjects_tied": 24,
-     "t_stat": 3.6854,
-     "cohens_dz": 0.468041
+     "p_paired_t": 0.0003404,
+     "p_wilcoxon": 0.0005631,
+     "p_signflip": 0.00055,
+     "n_subjects_a_gt_b": 40,
+     "n_subjects_a_lt_b": 17,
+     "n_subjects_tied": 30,
+     "t_stat": 3.7318,
+     "cohens_dz": 0.400096
     },
     "flag": null,
     "summary": {
-     "n_subjects": 62,
-     "mean": 0.115297,
+     "n_subjects": 87,
+     "mean": 0.094043,
      "median": 0.0,
-     "sd": 0.246339,
+     "sd": 0.235051,
      "min": -0.5,
      "max": 0.666667,
-     "n_positive": 29,
-     "n_negative": 9
+     "n_positive": 40,
+     "n_negative": 17
     },
-    "large_meter_cutoff_p90": 0.485,
+    "large_meter_cutoff_p90": 0.34,
     "large_meter_subjects": [
      "C00110",
+     "C00440",
+     "C00563",
      "C00621",
      "C00752",
+     "C00812",
      "C01904",
-     "C01933",
      "C02121",
      "C02500"
     ]
@@ -4017,7 +5168,15 @@
      0.093216
     ],
     "channel1_p": 1.505e-12,
-    "channel2_mean_diff": "[AWAITING JUDGE]"
+    "channel2_mean_diff": 0.121106,
+    "channel2_ci95": [
+     0.05795,
+     0.184263
+    ],
+    "channel2_p": 0.0002608,
+    "population_tvd_pooled": 0.197183,
+    "population_tvd_per_subject_mean": 0.32983,
+    "population_tvd_n_subjects": 88
    },
    "own_named_minus_imposter": {
     "channel1_mean_diff": 0.077758,
@@ -4026,7 +5185,15 @@
      0.095767
     ],
     "channel1_p": 3.221e-13,
-    "channel2_mean_diff": "[AWAITING JUDGE]"
+    "channel2_mean_diff": 0.140728,
+    "channel2_ci95": [
+     0.069416,
+     0.212041
+    ],
+    "channel2_p": 0.0001773,
+    "population_tvd_pooled": 0.228169,
+    "population_tvd_per_subject_mean": 0.344792,
+    "population_tvd_n_subjects": 88
    },
    "own_minus_zeroinfo": {
     "channel1_mean_diff": 0.037777,
@@ -4035,7 +5202,15 @@
      0.054481
     ],
     "channel1_p": 2.132e-05,
-    "channel2_mean_diff": "[AWAITING JUDGE]"
+    "channel2_mean_diff": 0.115517,
+    "channel2_ci95": [
+     0.054341,
+     0.176692
+    ],
+    "channel2_p": 0.0003145,
+    "population_tvd_pooled": 0.138028,
+    "population_tvd_per_subject_mean": 0.277421,
+    "population_tvd_n_subjects": 88
    },
    "own_named_minus_zeroinfo_named": {
     "channel1_mean_diff": 0.027039,
@@ -4044,11 +5219,62 @@
      0.043667
     ],
     "channel1_p": 0.001736,
-    "channel2_mean_diff": "[AWAITING JUDGE]"
+    "channel2_mean_diff": 0.097128,
+    "channel2_ci95": [
+     0.035549,
+     0.158706
+    ],
+    "channel2_p": 0.002343,
+    "population_tvd_pooled": 0.098592,
+    "population_tvd_per_subject_mean": 0.267708,
+    "population_tvd_n_subjects": 88
    }
   },
-  "population_level": "[AWAITING JUDGE]",
-  "divergences": "[AWAITING JUDGE]"
+  "population_level": {
+   "imposter_redacted": {
+    "counts": {
+     "SAME": 151,
+     "DIFFERENT": 99,
+     "UNCLEAR": 105
+    },
+    "tvd_vs_twin_redacted": 0.197183
+   },
+   "twin_named": {
+    "counts": {
+     "SAME": 232,
+     "DIFFERENT": 79,
+     "UNCLEAR": 44
+    },
+    "tvd_vs_twin_redacted": 0.030986
+   },
+   "twin_redacted": {
+    "counts": {
+     "SAME": 221,
+     "DIFFERENT": 82,
+     "UNCLEAR": 52
+    },
+    "tvd_vs_twin_redacted": 0.0
+   },
+   "zeroinfo_named": {
+    "counts": {
+     "SAME": 209,
+     "DIFFERENT": 114,
+     "UNCLEAR": 32
+    },
+    "tvd_vs_twin_redacted": 0.090141
+   },
+   "zeroinfo_redacted": {
+    "counts": {
+     "SAME": 192,
+     "DIFFERENT": 131,
+     "UNCLEAR": 32
+    },
+    "tvd_vs_twin_redacted": 0.138028
+   }
+  },
+  "divergences": [
+   "None. The individual and population levels agree on every registered contrast."
+  ]
  },
  "health": {
   "generation_per_chunk": {
@@ -4709,17 +5935,17 @@
    "note": "Flags recorded on the item at build time."
   },
   "labels_present_per_model": {
-   "gemma": 0,
-   "flashlite": 1268
+   "gemma": 1911,
+   "flashlite": 1911
   }
  },
  "costs": {
   "source": "results/cost_log.jsonl",
   "run_id_filter": "stage2_confirm/*",
-  "n_entries": 15,
-  "api_usd_spent": 3.15582,
+  "n_entries": 22,
+  "api_usd_spent": 6.552869,
   "api_cap_usd": 15.0,
-  "api_headroom_usd": 11.84418,
+  "api_headroom_usd": 8.447131,
   "api_cap_breached": false,
   "node_hours_spent": 0.6028,
   "node_hours_cap": 8.0,
@@ -4754,12 +5980,12 @@
     "n_parse_failures": 0
    },
    "stage2_confirm/judge_r2": {
-    "n_entries": 3,
-    "n_calls": 1140,
-    "cost_usd": 1.454335,
+    "n_entries": 10,
+    "n_calls": 3822,
+    "cost_usd": 4.851384,
     "node_hours": 0.0,
-    "tokens_in": 1422250,
-    "tokens_out": 86144,
+    "tokens_in": 4730223,
+    "tokens_out": 289715,
     "n_parse_failures": 0
    }
   },
@@ -4774,7 +6000,7 @@
  },
  "provenance": {
   "report_generator": "experiments/stage2_confirm_report.py",
-  "git_head": "bb525ab82e3cd49e18003c12954436fb37967a31",
+  "git_head": "4f3d6b067355bc5cc10d28ff538291c12aa77694",
   "git_dirty": true,
   "seed": 20260728,
   "n_bootstrap": 10000,
@@ -4884,7 +6110,7 @@
     "file": "results/cost_log.jsonl",
     "generator": "every run driver, appended per chunk",
     "exists": true,
-    "sha256": "b9992d19eda5d4c8e691d1db3e7cac924d4700baaadaaea9f627138c3515373f",
+    "sha256": "514ec3160d7c4cabdb083605dc1b675037aaa5ce902911669601578b66064f3c",
     "last_commit": "bb525ab82e3cd49e18003c12954436fb37967a31",
     "tracked": true
    },
@@ -4913,6 +6139,14 @@
     "tracked": true
    },
    {
+    "file": "results/stage2_confirm/judge/judgements_gemma_chunk_01.jsonl",
+    "generator": "experiments/stage2_confirm_judge.py",
+    "exists": true,
+    "sha256": "e531820cb4d8586fddf304e7a90aebe875196424d6dd6c1928671d9355854d06",
+    "last_commit": null,
+    "tracked": false
+   },
+   {
     "file": "results/stage2_confirm/gen/gemma/completions_chunk_02.jsonl",
     "generator": "experiments/stage2_confirm_gen.sbatch on Leonardo, ingested by experiments/stage2_confirm_ingest.py",
     "exists": true,
@@ -4927,6 +6161,14 @@
     "sha256": "cdb6aaaccabe33715bd10037898d6195c3363ab1a82cc129247f51b08a3a2aae",
     "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
     "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/judge/judgements_gemma_chunk_02.jsonl",
+    "generator": "experiments/stage2_confirm_judge.py",
+    "exists": true,
+    "sha256": "869e001fdf63dc02486254eae6643cffa8e33fe589e16cc2abe3715d8e0f77bf",
+    "last_commit": null,
+    "tracked": false
    },
    {
     "file": "results/stage2_confirm/gen/gemma/completions_chunk_03.jsonl",
@@ -4945,6 +6187,14 @@
     "tracked": true
    },
    {
+    "file": "results/stage2_confirm/judge/judgements_gemma_chunk_03.jsonl",
+    "generator": "experiments/stage2_confirm_judge.py",
+    "exists": true,
+    "sha256": "7cb8fd3379edc55ed6262a413826c1b83eb54588838a5fef88fc91295d368695",
+    "last_commit": null,
+    "tracked": false
+   },
+   {
     "file": "results/stage2_confirm/gen/gemma/completions_chunk_04.jsonl",
     "generator": "experiments/stage2_confirm_gen.sbatch on Leonardo, ingested by experiments/stage2_confirm_ingest.py",
     "exists": true,
@@ -4961,6 +6211,14 @@
     "tracked": true
    },
    {
+    "file": "results/stage2_confirm/judge/judgements_gemma_chunk_04.jsonl",
+    "generator": "experiments/stage2_confirm_judge.py",
+    "exists": true,
+    "sha256": "22187beecd16a1bed9b95e50b6ab4e4fd0b21dc00c6e5911813f3b4af6af61da",
+    "last_commit": null,
+    "tracked": false
+   },
+   {
     "file": "results/stage2_confirm/gen/gemma/completions_chunk_05.jsonl",
     "generator": "experiments/stage2_confirm_gen.sbatch on Leonardo, ingested by experiments/stage2_confirm_ingest.py",
     "exists": true,
@@ -4975,6 +6233,14 @@
     "sha256": "b1a9036132a33d7487197b8d917356b42d6de7352e00e3b792ba8c7391e7fb32",
     "last_commit": "1464f83dc71fdd3a2dd53fffc7618998278d14bd",
     "tracked": true
+   },
+   {
+    "file": "results/stage2_confirm/judge/judgements_gemma_chunk_05.jsonl",
+    "generator": "experiments/stage2_confirm_judge.py",
+    "exists": true,
+    "sha256": "098d65d79264cf3f320f1439d8c1b274f206a3e7e000d0213b824167219bf21d",
+    "last_commit": null,
+    "tracked": false
    },
    {
     "file": "results/stage2_confirm/gen/flashlite/completions_chunk_01.jsonl",
@@ -5068,7 +6334,7 @@
     "file": "results/stage2_confirm/judge/judgements_flashlite_chunk_04.jsonl",
     "generator": "experiments/stage2_confirm_judge.py",
     "exists": true,
-    "sha256": "78f7f44e014606c98d6fc20a770172ad4f950f42e1e0b2a9b88987d4913064e8",
+    "sha256": "e3ecc87fc6d803c2bfe003df4466b90ade54cc636df75bf9344d33baa90bf1bd",
     "last_commit": null,
     "tracked": false
    },
@@ -5085,6 +6351,14 @@
     "generator": "experiments/stage2_confirm_embed.py",
     "exists": true,
     "sha256": "7acffb9e6135724968771b25b561e455b7403aa5b033f5e3de19997cf9f6b421",
+    "last_commit": null,
+    "tracked": false
+   },
+   {
+    "file": "results/stage2_confirm/judge/judgements_flashlite_chunk_05.jsonl",
+    "generator": "experiments/stage2_confirm_judge.py",
+    "exists": true,
+    "sha256": "e44d5882227d5af06d0115bfa3773b2253d59ffe426326785b559853ba8f9273",
     "last_commit": null,
     "tracked": false
    }
@@ -5152,5 +6426,5 @@
    "owner_decision": "Mechanical application of A5 / B3 / B7."
   }
  ],
- "runtime_secs": 1.5
+ "runtime_secs": 1.8
 }

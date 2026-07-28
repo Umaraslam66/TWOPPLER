@@ -1,0 +1,120 @@
+{
+ "banner": "CONFIRMATORY. Channel 2 (stance judge) labels. Labels only -- no contrast and no hypothesis verdict is computed here.",
+ "canary": {
+  "n": 10,
+  "n_flips": 0,
+  "flips": [],
+  "passed": true,
+  "max_flips_allowed": 0,
+  "file": "results/stage2_confirm/judge/canary_20260728-133557.jsonl",
+  "cost_usd": 0.012671,
+  "checked_utc": "2026-07-28T13:35:57Z"
+ },
+ "judge_model": "gemini-3.5-flash",
+ "rubric_sha256": "ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464",
+ "chunks": [
+  {
+   "gen_dir": "flashlite",
+   "chunk": "chunk_01",
+   "n_rows": 497,
+   "labels": {
+    "DIFFERENT": 114,
+    "SAME": 292,
+    "UNCLEAR": 91
+   }
+  },
+  {
+   "gen_dir": "flashlite",
+   "chunk": "chunk_02",
+   "n_rows": 144,
+   "labels": {
+    "UNCLEAR": 24,
+    "SAME": 92,
+    "DIFFERENT": 28
+   }
+  },
+  {
+   "gen_dir": "flashlite",
+   "chunk": "chunk_03",
+   "n_rows": 499,
+   "labels": {
+    "UNCLEAR": 68,
+    "SAME": 326,
+    "DIFFERENT": 105
+   }
+  },
+  {
+   "gen_dir": "flashlite",
+   "chunk": "chunk_04",
+   "n_rows": 492,
+   "labels": {
+    "SAME": 328,
+    "DIFFERENT": 119,
+    "UNCLEAR": 45
+   }
+  },
+  {
+   "gen_dir": "flashlite",
+   "chunk": "chunk_05",
+   "n_rows": 279,
+   "labels": {
+    "DIFFERENT": 86,
+    "SAME": 145,
+    "UNCLEAR": 48
+   }
+  },
+  {
+   "gen_dir": "gemma",
+   "chunk": "chunk_01",
+   "n_rows": 497,
+   "labels": {
+    "DIFFERENT": 146,
+    "SAME": 249,
+    "UNCLEAR": 102
+   }
+  },
+  {
+   "gen_dir": "gemma",
+   "chunk": "chunk_02",
+   "n_rows": 144,
+   "labels": {
+    "UNCLEAR": 27,
+    "DIFFERENT": 37,
+    "SAME": 80
+   }
+  },
+  {
+   "gen_dir": "gemma",
+   "chunk": "chunk_03",
+   "n_rows": 499,
+   "labels": {
+    "UNCLEAR": 64,
+    "SAME": 293,
+    "DIFFERENT": 142
+   }
+  },
+  {
+   "gen_dir": "gemma",
+   "chunk": "chunk_04",
+   "n_rows": 492,
+   "labels": {
+    "UNCLEAR": 48,
+    "DIFFERENT": 129,
+    "SAME": 315
+   }
+  },
+  {
+   "gen_dir": "gemma",
+   "chunk": "chunk_05",
+   "n_rows": 279,
+   "labels": {
+    "DIFFERENT": 84,
+    "SAME": 142,
+    "UNCLEAR": 53
+   }
+  }
+ ],
+ "confirmatory_spend_usd": 6.552869,
+ "confirmatory_budget_usd": 15.0,
+ "finished_utc": "2026-07-28T15:15:20Z"
+}

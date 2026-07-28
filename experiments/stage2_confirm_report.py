@@ -1925,102 +1925,194 @@ def render_markdown(data: dict) -> str:
              f"{h7['counts']['n_eligible_filling_zero_bins']} flagged-eligible "
              f"subjects fill no bin at all.")
     A.append("")
-    for gen_dir, model in GEN_DIRS.items():
-        role = "PRIMARY" if gen_dir == PRIMARY_DIR else "ROBUSTNESS"
-        blk = h7["channel1"][gen_dir]
-        A.append(f"### {model} — {role}, channel 1"
-                 + ("" if ch2_ok else " (PRELIMINARY)"))
-        A.append("")
-        A.append("| Δ bin | subjects | items | mean Δ (days) | stale own twin | "
-                 "fresh imposter | own − fresh imposter |")
-        A.append("|---|---|---|---|---|---|---|")
-        for b in H7_BIN_ORDER:
-            pb = blk["per_bin"][b]
-            A.append(f"| {b} | {pb['n_subjects']} | {pb['n_items']} | "
-                     f"{fmt(pb['mean_delta_days'], 1)} | "
-                     f"{fmt(pb['stale_own_twin_mean'])} | "
-                     f"{fmt(pb['fresh_imposter_mean'])} | "
-                     f"{fmt(pb['own_minus_fresh_imposter'], plus=True)} |")
-        A.append("")
+    def _h7_reading_pointer(blk):
+        """Which pre-written reading this channel's arithmetic points at.
+
+        Mechanical: decay iff the frozen slope bar's arithmetic holds
+        (mean slope < 0, p < .05); flat iff the slope is not
+        distinguishable from zero; a SIGNIFICANT POSITIVE slope fits
+        neither pre-written reading and is said so, not shoehorned.
+        """
         sl = blk.get("slope_test")
-        if sl:
-            A.append(f"**Between-subject slope test.** "
-                     f"{blk['n_subjects_with_slope']} subjects fill ≥ 2 bins "
-                     f"and contribute a slope; "
-                     f"{blk['n_subjects_single_bin_no_slope']} fill exactly "
-                     f"one and contribute none.")
+        if not sl or sl.get("p_paired_t") is None:
+            return "insufficient data for a pointer"
+        if sl["mean_slope_per_year"] < 0 and sl["p_paired_t"] < 0.05:
+            return "the decay reading"
+        if sl["mean_slope_per_year"] > 0 and sl["p_paired_t"] < 0.05:
+            return ("NEITHER pre-written reading — the slope is "
+                    "significantly POSITIVE (anti-decay), a direction "
+                    "neither reading anticipates")
+        return "the flat reading"
+
+    def _h7_model_sections(ch_key, ch_label, unit_year, mag_bar):
+        for gen_dir, model in GEN_DIRS.items():
+            role = "PRIMARY" if gen_dir == PRIMARY_DIR else "ROBUSTNESS"
+            blk = h7[ch_key][gen_dir]
+            A.append(f"### {model} — {role}, {ch_label}"
+                     + ("" if ch2_ok else " (PRELIMINARY)"))
             A.append("")
-            A.append(f"- Mean per-subject slope: "
-                     f"{fmt(sl['mean_slope_per_year'], 5, plus=True)} cosine "
-                     f"per year "
-                     f"(95% CI [{fmt(sl['ci95_t_per_year'][0], 5, plus=True)}, "
-                     f"{fmt(sl['ci95_t_per_year'][1], 5, plus=True)}]).")
-            A.append(f"- Paired t p = {fmt_p(sl['p_paired_t'])}; Wilcoxon "
-                     f"p = {fmt_p(sl['p_wilcoxon'])}; sign-flip "
-                     f"p = {fmt_p(sl['p_signflip'])}.")
-            A.append(f"- Slopes below zero: {sl['n_negative']} of "
-                     f"{sl['n_subjects']}.")
-            A.append(f"- Against the frozen bar (mean slope < 0 AND p < .05): "
-                     f"**{'MET' if sl.get('meets_frozen_bar') else 'NOT MET'}** "
-                     f"— exploratory, so this is a description of the bar's "
-                     f"arithmetic, not a confirmatory verdict.")
-        else:
-            A.append("Not enough subjects fill two bins to fit slopes.")
-        A.append("")
-        cr = blk["crossover"]
-        A.append(f"**Crossover statistic.** "
-                 + (f"Pooled crossover at the **{cr['pooled_crossover_bin']}** "
-                    f"bin." if cr["pooled_crossover_bin"] else
-                    "No pooled crossover inside the observed Δ range: the "
-                    "stale own twin stays ahead of the fresh imposter in "
-                    "every filled bin.")
-                 + f" Per subject, {cr['n_subjects_with_crossover']} of "
-                   f"{cr['n_subjects_evaluated']} cross at some bin.")
-        A.append("")
-        fs = blk.get("freshest_minus_stalest") or {}
-        if not fs.get("unavailable"):
-            A.append(f"**Freshest − stalest bin** (the contrast the magnitude "
-                     f"bar names for H7), paired over the "
-                     f"{fs.get('n_subjects')} subjects filling both: "
-                     f"{fmt(fs.get('mean_diff'), plus=True)} "
-                     f"(95% CI [{fmt((fs.get('ci95_t') or [None])[0], plus=True)}, "
-                     f"{fmt((fs.get('ci95_t') or [None, None])[1], plus=True)}], "
-                     f"p = {fmt_p(fs.get('p_paired_t'))}) against ≥ "
-                     f"+{MAG_BAR_CH1:.2f} — "
-                     f"**{'MET' if fs.get('meets_magnitude_bar') else 'NOT MET'}**.")
-        else:
-            A.append(f"**Freshest − stalest bin**: {fs.get('note')}")
-        A.append("")
-        ws = blk["within_subject_sweep"]
-        A.append(f"**Within-subject sweep (supporting analysis).** Subset: "
-                 f"{', '.join(ws['subset']) or 'none'} "
-                 f"({ws['n_subjects']} subjects). "
-                 f"{ws['status']}.")
-        if ws.get("slope_test"):
+            A.append("| Δ bin | subjects | items | mean Δ (days) | stale own twin | "
+                     "fresh imposter | own − fresh imposter |")
+            A.append("|---|---|---|---|---|---|---|")
+            for b in H7_BIN_ORDER:
+                pb = blk["per_bin"][b]
+                A.append(f"| {b} | {pb['n_subjects']} | {pb['n_items']} | "
+                         f"{fmt(pb['mean_delta_days'], 1)} | "
+                         f"{fmt(pb['stale_own_twin_mean'])} | "
+                         f"{fmt(pb['fresh_imposter_mean'])} | "
+                         f"{fmt(pb['own_minus_fresh_imposter'], plus=True)} |")
             A.append("")
-            A.append(f"Mean slope over the sweep subset: "
-                     f"{fmt((ws['slope_test']['mean'] or 0) * 365.25, 5, plus=True)} "
-                     f"cosine per year, p = "
-                     f"{fmt_p(ws['slope_test']['p_paired_t'])} "
-                     f"(n = {ws['slope_test']['n_subjects']}).")
+            sl = blk.get("slope_test")
+            if sl:
+                A.append(f"**Between-subject slope test.** "
+                         f"{blk['n_subjects_with_slope']} subjects fill ≥ 2 bins "
+                         f"and contribute a slope; "
+                         f"{blk['n_subjects_single_bin_no_slope']} fill exactly "
+                         f"one and contribute none.")
+                A.append("")
+                A.append(f"- Mean per-subject slope: "
+                         f"{fmt(sl['mean_slope_per_year'], 5, plus=True)} "
+                         f"{unit_year} "
+                         f"(95% CI [{fmt(sl['ci95_t_per_year'][0], 5, plus=True)}, "
+                         f"{fmt(sl['ci95_t_per_year'][1], 5, plus=True)}]).")
+                A.append(f"- Paired t p = {fmt_p(sl['p_paired_t'])}; Wilcoxon "
+                         f"p = {fmt_p(sl['p_wilcoxon'])}; sign-flip "
+                         f"p = {fmt_p(sl['p_signflip'])}.")
+                A.append(f"- Slopes below zero: {sl['n_negative']} of "
+                         f"{sl['n_subjects']}.")
+                A.append(f"- Against the frozen bar (mean slope < 0 AND p < .05): "
+                         f"**{'MET' if sl.get('meets_frozen_bar') else 'NOT MET'}** "
+                         f"— exploratory, so this is a description of the bar's "
+                         f"arithmetic, not a confirmatory verdict.")
+            else:
+                A.append("Not enough subjects fill two bins to fit slopes.")
+            A.append("")
+            cr = blk["crossover"]
+            A.append(f"**Crossover statistic.** "
+                     + (f"Pooled crossover at the **{cr['pooled_crossover_bin']}** "
+                        f"bin." if cr["pooled_crossover_bin"] else
+                        "No pooled crossover inside the observed Δ range: the "
+                        "stale own twin stays ahead of the fresh imposter in "
+                        "every filled bin.")
+                     + f" Per subject, {cr['n_subjects_with_crossover']} of "
+                       f"{cr['n_subjects_evaluated']} cross at some bin.")
+            A.append("")
+            fs = blk.get("freshest_minus_stalest") or {}
+            if not fs.get("unavailable"):
+                A.append(f"**Freshest − stalest bin** (the contrast the magnitude "
+                         f"bar names for H7), paired over the "
+                         f"{fs.get('n_subjects')} subjects filling both: "
+                         f"{fmt(fs.get('mean_diff'), plus=True)} "
+                         f"(95% CI [{fmt((fs.get('ci95_t') or [None])[0], plus=True)}, "
+                         f"{fmt((fs.get('ci95_t') or [None, None])[1], plus=True)}], "
+                         f"p = {fmt_p(fs.get('p_paired_t'))}) against ≥ "
+                         f"+{mag_bar:.2f} — "
+                         f"**{'MET' if fs.get('meets_magnitude_bar') else 'NOT MET'}**.")
+            else:
+                A.append(f"**Freshest − stalest bin**: {fs.get('note')}")
+            A.append("")
+            ws = blk["within_subject_sweep"]
+            A.append(f"**Within-subject sweep (supporting analysis).** Subset: "
+                     f"{', '.join(ws['subset']) or 'none'} "
+                     f"({ws['n_subjects']} subjects). "
+                     f"{ws['status']}.")
+            if ws.get("slope_test"):
+                A.append("")
+                A.append(f"Mean slope over the sweep subset: "
+                         f"{fmt((ws['slope_test']['mean'] or 0) * 365.25, 5, plus=True)} "
+                         f"{unit_year}, p = "
+                         f"{fmt_p(ws['slope_test']['p_paired_t'])} "
+                         f"(n = {ws['slope_test']['n_subjects']}).")
+            A.append("")
+
+    _h7_model_sections("channel1", "channel 1 (embedding cosine)",
+                       "cosine per year", MAG_BAR_CH1)
+    if not ch2_ok:
+        A.append("### Channel 2, H7")
         A.append("")
-    A.append("### Channel 2, H7")
-    A.append("")
-    A.append(f"{AWAIT} — the stance judge has not finished. H7's channel-2 "
-             f"bins, slopes and crossover are computed by the same code and "
-             f"will render as soon as every chunk carries labels."
-             if not ch2_ok else "See the JSON block `h7.channel2`.")
-    A.append("")
+        A.append(f"{AWAIT} — the stance judge has not finished. H7's channel-2 "
+                 f"bins, slopes and crossover are computed by the same code and "
+                 f"will render as soon as every chunk carries labels.")
+        A.append("")
+    else:
+        _h7_model_sections("channel2", "channel 2 (stance match)",
+                           "stance-match points per year", MAG_BAR_CH2)
+        A.append("### The two channels on H7, side by side — they disagree")
+        A.append("")
+        A.append(_quote("both_channels"))
+        A.append("| model | channel | mean slope / year | p | pooled crossover "
+                 "| subjects crossing |")
+        A.append("|---|---|---|---|---|---|")
+        for gen_dir, model in GEN_DIRS.items():
+            for ch_key, ch_name in (("channel1", "1 embedding"),
+                                    ("channel2", "2 stance")):
+                blk = h7[ch_key][gen_dir]
+                sl = blk.get("slope_test") or {}
+                cr = blk["crossover"]
+                A.append(f"| {model} | {ch_name} | "
+                         f"{fmt(sl.get('mean_slope_per_year'), 5, plus=True)} | "
+                         f"{fmt_p(sl.get('p_paired_t'))} | "
+                         f"{cr['pooled_crossover_bin'] or 'none in range'} | "
+                         f"{cr['n_subjects_with_crossover']}/"
+                         f"{cr['n_subjects_evaluated']} |")
+        A.append("")
+        p_cr1 = h7["channel1"][PRIMARY_DIR]["crossover"]
+        p_cr2 = h7["channel2"][PRIMARY_DIR]["crossover"]
+        if bool(p_cr1["pooled_crossover_bin"]) != bool(p_cr2["pooled_crossover_bin"]):
+            A.append(
+                "**The pre-declared crossover statistic points different ways "
+                "in the two channels on the primary model**: channel 1 finds "
+                + (f"a pooled crossover at {p_cr1['pooled_crossover_bin']}"
+                   if p_cr1["pooled_crossover_bin"] else "no crossover in range")
+                + ", channel 2 finds "
+                + (f"a pooled crossover at {p_cr2['pooled_crossover_bin']}"
+                   if p_cr2["pooled_crossover_bin"] else "no crossover in range")
+                + ". By the frozen rule quoted above, no crossover claim can "
+                  "rest on either channel alone; the disagreement is itself "
+                  "the reportable fact. Note also that a crossover at the "
+                  "EARLIEST bin under a non-negative slope is not the "
+                  "declared decay pattern (a stranger's fresh twin "
+                  "overtaking as Δ grows); it is reported as measured, not "
+                  "as decay.")
+            A.append("")
+        A.append("Channel-2 caveat, printed where the numbers are: per-bin "
+                 "stance denominators are thin (few items per bin) and are "
+                 "further thinned by the imposter-arm UNCLEAR asymmetry "
+                 "flagged in section 6; channel-2 H7 numbers carry wider "
+                 "uncertainty than their channel-1 counterparts.")
+        A.append("")
     A.append("### The two pre-written readings, at equal prominence")
     A.append("")
     A.append(_quote("H7_reading_decay"))
     A.append(_quote("H7_reading_flat"))
-    A.append(f"Which reading the data supports is not stated here: the "
-             f"frozen bar names the primary model on both channels, and "
-             f"channel 2 is {'complete' if ch2_ok else 'incomplete'}."
-             if not ch2_ok else
-             "Both readings are printed above; the numbers in this section "
-             "decide between them.")
+    if not ch2_ok:
+        A.append(f"Which reading the data supports is not stated here: the "
+                 f"frozen bar names the primary model on both channels, and "
+                 f"channel 2 is incomplete.")
+    else:
+        A.append("Applied mechanically to the primary model (slope "
+                 "arithmetic; the crossover is reported beside):")
+        A.append("")
+        pointers = {}
+        for ch_key, ch_name in (("channel1", "Channel 1 (embedding)"),
+                                ("channel2", "Channel 2 (stance)")):
+            ptr = _h7_reading_pointer(h7[ch_key][PRIMARY_DIR])
+            pointers[ch_key] = ptr
+            A.append(f"- **{ch_name}** points at **{ptr}**.")
+        A.append("")
+        if pointers["channel1"] == pointers["channel2"]:
+            A.append(f"The two channels agree; the pointed reading stands, "
+                     f"with the EXPLORATORY label attached to every H7 "
+                     f"statement (30–79 band).")
+        else:
+            A.append(f"**The channels do not agree on H7.** Channel 1 points "
+                     f"at {pointers['channel1']}; channel 2 points at "
+                     f"{pointers['channel2']}. Under the frozen rule "
+                     f"(Amendment 3 C2.4, quoted in the side-by-side section "
+                     f"above), H7 therefore gets NO headline reading. The "
+                     f"disagreement, with both channels' numbers beside it, "
+                     f"is the finding this section reports. Exploratory "
+                     f"label on all of it (30–79 band).")
     A.append("")
     A.append(_quote("H7_within_subject"))
     A.append("")

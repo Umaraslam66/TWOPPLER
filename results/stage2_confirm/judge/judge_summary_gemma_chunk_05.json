@@ -1,0 +1,85 @@
+{
+ "banner": "CONFIRMATORY. Channel 2 (stance judge) labels. Labels only -- no contrast and no hypothesis verdict is computed here.",
+ "run_id": "stage2_confirm/judge_r2",
+ "gen_dir": "gemma",
+ "chunk": "chunk_05",
+ "scored_model": "Gemma-4-31B-it",
+ "judge_model": "gemini-3.5-flash",
+ "temperature": 0.0,
+ "thinking_budget": 0,
+ "max_output_tokens": 512,
+ "rubric": "results/stage2_openended/rubric_r2_draft.txt",
+ "rubric_sha256": "ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464",
+ "call_order_seed": 20260727,
+ "blind": "judge sees rubric + question + real + candidate only, all GUEST-redacted; never the arm, the model or the subject",
+ "n_rows": 279,
+ "n_calls_this_process": 279,
+ "n_retries_this_process": 0,
+ "n_parse_failures_this_process": 0,
+ "n_why_intact": 279,
+ "n_central_present": 279,
+ "n_output_hit_cap": 0,
+ "labels": {
+  "DIFFERENT": 84,
+  "SAME": 142,
+  "UNCLEAR": 53
+ },
+ "per_arm_labels": {
+  "h7_twin_redacted": {
+   "n": 39,
+   "labels": {
+    "DIFFERENT": 13,
+    "SAME": 21,
+    "UNCLEAR": 5
+   }
+  },
+  "imposter_redacted": {
+   "n": 48,
+   "labels": {
+    "UNCLEAR": 17,
+    "SAME": 21,
+    "DIFFERENT": 10
+   }
+  },
+  "twin_named": {
+   "n": 48,
+   "labels": {
+    "DIFFERENT": 15,
+    "SAME": 24,
+    "UNCLEAR": 9
+   }
+  },
+  "twin_redacted": {
+   "n": 48,
+   "labels": {
+    "DIFFERENT": 12,
+    "SAME": 23,
+    "UNCLEAR": 13
+   }
+  },
+  "zeroinfo_named": {
+   "n": 48,
+   "labels": {
+    "DIFFERENT": 16,
+    "UNCLEAR": 4,
+    "SAME": 28
+   }
+  },
+  "zeroinfo_redacted": {
+   "n": 48,
+   "labels": {
+    "DIFFERENT": 18,
+    "SAME": 25,
+    "UNCLEAR": 5
+   }
+  }
+ },
+ "tokens_in": 345061,
+ "tokens_out": 21431,
+ "cost_usd_this_process": 0.355235,
+ "confirmatory_spend_after_usd": 6.552869,
+ "confirmatory_budget_usd": 15.0,
+ "no_verdicts_note": "Label counts only. No agreement statistic, no contrast and no bar is evaluated here.",
+ "runtime_secs": 364.9,
+ "judged_utc": "2026-07-28T15:15:20Z"
+}

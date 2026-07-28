@@ -1,0 +1,11 @@
+{
+ "banner": "Judge canary. Halt-on-flip.",
+ "n": 10,
+ "n_flips": 0,
+ "flips": [],
+ "passed": true,
+ "max_flips_allowed": 0,
+ "file": "results/stage2_confirm/judge/canary_20260728-133534.jsonl",
+ "cost_usd": 0.012653,
+ "checked_utc": "2026-07-28T13:35:34Z"
+}
