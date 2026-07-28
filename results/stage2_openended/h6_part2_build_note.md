@@ -66,15 +66,35 @@ Written to `results/stage2_openended/h6_part2_sheet.md` (blind) and
 
 | | value |
 |---|---|
-| rows | **60** |
-| FOLLOW-UP / NEW-TOPIC | **30 / 30** — exactly balanced, no shortfall |
-| subjects | **30**, two rows each |
+| rows | **120** |
+| FOLLOW-UP / NEW-TOPIC | **60 / 60** — exactly balanced, no shortfall |
+| subjects | **60**, two rows each |
 | seed | **62** |
 | pool drawn from | 5,268 auditable labels over 88 subjects |
 
 Requirements from Addendum A precondition 5 part 2 are ≥ 60 rows and ≥ 10
 confirmatory subjects. Both clear with room, and the balance is exact, so
 there is no shortfall to document — unlike the F/G tranche.
+
+### Why 120 rows and not the floor of 60
+
+The tranche was first built at 60 — the pre-registered floor — and the owner
+then ruled it up to 120. The reasoning, recorded because the timing is what
+makes it legitimate:
+
+- The frozen text sets a **floor (≥ 60), not a ceiling**.
+- 30 FOLLOW-UP rows measure the 20% / 35% tripwire in steps of 3.3 points.
+  Development's FOLLOW-UP overturn rate was 25%, right between the two lines,
+  so a 30-row tranche risks a **false halt** — or a false all-clear — on
+  sampling noise alone.
+- **Part 1 set the precedent at 120 rows.**
+- The enlargement was **decided blind, before any co-audit label existed**, so
+  it adds statistical power without adding bias. Nobody could see which way it
+  would push the verdict.
+
+Same seed (62), same balance rule, same blindness checks; only the row count
+changed. Supply was never the constraint — 5,268 auditable labels were
+available and 120 uses 2% of them.
 
 What the sheet shows a co-auditor is byte-for-byte what the classifier saw:
 the same PREV / GUEST / TARGET block, sliced out of the rendered prompt, with
@@ -138,19 +158,32 @@ arm must additionally be built at D_min = 3 as a sensitivity arm and both
 reported side by side. **Above 35%**, H6 scoring halts. Development's own
 FOLLOW-UP overturn rate was 25%, so the D_min = 3 arm is expected to fire.
 
-One honest limitation on that tripwire: 30 FOLLOW-UP rows measure an overturn
-rate in steps of 3.3 points, which is coarse for a threshold set at 20%. 60
-rows is the pre-registered floor and supply is nowhere near exhausted — a
-larger tranche is one command away (`--rows 120`) if a tighter read is wanted,
-and it would have to be decided before the co-audit, not after.
+The tranche was sized at 120 rows partly for this reason — see "Why 120 rows"
+above. 60 FOLLOW-UP rows measure the overturn rate in steps of 1.7 points
+rather than 3.3, which is what a threshold set at 20% needs when the expected
+value is 25%.
+
+**How it gets scored is already fixed.** `experiments/h6_part2_score.py` was
+written and committed *before any co-audit label existed*, so the arithmetic
+and every verdict rule were settled while the answer was still unknown. It
+takes the sealed key and a co-auditor label file and prints raw agreement,
+Cohen's κ, both overturn rates, per-subject disagreements, and the mechanical
+verdicts against the frozen bars. Nobody chooses the scoring after seeing the
+labels.
 
 ## Reproduce
 
 ```
 .venv/bin/python experiments/h6_confirm_classify.py build
 .venv/bin/python experiments/h6_confirm_classify.py finalise
-.venv/bin/python experiments/h6_part2_tranche.py
+.venv/bin/python experiments/h6_part2_tranche.py --rows 120
 ```
 
-Both are deterministic. The classifier run itself needs the node
+All deterministic. The classifier run itself needs the node
 (`experiments/h6_classify_gen.sbatch`).
+
+Scoring, once the co-audit line exists:
+
+```
+.venv/bin/python experiments/h6_part2_score.py --labels <coaudit_labels.json>
+```
