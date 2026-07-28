@@ -76,6 +76,18 @@ rescue the line above: own − zero-info reads +0.0578 cosine on the robustness 
 ≥ +0.09, MET) ([confirm report §2](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). The miss
 is specific and it is the one the frozen text points at.
 
+**Erratum note, 2026-07-28 — a post-freeze governance ambiguity, recorded rather than
+resolved quietly.** Two frozen texts point at different contrasts.
+[Amendment 3 C3](../../PREREGISTRATION_AMENDMENT_3.md) makes **own − imposter** the primary
+contrast; the Addendum-A magnitude text, written for the same instrument, names
+**own − zero-info** as H1's registered contrast. Neither was written to override the other,
+and the conflict only became visible once the two numbers landed on opposite sides of the
+same bar. **Owner ruling, 2026-07-28: the headline is own-vs-imposter, and the
+own − zero-info magnitude miss stays top-placed at equal size.** The ambiguity is resolved
+by **reporting both contrasts fully — never by choosing between them**: no back-selection of
+whichever contrast clears the bar, and no quiet retirement of the one that does not. Both
+travel together everywhere this result is quoted, including here.
+
 ### 1.2 Which arm moved
 
 Read the tables above by watching the arms, not the differences. On channel 1, the primary
@@ -371,6 +383,15 @@ Three things stay attached to that PASS rather than being cleared by it:
   arm was not built. Development's own rate was 25%, above the line — the appendix expected
   the arm to fire and the confirmatory measurement came in under it.
 
+A depth-3 arm was nonetheless built later, **ordered by the owner as exploratory diagnostic
+colour after the registered numbers were rendered — it is not the pre-committed sensitivity
+arm, whose tripwire never fired**, and it changes no verdict: its direction matches the
+registered contrast in all four cells including the B = 400 sign reversal, and eligibility
+halves again from 24 subjects to 12 at the primary budget
+([H6 report §11](../stage2_confirm/H6_REPORT.md)). That is the same supply dependency §4.1
+reports, seen from a third angle: the depth requirement bites the rich arm, not the poor one,
+and it gets worse as the requirement rises.
+
 ### 4.6 The declared confound
 
 Stated in every write-up, as the frozen text requires
@@ -383,24 +404,79 @@ script. That confound is structural and is not corrected for.
 
 ---
 
-## 5. Registered hypotheses not run in this cycle
+## 5. Registered hypotheses without a verdict — one withdrawn, one untested under cap
 
-Two hypotheses are on the frozen record and have **no data at all** in this cycle. Neither is
-withdrawn, and neither is reported anywhere in this paper. **This is a different status from
-H6 in §4:** H6 ran end to end and came back unresolved because too few subjects were eligible
-to license a claim; H2 and H5 were never run, so there is nothing to be unresolved about.
+Two hypotheses are on the frozen record and neither returns a pass or a fail. They are in
+**different states** and the difference matters: H2 is withdrawn, H5 was run as a substituted
+analysis whose registered estimator could not be computed inside the cap. Both dispositions
+were decided by owner ruling on 2026-07-28
+([rulings record](../stage2_confirm/RULINGS_STOPPOINT3_20260728.md)). **This is also a
+different status from H6 in §4:** H6 ran end to end and came back unresolved because too few
+subjects were eligible to license a claim.
 
-- **H2 (selection matters)** — model-selected context beats random-segment context at matched
-  budget ([`PREREGISTRATION.md`](../../PREREGISTRATION.md) §3, confirmatory at ≥ 80 subjects
-  under the [Amendment 1 A5](../../PREREGISTRATION_AMENDMENT_1.md) branch). **No confirmatory
-  selection-policy arms were ever generated**, so H2 has no data at all — not a null, not a
-  weak effect, nothing.
-- **H5 (calibration)** — twin confidence calibrated to ECE ≤ 0.10, re-scoped from Stages 2–3
-  to Stage 2 predictions alone by [Amendment 2 B9.b](../../PREREGISTRATION_AMENDMENT_2.md).
-  **No calibration analysis exists on Stage 2 predictions.**
+**H2 (selection matters) — WITHDRAWN, documented deviation.** Model-selected context beats
+random-segment context at matched budget
+([`PREREGISTRATION.md`](../../PREREGISTRATION.md) §3, confirmatory at ≥ 80 subjects under the
+[Amendment 1 A5](../../PREREGISTRATION_AMENDMENT_1.md) branch). It is withdrawn for three
+stated reasons:
 
-Both remain outstanding registered hypotheses. Their disposition — run in a later cycle, or
-withdraw as a documented deviation — is an owner decision and is currently pending.
+- **It was never run.** No confirmatory selection-policy arms were ever generated, so H2 has
+  no data at all — not a null, not a weak effect, nothing.
+- **It was superseded by the instrument change.** H2's bar was written in forced-choice
+  accuracy points, and forced choice was killed outright by pre-committed kill rule
+  ([Amendment 3 C1](../../PREREGISTRATION_AMENDMENT_3.md)). The bar did not transfer.
+- **Stage 1E already answered the selection-policy question at lower cost.** Adaptive item
+  selection did not beat random ordering there, and that was a *powered* null rather than a
+  shortfall (§7, [`stage1e_findings.md`](../stage1e_findings.md)).
+
+The withdrawal follows the precedent set when **H4 was withdrawn** under
+[Amendment 2 B9.b](../../PREREGISTRATION_AMENDMENT_2.md): dated, documented, labelled a
+deviation, and never left silent. Leaving a registered hypothesis unmentioned was not one of
+the available options.
+
+**H5 (calibration) — the registered estimator is UNTESTED under the cap; a substituted
+analysis is reported in its place.** Full record:
+[`H5_CALIBRATION.md`](../stage2_confirm/H5_CALIBRATION.md); artifacts and figures under
+[`stage2_confirm/h5/`](../stage2_confirm/h5/), machine copy
+[`h5_numbers.json`](../stage2_confirm/h5/h5_numbers.json).
+
+> H5 registered a specific estimator: k = 10 self-consistency samples per prediction,
+> agreement rate as the confidence, ECE ≤ 0.10, re-scoped from Stages 2–3 to Stage 2
+> predictions alone by [Amendment 2 B9.b](../../PREREGISTRATION_AMENDMENT_2.md). **That
+> estimator was not computed and no verdict on it is claimed.** Every confirmatory generation
+> was produced at temperature 0.0, which is greedy decoding: ten samples return ten identical
+> strings, so the registered confidence is a *constant* 1.0 on these records and its ECE
+> measures the pinning, not the twin. Running it properly means re-generating above
+> temperature 0 — a fresh run that can recycle nothing, costing **1.12 node-hours and $4.51**
+> on the primary model alone (**$12.13** with the two-model structure Stage 2 uses
+> everywhere), against an owner cap of 0.2 node-hours and $0.50. Both caps break on the
+> cheapest honest version. In its place, and at $0.00 on CPU, a graded signal already
+> attached to every generation — the channel-1 embedding cosine — was mapped monotonically to
+> a confidence and calibrated against channel-2 stance correctness, cross-fit over a 44/44
+> subject split so no item is scored by a map that saw its own subject. **The substituted
+> estimator is a different quantity and is reported as its own line, never pooled with or
+> presented as the registered one.** Held out on the primary model it reads ECE 0.0861
+> (equal-width) and 0.0939 (equal-mass) — numerically under 0.10, and **this is not "H5
+> passed"**: both 95% CIs cross 0.10, the secondary isotonic map lands *above* it (0.1162),
+> and a predictor that always states the base rate scores ECE **exactly 0.0000** while
+> knowing nothing. Read the discrimination column instead. The primary model's **AUC is
+> 0.518**, a coin flip, and the mapped confidence's held-out Brier score (0.2059) is *worse*
+> than that constant base-rate predictor's (0.1974). The one consistency-style signal
+> measurable on these records — whether the twin says the same thing when the subject's name
+> is hidden, the closest available analogue to the registered agreement rate and the only one
+> a deployed twin could actually compute — has an **AUC of 0.427**, below chance, and its
+> fitted map slopes *positive on one half of the subject pool and negative on the other*
+> (+1.375 / −1.514). Stated plainly and labelled exploratory: **the confidence signals
+> available on this record do not rank the twin's correct answers above its incorrect ones.**
+> That is not evidence against registered H5, because it is not the registered estimator —
+> but it is the closest available evidence about the mechanism H5 assumed, and it points the
+> wrong way. Reliability diagrams are reported regardless, as the registration requires, and
+> labelled as substituted on the figures themselves.
+
+**For the record: registered H5 is neither passed nor failed.** It is untested under the cap,
+with the substituted descriptive analysis reported in its place. What is still owed, if the
+registered estimator is ever wanted, is the fresh generation run priced above — a cap
+decision, not an analysis decision.
 
 ## 6. B8 — individual level beside population level
 
@@ -729,6 +805,23 @@ ones — which carried the same D3-pattern substitution
 human line, and **no human label exists anywhere in the H6 trust chain**. A reviewer is
 entitled to weight all of it lower than owner labels.
 
+**The instrument has a measured run-to-run noise floor, and it is not zero.** The exploratory
+depth-3 arm accidentally re-generated **72 prompts that hash identically to the registered
+run's** — same model, same weights, temperature 0.0, seed 0, two separate Leonardo jobs. Only
+**15 of 72 came back byte-identical**. Channel-1 cosine differs on 57 of 72, with a **median
+absolute gap of 0.0138** and a maximum of 0.123, and **4 of 72 channel-2 stance labels
+flipped** ([H6 report §11](../stage2_confirm/H6_REPORT.md)). The cause is not a bug in either
+run: greedy decoding is deterministic in arithmetic but not across batch compositions —
+vLLM's batched matrix multiplies reduce in an order that depends on what else is in the
+batch, and one flipped token early in a 150-word answer changes everything after it. The
+registered job batched 542 prompts, this one 182. **This noise was present in every number in
+this paper before it was measurable**, and its magnitude is the same order as several of the
+thin-cell differences reported above — H7's per-bin numbers and H6's small-*n* contrasts in
+particular. It is one more reason those carry wide uncertainty and read as descriptive rather
+than decisive. It does **not** put the headline in doubt: item-level noise averages down into
+a subject mean and again across 88 subjects, and H1's subject-pooled own − imposter contrast
+(**+0.0751**, CI half-width ≈ 0.018) sits well above this floor.
+
 **H6 did not reach the power its own design assumed.** Only 24 of 88 subjects could fill both
 arms at the frozen budget, against a development supply that implied roughly two thirds. H6 is
 therefore descriptive, unresolved, and — because its sign reverses when the budget halves —
@@ -740,7 +833,11 @@ on its own named contrast, primary model, channel 1 (§1.1); H7 produced no head
 in any cell (§3); H7's magnitude bar missed in all four cells (§3.4); H6 collapsed to
 DESCRIPTIVE on eligibility and neither pre-written reading could be applied (§4); H6's
 magnitude bar missed on both channels (§4.2) and its sign reversed at the dose-check budget
-(§4.3); H2 and H5 were never run at all (§5); H3's confound-free row shows no shrinkage of
+(§4.3); H2 was withdrawn without ever being run and H5's registered estimator is untested
+under the cap (§5); **H5's substituted analysis found no usable discrimination at all — the
+available confidence signals do not rank the twin's correct answers above its incorrect ones
+(primary-model AUC 0.518 on the oracle signal, and 0.427 — below chance — on the only signal
+a deployed twin could compute)** (§5); H3's confound-free row shows no shrinkage of
 lift with contamination (§8.2); Stage 1E's primary adaptive bar C1 failed (§7); the
 forced-choice instrument was killed outright after four rounds (§2); the 16PF replication was
 cancelled (above). None of these is a footnote in this paper and none of them should become
