@@ -1,0 +1,117 @@
+{
+ "canonical_id": "C00077",
+ "canonical_name": "Al Hussein",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl13",
+   "transcript_id": "CNN-58775",
+   "date": "2002-08-08",
+   "program": "CNN CROSSFIRE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2002-08-08"
+   ],
+   "guest_words": 763
+  },
+  {
+   "cluster_id": "cl14",
+   "transcript_id": "CNN-58936",
+   "date": "2002-08-11",
+   "program": "CNN SUNDAY MORNING",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2002-08-11"
+   ],
+   "guest_words": 552
+  },
+  {
+   "cluster_id": "cl16",
+   "transcript_id": "CNN-64920",
+   "date": "2003-01-01",
+   "program": "CNN SHOWDOWN: IRAQ",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2003-01-01"
+   ],
+   "guest_words": 540
+  },
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "CNN-251420",
+   "date": "2015-03-17",
+   "program": "CNN'S AMANPOUR",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-03-17"
+   ],
+   "guest_words": 444
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "CNN-297144",
+   "date": "2016-10-26",
+   "program": "CNN'S AMANPOUR",
+   "title": "",
+   "n_transcripts_in_cluster": 2,
+   "member_dates": [
+    "2016-10-26",
+    "2016-10-28"
+   ],
+   "guest_words": 769
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "CNN-331179",
+   "date": "2018-01-24",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-01-24"
+   ],
+   "guest_words": 620
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "CNN-337634",
+   "date": "2018-04-15",
+   "program": "FAREED ZAKARIA GPS",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-04-15"
+   ],
+   "guest_words": 587
+  },
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "CNN-343562",
+   "date": "2018-06-24",
+   "program": "FAREED ZAKARIA GPS",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-06-24"
+   ],
+   "guest_words": 580
+  }
+ ],
+ "test": {
+  "cluster_id": "cl19",
+  "transcript_id": "NPR-7049",
+  "date": "2018-09-18",
+  "program": "All Things Considered",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2018-09-18"
+  ],
+  "guest_words": 328
+ },
+ "excluded_same_date": []
+}

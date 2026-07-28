@@ -1,0 +1,128 @@
+{
+ "canonical_id": "C02070",
+ "canonical_name": "Rovenia Brock",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl13",
+   "transcript_id": "NPR-47845",
+   "date": "2005-06-09",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-06-09"
+   ],
+   "guest_words": 559
+  },
+  {
+   "cluster_id": "cl14",
+   "transcript_id": "NPR-5143",
+   "date": "2006-05-31",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-05-31"
+   ],
+   "guest_words": 707
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-3974",
+   "date": "2006-09-13",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-09-13"
+   ],
+   "guest_words": 650
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-3630",
+   "date": "2006-10-13",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-10-13"
+   ],
+   "guest_words": 660
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-3427",
+   "date": "2006-11-01",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-11-01"
+   ],
+   "guest_words": 715
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-3094",
+   "date": "2006-11-29",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-11-29"
+   ],
+   "guest_words": 812
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-2265",
+   "date": "2007-02-22",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-02-22"
+   ],
+   "guest_words": 443
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-2192",
+   "date": "2007-02-28",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-02-28"
+   ],
+   "guest_words": 803
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-1530",
+   "date": "2007-06-21",
+   "program": "News & Notes",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2007-06-21"
+   ],
+   "guest_words": 990
+  }
+ ],
+ "test": {
+  "cluster_id": "cl15",
+  "transcript_id": "NPR-9797",
+  "date": "2013-01-10",
+  "program": "Talk of the Nation",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-01-10"
+  ],
+  "guest_words": 1389
+ },
+ "excluded_same_date": []
+}

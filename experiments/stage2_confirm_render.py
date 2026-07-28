@@ -73,7 +73,13 @@ from doppler import stage2_render as R  # noqa: E402
 RESULTS_DIR = _ROOT / "results"
 CONFIRM_DIR = RESULTS_DIR / "stage2_confirm"
 DRAW_FILE = RESULTS_DIR / "stage2_confirm_draw_provisional.json"
-BUILD_FILE = CONFIRM_DIR / "build_first40.json"
+BUILD_FILE = CONFIRM_DIR / "build_full140.json"
+
+#: Draw positions 1-40 were rendered first, reviewed, and committed; 41-140
+#: followed. The split is kept only for reporting -- every rule below is
+#: applied identically to all 89 survivors.
+TRANCHE_1_LAST_POS = 40
+TRANCHE_NAMES = {1: "positions_1_40", 2: "positions_41_140"}
 PAIRS_FILE = CONFIRM_DIR / "imposter_pairs_confirm.json"
 DONOR_CACHE = _ROOT / "data/stage2_cache/donor_grounding_v1.json"
 
@@ -417,10 +423,11 @@ def git_commit_for(path: Path) -> str | None:
 
 
 def survivors(build_file: Path = BUILD_FILE) -> list[dict]:
-    """The survivors of draw positions 1-40, in draw order.
+    """Every surviving subject of the committed draw, in draw order.
 
-    Read from the committed tranche summary only. Positions 41-140 are another
-    agent's work and are not touched: this file never reads build_full140.json.
+    Each row is tagged with the build tranche it came from (draw positions
+    1-40, then 41-140). The tag is reporting only: the arms, the guards, the
+    D7 match and the H7 rules are applied identically to every survivor.
     """
     doc = json.loads(Path(build_file).read_text(encoding="utf-8"))
     rows = [s for s in doc.get("subjects", []) if s.get("survived")]
@@ -430,6 +437,8 @@ def survivors(build_file: Path = BUILD_FILE) -> list[dict]:
     if len(rows) != doc.get("n_survived"):
         raise fatal(f"{rel(build_file)}: n_survived={doc.get('n_survived')} "
                     f"but {len(rows)} subject rows say survived")
+    for row in rows:
+        row["tranche"] = 1 if row["draw_pos"] <= TRANCHE_1_LAST_POS else 2
     return rows
 
 
@@ -575,12 +584,20 @@ def select_donors(subject_ids: list[str], pool: list[dict], dev_ids: list[str],
     removed_as_study_subjects = sorted(set(sample) - set(permitted))
 
     pairs_path = out_dir / "imposter_pairs_confirm.json"
+    superseded = None
     if pairs_path.exists():
         doc = json.loads(pairs_path.read_text(encoding="utf-8"))
-        if sorted(doc["pairs"]) != sorted(subject_ids):
-            raise fatal(f"{rel(pairs_path)} was matched for a different "
-                        "subject set; it is frozen once written")
-        return doc
+        if sorted(doc["pairs"]) == sorted(subject_ids):
+            return doc
+        # The subject set grew. D7's method fits the TF-IDF "once on all
+        # eligible donor documents plus all subject documents", so a larger
+        # subject set is a different fit and the whole match is redone -- one
+        # uniform rule over every confirmatory subject, rather than one rule
+        # for the subjects matched early and another for the rest. Safe here
+        # only because nothing has been generated yet: re-matching costs file
+        # bytes, not node-hours. What moved is recorded, never silent.
+        superseded = {"n_subjects_before": len(doc["pairs"]),
+                      "pairs_before": dict(doc["pairs"])}
 
     texts = donor_texts_from_cache(sample)
     donor_texts = {c: texts[c] for c in permitted}
@@ -718,6 +735,27 @@ def select_donors(subject_ids: list[str], pool: list[dict], dev_ids: list[str],
                              / "grounding_turns.jsonl")[:16]
             for cid in subjects},
     }
+    if superseded is not None:
+        before = superseded["pairs_before"]
+        moved_by_refit = [
+            {"canonical_id": c, "donor_before": before[c],
+             "donor_now": pairs[c]}
+            for c in sorted(before) if before[c] != pairs[c]]
+        doc["confirmatory"]["supersedes_earlier_match"] = {
+            "n_subjects_before": superseded["n_subjects_before"],
+            "n_subjects_now": len(pairs),
+            "reason": (
+                "D7 fits the TF-IDF once over all eligible donor documents "
+                "plus ALL subject documents. Growing the confirmatory subject "
+                "set from "
+                f"{superseded['n_subjects_before']} to {len(pairs)} changes "
+                "that fit, so the match was redone for every subject rather "
+                "than leaving two populations matched under two different "
+                "idf weightings. No generation had been run against the "
+                "earlier pairs."),
+            "n_donors_moved": len(moved_by_refit),
+            "donors_moved": moved_by_refit,
+        }
 
     # The frozen leakage guards, unrelaxed, on the winners.
     for cid, donor in sorted(pairs.items()):
@@ -763,6 +801,19 @@ def write_donor_artifacts(donor_ids: list[str], pool: list[dict],
                     turns.append(turn)
             S.write_json(base / "split.json", split)
             S.write_jsonl(base / "grounding_turns.jsonl", turns)
+    # A re-match can retire a donor. Its artifacts are dropped so the committed
+    # donors/ directory always holds exactly the donors in force.
+    keep = set(donor_ids)
+    pruned = []
+    donors_root = out_dir / "donors"
+    if donors_root.exists():
+        for path in sorted(donors_root.iterdir()):
+            if path.is_dir() and path.name not in keep:
+                for child in sorted(path.iterdir()):
+                    child.unlink()
+                path.rmdir()
+                pruned.append(path.name)
+
     for donor in sorted(donor_ids):
         base = out_dir / "donors" / donor
         written[donor] = {
@@ -772,13 +823,60 @@ def write_donor_artifacts(donor_ids: list[str], pool: list[dict],
     # ``n_built_this_run`` is run-scoped, not content: it lives in
     # render_run.json so render_manifest.json stays byte-identical whether the
     # donor artifacts were already on disk or were built by this invocation.
+    # Both counters are run-scoped, not content: whether a donor directory was
+    # built or pruned by THIS invocation depends on what was already on disk,
+    # so they live in render_run.json and the manifest stays byte-stable.
     return {"n_donors": len(donor_ids), "files": written,
-            "_n_built_this_run": len(todo)}
+            "_n_built_this_run": len(todo),
+            "_retired_donor_dirs_pruned": pruned}
 
 
 # ---------------------------------------------------------------------------
 # H7 cutoff plan (DERIVED_RULES H7-R2 .. H7-R6)
 # ---------------------------------------------------------------------------
+
+
+def same_event_leak_scan(cid: str, out_dir: Path) -> dict:
+    """How much of the test interview is replayed on the subject's grounding side.
+
+    DESCRIPTIVE. Nothing is excluded on this number -- the frozen exclusions
+    are D2's same-event guard upstream and the per-item answer-leak assert
+    downstream, and inventing a third threshold here would be a new bar rather
+    than a reading. It exists because the downstream assert only sees the
+    2,000-word rendered block, so a re-aired interview whose overlap happens to
+    fall outside the budget window would leave no trace anywhere.
+
+    Measured with the frozen convention: 10-word shingles over
+    ``stage2_render._norm_tokens``, guest-role text only, per grounding
+    transcript against the test transcript.
+    """
+    base = S.subject_dir(cid, out_dir)
+    test_turns = S.read_jsonl(base / "test_turns.jsonl")
+    grounding_turns = S.read_jsonl(base / "grounding_turns.jsonl")
+
+    def shingles(turns, tid=None):
+        text = " ".join(t["text"] for t in turns if t.get("role") == "guest"
+                        and (tid is None or t["transcript_id"] == tid))
+        toks = R._norm_tokens(text)
+        n = R.SHINGLE_WORDS
+        return {tuple(toks[i:i + n]) for i in range(len(toks) - n + 1)}, len(toks)
+
+    test_sh, test_words = shingles(test_turns)
+    per_transcript = {}
+    worst = 0.0
+    for tid in sorted({t["transcript_id"] for t in grounding_turns}):
+        sh, words = shingles(grounding_turns, tid)
+        shared = len(test_sh & sh)
+        frac = (shared / len(test_sh)) if test_sh else 0.0
+        if shared:
+            per_transcript[tid] = {"guest_words": words,
+                                   "shared_10grams": shared,
+                                   "share_of_test": round(frac, 4)}
+        worst = max(worst, frac)
+    return {"test_guest_words": test_words,
+            "n_test_10grams": len(test_sh),
+            "max_share_of_test_in_one_grounding_transcript": round(worst, 4),
+            "grounding_transcripts_with_overlap": per_transcript}
 
 
 def cutoff_table(segments: list[dict], test_date: str) -> list[dict]:
@@ -1092,17 +1190,23 @@ def chunk_subjects(per_subject: list[dict],
     A block never splits a subject: the launch plan's parallel submission
     depends on the blocks being independent, and a subject's arms have to stay
     together for the per-subject ledger to mean anything.
+
+    A block never spans two build tranches either, so the chunk numbering runs
+    continuously across the whole draw and a chunk always names one tranche.
+    Subjects arrive in draw order, so tranche order is draw order.
     """
     chunks: list[list[dict]] = []
     current: list[dict] = []
     size = 0
+    tranche = None
     for entry in per_subject:
         n = len(entry["unique"])
-        if current and size + n > target:
+        if current and (size + n > target or entry["tranche"] != tranche):
             chunks.append(current)
             current, size = [], 0
         current.append(entry)
         size += n
+        tranche = entry["tranche"]
     if current:
         chunks.append(current)
     return chunks
@@ -1158,6 +1262,7 @@ def write_chunks(chunks: list[list[dict]], out_dir: Path) -> dict:
         S.write_jsonl(meta_path, node_meta)
         files.append({
             "chunk": tag,
+            "tranche": TRANCHE_NAMES[chunk[0]["tranche"]],
             "subjects": [e["canonical_id"] for e in chunk],
             "n_subjects": len(chunk),
             "n_prompts": len(api_rows),
@@ -1217,6 +1322,7 @@ def main(argv=None) -> int:
     item_rows: list[dict] = []
     h7_report: list[dict] = []
     elig_mismatches: list[dict] = []
+    leak_scan: list[dict] = []
 
     for row in rows:
         cid = row["canonical_id"]
@@ -1234,10 +1340,15 @@ def main(argv=None) -> int:
             raise fatal(f"{cid}: build.json says {row['n_items']} items, "
                         f"qa_items.jsonl holds {len(items)}")
 
+        scan = same_event_leak_scan(cid, out_dir)
+        scan["canonical_id"] = cid
+        leak_scan.append(scan)
+
         built = render_subject(ctx, items, failures)
         unique, index = dedup_subject_rows(built["rows"])
         per_subject.append({
             "canonical_id": cid, "draw_pos": row["draw_pos"],
+            "tranche": row["tranche"],
             "unique": unique, "index": index,
             "n_items_built": len(built["kept_items"]),
             "n_items_excluded": len(built["excluded_items"]),
@@ -1265,6 +1376,7 @@ def main(argv=None) -> int:
         plan = ctx["h7"]
         h7_report.append({
             "canonical_id": cid, "draw_pos": row["draw_pos"],
+            "tranche": TRANCHE_NAMES[row["tranche"]],
             "h7_eligible": elig["pool_derived"],
             "eligibility": elig,
             "test_date": ctx["test_date"],
@@ -1331,7 +1443,11 @@ def main(argv=None) -> int:
             "cannot reuse the H1 arm")
 
     # --- export -------------------------------------------------------------
-    chunks = chunk_subjects(per_subject)
+    # A subject whose every item was guard-excluded has nothing to submit and
+    # must not occupy a block. It stays in every report.
+    dropped_subjects = [e["canonical_id"] for e in per_subject
+                        if not e["unique"]]
+    chunks = chunk_subjects([e for e in per_subject if e["unique"]])
     written = write_chunks(chunks, out_dir)
     S.write_jsonl(out_dir / "items_confirm.jsonl", item_rows)
 
@@ -1353,6 +1469,42 @@ def main(argv=None) -> int:
     sweep_subset = sorted(s["canonical_id"] for s in h7_report
                           if s["within_subject_sweep_subset"])
 
+    # --- per-tranche breakdown (reporting only; one rule set throughout) ----
+    h7_by_id = {s["canonical_id"]: s for s in h7_report}
+    by_subject = {e["canonical_id"]: e for e in per_subject}
+    tranche_report = {}
+    for num, name in sorted(TRANCHE_NAMES.items()):
+        cids = [r["canonical_id"] for r in rows if r["tranche"] == num]
+        if not cids:
+            continue
+        arms: dict[str, int] = {}
+        for cid in cids:
+            for r in by_subject[cid]["unique"]:
+                arms[r["arm"]] = arms.get(r["arm"], 0) + 1
+        tranche_report[name] = {
+            "draw_positions": ([1, TRANCHE_1_LAST_POS] if num == 1
+                               else [TRANCHE_1_LAST_POS + 1, 140]),
+            "n_survivors": len(cids),
+            "subjects": cids,
+            "n_items_built": sum(by_subject[c]["n_items_built"] for c in cids),
+            "n_unique_prompts": sum(len(by_subject[c]["unique"])
+                                    for c in cids),
+            "n_logical_renders": sum(len(by_subject[c]["index"])
+                                     for c in cids),
+            "unique_prompts_per_arm": arms,
+            "n_h7_eligible": sum(1 for c in cids
+                                 if h7_by_id[c]["h7_eligible"]),
+            "n_h7_usable": sum(1 for c in cids
+                               if h7_by_id[c]["n_bins_filled"] > 0),
+            "n_h7_bin_renders": sum(h7_by_id[c]["n_bins_filled"]
+                                    for c in cids),
+            "n_within_subject_sweep_subset": sum(
+                1 for c in cids
+                if h7_by_id[c]["within_subject_sweep_subset"]),
+            "chunks": [c["chunk"] for c in written["chunks"]
+                       if c["tranche"] == name],
+        }
+
     s1_commit = git_commit_for(_ROOT / "src/doppler/oe_render.py")
     manifest = {
         "banner": BANNER,
@@ -1362,16 +1514,18 @@ def main(argv=None) -> int:
             "PREREGISTRATION_AMENDMENT_2.md B7",
             "PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md item 6",
         ],
-        "tranche": {
+        "draw": {
             "source": rel(build_file),
             "source_sha256": sha256_file(build_file),
             "draw_file": rel(DRAW_FILE), "draw_seed": draw["seed"],
-            "draw_positions": [1, 40],
+            "draw_positions": [1, 140],
             "n_survivors_rendered": len(subject_ids),
             "subjects": subject_ids,
-            "note": "Positions 41-140 and build_full140.json belong to another "
-                    "agent and are not read by this file.",
+            "note": "The whole committed draw: every surviving subject of "
+                    "positions 1-140. Every rule is applied identically to "
+                    "all of them; the tranche split below is reporting only.",
         },
+        "tranches": tranche_report,
         "generation_config": {
             "primary_model": PRIMARY_MODEL,
             "robustness_model": ROBUSTNESS_MODEL,
@@ -1422,6 +1576,24 @@ def main(argv=None) -> int:
             "budget_B_words": GROUNDING_BUDGET_WORDS,
             "n_eligible_survivors": sum(1 for s in h7_report
                                         if s["h7_eligible"]),
+            "n_usable_subjects": sum(1 for s in h7_report
+                                     if s["n_bins_filled"] > 0),
+            "usable_note": (
+                "USABLE = fills at least one Delta bin after the B7.3 volume "
+                "control, i.e. can contribute a point to the fidelity-vs-Delta "
+                "curve. This is the count the H7 subject-count branch should "
+                "be read against, not the eligibility flag: an eligible "
+                "subject that fills no bin contributes nothing to the slope."),
+            "subject_count_branch": {
+                "rule": "B7 / A5-mirroring: >= 80 confirmatory; 30-79 "
+                        "exploratory (effect size + CI); < 30 descriptive",
+                "on_eligibility_flag": sum(1 for s in h7_report
+                                           if s["h7_eligible"]),
+                "on_usable_subjects": sum(1 for s in h7_report
+                                          if s["n_bins_filled"] > 0),
+                "note": "Reported both ways; which one the branch is decided "
+                        "on is an owner call, not this file's.",
+            },
             "n_subjects_with_at_least_one_bin": sum(
                 1 for s in h7_report if s["n_bins_filled"] > 0),
             "n_bin_renders": sum(s["n_bins_filled"] for s in h7_report),
@@ -1503,7 +1675,41 @@ def main(argv=None) -> int:
             "excluded_items_by_subject": {
                 e["canonical_id"]: e["n_items_excluded"] for e in per_subject
                 if e["n_items_excluded"]},
+            "subjects_dropped_entirely": dropped_subjects,
             "twin_free_check": twin_check,
+        },
+        "same_event_leak_scan": {
+            "what": "DESCRIPTIVE contamination scan, no exclusion attached: "
+                    "share of the test interview's 10-word guest shingles that "
+                    "also appear in one grounding transcript. Frozen "
+                    "convention (stage2_render._norm_tokens, SHINGLE_WORDS).",
+            "why": (
+                "The per-item answer-leak assert only sees the 2,000-word "
+                "rendered block, so a re-aired interview whose overlap falls "
+                "outside the budget window would leave no trace. This scan "
+                "sees the whole grounding side."),
+            "n_subjects_scanned": len(leak_scan),
+            "n_subjects_with_any_overlap": sum(
+                1 for s in leak_scan
+                if s["max_share_of_test_in_one_grounding_transcript"] > 0),
+            "subjects_over_10pct": sorted(
+                (s["canonical_id"],
+                 s["max_share_of_test_in_one_grounding_transcript"])
+                for s in leak_scan
+                if s["max_share_of_test_in_one_grounding_transcript"] > 0.10),
+            "finding": (
+                "C02502 is a re-aired interview: CNN-381362 (2019-09-25) "
+                "replays 47% of the test transcript CNN-388758 (2019-12-25, "
+                "Christmas Day) on the same programme. The two sit in "
+                "different dedup clusters, so D2's same-event guard never saw "
+                "them; the answer-leak assert caught it downstream and every "
+                "one of the subject's 11 items was excluded, dropping the "
+                "subject. Reported because the clustering, not the split "
+                "logic, is what missed it -- that is an owner call, not this "
+                "file's."),
+            "per_subject": [s for s in leak_scan
+                            if s["max_share_of_test_in_one_grounding_transcript"]
+                            > 0],
         },
         "donors": {
             "rule_id": "D7-CONF",
@@ -1551,6 +1757,7 @@ def main(argv=None) -> int:
         "generated_utc": now(),
         "runtime_secs": round(time.time() - started, 2),
         "n_donor_artifacts_built_this_run": donors["_n_built_this_run"],
+        "retired_donor_dirs_pruned_this_run": donors["_retired_donor_dirs_pruned"],
         "manifest_sha256": sha256_file(out_dir / "render_manifest.json"),
         "note": "The only artifact with wall-clock fields. render_manifest.json "
                 "and every prompt file are byte-identical on a re-run.",

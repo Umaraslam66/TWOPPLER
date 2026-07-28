@@ -1,56 +1,56 @@
 {
- "canonical_id": "C01837",
- "canonical_name": "Nikky Finney",
+ "canonical_id": "C02428",
+ "canonical_name": "Tom Rosenstiel",
  "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
  "grounding": [
   {
-   "cluster_id": "cl2",
-   "transcript_id": "NPR-150",
-   "date": "2012-02-02",
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-14448",
+   "date": "2008-03-17",
    "program": "Talk of the Nation",
    "title": "",
    "n_transcripts_in_cluster": 1,
    "member_dates": [
-    "2012-02-02"
+    "2008-03-17"
    ],
-   "guest_words": 1807
+   "guest_words": 1374
   },
   {
-   "cluster_id": "cl4",
-   "transcript_id": "NPR-9756",
-   "date": "2013-01-21",
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-14011",
+   "date": "2008-05-28",
    "program": "Talk of the Nation",
    "title": "",
    "n_transcripts_in_cluster": 1,
    "member_dates": [
-    "2013-01-21"
+    "2008-05-28"
    ],
-   "guest_words": 964
+   "guest_words": 1232
   },
   {
-   "cluster_id": "cl3",
-   "transcript_id": "NPR-8282",
-   "date": "2013-06-20",
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-45363",
+   "date": "2010-03-15",
    "program": "Talk of the Nation",
    "title": "",
    "n_transcripts_in_cluster": 1,
    "member_dates": [
-    "2013-06-20"
+    "2010-03-15"
    ],
-   "guest_words": 2233
+   "guest_words": 1406
   }
  ],
  "test": {
-  "cluster_id": "cl1",
-  "transcript_id": "NPR-14696",
-  "date": "2017-06-27",
-  "program": "Morning Edition",
+  "cluster_id": "cl10",
+  "transcript_id": "NPR-2573",
+  "date": "2011-03-14",
+  "program": "Talk of the Nation",
   "title": "",
   "n_transcripts_in_cluster": 1,
   "member_dates": [
-   "2017-06-27"
+   "2011-03-14"
   ],
-  "guest_words": 560
+  "guest_words": 1535
  },
  "excluded_same_date": []
 }

@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C02425",
+ "canonical_name": "Tom Malinowski",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl36",
+   "transcript_id": "NPR-39991",
+   "date": "2005-11-21",
+   "program": "Morning Edition",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-11-21"
+   ],
+   "guest_words": 344
+  },
+  {
+   "cluster_id": "cl35",
+   "transcript_id": "NPR-3112",
+   "date": "2011-01-10",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-01-10"
+   ],
+   "guest_words": 1797
+  },
+  {
+   "cluster_id": "cl34",
+   "transcript_id": "NPR-2590",
+   "date": "2011-03-14",
+   "program": "Talk of the Nation",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-03-14"
+   ],
+   "guest_words": 663
+  },
+  {
+   "cluster_id": "cl38",
+   "transcript_id": "NPR-9828",
+   "date": "2019-07-16",
+   "program": "All Things Considered",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-07-16"
+   ],
+   "guest_words": 656
+  }
+ ],
+ "test": {
+  "cluster_id": "cl37",
+  "transcript_id": "NPR-7786",
+  "date": "2019-09-22",
+  "program": "Weekend Edition Sunday",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-09-22"
+  ],
+  "guest_words": 431
+ },
+ "excluded_same_date": []
+}
