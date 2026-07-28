@@ -1,6 +1,7 @@
 # Project DOPPLER — project log
 
-Last updated 2026-07-28, after closeout.
+Last updated 2026-07-28, after the stop-point-iii rulings. Project complete for
+this version; one paste job open (§12).
 
 ## 1. What this file is, and what it is not
 
@@ -361,18 +362,54 @@ descriptive, a top-decile split of 9 subjects, no bar attached to any number.
 The reading rule travels with the table — own minus zero-info shares a term with
 the meter that defines the split and therefore says nothing about contamination;
 own minus imposter shares no term and is the row to read. The same report's
-header now flags the OSF snapshot **v4** upload as the project's one open
-external timestamp.
+header now carries the live OSF registration line instead of the old
+outstanding-upload flag (see §3).
 
-### Write-ups — drafts, under owner review
+### Write-ups — both APPROVED
 
-Two drafts, both under owner review and both being consistency-passed against
-the reports. Neither is a source of truth for anything; the reports are.
+Both were consistency-passed against the reports and approved by the owner on
+2026-07-28. Neither is a source of truth for anything; the reports are.
 
 - [`results/writeups/PAPER1_METHODS.md`](writeups/PAPER1_METHODS.md) — the
   methods paper on the four-round forced-choice failure.
 - [`results/writeups/PAPER2_MAIN.md`](writeups/PAPER2_MAIN.md) — the main
   results paper.
+
+H1's headline is **own-vs-imposter**, the contrast Amendment 3 C3 makes primary,
+which clears every bar. The **own − zero-info magnitude miss stays top-placed at
+equal size**. The two frozen texts point at different contrasts; that is a
+post-freeze governance ambiguity, and it is resolved by reporting both fully,
+never by choosing.
+
+### H2 withdrawn, H5 substituted (2026-07-28)
+
+- **H2 (selection matters) is WITHDRAWN** as a documented deviation, the same
+  route Amendment 2 B9.b used for H4. It was never run, its forced-choice bar
+  did not survive the instrument change, and Stage 1E already answered the
+  selection-policy question at lower cost with a powered null.
+- **H5 (calibration): the registered estimator is UNTESTED under the cap**, with
+  an owner-directed substituted analysis reported in its place —
+  [`results/stage2_confirm/H5_CALIBRATION.md`](stage2_confirm/H5_CALIBRATION.md).
+  The registered k = 10 agreement rate is a constant on temperature-0 records
+  and re-running it properly costs 5.6× the node-hour cap and 9.0× the API cap;
+  the substitution ran at $0.00 on CPU, found **AUC 0.518** on the primary model
+  (0.427 on the only signal a deployed twin could compute), and **no pass/fail on
+  registered H5 is claimed anywhere**.
+
+### The exploratory D_min = 3 arm, and a reproducibility finding
+
+- **Owner-ordered exploratory arm at chain depth 3**, run after the registered
+  numbers were rendered; **H6's verdict is unchanged** and it is not the
+  pre-committed sensitivity arm, whose tripwire never fired. Direction matches
+  the registered contrast in all four cells including the B = 400 sign reversal,
+  and eligibility halves again, 24 → 12 subjects at B = 1,000 —
+  [`H6_REPORT.md` §11](stage2_confirm/H6_REPORT.md).
+- **Measured run-to-run generation noise, found by accident in that arm.** 72
+  prompts were generated twice at temperature 0 in two Leonardo jobs: only 15/72
+  byte-identical, median channel-1 cosine gap **0.0138** (max 0.123), 4/72 stance
+  labels flipped — vLLM batch-composition non-determinism, present in every
+  number in the record before it became measurable
+  ([`H6_REPORT.md` §11](stage2_confirm/H6_REPORT.md)).
 
 ### Owner rulings on the record
 
@@ -385,26 +422,28 @@ in the survival rate instead of being absorbed into it. The pair is carried as
 one documented-deviation candidate for a future corpus rebuild. No action this
 cycle.
 
+[`results/stage2_confirm/RULINGS_STOPPOINT3_20260728.md`](stage2_confirm/RULINGS_STOPPOINT3_20260728.md):
+the **seven stop-point-iii rulings** — both papers approved with H1's headline
+set to own-vs-imposter and the magnitude miss kept top-placed; H2 withdrawn and
+H5 substituted under caps; the exploratory D_min = 3 arm ordered; the two
+co-audit rulings confirmed (120-row tranche sizing, H6 magnitude inheritance via
+B3's mirror clause) and two errata approved for filing; future-version inputs
+recorded with no action and the staff reserve closed as moot; the OSF
+registration recorded as live; and this final pass.
+
+Corrections against the frozen documents live in
+[`PREREGISTRATION_ERRATA.md`](../PREREGISTRATION_ERRATA.md) — see §3.
+
 ## 12. What is open right now
 
-1. **The OSF timestamp.** Snapshot v4 is ready and covers all six governance
-   documents ([`results/osf_preregistration_snapshot_v4.md`](osf_preregistration_snapshot_v4.md));
-   the upload itself is still on the owner, and until it happens the word
-   "pre-registered" keeps meaning only "committed to git before the data was
-   touched". This is the project's one open external timestamp.
-2. **Owner review of the three closeout deliverables** — the H6 report, the H7
-   exploratory diagnostics, and the two write-up drafts. All three are written
-   and committed; none has been reviewed.
-3. **H2 and H5 are registered and were never run.** H2 (model-selected context
-   beats random-segment context at matched budget) and H5 (twin confidence is
-   calibrated, ECE ≤ 0.10) are both live in the pre-registration and have no
-   result of any kind. Their disposition is now an owner decision on the table:
-   **run them, or withdraw them as a documented deviation** — the same route
-   Amendment 2 B9 used to withdraw H4. Leaving them silent is not one of the
-   options.
-4. **The staff-reserve spot-check** — 20 dossiers, human task, owner only
-   ([`results/staff_reserve_spotcheck.md`](staff_reserve_spotcheck.md));
-   unchanged. It gates re-admission of the 292-subject reserve, nothing else.
+**One item, and it is a paste job.**
+
+1. **The OSF registration summary quote.** The registration is live at
+   https://osf.io/qz28m (§3), but it sits inside OSF's approval window and is
+   not yet publicly readable, so its summary cannot be quoted. Both papers carry
+   a marked slot — *[registration summary, verbatim: pending …]* — for the owner
+   to paste the exact text once it is public. **It is never paraphrased as a
+   quote.**
 
 Closed since the last revision of this list, so nobody re-opens them: the
 bar-lock addendum is adopted; the confirmatory launch plan got its GO and ran;
@@ -414,7 +453,27 @@ classifier trust audit are all satisfied, each under a documented deviation
 [`results/stage2_openended/AUDIT_LINES_2026-07-28.md`](stage2_openended/AUDIT_LINES_2026-07-28.md).
 The B10.8 human detectability line is closed history — waived 2026-07-27 as a
 documented deviation with an LLM-rater line substituted, recorded in
-[`PILOT_REPORT_4.md`](stage2_pilot4/PILOT_REPORT_4.md).
+[`PILOT_REPORT_4.md`](stage2_pilot4/PILOT_REPORT_4.md). **Closed at stop point
+iii (2026-07-28):** the OSF upload itself, now registered; owner review of the
+closeout deliverables, with both papers approved; H2, withdrawn as a documented
+deviation; H5, run as a substituted analysis with the registered estimator
+untested under cap; and the staff-reserve spot-check, closed as moot.
+
+### For any future corpus version
+
+Recorded, no action in this cycle. None of these changes a number in this
+version; all three are inputs to a rebuild if one ever happens.
+
+- **The two name-resolution defect classes** — C02240 (single-token surname) and
+  C02521 (compound surname spelled inconsistently), carried as one
+  documented-deviation candidate
+  ([`RULINGS_20260728.md`](stage2_confirm/RULINGS_20260728.md)).
+- **The rubric tensions** surfaced by the judge audit, which the trust bar
+  cleared but did not dissolve.
+- **The 106 auto-re-admit candidates** in the staff reserve, kept on file with
+  the full dossiers ([`staff_reserve_spotcheck.md`](staff_reserve_spotcheck.md),
+  [`staff_reserve_dossiers.csv`](staff_reserve_dossiers.csv)). The sheet is
+  closed as moot for this version, not discarded.
 
 ## 13. Cost ledger to date
 
@@ -422,17 +481,21 @@ Source of truth: [`results/cost_log.jsonl`](cost_log.jsonl), one line per run.
 
 | item | value |
 |---|---|
-| entries logged | 101 |
-| API spend (Gemini) | **$12.34** (5 rows carry null cost — unpriced models, not zero) |
-| Leonardo compute | **13.75 node-hours** |
-| Leonardo balance remaining | ~1,007 node-hours (~1,008 checked 2026-07-27, ~1.01 spent since) |
+| entries logged | 105 |
+| API spend (Gemini) | **$12.60** (5 rows carry null cost — unpriced models, not zero) |
+| Leonardo compute | **13.88 node-hours** |
+| Leonardo balance remaining | ~1,007 node-hours (~1,008 checked 2026-07-27, ~1.14 spent since) |
 | allocation expires | **2026-09-17** |
 
-The closeout phase itself cost **0.41 node-hours and about $2.01 of API** — the
-H6 classifier pass, H6 generation on both models, the H6 judge and its canaries;
+The closeout phase cost **0.41 node-hours and about $2.01 of API** — the H6
+classifier pass, H6 generation on both models, the H6 judge and its canaries;
 figures as reported in [`H6_REPORT.md`](stage2_confirm/H6_REPORT.md) section 10.
-The H7 diagnostics, the H6 report and the large-meter analysis were CPU only and
-cost nothing.
+The exploratory D_min = 3 arm added **0.125 node-hours and $0.2568** on top of
+that, under its own separate cap and deliberately kept out of section 10's
+projection ([`H6_REPORT.md` §11](stage2_confirm/H6_REPORT.md)); combined H6
+totals including it are **$2.264194 and 0.5362 node-hours**. The H7 diagnostics,
+the H6 report, the large-meter analysis and the whole H5 substituted analysis
+were CPU only and cost nothing.
 
 Compute is still not the constraint. Owner review time is.
 
@@ -473,8 +536,12 @@ Compute is still not the constraint. Owner review time is.
 | H6 classifier run and part-2 tranche | [`stage2_openended/h6_part2_build_note.md`](stage2_openended/h6_part2_build_note.md) | `experiments/h6_confirm_classify.py`, `h6_part2_tranche.py` |
 | H6 part-2 trust gate scoring | [`stage2_openended/h6_part2_score_output.txt`](stage2_openended/h6_part2_score_output.txt) | `experiments/h6_part2_score.py` |
 | H7 exploratory diagnostics | [`stage2_confirm/h7_diagnostics.md`](stage2_confirm/h7_diagnostics.md) | `experiments/h7_diagnostics.py` |
+| H5 substituted calibration analysis | [`stage2_confirm/H5_CALIBRATION.md`](stage2_confirm/H5_CALIBRATION.md), artifacts in [`stage2_confirm/h5/`](stage2_confirm/h5/) | `experiments/h5_calibration.py` |
+| Exploratory D_min = 3 arm and the reproducibility finding | [`stage2_confirm/H6_REPORT.md`](stage2_confirm/H6_REPORT.md) §11 | `experiments/h6_d3_arms.py` |
 | Owner rulings, 2026-07-28 | [`stage2_confirm/RULINGS_20260728.md`](stage2_confirm/RULINGS_20260728.md) | — |
-| Write-up drafts (owner review) | [`writeups/PAPER1_METHODS.md`](writeups/PAPER1_METHODS.md), [`writeups/PAPER2_MAIN.md`](writeups/PAPER2_MAIN.md) | — |
+| Owner rulings, stop point iii | [`stage2_confirm/RULINGS_STOPPOINT3_20260728.md`](stage2_confirm/RULINGS_STOPPOINT3_20260728.md) | — |
+| Errata against the frozen documents | [`PREREGISTRATION_ERRATA.md`](../PREREGISTRATION_ERRATA.md) | — |
+| Write-ups (both approved) | [`writeups/PAPER1_METHODS.md`](writeups/PAPER1_METHODS.md), [`writeups/PAPER2_MAIN.md`](writeups/PAPER2_MAIN.md) | — |
 | Why MoE fails on Leonardo | [`moe_failure_note.md`](moe_failure_note.md) | — |
 | Superseded documents | [`results/archive/`](archive/) | — |
 | Cost ledger | [`cost_log.jsonl`](cost_log.jsonl) | every run driver |
