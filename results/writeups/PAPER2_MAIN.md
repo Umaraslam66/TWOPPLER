@@ -378,10 +378,13 @@ instrument that detects the model already knowing the person
 
 Source: [confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md). Both fire. The
 robustness model's meter is roughly four times the primary model's, and it is the arm whose
-absolute scores are already declared secondary. Top-decile subjects were analysed separately
-as the frozen text requires: cutoffs ≥ 0.0856 (Gemma, 9 subjects) and ≥ 0.1263 (flash-lite,
-9 subjects), listed by ID in the report. The dev pilot measured the same thing at +0.016 and
-+0.048, so the confirmatory run reproduced the dev magnitude rather than surprising us.
+absolute scores are already declared secondary. The frozen text requires subjects with a large meter to be
+analysed separately; the confirm report **identifies** them — cutoffs ≥ 0.0856 (Gemma, 9
+subjects) and ≥ 0.1263 (flash-lite, 9 subjects), listed by ID
+([confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)) — but does not yet print a
+separate lift recomputed on that subset. **That separate analysis is outstanding, and this
+paper does not claim it was done.** The dev pilot measured the meter at +0.016 and +0.048, so
+the confirmatory run reproduced the dev magnitude rather than surprising us.
 
 ### 7.2 H3 (descriptive) — and the coupling that makes half of it unusable
 
