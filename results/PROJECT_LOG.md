@@ -1,6 +1,6 @@
 # Project DOPPLER — project log
 
-Last updated 2026-07-28.
+Last updated 2026-07-28, after closeout.
 
 ## 1. What this file is, and what it is not
 
@@ -31,7 +31,7 @@ That sentence belongs in every write-up.
 
 ## 3. The governance chain
 
-Four frozen documents, in order. They are never edited, summarised in place, or
+Six frozen documents, in order. They are never edited, summarised in place, or
 moved. Later documents override earlier ones where they conflict.
 
 | document | what it added | status |
@@ -41,12 +41,13 @@ moved. Later documents override earlier ones where they conflict.
 | [`PREREGISTRATION_AMENDMENT_1_ADDENDUM_A.md`](../PREREGISTRATION_AMENDMENT_1_ADDENDUM_A.md) | Stage 1E's bars, locked before the confirm split was drawn: C1, C2 with both readings pre-written, C3, binding dual decoding. | frozen |
 | [`PREREGISTRATION_AMENDMENT_2.md`](../PREREGISTRATION_AMENDMENT_2.md) | **Adopted 2026-07-26**, commit `9949c9d`. B7 new hypothesis H7 (twin staleness, co-headline with H1, with a pre-declared crossover statistic); B8 individual-level lift and population-level TVD reported side by side everywhere; B9 positioning, Stage 3 demoted to optional demo and **H4 withdrawn** as a documented deviation; B10 the revised Stage 2 instrument (generated same-question counterfactuals), forced by the two pilots below. | frozen |
 | [`PREREGISTRATION_AMENDMENT_3.md`](../PREREGISTRATION_AMENDMENT_3.md) | **Adopted 2026-07-27**, commit `7548bc3`. C1 declares forced choice dead by pre-committed kill rule (four dev-pilot rounds, zero-info solved every item; a claimable, scoped negative finding); C2 the replacement instrument — open-ended generation, scored by a pinned local embedding model and a rubric-locked stance judge, no claim on one channel alone; C3 own-minus-imposter primary, robustness absolute scores explicitly secondary; C4 a dev validation gate with a pause-for-design-review branch; C5 hypotheses transfer, magnitude bars re-set at bar-lock. | frozen |
+| [`PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md`](../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md) | **Adopted 2026-07-28**, commit `bcd1d51`. The bar lock: instrument parameters filled from the dev pilot, the judge pinned (gemini-3.5-flash + rubric r2 + widened parser), the magnitude units re-set for continuous scales (≥ +0.05 cosine, ≥ +0.09 stance points), and the two-part classifier trust gate. | frozen |
 
 **External timestamping.** [`results/osf_preregistration_snapshot.md`](osf_preregistration_snapshot.md)
 is a frozen copy of the pre-registration plus Amendment 1, prepared for OSF.
-[`results/osf_preregistration_snapshot_v3.md`](osf_preregistration_snapshot_v3.md)
-is the current one, covering all five documents with per-document commit and
-sha256 provenance; v2 and the original are kept verbatim. **The OSF upload
+[`results/osf_preregistration_snapshot_v4.md`](osf_preregistration_snapshot_v4.md)
+is the current one, covering all six documents with per-document commit and
+sha256 provenance; v3, v2 and the original are kept verbatim. **The OSF upload
 itself is still outstanding on the owner.** Until it happens, "pre-registered"
 means "committed to git before the data was touched", which is weaker.
 
@@ -261,66 +262,157 @@ verdicts applied mechanically against the frozen bars).
   donor-blog line stays a declared miss.
 - **Cost:** 0.603 node-hours of the 8 cap, $6.55 API of the $15 cap.
 
-## 11. What is open right now
+## 11. Closeout (2026-07-28, evening)
 
-1. **The open-ended dev pilot RAN and its C4 gate PASSED** (2026-07-27,
-   directional, not powered) —
-   [`results/stage2_openended/OE1_PILOT_REPORT.md`](stage2_openended/OE1_PILOT_REPORT.md).
-   Own beat imposter on the primary model in both channels (embedding
-   +0.1024, stance +0.1818); the imposter-arm UNCLEAR asymmetry and the
-   topic-overlap diagnostic are reported beside the verdict. The pilot
-   also caught and fixed a judge defect (hidden thinking made labels
-   budget-dependent; pinned to thinking-off, 512 tokens). Next: the
-   owner's ≥50-label judge spot-check (sheets A/B/C ready), then the
-   addendum's [TO FILL] slots.
-2. **The bar-lock addendum is ADOPTED** ([`PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md`](../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md),
-   commit `bcd1d51`, 2026-07-28). The road there, all on the record in
-   [`results/stage2_openended/AUDIT_LINES_2026-07-28.md`](stage2_openended/AUDIT_LINES_2026-07-28.md):
-   slots filled from OE-1; audits under documented deviations D1–D4; the
-   pre-committed judge trust bar (raw ≥ 0.80 AND κ ≥ 0.60) **FAILED on the
-   first tranche** (0.7778 / 0.5789); the pre-committed iteration ran once —
-   rubric r2 (three edits matching the three adjudicated judge failure
-   modes), regression broke 0 of 14 previously-correct rows, and the fresh
-   F/G tranche **PASSED** (0.8889 / 0.7978), verdicts mechanical, bar never
-   moved. Judge pinned: gemini-3.5-flash + rubric r2 + widened parser.
-   OSF snapshot v4 covers all six documents
-   ([`results/osf_preregistration_snapshot_v4.md`](osf_preregistration_snapshot_v4.md));
-   the upload remains on the owner. **A confirmatory launch plan now awaits
-   the owner's explicit GO:** [`STAGE2_LAUNCH_PLAN.md`](../STAGE2_LAUNCH_PLAN.md)
-   (provisional seeded draw of 140 with printed disjointness proof, H1+H7
-   batched generation, caps, risk table, report skeleton). The H6/B3
-   parameter spec is being drafted separately and gates H6 scoring only.
-3. **Three owner human tasks gating the freeze:** the 20-row fuzzy-host
-   spot-check (sheet ready at
-   [`results/stage2_pilot2/barlock/fuzzy_host_spotcheck_sheet.md`](stage2_pilot2/barlock/fuzzy_host_spotcheck_sheet.md)),
-   the H6 classifier ≥100-label trust audit (B2.2), and the ≥50 judge-label
-   spot-check (Amendment 3 C4.2, only possible after the dev pilot runs).
+Three things closed the confirmatory stage: H6 run end to end, an exploratory
+decomposition of the H7 channel disagreement, and the contamination analysis the
+pre-registration mandated but nobody had actually run.
+
+### H6 — descriptive, and unresolved
+
+Full record: [`results/stage2_confirm/H6_REPORT.md`](stage2_confirm/H6_REPORT.md).
+
+- **The classifier ran clean.** The frozen follow-up classifier went over the 89
+  survivors' grounding transcripts: **7,322 host turns in scope, 0 parse
+  failures, 0 turns dropped**, and the follow-up share landed where development's
+  did. Build note:
+  [`results/stage2_openended/h6_part2_build_note.md`](stage2_openended/h6_part2_build_note.md).
+- **The part-2 trust gate PASSED** — raw agreement 0.8833 against the ≥ 0.85
+  bar, Cohen's κ 0.7667 against the ≥ 0.60 bar, over 120 rows from 60
+  confirmatory subjects. Scored by `experiments/h6_part2_score.py`, committed
+  before any co-audit label existed.
+- **Two deviations carried into that gate, both owner-directed and both on the
+  record.** The auditor line is a blind Opus 5 co-audit standing in for the
+  owner's own labels (the D3 pattern from part 1, reported as its own line,
+  never pooled with a human one — no human line exists for it). And the tranche
+  was ruled up from the pre-registered floor of 60 rows to 120 **while still
+  blind**, which adds power without adding bias; the reason was that 30
+  FOLLOW-UP rows measure a 20% tripwire in steps of 3.3 points.
+- **The D_min = 3 tripwire did not fire.** The confirmatory FOLLOW-UP overturn
+  rate came in at **18.33%** against the frozen > 20% line, so that
+  pre-committed sensitivity arm was never built. Development's rate was 25%, so
+  the arm had been expected to fire; it did not.
+- **The branch collapsed to descriptive.** Only **24 of 88** subjects could fill
+  both arms to the primary budget, and B3's frozen rule puts anything under 30
+  in the descriptive band. No hypothesis test is available, so **neither
+  pre-written reading is applied** — not the positive one, not the null. The
+  null in particular has to be earned by a powered null, and this is not one: a
+  non-significant positive point estimate over 24 people, with the sign
+  reversing at the B = 400 dose check.
+- **Verdict: H6 UNRESOLVED at confirmatory scale on this corpus.** The operative
+  finding is the eligibility shortfall itself — dev supply implied roughly two
+  thirds of subjects would be eligible, the confirmatory corpus delivered 27%.
+  What this run establishes is that the registered H6 design does not reach
+  confirmatory power on MediaSum-derived grounding transcripts at the frozen
+  budget.
+
+### H7 — exploratory diagnostics, no verdict change
+
+[`results/stage2_confirm/h7_diagnostics.md`](stage2_confirm/h7_diagnostics.md).
+Four angles on the channel disagreement. Nothing in it is a bar, a verdict or a
+claim; the reported H7 numbers stay in the confirmatory report.
+
+- The imposter-minus-twin UNCLEAR gap is roughly flat across Δ bins. What spikes
+  in the 6-12m bin is the **twin's own** UNCLEAR rate — so the bin carrying
+  channel 2's crossover is the bin whose denominator is thinned hardest.
+- The era / topic-overlap covariate is measurable between subjects but flat
+  within them, and it does not track the channel-2 stance slope. **Era drift is
+  not what produces the slope.**
+- The slope's sign survives all three UNCLEAR handling rules (frozen,
+  count-as-non-match, count-as-half). It is not an artefact of that choice.
+- Noted rather than acted on: the pooled crossover statistic compares two arm
+  means without the same-subject guard the report driver applies one column to
+  its left, so it can fire on a comparison the driver itself declines to print.
+- Net: two candidate explanations weakened, one strengthened (channel 2's
+  denominators are thin and unevenly thinned). The disagreement is narrowed, not
+  resolved, and H7 still gets no headline.
+
+### The large-meter analysis that was mandated and missing
+
+The pre-registration says subjects with a large contamination meter are analysed
+separately. The confirmatory report named them but never ran that analysis. It
+now does, in a new subsection of
+[`STAGE2_CONFIRM_REPORT.md`](stage2_confirm/STAGE2_CONFIRM_REPORT.md):
+descriptive, a top-decile split of 9 subjects, no bar attached to any number.
+The reading rule travels with the table — own minus zero-info shares a term with
+the meter that defines the split and therefore says nothing about contamination;
+own minus imposter shares no term and is the row to read. The same report's
+header now flags the OSF snapshot **v4** upload as the project's one open
+external timestamp.
+
+### Write-ups — drafts, under owner review
+
+Two drafts, both under owner review and both being consistency-passed against
+the reports. Neither is a source of truth for anything; the reports are.
+
+- [`results/writeups/PAPER1_METHODS.md`](writeups/PAPER1_METHODS.md) — the
+  methods paper on the four-round forced-choice failure.
+- [`results/writeups/PAPER2_MAIN.md`](writeups/PAPER2_MAIN.md) — the main
+  results paper.
+
+### Owner rulings on the record
+
+[`results/stage2_confirm/RULINGS_20260728.md`](stage2_confirm/RULINGS_20260728.md):
+the two name-resolution defect classes (C02240, a single-token surname; C02521,
+a compound surname spelled inconsistently) are **deferred**. No mid-project pool
+amendment, no matcher change, no re-admission — both subjects failed before
+generation, so nothing downstream has to move, and the attrition stays visible
+in the survival rate instead of being absorbed into it. The pair is carried as
+one documented-deviation candidate for a future corpus rebuild. No action this
+cycle.
+
+## 12. What is open right now
+
+1. **The OSF timestamp.** Snapshot v4 is ready and covers all six governance
+   documents ([`results/osf_preregistration_snapshot_v4.md`](osf_preregistration_snapshot_v4.md));
+   the upload itself is still on the owner, and until it happens the word
+   "pre-registered" keeps meaning only "committed to git before the data was
+   touched". This is the project's one open external timestamp.
+2. **Owner review of the three closeout deliverables** — the H6 report, the H7
+   exploratory diagnostics, and the two write-up drafts. All three are written
+   and committed; none has been reviewed.
+3. **H2 and H5 are registered and were never run.** H2 (model-selected context
+   beats random-segment context at matched budget) and H5 (twin confidence is
+   calibrated, ECE ≤ 0.10) are both live in the pre-registration and have no
+   result of any kind. Their disposition is now an owner decision on the table:
+   **run them, or withdraw them as a documented deviation** — the same route
+   Amendment 2 B9 used to withdraw H4. Leaving them silent is not one of the
+   options.
 4. **The staff-reserve spot-check** — 20 dossiers, human task, owner only
-   ([`results/staff_reserve_spotcheck.md`](staff_reserve_spotcheck.md)); gates
-   re-admission of the 292-subject reserve, not the freeze.
-5. **The OSF timestamp** — snapshot v3 is ready and covers all five documents;
-   the upload is still outstanding, still weakening the word "pre-registered".
-6. **Magnitude bars and instrument parameters** — set in the addendum after the
-   dev pilot, per Amendment 3 C5/C6; until then no magnitude claim exists. The
-   B10.8 human detectability line is closed history: waived 2026-07-27 as a
-   documented deviation, LLM-rater line substituted, recorded in
-   [`PILOT_REPORT_4.md`](stage2_pilot4/PILOT_REPORT_4.md).
+   ([`results/staff_reserve_spotcheck.md`](staff_reserve_spotcheck.md));
+   unchanged. It gates re-admission of the 292-subject reserve, nothing else.
 
-## 12. Cost ledger to date
+Closed since the last revision of this list, so nobody re-opens them: the
+bar-lock addendum is adopted; the confirmatory launch plan got its GO and ran;
+the judge trust bar, the fuzzy-host spot-check and both parts of the H6
+classifier trust audit are all satisfied, each under a documented deviation
+(D1–D4 and the D3 pattern) recorded in
+[`results/stage2_openended/AUDIT_LINES_2026-07-28.md`](stage2_openended/AUDIT_LINES_2026-07-28.md).
+The B10.8 human detectability line is closed history — waived 2026-07-27 as a
+documented deviation with an LLM-rater line substituted, recorded in
+[`PILOT_REPORT_4.md`](stage2_pilot4/PILOT_REPORT_4.md).
+
+## 13. Cost ledger to date
 
 Source of truth: [`results/cost_log.jsonl`](cost_log.jsonl), one line per run.
 
 | item | value |
 |---|---|
-| entries logged | 92 |
-| API spend (Gemini) | **$10.33** (5 rows carry null cost — unpriced models, not zero) |
-| Leonardo compute | **13.34 node-hours** |
-| Leonardo balance remaining | ~1,008 node-hours (as of 2026-07-27) |
+| entries logged | 101 |
+| API spend (Gemini) | **$12.34** (5 rows carry null cost — unpriced models, not zero) |
+| Leonardo compute | **13.75 node-hours** |
+| Leonardo balance remaining | ~1,007 node-hours (~1,008 checked 2026-07-27, ~1.01 spent since) |
 | allocation expires | **2026-09-17** |
 
-Compute is not the constraint. Owner review time is.
+The closeout phase itself cost **0.41 node-hours and about $2.01 of API** — the
+H6 classifier pass, H6 generation on both models, the H6 judge and its canaries;
+figures as reported in [`H6_REPORT.md`](stage2_confirm/H6_REPORT.md) section 10.
+The H7 diagnostics, the H6 report and the large-meter analysis were CPU only and
+cost nothing.
 
-## 13. Where everything lives
+Compute is still not the constraint. Owner review time is.
+
+## 14. Where everything lives
 
 | what | where | regenerated by |
 |---|---|---|
@@ -351,6 +443,14 @@ Compute is not the constraint. Owner review time is.
 | OE-1 pre-GPU checkpoint + resolutions | [`stage2_openended/CHECKPOINT_PREGPU.md`](stage2_openended/CHECKPOINT_PREGPU.md) | — |
 | Owner sheets: judge spot-check A/B/C, H6 audit | [`stage2_openended/`](stage2_openended/) | `experiments/h6_audit_sample.py`, `stage2_oe1.py spotcheck` |
 | Bar-lock proposals | [`stage2_pilot2/BARLOCK_MEASUREMENTS.md`](stage2_pilot2/BARLOCK_MEASUREMENTS.md) | `experiments/barlock_*.py` |
+| Audit lines and deviations D1–D4 | [`stage2_openended/AUDIT_LINES_2026-07-28.md`](stage2_openended/AUDIT_LINES_2026-07-28.md) | `experiments/oe1_r2_score.py` |
+| Stage 2 confirmatory report (H1, H7, contamination) | [`stage2_confirm/STAGE2_CONFIRM_REPORT.md`](stage2_confirm/STAGE2_CONFIRM_REPORT.md) | `experiments/stage2_confirm_report.py` |
+| H6 verdict report | [`stage2_confirm/H6_REPORT.md`](stage2_confirm/H6_REPORT.md) | `experiments/h6_report.py` |
+| H6 classifier run and part-2 tranche | [`stage2_openended/h6_part2_build_note.md`](stage2_openended/h6_part2_build_note.md) | `experiments/h6_confirm_classify.py`, `h6_part2_tranche.py` |
+| H6 part-2 trust gate scoring | [`stage2_openended/h6_part2_score_output.txt`](stage2_openended/h6_part2_score_output.txt) | `experiments/h6_part2_score.py` |
+| H7 exploratory diagnostics | [`stage2_confirm/h7_diagnostics.md`](stage2_confirm/h7_diagnostics.md) | `experiments/h7_diagnostics.py` |
+| Owner rulings, 2026-07-28 | [`stage2_confirm/RULINGS_20260728.md`](stage2_confirm/RULINGS_20260728.md) | — |
+| Write-up drafts (owner review) | [`writeups/PAPER1_METHODS.md`](writeups/PAPER1_METHODS.md), [`writeups/PAPER2_MAIN.md`](writeups/PAPER2_MAIN.md) | — |
 | Why MoE fails on Leonardo | [`moe_failure_note.md`](moe_failure_note.md) | — |
 | Superseded documents | [`results/archive/`](archive/) | — |
 | Cost ledger | [`cost_log.jsonl`](cost_log.jsonl) | every run driver |
@@ -359,7 +459,7 @@ Working notes live in `memory/` (untracked, not part of the record).
 `memory/stage1-closed.md` holds the closed Stage 1 and 1E notes;
 `memory/stage2-*.md` are the live ones.
 
-## 14. Six things this project learned the hard way
+## 15. Seven things this project learned the hard way
 
 1. **Derive on a disjoint split or do not believe the number.** Learned twice.
    Selecting a variant counts as tuning. The pilot's fixed order was inflated by
@@ -378,3 +478,11 @@ Working notes live in `memory/` (untracked, not part of the record).
    Stage 2 ceilings: nothing that looked good at pilot scale on this project has
    survived at full size unchanged. When a result looks surprisingly good, hunt
    for the leak before celebrating.
+7. **Project the supply, not just the effect — and expect that to shrink too.**
+   H6 made this the third instance of pilot-to-scale shrinkage, and the first
+   where what shrank was how many subjects the design could even use: dev supply
+   implied about two thirds eligible, the confirmatory corpus delivered 27%, and
+   a hypothesis that was fully powered on paper landed in the descriptive band
+   before a single score was computed. Six dev subjects cannot tell you what
+   eighty-eight real ones will supply. Measure eligibility on a realistic draw
+   before freezing the budget that defines it.
