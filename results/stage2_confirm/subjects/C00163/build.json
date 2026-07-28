@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00163",
+ "canonical_name": "Andrew Exum",
+ "draw_pos": 124,
+ "stratum": "article",
+ "h7_eligible": true,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 14,
+ "span_days_dedup": 2292,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 5,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl12",
+  "transcript_id": "NPR-10832",
+  "date": "2017-07-23",
+  "programme": "Weekend Edition Sunday",
+  "title": "The Call-In: Iraq, Then And Now",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-07-23"
+  ],
+  "guest_words": 808
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 9,
+  "host": 22,
+  "other": 18
+ },
+ "n_grounding_clusters": 3,
+ "grounding_guest_words": 4475,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 6,
+ "drop_reasons": {
+  "not_interrogative": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

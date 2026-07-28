@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C01485",
+ "canonical_name": "Laurie Roberts",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-13774",
+   "date": "2018-01-11",
+   "program": "All Things Considered",
+   "title": "Arizona Set To Have A More Dynamic U.S. Senate Race Than In Years Past",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-01-11"
+   ],
+   "guest_words": 488
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-10992",
+   "date": "2018-03-17",
+   "program": "Weekend Edition Saturday",
+   "title": "Arizona's Special Election",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-03-17"
+   ],
+   "guest_words": 483
+  }
+ ],
+ "test": {
+  "cluster_id": "cl4",
+  "transcript_id": "NPR-4616",
+  "date": "2018-08-27",
+  "program": "All Things Considered",
+  "title": "Both Of Arizona's Senate Seats Are Now In Question",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2018-08-27"
+  ],
+  "guest_words": 440
+ },
+ "excluded_same_date": []
+}

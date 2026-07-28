@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00526",
+ "canonical_name": "Craig Gilbert",
+ "draw_pos": 104,
+ "stratum": "article",
+ "h7_eligible": false,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 7,
+ "span_days_dedup": 451,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 4,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl6",
+  "transcript_id": "NPR-12705",
+  "date": "2012-08-11",
+  "programme": "Weekend Edition Saturday",
+  "title": "A Local Look At Wisconsin's Rep. Paul Ryan",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2012-08-11"
+  ],
+  "guest_words": 497
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 9,
+  "host": 17
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 1919,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 7,
+ "drop_reasons": {
+  "not_interrogative": 2,
+  "question_too_short": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

@@ -1,0 +1,48 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00218",
+ "canonical_name": "Anthony Cordesman",
+ "draw_pos": 112,
+ "stratum": "article",
+ "h7_eligible": true,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 54,
+ "span_days_dedup": 4474,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 3,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl37",
+  "transcript_id": "NPR-3064",
+  "date": "2018-10-20",
+  "programme": "All Things Considered",
+  "title": "Turkey's Role In The Khashoggi Case",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2018-10-20"
+  ],
+  "guest_words": 436
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 7,
+  "host": 7
+ },
+ "n_grounding_clusters": 3,
+ "grounding_guest_words": 1255,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 5,
+ "drop_reasons": {
+  "not_interrogative": 2
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

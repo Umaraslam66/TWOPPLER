@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C01375",
+ "canonical_name": "Kareem Fahim",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-44686",
+   "date": "2013-12-29",
+   "program": "Weekend Edition Sunday",
+   "title": "'Terrorist' Label Is A Massive Setback For Muslim Brotherhood",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-12-29"
+   ],
+   "guest_words": 360
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-25371",
+   "date": "2015-01-10",
+   "program": "All Things Considered",
+   "title": "How Does Al-Qaida Continue To Grow?",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-01-10"
+   ],
+   "guest_words": 303
+  }
+ ],
+ "test": {
+  "cluster_id": "cl2",
+  "transcript_id": "NPR-24331",
+  "date": "2015-07-01",
+  "program": "All Things Considered",
+  "title": "Islamic State Affiliate Claims Responsibility For Attack On Egyptian Soldiers",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2015-07-01"
+  ],
+  "guest_words": 378
+ },
+ "excluded_same_date": []
+}

@@ -1,0 +1,55 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00032",
+ "canonical_name": "Abdullah Ii",
+ "draw_pos": 114,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 52,
+ "span_days_dedup": 1275,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 5,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl31",
+  "transcript_id": "CNN-273898",
+  "date": "2016-01-14",
+  "programme": "WOLF",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2016-01-14"
+  ],
+  "guest_words": 719
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 7,
+  "host": 9,
+  "other": 1
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 1461,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 7,
+ "drop_reasons": {
+  "not_interrogative": 2
+ },
+ "guest_word_warnings": [
+  {
+   "transcript_id": "CNN-200069",
+   "extracted": 606,
+   "scan_cache": 486
+  }
+ ],
+ "date_disagreements": []
+}

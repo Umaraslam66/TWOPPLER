@@ -1,0 +1,140 @@
+{
+ "canonical_id": "C00812",
+ "canonical_name": "Gayle Trotter",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl13",
+   "transcript_id": "NPR-22016",
+   "date": "2016-05-14",
+   "program": "All Things Considered",
+   "title": "Barbershop: Bathroom Laws, Women In The Workplace And High Heels",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-05-14"
+   ],
+   "guest_words": 567
+  },
+  {
+   "cluster_id": "cl12",
+   "transcript_id": "NPR-21613",
+   "date": "2016-06-25",
+   "program": "All Things Considered",
+   "title": "Barbershop: 'Brexit' And The U.S.",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-06-25"
+   ],
+   "guest_words": 369
+  },
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-20556",
+   "date": "2016-10-08",
+   "program": "All Things Considered",
+   "title": "Barbershop: Trump, Women And The Republican Party",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-10-08"
+   ],
+   "guest_words": 415
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-20274",
+   "date": "2016-11-12",
+   "program": "All Things Considered",
+   "title": "Trump Supporter Says 'My Heart Swelled With Satisfaction' On Election Night",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-11-12"
+   ],
+   "guest_words": 542
+  },
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-19967",
+   "date": "2016-12-10",
+   "program": "All Things Considered",
+   "title": "Barbershop: Trump Transition Team Tactics And Twitter Etiquette",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-12-10"
+   ],
+   "guest_words": 533
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-18955",
+   "date": "2017-04-01",
+   "program": "All Things Considered",
+   "title": "Barbershop: 'Bathroom Bill,' VP Pence's Marriage Beliefs",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-04-01"
+   ],
+   "guest_words": 628
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-15792",
+   "date": "2017-09-09",
+   "program": "All Things Considered",
+   "title": "Barbershop: DACA Decision Fallout And More",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-09-09"
+   ],
+   "guest_words": 468
+  },
+  {
+   "cluster_id": "cl15",
+   "transcript_id": "NPR-46554",
+   "date": "2018-05-19",
+   "program": "All Things Considered",
+   "title": "Barbershop: GOP Infighting Dooms Farm Bill",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-05-19"
+   ],
+   "guest_words": 436
+  },
+  {
+   "cluster_id": "cl14",
+   "transcript_id": "NPR-46056",
+   "date": "2018-06-29",
+   "program": "All Things Considered",
+   "title": "Week In Politics: Justice Anthony Kennedy Retires And A New York Primary Upset",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-06-29"
+   ],
+   "guest_words": 470
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-1960",
+   "date": "2018-11-23",
+   "program": "All Things Considered",
+   "title": "Week In Politics: U.S.-Saudi Relations And A Bigger-Than-Expected Blue Wave",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-11-23"
+   ],
+   "guest_words": 335
+  }
+ ],
+ "test": {
+  "cluster_id": "cl5",
+  "transcript_id": "NPR-13180",
+  "date": "2019-03-08",
+  "program": "All Things Considered",
+  "title": "Week In Politics: Manafort, The Anti-Hate Resolution And Emergency Declaration Voting",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-03-08"
+  ],
+  "guest_words": 362
+ },
+ "excluded_same_date": []
+}

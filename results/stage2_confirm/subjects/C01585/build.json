@@ -1,0 +1,48 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01585",
+ "canonical_name": "Maen Rashid Areikat",
+ "draw_pos": 92,
+ "stratum": "article",
+ "h7_eligible": true,
+ "wiki_status": "has-page",
+ "n_dedup_clusters": 9,
+ "span_days_dedup": 1396,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 3,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl7",
+  "transcript_id": "NPR-24850",
+  "date": "2015-03-18",
+  "programme": "All Things Considered",
+  "title": "Palestinian Authority Reacts To Prime Minister Netanyahu's Reelection",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2015-03-18"
+  ],
+  "guest_words": 415
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 8,
+  "host": 9
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 752,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 8,
+ "drop_reasons": {
+  "not_interrogative": 5
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

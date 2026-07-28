@@ -1,0 +1,92 @@
+{
+ "canonical_id": "C00653",
+ "canonical_name": "Del Barco",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl12",
+   "transcript_id": "NPR-47851",
+   "date": "2005-06-06",
+   "program": "News & Notes",
+   "title": "Racial Brawls at L.A.'s Jefferson High",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-06-06"
+   ],
+   "guest_words": 390
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-40900",
+   "date": "2005-07-08",
+   "program": "Morning Edition",
+   "title": "New School in L.A. Is First in 35 Years",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-07-08"
+   ],
+   "guest_words": 383
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-40855",
+   "date": "2005-07-14",
+   "program": "Morning Edition",
+   "title": "Autopsy Confirms L.A. Police Bullet Killed Toddler",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-07-14"
+   ],
+   "guest_words": 395
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-40011",
+   "date": "2005-11-21",
+   "program": "Morning Edition",
+   "title": "Facing Execution, Tookie Williams Hopes for Clemency",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-11-21"
+   ],
+   "guest_words": 666
+  },
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-46410",
+   "date": "2005-12-07",
+   "program": "News & Notes",
+   "title": "Stanley 'Tookie' Williams Awaits Clemency Decision",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-12-07"
+   ],
+   "guest_words": 378
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-43183",
+   "date": "2005-12-12",
+   "program": "All Things Considered",
+   "title": "Clemency for Ex-Crips Leader Williams Denied",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-12-12"
+   ],
+   "guest_words": 402
+  }
+ ],
+ "test": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-14263",
+  "date": "2006-03-09",
+  "program": "Day to Day",
+  "title": "A Gangsta's Memoir Becomes a Smoking Gun",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2006-03-09"
+  ],
+  "guest_words": 467
+ },
+ "excluded_same_date": []
+}

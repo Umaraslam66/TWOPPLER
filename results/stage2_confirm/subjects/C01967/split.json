@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C01967",
+ "canonical_name": "Rich Jaroslovsky",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-27916",
+   "date": "2012-05-29",
+   "program": "Morning Edition",
+   "title": "How Firms Can Recover From High-Tech Stumbles",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-05-29"
+   ],
+   "guest_words": 552
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-27762",
+   "date": "2012-07-02",
+   "program": "Morning Edition",
+   "title": "Samsung's Galaxy S3 Sets A Marker For iPhones",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-07-02"
+   ],
+   "guest_words": 509
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-27159",
+   "date": "2012-10-26",
+   "program": "Morning Edition",
+   "title": "What Windows 8 Could Mean For You",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-10-26"
+   ],
+   "guest_words": 469
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-26988",
+   "date": "2012-11-22",
+   "program": "Morning Edition",
+   "title": "Rich Jaroslovsky's Gadget Picks For 2012",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-11-22"
+   ],
+   "guest_words": 445
+  }
+ ],
+ "test": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-24870",
+  "date": "2013-11-04",
+  "program": "Morning Edition",
+  "title": "iPhone Users Face Dilemma Of When To Upgrade",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-11-04"
+  ],
+  "guest_words": 549
+ },
+ "excluded_same_date": []
+}

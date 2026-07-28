@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C02218",
+ "canonical_name": "Shuja Nawaz",
+ "draw_pos": 118,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 8,
+ "span_days_dedup": 1621,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 5,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl4",
+  "transcript_id": "NPR-25591",
+  "date": "2014-12-16",
+  "programme": "All Things Considered",
+  "title": "Pakistan Near Watershed Moment, But It Will Take Work",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2014-12-16"
+  ],
+  "guest_words": 472
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 9,
+  "host": 9
+ },
+ "n_grounding_clusters": 4,
+ "grounding_guest_words": 1682,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 8,
+ "drop_reasons": {
+  "intro_host_turn": 1,
+  "not_interrogative": 2
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

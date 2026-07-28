@@ -1,0 +1,188 @@
+{
+ "canonical_id": "C01659",
+ "canonical_name": "Mary Kate Cary",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl34",
+   "transcript_id": "NPR-6953",
+   "date": "2010-10-26",
+   "program": "Talk of the Nation",
+   "title": "Decoding 2010 Political Attack Buzzwords",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-10-26"
+   ],
+   "guest_words": 1261
+  },
+  {
+   "cluster_id": "cl28",
+   "transcript_id": "NPR-29670",
+   "date": "2013-03-08",
+   "program": "All Things Considered",
+   "title": "Week In Politics: Unemployment, Rand Paul's Filibuster",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-03-08"
+   ],
+   "guest_words": 511
+  },
+  {
+   "cluster_id": "cl27",
+   "transcript_id": "NPR-26935",
+   "date": "2014-06-27",
+   "program": "All Things Considered",
+   "title": "Week In Politics: Lawsuits, Rulings And The Legacy Of Howard Baker",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-06-27"
+   ],
+   "guest_words": 493
+  },
+  {
+   "cluster_id": "cl24",
+   "transcript_id": "NPR-2049",
+   "date": "2015-08-09",
+   "program": "Weekend Edition Sunday",
+   "title": "Should The Republican Party Worry About The Trump Phenomenon?",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-08-09"
+   ],
+   "guest_words": 494
+  },
+  {
+   "cluster_id": "cl26",
+   "transcript_id": "NPR-23066",
+   "date": "2016-01-15",
+   "program": "All Things Considered",
+   "title": "Week In Politics: State Of The Union, GOP Debate",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-01-15"
+   ],
+   "guest_words": 454
+  },
+  {
+   "cluster_id": "cl25",
+   "transcript_id": "NPR-21281",
+   "date": "2016-07-30",
+   "program": "All Things Considered",
+   "title": "Barbershop: Speechwriters Speak On The RNC And DNC",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-07-30"
+   ],
+   "guest_words": 526
+  },
+  {
+   "cluster_id": "cl23",
+   "transcript_id": "NPR-18535",
+   "date": "2017-05-06",
+   "program": "All Things Considered",
+   "title": "Barbershop: The State Of Health Care, Police Brutality And Racism In America",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-05-06"
+   ],
+   "guest_words": 509
+  },
+  {
+   "cluster_id": "cl22",
+   "transcript_id": "NPR-16871",
+   "date": "2017-07-29",
+   "program": "All Things Considered",
+   "title": "Barbershop: Changes At The White House And What The GOP Does Next",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-07-29"
+   ],
+   "guest_words": 423
+  },
+  {
+   "cluster_id": "cl20",
+   "transcript_id": "NPR-11365",
+   "date": "2017-09-30",
+   "program": "Weekend Edition Saturday",
+   "title": "Week In Politics: Price Resigns, Puerto Rico, Tax Overhaul",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2017-09-30"
+   ],
+   "guest_words": 663
+  },
+  {
+   "cluster_id": "cl21",
+   "transcript_id": "NPR-13762",
+   "date": "2018-01-13",
+   "program": "All Things Considered",
+   "title": "Trump's Latest Vulgar Comments Cast Shadow Over Legislative Agenda",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-01-13"
+   ],
+   "guest_words": 569
+  },
+  {
+   "cluster_id": "cl32",
+   "transcript_id": "NPR-47088",
+   "date": "2018-04-21",
+   "program": "All Things Considered",
+   "title": "Former George H.W. Bush Speechwriter Remembers Barbara Bush",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-04-21"
+   ],
+   "guest_words": 313
+  },
+  {
+   "cluster_id": "cl31",
+   "transcript_id": "NPR-46269",
+   "date": "2018-06-23",
+   "program": "All Things Considered",
+   "title": "Barbershop: The Media And The White House",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-06-23"
+   ],
+   "guest_words": 403
+  },
+  {
+   "cluster_id": "cl30",
+   "transcript_id": "NPR-3715",
+   "date": "2018-09-30",
+   "program": "All Things Considered",
+   "title": "How Will The Kavanaugh Controversy Play Into Midterm Elections?",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-09-30"
+   ],
+   "guest_words": 442
+  },
+  {
+   "cluster_id": "cl33",
+   "transcript_id": "NPR-550",
+   "date": "2019-02-09",
+   "program": "All Things Considered",
+   "title": "Political Speechwriters Weigh In On Acting Attorney General's Testimony",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-02-09"
+   ],
+   "guest_words": 392
+  }
+ ],
+ "test": {
+  "cluster_id": "cl35",
+  "transcript_id": "NPR-7296",
+  "date": "2019-09-24",
+  "program": "Morning Edition",
+  "title": "Trump To Address World Leaders At U.N. General Assembly",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-09-24"
+  ],
+  "guest_words": 503
+ },
+ "excluded_same_date": []
+}

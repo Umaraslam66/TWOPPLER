@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C00163",
+ "canonical_name": "Andrew Exum",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl13",
+   "transcript_id": "NPR-2231",
+   "date": "2011-04-14",
+   "program": "Talk of the Nation",
+   "title": "How The Fall Troop Surge Changed Afghanistan",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-04-14"
+   ],
+   "guest_words": 1960
+  },
+  {
+   "cluster_id": "cl14",
+   "transcript_id": "NPR-611",
+   "date": "2011-12-19",
+   "program": "Talk of the Nation",
+   "title": "What Lessons Should Americans Draw From Iraq War?",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-12-19"
+   ],
+   "guest_words": 1536
+  },
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-10770",
+   "date": "2012-06-14",
+   "program": "Talk of the Nation",
+   "title": "On The Ground With Troops In Afghanistan",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2012-06-14"
+   ],
+   "guest_words": 979
+  }
+ ],
+ "test": {
+  "cluster_id": "cl12",
+  "transcript_id": "NPR-10832",
+  "date": "2017-07-23",
+  "program": "Weekend Edition Sunday",
+  "title": "The Call-In: Iraq, Then And Now",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-07-23"
+  ],
+  "guest_words": 808
+ },
+ "excluded_same_date": []
+}

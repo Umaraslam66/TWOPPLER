@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00146",
+ "canonical_name": "Amy Myers Jaffe",
+ "draw_pos": 125,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 14,
+ "span_days_dedup": 2102,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 4,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl5",
+  "transcript_id": "NPR-20141",
+  "date": "2016-11-24",
+  "programme": "All Things Considered",
+  "title": "Clean Energy Analyst: Renewables Are 'Here To Stay' Under Trump Presidency",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2016-11-24"
+  ],
+  "guest_words": 458
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 8,
+  "host": 6
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 2363,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 6,
+ "drop_reasons": {
+  "intro_host_turn": 1,
+  "not_interrogative": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

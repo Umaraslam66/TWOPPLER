@@ -1,0 +1,92 @@
+{
+ "canonical_id": "C00629",
+ "canonical_name": "De Mistura",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "CNN-250621",
+   "date": "2015-03-05",
+   "program": "CNN'S AMANPOUR",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-03-05"
+   ],
+   "guest_words": 883
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "CNN-264036",
+   "date": "2015-09-08",
+   "program": "CONNECT THE WORLD",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-09-08"
+   ],
+   "guest_words": 600
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "CNN-267926",
+   "date": "2015-10-29",
+   "program": "WORLD RIGHT NOW WITH HALA GORANI",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-10-29"
+   ],
+   "guest_words": 541
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "CNN-274380",
+   "date": "2016-01-20",
+   "program": "CNN'S AMANPOUR",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-01-20"
+   ],
+   "guest_words": 704
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "CNN-275699",
+   "date": "2016-02-04",
+   "program": "WORLD RIGHT NOW WITH HALA GORANI",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-02-04"
+   ],
+   "guest_words": 558
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "CNN-277899",
+   "date": "2016-03-01",
+   "program": "CNN'S AMANPOUR",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-03-01"
+   ],
+   "guest_words": 785
+  }
+ ],
+ "test": {
+  "cluster_id": "cl16",
+  "transcript_id": "CNN-384834",
+  "date": "2019-11-05",
+  "program": "CONNECT THE WORLD",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-11-05"
+  ],
+  "guest_words": 956
+ },
+ "excluded_same_date": []
+}

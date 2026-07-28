@@ -1,0 +1,52 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00657",
+ "canonical_name": "Della Femina",
+ "draw_pos": 122,
+ "stratum": "long-tail",
+ "h7_eligible": true,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 6,
+ "span_days_dedup": 1777,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 0,
+ "failure_reason": "zero_d4_items",
+ "failure_detail": "0 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl1",
+  "transcript_id": "CNN-111615",
+  "date": "2006-10-30",
+  "programme": "SHOWBIZ TONIGHT",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2006-10-30"
+  ],
+  "guest_words": 332
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 9,
+  "other": 16
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 748,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 0,
+ "drop_reasons": {},
+ "guest_word_warnings": [
+  {
+   "transcript_id": "CNN-49622",
+   "extracted": 425,
+   "scan_cache": 386
+  }
+ ],
+ "date_disagreements": []
+}

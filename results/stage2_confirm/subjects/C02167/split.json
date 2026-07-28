@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C02167",
+ "canonical_name": "Seth Stoughton",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-21503",
+   "date": "2016-07-09",
+   "program": "All Things Considered",
+   "title": "Looking At How Police Are Trained",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-07-09"
+   ],
+   "guest_words": 396
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-19955",
+   "date": "2016-12-10",
+   "program": "All Things Considered",
+   "title": "Why Police Shooting Trials Put Juries In A Bind",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-12-10"
+   ],
+   "guest_words": 319
+  }
+ ],
+ "test": {
+  "cluster_id": "cl9",
+  "transcript_id": "NPR-9087",
+  "date": "2019-08-24",
+  "program": "All Things Considered",
+  "title": "Law Professor On California's New Police Use-Of-Force Law",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-08-24"
+  ],
+  "guest_words": 527
+ },
+ "excluded_same_date": []
+}

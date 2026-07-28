@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C00087",
+ "canonical_name": "Alan Schroeder",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "NPR-5948",
+   "date": "2008-06-07",
+   "program": "All Things Considered",
+   "title": "Historian Imagines McCain-Obama Debate",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2008-06-07"
+   ],
+   "guest_words": 529
+  },
+  {
+   "cluster_id": "cl12",
+   "transcript_id": "NPR-783",
+   "date": "2011-11-16",
+   "program": "Talk of the Nation",
+   "title": "Candidates Sink Or Swim In Numerous Debates",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-11-16"
+   ],
+   "guest_words": 334
+  }
+ ],
+ "test": {
+  "cluster_id": "cl9",
+  "transcript_id": "NPR-12798",
+  "date": "2012-02-29",
+  "program": "Talk of the Nation",
+  "title": "Game-Changing Debate Moments",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2012-02-29"
+  ],
+  "guest_words": 829
+ },
+ "excluded_same_date": []
+}

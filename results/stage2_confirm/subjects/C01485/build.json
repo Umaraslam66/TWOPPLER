@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01485",
+ "canonical_name": "Laurie Roberts",
+ "draw_pos": 113,
+ "stratum": "long-tail",
+ "h7_eligible": false,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 4,
+ "span_days_dedup": 228,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 3,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl4",
+  "transcript_id": "NPR-4616",
+  "date": "2018-08-27",
+  "programme": "All Things Considered",
+  "title": "Both Of Arizona's Senate Seats Are Now In Question",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2018-08-27"
+  ],
+  "guest_words": 440
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 13,
+  "host": 11
+ },
+ "n_grounding_clusters": 2,
+ "grounding_guest_words": 971,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 10,
+ "drop_reasons": {
+  "answer_too_short": 1,
+  "not_interrogative": 3,
+  "question_too_short": 3
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

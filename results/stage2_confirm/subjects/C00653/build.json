@@ -1,0 +1,75 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00653",
+ "canonical_name": "Del Barco",
+ "draw_pos": 110,
+ "stratum": "long-tail",
+ "h7_eligible": false,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 13,
+ "span_days_dedup": 276,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 0,
+ "failure_reason": "zero_d4_items",
+ "failure_detail": "0 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-14263",
+  "date": "2006-03-09",
+  "programme": "Day to Day",
+  "title": "A Gangsta's Memoir Becomes a Smoking Gun",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2006-03-09"
+  ],
+  "guest_words": 467
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 13,
+  "host": 3,
+  "other": 5
+ },
+ "n_grounding_clusters": 6,
+ "grounding_guest_words": 2614,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 1,
+ "drop_reasons": {
+  "not_interrogative": 1
+ },
+ "guest_word_warnings": [
+  {
+   "transcript_id": "NPR-40900",
+   "extracted": 383,
+   "scan_cache": 331
+  },
+  {
+   "transcript_id": "NPR-40011",
+   "extracted": 666,
+   "scan_cache": 596
+  },
+  {
+   "transcript_id": "NPR-46410",
+   "extracted": 378,
+   "scan_cache": 314
+  },
+  {
+   "transcript_id": "NPR-43183",
+   "extracted": 402,
+   "scan_cache": 334
+  },
+  {
+   "transcript_id": "NPR-14263",
+   "extracted": 467,
+   "scan_cache": 400
+  }
+ ],
+ "date_disagreements": []
+}

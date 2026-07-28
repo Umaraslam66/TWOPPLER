@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C02478",
+ "canonical_name": "Van Nieuwenhuijzen",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "CNN-172501",
+   "date": "2011-09-16",
+   "program": "QUEST MEANS BUSINESS",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-09-16"
+   ],
+   "guest_words": 394
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "CNN-178549",
+   "date": "2011-12-30",
+   "program": "QUEST MEANS BUSINESS",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-12-30"
+   ],
+   "guest_words": 442
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "CNN-205578",
+   "date": "2013-04-24",
+   "program": "QUEST MEANS BUSINESS",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-04-24"
+   ],
+   "guest_words": 435
+  },
+  {
+   "cluster_id": "cl13",
+   "transcript_id": "CNN-219109",
+   "date": "2013-11-19",
+   "program": "QUEST MEANS BUSINESS",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-11-19"
+   ],
+   "guest_words": 482
+  }
+ ],
+ "test": {
+  "cluster_id": "cl14",
+  "transcript_id": "CNN-224685",
+  "date": "2014-02-10",
+  "program": "QUEST MEANS BUSINESS",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2014-02-10"
+  ],
+  "guest_words": 391
+ },
+ "excluded_same_date": []
+}

@@ -1,0 +1,80 @@
+{
+ "canonical_id": "C00364",
+ "canonical_name": "Brenda Van Dam",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "CNN-49040",
+   "date": "2002-02-11",
+   "program": "CNN LIVE EVENT/SPECIAL",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2002-02-11"
+   ],
+   "guest_words": 415
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "CNN-49275",
+   "date": "2002-02-14",
+   "program": "CNN LIVE EVENT/SPECIAL",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2002-02-14"
+   ],
+   "guest_words": 625
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "CNN-49305",
+   "date": "2002-02-14",
+   "program": "CNN WOLF BLITZER REPORTS",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2002-02-14"
+   ],
+   "guest_words": 421
+  },
+  {
+   "cluster_id": "cl31",
+   "transcript_id": "CNN-60584",
+   "date": "2002-09-17",
+   "program": "CNN LIVE EVENT/SPECIAL",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2002-09-17"
+   ],
+   "guest_words": 733
+  },
+  {
+   "cluster_id": "cl27",
+   "transcript_id": "CNN-63743",
+   "date": "2002-12-03",
+   "program": "CNN LARRY KING LIVE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2002-12-03"
+   ],
+   "guest_words": 4083
+  }
+ ],
+ "test": {
+  "cluster_id": "cl36",
+  "transcript_id": "CNN-72110",
+  "date": "2003-06-11",
+  "program": "CNN LARRY KING LIVE",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2003-06-11"
+  ],
+  "guest_words": 3731
+ },
+ "excluded_same_date": []
+}

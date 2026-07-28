@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C02218",
+ "canonical_name": "Shuja Nawaz",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-31330",
+   "date": "2010-07-09",
+   "program": "Morning Edition",
+   "title": "Afghanistan, Pakistan Forge Closer Ties",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-07-09"
+   ],
+   "guest_words": 306
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-13787",
+   "date": "2010-08-14",
+   "program": "Weekend Edition Saturday",
+   "title": "Flood Gives Pakistan, U.S. Chance To Build Bridges",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-08-14"
+   ],
+   "guest_words": 482
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-28436",
+   "date": "2013-08-20",
+   "program": "All Things Considered",
+   "title": "Pakistan's Former President Charged In Benazir Bhutto Murder",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-08-20"
+   ],
+   "guest_words": 433
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-12117",
+   "date": "2014-05-31",
+   "program": "Weekend Edition Saturday",
+   "title": "Pakistan Signals Possible Opening In Relations With India",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-05-31"
+   ],
+   "guest_words": 461
+  }
+ ],
+ "test": {
+  "cluster_id": "cl4",
+  "transcript_id": "NPR-25591",
+  "date": "2014-12-16",
+  "program": "All Things Considered",
+  "title": "Pakistan Near Watershed Moment, But It Will Take Work",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2014-12-16"
+  ],
+  "guest_words": 472
+ },
+ "excluded_same_date": []
+}

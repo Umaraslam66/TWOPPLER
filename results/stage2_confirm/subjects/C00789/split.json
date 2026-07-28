@@ -1,0 +1,69 @@
+{
+ "canonical_id": "C00789",
+ "canonical_name": "Fred Goldman",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl49",
+   "transcript_id": "CNN-85524",
+   "date": "2004-06-19",
+   "program": "CNN LARRY KING LIVE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2004-06-19"
+   ],
+   "guest_words": 1610
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "CNN-110074",
+   "date": "2006-09-05",
+   "program": "NANCY GRACE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-09-05"
+   ],
+   "guest_words": 604
+  },
+  {
+   "cluster_id": "cl11",
+   "transcript_id": "CNN-112158",
+   "date": "2006-11-19",
+   "program": "CNN LARRY KING LIVE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-11-19"
+   ],
+   "guest_words": 514
+  },
+  {
+   "cluster_id": "cl13",
+   "transcript_id": "CNN-112179",
+   "date": "2006-11-20",
+   "program": "CNN LARRY KING LIVE",
+   "title": "",
+   "n_transcripts_in_cluster": 2,
+   "member_dates": [
+    "2006-11-20",
+    "2006-11-26"
+   ],
+   "guest_words": 443
+  }
+ ],
+ "test": {
+  "cluster_id": "cl20",
+  "transcript_id": "CNN-115257",
+  "date": "2007-03-14",
+  "program": "CNN LARRY KING LIVE",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2007-03-14"
+  ],
+  "guest_words": 395
+ },
+ "excluded_same_date": []
+}

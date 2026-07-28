@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C00622",
+ "canonical_name": "De Borchgrave",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "CNN-43031",
+   "date": "2001-11-02",
+   "program": "CNN THE POINT WITH GRETA VAN SUSTEREN",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2001-11-02"
+   ],
+   "guest_words": 582
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "CNN-54086",
+   "date": "2002-05-13",
+   "program": "AMERICAN MORNING WITH PAULA ZAHN",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2002-05-13"
+   ],
+   "guest_words": 761
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "CNN-78472",
+   "date": "2003-10-24",
+   "program": "NEWS FROM CNN",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2003-10-24"
+   ],
+   "guest_words": 585
+  }
+ ],
+ "test": {
+  "cluster_id": "cl6",
+  "transcript_id": "CNN-83819",
+  "date": "2004-04-15",
+  "program": "PAULA ZAHN NOW",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2004-04-15"
+  ],
+  "guest_words": 403
+ },
+ "excluded_same_date": []
+}

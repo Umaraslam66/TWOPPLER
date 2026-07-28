@@ -65,6 +65,7 @@ from doppler.stage2_data import (                            # noqa: E402
     chronological_split,
     extract_turns,
     iter_wanted_raw,
+    label_tokens,
     load_guest_words,
     load_pool,
     load_titles,
@@ -88,6 +89,12 @@ EXPECTED_CI = (0.575, 0.801)
 #: Launch-plan risk-table row 4: cumulative survival below the pre-registered
 #: CI floor is an item-yield collapse and stops the build for an owner call.
 CI_FLOOR = EXPECTED_CI[0]
+
+#: The halt is not armed until this many positions are in hand. The launch plan
+#: checks "after every 20 subjects built", and below that the rate is not a
+#: measurement: a run that starts on a failing subject sits at 0% after one
+#: position and would stop itself before it began.
+HALT_MIN_N = 20
 
 #: Bumped whenever the artifact contract changes, so stale build.json files
 #: rebuild instead of being trusted.
@@ -586,10 +593,11 @@ def main(argv: list[str]) -> int:
                   f"{k_cum}/{n_cum} = {cum:.1%}"
                   + ("   *** BELOW THE 57.5% CI FLOOR ***"
                      if cum < CI_FLOOR else f"   (floor {CI_FLOOR:.1%}, ok)"))
-        if cum < CI_FLOOR:
+        if n_cum >= HALT_MIN_N and cum < CI_FLOOR:
             halted = {
                 "halted": True,
                 "at_draw_pos": s["draw_pos"],
+                "halt_min_n": HALT_MIN_N,
                 "cumulative_n": n_cum,
                 "cumulative_survived": k_cum,
                 "cumulative_rate": round(cum, 4),
@@ -666,6 +674,30 @@ def main(argv: list[str]) -> int:
                 "comparison_tokens": toks,
                 "n_items": r["n_items"], "survived": r["survived"]})
 
+    # A subject spelling that survives as a NAME but is thrown away as a token
+    # LIST. subject_token_lists de-duplicates on " ".join(tokens), and a
+    # hyphenated surname tokenises to ONE token containing a space
+    # ("Wong-Ulrich" -> ['wong ulrich']) whose join key is identical to the
+    # spaced form's (['wong','ulrich']). The hyphen spelling is therefore
+    # dropped as a duplicate even though the two lists can never match each
+    # other under name_matches_subject's contiguous-run test. When the corpus
+    # writes the hyphenated form, the subject goes unrecognised.
+    variant_collapse = []
+    for r in per_subject:
+        row = by_id[r["canonical_id"]]
+        kept = subject_token_lists(row)
+        kept_keys = {" ".join(t) for t in kept}
+        dropped = [{"spelling": nm, "tokens": t}
+                   for nm in [row["canonical_name"], *row.get("variants", [])]
+                   for t in [label_tokens(nm)]
+                   if t and t not in kept and " ".join(t) in kept_keys]
+        if dropped:
+            variant_collapse.append({
+                "canonical_id": r["canonical_id"], "draw_pos": r["draw_pos"],
+                "canonical_name": row["canonical_name"],
+                "kept_token_lists": kept, "collapsed_spellings": dropped,
+                "n_items": r["n_items"], "survived": r["survived"]})
+
     tripwires = {
         "transcripts_failed_to_parse": [
             {"canonical_id": r["canonical_id"], "draw_pos": r["draw_pos"],
@@ -715,6 +747,7 @@ def main(argv: list[str]) -> int:
         # equality — and D3.1-r2 surname resolution rewrites a bare label to its
         # full introduced form, which then has two tokens and cannot match.
         "subject_key_single_token": single_token_subjects,
+        "subject_variant_token_collapse": variant_collapse,
     }
 
     runtime = round(time.time() - t0, 1)

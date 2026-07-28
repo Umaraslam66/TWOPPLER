@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C00364",
+ "canonical_name": "Brenda Van Dam",
+ "draw_pos": 103,
+ "stratum": "long-tail",
+ "h7_eligible": false,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 37,
+ "span_days_dedup": 485,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": false,
+ "n_items": 0,
+ "failure_reason": "zero_d4_items",
+ "failure_detail": "0 D4-eligible item(s), floor is 3",
+ "test_cluster": {
+  "cluster_id": "cl36",
+  "transcript_id": "CNN-72110",
+  "date": "2003-06-11",
+  "programme": "CNN LARRY KING LIVE",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2003-06-11"
+  ],
+  "guest_words": 3731
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 95,
+  "host": 1,
+  "other": 169
+ },
+ "n_grounding_clusters": 5,
+ "grounding_guest_words": 6277,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 1,
+ "drop_reasons": {
+  "intro_host_turn": 1
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

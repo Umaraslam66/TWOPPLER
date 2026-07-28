@@ -1,0 +1,92 @@
+{
+ "canonical_id": "C01404",
+ "canonical_name": "Kearns Goodwin",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "CNN-163947",
+   "date": "2011-03-28",
+   "program": "AMERICAN MORNING",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-03-28"
+   ],
+   "guest_words": 420
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "CNN-264697",
+   "date": "2015-09-16",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-09-16"
+   ],
+   "guest_words": 545
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "CNN-296959",
+   "date": "2016-10-26",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-10-26"
+   ],
+   "guest_words": 950
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "CNN-297208",
+   "date": "2016-10-29",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-10-29"
+   ],
+   "guest_words": 1399
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "CNN-354058",
+   "date": "2018-11-06",
+   "program": "WOLF",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-11-06"
+   ],
+   "guest_words": 534
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "CNN-354335",
+   "date": "2018-11-10",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-11-10"
+   ],
+   "guest_words": 858
+  }
+ ],
+ "test": {
+  "cluster_id": "cl7",
+  "transcript_id": "CNN-372316",
+  "date": "2019-06-14",
+  "program": "CNN'S AMANPOUR",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-06-14"
+  ],
+  "guest_words": 2797
+ },
+ "excluded_same_date": []
+}

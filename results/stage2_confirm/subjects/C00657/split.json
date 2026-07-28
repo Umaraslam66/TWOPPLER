@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C00657",
+ "canonical_name": "Della Femina",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "CNN-45824",
+   "date": "2001-12-18",
+   "program": "MORNINGS WITH PAULA ZAHN",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2001-12-18"
+   ],
+   "guest_words": 323
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "CNN-49622",
+   "date": "2002-02-20",
+   "program": "AMERICAN MORNING WITH PAULA ZAHN",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2002-02-20"
+   ],
+   "guest_words": 425
+  }
+ ],
+ "test": {
+  "cluster_id": "cl1",
+  "transcript_id": "CNN-111615",
+  "date": "2006-10-30",
+  "program": "SHOWBIZ TONIGHT",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2006-10-30"
+  ],
+  "guest_words": 332
+ },
+ "excluded_same_date": []
+}

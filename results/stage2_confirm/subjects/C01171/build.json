@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01171",
+ "canonical_name": "Jim Hobart",
+ "draw_pos": 134,
+ "stratum": "long-tail",
+ "h7_eligible": false,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 6,
+ "span_days_dedup": 341,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 5,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl2",
+  "transcript_id": "NPR-15497",
+  "date": "2017-03-27",
+  "programme": "Morning Edition",
+  "title": "What's Next For Health Care On The Hill?",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-03-27"
+  ],
+  "guest_words": 479
+ },
+ "one_on_one": false,
+ "test_role_counts": {
+  "guest": 7,
+  "host": 11,
+  "other": 2
+ },
+ "n_grounding_clusters": 3,
+ "grounding_guest_words": 1134,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 7,
+ "drop_reasons": {
+  "question_too_short": 2
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

@@ -1,0 +1,188 @@
+{
+ "canonical_id": "C02482",
+ "canonical_name": "Van Tulleken",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "CNN-238572",
+   "date": "2014-09-10",
+   "program": "NEW DAY",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-09-10"
+   ],
+   "guest_words": 549
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "CNN-240448",
+   "date": "2014-10-07",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-10-07"
+   ],
+   "guest_words": 475
+  },
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "CNN-240565",
+   "date": "2014-10-08",
+   "program": "ERIN BURNETT OUTFRONT",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-10-08"
+   ],
+   "guest_words": 401
+  },
+  {
+   "cluster_id": "cl12",
+   "transcript_id": "CNN-240658",
+   "date": "2014-10-09",
+   "program": "LEGAL VIEW WITH ASHLEIGH BANFIELD",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-10-09"
+   ],
+   "guest_words": 649
+  },
+  {
+   "cluster_id": "cl21",
+   "transcript_id": "CNN-241076",
+   "date": "2014-10-15",
+   "program": "NEW DAY",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-10-15"
+   ],
+   "guest_words": 728
+  },
+  {
+   "cluster_id": "cl27",
+   "transcript_id": "CNN-241347",
+   "date": "2014-10-20",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-10-20"
+   ],
+   "guest_words": 513
+  },
+  {
+   "cluster_id": "cl28",
+   "transcript_id": "CNN-241584",
+   "date": "2014-10-23",
+   "program": "ANDERSON COOPER 360 DEGREES",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-10-23"
+   ],
+   "guest_words": 1123
+  },
+  {
+   "cluster_id": "cl31",
+   "transcript_id": "CNN-241650",
+   "date": "2014-10-23",
+   "program": "THE SITUATION ROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-10-23"
+   ],
+   "guest_words": 973
+  },
+  {
+   "cluster_id": "cl34",
+   "transcript_id": "CNN-241699",
+   "date": "2014-10-24",
+   "program": "NEW DAY",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-10-24"
+   ],
+   "guest_words": 544
+  },
+  {
+   "cluster_id": "cl37",
+   "transcript_id": "CNN-241767",
+   "date": "2014-10-25",
+   "program": "SMERCONISH",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-10-25"
+   ],
+   "guest_words": 404
+  },
+  {
+   "cluster_id": "cl38",
+   "transcript_id": "CNN-241785",
+   "date": "2014-10-26",
+   "program": "CNN RELIABLE SOURCES",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-10-26"
+   ],
+   "guest_words": 605
+  },
+  {
+   "cluster_id": "cl39",
+   "transcript_id": "CNN-242983",
+   "date": "2014-11-11",
+   "program": "NEW DAY",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-11-11"
+   ],
+   "guest_words": 819
+  },
+  {
+   "cluster_id": "cl41",
+   "transcript_id": "CNN-247737",
+   "date": "2015-01-23",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-01-23"
+   ],
+   "guest_words": 564
+  },
+  {
+   "cluster_id": "cl42",
+   "transcript_id": "CNN-247750",
+   "date": "2015-01-23",
+   "program": "CNN NEWSROOM",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-01-23"
+   ],
+   "guest_words": 570
+  }
+ ],
+ "test": {
+  "cluster_id": "cl43",
+  "transcript_id": "CNN-268883",
+  "date": "2015-11-10",
+  "program": "IDESK",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2015-11-10"
+  ],
+  "guest_words": 585
+ },
+ "excluded_same_date": []
+}

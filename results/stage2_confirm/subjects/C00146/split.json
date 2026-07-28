@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C00146",
+ "canonical_name": "Amy Myers Jaffe",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-2778",
+   "date": "2011-02-22",
+   "program": "Talk of the Nation",
+   "title": "Violence Abroad May Affect Oil Prices In The U.S.",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-02-22"
+   ],
+   "guest_words": 1809
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-21048",
+   "date": "2015-09-29",
+   "program": "Morning Edition",
+   "title": "Shell Shuts Down Offshore Arctic Drilling After Huge Investment",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-09-29"
+   ],
+   "guest_words": 554
+  }
+ ],
+ "test": {
+  "cluster_id": "cl5",
+  "transcript_id": "NPR-20141",
+  "date": "2016-11-24",
+  "program": "All Things Considered",
+  "title": "Clean Energy Analyst: Renewables Are 'Here To Stay' Under Trump Presidency",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2016-11-24"
+  ],
+  "guest_words": 458
+ },
+ "excluded_same_date": []
+}

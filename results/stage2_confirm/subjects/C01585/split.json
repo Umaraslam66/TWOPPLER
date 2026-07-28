@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C01585",
+ "canonical_name": "Maen Rashid Areikat",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-33172",
+   "date": "2011-05-22",
+   "program": "All Things Considered",
+   "title": "Israelis, Palestinians React To Obama Plan",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2011-05-22"
+   ],
+   "guest_words": 386
+  },
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-26719",
+   "date": "2014-07-24",
+   "program": "All Things Considered",
+   "title": "Palestinian Authority Faces A Fraught Path To Peace In Gaza",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2014-07-24"
+   ],
+   "guest_words": 366
+  }
+ ],
+ "test": {
+  "cluster_id": "cl7",
+  "transcript_id": "NPR-24850",
+  "date": "2015-03-18",
+  "program": "All Things Considered",
+  "title": "Palestinian Authority Reacts To Prime Minister Netanyahu's Reelection",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2015-03-18"
+  ],
+  "guest_words": 415
+ },
+ "excluded_same_date": []
+}

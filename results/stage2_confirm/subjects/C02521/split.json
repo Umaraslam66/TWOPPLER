@@ -1,0 +1,58 @@
+{
+ "canonical_id": "C02521",
+ "canonical_name": "Wong Ulrich",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl1",
+   "transcript_id": "CNN-122342",
+   "date": "2007-12-22",
+   "program": "YOUR MONEY",
+   "title": "",
+   "n_transcripts_in_cluster": 2,
+   "member_dates": [
+    "2007-12-22",
+    "2007-12-23"
+   ],
+   "guest_words": 424
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "CNN-122484",
+   "date": "2007-12-29",
+   "program": "YOUR MONEY",
+   "title": "",
+   "n_transcripts_in_cluster": 2,
+   "member_dates": [
+    "2007-12-29",
+    "2007-12-30"
+   ],
+   "guest_words": 493
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "CNN-154094",
+   "date": "2010-08-07",
+   "program": "YOUR BOTTOM LINE",
+   "title": "",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-08-07"
+   ],
+   "guest_words": 2
+  }
+ ],
+ "test": {
+  "cluster_id": "cl5",
+  "transcript_id": "CNN-154381",
+  "date": "2010-08-14",
+  "program": "YOUR BOTTOM LINE",
+  "title": "",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2010-08-14"
+  ],
+  "guest_words": 0
+ },
+ "excluded_same_date": []
+}

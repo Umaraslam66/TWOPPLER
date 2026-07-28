@@ -1,0 +1,80 @@
+{
+ "canonical_id": "C01538",
+ "canonical_name": "Loveday Morris",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-28443",
+   "date": "2013-08-21",
+   "program": "All Things Considered",
+   "title": "Syrian Government Accused Again Of Using Chemical Weapons",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-08-21"
+   ],
+   "guest_words": 381
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-25072",
+   "date": "2015-02-17",
+   "program": "All Things Considered",
+   "title": "Iraqi Sheikh's Murder Sparks Outrage From Sunnis",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-02-17"
+   ],
+   "guest_words": 495
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-19540",
+   "date": "2016-04-29",
+   "program": "Morning Edition",
+   "title": "Trapped By ISIS, Fallujah Residents Desperate For Aid",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-04-29"
+   ],
+   "guest_words": 435
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-22138",
+   "date": "2016-05-02",
+   "program": "All Things Considered",
+   "title": "Protesters Rush Parliament Inside Baghdad's Green Zone",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-05-02"
+   ],
+   "guest_words": 458
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-21603",
+   "date": "2016-06-27",
+   "program": "All Things Considered",
+   "title": "Iraqi Forces Defeat Islamic State In Fallujah",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-06-27"
+   ],
+   "guest_words": 461
+  }
+ ],
+ "test": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-19053",
+  "date": "2017-03-26",
+  "program": "All Things Considered",
+  "title": "U.S. Acknowledges Mosul Airstrikes That Residents Say Killed More Than 100 Civilians",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-03-26"
+  ],
+  "guest_words": 443
+ },
+ "excluded_same_date": []
+}

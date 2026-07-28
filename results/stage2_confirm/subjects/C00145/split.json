@@ -1,0 +1,68 @@
+{
+ "canonical_id": "C00145",
+ "canonical_name": "Amy Howe",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl8",
+   "transcript_id": "NPR-45206",
+   "date": "2010-04-07",
+   "program": "Talk of the Nation",
+   "title": "Court Watchers Speculate Over Potential Vacancy",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2010-04-07"
+   ],
+   "guest_words": 1316
+  },
+  {
+   "cluster_id": "cl7",
+   "transcript_id": "NPR-22255",
+   "date": "2016-04-17",
+   "program": "All Things Considered",
+   "title": "'Implied Consent': The Complex Phrase At The Heart Of A High Court Case",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-04-17"
+   ],
+   "guest_words": 445
+  },
+  {
+   "cluster_id": "cl9",
+   "transcript_id": "NPR-45669",
+   "date": "2018-04-25",
+   "program": "Morning Edition",
+   "title": "News Brief: Ronny Jackson, Travel Ban At The Supreme Court",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-04-25"
+   ],
+   "guest_words": 403
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-1706",
+   "date": "2018-11-22",
+   "program": "Morning Edition",
+   "title": "News Brief: Roberts Calls Out Trump, Border Agent Trial, War In Yemen",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2018-11-22"
+   ],
+   "guest_words": 335
+  }
+ ],
+ "test": {
+  "cluster_id": "cl5",
+  "transcript_id": "NPR-132",
+  "date": "2019-02-08",
+  "program": "Morning Edition",
+  "title": "News Brief: Bezos Accuses 'Enquirer' Of Extortion, Supreme Court, Democrats' Agenda",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-02-08"
+  ],
+  "guest_words": 452
+ },
+ "excluded_same_date": []
+}

@@ -1,0 +1,49 @@
+{
+ "schema_version": 1,
+ "canonical_id": "C01967",
+ "canonical_name": "Rich Jaroslovsky",
+ "draw_pos": 115,
+ "stratum": "long-tail",
+ "h7_eligible": false,
+ "wiki_status": "long-tail",
+ "n_dedup_clusters": 5,
+ "span_days_dedup": 524,
+ "fingerprint": {
+  "src/doppler/stage2_data.py": "140dd02b5f31c11b",
+  "src/doppler/qa_extract.py": "daa0ac507e79fa13",
+  "results/stage2_candidate_pool_v2.csv": "27a05eebf74195f8",
+  "results/stage2_confirm_draw_provisional.json": "7ba970a0306b98b6"
+ },
+ "item_floor": 3,
+ "survived": true,
+ "n_items": 3,
+ "failure_reason": null,
+ "failure_detail": null,
+ "test_cluster": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-24870",
+  "date": "2013-11-04",
+  "programme": "Morning Edition",
+  "title": "iPhone Users Face Dilemma Of When To Upgrade",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2013-11-04"
+  ],
+  "guest_words": 549
+ },
+ "one_on_one": true,
+ "test_role_counts": {
+  "guest": 9,
+  "host": 11
+ },
+ "n_grounding_clusters": 4,
+ "grounding_guest_words": 1975,
+ "n_excluded_clusters": 0,
+ "n_qa_candidates": 9,
+ "drop_reasons": {
+  "answer_too_short": 1,
+  "not_interrogative": 5
+ },
+ "guest_word_warnings": [],
+ "date_disagreements": []
+}

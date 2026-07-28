@@ -1,0 +1,56 @@
+{
+ "canonical_id": "C02088",
+ "canonical_name": "Russell Moore",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl28",
+   "transcript_id": "NPR-23554",
+   "date": "2015-11-21",
+   "program": "All Things Considered",
+   "title": "Round-Table On Refugees: How People Of Faith Are Navigating The Crisis",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2015-11-21"
+   ],
+   "guest_words": 336
+  },
+  {
+   "cluster_id": "cl23",
+   "transcript_id": "NPR-11699",
+   "date": "2016-05-07",
+   "program": "Weekend Edition Saturday",
+   "title": "With Cruz Out, Will Donald Trump Be Able To Capture Republican Evangelical Vote?",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-05-07"
+   ],
+   "guest_words": 581
+  },
+  {
+   "cluster_id": "cl24",
+   "transcript_id": "NPR-127",
+   "date": "2019-02-12",
+   "program": "Morning Edition",
+   "title": "Many Churches Haven't Been Vigilant, Southern Baptist Official Says",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2019-02-12"
+   ],
+   "guest_words": 523
+  }
+ ],
+ "test": {
+  "cluster_id": "cl29",
+  "transcript_id": "NPR-386",
+  "date": "2019-02-16",
+  "program": "All Things Considered",
+  "title": "Barbershop: Virginia Gov. Northam Plans His 'Racial Reconciliation Tour'",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2019-02-16"
+  ],
+  "guest_words": 313
+ },
+ "excluded_same_date": []
+}

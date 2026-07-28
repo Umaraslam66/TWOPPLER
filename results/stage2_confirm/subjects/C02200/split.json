@@ -1,0 +1,44 @@
+{
+ "canonical_id": "C02200",
+ "canonical_name": "Sheila Smith",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl10",
+   "transcript_id": "NPR-28222",
+   "date": "2013-11-27",
+   "program": "All Things Considered",
+   "title": "Territory Dispute Between China And Japan Hits The Sky",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2013-11-27"
+   ],
+   "guest_words": 461
+  },
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-22319",
+   "date": "2016-04-11",
+   "program": "All Things Considered",
+   "title": "Secretary Of State John Kerry Makes Historic Visit To Hiroshima",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2016-04-11"
+   ],
+   "guest_words": 377
+  }
+ ],
+ "test": {
+  "cluster_id": "cl4",
+  "transcript_id": "NPR-15998",
+  "date": "2017-08-29",
+  "program": "All Things Considered",
+  "title": "Japan Weighs Response To North Korea Missile Launch",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2017-08-29"
+  ],
+  "guest_words": 596
+ },
+ "excluded_same_date": []
+}

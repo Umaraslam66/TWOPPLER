@@ -1,0 +1,80 @@
+{
+ "canonical_id": "C00836",
+ "canonical_name": "Glen Loury",
+ "rule": "Substantive transcripts only (flag S in the pool's transcripts column), grouped by cluster_id (one cluster = one real interview event; re-airings share a cluster). Cluster date = earliest transcript date in the cluster. Cluster representative = the transcript with the most guest words, ties broken by lexicographically smallest transcript_id. test = the cluster with the latest date; a tie for latest is broken by representative transcript_id lexicographic order, largest wins. grounding = every cluster ALL of whose member transcripts are dated strictly before the test date. Every other cluster is excluded entirely: one sharing the test date, and one whose cluster date is earlier but which has any member transcript aired on or after the test date (same-event leak guard, hardened v1.2 to test every member rather than the cluster minimum).",
+ "grounding": [
+  {
+   "cluster_id": "cl6",
+   "transcript_id": "NPR-46809",
+   "date": "2005-09-19",
+   "program": "News & Notes",
+   "title": "Roundtable: Katrina Lawsuits, BET Fundraiser",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2005-09-19"
+   ],
+   "guest_words": 706
+  },
+  {
+   "cluster_id": "cl5",
+   "transcript_id": "NPR-45253",
+   "date": "2006-03-15",
+   "program": "News & Notes",
+   "title": "Roundtable: Iraq Timetable, Hayes Quits 'South Park'",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-03-15"
+   ],
+   "guest_words": 563
+  },
+  {
+   "cluster_id": "cl4",
+   "transcript_id": "NPR-45193",
+   "date": "2006-03-22",
+   "program": "News & Notes",
+   "title": "Roundtable: NOLA Rebuilding, Gay Blood Donors",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-03-22"
+   ],
+   "guest_words": 418
+  },
+  {
+   "cluster_id": "cl3",
+   "transcript_id": "NPR-3797",
+   "date": "2006-09-22",
+   "program": "News & Notes",
+   "title": "Roundtable: Chavez at the U.N., Archbishop Tutu Honored",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-09-22"
+   ],
+   "guest_words": 663
+  },
+  {
+   "cluster_id": "cl2",
+   "transcript_id": "NPR-3303",
+   "date": "2006-11-07",
+   "program": "News & Notes",
+   "title": "Roundtable: Voter Fraud, Workplace Bullying",
+   "n_transcripts_in_cluster": 1,
+   "member_dates": [
+    "2006-11-07"
+   ],
+   "guest_words": 571
+  }
+ ],
+ "test": {
+  "cluster_id": "cl1",
+  "transcript_id": "NPR-3087",
+  "date": "2006-11-28",
+  "program": "News & Notes",
+  "title": "Bebe Moore Campbell's Heart and Mind Live On",
+  "n_transcripts_in_cluster": 1,
+  "member_dates": [
+   "2006-11-28"
+  ],
+  "guest_words": 561
+ },
+ "excluded_same_date": []
+}
