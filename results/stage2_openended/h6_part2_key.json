@@ -1,0 +1,669 @@
+{
+ "purpose": "Sealed answer key for the H6 classifier trust gate, part 2 (Amendment 2 Addendum A precondition 5 part 2). Do not open until the co-auditor has finished labelling h6_part2_sheet.md.",
+ "generated_by": "experiments/h6_part2_tranche.py",
+ "seed": 62,
+ "classifier": "Gemma-4-31B-it",
+ "rubric_sha256": "053b96cba42ebf03d966db3c22fce2acde3a685d5b4cca9badd556ee248a24da",
+ "records_path": "results/stage2_confirm/h6_classify/records/classify.jsonl",
+ "trust_bar": {
+  "raw_agreement": 0.85,
+  "cohens_kappa": 0.6,
+  "on_failure": "H6 scoring halts pending rubric revision"
+ },
+ "tripwire": {
+  "source": "H6/B3 appendix section 4.3(c), APPROVED 2026-07-28",
+  "follow_up_overturn_gt_0_20": "pre-committed D_min = 3 sensitivity arm, both arms reported",
+  "follow_up_overturn_gt_0_35": "H6 scoring halts pending rubric revision",
+  "dev_part1_follow_up_overturn": 0.25
+ },
+ "sampling": {
+  "eligible_pool": "source == 'model', label not null, no parse failure, no missing completion",
+  "excluded_rule_labels": "source == 'rule' rows are NEW-TOPIC by SPEC D9 definition (no guest answer behind the turn), cost no model call and involve no judgement; auditing them would measure the definition, not the rubric",
+  "excluded_counts": {
+   "rule": 2035,
+   "unlabelled": 0,
+   "duplicate_case": 19
+  },
+  "balance_rule": "even split across labels, then across a seeded permutation of subjects, each cell capped by supply, deficit to the subject with the most unused rows",
+  "min_turn_gap": "no two sampled rows from one transcript are within 3 turn indices, so no turn appears both as a TARGET to label and as the PREV of another row",
+  "disjoint_from_part1": "asserted at build time on (canonical_id, transcript_id, turn_idx)",
+  "no_dev_subjects": "asserted at build time against results/stage2_pilot/dev_subjects.json",
+  "grounding_only": "every case comes from grounding_turns.jsonl; the test interview is never classified or shown"
+ },
+ "achieved": {
+  "n_rows": 60,
+  "n_rows_requested": 60,
+  "per_label_target": 30,
+  "achieved_by_label": {
+   "FOLLOW-UP": 30,
+   "NEW-TOPIC": 30
+  },
+  "n_subjects_drawn": 30,
+  "subjects_drawn": [
+   "C00110",
+   "C00145",
+   "C00153",
+   "C00427",
+   "C00440",
+   "C00522",
+   "C00622",
+   "C00642",
+   "C00752",
+   "C00789",
+   "C00819",
+   "C00890",
+   "C01108",
+   "C01247",
+   "C01296",
+   "C01375",
+   "C01430",
+   "C01464",
+   "C01485",
+   "C01538",
+   "C01659",
+   "C01752",
+   "C01800",
+   "C01801",
+   "C01817",
+   "C01891",
+   "C01967",
+   "C02200",
+   "C02437",
+   "C02500"
+  ],
+  "n_subjects_in_pool": 88,
+  "pool_size": 5268,
+  "min_turn_gap": 3,
+  "achieved_by_subject": {
+   "C00110": 2,
+   "C00145": 2,
+   "C00153": 2,
+   "C00427": 2,
+   "C00440": 2,
+   "C00522": 2,
+   "C00622": 2,
+   "C00642": 2,
+   "C00752": 2,
+   "C00789": 2,
+   "C00819": 2,
+   "C00890": 2,
+   "C01108": 2,
+   "C01247": 2,
+   "C01296": 2,
+   "C01375": 2,
+   "C01430": 2,
+   "C01464": 2,
+   "C01485": 2,
+   "C01538": 2,
+   "C01659": 2,
+   "C01752": 2,
+   "C01800": 2,
+   "C01801": 2,
+   "C01817": 2,
+   "C01891": 2,
+   "C01967": 2,
+   "C02200": 2,
+   "C02437": 2,
+   "C02500": 2
+  },
+  "achieved_by_subject_label": {
+   "FOLLOW-UP": {
+    "C00110": 1,
+    "C00145": 1,
+    "C00153": 1,
+    "C00427": 1,
+    "C00440": 1,
+    "C00522": 1,
+    "C00622": 1,
+    "C00642": 1,
+    "C00752": 1,
+    "C00789": 1,
+    "C00819": 1,
+    "C00890": 1,
+    "C01108": 1,
+    "C01247": 1,
+    "C01296": 1,
+    "C01375": 1,
+    "C01430": 1,
+    "C01464": 1,
+    "C01485": 1,
+    "C01538": 1,
+    "C01659": 1,
+    "C01752": 1,
+    "C01800": 1,
+    "C01801": 1,
+    "C01817": 1,
+    "C01891": 1,
+    "C01967": 1,
+    "C02200": 1,
+    "C02437": 1,
+    "C02500": 1
+   },
+   "NEW-TOPIC": {
+    "C00110": 1,
+    "C00145": 1,
+    "C00153": 1,
+    "C00427": 1,
+    "C00440": 1,
+    "C00522": 1,
+    "C00622": 1,
+    "C00642": 1,
+    "C00752": 1,
+    "C00789": 1,
+    "C00819": 1,
+    "C00890": 1,
+    "C01108": 1,
+    "C01247": 1,
+    "C01296": 1,
+    "C01375": 1,
+    "C01430": 1,
+    "C01464": 1,
+    "C01485": 1,
+    "C01538": 1,
+    "C01659": 1,
+    "C01752": 1,
+    "C01800": 1,
+    "C01801": 1,
+    "C01817": 1,
+    "C01891": 1,
+    "C01967": 1,
+    "C02200": 1,
+    "C02437": 1,
+    "C02500": 1
+   }
+  },
+  "pool_supply_by_label": {
+   "FOLLOW-UP": 2020,
+   "NEW-TOPIC": 3248
+  }
+ },
+ "compliance": {
+  "requires_rows": 60,
+  "requires_subjects": 10,
+  "rows_ok": true,
+  "subjects_ok": true,
+  "balanced": true
+ },
+ "key": [
+  {
+   "row": 1,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C02437",
+   "transcript_id": "NPR-2456",
+   "turn_idx": 35,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:5203"
+  },
+  {
+   "row": 2,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C00522",
+   "transcript_id": "NPR-19344",
+   "turn_idx": 2,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:1653"
+  },
+  {
+   "row": 3,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C00153",
+   "transcript_id": "NPR-25620",
+   "turn_idx": 4,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:293"
+  },
+  {
+   "row": 4,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01247",
+   "transcript_id": "NPR-12777",
+   "turn_idx": 13,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3855"
+  },
+  {
+   "row": 5,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C00427",
+   "transcript_id": "NPR-17209",
+   "turn_idx": 15,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:1593"
+  },
+  {
+   "row": 6,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C00622",
+   "transcript_id": "CNN-54086",
+   "turn_idx": 4,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:2126"
+  },
+  {
+   "row": 7,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01817",
+   "transcript_id": "NPR-9501",
+   "turn_idx": 21,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4564"
+  },
+  {
+   "row": 8,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C02500",
+   "transcript_id": "CNN-322043",
+   "turn_idx": 30,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:5272"
+  },
+  {
+   "row": 9,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01375",
+   "transcript_id": "NPR-44686",
+   "turn_idx": 6,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3954"
+  },
+  {
+   "row": 10,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01800",
+   "transcript_id": "NPR-26275",
+   "turn_idx": 5,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4523"
+  },
+  {
+   "row": 11,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C00819",
+   "transcript_id": "NPR-2590",
+   "turn_idx": 108,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3275"
+  },
+  {
+   "row": 12,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01817",
+   "transcript_id": "NPR-13221",
+   "turn_idx": 9,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4553"
+  },
+  {
+   "row": 13,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C00890",
+   "transcript_id": "CNN-96355",
+   "turn_idx": 28,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3429"
+  },
+  {
+   "row": 14,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C00153",
+   "transcript_id": "NPR-855",
+   "turn_idx": 26,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:301"
+  },
+  {
+   "row": 15,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C00642",
+   "transcript_id": "NPR-2161",
+   "turn_idx": 12,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:2238"
+  },
+  {
+   "row": 16,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01108",
+   "transcript_id": "NPR-41753",
+   "turn_idx": 19,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3644"
+  },
+  {
+   "row": 17,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01430",
+   "transcript_id": "NPR-3667",
+   "turn_idx": 65,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4006"
+  },
+  {
+   "row": 18,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C00789",
+   "transcript_id": "CNN-110074",
+   "turn_idx": 170,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:2781"
+  },
+  {
+   "row": 19,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C00440",
+   "transcript_id": "NPR-24649",
+   "turn_idx": 8,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:1607"
+  },
+  {
+   "row": 20,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01485",
+   "transcript_id": "NPR-10992",
+   "turn_idx": 6,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4119"
+  },
+  {
+   "row": 21,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01659",
+   "transcript_id": "NPR-6953",
+   "turn_idx": 26,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4342"
+  },
+  {
+   "row": 22,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01801",
+   "transcript_id": "NPR-21043",
+   "turn_idx": 7,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4534"
+  },
+  {
+   "row": 23,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01247",
+   "transcript_id": "NPR-37286",
+   "turn_idx": 10,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3883"
+  },
+  {
+   "row": 24,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C02200",
+   "transcript_id": "NPR-22319",
+   "turn_idx": 12,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4992"
+  },
+  {
+   "row": 25,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01967",
+   "transcript_id": "NPR-27159",
+   "turn_idx": 7,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4934"
+  },
+  {
+   "row": 26,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01801",
+   "transcript_id": "NPR-21043",
+   "turn_idx": 3,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4532"
+  },
+  {
+   "row": 27,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01296",
+   "transcript_id": "NPR-16626",
+   "turn_idx": 13,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3909"
+  },
+  {
+   "row": 28,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C00642",
+   "transcript_id": "NPR-41673",
+   "turn_idx": 8,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:2244"
+  },
+  {
+   "row": 29,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01659",
+   "transcript_id": "NPR-13762",
+   "turn_idx": 35,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4198"
+  },
+  {
+   "row": 30,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C00622",
+   "transcript_id": "CNN-43031",
+   "turn_idx": 117,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:2121"
+  },
+  {
+   "row": 31,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01464",
+   "transcript_id": "CNN-26104",
+   "turn_idx": 14,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4116"
+  },
+  {
+   "row": 32,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01538",
+   "transcript_id": "NPR-25072",
+   "turn_idx": 6,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4151"
+  },
+  {
+   "row": 33,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01108",
+   "transcript_id": "NPR-41753",
+   "turn_idx": 27,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3648"
+  },
+  {
+   "row": 34,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C00890",
+   "transcript_id": "CNN-96415",
+   "turn_idx": 171,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3620"
+  },
+  {
+   "row": 35,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C02500",
+   "transcript_id": "CNN-344818",
+   "turn_idx": 32,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:5276"
+  },
+  {
+   "row": 36,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C00522",
+   "transcript_id": "NPR-21790",
+   "turn_idx": 4,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:1660"
+  },
+  {
+   "row": 37,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C00752",
+   "transcript_id": "NPR-475",
+   "turn_idx": 10,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:2698"
+  },
+  {
+   "row": 38,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C00110",
+   "transcript_id": "NPR-21063",
+   "turn_idx": 14,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:110"
+  },
+  {
+   "row": 39,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C00440",
+   "transcript_id": "NPR-47244",
+   "turn_idx": 12,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:1620"
+  },
+  {
+   "row": 40,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C00427",
+   "transcript_id": "NPR-48675",
+   "turn_idx": 10,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:1602"
+  },
+  {
+   "row": 41,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01485",
+   "transcript_id": "NPR-13774",
+   "turn_idx": 2,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4124"
+  },
+  {
+   "row": 42,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01752",
+   "transcript_id": "NPR-24493",
+   "turn_idx": 6,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4502"
+  },
+  {
+   "row": 43,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C00145",
+   "transcript_id": "NPR-1706",
+   "turn_idx": 12,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:149"
+  },
+  {
+   "row": 44,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C00145",
+   "transcript_id": "NPR-45206",
+   "turn_idx": 219,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:218"
+  },
+  {
+   "row": 45,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01891",
+   "transcript_id": "NPR-42",
+   "turn_idx": 16,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4698"
+  },
+  {
+   "row": 46,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01967",
+   "transcript_id": "NPR-27762",
+   "turn_idx": 27,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4953"
+  },
+  {
+   "row": 47,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C00110",
+   "transcript_id": "NPR-21063",
+   "turn_idx": 22,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:114"
+  },
+  {
+   "row": 48,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01375",
+   "transcript_id": "NPR-25371",
+   "turn_idx": 8,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3951"
+  },
+  {
+   "row": 49,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C02437",
+   "transcript_id": "NPR-2456",
+   "turn_idx": 52,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:5217"
+  },
+  {
+   "row": 50,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C00752",
+   "transcript_id": "NPR-10732",
+   "turn_idx": 20,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:2633"
+  },
+  {
+   "row": 51,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01538",
+   "transcript_id": "NPR-21603",
+   "turn_idx": 11,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4143"
+  },
+  {
+   "row": 52,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C00789",
+   "transcript_id": "CNN-112158",
+   "turn_idx": 5,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:2792"
+  },
+  {
+   "row": 53,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01430",
+   "transcript_id": "NPR-3667",
+   "turn_idx": 38,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3994"
+  },
+  {
+   "row": 54,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C00819",
+   "transcript_id": "NPR-1527",
+   "turn_idx": 18,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3197"
+  },
+  {
+   "row": 55,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01800",
+   "transcript_id": "NPR-26275",
+   "turn_idx": 15,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4528"
+  },
+  {
+   "row": 56,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01891",
+   "transcript_id": "NPR-9277",
+   "turn_idx": 22,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4710"
+  },
+  {
+   "row": 57,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C01296",
+   "transcript_id": "NPR-19696",
+   "turn_idx": 25,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:3922"
+  },
+  {
+   "row": 58,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01752",
+   "transcript_id": "NPR-28024",
+   "turn_idx": 12,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4515"
+  },
+  {
+   "row": 59,
+   "classifier_label": "NEW-TOPIC",
+   "canonical_id": "C01464",
+   "transcript_id": "CNN-12839",
+   "turn_idx": 3,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4072"
+  },
+  {
+   "row": 60,
+   "classifier_label": "FOLLOW-UP",
+   "canonical_id": "C02200",
+   "transcript_id": "NPR-28222",
+   "turn_idx": 10,
+   "source_record": "results/stage2_confirm/h6_classify/records/classify.jsonl:4996"
+  }
+ ]
+}
