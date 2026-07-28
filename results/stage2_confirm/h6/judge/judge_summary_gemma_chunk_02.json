@@ -1,0 +1,53 @@
+{
+ "banner": "CONFIRMATORY. Channel 2 (stance judge) labels. Labels only -- no contrast and no hypothesis verdict is computed here.",
+ "run_id": "stage2_confirm/h6_judge_r2",
+ "gen_dir": "gemma",
+ "chunk": "chunk_02",
+ "scored_model": "Gemma-4-31B-it",
+ "judge_model": "gemini-3.5-flash",
+ "temperature": 0.0,
+ "thinking_budget": 0,
+ "max_output_tokens": 512,
+ "rubric": "results/stage2_openended/rubric_r2_draft.txt",
+ "rubric_sha256": "ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464",
+ "call_order_seed": 20260727,
+ "blind": "judge sees rubric + question + real + candidate only, all GUEST-redacted; never the arm, the model or the subject",
+ "n_rows": 187,
+ "n_calls_this_process": 187,
+ "n_retries_this_process": 0,
+ "n_parse_failures_this_process": 0,
+ "n_why_intact": 187,
+ "n_central_present": 187,
+ "n_output_hit_cap": 0,
+ "labels": {
+  "DIFFERENT": 47,
+  "SAME": 100,
+  "UNCLEAR": 40
+ },
+ "per_arm_labels": {
+  "h6_richnr_b1000": {
+   "n": 67,
+   "labels": {
+    "UNCLEAR": 12,
+    "DIFFERENT": 17,
+    "SAME": 38
+   }
+  },
+  "h6_richnr_b400": {
+   "n": 120,
+   "labels": {
+    "DIFFERENT": 30,
+    "SAME": 62,
+    "UNCLEAR": 28
+   }
+  }
+ },
+ "tokens_in": 231034,
+ "tokens_out": 14286,
+ "cost_usd_this_process": 0.237563,
+ "confirmatory_spend_after_usd": 7.50514,
+ "confirmatory_budget_usd": 12.552869,
+ "no_verdicts_note": "Label counts only. No agreement statistic, no contrast and no bar is evaluated here.",
+ "runtime_secs": 222.0,
+ "judged_utc": "2026-07-28T20:26:25Z"
+}

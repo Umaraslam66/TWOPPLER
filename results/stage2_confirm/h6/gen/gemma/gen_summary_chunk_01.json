@@ -1,0 +1,44 @@
+{
+ "chunk": "chunk_01",
+ "model": "Gemma-4-31B-it",
+ "n_rows": 542,
+ "temperature": 0.0,
+ "max_output_tokens": 256,
+ "tokens_in": 563494,
+ "tokens_out": 75392,
+ "n_truncated": 0,
+ "n_over_word_cap": 0,
+ "n_era_violations": 0,
+ "n_empty": 0,
+ "per_arm": {
+  "h6_poor_b1000": {
+   "n": 98,
+   "n_truncated": 0,
+   "n_over_word_cap": 0,
+   "n_era_violations": 0,
+   "n_empty": 0
+  },
+  "h6_poor_b400": {
+   "n": 173,
+   "n_truncated": 0,
+   "n_over_word_cap": 0,
+   "n_era_violations": 0,
+   "n_empty": 0
+  },
+  "h6_rich_b1000": {
+   "n": 98,
+   "n_truncated": 0,
+   "n_over_word_cap": 0,
+   "n_era_violations": 0,
+   "n_empty": 0
+  },
+  "h6_rich_b400": {
+   "n": 173,
+   "n_truncated": 0,
+   "n_over_word_cap": 0,
+   "n_era_violations": 0,
+   "n_empty": 0
+  }
+ },
+ "ingested_utc": "2026-07-28T20:08:09Z"
+}

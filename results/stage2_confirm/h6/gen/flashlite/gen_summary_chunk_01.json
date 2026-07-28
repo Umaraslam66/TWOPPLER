@@ -1,0 +1,69 @@
+{
+ "banner": "CONFIRMATORY. Robustness (secondary) generations; absolute scores from this model are secondary per C3.",
+ "run_id": "stage2_confirm/h6_gen_flashlite",
+ "chunk": "chunk_01",
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 0.0,
+ "max_output_tokens": 256,
+ "max_answer_words": 150,
+ "n_rows": 542,
+ "n_calls_this_process": 542,
+ "n_retries_this_process": 0,
+ "resumed": false,
+ "n_stale_dropped": 0,
+ "sha_verified_against_prompt_file": true,
+ "tokens_in": 556990,
+ "tokens_out": 73901,
+ "cost_usd_this_process": 0.351849,
+ "cost_logged": true,
+ "confirmatory_spend_after_usd": 6.904718,
+ "confirmatory_budget_usd": 12.552869,
+ "n_truncated": 2,
+ "n_era_violations": 0,
+ "n_over_word_cap": 8,
+ "n_empty": 2,
+ "per_arm": {
+  "h6_poor_b1000": {
+   "n": 98,
+   "n_truncated": 2,
+   "n_era_violations": 0,
+   "n_over_word_cap": 3,
+   "n_empty": 2,
+   "tokens_in": 150874,
+   "tokens_out": 13299,
+   "truncation_rate": 0.0204
+  },
+  "h6_poor_b400": {
+   "n": 173,
+   "n_truncated": 0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 0,
+   "n_empty": 0,
+   "tokens_in": 126880,
+   "tokens_out": 22951,
+   "truncation_rate": 0.0
+  },
+  "h6_rich_b1000": {
+   "n": 98,
+   "n_truncated": 0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 3,
+   "n_empty": 0,
+   "tokens_in": 151855,
+   "tokens_out": 13990,
+   "truncation_rate": 0.0
+  },
+  "h6_rich_b400": {
+   "n": 173,
+   "n_truncated": 0,
+   "n_era_violations": 0,
+   "n_over_word_cap": 2,
+   "n_empty": 0,
+   "tokens_in": 127381,
+   "tokens_out": 23661,
+   "truncation_rate": 0.0
+  }
+ },
+ "runtime_secs": 656.5,
+ "generated_utc": "2026-07-28T20:14:31Z"
+}

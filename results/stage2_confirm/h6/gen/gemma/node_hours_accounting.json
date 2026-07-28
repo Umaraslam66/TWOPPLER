@@ -1,0 +1,31 @@
+{
+ "run_id": "stage2_confirm/h6_gen_gemma",
+ "billing": {
+  "jobs": [
+   {
+    "job_id": "50600113",
+    "state": "COMPLETED",
+    "elapsed": "00:07:41",
+    "nnodes": 1,
+    "node_seconds": 461.0,
+    "start": "2026-07-28T21:59:36",
+    "end": "2026-07-28T22:07:17"
+   },
+   {
+    "job_id": "50600114",
+    "state": "COMPLETED",
+    "elapsed": "00:07:30",
+    "nnodes": 1,
+    "node_seconds": 450.0,
+    "start": "2026-07-28T22:01:01",
+    "end": "2026-07-28T22:08:31"
+   }
+  ],
+  "n_attempts": 2,
+  "node_hours_all_attempts": 0.2531
+ },
+ "classify_node_hours": 0.1581,
+ "phase_cap": 3.0,
+ "task_limit": 2.0,
+ "billed_this_run": 0.2531
+}

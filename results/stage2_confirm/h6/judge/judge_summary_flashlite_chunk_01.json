@@ -1,0 +1,71 @@
+{
+ "banner": "CONFIRMATORY. Channel 2 (stance judge) labels. Labels only -- no contrast and no hypothesis verdict is computed here.",
+ "run_id": "stage2_confirm/h6_judge_r2",
+ "gen_dir": "flashlite",
+ "chunk": "chunk_01",
+ "scored_model": "gemini-3.5-flash-lite",
+ "judge_model": "gemini-3.5-flash",
+ "temperature": 0.0,
+ "thinking_budget": 0,
+ "max_output_tokens": 512,
+ "rubric": "results/stage2_openended/rubric_r2_draft.txt",
+ "rubric_sha256": "ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464",
+ "call_order_seed": 20260727,
+ "blind": "judge sees rubric + question + real + candidate only, all GUEST-redacted; never the arm, the model or the subject",
+ "n_rows": 542,
+ "n_calls_this_process": 542,
+ "n_retries_this_process": 0,
+ "n_parse_failures_this_process": 1,
+ "n_why_intact": 541,
+ "n_central_present": 541,
+ "n_output_hit_cap": 0,
+ "labels": {
+  "SAME": 350,
+  "UNCLEAR": 73,
+  "DIFFERENT": 118,
+  "None": 1
+ },
+ "per_arm_labels": {
+  "h6_poor_b1000": {
+   "n": 98,
+   "labels": {
+    "SAME": 56,
+    "UNCLEAR": 16,
+    "DIFFERENT": 25,
+    "None": 1
+   }
+  },
+  "h6_poor_b400": {
+   "n": 173,
+   "labels": {
+    "SAME": 109,
+    "DIFFERENT": 41,
+    "UNCLEAR": 23
+   }
+  },
+  "h6_rich_b1000": {
+   "n": 98,
+   "labels": {
+    "SAME": 68,
+    "DIFFERENT": 17,
+    "UNCLEAR": 13
+   }
+  },
+  "h6_rich_b400": {
+   "n": 173,
+   "labels": {
+    "SAME": 117,
+    "UNCLEAR": 21,
+    "DIFFERENT": 35
+   }
+  }
+ },
+ "tokens_in": 670465,
+ "tokens_out": 41714,
+ "cost_usd_this_process": 0.690562,
+ "confirmatory_spend_after_usd": 7.633402,
+ "confirmatory_budget_usd": 12.552869,
+ "no_verdicts_note": "Label counts only. No agreement statistic, no contrast and no bar is evaluated here.",
+ "runtime_secs": 653.9,
+ "judged_utc": "2026-07-28T20:26:57Z"
+}

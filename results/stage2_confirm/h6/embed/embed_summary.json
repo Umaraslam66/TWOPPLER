@@ -1,0 +1,341 @@
+{
+ "banner": "CONFIRMATORY. Channel 1 (embedding) scores. Raw per-arm means only -- no contrasts, no confidence intervals, no hypothesis verdicts. Bars are judged once, in the final report.",
+ "channel": "1 (embedding)",
+ "score": "cosine between the generated answer and the real verbatim answer, both encoded by the pinned model",
+ "instrument": {
+  "name": "sentence-transformers/all-mpnet-base-v2",
+  "revision": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+  "resolved_snapshot_dir": "/Users/umaraslam/.cache/huggingface/hub/models--sentence-transformers--all-mpnet-base-v2/snapshots/e8c3b32edf5434bc2275fc9bab85f82640a19130",
+  "resolved_dir_name": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+  "revision_assertion": "resolved snapshot directory name == pinned revision",
+  "revision_asserted": true,
+  "weights_file": "model.safetensors",
+  "weights_bytes": 437971872,
+  "device": "cpu",
+  "loaded_hidden_size": 768,
+  "torch_version": "2.13.0",
+  "torch_threads": 4
+ },
+ "contract": "PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md instrument parameter 1 (pinned embedding model and revision)",
+ "batch_size": 8,
+ "torch_seed": 20260728,
+ "never_an_api_model": true,
+ "no_verdicts_note": "Per-arm means below are raw descriptives for the watch-which-arm-moves rule. No contrast, no CI and no pass/fail is computed here; the frozen bars are judged once, in the final report.",
+ "results": {
+  "flashlite": {
+   "model": "gemini-3.5-flash-lite",
+   "chunks_scored": [
+    "chunk_01"
+   ],
+   "chunks_missing": [
+    "chunk_02"
+   ],
+   "n_rows": 542,
+   "n_subjects": 45,
+   "n_items": 185,
+   "overall": {
+    "n": 542,
+    "mean": 0.572016,
+    "median": 0.592476,
+    "sd": 0.154107,
+    "min": -0.011767,
+    "max": 0.923177
+   },
+   "per_arm_generated": {
+    "h6_poor_b1000": {
+     "n": 98,
+     "mean": 0.570453,
+     "median": 0.594404,
+     "sd": 0.172347,
+     "min": -0.011767,
+     "max": 0.923177,
+     "n_subjects": 24,
+     "n_truncated": 2,
+     "n_empty_text": 2,
+     "n_over_word_cap": 3
+    },
+    "h6_poor_b400": {
+     "n": 173,
+     "mean": 0.57017,
+     "median": 0.590374,
+     "sd": 0.150588,
+     "min": 0.111368,
+     "max": 0.824569,
+     "n_subjects": 41,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_rich_b1000": {
+     "n": 98,
+     "mean": 0.580155,
+     "median": 0.605382,
+     "sd": 0.155161,
+     "min": 0.090809,
+     "max": 0.841582,
+     "n_subjects": 24,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 3
+    },
+    "h6_rich_b400": {
+     "n": 173,
+     "mean": 0.570136,
+     "median": 0.586331,
+     "sd": 0.14713,
+     "min": 0.18264,
+     "max": 0.881948,
+     "n_subjects": 41,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 2
+    }
+   },
+   "per_arm_logical_renders": {
+    "h6_poor_b1000": {
+     "n": 98,
+     "mean": 0.570453,
+     "median": 0.594404,
+     "sd": 0.172347,
+     "min": -0.011767,
+     "max": 0.923177,
+     "n_subjects": 24,
+     "n_truncated": 2,
+     "n_empty_text": 2,
+     "n_over_word_cap": 3
+    },
+    "h6_poor_b400": {
+     "n": 173,
+     "mean": 0.57017,
+     "median": 0.590374,
+     "sd": 0.150588,
+     "min": 0.111368,
+     "max": 0.824569,
+     "n_subjects": 41,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_rich_b1000": {
+     "n": 98,
+     "mean": 0.580155,
+     "median": 0.605382,
+     "sd": 0.155161,
+     "min": 0.090809,
+     "max": 0.841582,
+     "n_subjects": 24,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 3
+    },
+    "h6_rich_b400": {
+     "n": 173,
+     "mean": 0.570136,
+     "median": 0.586331,
+     "sd": 0.14713,
+     "min": 0.18264,
+     "max": 0.881948,
+     "n_subjects": 41,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 2
+    },
+    "h6_richnr_b400": {
+     "n": 12,
+     "mean": 0.631266,
+     "median": 0.672055,
+     "sd": 0.16648,
+     "min": 0.260116,
+     "max": 0.840722,
+     "n_subjects": 3,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    }
+   }
+  },
+  "gemma": {
+   "model": "Gemma-4-31B-it",
+   "chunks_scored": [
+    "chunk_01",
+    "chunk_02"
+   ],
+   "chunks_missing": [],
+   "n_rows": 729,
+   "n_subjects": 45,
+   "n_items": 185,
+   "overall": {
+    "n": 729,
+    "mean": 0.548176,
+    "median": 0.56604,
+    "sd": 0.157011,
+    "min": 0.026579,
+    "max": 0.866662
+   },
+   "per_arm_generated": {
+    "h6_poor_b1000": {
+     "n": 98,
+     "mean": 0.564939,
+     "median": 0.617958,
+     "sd": 0.182998,
+     "min": 0.069614,
+     "max": 0.858476,
+     "n_subjects": 24,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_poor_b400": {
+     "n": 173,
+     "mean": 0.55395,
+     "median": 0.559406,
+     "sd": 0.159346,
+     "min": 0.060423,
+     "max": 0.84934,
+     "n_subjects": 41,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_rich_b1000": {
+     "n": 98,
+     "mean": 0.580521,
+     "median": 0.596017,
+     "sd": 0.143021,
+     "min": 0.163841,
+     "max": 0.853636,
+     "n_subjects": 24,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_rich_b400": {
+     "n": 173,
+     "mean": 0.531212,
+     "median": 0.551282,
+     "sd": 0.153958,
+     "min": 0.026579,
+     "max": 0.866662,
+     "n_subjects": 41,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_richnr_b1000": {
+     "n": 67,
+     "mean": 0.561265,
+     "median": 0.565522,
+     "sd": 0.137611,
+     "min": 0.2291,
+     "max": 0.827078,
+     "n_subjects": 16,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_richnr_b400": {
+     "n": 120,
+     "mean": 0.516893,
+     "median": 0.521937,
+     "sd": 0.150796,
+     "min": 0.165074,
+     "max": 0.849395,
+     "n_subjects": 29,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    }
+   },
+   "per_arm_logical_renders": {
+    "h6_poor_b1000": {
+     "n": 98,
+     "mean": 0.564939,
+     "median": 0.617958,
+     "sd": 0.182998,
+     "min": 0.069614,
+     "max": 0.858476,
+     "n_subjects": 24,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_poor_b400": {
+     "n": 173,
+     "mean": 0.55395,
+     "median": 0.559406,
+     "sd": 0.159346,
+     "min": 0.060423,
+     "max": 0.84934,
+     "n_subjects": 41,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_rich_b1000": {
+     "n": 98,
+     "mean": 0.580521,
+     "median": 0.596017,
+     "sd": 0.143021,
+     "min": 0.163841,
+     "max": 0.853636,
+     "n_subjects": 24,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_rich_b400": {
+     "n": 173,
+     "mean": 0.531212,
+     "median": 0.551282,
+     "sd": 0.153958,
+     "min": 0.026579,
+     "max": 0.866662,
+     "n_subjects": 41,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_richnr_b1000": {
+     "n": 67,
+     "mean": 0.561265,
+     "median": 0.565522,
+     "sd": 0.137611,
+     "min": 0.2291,
+     "max": 0.827078,
+     "n_subjects": 16,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_richnr_b400": {
+     "n": 120,
+     "mean": 0.515501,
+     "median": 0.521937,
+     "sd": 0.152229,
+     "min": 0.165074,
+     "max": 0.849395,
+     "n_subjects": 29,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    }
+   }
+  }
+ },
+ "scored_this_run": [
+  {
+   "gen_dir": "flashlite",
+   "chunk": "chunk_01",
+   "n_rows": 542
+  }
+ ],
+ "skipped_this_run": [
+  {
+   "gen_dir": "flashlite",
+   "chunk": "chunk_02",
+   "reason": "not generated yet"
+  }
+ ],
+ "runtime_secs": 57.1,
+ "embedded_utc": "2026-07-28T20:15:41Z"
+}

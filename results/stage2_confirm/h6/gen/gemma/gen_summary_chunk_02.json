@@ -1,0 +1,30 @@
+{
+ "chunk": "chunk_02",
+ "model": "Gemma-4-31B-it",
+ "n_rows": 187,
+ "temperature": 0.0,
+ "max_output_tokens": 256,
+ "tokens_in": 195748,
+ "tokens_out": 27050,
+ "n_truncated": 0,
+ "n_over_word_cap": 0,
+ "n_era_violations": 0,
+ "n_empty": 0,
+ "per_arm": {
+  "h6_richnr_b1000": {
+   "n": 67,
+   "n_truncated": 0,
+   "n_over_word_cap": 0,
+   "n_era_violations": 0,
+   "n_empty": 0
+  },
+  "h6_richnr_b400": {
+   "n": 120,
+   "n_truncated": 0,
+   "n_over_word_cap": 0,
+   "n_era_violations": 0,
+   "n_empty": 0
+  }
+ },
+ "ingested_utc": "2026-07-28T20:08:11Z"
+}
