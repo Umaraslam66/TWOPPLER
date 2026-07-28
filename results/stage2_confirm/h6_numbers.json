@@ -1,10 +1,10 @@
 {
  "banner": "CONFIRMATORY-TRACK H6 report. The frozen H6 bars are applied here, once, and nowhere else.",
- "generated_utc": "2026-07-28T20:32:58Z",
+ "generated_utc": "2026-07-28T21:14:45Z",
  "seed": 20260728,
  "n_bootstrap": 10000,
  "n_signflip": 20000,
- "git_commit": "f73c4ae7d3d75f4dfc53e6de4ed19e81798b8b9e",
+ "git_commit": "98fd2d04b6b498f8175906353d78e62f152655fb",
  "manifest": {
   "contract": "results/stage2_openended/H6_B3_PARAM_SPEC_DRAFT.md, APPROVED 2026-07-28",
   "rich_arm_wording": "follow-up chains including their root",
@@ -2567,5 +2567,543 @@
    "neither_reading_applied": true,
    "unresolved": true
   }
+ },
+ "exploratory_d3": {
+  "banner": "EXPLORATORY H6 D_min = 3 arm, owner-ordered 2026-07-28. The frozen tripwire did NOT fire (part-2 FOLLOW-UP overturn 18.33% against the > 20% line), so this is NOT the pre-committed sensitivity arm. It changes no bar, no branch and no verdict.",
+  "not_precommitted": "Appendix 4.3(c) pre-committed a D_min = 3 arm CONDITIONALLY, on the part-2 FOLLOW-UP overturn rate exceeding 20%. The measured rate is 18.33%, below the line, so the pre-committed arm does not exist. This arm is owner-ordered exploratory diagnostic colour and is labelled as such everywhere it appears.",
+  "primary_model_only": "Generated and scored on the PRIMARY model (Gemma-4-31B-it) only, consistent with the root-excluded sensitivity arm's precedent. Declared in the report.",
+  "poor_arm_source": "results/stage2_confirm/h6/ — the SAME poor arm generations and scores the registered contrast used. No poor arm is rebuilt or regenerated here.",
+  "d_min": 3,
+  "d_min_registered": 2,
+  "eligibility": {
+   "1000": {
+    "budget": 1000,
+    "n_registered_eligible": 24,
+    "n_rich_d3_fills": 23,
+    "n_eligible": 12,
+    "eligible_ids": [
+     "C00344",
+     "C00580",
+     "C00621",
+     "C00698",
+     "C00789",
+     "C00812",
+     "C00819",
+     "C01430",
+     "C01722",
+     "C01904",
+     "C02312",
+     "C02437"
+    ],
+    "n_lost_vs_registered": 12,
+    "lost_ids": [
+     "C00050",
+     "C00087",
+     "C00145",
+     "C00163",
+     "C00203",
+     "C00622",
+     "C00752",
+     "C01171",
+     "C01442",
+     "C01659",
+     "C01752",
+     "C02359"
+    ],
+    "n_items_eligible": 51,
+    "n_subjects_with_any_d3_chain": 76,
+    "branch_if_it_were_registered": "descriptive",
+    "root_share_min": 0.0203,
+    "root_share_median": 0.1375,
+    "root_share_max": 0.422
+   },
+   "400": {
+    "budget": 400,
+    "n_registered_eligible": 41,
+    "n_rich_d3_fills": 43,
+    "n_eligible": 32,
+    "eligible_ids": [
+     "C00050",
+     "C00087",
+     "C00110",
+     "C00145",
+     "C00163",
+     "C00203",
+     "C00344",
+     "C00427",
+     "C00457",
+     "C00580",
+     "C00621",
+     "C00698",
+     "C00746",
+     "C00789",
+     "C00812",
+     "C00819",
+     "C01108",
+     "C01171",
+     "C01180",
+     "C01430",
+     "C01722",
+     "C01800",
+     "C01848",
+     "C01897",
+     "C01904",
+     "C01933",
+     "C02242",
+     "C02248",
+     "C02312",
+     "C02318",
+     "C02397",
+     "C02437"
+    ],
+    "n_lost_vs_registered": 9,
+    "lost_ids": [
+     "C00622",
+     "C00634",
+     "C00697",
+     "C00890",
+     "C01247",
+     "C01659",
+     "C01817",
+     "C01842",
+     "C02218"
+    ],
+    "n_items_eligible": 131,
+    "n_subjects_with_any_d3_chain": 76,
+    "branch_if_it_were_registered": "exploratory",
+    "root_share_min": 0.0,
+    "root_share_median": 0.1098,
+    "root_share_max": 0.4156
+   }
+  },
+  "n_prompts": 182,
+  "n_items": 131,
+  "n_subjects": 32,
+  "generation": {
+   "primary_model": "Gemma-4-31B-it",
+   "temperature": 0.0,
+   "max_output_tokens": 256,
+   "max_answer_words": 150,
+   "instruction_tail_sha256": "d8758204009e71b482d36fb7133641f3077b7414df87e5a055f3949cb2ef3d3b",
+   "template_sha256": "4c4f9e0bdca11ce79ec669a0719d7a71894d587f4e61b54ddda4848f7bb1b785"
+  },
+  "n_with_items": 88,
+  "reproducibility": {
+   "n_prompt_hashes_shared_with_registered_run": 72,
+   "n_identical_generations": 15,
+   "n_cosine_disagreements": 57,
+   "median_abs_cosine_gap": 0.013822,
+   "mean_abs_cosine_gap": 0.024381,
+   "max_abs_cosine_gap": 0.123078,
+   "n_labels_compared": 72,
+   "n_label_disagreements": 4
+  },
+  "channel1": {
+   "richd3_minus_poor_b1000": {
+    "arm_a": "h6_richd3_b1000",
+    "arm_b": "h6_poor_b1000",
+    "n_subjects": 12,
+    "n_subjects_only_a": 0,
+    "n_subjects_only_b": 0,
+    "mean_a": 0.573672,
+    "mean_b": 0.527751,
+    "mean_diff": 0.045922,
+    "median_diff": 0.041503,
+    "sd_diff": 0.095593,
+    "se_diff": 0.027595,
+    "ci95_t": [
+     -0.014815,
+     0.106658
+    ],
+    "ci95_bootstrap": [
+     -0.004536,
+     0.098431
+    ],
+    "p_paired_t": 0.1243,
+    "p_wilcoxon": 0.06396,
+    "p_signflip": 0.1271,
+    "n_subjects_a_gt_b": 9,
+    "n_subjects_a_lt_b": 3,
+    "n_subjects_tied": 0,
+    "t_stat": 1.6641,
+    "cohens_dz": 0.480388,
+    "channel": "1 embedding",
+    "n_item_scores_dropped_for_pairing": 0,
+    "role": "EXPLORATORY: rich arm rebuilt from chains of depth >= 3 only, root included, against the SAME poor arm as the registered contrast.",
+    "budget": 1000
+   },
+   "richd3_minus_poor_b400": {
+    "arm_a": "h6_richd3_b400",
+    "arm_b": "h6_poor_b400",
+    "n_subjects": 32,
+    "n_subjects_only_a": 0,
+    "n_subjects_only_b": 0,
+    "mean_a": 0.544207,
+    "mean_b": 0.558708,
+    "mean_diff": -0.014501,
+    "median_diff": -0.017817,
+    "sd_diff": 0.05686,
+    "se_diff": 0.010052,
+    "ci95_t": [
+     -0.035001,
+     0.005999
+    ],
+    "ci95_bootstrap": [
+     -0.033669,
+     0.004534
+    ],
+    "p_paired_t": 0.1591,
+    "p_wilcoxon": 0.2169,
+    "p_signflip": 0.1595,
+    "n_subjects_a_gt_b": 14,
+    "n_subjects_a_lt_b": 18,
+    "n_subjects_tied": 0,
+    "t_stat": -1.4427,
+    "cohens_dz": -0.255028,
+    "channel": "1 embedding",
+    "n_item_scores_dropped_for_pairing": 0,
+    "role": "Exploratory arm at the dose-check budget.",
+    "budget": 400
+   }
+  },
+  "channel2": {
+   "richd3_minus_poor_b1000": {
+    "arm_a": "h6_richd3_b1000",
+    "arm_b": "h6_poor_b1000",
+    "n_subjects": 11,
+    "n_subjects_only_a": 0,
+    "n_subjects_only_b": 0,
+    "mean_a": 0.634848,
+    "mean_b": 0.59697,
+    "mean_diff": 0.037879,
+    "median_diff": 0.0,
+    "sd_diff": 0.221622,
+    "se_diff": 0.066821,
+    "ci95_t": [
+     -0.111009,
+     0.186766
+    ],
+    "ci95_bootstrap": [
+     -0.068182,
+     0.181818
+    ],
+    "p_paired_t": 0.5833,
+    "p_wilcoxon": 1.0,
+    "p_signflip": 1.0,
+    "n_subjects_a_gt_b": 1,
+    "n_subjects_a_lt_b": 1,
+    "n_subjects_tied": 9,
+    "t_stat": 0.5669,
+    "cohens_dz": 0.170916,
+    "channel": "2 stance",
+    "n_item_scores_dropped_for_pairing": 8,
+    "role": "EXPLORATORY: rich arm rebuilt from chains of depth >= 3 only, root included, against the SAME poor arm as the registered contrast.",
+    "budget": 1000
+   },
+   "richd3_minus_poor_b400": {
+    "arm_a": "h6_richd3_b400",
+    "arm_b": "h6_poor_b400",
+    "n_subjects": 31,
+    "n_subjects_only_a": 0,
+    "n_subjects_only_b": 0,
+    "mean_a": 0.598925,
+    "mean_b": 0.664516,
+    "mean_diff": -0.065591,
+    "median_diff": 0.0,
+    "sd_diff": 0.384465,
+    "se_diff": 0.069052,
+    "ci95_t": [
+     -0.206614,
+     0.075432
+    ],
+    "ci95_bootstrap": [
+     -0.202688,
+     0.06129
+    ],
+    "p_paired_t": 0.3498,
+    "p_wilcoxon": 0.7433,
+    "p_signflip": 0.3703,
+    "n_subjects_a_gt_b": 8,
+    "n_subjects_a_lt_b": 10,
+    "n_subjects_tied": 13,
+    "t_stat": -0.9499,
+    "cohens_dz": -0.170604,
+    "channel": "2 stance",
+    "n_item_scores_dropped_for_pairing": 18,
+    "role": "Exploratory arm at the dose-check budget.",
+    "budget": 400
+   }
+  },
+  "cost": {
+   "per_run": [
+    {
+     "run_id": "stage2_confirm/h6_d3_gen_gemma",
+     "entries": 1,
+     "calls": 182,
+     "usd": 0.0,
+     "node_hours": 0.125,
+     "model": "Gemma-4-31B-it"
+    },
+    {
+     "run_id": "stage2_confirm/h6_d3_judge_r2",
+     "entries": 1,
+     "calls": 182,
+     "usd": 0.231422,
+     "node_hours": 0.0,
+     "model": "gemini-3.5-flash"
+    },
+    {
+     "run_id": "stage2_confirm/h6_d3_judge_r2_canary",
+     "entries": 2,
+     "calls": 20,
+     "usd": 0.025374,
+     "node_hours": 0.0,
+     "model": "gemini-3.5-flash"
+    }
+   ],
+   "api_usd": 0.256796,
+   "node_hours": 0.125,
+   "api_cap_usd": 0.75,
+   "node_hour_cap": 0.2,
+   "api_breached": false,
+   "gpu_breached": false
+  },
+  "rich_supply": {
+   "1000": {
+    "d_min_2": 45,
+    "d_min_3": 23
+   },
+   "400": {
+    "d_min_2": 52,
+    "d_min_3": 43
+   }
+  },
+  "identical_to_registered_rich": {
+   "1000": [
+    "C01722",
+    "C01904",
+    "C02437"
+   ],
+   "400": [
+    "C00050",
+    "C00087",
+    "C00110",
+    "C00344",
+    "C00427",
+    "C00457",
+    "C00789",
+    "C01108",
+    "C01180",
+    "C01722",
+    "C01800",
+    "C01933",
+    "C02397",
+    "C02437"
+   ]
+  },
+  "health": {
+   "h6_richd3_b1000": {
+    "n": 51,
+    "n_truncated": 0,
+    "n_over_word_cap": 0,
+    "n_era_violations": 0,
+    "n_empty": 0
+   },
+   "h6_richd3_b400": {
+    "n": 131,
+    "n_truncated": 0,
+    "n_over_word_cap": 0,
+    "n_era_violations": 0,
+    "n_empty": 0
+   }
+  },
+  "unclear": {
+   "h6_poor_b1000": {
+    "stance_match_rate": 0.626087,
+    "unclear_rate": 0.154167,
+    "denominator": 83
+   },
+   "h6_poor_b400": {
+    "stance_match_rate": 0.665694,
+    "unclear_rate": 0.167886,
+    "denominator": 145
+   },
+   "h6_richd3_b1000": {
+    "stance_match_rate": 0.661111,
+    "unclear_rate": 0.093056,
+    "denominator": 47
+   },
+   "h6_richd3_b400": {
+    "stance_match_rate": 0.604688,
+    "unclear_rate": 0.144792,
+    "denominator": 112
+   }
+  },
+  "canary": [
+   {
+    "file": "canary_20260728-210745_summary.json",
+    "rows": 10,
+    "flips": 0,
+    "passed": true
+   },
+   {
+    "file": "canary_20260728-210806_summary.json",
+    "rows": 10,
+    "flips": 0,
+    "passed": true
+   }
+  ],
+  "comparison": [
+   {
+    "budget": 1000,
+    "registered": {
+     "channel1": {
+      "mean_a": 0.576662,
+      "mean_b": 0.554986,
+      "diff": 0.021676,
+      "ci": [
+       -0.009928,
+       0.056482
+      ],
+      "p": 0.2169,
+      "n": 24
+     },
+     "channel2": {
+      "mean_a": 0.691304,
+      "mean_b": 0.662319,
+      "diff": 0.028986,
+      "ci": [
+       -0.07971,
+       0.148551
+      ],
+      "p": 0.6418,
+      "n": 23
+     }
+    },
+    "root_excluded": {
+     "channel1": {
+      "mean_a": 0.561536,
+      "mean_b": 0.544209,
+      "diff": 0.017327,
+      "ci": [
+       -0.026581,
+       0.069216
+      ],
+      "p": 0.4994,
+      "n": 16
+     },
+     "channel2": {
+      "mean_a": 0.636667,
+      "mean_b": 0.614444,
+      "diff": 0.022222,
+      "ci": [
+       -0.1,
+       0.155556
+      ],
+      "p": 0.7443,
+      "n": 15
+     }
+    },
+    "d_min_3": {
+     "channel1": {
+      "mean_a": 0.573672,
+      "mean_b": 0.527751,
+      "diff": 0.045922,
+      "ci": [
+       -0.004536,
+       0.098431
+      ],
+      "p": 0.1243,
+      "n": 12
+     },
+     "channel2": {
+      "mean_a": 0.634848,
+      "mean_b": 0.59697,
+      "diff": 0.037879,
+      "ci": [
+       -0.068182,
+       0.181818
+      ],
+      "p": 0.5833,
+      "n": 11
+     }
+    }
+   },
+   {
+    "budget": 400,
+    "registered": {
+     "channel1": {
+      "mean_a": 0.533136,
+      "mean_b": 0.556156,
+      "diff": -0.02302,
+      "ci": [
+       -0.038814,
+       -0.005464
+      ],
+      "p": 0.01012,
+      "n": 41
+     },
+     "channel2": {
+      "mean_a": 0.665694,
+      "mean_b": 0.714028,
+      "diff": -0.048333,
+      "ci": [
+       -0.128333,
+       0.025417
+      ],
+      "p": 0.2341,
+      "n": 40
+     }
+    },
+    "root_excluded": {
+     "channel1": {
+      "mean_a": 0.517103,
+      "mean_b": 0.541409,
+      "diff": -0.024305,
+      "ci": [
+       -0.050652,
+       0.001648
+      ],
+      "p": 0.08575,
+      "n": 29
+     },
+     "channel2": {
+      "mean_a": 0.655952,
+      "mean_b": 0.722619,
+      "diff": -0.066667,
+      "ci": [
+       -0.180952,
+       0.03753
+      ],
+      "p": 0.2499,
+      "n": 28
+     }
+    },
+    "d_min_3": {
+     "channel1": {
+      "mean_a": 0.544207,
+      "mean_b": 0.558708,
+      "diff": -0.014501,
+      "ci": [
+       -0.033669,
+       0.004534
+      ],
+      "p": 0.1591,
+      "n": 32
+     },
+     "channel2": {
+      "mean_a": 0.598925,
+      "mean_b": 0.664516,
+      "diff": -0.065591,
+      "ci": [
+       -0.202688,
+       0.06129
+      ],
+      "p": 0.3498,
+      "n": 31
+     }
+    }
+   }
+  ]
  }
 }

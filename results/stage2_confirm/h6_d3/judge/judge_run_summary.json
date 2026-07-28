@@ -1,0 +1,30 @@
+{
+ "banner": "CONFIRMATORY. Channel 2 (stance judge) labels. Labels only -- no contrast and no hypothesis verdict is computed here.",
+ "canary": {
+  "n": 10,
+  "n_flips": 0,
+  "flips": [],
+  "passed": true,
+  "max_flips_allowed": 0,
+  "file": "results/stage2_confirm/h6_d3/judge/canary_20260728-210806.jsonl",
+  "cost_usd": 0.012676,
+  "checked_utc": "2026-07-28T21:08:06Z"
+ },
+ "judge_model": "gemini-3.5-flash",
+ "rubric_sha256": "ad050d1a75b038fc63ee162fe74862fd8f99c895e2b39b3af56f24bdea102464",
+ "chunks": [
+  {
+   "gen_dir": "gemma",
+   "chunk": "chunk_01",
+   "n_rows": 182,
+   "labels": {
+    "DIFFERENT": 56,
+    "SAME": 103,
+    "UNCLEAR": 23
+   }
+  }
+ ],
+ "confirmatory_spend_usd": 8.817063,
+ "confirmatory_budget_usd": 9.310267,
+ "finished_utc": "2026-07-28T21:13:13Z"
+}

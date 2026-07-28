@@ -88,6 +88,27 @@ CONTRASTS = (
 REGISTERED_KEY = "rich_minus_poor_b1000"
 SENSITIVITY_KEYS = ("richnoroot_minus_poor_b1000", "richnoroot_minus_poor_b400")
 
+# --- the EXPLORATORY D_min = 3 arm (section 11) -----------------------------
+# Owner-ordered 2026-07-28, AFTER the numbers above were rendered. It is NOT
+# the pre-committed sensitivity arm: appendix 4.3(c) pre-committed a D_min = 3
+# arm only if the part-2 FOLLOW-UP overturn rate exceeded 20%, and it measured
+# 18.33%. Everything about it lives in its own section and its own directory;
+# it touches no bar, no branch and no verdict. Primary model only.
+D3_DIR = CONFIRM_DIR / "h6_d3"
+D3_CHUNKS = ("chunk_01",)
+D3_CONTRASTS = (
+    ("richd3_minus_poor_b1000", "h6_richd3_b1000", "h6_poor_b1000", 1000,
+     "EXPLORATORY: rich arm rebuilt from chains of depth >= 3 only, root "
+     "included, against the SAME poor arm as the registered contrast."),
+    ("richd3_minus_poor_b400", "h6_richd3_b400", "h6_poor_b400", 400,
+     "Exploratory arm at the dose-check budget."),
+)
+D3_ARMS = ("h6_richd3_b1000", "h6_richd3_b400")
+#: Cost lines belonging to the exploratory arm. They are kept OUT of section
+#: 10, whose projection sentence describes the registered run only, and are
+#: billed in full inside section 11 instead.
+D3_RUN_PREFIX = "stage2_confirm/h6_d3"
+
 #: Addendum A instrument parameter 7's two units.
 MAG_COSINE = 0.05
 MAG_STANCE = 0.09
@@ -335,17 +356,22 @@ def read_jsonl(path: Path) -> list:
     return CR.read_jsonl(path)
 
 
-def load_scores(gen_dir: str, kind: str) -> dict:
+def scores_from(base: Path, gen_dir: str, kind: str, chunks) -> dict:
     """prompt_sha256 -> the scored row, over every chunk present on disk."""
     stem = {"embed": ("embed", f"cosines_{gen_dir}"),
             "judge": ("judge", f"judgements_{gen_dir}")}[kind]
     out: dict = {}
-    for chunk in CHUNKS:
-        path = H6_DIR / stem[0] / f"{stem[1]}_{chunk}.jsonl"
+    for chunk in chunks:
+        path = base / stem[0] / f"{stem[1]}_{chunk}.jsonl"
         if path.exists():
             for row in read_jsonl(path):
                 out[row["prompt_sha256"]] = row
     return out
+
+
+def load_scores(gen_dir: str, kind: str) -> dict:
+    """The registered H6 scores. Unchanged behaviour; see ``scores_from``."""
+    return scores_from(H6_DIR, gen_dir, kind, CHUNKS)
 
 
 def load_completions(gen_dir: str) -> list:
@@ -536,14 +562,23 @@ def part2_gate() -> dict:
 
 
 def cost_block() -> dict:
-    """Every cost line whose run id names H6, plus the caps it answers to."""
+    """Every cost line whose run id names H6, plus the caps it answers to.
+
+    The EXPLORATORY D_min = 3 arm is deliberately excluded and billed in full
+    in section 11 instead. This table's projection sentence describes the
+    registered run's pre-spend projection; folding a later, separately capped
+    arm into the same totals would leave that sentence describing numbers it
+    never covered. Nothing is hidden — section 11 prints its own table and the
+    combined totals.
+    """
     rows = []
     if COST_LOG.exists():
         for line in COST_LOG.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
             entry = json.loads(line)
-            if "h6" in str(entry.get("run_id", "")):
+            run = str(entry.get("run_id", ""))
+            if "h6" in run and not run.startswith(D3_RUN_PREFIX):
                 rows.append(entry)
     by_run: dict = {}
     for entry in rows:
@@ -645,6 +680,228 @@ def era_rows() -> list:
                             "item_id": row["item_id"], "arm": row["arm"],
                             "tokens": row["era_violations"]})
     return out
+
+
+def d3_cost_block() -> dict:
+    """The exploratory arm's own cost lines and its own caps."""
+    rows = []
+    if COST_LOG.exists():
+        for line in COST_LOG.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            entry = json.loads(line)
+            if str(entry.get("run_id", "")).startswith(D3_RUN_PREFIX):
+                rows.append(entry)
+    by_run: dict = {}
+    for entry in rows:
+        run = entry["run_id"]
+        acc = by_run.setdefault(run, {"run_id": run, "entries": 0, "calls": 0,
+                                      "usd": 0.0, "node_hours": 0.0,
+                                      "model": entry.get("model")})
+        acc["entries"] += 1
+        acc["calls"] += int(entry.get("n_calls") or 0)
+        acc["usd"] += float(entry.get("cost_usd") or 0.0)
+        acc["node_hours"] += float(entry.get("node_hours") or 0.0)
+    usd = round(sum(v["usd"] for v in by_run.values()), 6)
+    gpu = round(sum(v["node_hours"] for v in by_run.values()), 4)
+    return {
+        "per_run": [dict(v, usd=round(v["usd"], 6),
+                         node_hours=round(v["node_hours"], 4))
+                    for v in sorted(by_run.values(), key=lambda x: x["run_id"])],
+        "api_usd": usd, "node_hours": gpu,
+        "api_cap_usd": 0.75, "node_hour_cap": 0.2,
+        "api_breached": usd > 0.75, "gpu_breached": gpu > 0.2,
+    }
+
+
+def d3_block(data: dict) -> dict:
+    """The EXPLORATORY D_min = 3 arm. Owner-ordered; not pre-committed.
+
+    Built exactly like the registered contrasts — the same paired machinery,
+    the same seed, the same channels — but read from its own directory and
+    contrasted against the SAME poor arm generations and scores the registered
+    contrast used. Nothing here feeds the branch, the bars or the verdict.
+    """
+    path = D3_DIR / "render_manifest.json"
+    if not path.exists():
+        return {}
+    man = json.loads(path.read_text(encoding="utf-8"))
+
+    d3_index = read_jsonl(D3_DIR / "render_index.jsonl")
+    keep = set(D3_ARMS) | {"h6_poor_b1000", "h6_poor_b400"}
+    rows = [r for r in logical_rows() + d3_index if r["arm"] in keep]
+
+    cos = dict(load_scores("gemma", "embed"))
+    lab = dict(load_scores("gemma", "judge"))
+    d3_cos = scores_from(D3_DIR, "gemma", "embed", D3_CHUNKS)
+    d3_lab = scores_from(D3_DIR, "gemma", "judge", D3_CHUNKS)
+
+    # A depth>=3 arm that came out byte-identical to the registered rich arm
+    # has the SAME prompt hash as a prompt the registered run already
+    # generated and scored. Joining by hash would therefore let a handful of
+    # borrowed rows masquerade as the whole arm before this arm has generated
+    # anything of its own. Same trap ``build()`` disarms for the sensitivity
+    # arm on the robustness model, so the same answer: refuse to report an
+    # incomplete arm at all. The section is omitted until both channels cover
+    # every one of this arm's own prompts.
+    need = {r["prompt_sha256"] for r in d3_index}
+    missing = {"channel1": sorted(need - set(d3_cos)),
+               "channel2": sorted(need - set(d3_lab))}
+    if missing["channel1"] or missing["channel2"]:
+        print(f"[h6-report] exploratory D_min=3 section OMITTED: "
+              f"{len(missing['channel1'])} of {len(need)} prompts unscored on "
+              f"channel 1, {len(missing['channel2'])} on channel 2")
+        return {}
+
+    # Those collisions are also a free reproducibility check: the same prompt
+    # was generated twice on the same model at temperature 0, in two separate
+    # jobs. Checked rather than assumed — a mismatch would mean the decode is
+    # not reproducible and every cosine in this report carries that noise.
+    shared = sorted(set(cos) & set(d3_cos))
+    gaps = sorted(abs(float(cos[s]["cosine_to_real"])
+                      - float(d3_cos[s]["cosine_to_real"])) for s in shared)
+    reg_text = {r["prompt_sha256"]: (r.get("text") or "")
+                for r in load_completions("gemma")}
+    d3_text: dict = {}
+    for chunk in D3_CHUNKS:
+        p = D3_DIR / "gen" / "gemma" / f"completions_{chunk}.jsonl"
+        if p.exists():
+            for r in read_jsonl(p):
+                d3_text[r["prompt_sha256"]] = r.get("text") or ""
+    same_text = sum(1 for s in shared if reg_text.get(s) == d3_text.get(s))
+    shared_lab = sorted(set(lab) & set(d3_lab))
+    reproducibility = {
+        "n_prompt_hashes_shared_with_registered_run": len(shared),
+        "n_identical_generations": same_text,
+        "n_cosine_disagreements": sum(1 for g in gaps if g > 1e-9),
+        "median_abs_cosine_gap": (round(gaps[len(gaps) // 2], 6)
+                                  if gaps else None),
+        "mean_abs_cosine_gap": (round(sum(gaps) / len(gaps), 6)
+                                if gaps else None),
+        "max_abs_cosine_gap": round(gaps[-1], 6) if gaps else None,
+        "n_labels_compared": len(shared_lab),
+        "n_label_disagreements": len([
+            s for s in shared_lab
+            if lab[s].get("label") != d3_lab[s].get("label")]),
+    }
+    cos.update(d3_cos)
+    lab.update(d3_lab)
+
+    out: dict = {
+        "banner": man["banner"],
+        "not_precommitted": man["not_precommitted"],
+        "primary_model_only": man["primary_model_only"],
+        "poor_arm_source": man["poor_arm_source"],
+        "d_min": man["d_min"],
+        "d_min_registered": man["d_min_registered"],
+        "eligibility": man["eligibility"],
+        "n_prompts": man["n_unique_prompts"],
+        "n_items": man["n_items"],
+        "n_subjects": man["n_subjects"],
+        "generation": man["generation"],
+        "n_with_items": json.loads(
+            (D3_DIR / "arms_d3.json").read_text())["n_with_items"],
+        "reproducibility": reproducibility,
+        "channel1": {}, "channel2": {},
+        "cost": d3_cost_block(),
+    }
+
+    # Like-for-like rich supply: how many subjects can fill a rich arm at all,
+    # at D_min = 2 and at D_min = 3, with the poor arm taken out of it. Read
+    # off the registered build's own file so nothing is rebuilt to get it.
+    reg_subjects = [r for r in json.loads(
+        (H6_DIR / "arms.json").read_text())["per_subject"] if r["has_items"]]
+    out["rich_supply"] = {
+        str(budget): {
+            "d_min_2": sum(1 for r in reg_subjects
+                           if r["budgets"][str(budget)]["rich_fill"] >= 0.95),
+            "d_min_3": man["eligibility"][str(budget)]["n_rich_d3_fills"],
+        } for budget in A.BUDGETS}
+
+    # Subjects whose depth>=3 arm is the registered rich arm, byte for byte.
+    identical: dict = {}
+    for budget in A.BUDGETS:
+        arm = f"h6_richd3_b{budget}"
+        identical[str(budget)] = sorted(
+            cid for cid, row in (man.get("per_subject") or {}).items()
+            if (row.get("arms") or {}).get(arm, {}).get(
+                "identical_to_registered_rich"))
+    out["identical_to_registered_rich"] = identical
+
+    for key, arm_a, arm_b, budget, role in D3_CONTRASTS:
+        if cos:
+            c1 = contrast_block(rows, cos, cosine_of, arm_a, arm_b,
+                                "1 embedding")
+            if c1["n_subjects"]:
+                c1["role"] = role
+                c1["budget"] = budget
+                out["channel1"][key] = c1
+        if lab:
+            c2 = contrast_block(rows, lab, stance_of, arm_a, arm_b, "2 stance")
+            if c2["n_subjects"]:
+                c2["role"] = role
+                c2["budget"] = budget
+                out["channel2"][key] = c2
+
+    # Instrument health for the new arm only.
+    gen_rows = []
+    for chunk in D3_CHUNKS:
+        p = D3_DIR / "gen" / "gemma" / f"completions_{chunk}.jsonl"
+        if p.exists():
+            gen_rows.extend(read_jsonl(p))
+    out["health"] = {
+        arm: {"n": len([r for r in gen_rows if r["arm"] == arm]),
+              "n_truncated": sum(1 for r in gen_rows
+                                 if r["arm"] == arm and r.get("truncated")),
+              "n_over_word_cap": sum(1 for r in gen_rows if r["arm"] == arm
+                                     and r.get("over_word_cap")),
+              "n_era_violations": sum(1 for r in gen_rows if r["arm"] == arm
+                                      and r.get("era_violations")),
+              "n_empty": sum(1 for r in gen_rows if r["arm"] == arm
+                             and not (r.get("text") or "").strip())}
+        for arm in D3_ARMS}
+    if lab:
+        ch2 = channel2_subject_arm(rows, lab)
+        out["unclear"] = {
+            arm: {"stance_match_rate": (
+                      round(float(np.mean(list(ch2["rate"][arm].values()))), 6)
+                      if ch2["rate"].get(arm) else None),
+                  "unclear_rate": round(float(np.mean(list(v.values()))), 6),
+                  "denominator": sum(ch2["denominator"][arm].values())}
+            for arm, v in sorted(ch2["unclear_rate"].items())}
+    canaries = []
+    jd = D3_DIR / "judge"
+    if jd.exists():
+        for p in sorted(jd.glob("canary_*_summary.json")):
+            doc = json.loads(p.read_text(encoding="utf-8"))
+            canaries.append({"file": p.name, "rows": doc.get("n"),
+                             "flips": doc.get("n_flips"),
+                             "passed": doc.get("passed")})
+    out["canary"] = canaries
+
+    # The registered and root-excluded numbers, for the side-by-side table.
+    primary = data["results"].get(PRIMARY, {})
+    out["comparison"] = [
+        {"budget": budget,
+         "registered": _cmp(primary, f"rich_minus_poor_b{budget}"),
+         "root_excluded": _cmp(primary, f"richnoroot_minus_poor_b{budget}"),
+         "d_min_3": {ch: _pack(out[ch].get(f"richd3_minus_poor_b{budget}"))
+                     for ch in ("channel1", "channel2")}}
+        for budget in A.BUDGETS]
+    return out
+
+
+def _pack(c) -> dict | None:
+    if not c:
+        return None
+    return {"mean_a": c["mean_a"], "mean_b": c["mean_b"],
+            "diff": c["mean_diff"], "ci": c["ci95_bootstrap"],
+            "p": c["p_paired_t"], "n": c["n_subjects"]}
+
+
+def _cmp(primary: dict, key: str) -> dict:
+    return {ch: _pack((primary.get(ch) or {}).get(key))
+            for ch in ("channel1", "channel2")}
 
 
 def build() -> dict:
@@ -752,6 +1009,10 @@ def build() -> dict:
     data["b8"] = b8_block(data)
     data["flags"] = flag_block(data, arms)
     data["verdict"] = verdict_block(data)
+    # Built LAST and from a copy of the finished report data, so it can read
+    # the registered numbers for its side-by-side table but cannot possibly
+    # feed back into them. Section 11 only.
+    data["exploratory_d3"] = d3_block(data)
     return data
 
 
@@ -1550,7 +1811,319 @@ def render_markdown(data: dict) -> str:
             f"{run['calls']} | ${run['usd']} | {run['node_hours']} |")
     add("\nGPU billing comes from `sacct`, every attempt included, cancelled "
         "ones counted at their billed elapsed time.\n")
+
+    # ---- 11. the exploratory D_min = 3 arm ----
+    render_d3_section(data, add)
     return "\n".join(L) + "\n"
+
+
+def render_d3_section(data: dict, add) -> None:
+    """Section 11. Everything above this line is unaffected by it.
+
+    The section is appended, never interleaved, so a diff against the previous
+    render shows the registered report byte-identical apart from provenance.
+    """
+    d = data.get("exploratory_d3") or {}
+    if not d:
+        return
+    add("## 11. EXPLORATORY — owner-ordered D_min = 3 arm (the tripwire did "
+        "not fire; this is not the pre-committed sensitivity arm)\n")
+    add("**Nothing in this section changes anything above it.** H6's verdict "
+        "stays **DESCRIPTIVE ONLY — neither pre-written reading is applied; "
+        "H6 UNRESOLVED at confirmatory scale on this corpus**. The branch "
+        "stays DESCRIPTIVE at B = 1,000. No bar is applied to any number "
+        "below, and no number below is claimable. Section 7 and section 9's "
+        "bullet \"The D_min = 3 arm is not built\" both still stand: the arm "
+        "they refer to is the PRE-COMMITTED one, and it is still not built. "
+        "This is a different arm with a different status.\n")
+    add(q("tripwire"))
+    add(f"**The tripwire did NOT fire**, as section 7 records: the measured "
+        f"part-2 FOLLOW-UP overturn rate is "
+        f"{CR.fmt(data['part2_gate']['followup_overturn_rate'])} against the "
+        f"frozen > 0.20 line. So the arm the appendix pre-committed does not "
+        f"exist. What follows was **ordered by the owner on 2026-07-28 as "
+        f"exploratory diagnostic colour**, after the numbers above were "
+        f"rendered. It is labelled exploratory everywhere it appears, per "
+        f"CLAUDE.md's rule that anything outside a frozen bar is "
+        f"exploratory.\n")
+    add(f"**How it is built.** `experiments/h6_d3_arms.py` imports "
+        f"`experiments/h6_arms.py` and re-points exactly one module constant, "
+        f"`D_MIN` from {d['d_min_registered']} to {d['d_min']}. Chains of "
+        f"depth ≥ 3 only, **root included**, same deepest-first / "
+        f"skip-not-stop / newest-first top-up selection, same chronological "
+        f"render, same redaction and leakage guards. {d['poor_arm_source']} "
+        f"The build asserts per subject that the poor selection is unchanged "
+        f"under the new D_min — it cannot change, because the poor arm is "
+        f"lone NEW-TOPIC segments and excludes anything inside a chain of any "
+        f"depth, but it is proved rather than argued.\n")
+    add(f"**{d['primary_model_only']}**\n")
+
+    add("### Eligibility at D_min = 3 — the shrinkage is the point\n")
+    add("| budget B | rich arm fills, D_min = 2 | rich arm fills, D_min = 3 | "
+        "registered-eligible (D_min = 2, both arms) | exploratory-eligible "
+        "(D_min = 3, both arms) | lost vs registered | items | subjects with "
+        "≥ 1 depth ≥ 3 chain anywhere |")
+    add("|---|---|---|---|---|---|---|---|")
+    for budget in A.BUDGETS:
+        e = d["eligibility"][str(budget)]
+        rs = (d.get("rich_supply") or {}).get(str(budget), {})
+        add(f"| {budget} | {rs.get('d_min_2', '—')} | "
+            f"{rs.get('d_min_3', '—')} | {e['n_registered_eligible']} | "
+            f"**{e['n_eligible']}** | {e['n_lost_vs_registered']} | "
+            f"{e['n_items_eligible']} | "
+            f"{e['n_subjects_with_any_d3_chain']} |")
+    add("")
+    add(f"The first two columns count subjects whose RICH arm alone fills to "
+        f"within ±5% of B, out of the {d['n_with_items']} confirmatory "
+        f"subjects that carry items — the poor arm is ignored there, so the "
+        f"two depths are compared like for like. The next two columns add the "
+        f"poor-arm requirement back and are the eligibility counts the "
+        f"contrasts actually run on.\n")
+    add("A subject enters the exploratory contrast only if it is already "
+        "eligible for the REGISTERED contrast at that budget AND its "
+        "depth ≥ 3 rich arm also fills to within ±5% of B. That is the same "
+        "conjunction the root-excluded sensitivity arm used, so the two "
+        "arms' counts mean the same thing and both are subsets of the "
+        "registered pool.\n")
+    ident = d.get("identical_to_registered_rich") or {}
+    for budget in A.BUDGETS:
+        ids = ident.get(str(budget)) or []
+        if ids:
+            add(f"**At B = {budget}, {len(ids)} of the "
+                f"{d['eligibility'][str(budget)]['n_eligible']} exploratory "
+                f"arms are byte-identical to the registered rich arm** "
+                f"({', '.join(ids)}): every chain that fitted was already "
+                f"depth ≥ 3, so raising D_min removed nothing. For those "
+                f"subjects this is not an independent arm — it is the "
+                f"registered one. Named rather than left to be inferred.\n")
+    rep = d.get("reproducibility") or {}
+    n_shared = rep.get("n_prompt_hashes_shared_with_registered_run") or 0
+    if n_shared:
+        add("#### An unplanned reproducibility check, and what it found\n")
+        add(f"Those identical arms produce prompts that hash identically to "
+            f"the registered run's, so {n_shared} of the same prompts were "
+            f"generated twice — same model, same weights, same temperature "
+            f"0.0, same seed 0 — in two separate Leonardo jobs. That is a "
+            f"free run-to-run reproducibility check nobody planned, and it "
+            f"does not come out clean.\n")
+        add(f"- Byte-identical generated answers: **{rep['n_identical_generations']} "
+            f"of {n_shared}**.")
+        add(f"- Channel-1 cosine differs on **{rep['n_cosine_disagreements']} "
+            f"of {n_shared}**: median absolute gap "
+            f"{rep['median_abs_cosine_gap']}, mean "
+            f"{rep['mean_abs_cosine_gap']}, largest "
+            f"{rep['max_abs_cosine_gap']}.")
+        add(f"- Channel-2 stance label differs on "
+            f"**{rep['n_label_disagreements']} of "
+            f"{rep['n_labels_compared']}**.\n")
+        add("**Why, and what it does and does not mean.** Greedy decoding is "
+            "deterministic in arithmetic but not across batch compositions: "
+            "vLLM's batched matrix multiplies reduce in an order that depends "
+            "on what else is in the batch, and a single flipped token early "
+            "in a 150-word free-text answer changes everything after it. The "
+            "registered job batched 542 prompts; this job batched 182, so the "
+            "batches were never the same. This is a property of the "
+            "instrument, not a bug in either run, and it was present in every "
+            "number in this report before this arm existed.\n")
+        add(f"What it adds is a **magnitude for that noise on this corpus: "
+            f"about {rep['median_abs_cosine_gap']} cosine at the median "
+            f"item**, run to run, on free-text answers of this length. Item "
+            f"noise averages down into a subject mean and again across "
+            f"subjects, so it does not translate one-for-one into a contrast, "
+            f"but it is the same order as several of the differences reported "
+            f"above. It is one more reason the registered contrasts read as "
+            f"descriptive rather than decisive, and it is recorded here "
+            f"because this arm is where it happened to become measurable — "
+            f"not as a criticism of the registered numbers, which were "
+            f"computed correctly from the run that produced them.\n")
+
+    add("### The exploratory contrast — richD3 − poor at matched budget\n")
+    add("Both arms' raw means sit beside every difference, the same way the "
+        "registered tables print them.\n")
+    add("**Channel 1 (embedding cosine), primary model**\n")
+    for line in contrast_table(d["channel1"], [k for k, *_ in D3_CONTRASTS]):
+        add(line)
+    add("")
+    add("**Channel 2 (stance match), primary model**\n")
+    for line in contrast_table(d["channel2"], [k for k, *_ in D3_CONTRASTS]):
+        add(line)
+    add("")
+
+    add("### Beside the registered and root-excluded numbers\n")
+    add("| budget | channel | registered (D_min = 2) | root-excluded | "
+        "D_min = 3 |")
+    add("|---|---|---|---|---|")
+    for row in d["comparison"]:
+        for ch, label in (("channel1", "1 embedding"), ("channel2", "2 stance")):
+            add(f"| {row['budget']} | {label} | {_cell(row['registered'][ch])} "
+                f"| {_cell(row['root_excluded'][ch])} | "
+                f"{_cell(row['d_min_3'][ch])} |")
+    add("")
+    add("Each cell is *rich-arm mean → poor-arm mean, difference [95% CI], "
+        "p, n subjects*. The poor-arm mean moves across columns only because "
+        "the subject set moves: the poor arm itself is the same arm, the same "
+        "generations and the same scores in all three columns.\n")
+
+    add("### What it shows\n")
+    add(_d3_prose(data, d))
+    add("")
+
+    add("### Instrument health for the new arm\n")
+    add("| arm | n | truncated | over word cap | era violations | empty |")
+    add("|---|---|---|---|---|---|")
+    for arm in D3_ARMS:
+        h = (d.get("health") or {}).get(arm)
+        if not h:
+            continue
+        add(f"| `{arm}` | {h['n']} | {h['n_truncated']} | "
+            f"{h['n_over_word_cap']} | {h['n_era_violations']} | "
+            f"{h['n_empty']} |")
+    add("")
+    unclear = d.get("unclear") or {}
+    if unclear:
+        add("| arm | stance-match rate | UNCLEAR rate | denominator |")
+        add("|---|---|---|---|")
+        for arm in list(D3_ARMS) + ["h6_poor_b1000", "h6_poor_b400"]:
+            u = unclear.get(arm)
+            if not u:
+                continue
+            add(f"| `{arm}` | {CR.fmt(u['stance_match_rate'])} | "
+                f"{CR.fmt(u['unclear_rate'])} | {u['denominator']} |")
+        add("")
+    for c in d.get("canary") or []:
+        add(f"- Judge canary `{c['file']}`: {c['rows']} rows, {c['flips']} "
+            f"flips, {'PASS' if c['passed'] else 'FAIL'}. It ran before any "
+            f"exploratory judge call, halt-on-flip, same rule as section 6.")
+    add("")
+
+    add("### Cost of the exploratory arm\n")
+    c = d["cost"]
+    add("| currency | spend | cap | headroom | breached |")
+    add("|---|---|---|---|---|")
+    add(f"| GPU node-hours | {c['node_hours']} | {c['node_hour_cap']} | "
+        f"{round(c['node_hour_cap'] - c['node_hours'], 4)} | "
+        f"{'YES' if c['gpu_breached'] else 'no'} |")
+    add(f"| API dollars | ${c['api_usd']} | ${c['api_cap_usd']} | "
+        f"${round(c['api_cap_usd'] - c['api_usd'], 6)} | "
+        f"{'YES' if c['api_breached'] else 'no'} |")
+    add("")
+    add("| run id | model | entries | calls | API $ | node-hours |")
+    add("|---|---|---|---|---|---|")
+    for run in c["per_run"]:
+        add(f"| `{run['run_id']}` | {run['model']} | {run['entries']} | "
+            f"{run['calls']} | ${run['usd']} | {run['node_hours']} |")
+    add("")
+    total = data["cost"]
+    add(f"These lines are kept OUT of section 10 on purpose: that table's "
+        f"projection sentence describes the registered run's pre-spend "
+        f"projection, and folding a later, separately capped arm into it "
+        f"would leave the sentence describing numbers it never covered. "
+        f"**Combined H6 totals including this arm: "
+        f"${round(total['total_api_usd'] + c['api_usd'], 6)} API against the "
+        f"$6.00 H6 sub-cap, and "
+        f"{round(total['total_node_hours'] + c['node_hours'], 4)} node-hours "
+        f"against the 3.0 closeout-phase cap.** Projected before this arm "
+        f"spent anything: ~0.13 node-hours (one `boost_qos_dbg` job, "
+        f"{d['n_prompts']} prompts behind a ~7-minute engine init) and "
+        f"~$0.24 API ({d['n_prompts']} judge calls at the registered run's "
+        f"measured $0.00127 per call, plus one 10-row canary).\n")
+
+
+def _cell(p) -> str:
+    if not p:
+        return "—"
+    ci = p["ci"]
+    return (f"{CR.fmt(p['mean_a'])} → {CR.fmt(p['mean_b'])}, "
+            f"**{CR.fmt(p['diff'], plus=True)}** "
+            f"[{CR.fmt(ci[0], plus=True)}, {CR.fmt(ci[1], plus=True)}], "
+            f"p = {CR.fmt_p(p['p'])}, n = {p['n']}")
+
+
+def _d3_prose(data: dict, d: dict) -> str:
+    """One plain-language paragraph, written from the numbers as they land."""
+    e1 = d["eligibility"][str(BUDGET_PRIMARY)]
+    e4 = d["eligibility"]["400"]
+    reg = data["results"].get(PRIMARY, {})
+
+    def sign(key, ch):
+        c = (d[ch] or {}).get(key)
+        if not c or c["mean_diff"] is None:
+            return None
+        return "positive" if c["mean_diff"] > 0 else (
+            "negative" if c["mean_diff"] < 0 else "flat")
+
+    def rsign(key, ch):
+        c = (reg.get(ch) or {}).get(key)
+        if not c or c["mean_diff"] is None:
+            return None
+        return "positive" if c["mean_diff"] > 0 else (
+            "negative" if c["mean_diff"] < 0 else "flat")
+
+    parts = []
+    parts.append(
+        f"The rich arm leans on shallow chains for its supply. Raising the "
+        f"depth requirement from 2 to 3 cuts the eligible pool from "
+        f"{e1['n_registered_eligible']} subjects to {e1['n_eligible']} at "
+        f"B = 1,000, and from {e4['n_registered_eligible']} to "
+        f"{e4['n_eligible']} at B = 400 — and that is despite "
+        f"{e1['n_subjects_with_any_d3_chain']} of the {d['n_with_items']} "
+        f"subjects carrying items having at least one depth ≥ 3 chain "
+        f"somewhere in their transcripts. Having a deep chain and having "
+        f"1,000 words of them are very different things. Hosts in this "
+        f"corpus drill about two turns and move on, so most of the "
+        f"registered rich arm's volume is depth-2 chains plus their "
+        f"NEW-TOPIC roots.")
+    rs = d.get("rich_supply") or {}
+    if rs:
+        s1, s4 = rs[str(BUDGET_PRIMARY)], rs["400"]
+        parts.append(
+            f"Taking the poor arm out of it isolates the rich arm's own "
+            f"supply, and it roughly halves: of the {d['n_with_items']} "
+            f"subjects carrying items, {s1['d_min_2']} can fill a rich arm at "
+            f"B = 1,000 with depth ≥ 2 and {s1['d_min_3']} can with "
+            f"depth ≥ 3; at B = 400 it is {s4['d_min_2']} against "
+            f"{s4['d_min_3']}. The joint eligibility counts fall by about the "
+            f"same proportion, so the rich arm — not the poor one — is what "
+            f"the depth requirement bites.")
+    d1 = (d["channel1"] or {}).get("richd3_minus_poor_b1000")
+    d4 = (d["channel1"] or {}).get("richd3_minus_poor_b400")
+    if d1 and d4:
+        parts.append(
+            f"On direction: at B = 1,000 the deeper arm is "
+            f"{sign('richd3_minus_poor_b1000', 'channel1')} on channel 1 "
+            f"({CR.fmt(d1['mean_diff'], plus=True)} cosine, n = "
+            f"{d1['n_subjects']}) against a "
+            f"{rsign('rich_minus_poor_b1000', 'channel1')} registered "
+            f"contrast, and at B = 400 it is "
+            f"{sign('richd3_minus_poor_b400', 'channel1')} "
+            f"({CR.fmt(d4['mean_diff'], plus=True)} cosine, n = "
+            f"{d4['n_subjects']}) against a "
+            f"{rsign('rich_minus_poor_b400', 'channel1')} registered "
+            f"contrast.")
+    ident = d.get("identical_to_registered_rich") or {}
+    n1, n4 = len(ident.get("1000") or []), len(ident.get("400") or [])
+    if n1 or n4:
+        parts.append(
+            f"The surviving subjects are also the least informative ones. "
+            f"{n1} of the {e1['n_eligible']} arms at B = 1,000 and {n4} of "
+            f"the {e4['n_eligible']} at B = 400 are byte-identical to the "
+            f"registered rich arm — for those subjects raising D_min removed "
+            f"nothing, because everything that fitted the budget was already "
+            f"depth ≥ 3. So the exploratory arm is not a clean 'deeper "
+            f"material' arm: it is a smaller, partly overlapping subset of "
+            f"the registered one, and at B = 400 nearly half of it is the "
+            f"registered arm verbatim.")
+    parts.append(
+        "Read it as supply diagnostics, not as an effect. Every interval "
+        "below crosses zero or sits on a dozen-odd subjects, the branch "
+        "forbids a hypothesis-test claim at any depth, and this arm was not "
+        "pre-committed — the tripwire that would have pre-committed it did "
+        "not fire. What it adds to the record is the mechanism behind "
+        "section 8's operative fact: H6's eligibility shortfall is not a "
+        "quirk of one threshold, it gets worse as the depth requirement "
+        "rises, because the depth-1 and depth-2 material the registered rich "
+        "arm leans on is most of what this corpus has.")
+    return "\n\n".join(parts) + "\n"
 
 
 # ---------------------------------------------------------------------------

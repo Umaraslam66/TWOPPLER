@@ -1,0 +1,106 @@
+{
+ "banner": "CONFIRMATORY. Channel 1 (embedding) scores. Raw per-arm means only -- no contrasts, no confidence intervals, no hypothesis verdicts. Bars are judged once, in the final report.",
+ "channel": "1 (embedding)",
+ "score": "cosine between the generated answer and the real verbatim answer, both encoded by the pinned model",
+ "instrument": {
+  "name": "sentence-transformers/all-mpnet-base-v2",
+  "revision": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+  "resolved_snapshot_dir": "/Users/umaraslam/.cache/huggingface/hub/models--sentence-transformers--all-mpnet-base-v2/snapshots/e8c3b32edf5434bc2275fc9bab85f82640a19130",
+  "resolved_dir_name": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+  "revision_assertion": "resolved snapshot directory name == pinned revision",
+  "revision_asserted": true,
+  "weights_file": "model.safetensors",
+  "weights_bytes": 437971872,
+  "device": "cpu",
+  "loaded_hidden_size": 768,
+  "torch_version": "2.13.0",
+  "torch_threads": 4
+ },
+ "contract": "PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md instrument parameter 1 (pinned embedding model and revision)",
+ "batch_size": 8,
+ "torch_seed": 20260728,
+ "never_an_api_model": true,
+ "no_verdicts_note": "Per-arm means below are raw descriptives for the watch-which-arm-moves rule. No contrast, no CI and no pass/fail is computed here; the frozen bars are judged once, in the final report.",
+ "results": {
+  "gemma": {
+   "model": "Gemma-4-31B-it",
+   "chunks_scored": [
+    "chunk_01"
+   ],
+   "chunks_missing": [],
+   "n_rows": 182,
+   "n_subjects": 32,
+   "n_items": 131,
+   "overall": {
+    "n": 182,
+    "mean": 0.557231,
+    "median": 0.583746,
+    "sd": 0.162602,
+    "min": 0.026579,
+    "max": 0.88701
+   },
+   "per_arm_generated": {
+    "h6_richd3_b1000": {
+     "n": 51,
+     "mean": 0.583647,
+     "median": 0.609486,
+     "sd": 0.155201,
+     "min": 0.193336,
+     "max": 0.854465,
+     "n_subjects": 12,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_richd3_b400": {
+     "n": 131,
+     "mean": 0.546947,
+     "median": 0.575507,
+     "sd": 0.164824,
+     "min": 0.026579,
+     "max": 0.88701,
+     "n_subjects": 32,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    }
+   },
+   "per_arm_logical_renders": {
+    "h6_richd3_b1000": {
+     "n": 51,
+     "mean": 0.583647,
+     "median": 0.609486,
+     "sd": 0.155201,
+     "min": 0.193336,
+     "max": 0.854465,
+     "n_subjects": 12,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    },
+    "h6_richd3_b400": {
+     "n": 131,
+     "mean": 0.546947,
+     "median": 0.575507,
+     "sd": 0.164824,
+     "min": 0.026579,
+     "max": 0.88701,
+     "n_subjects": 32,
+     "n_truncated": 0,
+     "n_empty_text": 0,
+     "n_over_word_cap": 0
+    }
+   }
+  }
+ },
+ "scored_this_run": [
+  {
+   "gen_dir": "gemma",
+   "chunk": "chunk_01",
+   "n_rows": 182
+  }
+ ],
+ "skipped_this_run": [],
+ "runtime_secs": 22.0,
+ "embedded_utc": "2026-07-28T21:07:03Z"
+}
