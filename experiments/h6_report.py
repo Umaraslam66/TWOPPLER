@@ -613,6 +613,29 @@ def health_block(manifest: dict) -> dict:
     return out
 
 
+def identical_sensitivity_blocks(manifest: dict) -> dict:
+    """Subjects whose root-excluded arm is byte-identical to the rich arm.
+
+    It happens when a subject's rich selection ended up carrying no root words
+    at all — every qualifying whole chain overflowed the budget, so the arm was
+    filled entirely by the newest-first top-up pass and that pass happened to
+    draw only follow-up turns. For such a subject the sensitivity arm is not an
+    independent check: it IS the registered arm. Counted and named rather than
+    left for a reader to notice from the numbers.
+    """
+    out: dict = {}
+    for budget in A.BUDGETS:
+        rich, nr = f"h6_rich_b{budget}", f"h6_richnr_b{budget}"
+        ids = []
+        for cid, row in (manifest.get("per_subject") or {}).items():
+            arms = row.get("arms") or {}
+            if rich in arms and nr in arms and \
+                    arms[rich]["block_sha256"] == arms[nr]["block_sha256"]:
+                ids.append(cid)
+        out[str(budget)] = sorted(ids)
+    return out
+
+
 def era_rows() -> list:
     out = []
     for gen_dir, model in GEN_DIRS.items():
@@ -625,7 +648,8 @@ def era_rows() -> list:
 
 
 def build() -> dict:
-    manifest = json.loads((H6_DIR / "render_manifest.json").read_text())
+    full_manifest = json.loads((H6_DIR / "render_manifest.json").read_text())
+    manifest = full_manifest
     arms = json.loads((H6_DIR / "arms.json").read_text())
     rows = logical_rows()
 
@@ -652,6 +676,8 @@ def build() -> dict:
         "branch": {"n_eligible_primary_budget": n_primary,
                    "primary_budget": BUDGET_PRIMARY,
                    "branch": branch},
+        "identical_sensitivity_blocks": identical_sensitivity_blocks(
+            full_manifest),
         "part2_gate": part2_gate(),
         "classifier": json.loads(
             (CONFIRM_DIR / "h6_classify/stats.json").read_text()),
@@ -1070,6 +1096,20 @@ def render_markdown(data: dict) -> str:
         "appendix was approved, before any confirmatory number existed. It is "
         "reported beside the registered contrast and never substituted for "
         "it. It runs on the primary model only, to conserve API budget.\n")
+    ident = data["identical_sensitivity_blocks"]
+    if any(ident.values()):
+        for budget, ids in ident.items():
+            if ids:
+                add(f"**At B = {budget}, {len(ids)} subject(s) have a "
+                    f"root-excluded arm that is byte-identical to the rich "
+                    f"arm** ({', '.join(ids)}): their rich selection carried "
+                    f"no root words at all, because every qualifying whole "
+                    f"chain overflowed the budget and the newest-first top-up "
+                    f"pass happened to draw only follow-up turns. For those "
+                    f"subjects the sensitivity arm is not an independent "
+                    f"check — it is the same arm. Named here rather than left "
+                    f"to be inferred from the numbers.")
+        add("")
     block = data["results"].get(PRIMARY)
     if block:
         if block["channel1"]:
