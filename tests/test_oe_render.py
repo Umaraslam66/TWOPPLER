@@ -11,7 +11,10 @@ What these defend, in the order the pilot spec puts them:
   * a zero-information prompt carries no excerpts, no program and no date;
   * every subject name variant is still replaced by GUEST, and a named arm is
     still its redacted counterpart plus exactly one name line;
-  * S1 affiliation redaction is the scope that was priced, not a new one.
+  * S1 affiliation redaction is the scope that was priced, not a new one, plus
+    the two Addendum A parameter-8 extensions — reading through an
+    abbreviation's full stop and following a "GUEST, who ..." clause past its
+    commas — neither of which may reach the interview's own content.
 """
 
 from __future__ import annotations
@@ -338,7 +341,13 @@ def _barlock():
 
 
 def test_inlined_s1_matches_the_origin_module():
-    """No drift from experiments/barlock_affiliation, which priced this scope."""
+    """The priced core does not drift from experiments/barlock_affiliation.
+
+    The Addendum A parameter-8 extension is added beside this core, never on
+    top of it: the role word list and the appositive pattern that were priced
+    stay byte-identical, and a clause with no abbreviation and no ``who`` is
+    rewritten exactly as the origin module rewrites it.
+    """
     origin = _barlock()
     assert OE.ROLE_WORDS == origin.ROLE_WORDS
     assert OE._APPOS_RE.pattern == origin._APPOS_RE.pattern
@@ -381,6 +390,81 @@ def test_s1_is_on_by_default_and_can_be_turned_off():
     assert OE.S1_PLACEHOLDER in on
     assert OE.S1_PLACEHOLDER not in off
     assert "senior fellow at the institute" in off
+
+
+# --- Addendum A instrument parameter 8: the two S1 extensions --------------
+
+
+def test_s1_reads_through_an_abbreviation_full_stop():
+    """(a) The period in "U.S." no longer ends the clause before the role word.
+
+    The exact dev case: an imposter prompt kept a whole donor resume because
+    the clause pattern stopped at the dot in "U.S." and never saw "ambassador".
+    """
+    line = ("HOST: GUEST, who served two tours as U.S. ambassador to Israel, "
+            "now at the Brookings Institution, thanks so much.")
+    out, n = OE.apply_s1_scope(line)
+    assert n == 1
+    assert out == f"HOST: GUEST, {OE.S1_PLACEHOLDER}, thanks so much."
+
+
+def test_s1_reads_through_an_abbreviation_in_a_free_standing_sentence():
+    """(a) again, on the "GUEST is ..." shape, and only on that sentence."""
+    line = ("HOST: GUEST is a former U.S. ambassador to Israel and a former "
+            "assistant secretary of state. He joins us today.")
+    out, n = OE.apply_s1_scope(line)
+    assert n == 1
+    assert out == (f"HOST: GUEST is {OE.S1_PLACEHOLDER}. He joins us today.")
+
+
+def test_s1_still_stops_at_a_real_sentence_break():
+    """A full stop followed by a capital is a sentence end, not an abbreviation."""
+    assert OE._mask_abbreviations("He is in Washington, D.C. The war goes on.") \
+        == "He is in Washington, D.C. The war goes on."
+    line = "HOST: GUEST is a professor. The war goes on."
+    out, n = OE.apply_s1_scope(line)
+    assert out == f"HOST: GUEST is {OE.S1_PLACEHOLDER}. The war goes on."
+    assert n == 1
+
+
+def test_s1_who_clause_runs_past_its_internal_commas():
+    """(b) The relative clause is removed whole, not cut at the first comma."""
+    line = ("HOST: We check in with GUEST, who used to be ambassador there, "
+            "as well as assistant secretary of state for the region and who "
+            "now directs foreign policy programs at the Brookings Institution. "
+            "Welcome.")
+    out, n = OE.apply_s1_scope(line)
+    assert n == 1
+    assert out == (f"HOST: We check in with GUEST, {OE.S1_PLACEHOLDER}. "
+                   "Welcome.")
+
+
+def test_s1_who_clause_never_swallows_the_hosts_own_question():
+    """The zero-collateral rule the extension froze on, as a test.
+
+    The clause stops at the segment that turns to address the guest, so the
+    interview's own content is never inside the removal.
+    """
+    line = ("HOST: GUEST, who is a professor at Georgetown, what do you make "
+            "of Assad's speech?")
+    out, n = OE.apply_s1_scope(line)
+    assert n == 1
+    assert out == (f"HOST: GUEST, {OE.S1_PLACEHOLDER}, what do you make of "
+                   "Assad's speech?")
+
+
+def test_s1_who_clause_without_a_role_word_is_left_alone():
+    """The role-word gate still decides; the extension only changes the reach."""
+    line = "HOST: GUEST, who's now with the Atlantic Council. Thank you, sir."
+    assert OE.apply_s1_scope(line) == (line, 0)
+
+
+def test_s1_never_leaves_its_abbreviation_marker_behind():
+    line = ("HOST: GUEST, a former U.S. official, joined us from Washington, "
+            "D.C. He said little.")
+    out, _ = OE.apply_s1_scope(line)
+    assert OE._ABBREV_DOT not in out
+    assert "Washington, D.C. He said little." in out
 
 
 def test_s1_does_not_disturb_the_instruction_tail():

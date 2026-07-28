@@ -66,6 +66,13 @@ byte-identical to its redacted counterpart apart from the single name line —
 the one-factor invariant the contamination meter rests on. The build summary
 reports the check on the redacted arms, as required.
 
+Extended 2026-07-28 under Addendum A instrument parameter 8, in two places
+only: the clause pattern now reads through an abbreviation's full stop
+("U.S."), and a "GUEST, who ..." clause now runs past its internal commas for
+as long as it is still describing the guest. Both stay inside S1's declared
+intent and neither changes what S1 removed before. Measurement:
+``results/stage2_confirm/s1_extension_remeasure.md``.
+
 Nothing here calls a model, reads a config, or touches disk beyond what its
 caller hands it: a prompt is reproducible from its inputs alone, and
 ``R.sha256`` of the rendered string is the record of what was asked.
@@ -132,8 +139,9 @@ INSTRUCTION_SHA256 = R.sha256(OPEN_ANSWER_INSTRUCTION)
 #
 # Inlined copy of the S1 scope from experiments/barlock_affiliation.py (role
 # word list, appositive pattern and the substitution), so the renderer stays
-# importable from src/ without reaching into experiments/. tests assert no
-# drift against the origin module.
+# importable from src/ without reaching into experiments/. ROLE_WORDS and
+# _APPOS_RE stay byte-identical to the origin module — the tests pin them — and
+# the extension below is added beside them, never on top of them.
 
 S1_PLACEHOLDER = "[DESCRIPTION REMOVED]"
 
@@ -161,14 +169,102 @@ _APPOS_RE = re.compile(
 _HOST_PREFIX = f"{R.HOST_LABEL}: "
 _GUEST_PREFIX = f"{R.PLACEHOLDER}: "
 
+# --- S1 extension, Addendum A instrument parameter 8 (2026-07-28) -----------
+#
+# Two additions, both inside S1's declared intent: the host's descriptive
+# clause about GUEST. Nothing else about S1 moves.
+#
+# (a) Abbreviation-safe clause. _APPOS_RE's clause runs "up to the next full
+#     stop", so the full stop inside "U.S." ended the clause early and the role
+#     word behind it was never seen — an imposter prompt kept "GUEST, who
+#     served two tours as U.S. ambassador to Israel, now at the Brookings
+#     Institution" whole. The clause patterns now run over a copy of the line
+#     in which an abbreviation's full stops are masked, so they no longer read
+#     as sentence ends. A full stop followed by a space and a capital is left
+#     alone: that is a real sentence break and the clause must still stop
+#     there.
+#
+# (b) The "GUEST, who ..." relative clause. _APPOS_RE stops at the first comma,
+#     which cuts such a clause in half and leaves the rest of the résumé
+#     standing (", now at the Brookings Institution"). The clause now grows
+#     across commas one segment at a time and stops at the first segment that
+#     no longer describes the guest — no role word and no proper noun — or that
+#     turns to address them ("thanks so much", "what did you see?"). That stop
+#     rule is what keeps the host's own question out of the removal.
+
+#: Stand-in for a full stop that belongs to an abbreviation. Never occurs in
+#: transcript text, so masking and unmasking are exactly reversible.
+_ABBREV_DOT = "\x00"
+
+#: An abbreviation whose full stop is not the end of the sentence: an
+#: initialism ("U.S.", "D.C.") or a common title ("Dr.", "Sen."), followed by
+#: more of the same sentence — a comma, a hyphen, a bracket, or a space and a
+#: lower-case word.
+_ABBREV_RE = re.compile(
+    r"(?:\b(?:[A-Za-z]\.){2,}"
+    r"|\b(?:Mr|Mrs|Ms|Dr|Prof|Sen|Rep|Gov|Gen|Amb|Lt|Col|Sgt|St|Jr|Sr"
+    r"|Inc|Corp|Ltd|Univ)\.)"
+    r"(?=[,;:)\-]|\s+[a-z])"
+)
+
+#: "GUEST, who ..." up to the end of its sentence. How much of that is kept is
+#: :func:`_describing_prefix`'s decision, not the pattern's.
+_WHO_RE = re.compile(r"GUEST,\s+(who\b[^.;?!]{3,300})(?=[.;?!])")
+
+#: A proper noun: what marks a comma-segment as still naming an affiliation
+#: ("now at the Brookings Institution") rather than closing the introduction.
+#: Two lower-case letters are required so a bare "I" does not qualify.
+_PROPER_RE = re.compile(r"\b[A-Z][a-z]{2,}")
+
+#: The host turning from describing the guest to addressing them. Same reading
+#: as ``barlock_affiliation._SECOND_PERSON_RE``.
+_SECOND_PERSON_RE = re.compile(r"\b(you|your|you're|you've|yourself)\b",
+                               re.IGNORECASE)
+
+
+def _mask_abbreviations(text: str) -> str:
+    """Hide abbreviation full stops so a clause pattern reads through them."""
+    return _ABBREV_RE.sub(
+        lambda m: m.group(0).replace(".", _ABBREV_DOT), text)
+
+
+def _describing_prefix(body: str) -> str:
+    """How much of a ``who ...`` clause is still describing GUEST.
+
+    Grows the clause one comma-segment at a time from the left and returns the
+    prefix of ``body`` that stops before the first segment that carries no role
+    word and no proper noun, or that addresses the guest in the second person.
+    """
+    breaks = list(re.finditer(r",\s+", body))
+    ends = [m.start() for m in breaks] + [len(body)]
+    starts = [0] + [m.end() for m in breaks]
+    keep = ends[0]
+    for start, end in zip(starts[1:], ends[1:]):
+        segment = body[start:end]
+        if _SECOND_PERSON_RE.search(segment):
+            break
+        if not (_ROLE_RE.search(segment) or _PROPER_RE.search(segment)):
+            break
+        keep = end
+    return body[:keep]
+
 
 def apply_s1(text: str) -> tuple[str, int]:
     """Drop the clause that describes GUEST, when it carries a role word.
 
     Returns ``(rewritten, n_clauses_removed)``. Origin:
-    ``experiments/barlock_affiliation.apply_s1``.
+    ``experiments/barlock_affiliation.apply_s1``, plus the two Addendum A
+    parameter-8 extensions described above.
     """
     n = 0
+
+    def repl_who(m):
+        nonlocal n
+        body = _describing_prefix(m.group(1))
+        if not _ROLE_RE.search(body):
+            return m.group(0)
+        n += 1
+        return m.group(0).replace(body, S1_PLACEHOLDER, 1)
 
     def repl(m):
         nonlocal n
@@ -178,7 +274,10 @@ def apply_s1(text: str) -> tuple[str, int]:
         n += 1
         return m.group(0).replace(body, S1_PLACEHOLDER)
 
-    return _APPOS_RE.sub(repl, text or ""), n
+    masked = _mask_abbreviations(text or "")
+    masked = _WHO_RE.sub(repl_who, masked)
+    masked = _APPOS_RE.sub(repl, masked)
+    return masked.replace(_ABBREV_DOT, "."), n
 
 
 def apply_s1_scope(prompt: str) -> tuple[str, int]:
