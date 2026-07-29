@@ -70,6 +70,12 @@ render PAPER1_METHODS.md DOPPLER_PAPER1_METHODS.pdf \
 render PAPER2_MAIN.md DOPPLER_PAPER2_MAIN.pdf \
   10pt "top=2.4cm,bottom=2.2cm,left=2.3cm,right=2.3cm"
 
+# The consolidated preprint for the Zenodo deposit, once it exists.
+if [[ -f "$src_dir/PREPRINT.md" ]]; then
+  render PREPRINT.md DOPPLER_PREPRINT.pdf \
+    10pt "top=2.4cm,bottom=2.2cm,left=2.3cm,right=2.3cm"
+fi
+
 echo
 echo "Done. Wrote to $out_dir:"
 ls -la "$out_dir"/*.pdf
