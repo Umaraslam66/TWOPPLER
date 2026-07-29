@@ -60,10 +60,15 @@ fidelity minus the fidelity of a zero-information baseline: the same model, the
 same items, no grounding, identity redacted. Lift is the only headline metric in
 this project; a raw fidelity number is never reported without its baseline.
 
-The design target is Park et al. (2024), "Generative Agent Simulations of 1,000
-People", commercialised by Simile: an agent grounded in a two-hour interview
-reproduces a person's survey answers at roughly 0.85 of that person's own
-two-week test-retest consistency. That work uses surveys. We wanted the same
+The design target is Park et al. (2026), "LLM Agents Grounded in Self-Reports
+Enable General-Purpose Simulation of Individuals" (originally circulated as
+"Generative Agent Simulations of 1,000 People", 2024), commercialised by Simile:
+an agent grounded in a two-hour interview reproduces a person's survey answers at
+0.83 of that person's own two-week test-retest consistency, against 0.74 for an
+agent given demographics only. We quote their baseline beside their headline
+because that is the rule this project holds itself to. Simile's widely quoted
+accuracy figure is a company number on proprietary behavioural data, not the same
+measurement as the paper's 0.83. That work uses surveys. We wanted the same
 question asked on natural speech, so we used public interviews, where the
 held-out data already exists: ground a twin on a person's earlier interviews,
 test it on real questions from a later one.
@@ -81,11 +86,16 @@ the instrument the four rounds below tested to destruction.
 
 ## 3. Corpus and subjects
 
-MediaSum: 463,596 NPR and CNN interview transcripts (CNN 414k, NPR 49k), 2000 to
-2020; see the [corpus recon](../stage2_corpus_recon.md), with parsing rules and
+MediaSum (Zhu et al., 2021): 463,596 NPR and CNN interview transcripts (CNN 414k,
+NPR 49k), 2000 to 2020. Those counts and that date range are this project's own
+measurements of the released data, not figures quoted from the corpus paper; see
+the [corpus recon](../stage2_corpus_recon.md), with parsing rules and
 checksums in [the index](../stage2_corpus_recon_index.md) and a 20-guest hand
-audit in [the quality note](../stage2_corpus_recon_quality.md). Curation yields
-**578 clean candidate subjects** with at least three deduplicated substantive
+audit in [the quality note](../stage2_corpus_recon_quality.md). MediaSum's NPR
+half is inherited from the INTERVIEW corpus (Majumder et al., 2020).
+
+Curation yields **578 clean candidate subjects** with at least three
+deduplicated substantive
 interviews and at least 180 days of span, of which **137 are confirmed
 long-tail**: no Wikipedia article under any spelling
 ([curation report](../stage2_curation_report.md)).
@@ -152,7 +162,10 @@ correctly and saying the instrument is unusable.
 The mechanism is visible in the scorer's own words: *"Option B directly
 addresses the host's question about American responsibility."* It is matching
 topic. The median distractor's question-similarity to the real question was
-cosine 0.050, and one item of eighteen had any distractor above 0.10.
+cosine 0.050, and one item of eighteen had any distractor above 0.10. This is
+prior art rather than a surprise: Aggazzotti et al. (2024) found that authorship
+models on speech transcripts look strong until conversational topic is
+controlled, at which point the apparent speaker signal largely goes away.
 
 **What round 1 established:** the pipeline runs end to end: draw, chronological
 split, question–answer extraction, distractors, imposter donors, five-arm
@@ -236,7 +249,11 @@ Three replacement tells, each quoted from the scorer's own reasoning:
   conflicting position, the generator writes a confident thesis. Real
   interviewees qualify, digress, and say "it's mixed". The paraphrase cannot fix
   this, because it must preserve every substantive claim and the confidence
-  lives *in* the claims.
+  lives *in* the claims. Reinhart et al. (2025) is the published mechanism:
+  LLM text differs systematically from human text on grammatical and rhetorical
+  style, and the gap is *larger* for instruction-tuned models than for base
+  models, which is consistent with round 4's few-shot fix inverting this tell
+  rather than removing it.
 - **World-truth.** *"Option C reflects the actual political reality of that
   moment… Options A, B, and D suggest a competitive race, which does not align
   with the historical consensus."* If the person's real position is simply
@@ -430,11 +447,19 @@ Scoring runs on two channels that fail differently:
   a scored model: `sentence-transformers/all-mpnet-base-v2`, revision
   `e8c3b32edf5434bc2275fc9bab85f82640a19130`, pinned in
   [Addendum A, instrument parameter 1](../../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md).
+  It is a Sentence-BERT encoder (Reimers & Gurevych, 2019) over an MPNet backbone
+  (Song et al., 2020).
 - **Channel 2, a stance judge.** A separate model labels whether the generated
   answer takes the same position as the real one: SAME / DIFFERENT / UNCLEAR,
   under a rubric frozen by hash. Pinned as `gemini-3.5-flash`, temperature 0.0,
   `thinking_budget=0`, `max_output_tokens=512`, rubric r2 sha256
   `ad050d1a…102464` ([Addendum A parameters 2–3](../../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md)).
+
+Model provenance for everything named in this paper: `Gemma-4-31B-it` is the
+instruction-tuned 31B member of the Gemma 4 suite (Gemma Team, 2026), and the two
+Gemini models, `gemini-3.5-flash` as the stance judge and `gemini-3.5-flash-lite`
+as generator and robustness scorer, have no paper and are documented only by
+their model cards (Google DeepMind, 2026).
 
 Two rules bind the reporting. The primary metric is **own twin minus imposter
 twin**, computed identically in both channels, because judge and embedding
@@ -533,10 +558,16 @@ disagreed with a concordant auditor line: **net 2–2**, two judge-correct, two
 auditors-correct.
 
 **The bar was then set, in writing, before its measurement existed:** the judge
-passes if and only if **raw agreement ≥ 0.80 AND Cohen's κ ≥ 0.60** against a
-rubric-briefed auditor line on a fresh blind tranche. The rationale is on the
-record: the 0.76–0.78 above is a lower bound because the auditors were
+passes if and only if **raw agreement ≥ 0.80 AND Cohen's κ ≥ 0.60** (Cohen, 1960)
+against a rubric-briefed auditor line on a fresh blind tranche. The rationale is
+on the record: the 0.76–0.78 above is a lower bound because the auditors were
 rubric-naive.
+
+Auditing the judge rather than trusting it is the practice this follows:
+Calderon et al. (2025) turn "may this LLM judge replace a human annotator" into a
+statistical test, and Desai et al. (2026) find that in social-science work using
+LLMs for measurement, validation is inconsistent and often absent altogether. A
+pre-committed two-legged bar is the cruder version of the same discipline.
 
 **First measurement: FAIL.** Fresh 18-row tranche (sheets D/E, seed 611, drawn
 only from generations unused in the first audit, key sealed). Scored by
@@ -624,11 +655,27 @@ we cite instead:
 
 Full references in §14.
 
+On the forced-choice side there is a closer neighbour, and this paper's claim has
+to be stated against it. Chandak et al. (2025) showed that multiple-choice
+benchmark items can often be answered without even seeing the question, and
+argued for replacing forced choice with free-form generation graded against a
+reference answer by an LLM. That is the same arc walked here, one step earlier in
+the pipeline. Our claim is narrower and complementary: they show an item can be
+solved without the *question*; we show that on this corpus a person-prediction
+item stays solvable without the *person*, which is a different leak and one that
+survives fixing the question side (round 2 removed responsiveness and the ceiling
+did not move). The replacement adopted in §9 is their remedy applied to a
+person-prediction task.
+
 This project claims two contributions, and this paper adds a third:
 
 1. **A population-optimised static-script baseline** that adaptive-questioning
    work generally omits. Stage 1E showed it beating adaptive selection at a tenth
-   of the compute ([Stage 1E findings](../stage1e_findings.md)).
+   of the compute ([Stage 1E findings](../stage1e_findings.md)). Choi et al.
+   (2010) reported the same pattern in psychometrics sixteen years earlier: a
+   well-chosen static short form performs only marginally worse than
+   computerised adaptive testing. The static-script result extends a known
+   pattern into the LLM setting rather than establishing a new one.
 2. **Elicitation budgets priced in human time**: respondent seconds rather than
    item counts ([time-cost note](../stage1e_timecost_note.md)).
 3. **This paper's scoped negative result about forced-choice instruments**, with
@@ -822,7 +869,8 @@ given; the amendment names them only by short description.
   Kirchhof, M., Zhang, Y., & Rainforth, T. (2026). *BED-LLM: Intelligent
   Information Gathering with LLMs and Bayesian Experimental Design.*
   International Conference on Learning Representations (ICLR) 2026.
-  arXiv:2508.21184. https://arxiv.org/abs/2508.21184
+  arXiv:2508.21184, a 2025 arXiv posting published at ICLR 2026, which is why the
+  identifier reads 2508. https://arxiv.org/abs/2508.21184
 - Wang, J., Zollo, T., Zemel, R., & Namkoong, H. (2025). *Adaptive Elicitation of
   Latent Information Using Natural Language.* International Conference on Machine
   Learning (ICML) 2025. arXiv:2504.04204. https://arxiv.org/abs/2504.04204.
@@ -834,19 +882,71 @@ given; the amendment names them only by short description.
   submitted 28 May 2026. arXiv:2605.29458. https://arxiv.org/abs/2605.29458.
   Not peer-reviewed at time of writing.
 
-Two further works are cited in the text and are not part of B9's list:
+The remaining works cited in this paper, alphabetically by first author:
 
-- Park, J. S., Zou, C. Q., Shaw, A., Hill, B. M., Cai, C., Morris, M. R.,
-  Willer, R., Liang, P., & Bernstein, M. S. (2024). *Generative Agent
-  Simulations of 1,000 People.* arXiv:2411.10109.
-  https://arxiv.org/abs/2411.10109. The design target named in
+- Aggazzotti, C., Andrews, N., & Smith, E. A. (2024). *Can Authorship
+  Attribution Models Distinguish Speakers in Speech Transcripts?* Transactions of
+  the ACL (TACL). arXiv:2311.07564. https://arxiv.org/abs/2311.07564
+- Calderon, N., Reichart, R., & Dror, R. (2025). *The Alternative Annotator Test
+  for LLM-as-a-Judge: How to Statistically Justify Replacing Human Annotators
+  with LLMs.* ACL 2025. arXiv:2501.10970. https://arxiv.org/abs/2501.10970
+- Chandak, N., Goel, S., Prabhu, A., Hardt, M., & Geiping, J. (2025). *Answer
+  Matching Outperforms Multiple Choice for Language Model Evaluation.*
+  arXiv:2507.02856. https://arxiv.org/abs/2507.02856
+- Choi, S. W., Reise, S. P., Pilkonis, P. A., Hays, R. D., & Cella, D. (2010).
+  *Efficiency of static and computer adaptive short forms compared to
+  full-length measures of depressive symptoms.* Quality of Life Research, 19(1),
+  125–136. doi:10.1007/s11136-009-9560-5.
+  https://pubmed.ncbi.nlm.nih.gov/19941077/
+- Cohen, J. (1960). *A coefficient of agreement for nominal scales.* Educational
+  and Psychological Measurement, 20(1), 37–46. doi:10.1177/001316446002000104.
+  https://journals.sagepub.com/doi/10.1177/001316446002000104
+- Desai, J., Card, D., & Jacobs, A. Z. (2026). *Validating LLMs in social
+  science: Epistemic threats and emerging norms.* arXiv:2607.07915.
+  https://arxiv.org/abs/2607.07915
+- Gemma Team, Google DeepMind (2026). *Gemma 4 Technical Report.*
+  arXiv:2607.02770. https://arxiv.org/abs/2607.02770
+- Google DeepMind (2026). *Gemini 3.5 Flash model card.*
+  https://deepmind.google/models/model-cards/gemini-3-5-flash/
+- Google DeepMind (2026). *Gemini 3.5 Flash-Lite model card.*
+  https://deepmind.google/models/model-cards/gemini-3-5-flash-lite/
+- Majumder, B. P., Li, S., Ni, J., & McAuley, J. (2020). *Interview: Large-scale
+  Modeling of Media Dialog with Discourse Patterns and Knowledge Grounding.*
+  Proc. EMNLP 2020, 8129–8141. arXiv:2004.03090.
+  doi:10.18653/v1/2020.emnlp-main.653.
+  https://aclanthology.org/2020.emnlp-main.653/. The source corpus of MediaSum's
+  NPR half.
+- Park, J. S., Zou, C. Q., Kamphorst, J., Egan, N., Shaw, A., Hill, B. M.,
+  Cai, C., Morris, M. R., Liang, P., Willer, R., & Bernstein, M. S. (2026).
+  *LLM Agents Grounded in Self-Reports Enable General-Purpose Simulation of
+  Individuals.* arXiv:2411.10109. https://arxiv.org/abs/2411.10109
+  (v1 15 Nov 2024, as *Generative Agent Simulations of 1,000 People*;
+  v2 22 Apr 2026; v3 28 Jun 2026.) The design target named in
   [PREREGISTRATION.md §1](../../PREREGISTRATION.md), commercialised by Simile.
-  Verified against the arXiv listing 2026-07-28.
+- Reimers, N., & Gurevych, I. (2019). *Sentence-BERT: Sentence Embeddings using
+  Siamese BERT-Networks.* Proc. EMNLP-IJCNLP 2019. arXiv:1908.10084.
+  https://arxiv.org/abs/1908.10084
+- Reinhart, A., Markey, B., Laudenbach, M., Pantusen, K., Yurko, R., Weinberg, G.,
+  & Brown, D. W. (2025). *Do LLMs write like humans? Variation in grammatical and
+  rhetorical styles.* Proceedings of the National Academy of Sciences, 122,
+  e2422455122. arXiv:2410.16107. https://arxiv.org/abs/2410.16107
 - Santurkar, S., Durmus, E., Ladhak, F., Lee, C., Liang, P., & Hashimoto, T.
-  (2023). *Whose Opinions Do Language Models Reflect?* ICML 2023.
-  arXiv:2303.17548. https://arxiv.org/abs/2303.17548. The origin of OpinionQA,
+  (2023). *Whose Opinions Do Language Models Reflect?* Proc. 40th International
+  Conference on Machine Learning (ICML), PMLR 202:29971–30004. arXiv:2303.17548.
+  https://proceedings.mlr.press/v202/santurkar23a.html. The origin of OpinionQA,
   already on the project's record in
   [`results/lit_check.md`](../lit_check.md).
+- Song, K., Tan, X., Qin, T., Lu, J., & Liu, T.-Y. (2020). *MPNet: Masked and
+  Permuted Pre-training for Language Understanding.* Advances in Neural
+  Information Processing Systems 33 (NeurIPS 2020), 16857–16867.
+  arXiv:2004.09297.
+  https://proceedings.neurips.cc/paper/2020/hash/c3a690be93aa602ee2dc0ccab5b7b67e-Abstract.html
+- Zhu, C., Liu, Y., Mei, J., & Zeng, M. (2021). *MediaSum: A Large-scale Media
+  Interview Dataset for Dialogue Summarization.* Proc. 2021 Conference of the
+  North American Chapter of the ACL: Human Language Technologies (NAACL-HLT),
+  5927–5934. arXiv:2103.06410. doi:10.18653/v1/2021.naacl-main.474.
+  https://aclanthology.org/2021.naacl-main.474/. The corpus behind every number
+  in this paper.
 
 ---
 

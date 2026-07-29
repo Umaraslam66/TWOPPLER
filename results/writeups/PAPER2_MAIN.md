@@ -97,7 +97,11 @@ Read the tables above by watching the arms, not the differences. On channel 1, t
 model's own twin sits at 0.5821 and the imposter at 0.5070, while the zero-information
 baseline sits at 0.5443, **higher than the imposter**
 ([confirm report §2](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). Knowing nothing beats
-knowing about the wrong person. Stage 1E saw the same *shape* on survey data
+knowing about the wrong person. The closest published statement of that effect at scale is
+Morocho et al. (2026): over 70,000 respondent-item instances from the World Values Survey,
+with a random-guesser baseline in place, persona conditioning gave no clear aggregate
+improvement in survey alignment and in many cases significantly degraded it. Stage 1E saw
+the same *shape* on survey data
 ([`stage1e_findings.md`](../stage1e_findings.md) section c), but the two imposters are
 different constructs (a random different respondent there, a same-domain donor here) and the
 frozen text forbids conflating them
@@ -137,14 +141,21 @@ So: the twin writes a free-text answer to a question the real person was actuall
 an interview the twin never saw. Two instruments score it independently. Channel 1 is
 cosine similarity between the twin's answer and the person's real answer, using a pinned
 local embedding model (`all-mpnet-base-v2`, revision `e8c3b32e…`, pin asserted at run
-time). Channel 2 is a stance judge (`gemini-3.5-flash`, temperature 0, thinking off,
-rubric sha256 `ad050d1a…`) labelling SAME / DIFFERENT / UNCLEAR against the real answer
-([confirm report §1](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). No claim rests on one
-channel alone ([Amendment 3 C2.4](../../PREREGISTRATION_AMENDMENT_3.md)).
+time), a Sentence-BERT encoder (Reimers & Gurevych, 2019) over an MPNet backbone
+(Song et al., 2020). Channel 2 is a stance judge (`gemini-3.5-flash`, temperature 0,
+thinking off, rubric sha256 `ad050d1a…`) labelling SAME / DIFFERENT / UNCLEAR against the
+real answer ([confirm report §1](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). No claim
+rests on one channel alone ([Amendment 3 C2.4](../../PREREGISTRATION_AMENDMENT_3.md)).
+Model provenance: `Gemma-4-31B-it` is the instruction-tuned 31B member of the Gemma 4 suite
+(Gemma Team, 2026), and the two Gemini models used here have no paper and are documented
+only by their model cards (Google DeepMind, 2026).
 
 **Design in one paragraph.** Subjects are recurring interview guests from MediaSum
-(463,596 NPR and CNN transcripts, 2000–2020), curated to 578 clean candidates with ≥ 3
-deduplicated substantive interviews and ≥ 180 days of span, of which 137 are confirmed
+(Zhu et al., 2021), whose 463,596 NPR and CNN transcripts and 2000–2020 span are this
+project's own recon measurements of the released data
+([`stage2_corpus_recon.md`](../stage2_corpus_recon.md)) rather than figures quoted from the
+corpus paper. They are curated to 578 clean candidates with ≥ 3 deduplicated substantive
+interviews and ≥ 180 days of span, of which 137 are confirmed
 long-tail ([`stage2_curation_report.md`](../stage2_curation_report.md)). Splits are strictly
 chronological: grounding is earlier interviews, the test is the chronologically last one.
 Five arms per item (twin redacted, twin named, zero-info redacted, zero-info named,
@@ -366,8 +377,8 @@ not reverse sign when the budget halves.
 ### 4.5 The part-2 trust gate, and the tripwire that did not fire
 
 The classifier had to clear a second blind audit on **confirmatory** subjects before any H6
-arm was scored. **PASS: raw agreement 0.8833 against the ≥ 0.85 bar, Cohen's κ 0.7667 against
-the ≥ 0.60 bar, over 120 rows from 60 confirmatory subjects**
+arm was scored. **PASS: raw agreement 0.8833 against the ≥ 0.85 bar, Cohen's κ
+(Cohen, 1960) 0.7667 against the ≥ 0.60 bar, over 120 rows from 60 confirmatory subjects**
 ([H6 report §7](../stage2_confirm/H6_REPORT.md); scorer output
 [`h6_part2_score_output.txt`](../stage2_openended/h6_part2_score_output.txt)). The verdict was
 applied by a script committed before any co-audit label existed.
@@ -790,8 +801,9 @@ registration predates the work and is prospective. A reviewer should apply the w
 to the headline and the stronger one only to the closeout analyses.
 
 **No comparability with the accuracy numbers this project set out beside.** The original
-motivation cited Park et al.'s ~0.85 normalized accuracy on survey replay. **Forced-choice
-fidelity was abandoned** by a pre-committed kill rule after four dev pilots
+motivation cited Park et al. (2026) on survey replay: 0.83 normalized accuracy for their
+interview-grounded agent, against their own published 0.74 for a demographics-only agent.
+**Forced-choice fidelity was abandoned** by a pre-committed kill rule after four dev pilots
 ([Amendment 3 C1](../../PREREGISTRATION_AMENDMENT_3.md)), so this project has **no
 forced-choice accuracy number for Stage 2 and cannot be compared with theirs**. Stating what
 is and is not comparable:
@@ -804,6 +816,12 @@ is and is not comparable:
 - **Comparable and, we think, ours:** the imposter-controlled contrast (grounded on the wrong
   person, same pipeline, same budget), which separates "knows about people" from "knows about
   this person"; and elicitation budgets priced in respondent seconds.
+
+The nearest published design is Jia et al. (2026), who build personas from panel
+respondents' background variables plus their pre-2023 survey history and test them against
+the same respondents' held-out post-cutoff answers. Across four architectures and three
+models they report the same asymmetry this paper reports: distributional alignment improves
+while individual-level prediction stays limited.
 
 **The instrument is younger than the hypotheses.** The open-ended instrument was adopted on
 2026-07-27 and the confirmatory run launched on 2026-07-28. Its trust evidence is one dev
@@ -832,8 +850,12 @@ flipped** ([H6 report §11](../stage2_confirm/H6_REPORT.md)). The cause is not a
 run: greedy decoding is deterministic in arithmetic but not across batch compositions:
 vLLM's batched matrix multiplies reduce in an order that depends on what else is in the
 batch, and one flipped token early in a 150-word answer changes everything after it. The
-registered job batched 542 prompts, this one 182. **This noise was present in every number in
-this paper before it was measurable**, and its magnitude is the same order as several of the
+registered job batched 542 prompts, this one 182. vLLM is the serving system
+(Kwon et al., 2023), and the mechanism is documented: Yuan et al. (2025) show that batch
+size, GPU count and GPU version change greedy-decoding output because floating-point
+addition is not associative, with small early rounding differences cascading into divergent
+text. **This noise was present in every number in this paper before it was measurable**, and
+its magnitude is the same order as several of the
 thin-cell differences reported above, H7's per-bin numbers and H6's small-*n* contrasts in
 particular. It is one more reason those carry wide uncertainty and read as descriptive rather
 than decisive. It does **not** put the headline in doubt: item-level noise averages down into
@@ -869,6 +891,14 @@ All material is **public broadcast interview transcript**: words these people ch
 on NPR and CNN, already published, already archived. No private data, no participants, no
 consent burden, and nothing was collected from anyone for this study.
 
+Public is not the same as consented, and the objection is on the record rather than around
+it: Favela and Amon (2023) argue that building a high-fidelity human digital twin without
+consent is a privacy violation whatever the source of the material, Methuku and Myakala
+(2025) make that case specifically for clones of living people, and Lauterwasser and
+Nedzhvetskaya (2023) argue that data being technically public does not settle consent,
+while recommending the two safeguards this project already applies: do not spotlight
+individuals, do not publish inferred characteristics.
+
 The subject pool is **deliberately biased toward the long tail** rather than celebrities: of
 578 qualifying candidates, 137 are confirmed long-tail with no Wikipedia article under any
 spelling we could find ([`stage2_curation_report.md`](../stage2_curation_report.md)). The
@@ -878,6 +908,15 @@ models people who are *less* able to notice or object. The mitigation is that no
 individuating is published. **Subjects appear in the repository only as pseudonymous IDs**
 (C00203, C02502, and so on); no subject name appears in any results file or in this paper,
 including in the top-decile contamination lists and the dropped-subject record.
+
+Two anchors mark what those safeguards do not cover. Park et al. (2025), the governance
+brief written as the companion to the study this project takes as its design target,
+recommends tiered access, audit logs and revocable consent for agents built from people's
+interview data; their subjects were paid, consenting and able to revoke, ours are
+non-consenting broadcast guests, and this paper does not close that gap. And the nearest
+emerging legal baseline, the NO FAKES Act of 2025 (119th U.S. Congress, 2025), reaches
+voice and visual likeness, so a text-only statistical twin built from transcripts sits
+outside its scope.
 
 The corpus ends in October 2020, so the fully airtight post-training-cutoff subset described
 in the original registration is not available from MediaSum; contamination is handled by
@@ -930,3 +969,77 @@ and not yet publicly readable; to be pasted by the owner]*
 Repository commit at report render: `4f3d6b067355bc5cc10d28ff538291c12aa77694` (working tree
 dirty at render time; recorded rather than hidden). Governance documents are pinned by
 sha256 in [confirm report §1](../stage2_confirm/STAGE2_CONFIRM_REPORT.md).
+
+---
+
+## 13. References
+
+Every external work cited in this paper, alphabetically by first author.
+
+119th U.S. Congress. (2025). S. 1367: Nurture Originals, Foster Art, and Keep Entertainment
+Safe Act of 2025 (NO FAKES Act of 2025). Introduced 9 April 2025.
+https://www.congress.gov/119/bills/s1367/BILLS-119s1367is.pdf
+
+Cohen, J. (1960). A coefficient of agreement for nominal scales. Educational and
+Psychological Measurement, 20(1), 37–46. doi:10.1177/001316446002000104
+
+Favela, L. H., & Amon, M. J. (2023). The ethics of human digital twins: Counterfeit people,
+personhood, and the right to privacy. In 2023 IEEE 3rd International Conference on Digital
+Twins and Parallel Intelligence (DTPI), 16–22.
+https://ieeexplore.ieee.org/document/10365409/
+
+Gemma Team, Google DeepMind. (2026). Gemma 4 technical report. arXiv:2607.02770.
+https://arxiv.org/abs/2607.02770
+
+Google DeepMind. (2026). Gemini 3.5 Flash model card.
+https://deepmind.google/models/model-cards/gemini-3-5-flash/
+
+Google DeepMind. (2026). Gemini 3.5 Flash-Lite model card.
+https://deepmind.google/models/model-cards/gemini-3-5-flash-lite/
+
+Jia, M., Chen, Y., Sharma, D., & Diaz-Rodriguez, J. (2026). When can digital personas
+reliably approximate human survey findings? arXiv:2605.10659.
+https://arxiv.org/abs/2605.10659
+
+Kwon, W., Li, Z., Zhuang, S., Sheng, Y., Zheng, L., Yu, C. H., Gonzalez, J. E., Zhang, H.,
+& Stoica, I. (2023). Efficient memory management for large language model serving with
+PagedAttention. In Proceedings of SOSP 2023. arXiv:2309.06180.
+https://arxiv.org/abs/2309.06180
+
+Lauterwasser, S., & Nedzhvetskaya, N. (2023). Privacy in public? The ethics of academic
+research with publicly available social media data. Berkeley Journal of Sociology.
+https://berkeleyjournal.org/2023/08/11/privacy-in-public/
+
+Methuku, V., & Myakala, P. K. (2025). Digital doppelgangers: Ethical and societal
+implications of pre-mortem AI clones. arXiv:2502.21248. https://arxiv.org/abs/2502.21248
+
+Morocho, E. E. T., Cima, L., Fagni, T., Avvenuti, M., & Cresci, S. (2026). Assessing the
+reliability of persona-conditioned LLMs as synthetic survey respondents. arXiv:2602.18462.
+https://arxiv.org/abs/2602.18462
+
+Park, J. S., Zou, C. Q., Kamphorst, J., Egan, N., Shaw, A., Hill, B. M., Cai, C.,
+Morris, M. R., Liang, P., Willer, R., & Bernstein, M. S. (2026). LLM agents grounded in
+self-reports enable general-purpose simulation of individuals. arXiv:2411.10109 (v1, 2024,
+circulated as "Generative agent simulations of 1,000 people").
+https://arxiv.org/abs/2411.10109
+
+Park, J. S., Zou, C. Q., Shaw, A., Hill, B. M., Cai, C. J., Morris, M. R., Willer, R.,
+Liang, P., & Bernstein, M. S. (2025). Simulating human behavior with AI agents. Stanford
+HAI Policy Brief. https://hai.stanford.edu/policy/simulating-human-behavior-with-ai-agents
+
+Reimers, N., & Gurevych, I. (2019). Sentence-BERT: Sentence embeddings using Siamese
+BERT-networks. In Proceedings of EMNLP-IJCNLP 2019. arXiv:1908.10084.
+https://arxiv.org/abs/1908.10084
+
+Song, K., Tan, X., Qin, T., Lu, J., & Liu, T.-Y. (2020). MPNet: Masked and permuted
+pre-training for language understanding. In Advances in Neural Information Processing
+Systems 33 (NeurIPS 2020), 16857–16867. arXiv:2004.09297.
+https://arxiv.org/abs/2004.09297
+
+Yuan, J., Li, Y., Ding, Y., Xie, S., Li, T., Zhao, Y., Wan, Z., Shi, Y., Hu, W., &
+Liu, Z. (2025). Understanding and mitigating numerical sources of nondeterminism in LLM
+inference. arXiv:2506.09501. https://arxiv.org/abs/2506.09501
+
+Zhu, C., Liu, Y., Mei, J., & Zeng, M. (2021). MediaSum: A large-scale media interview
+dataset for dialogue summarization. In Proceedings of NAACL-HLT 2021, 5927–5934.
+doi:10.18653/v1/2021.naacl-main.474. arXiv:2103.06410
