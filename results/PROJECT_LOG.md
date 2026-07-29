@@ -436,7 +436,7 @@ Corrections against the frozen documents live in
 
 ## 12. What is open right now
 
-**One item, and it is a paste job.**
+**Two items.**
 
 1. **The OSF registration summary quote.** The registration is live at
    https://osf.io/qz28m (§3), but it sits inside OSF's approval window and is
@@ -444,6 +444,12 @@ Corrections against the frozen documents live in
    a marked slot — *[registration summary, verbatim: pending …]* — for the owner
    to paste the exact text once it is public. **It is never paraphrased as a
    quote.**
+
+2. **The Zenodo publish decision.** A draft deposition with all four PDFs and
+   full metadata sits at https://zenodo.org/deposit/21677214 (§16), private
+   until published. Owner reviews the draft, then either publishes from the
+   web page or runs `python experiments/zenodo_upload.py --publish`.
+   Publishing mints the DOI and is **irreversible**.
 
 Closed since the last revision of this list, so nobody re-opens them: the
 bar-lock addendum is adopted; the confirmatory launch plan got its GO and ran;
@@ -577,3 +583,34 @@ Working notes live in `memory/` (untracked, not part of the record).
    before a single score was computed. Six dev subjects cannot tell you what
    eighty-eight real ones will supply. Measure eligibility on a realistic draw
    before freezing the budget that defines it.
+
+## 16. Publication pass (2026-07-29, afternoon)
+
+The write-ups became publishable artifacts. Four things happened, all on main:
+
+1. **Style and authorship.** Em dashes removed from the article and both papers
+   (the only survivors are inside verbatim quotes of frozen registration text,
+   which are never altered). Authors are now explicit in all documents and on
+   the PDF title blocks: Umar Aslam and Claude (Fable 5, Anthropic), with the
+   role split stated; "we" means the two of them. Draft banners replaced with
+   dated front matter.
+2. **Citation verification and integration.** Every external citation checked
+   by live lookup; the full memo is
+   [`lit_check_v2.md`](lit_check_v2.md) (68 new verified entries, zero
+   fabricated works found among the existing ones). Corrections applied: Park
+   et al. updated to its 2026 record (0.83 for the interview-grounded arm, their
+   0.74 demographics-only baseline quoted beside it); MediaSum finally cited
+   (Zhu 2021; Majumder 2020 for the NPR half); Cohen 1960 at the kappa bars;
+   encoder and model provenance cited. New positioning citations integrated
+   into both papers (Chandak 2025, Reinhart 2025, Aggazzotti 2024, Morocho
+   2026, Jia 2026, Choi 2010, ethics anchors). Paper 2 gained a References
+   section. No measured number, verdict or bar changed anywhere.
+3. **A consolidated preprint.**
+   [`writeups/PREPRINT.md`](writeups/PREPRINT.md) (19 rendered pages) combines
+   the methods story and the results into the one publishable paper; every
+   number machine-checked verbatim against the two companion papers; the
+   magnitude-bar miss travels beside the H1 pass at equal prominence.
+4. **Zenodo automation and draft.** `experiments/zenodo_upload.py` (draft-first,
+   stdlib only, state in [`zenodo_deposition.json`](zenodo_deposition.json))
+   created deposition 21677214 with all four PDFs and CC-BY 4.0 metadata.
+   Nothing is public; the publish decision is §12 item 2.
