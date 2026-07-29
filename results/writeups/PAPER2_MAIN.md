@@ -1,6 +1,9 @@
-# DOPPLER Stage 2 — can a twin built from someone's old interviews predict what they say in the next one?
+# DOPPLER Stage 2: can a twin built from someone's old interviews predict what they say in the next one?
 
-**Main results paper. Draft for owner review.**
+**Main results paper, 2026-07-28.**
+
+*Umar Aslam and Claude (Fable 5, Anthropic). Claude ran the experiments, the analyses and
+the drafting under Umar's direction; "we" throughout means the two of us.*
 
 Every number below links to the report that produced it. The confirmatory numbers come
 from one place only: [`results/stage2_confirm/STAGE2_CONFIRM_REPORT.md`](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)
@@ -21,8 +24,8 @@ a later, unseen interview better than an identically built twin grounded in a *d
 person's interviews.** That is the imposter-controlled result, it is confirmatory, it holds
 on 88 subjects, and it holds on both scoring channels and both scored models.
 
-Primary contrast — own twin minus imposter twin, the metric
-[Amendment 3 C3](../../PREREGISTRATION_AMENDMENT_3.md) makes primary — on the primary model
+Primary contrast (own twin minus imposter twin, the metric
+[Amendment 3 C3](../../PREREGISTRATION_AMENDMENT_3.md) makes primary) on the primary model
 (Gemma-4-31B-it), with both arms' raw means printed beside the difference as the
 watch-which-arm-moves rule requires
 ([confirm report §4](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)):
@@ -32,7 +35,7 @@ watch-which-arm-moves rule requires
 | 1 embedding cosine | 0.5821 | 0.5070 | **+0.0751** | [+0.0570, +0.0932] | < 0.0001 | 88 |
 | 2 stance match | 0.6914 | 0.5703 | **+0.1211** | [+0.0580, +0.1843] | 0.0003 | 85 |
 
-Second registered leg — own twin minus the zero-information baseline (same model, same
+Second registered leg: own twin minus the zero-information baseline (same model, same
 items, no grounding, identity redacted), same model, same run
 ([confirm report §2](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)):
 
@@ -60,13 +63,13 @@ pinned model) or ≥ +0.09 stance-match points (channel 2)"*, and the same froze
 **own-twin − zero-info** as H1's registered contrast.
 
 **On the primary model in channel 1, that contrast reads +0.0378 cosine
-[+0.0211, +0.0545] against the frozen ≥ +0.05 — NOT MET**
+[+0.0211, +0.0545] against the frozen ≥ +0.05: NOT MET**
 ([confirm report §2](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). H1's significance legs
 passed; H1's magnitude bar on its own named contrast did not, on the primary model in
 channel 1. Those two sentences travel together everywhere this result is quoted.
 
 The own-twin − imposter contrast reads **+0.0751 cosine [+0.0570, +0.0932]** against the
-same ≥ +0.05 unit — **MET** — and is labelled here for what it is: the **C3 primary
+same ≥ +0.05 unit, **MET**, and is labelled here for what it is: the **C3 primary
 contrast**, not the contrast the frozen magnitude text names for H1. Applying the frozen
 unit to it is a labelled extension, not the registered comparison.
 
@@ -76,7 +79,7 @@ rescue the line above: own − zero-info reads +0.0578 cosine on the robustness 
 ≥ +0.09, MET) ([confirm report §2](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). The miss
 is specific and it is the one the frozen text points at.
 
-**Erratum note, 2026-07-28 — a post-freeze governance ambiguity, recorded rather than
+**Erratum note, 2026-07-28: a post-freeze governance ambiguity, recorded rather than
 resolved quietly.** Two frozen texts point at different contrasts.
 [Amendment 3 C3](../../PREREGISTRATION_AMENDMENT_3.md) makes **own − imposter** the primary
 contrast; the Addendum-A magnitude text, written for the same instrument, names
@@ -84,7 +87,7 @@ contrast; the Addendum-A magnitude text, written for the same instrument, names
 and the conflict only became visible once the two numbers landed on opposite sides of the
 same bar. **Owner ruling, 2026-07-28: the headline is own-vs-imposter, and the
 own − zero-info magnitude miss stays top-placed at equal size.** The ambiguity is resolved
-by **reporting both contrasts fully — never by choosing between them**: no back-selection of
+by **reporting both contrasts fully, never by choosing between them**: no back-selection of
 whichever contrast clears the bar, and no quiet retirement of the one that does not. Both
 travel together everywhere this result is quoted, including here.
 
@@ -92,15 +95,15 @@ travel together everywhere this result is quoted, including here.
 
 Read the tables above by watching the arms, not the differences. On channel 1, the primary
 model's own twin sits at 0.5821 and the imposter at 0.5070, while the zero-information
-baseline sits at 0.5443 — **higher than the imposter**
+baseline sits at 0.5443, **higher than the imposter**
 ([confirm report §2](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). Knowing nothing beats
 knowing about the wrong person. Stage 1E saw the same *shape* on survey data
-([`stage1e_findings.md`](../stage1e_findings.md) section c) — but the two imposters are
+([`stage1e_findings.md`](../stage1e_findings.md) section c), but the two imposters are
 different constructs (a random different respondent there, a same-domain donor here) and the
 frozen text forbids conflating them
 ([Addendum A to Amendment 1](../../PREREGISTRATION_AMENDMENT_1_ADDENDUM_A.md)), so this is a
-rhyme and not a replication. What it does explain is why the imposter arm — not the
-zero-information arm — carries the claim.
+rhyme and not a replication. What it does explain is why the imposter arm, not the
+zero-information arm, carries the claim.
 
 Effect sizes, paired over subjects, primary model
 ([`report_numbers.json`](../stage2_confirm/report_numbers.json), `h1`): own − imposter
@@ -120,7 +123,7 @@ softens it.
 
 The scored claim was also reframed once, on pilot evidence, before any confirmatory data
 existed. Four dev pilots showed that forced choice over this corpus is solvable without
-knowing the person at all — a person-blind scorer got 17/17, 10/10, 15/15, then 8/8 across
+knowing the person at all: a person-blind scorer got 17/17, 10/10, 15/15, then 8/8 across
 four different distractor constructions, and a pre-committed kill rule fired
 ([Amendment 3 C1](../../PREREGISTRATION_AMENDMENT_3.md), record in
 [`PILOT_REPORT_4.md`](../stage2_pilot4/PILOT_REPORT_4.md)). The replacement instrument is
@@ -144,8 +147,8 @@ channel alone ([Amendment 3 C2.4](../../PREREGISTRATION_AMENDMENT_3.md)).
 deduplicated substantive interviews and ≥ 180 days of span, of which 137 are confirmed
 long-tail ([`stage2_curation_report.md`](../stage2_curation_report.md)). Splits are strictly
 chronological: grounding is earlier interviews, the test is the chronologically last one.
-Five arms per item — twin redacted, twin named, zero-info redacted, zero-info named,
-imposter redacted — at an identical 2,000-word grounding budget and an identical 150-word
+Five arms per item (twin redacted, twin named, zero-info redacted, zero-info named,
+imposter redacted) at an identical 2,000-word grounding budget and an identical 150-word
 answer cap ([confirm report §1](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). The
 confirmatory draw was 140 seeded subjects; 89 survived the ≥ 3-item floor; one was dropped
 by a guard (§8.5 below), leaving **88 scored subjects and 355 items**
@@ -153,7 +156,7 @@ by a guard (§8.5 below), leaving **88 scored subjects and 355 items**
 
 ---
 
-## 3. H7 — does a twin go stale? EXPLORATORY, and the channels disagree
+## 3. H7: does a twin go stale? EXPLORATORY, and the channels disagree
 
 **Everything in this section is exploratory and carries no confirmatory claim.** 68 subjects
 carry the H7 eligibility flag; **36** of them fill at least one staleness bin after the
@@ -185,7 +188,7 @@ channel 1 [−0.02922, +0.01315]; robustness channel 2 [−0.09095, +0.08656].
 ### 3.2 Channel 1: no crossover, stated plainly
 
 **In channel 1, on both models, the stale own twin stays ahead of the fresh imposter in
-every filled Δ bin.** No pooled crossover occurs anywhere inside the observed range —
+every filled Δ bin.** No pooled crossover occurs anywhere inside the observed range,
 which stretches past three years, to a mean Δ of 1,788 days in the oldest bin
 ([confirm report §3](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)):
 
@@ -201,19 +204,19 @@ the same verdict: +0.0760 / +0.0558 / +0.0448 / +0.0688 across the four bins,
 [confirm report §3](../stage2_confirm/STAGE2_CONFIRM_REPORT.md).)
 
 Per subject, 13 of 36 cross at some bin on the primary model and 11 of 36 on the robustness
-model — so individual crossovers exist; the pooled curve does not cross.
+model, so individual crossovers exist; the pooled curve does not cross.
 
 ### 3.3 Channel 2 on the primary model: an anomaly, reported as measured
 
 The stance channel on the primary model produces a **significantly POSITIVE slope**
-(+0.06502 stance points per year, p = 0.0182, 95% CI [+0.01278, +0.11761]) — twins scoring
-*better* with older grounding — together with a **pooled crossover at the earliest bin**
+(+0.06502 stance points per year, p = 0.0182, 95% CI [+0.01278, +0.11761]), twins scoring
+*better* with older grounding, together with a **pooled crossover at the earliest bin**
 (6-12m) ([confirm report §3](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)).
 
 Two things about that, stated flatly:
 
 1. **It is outside both pre-written readings.** The frozen text pre-wrote exactly two
-   readings — "measurable decay, crossover in range" and "flat decay across our Δ range"
+   readings: "measurable decay, crossover in range" and "flat decay across our Δ range"
    ([Amendment 2 B7](../../PREREGISTRATION_AMENDMENT_2.md)). A significantly positive slope
    is neither. It is reported as measured, with no reading attached.
 2. **A crossover at the earliest bin under a non-negative slope is not the declared decay
@@ -235,21 +238,21 @@ section reports ([confirm report §3](../stage2_confirm/STAGE2_CONFIRM_REPORT.md
 The magnitude bar for H7 is also missed everywhere it was applied. Freshest − stalest bin,
 paired over the 3–4 subjects who fill both: +0.0077 (p = 0.8595) and +0.0280 (p = 0.2440) on
 channel 1 against ≥ +0.05; −0.1111 (p = 0.7418) and −0.3958 (p = 0.0864) on channel 2
-against ≥ +0.09 — **NOT MET** in all four cells
+against ≥ +0.09: **NOT MET** in all four cells
 ([confirm report §3](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). The interval on the
 channel-2 primary figure runs [−1.3760, +1.1538]; that is a number with no information in
 it, and it is printed rather than dropped.
 
 **Caveats printed where the numbers are.** Channel-2 per-bin stance denominators are thin
 (31–65 items per bin, spread over 9–19 subjects) and are thinned further by the
-imposter-arm UNCLEAR asymmetry in §8.3 — the imposter arm's answers are judged UNCLEAR far
+imposter-arm UNCLEAR asymmetry in §8.3; the imposter arm's answers are judged UNCLEAR far
 more often than any other arm's, so the imposter's stance-match rate is computed on a
 smaller and differently-selected denominator. Channel-2 H7 numbers carry wider uncertainty
 than their channel-1 counterparts
 ([confirm report §3](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)).
 
 **Declared confounds, restated as the frozen text requires:** staleness bundles person-change
-and world-change — topics move on even when the person does not — so H7 measures operational
+and world-change (topics move on even when the person does not), so H7 measures operational
 staleness, not its mechanism; and at matched token budget, older-cutoff grounding can differ
 in venue and interview count ([Amendment 2 B7](../../PREREGISTRATION_AMENDMENT_2.md)).
 
@@ -259,7 +262,7 @@ A separate exploratory note takes the channel disagreement apart four ways
 ([`h7_diagnostics.md`](../stage2_confirm/h7_diagnostics.md), CPU only, $0.00). Three things
 from it belong beside the numbers above, all exploratory. **First, the precision loss sits
 exactly where the anomaly lives:** on the primary model the *stale own twin's* own UNCLEAR
-rate spikes to **0.3051 in the 6-12m bin against 0.1543 across the other three pooled** — that
+rate spikes to **0.3051 in the 6-12m bin against 0.1543 across the other three pooled**; that
 is the bin carrying the channel-2 crossover and the start of its positive slope, and it is the
 bin whose twin denominator is thinned hardest. On the robustness model, which has no positive
 slope and no crossover, the same comparison is 0.2034 vs 0.1809, barely a spike. **Second, the
@@ -267,7 +270,7 @@ pooled channel-2 crossover rests on a mismatched-subject-set comparison.** The r
 prints a bin difference only when both arms cover the same subjects (a `len(tw) == len(im)`
 guard); on channel 2 the imposter arm loses whole subjects when all their imposter items come
 back UNCLEAR, which is why the 6-12m and >3y rows print `n/a` in the difference column. The
-crossover statistic does **not** apply that guard — it compares the two arm means whatever
+crossover statistic does **not** apply that guard; it compares the two arm means whatever
 subject sets produced them. So the crossover sits one column away from a difference the same
 driver declines to print. That is a visible fact about the frozen statistic, reported as such;
 no rule is changed and none is proposed. **Third, two candidate explanations were weakened and
@@ -276,14 +279,14 @@ Jaccard r = +0.2725, p = 0.0336) but vanishes within them (per-subject slope −
 p = 0.8491) and does not track the stance slope (r = +0.0237, p = 0.9281, n = 17); and the
 slope stays positive under all three UNCLEAR handling rules (+0.06502 frozen, +0.04785 counted
 as non-match, +0.07013 counted as half). Net: **the disagreement is narrowed, not resolved**,
-and nothing in the note changes the conclusion above — the channels disagree, so H7 gets no
+and nothing in the note changes the conclusion above: the channels disagree, so H7 gets no
 headline reading.
 
 ---
 
-## 4. H6 — is follow-up-derived grounding worth more per token? DESCRIPTIVE, and unresolved
+## 4. H6: is follow-up-derived grounding worth more per token? DESCRIPTIVE, and unresolved
 
-**Headline: DESCRIPTIVE ONLY — neither pre-written reading is applied; H6 is UNRESOLVED at
+**Headline: DESCRIPTIVE ONLY. Neither pre-written reading is applied; H6 is UNRESOLVED at
 confirmatory scale on this corpus** ([H6 report §8](../stage2_confirm/H6_REPORT.md)).
 
 H6 asks whether grounding drawn from **follow-up chains including their root** buys more twin
@@ -302,13 +305,13 @@ NEW-TOPIC turns and they make up 0.2425 of the rich arm's words at the median
 
 Source: [H6 report §2](../stage2_confirm/H6_REPORT.md). A subject enters H6 only if **both**
 arms can be filled to budget B from its own grounding transcripts. At the primary budget only
-**24 of 88** subjects clear that — the frozen branch puts 24 in the `< 30` band, so **no
+**24 of 88** subjects clear that; the frozen branch puts 24 in the `< 30` band, so **no
 hypothesis-test claim may be made at all** and every number below is descriptive.
 
 **The shortfall is the finding.** Development supply implied roughly two thirds of the pool
 would be eligible (4 of 6 subjects); the confirmatory corpus delivered 27%. What this run
 establishes is that **the registered H6 design does not reach confirmatory power on
-MediaSum-derived grounding transcripts at the frozen budget** — that, not any effect estimate,
+MediaSum-derived grounding transcripts at the frozen budget**; that, not any effect estimate,
 is what carries forward ([H6 report §8](../stage2_confirm/H6_REPORT.md)). One subject (C02474)
 produced zero host turns across both its grounding transcripts and fails mechanically; it is
 counted, not patched.
@@ -338,14 +341,14 @@ At the B = 400 dose check the primary model's sign **flips negative on both chan
 model × channel cells. **A contrast whose direction depends on the budget is not a stable
 effect**, and the dose check is what exposed it.
 
-**The root-excluded sensitivity arm agrees with the registered contrast at both budgets** —
+**The root-excluded sensitivity arm agrees with the registered contrast at both budgets**:
 positive at B = 1,000 (+0.0173 cosine [−0.0266, +0.0692], p = 0.4994, n = 16; +0.0222 stance,
 p = 0.7443, n = 15) and negative at B = 400 (−0.0243 cosine, p = 0.0858, n = 29; −0.0667
 stance, p = 0.2499, n = 28) ([H6 report §4](../stage2_confirm/H6_REPORT.md)). It was added
 unconditionally by owner ruling 1 before any confirmatory number existed, runs on the primary
 model only to conserve API budget, and for 3 subjects at B = 400 it is byte-identical to the
 rich arm, so for those it is not an independent check. So the budget-dependence is not an
-artifact of counting the NEW-TOPIC roots inside the rich arm — it survives removing them.
+artifact of counting the NEW-TOPIC roots inside the rich arm; it survives removing them.
 
 ### 4.4 Why neither pre-written reading applies
 
@@ -354,7 +357,7 @@ breadth") and the null one ("segment type does not matter at these budgets"). **
 applied**, because both are hypothesis-level claims and the branch returns DESCRIPTIVE
 ([H6 report §8e](../stage2_confirm/H6_REPORT.md)).
 
-The null reading in particular has to be earned, not defaulted to — it asserts a *publishable
+The null reading in particular has to be earned, not defaulted to; it asserts a *publishable
 absence* of an effect, which takes a powered null, and this run is not one. **A
 non-significant positive point estimate on 24 subjects is an absence of evidence, not evidence
 of absence.** The dose check cuts against a null from the other side too: a settled null does
@@ -373,18 +376,18 @@ Three things stay attached to that PASS rather than being cleared by it:
 
 - **Deviation, D3 pattern, owner-directed.** The auditor line is a blind Opus 5 co-audit
   substituted for the owner's own labels. It is reported as its own line and never pooled
-  with a human line — **no human line exists for it**.
+  with a human line; **no human line exists for it**.
 - **The 120-row sizing ruling.** The frozen text sets a floor of ≥ 60 rows, not a ceiling. The
   owner raised the tranche from 60 to 120 **while still blind**, before any co-audit label
   existed, so the enlargement adds power without adding bias
   ([build note](../stage2_openended/h6_part2_build_note.md)).
 - **The tripwire did not fire.** A part-2 FOLLOW-UP overturn rate above 20% would have forced
   an extra rich arm at chain depth 3; the measured rate is **18.33%**, below the line, so that
-  arm was not built. Development's own rate was 25%, above the line — the appendix expected
+  arm was not built. Development's own rate was 25%, above the line; the appendix expected
   the arm to fire and the confirmatory measurement came in under it.
 
 A depth-3 arm was nonetheless built later, **ordered by the owner as exploratory diagnostic
-colour after the registered numbers were rendered — it is not the pre-committed sensitivity
+colour after the registered numbers were rendered; it is not the pre-committed sensitivity
 arm, whose tripwire never fired**, and it changes no verdict: its direction matches the
 registered contrast in all four cells including the B = 400 sign reversal, and eligibility
 halves again from 24 subjects to 12 at the primary budget
@@ -404,7 +407,7 @@ script. That confound is structural and is not corrected for.
 
 ---
 
-## 5. Registered hypotheses without a verdict — one withdrawn, one untested under cap
+## 5. Registered hypotheses without a verdict: one withdrawn, one untested under cap
 
 Two hypotheses are on the frozen record and neither returns a pass or a fail. They are in
 **different states** and the difference matters: H2 is withdrawn, H5 was run as a substituted
@@ -414,14 +417,14 @@ were decided by owner ruling on 2026-07-28
 different status from H6 in §4:** H6 ran end to end and came back unresolved because too few
 subjects were eligible to license a claim.
 
-**H2 (selection matters) — WITHDRAWN, documented deviation.** Model-selected context beats
+**H2 (selection matters): WITHDRAWN, documented deviation.** Model-selected context beats
 random-segment context at matched budget
 ([`PREREGISTRATION.md`](../../PREREGISTRATION.md) §3, confirmatory at ≥ 80 subjects under the
 [Amendment 1 A5](../../PREREGISTRATION_AMENDMENT_1.md) branch). It is withdrawn for three
 stated reasons:
 
 - **It was never run.** No confirmatory selection-policy arms were ever generated, so H2 has
-  no data at all — not a null, not a weak effect, nothing.
+  no data at all: not a null, not a weak effect, nothing.
 - **It was superseded by the instrument change.** H2's bar was written in forced-choice
   accuracy points, and forced choice was killed outright by pre-committed kill rule
   ([Amendment 3 C1](../../PREREGISTRATION_AMENDMENT_3.md)). The bar did not transfer.
@@ -434,7 +437,7 @@ The withdrawal follows the precedent set when **H4 was withdrawn** under
 deviation, and never left silent. Leaving a registered hypothesis unmentioned was not one of
 the available options.
 
-**H5 (calibration) — the registered estimator is UNTESTED under the cap; a substituted
+**H5 (calibration): the registered estimator is UNTESTED under the cap; a substituted
 analysis is reported in its place.** Full record:
 [`H5_CALIBRATION.md`](../stage2_confirm/H5_CALIBRATION.md); artifacts and figures under
 [`stage2_confirm/h5/`](../stage2_confirm/h5/), machine copy
@@ -447,38 +450,38 @@ analysis is reported in its place.** Full record:
 > was produced at temperature 0.0, which is greedy decoding: ten samples return ten identical
 > strings, so the registered confidence is a *constant* 1.0 on these records and its ECE
 > measures the pinning, not the twin. Running it properly means re-generating above
-> temperature 0 — a fresh run that can recycle nothing, costing **1.12 node-hours and $4.51**
+> temperature 0, a fresh run that can recycle nothing, costing **1.12 node-hours and $4.51**
 > on the primary model alone (**$12.13** with the two-model structure Stage 2 uses
 > everywhere), against an owner cap of 0.2 node-hours and $0.50. Both caps break on the
 > cheapest honest version. In its place, and at $0.00 on CPU, a graded signal already
-> attached to every generation — the channel-1 embedding cosine — was mapped monotonically to
+> attached to every generation, the channel-1 embedding cosine, was mapped monotonically to
 > a confidence and calibrated against channel-2 stance correctness, cross-fit over a 44/44
 > subject split so no item is scored by a map that saw its own subject. **The substituted
 > estimator is a different quantity and is reported as its own line, never pooled with or
 > presented as the registered one.** Held out on the primary model it reads ECE 0.0861
-> (equal-width) and 0.0939 (equal-mass) — numerically under 0.10, and **this is not "H5
+> (equal-width) and 0.0939 (equal-mass), numerically under 0.10, and **this is not "H5
 > passed"**: both 95% CIs cross 0.10, the secondary isotonic map lands *above* it (0.1162),
 > and a predictor that always states the base rate scores ECE **exactly 0.0000** while
 > knowing nothing. Read the discrimination column instead. The primary model's **AUC is
 > 0.518**, a coin flip, and the mapped confidence's held-out Brier score (0.2059) is *worse*
 > than that constant base-rate predictor's (0.1974). The one consistency-style signal
-> measurable on these records — whether the twin says the same thing when the subject's name
+> measurable on these records (whether the twin says the same thing when the subject's name
 > is hidden, the closest available analogue to the registered agreement rate and the only one
-> a deployed twin could actually compute — has an **AUC of 0.427**, below chance, and its
+> a deployed twin could actually compute) has an **AUC of 0.427**, below chance, and its
 > fitted map slopes *positive on one half of the subject pool and negative on the other*
 > (+1.375 / −1.514). Stated plainly and labelled exploratory: **the confidence signals
 > available on this record do not rank the twin's correct answers above its incorrect ones.**
-> That is not evidence against registered H5, because it is not the registered estimator —
+> That is not evidence against registered H5, because it is not the registered estimator,
 > but it is the closest available evidence about the mechanism H5 assumed, and it points the
 > wrong way. Reliability diagrams are reported regardless, as the registration requires, and
 > labelled as substituted on the figures themselves.
 
 **For the record: registered H5 is neither passed nor failed.** It is untested under the cap,
 with the substituted descriptive analysis reported in its place. What is still owed, if the
-registered estimator is ever wanted, is the fresh generation run priced above — a cap
+registered estimator is ever wanted, is the fresh generation run priced above, a cap
 decision, not an analysis decision.
 
-## 6. B8 — individual level beside population level
+## 6. B8: individual level beside population level
 
 The standing rule ([Amendment 2 B8](../../PREREGISTRATION_AMENDMENT_2.md)) requires every
 fidelity report to print individual-level lift beside a population-level distribution
@@ -492,7 +495,7 @@ metric, and to call out divergences in the body.
 | own named − zero-info named | +0.0270 | [+0.0104, +0.0437] | +0.0971 | 0.0986 | 0.2677 |
 
 Source: [confirm report §5](../stage2_confirm/STAGE2_CONFIRM_REPORT.md). TVD is over the
-stance categories {SAME, DIFFERENT, UNCLEAR}, taken between each contrast's own two arms —
+stance categories {SAME, DIFFERENT, UNCLEAR}, taken between each contrast's own two arms;
 the real answer carries no stance label of its own, so there is no reference distribution to
 compare an arm against, and that choice is declared in the report rather than inherited.
 Channel 1 is a continuous cosine with no categories, so the registered population metric does
@@ -500,14 +503,14 @@ not apply to it; its individual lift is printed here so both levels sit in one t
 rule requires. No confirmatory bar attaches to the population column.
 
 **Divergences: none.** The individual and population levels agree on every registered
-contrast — the contrasts with the largest individual lift also have the largest
+contrast: the contrasts with the largest individual lift also have the largest
 between-arm distribution distance
 ([confirm report §5](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). Saying so explicitly is
 part of the rule; a divergence would have been reported the same way.
 
 ---
 
-## 7. Stage 1 and Stage 1E — elicitation groundwork, not a headline
+## 7. Stage 1 and Stage 1E: elicitation groundwork, not a headline
 
 Stage 1 is development only. Stage 1E is confirmatory within its own frozen bars, but those
 bars are about elicitation policy on a survey corpus, not about twin fidelity. Neither
@@ -544,7 +547,7 @@ open question.
 **A static order derived on disjoint people beat both, at a twelfth of the model calls.**
 The fixed order was derived by greedy ridge regression on 2,000 *disjoint* persons, no model
 involved; it read +0.074 on the derivation-adjacent split
-([`overnight_stage1e.md`](../overnight_stage1e.md)) and **+0.068** on the confirm split — it
+([`overnight_stage1e.md`](../overnight_stage1e.md)) and **+0.068** on the confirm split; it
 replicated ([`stage1e_findings.md`](../stage1e_findings.md)). At k = 20 the fixed order beats
 adaptive under **both** decodings: adaptive − fixed = **−0.0187 [−0.0264, −0.0109],
 p = 2.53e-06** (expected-value decoding) and **−0.0159 [−0.0290, −0.0028], p = 0.0174**
@@ -555,14 +558,14 @@ as mandatory beside either reading: adaptive spent **12× the interview-time mod
 **Budgets priced in human seconds.** k = 20 is about **92 seconds** of a respondent's
 attention (plausible range 83–132 s); k = 12 is about 58 s; the whole 48-item instrument is
 about 233 s ([`stage1e_timecost_note.md`](../stage1e_timecost_note.md)). Re-pricing the
-x-axis changes no verdict and says so up front — every arm asks the same number of items, so
+x-axis changes no verdict and says so up front: every arm asks the same number of items, so
 a shared rescaling cannot reorder them. What it adds is the one real asymmetry: **the
 adaptive policy makes the respondent wait while it picks the next question**, somewhere
 between +3% and +840% of interview wall clock depending entirely on serving engineering, and
 a static script never pays that cost at all.
 
 **Negative transfer replicated and is the most decoding-robust result in the project.** A
-coherent profile belonging to the *wrong person* scores below knowing nothing at all — at
+coherent profile belonging to the *wrong person* scores below knowing nothing at all, at
 every budget, under both decodings. At k = 20: **−0.0627, p = 3.3e-13** (EV) and **−0.1486,
 p = 8.8e-32** (argmax), with raw MAEs of 1.5389 / 1.5861 for the imposter against 1.4762 /
 1.4375 for the baseline ([`stage1e_findings.md`](../stage1e_findings.md)). It is the only
@@ -572,7 +575,7 @@ same-domain imposter is a different construct and the two must not be conflated.
 
 **Why every contrast in this project carries both arms' raw scores.** The re-scoring note
 ([`rescore_ev_vs_argmax.md`](../rescore_ev_vs_argmax.md)) showed that collapsing a stated
-probability distribution by its expected value damages hedging arms — and baselines hedge.
+probability distribution by its expected value damages hedging arms, and baselines hedge.
 That inflated lift in four of six runs checked. The rule adopted in consequence, binding
 ever since: watch which arm moves, and print both.
 
@@ -594,22 +597,22 @@ instrument that detects the model already knowing the person
 Source: [confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md). Both fire. The
 robustness model's meter is roughly four times the primary model's, and it is the arm whose
 absolute scores are already declared secondary. The frozen text requires subjects with a large meter to be
-analysed separately; the confirm report **identifies** them — cutoffs ≥ 0.0856 (Gemma, 9
+analysed separately; the confirm report **identifies** them: cutoffs ≥ 0.0856 (Gemma, 9
 subjects) and ≥ 0.1263 (flash-lite, 9 subjects), listed by ID
-([confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)) — but does not yet print a
-separate lift recomputed on that subset. **That analysis now exists** — added at closeout as a
+([confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). It does not yet print a
+separate lift recomputed on that subset. **That analysis now exists**, added at closeout as a
 large-meter-versus-rest subsection of
 [confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md), descriptive, no bar attached.
 Its result runs *against* the naive fame story: on channel 1 the top-decile group's lift is
 **larger** than the rest's, not smaller (own − imposter +0.0977 vs +0.0726 on the primary
 model, +0.1127 vs +0.0729 on the robustness model, 9 subjects against 79), which is the same
-direction as H3's flat-to-positive correlation in §8.2 and is read the same way — with the
+direction as H3's flat-to-positive correlation in §8.2 and is read the same way, with the
 caveat that the group is 9 people, the split is post hoc, and the two groups are different
 subjects, so the gap is a difference of group means and not a test. The dev pilot measured the
 meter at +0.016 and +0.048, so the confirmatory run reproduced the dev magnitude rather than
 surprising us.
 
-### 8.2 H3 (descriptive) — and the coupling that makes half of it unusable
+### 8.2 H3 (descriptive), and the coupling that makes half of it unusable
 
 H3 is registered as descriptive: *"lift shrinks as the contamination meter grows"*
 ([`PREREGISTRATION.md`](../../PREREGISTRATION.md) §3). **Only the own − imposter row can
@@ -621,18 +624,18 @@ that reason alone ([confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.
 | model | lift | usable for H3 | n | Pearson r | p | Spearman ρ | p |
 |---|---|---|---|---|---|---|---|
 | Gemma-4-31B-it | own − imposter | yes | 88 | +0.0563 | 0.6024 | +0.0610 | 0.5726 |
-| Gemma-4-31B-it | own − zero-info | **NO — shares a term** | 88 | +0.4541 | < 0.0001 | +0.4101 | < 0.0001 |
+| Gemma-4-31B-it | own − zero-info | **NO (shares a term)** | 88 | +0.4541 | < 0.0001 | +0.4101 | < 0.0001 |
 | gemini-3.5-flash-lite | own − imposter | yes | 88 | +0.2710 | 0.0107 | +0.1923 | 0.0727 |
-| gemini-3.5-flash-lite | own − zero-info | **NO — shares a term** | 88 | +0.7393 | < 0.0001 | +0.6692 | < 0.0001 |
+| gemini-3.5-flash-lite | own − zero-info | **NO (shares a term)** | 88 | +0.7393 | < 0.0001 | +0.6692 | < 0.0001 |
 
-On the confound-free row, lift does **not** shrink as the meter grows — the correlation is
+On the confound-free row, lift does **not** shrink as the meter grows: the correlation is
 non-negative on both models, weakly and non-significantly so on the primary. The large,
 highly significant correlations in the unusable rows are exactly what the shared term
 predicts, and anyone quoting them as support for H3 would be quoting an artifact. No
 estimator was frozen for H3; the choice of Pearson and Spearman is declared in the report,
 not inherited.
 
-### 8.3 Imposter-arm UNCLEAR asymmetry — flagged on both models
+### 8.3 Imposter-arm UNCLEAR asymmetry: flagged on both models
 
 The frozen UNCLEAR rule excludes UNCLEAR items from the stance-match denominator, requires
 every arm's UNCLEAR rate beside its match rate, and flags a between-arm gap ≥ 0.10 as
@@ -642,7 +645,7 @@ the imposter arm's UNCLEAR rate is 0.2958 against 0.1465 for the own twin (gap 0
 0.0901 for the zero-info arms (gap 0.2056); on the robustness model, 0.2535 against 0.1183
 and 0.0817 ([confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). Consequence,
 stated rather than absorbed: the imposter arm's stance-match rate is computed on ~250–265
-items where the other arms use ~303–326, and those denominators are not a random subset —
+items where the other arms use ~303–326, and those denominators are not a random subset;
 they are the items where the judge could read a position at all.
 
 ### 8.4 Donor concentration
@@ -664,7 +667,7 @@ relaxed.
   **re-airing** of CNN-381362 (2019-09-25) on the same programme, replaying 47% of the test
   guest text. The two sit in different dedup clusters, so the same-event guard never saw
   them; the downstream answer-leak assert caught it and excluded all 11 of the subject's
-  items. The clustering, not the split logic, is what missed it — flagged for the owner, not
+  items. The clustering, not the split logic, is what missed it; flagged for the owner, not
   fixed in the report ([confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)).
 - **Era-violation sensitivity: negligible.** 3 flagged generations across 2 items, all on
   the robustness model. Recomputing the primary contrast with those items removed moves it
@@ -673,7 +676,7 @@ relaxed.
 - **Truncation, word cap, parse.** 0 truncations and 0 parse failures on both models; 0–4
   over-cap answers per arm on the primary model, 8–18 on the robustness model
   ([confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)).
-- **Judge canary.** A 10-row canary ran at the start of every judging session — 0 label flips
+- **Judge canary.** A 10-row canary ran at the start of every judging session: 0 label flips
   across 2 runs on H1, **before any confirmatory judge call was made**
   ([confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)), and 0 flips across a
   further 3 runs on H6 ([H6 report §6](../stage2_confirm/H6_REPORT.md)). The halt-on-flip rule
@@ -683,8 +686,8 @@ relaxed.
   and never reached generation; recorded so the attrition is visible rather than absorbed
   into the survival rate ([confirm report §6](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)).
 - **One declared redaction miss stands.** The S1 affiliation-redaction extension froze with
-  zero collateral damage on dev prompts, and one known dev leak — a donor-identifying blog
-  line — remains unfixed and declared, with the contamination meter as its backstop
+  zero collateral damage on dev prompts, and one known dev leak, a donor-identifying blog
+  line, remains unfixed and declared, with the contamination meter as its backstop
   ([`s1_extension_remeasure.md`](../stage2_confirm/s1_extension_remeasure.md)).
 
 ---
@@ -692,8 +695,8 @@ relaxed.
 ## 9. Costs, reported as results
 
 Caps signed off at GO were 8 node-hours GPU and $15 API. **The H1 run itself spent 0.6028
-node-hours and $6.552869**; everything booked under the confirmatory phase — H1, H6, and the
-exploratory D_min = 3 arm — comes to **1.139 node-hours and $8.817063**, still inside both
+node-hours and $6.552869**; everything booked under the confirmatory phase (H1, H6, and the
+exploratory D_min = 3 arm) comes to **1.139 node-hours and $8.817063**, still inside both
 caps, headroom 6.861 node-hours and $6.182937
 ([confirm report §7](../stage2_confirm/STAGE2_CONFIRM_REPORT.md), which checks the GO caps
 against every `stage2_confirm/*` ledger row and prints each one separately). H6 and the
@@ -717,7 +720,7 @@ is charged twice, the same rows are simply totalled two ways.
 | **Stage 2 confirmatory, all of it** | | **$8.817063** | **1.139** |
 
 H6 added **$2.007398 API and 0.4112 node-hours** this phase, against its own caps of $6.00 and
-3.0 node-hours — neither breached, and both projections ($2.07 and ≤ 0.4 node-hours) were
+3.0 node-hours; neither was breached, and both projections ($2.07 and ≤ 0.4 node-hours) were
 computed and checked before the first call ([H6 report §10](../stage2_confirm/H6_REPORT.md)).
 The exploratory D_min = 3 arm added **$0.256796 and 0.125 node-hours** under its own separate
 cap of $0.75 and 0.2 node-hours, again neither breached
@@ -732,7 +735,7 @@ and it is the one reported.
 
 **Project totals across every run ever logged**
 ([`cost_log.jsonl`](../cost_log.jsonl), 105 entries): **$12.60 API** and **13.88 Leonardo
-node-hours**. Five rows carry a null cost field — unpriced models, not zero — and are
+node-hours**. Five rows carry a null cost field (unpriced models, not zero) and are
 excluded from the API sum rather than counted as $0. The single largest compute line in the
 project is not Stage 2 at all: it is Stage 1E's confirm run at 5.27 node-hours, of which the
 adaptive arm alone took 3.928 for a null effect
@@ -750,7 +753,7 @@ like, believe, or would say in private. This was declared before any data
 ([`PREREGISTRATION.md`](../../PREREGISTRATION.md) §3, §6) and it is the ceiling on the whole
 result.
 
-**One corpus, and a narrow one.** Every confirmatory number rests on MediaSum — NPR and CNN
+**One corpus, and a narrow one.** Every confirmatory number rests on MediaSum: NPR and CNN
 broadcast interviews, 2000–2020, mostly expert guests being asked to explain something
 ([`stage2_curation_report.md`](../stage2_curation_report.md)). Corpus generality is untested.
 The project has form here: Stage 1E's pre-registered second-corpus replication was
@@ -771,12 +774,12 @@ denominators run 31–65 items. One of the four cells reports a confidence inter
 [−1.3760, +1.1538]. Nothing in §3 should be read as a decay curve, in either direction.
 
 **The imposter arm is flagged twice.** Its UNCLEAR rate is materially higher than every other
-arm's on both models (§8.3), and its donors are concentrated — 25 donors for 89 arms, busiest
+arm's on both models (§8.3), and its donors are concentrated: 25 donors for 89 arms, busiest
 donor 11 (§8.4). Since own − imposter is the primary metric, both flags land directly on the
 headline. Neither was corrected for; both were declared.
 
 **"Pre-registered" means two different things in this paper, and the split matters.** The OSF
-registration is live — 2026-07-28, https://osf.io/qz28m (§12) — but it was made **after** the
+registration is live (2026-07-28, https://osf.io/qz28m; §12), but it was made **after** the
 H1/H7 confirmatory run had already produced its numbers. For **H1 and H7**, the registration
 is therefore **retrospective**: the only before-data guarantee is "committed to git before
 the data was touched", evidenced by the per-document commits and sha256es in
@@ -796,8 +799,8 @@ is and is not comparable:
 - **Not comparable:** any accuracy figure, any normalized-to-ceiling figure, anything on a
   0–1 correctness scale. The ceiling-normalization bar was also withdrawn as confirmatory
   ([Amendment 1 A2](../../PREREGISTRATION_AMENDMENT_1.md)).
-- **Comparable in kind, not in units:** the *shape* of the claim — grounded twin beats
-  ungrounded baseline on held-out items — and the direction and sign of that effect.
+- **Comparable in kind, not in units:** the *shape* of the claim (grounded twin beats
+  ungrounded baseline on held-out items) and the direction and sign of that effect.
 - **Comparable and, we think, ours:** the imposter-controlled contrast (grounded on the wrong
   person, same pipeline, same budget), which separates "knows about people" from "knows about
   this person"; and elicitation budgets priced in respondent seconds.
@@ -814,24 +817,24 @@ them: the judge audit's human tranche was 17 of 51 rows; the fuzzy-host spot-che
 substituted; the H6 classifier's part-1 trust audit ran as a blind LLM co-audit; the
 parameter-5 auditor line was a rubric-briefed LLM
 ([confirm report §8](../stage2_confirm/STAGE2_CONFIRM_REPORT.md)). The fifth is the H6
-**part-2** gate in §4.5 — the one audit that ran on confirmatory subjects rather than dev
-ones — which carried the same D3-pattern substitution
+**part-2** gate in §4.5 (the one audit that ran on confirmatory subjects rather than dev
+ones), which carried the same D3-pattern substitution
 ([H6 report §9](../stage2_confirm/H6_REPORT.md)). Each is documented, none is pooled with a
 human line, and **no human label exists anywhere in the H6 trust chain**. A reviewer is
 entitled to weight all of it lower than owner labels.
 
 **The instrument has a measured run-to-run noise floor, and it is not zero.** The exploratory
 depth-3 arm accidentally re-generated **72 prompts that hash identically to the registered
-run's** — same model, same weights, temperature 0.0, seed 0, two separate Leonardo jobs. Only
+run's** (same model, same weights, temperature 0.0, seed 0, two separate Leonardo jobs). Only
 **15 of 72 came back byte-identical**. Channel-1 cosine differs on 57 of 72, with a **median
 absolute gap of 0.0138** and a maximum of 0.123, and **4 of 72 channel-2 stance labels
 flipped** ([H6 report §11](../stage2_confirm/H6_REPORT.md)). The cause is not a bug in either
-run: greedy decoding is deterministic in arithmetic but not across batch compositions —
+run: greedy decoding is deterministic in arithmetic but not across batch compositions:
 vLLM's batched matrix multiplies reduce in an order that depends on what else is in the
 batch, and one flipped token early in a 150-word answer changes everything after it. The
 registered job batched 542 prompts, this one 182. **This noise was present in every number in
 this paper before it was measurable**, and its magnitude is the same order as several of the
-thin-cell differences reported above — H7's per-bin numbers and H6's small-*n* contrasts in
+thin-cell differences reported above, H7's per-bin numbers and H6's small-*n* contrasts in
 particular. It is one more reason those carry wide uncertainty and read as descriptive rather
 than decisive. It does **not** put the headline in doubt: item-level noise averages down into
 a subject mean and again across 88 subjects, and H1's subject-pooled own − imposter contrast
@@ -839,7 +842,7 @@ a subject mean and again across 88 subjects, and H1's subject-pooled own − imp
 
 **H6 did not reach the power its own design assumed.** Only 24 of 88 subjects could fill both
 arms at the frozen budget, against a development supply that implied roughly two thirds. H6 is
-therefore descriptive, unresolved, and — because its sign reverses when the budget halves —
+therefore descriptive, unresolved, and, because its sign reverses when the budget halves,
 not even a stable direction to carry forward (§4). A reviewer should read the H6 section as a
 report on a design that did not fit the corpus, not as a weak effect.
 
@@ -849,9 +852,9 @@ in any cell (§3); H7's magnitude bar missed in all four cells (§3.4); H6 colla
 DESCRIPTIVE on eligibility and neither pre-written reading could be applied (§4); H6's
 magnitude bar missed on both channels (§4.2) and its sign reversed at the dose-check budget
 (§4.3); H2 was withdrawn without ever being run and H5's registered estimator is untested
-under the cap (§5); **H5's substituted analysis found no usable discrimination at all — the
+under the cap (§5); **H5's substituted analysis found no usable discrimination at all: the
 available confidence signals do not rank the twin's correct answers above its incorrect ones
-(primary-model AUC 0.518 on the oracle signal, and 0.427 — below chance — on the only signal
+(primary-model AUC 0.518 on the oracle signal, and 0.427, below chance, on the only signal
 a deployed twin could compute)** (§5); H3's confound-free row shows no shrinkage of
 lift with contamination (§8.2); Stage 1E's primary adaptive bar C1 failed (§7); the
 forced-choice instrument was killed outright after four rounds (§2); the 16PF replication was
@@ -862,15 +865,15 @@ one downstream.
 
 ## 11. Ethics and scope
 
-All material is **public broadcast interview transcript** — words these people chose to say
+All material is **public broadcast interview transcript**: words these people chose to say
 on NPR and CNN, already published, already archived. No private data, no participants, no
 consent burden, and nothing was collected from anyone for this study.
 
 The subject pool is **deliberately biased toward the long tail** rather than celebrities: of
 578 qualifying candidates, 137 are confirmed long-tail with no Wikipedia article under any
 spelling we could find ([`stage2_curation_report.md`](../stage2_curation_report.md)). The
-reason is scientific — famous subjects are contaminated, and the contamination meter (§8.1)
-exists to measure exactly that — but it has an ethical consequence worth naming: this study
+reason is scientific: famous subjects are contaminated, and the contamination meter (§8.1)
+exists to measure exactly that. But it has an ethical consequence worth naming: this study
 models people who are *less* able to notice or object. The mitigation is that nothing
 individuating is published. **Subjects appear in the repository only as pseudonymous IDs**
 (C00203, C02502, and so on); no subject name appears in any results file or in this paper,
@@ -878,7 +881,7 @@ including in the top-decile contamination lists and the dropped-subject record.
 
 The corpus ends in October 2020, so the fully airtight post-training-cutoff subset described
 in the original registration is not available from MediaSum; contamination is handled by
-design — lift over baselines, name redaction, the meter, the imposter arm — rather than by
+design (lift over baselines, name redaction, the meter, the imposter arm) rather than by
 claiming a clean cutoff we do not have.
 
 ---
@@ -915,13 +918,13 @@ associated project https://osf.io/74bq3. The registration carries the name **TWO
 and the `src/doppler` package. They are the same project.
 
 **What the deposit covers, stated from the repository record.** The registration **postdates**
-Stage 1, Stage 1E and the Stage 2 H1/H7 confirmatory run — for those it is **retrospective**,
+Stage 1, Stage 1E and the Stage 2 H1/H7 confirmatory run; for those it is **retrospective**,
 and the before-data evidence remains snapshot v4's per-document git commits and sha256es. It
 **predates** the H6 confirmatory-subject scoring, the H5 substituted analysis and the
-D_min = 3 arm — for those it is **prospective**. The consequence for reading the headline is
+D_min = 3 arm; for those it is **prospective**. The consequence for reading the headline is
 spelled out in §10.
 
-*[registration summary, verbatim: pending — the registration is inside OSF's approval window
+*[registration summary, verbatim: pending; the registration is inside OSF's approval window
 and not yet publicly readable; to be pasted by the owner]*
 
 Repository commit at report render: `4f3d6b067355bc5cc10d28ff538291c12aa77694` (working tree

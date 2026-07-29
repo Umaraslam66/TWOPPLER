@@ -1,6 +1,9 @@
 # Person-blind signal dominates forced-choice evaluation of interview-grounded twins
 
-**Methods paper — DRAFT for owner review, 2026-07-28.**
+**Methods paper, 2026-07-28.**
+
+*Umar Aslam and Claude (Fable 5, Anthropic). Claude ran the experiments, the analyses and
+the drafting under Umar's direction; "we" throughout means the two of us.*
 
 Every number below links to the report or script that produced it. Nothing here
 is a new analysis; this is assembly of a record that is already committed.
@@ -17,8 +20,8 @@ right one.
 
 **It does not measure the twin.** We built four versions of that instrument,
 each fixing the previous version's flaw, and in all four a *person-blind*
-baseline — a prompt with no name, no excerpts, no date, no information about the
-person at all — solved essentially every item.
+baseline (a prompt with no name, no excerpts, no date, no information about the
+person at all) solved essentially every item.
 
 | round | where the wrong options came from | person-blind accuracy | what gave it away |
 |---|---|---|---|
@@ -41,8 +44,8 @@ corpus, with these four constructions, forced choice over a person's verbatim
 answers is dominated by signal that requires no knowledge of the person.** We do
 not claim forced choice is dead as an evaluation format everywhere.
 
-The paper also reports what replaced it — open-ended generation scored on two
-independent channels — together with the full validation trail of that
+The paper also reports what replaced it, open-ended generation scored on two
+independent channels, together with the full validation trail of that
 replacement, including the parts that failed.
 
 ---
@@ -53,7 +56,7 @@ A **twin** here is a language model whose prompt contains records of one
 specific real person, instructed to answer as that person
 ([PREREGISTRATION.md §2](../../PREREGISTRATION.md)). **Fidelity** is agreement
 with the person's real answers on material the twin never saw. **Lift** is
-fidelity minus the fidelity of a zero-information baseline — the same model, the
+fidelity minus the fidelity of a zero-information baseline: the same model, the
 same items, no grounding, identity redacted. Lift is the only headline metric in
 this project; a raw fidelity number is never reported without its baseline.
 
@@ -62,7 +65,7 @@ People", commercialised by Simile: an agent grounded in a two-hour interview
 reproduces a person's survey answers at roughly 0.85 of that person's own
 two-week test-retest consistency. That work uses surveys. We wanted the same
 question asked on natural speech, so we used public interviews, where the
-held-out data already exists — ground a twin on a person's earlier interviews,
+held-out data already exists: ground a twin on a person's earlier interviews,
 test it on real questions from a later one.
 
 The pre-registered instrument was forced choice
@@ -71,7 +74,7 @@ question–answer pairs from the held-out interview, hide the real answer among
 three or four distractors drawn from other guests' answers to similar questions,
 randomise position, and score whether the twin picks it. It was chosen because it
 is cheap, automatic, and has an obvious chance rate. Amendment 1 added distractor
-controls — matching, an entity-stripped re-score, an adversarial filter. That is
+controls: matching, an entity-stripped re-score, an adversarial filter. That is
 the instrument the four rounds below tested to destruction.
 
 ---
@@ -79,12 +82,12 @@ the instrument the four rounds below tested to destruction.
 ## 3. Corpus and subjects
 
 MediaSum: 463,596 NPR and CNN interview transcripts (CNN 414k, NPR 49k), 2000 to
-2020 — [corpus recon](../stage2_corpus_recon.md), with parsing rules and
+2020; see the [corpus recon](../stage2_corpus_recon.md), with parsing rules and
 checksums in [the index](../stage2_corpus_recon_index.md) and a 20-guest hand
 audit in [the quality note](../stage2_corpus_recon_quality.md). Curation yields
 **578 clean candidate subjects** with at least three deduplicated substantive
 interviews and at least 180 days of span, of which **137 are confirmed
-long-tail** — no Wikipedia article under any spelling
+long-tail**: no Wikipedia article under any spelling
 ([curation report](../stage2_curation_report.md)).
 
 All four rounds ran on **development subjects only**: six subjects drawn by a
@@ -96,7 +99,7 @@ excluded from every confirmatory analysis permanently
 ([Amendment 2 B4.1](../../PREREGISTRATION_AMENDMENT_2.md)). No confirmatory
 subject was touched by any round reported here.
 
-Item counts are small by design — 17, 10, 15 and 8. Enough to see a ceiling, not
+Item counts are small by design: 17, 10, 15 and 8. Enough to see a ceiling, not
 enough to size an effect, and every round report says so in its own header.
 
 ---
@@ -120,7 +123,7 @@ real answer is identifiable as *real* without any reference to who said it.
 
 ## 5. The four rounds
 
-### 5.1 Round 1 — distractors from other people
+### 5.1 Round 1: distractors from other people
 
 Three wrong options per item, drawn from other guests' answers to unrelated
 questions, similarity-ranked. 17 items over five subjects.
@@ -142,8 +145,8 @@ arms sit on the ceiling. Twin minus imposter is **+0.0500** accuracy and
 and is not evidence about fidelity either, because the imposter arm is simply
 the one arm not pinned at 1.00.
 
-Amendment 1's adversarial filter — drop every item the zero-information arm got
-right — removed **all 17 items**. The empty table is the filter working
+Amendment 1's adversarial filter (drop every item the zero-information arm got
+right) removed **all 17 items**. The empty table is the filter working
 correctly and saying the instrument is unusable.
 
 The mechanism is visible in the scorer's own words: *"Option B directly
@@ -151,12 +154,12 @@ addresses the host's question about American responsibility."* It is matching
 topic. The median distractor's question-similarity to the real question was
 cosine 0.050, and one item of eighteen had any distractor above 0.10.
 
-**What round 1 established:** the pipeline runs end to end — draw, chronological
+**What round 1 established:** the pipeline runs end to end: draw, chronological
 split, question–answer extraction, distractors, imposter donors, five-arm
 rendering, both leakage guards, cluster execution, ingest, scoring. **What it
 established about twins:** nothing.
 
-### 5.2 Round 2 — distractors from the same person
+### 5.2 Round 2: distractors from the same person
 
 One change: every wrong option is a real answer **the same subject** gave in one
 of their other interviews. Speaker is now controlled by construction.
@@ -173,7 +176,7 @@ The zero-information arm still solved every item
     items surviving into a final item set        0
 
 No twin, imposter or contamination number exists for round 2. The prediction
-phase was never run — the stop condition was "five or more of ten rejected", and
+phase was never run; the stop condition was "five or more of ten rejected", and
 eight were. The final item set would have been empty regardless.
 
 The diagnostic decomposition is the part that mattered. Three conditions, same
@@ -202,10 +205,10 @@ instrument change registered as
 Two secondary constraints surfaced here and both stayed true afterwards. First,
 the anti-leak rule starves the item pool: 32 of 100 harvested answers were
 excluded because the twin's own grounding block could quote them. Second, a
-similarity floor cannot rescue the design at this scale — a floor of 0.10 admits
+similarity floor cannot rescue the design at this scale: a floor of 0.10 admits
 **zero** items from these pools, 0.05 admits three.
 
-### 5.3 Round 3 — generated counterfactuals to the same question
+### 5.3 Round 3: generated counterfactuals to the same question
 
 Every option is now a *written* answer to the same question, taking a position
 that genuinely conflicts with the subject's real one. Every option, the real one
@@ -241,23 +244,23 @@ Three replacement tells, each quoted from the scorer's own reasoning:
   about the world, and a well-informed scorer picks the true one on general
   knowledge without modelling anyone. This is structural, not a bug in one item.
 - **Deixis.** The tightest item in the set (+0.30) was solved partly on the
-  paraphrased true answer retaining the host's first name — a leak of
+  paraphrased true answer retaining the host's first name, a leak of
   conversational packaging that only the real answer has, because only the real
   answer was spoken to a person.
 
 Two hypotheses about *other* tells were frozen before the gate completions were
 read, and are reported whichever way they landed. The **polar-question**
-hypothesis — that on a yes/no question all three distractors must land on the
-same side, making the true answer the lone dissenter — was **rejected**: polar
+hypothesis (that on a yes/no question all three distractors must land on the
+same side, making the true answer the lone dissenter) was **rejected**: polar
 items 7/7 solved at mean margin +0.633, non-polar 8/8 at +0.740, so the polar
 items were solved with *smaller* margins than the others, the opposite of the
 prediction. The **naming-register** hypothesis was **not supported as a
 systematic property**: the capitalised-entity-overlap proxy was positive on only
-4 of 15 items — but the proxy was case-sensitive and missed the case that
+4 of 15 items, but the proxy was case-sensitive and missed the case that
 prompted the flag, so the honest reading is that register marks the true option
 through conversational deixis, not through entity naming.
 
-### 5.4 Round 4 — every fix at once, under a pre-committed kill rule
+### 5.4 Round 4: every fix at once, under a pre-committed kill rule
 
 Round 4 attacked four of the six tells a frontier-model rater had named on round
 3's material, under the design frozen in
@@ -290,7 +293,7 @@ to solve.
 Stated so it is not over-read: round 4 is **not** apples-to-apples with round 3.
 Round 4 is eight subjective items; round 3 was fifteen mixed ones, and round 3's
 widest item (+0.96, the world-truth case) is excluded from round 4 by design. The
-*direction* — 1.00 either way — is comparable. The *size* of the margin drop is
+*direction*, 1.00 either way, is comparable. The *size* of the margin drop is
 partly a change of item mix.
 
 **The register fix inverted the tell instead of removing it.** Conditioned on the
@@ -300,7 +303,7 @@ Assad and Iran "an absolute free ride"; the generated alternatives reach for "th
 intelligence community in Langley and the Pentagon", "recent UN Security Council
 resolutions", "the Joint Chiefs of Staff". The scorer picked the real one on
 *"the biting irony"*. Entity counts were matched within ±2 and six of eight items
-sat at the tightest matching rung — matching on a count is not matching on how
+sat at the tightest matching rung; matching on a count is not matching on how
 entities are *deployed*.
 
 ---
@@ -313,16 +316,16 @@ round that exposed it and what the next round's fix did to it.
 | tell | what it is | exposed by | fix attempted | outcome |
 |---|---|---|---|---|
 | **Topical coherence** | the real answer is the only option about this subject matter | [round 1](../stage2_pilot/PILOT_REPORT.md) | draw distractors from the same person | removed as the dominant tell; topic still separated where a career spans many subjects ([round 2 §2.1](../stage2_pilot2/PILOT_REPORT_2.md)) |
-| **Responsiveness** | the real answer is the only option that answers *this* question | [round 2](../stage2_pilot2/PILOT_REPORT_2.md) — question-blind accuracy 0.10 vs 1.00 | generate all options as answers to the same question | **removed** by construction |
-| **Register — advocacy vs hedging** | generated positions sound like op-eds; real interviewees hedge | [round 3 §2.1](../stage2_pilot3/PILOT_REPORT_3.md) | few-shot on the subject's own answers | **inverted** — options became bland institutional prose and the real answer was still the one that sounded like a person ([round 4 §2](../stage2_pilot4/PILOT_REPORT_4.md)) |
+| **Responsiveness** | the real answer is the only option that answers *this* question | [round 2](../stage2_pilot2/PILOT_REPORT_2.md): question-blind accuracy 0.10 vs 1.00 | generate all options as answers to the same question | **removed** by construction |
+| **Register: advocacy vs hedging** | generated positions sound like op-eds; real interviewees hedge | [round 3 §2.1](../stage2_pilot3/PILOT_REPORT_3.md) | few-shot on the subject's own answers | **inverted**: options became bland institutional prose and the real answer was still the one that sounded like a person ([round 4 §2](../stage2_pilot4/PILOT_REPORT_4.md)) |
 | **World-truth** | when the real position is correct about the world, every conflicting option is wrong about it | [round 3 §2.2](../stage2_pilot3/PILOT_REPORT_3.md) | plausibility check + subjective-only items | 2 rejections fired (1 FALSE, 1 FRINGE); not decisive in round 4, but the item most exposed to it was excluded by design, so the tell is untested rather than beaten |
-| **Deixis** | the real answer carries the host's name and conversational address, because it was spoken to a person | [round 3 §2.3](../stage2_pilot3/PILOT_REPORT_3.md) | strip host names and address from all four options or none | **removed** — stripped on 8 of 8 items, no round-4 trace cites it |
-| **Real-voice idiom and entity deployment** | a person with a view uses idiom and names the actors they are actually talking about; generated text name-drops institutions | [round 4 §2](../stage2_pilot4/PILOT_REPORT_4.md) | none — this is what the register fix produced | **unfixed** |
+| **Deixis** | the real answer carries the host's name and conversational address, because it was spoken to a person | [round 3 §2.3](../stage2_pilot3/PILOT_REPORT_3.md) | strip host names and address from all four options or none | **removed**: stripped on 8 of 8 items, no round-4 trace cites it |
+| **Real-voice idiom and entity deployment** | a person with a view uses idiom and names the actors they are actually talking about; generated text name-drops institutions | [round 4 §2](../stage2_pilot4/PILOT_REPORT_4.md) | none; this is what the register fix produced | **unfixed** |
 
 A seventh, **stance-vs-premise fit**, sits across rounds 3 and 4: a leading
 question invites a stance, and the rule requiring every distractor to conflict
 with the real position puts all three distractors on the side the host did not
-invite. Restricting to subjective items makes this worse, not better — leading
+invite. Restricting to subjective items makes this worse, not better; leading
 questions are more common there.
 
 An eighth, **twin-pair stance inference** (reasoning across two versions of the
@@ -359,8 +362,8 @@ number, as written. Phase 2 was not submitted. There is no round 5.
 Two supporting facts belong here rather than in a footnote.
 
 **A gate-loosening option was on the table and was not taken.** A margin-relaxed
-gate — reject an item only when the person-blind arm solves it by more than some
-margin — was specified in advance and explicitly *not adopted for round 4*, on
+gate (reject an item only when the person-blind arm solves it by more than some
+margin) was specified in advance and explicitly *not adopted for round 4*, on
 the grounds that a kill rule means nothing if the bar can move in the round that
 tests it. It was made available at bar-lock only if round 4 landed in the grey
 zone (clearly below 0.90 and clearly above 0.25). It did not: accuracy was 1.00
@@ -422,12 +425,12 @@ options exist, so there is no option set to leak.
 
 Scoring runs on two channels that fail differently:
 
-- **Channel 1 — embedding similarity** between the generated answer and the
+- **Channel 1, embedding similarity:** the similarity between the generated answer and the
   person's real answer. A fixed, locally-run model, never an API model and never
   a scored model: `sentence-transformers/all-mpnet-base-v2`, revision
   `e8c3b32edf5434bc2275fc9bab85f82640a19130`, pinned in
   [Addendum A, instrument parameter 1](../../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md).
-- **Channel 2 — a stance judge.** A separate model labels whether the generated
+- **Channel 2, a stance judge.** A separate model labels whether the generated
   answer takes the same position as the real one: SAME / DIFFERENT / UNCLEAR,
   under a rubric frozen by hash. Pinned as `gemini-3.5-flash`, temperature 0.0,
   `thinking_budget=0`, `max_output_tokens=512`, rubric r2 sha256
@@ -435,12 +438,12 @@ Scoring runs on two channels that fail differently:
 
 Two rules bind the reporting. The primary metric is **own twin minus imposter
 twin**, computed identically in both channels, because judge and embedding
-biases — verbosity, topic priors, generosity — apply to both arms and cancel in
+biases (verbosity, topic priors, generosity) apply to both arms and cancel in
 the difference. And **no headline rests on one channel alone**: a claim requires
 direction agreement across both, and disagreement between channels is itself the
 reported result.
 
-### 9.2 The dev pilot and its gate — PASS, directional
+### 9.2 The dev pilot and its gate: PASS, directional
 
 The C4 validation gate required the instrument to separate own twin from imposter
 twin on the primary model, on dev subjects, before any bar could freeze. The
@@ -464,7 +467,7 @@ difference is paired on the items where **both** sides got a non-UNCLEAR label.
 The difference is therefore not the subtraction of the two printed means. Channel
 1 has no such gap (0.6497 − 0.5473 = 0.1024).
 
-**Verdict: PASS**, applied mechanically against the pre-written reading — own
+**Verdict: PASS**, applied mechanically against the pre-written reading: own
 beats imposter on the primary model in both channels, and the channels agree.
 
 Three qualifications were published with the verdict, not after it.
@@ -473,19 +476,19 @@ Three qualifications were published with the verdict, not after it.
    which contributes a single item. Channel 2's confidence interval touches zero.
 2. **The UNCLEAR asymmetry is real and it thins the data.** The judge returned
    UNCLEAR on 6 of 17 imposter answers (0.353) against 1 of 17 for the twin
-   (0.059) on the primary model — the imposter dodges the question in its donor's
+   (0.059) on the primary model; the imposter dodges the question in its donor's
    register. That is itself an own-versus-imposter difference, but it drops the
    stance denominator to 11 items, and a confirmatory design must expect it. The
    robustness model shows the same pattern, smaller (0.177 vs 0.059).
 3. **Channel 1's separation is partly topical.** Cosine between the twin's own
    grounding text and the real answer correlates r ≈ **0.74** with the own-arm
-   score on the pinned encoder. The design anticipated this — which is why no
+   score on the pinned encoder. The design anticipated this, which is why no
    claim rests on channel 1 alone, and why the stance channel, which topic
    overlap cannot satisfy by itself, has to agree. The diagnostic itself is
    partial: the grounding block is ~2,000 words and the encoder truncates it, so
    the number describes the head of the grounding, not all of it. Two figures for
    that window sit on the project's record and both are right about different
-   things — OE-1's caveat quotes the 512-token limit of the candidate encoders
+   things: OE-1's caveat quotes the 512-token limit of the candidate encoders
    generally, while the later H7 diagnostics quote **384 tokens**, which is the
    pinned `all-mpnet-base-v2`'s configured sequence length and so is the operative
    truncation here ([`h7_diagnostics.md` §2](../stage2_confirm/h7_diagnostics.md)).
@@ -499,7 +502,7 @@ The first judge pass was broken and the record says so
 Running `gemini-3.5-flash` at 256 output tokens with no thinking setting, 82 of
 85 replies came back with the explanation line cut mid-phrase. A two-budget probe
 found the cause: the model charges hidden thinking against the output budget and
-did not finish thinking at either budget — 243 of 256 tokens, then 980 of 1024,
+did not finish thinking at either budget: 243 of 256 tokens, then 980 of 1024,
 both ending in truncation.
 
 The damaging part is not the truncation. **The label itself moved between the two
@@ -507,13 +510,13 @@ budgets at temperature 0** (DIFFERENT → UNCLEAR). The v1 labels were a functio
 of the budget, not only of the rubric.
 
 Fix, taken before any re-run: thinking explicitly disabled (`thinking_budget=0`),
-budget 512, everything else unchanged. A determinism probe ran first — three
-items, two runs, 3/3 identical labels, explanations intact — and only then did
+budget 512, everything else unchanged. A determinism probe ran first (three
+items, two runs, 3/3 identical labels, explanations intact) and only then did
 the batches run. v1 and v2 agree on 72 of 85 labels (84.7%) on the same
 generations; v1 is retained as the defect record and used for nothing else. Both
 settings are now pinned parameters.
 
-### 9.4 The judge trust bar — FAIL, one iteration, PASS
+### 9.4 The judge trust bar: FAIL, one iteration, PASS
 
 This is the part of the validation trail that failed, and it gets the same space
 as the parts that passed. Full record:
@@ -524,7 +527,7 @@ three sheets. Human labels on sheet A (17 rows, owner time constraint, recorded
 as deviation D1), an out-of-family LLM co-auditor on all 51. The two lines agreed
 17/17 on sheet A. Against the judge: human 0.7647 raw / κ 0.556; co-auditor
 0.7843 / κ 0.596. But the auditors had been briefed with a *paraphrase* of the
-task rather than the frozen rubric text — an audit-protocol defect recorded as
+task rather than the frozen rubric text, an audit-protocol defect recorded as
 the owner's, not the judge's. The owner adjudicated the four rows where the judge
 disagreed with a concordant auditor line: **net 2–2**, two judge-correct, two
 auditors-correct.
@@ -532,7 +535,7 @@ auditors-correct.
 **The bar was then set, in writing, before its measurement existed:** the judge
 passes if and only if **raw agreement ≥ 0.80 AND Cohen's κ ≥ 0.60** against a
 rubric-briefed auditor line on a fresh blind tranche. The rationale is on the
-record — the 0.76–0.78 above is a lower bound because the auditors were
+record: the 0.76–0.78 above is a lower bound because the auditors were
 rubric-naive.
 
 **First measurement: FAIL.** Fresh 18-row tranche (sheets D/E, seed 611, drawn
@@ -552,14 +555,14 @@ three targeted edits, one per diagnosed failure mode, plus a reply-format line
 where the judge must name the central issue it scored (and a one-line parser
 widening to accept it). The owner approved the diff as drafted; all three edits
 increase strictness. A regression rule was set before the run: **if r2 breaks
-more than 2 of the 14 previously-correct rows, stop — it is overfitted.**
+more than 2 of the 14 previously-correct rows, stop; it is overfitted.**
 
 **Result** ([`experiments/oe1_r2_score.py`](../../experiments/oe1_r2_score.py)):
 
 | step | tranche | outcome |
 |---|---|---|
 | regression | D/E, 18 rows | **0** previously-correct rows broken (rule: >2 → stop). 1 of 4 disagreements fixed. Agreement 0.7778 → 0.8333. |
-| trust bar | F/G, 18 fresh rows, seed 613 | **raw 0.8889 (16/18), κ 0.7978 — PASS** against the unchanged bar |
+| trust bar | F/G, 18 fresh rows, seed 613 | **raw 0.8889 (16/18), κ 0.7978, a PASS** against the unchanged bar |
 
 Both remaining F/G disagreements are SAME-versus-UNCLEAR confusions. There is no
 SAME-versus-DIFFERENT flip anywhere on the tranche.
@@ -590,8 +593,8 @@ do to unfreeze the bars.
 
 It has **not** established anything about twin fidelity in this paper. The
 confirmatory run of the replacement instrument is a separate result with its own
-reports — [H1 and H7](../stage2_confirm/STAGE2_CONFIRM_REPORT.md) and
-[H6](../stage2_confirm/H6_REPORT.md) — written up in
+reports ([H1 and H7](../stage2_confirm/STAGE2_CONFIRM_REPORT.md) and
+[H6](../stage2_confirm/H6_REPORT.md)), written up in
 [the main results paper](PAPER2_MAIN.md); they are named here only so a reader does
 not assume the instrument went untested at scale. In brief, so the handoff is
 honest about outcomes as well as existence: the instrument separated own twin from
@@ -609,13 +612,13 @@ published results. No document in this project may claim otherwise
 ([Amendment 2 B9.a](../../PREREGISTRATION_AMENDMENT_2.md), binding). The record
 we cite instead:
 
-- **BED-LLM** (Choudhury et al., ICLR 2026) — Bayesian experimental design for
+- **BED-LLM** (Choudhury et al., ICLR 2026): Bayesian experimental design for
   adaptive LLM questioning: pick the next question by expected information gain
   about the thing you are trying to learn. Our Stage 1E entropy rule corresponds
   to their weak baseline.
-- **Wang et al. (ICML 2025)** — adaptive elicitation in natural language,
+- **Wang et al. (ICML 2025)**: adaptive elicitation in natural language,
   evaluated on OpinionQA among other tasks.
-- **Su et al. (May 2026 preprint)** — adaptive interviewing for persona
+- **Su et al. (May 2026 preprint)**: adaptive interviewing for persona
   simulation; small effect, small scale (follow-up-grounded predictions 45.5%
   against 39.3% for core-only). The flag is planted and is cited.
 
@@ -626,14 +629,14 @@ This project claims two contributions, and this paper adds a third:
 1. **A population-optimised static-script baseline** that adaptive-questioning
    work generally omits. Stage 1E showed it beating adaptive selection at a tenth
    of the compute ([Stage 1E findings](../stage1e_findings.md)).
-2. **Elicitation budgets priced in human time** — respondent seconds rather than
+2. **Elicitation budgets priced in human time**: respondent seconds rather than
    item counts ([time-cost note](../stage1e_timecost_note.md)).
 3. **This paper's scoped negative result about forced-choice instruments**, with
    the tell taxonomy and the four-round record behind it.
 
 The project's identity follows from that list: DOPPLER is measurement and
-validation science for person-models — what makes a twin faithful, where it
-fails, how fast it goes stale — not a competing interviewer.
+validation science for person-models (what makes a twin faithful, where it
+fails, how fast it goes stale), not a competing interviewer.
 
 One scope statement carries over and is worth repeating because it is easy to
 overstate. Stage 1E's null for adaptive selection was measured on a closed pool
@@ -662,14 +665,14 @@ owner declined on 2026-07-27 and substituted an out-of-family LLM rater. **No
 human hit rate exists and none is fabricated.** This is a documented deviation,
 recorded in [round 4 §3.1](../stage2_pilot4/PILOT_REPORT_4.md) and in
 [Addendum A precondition 4](../../PREREGISTRATION_AMENDMENT_2_ADDENDUM_A.md). The
-LLM line answers a related but different question — whether a capable model can
-spot the real answer — which predicts scorer behaviour more directly but is not
+LLM line answers a related but different question (whether a capable model can
+spot the real answer), which predicts scorer behaviour more directly but is not
 the check the amendment asked for.
 
 **Model-family relationships, declared** (Amendment 2 B10.3, carried into
 [Amendment 3 C3](../../PREREGISTRATION_AMENDMENT_3.md)). The option generator in
 rounds 3 and 4 was `gemini-3.5-flash-lite`, which is also the registered
-robustness scorer — an owner cost decision, declared at the time. It was inert in
+robustness scorer, an owner cost decision declared at the time. It was inert in
 those rounds, since only Gemma scored anything there, but it would be live at
 confirmatory scale. Under the open-ended instrument the stance judge
 (`gemini-3.5-flash`) is a different version from the robustness scorer
@@ -680,7 +683,7 @@ own-minus-imposter contrast carries robustness weight.**
 **Dev scale throughout.** 17, 10, 15 and 8 items on five or six development
 subjects. These are directions and ceilings, not effect sizes. The ceiling
 finding survives the small numbers because a ceiling at 1.00 with margins from
-+0.40 to +1.00 is not a marginal call — but nothing else in these rounds should
++0.40 to +1.00 is not a marginal call, but nothing else in these rounds should
 be read quantitatively.
 
 **A measurement artifact we chose not to patch mid-flight.** The scoring model
@@ -688,7 +691,7 @@ sometimes prints its probability distribution twice, which the frozen parser
 rejects as malformed. The rate climbed with option length: 2 of 170 in round 1,
 2 of 10 in round 2, 12 of 15 in round 3, **6 of 8 in round 4**. Every affected
 reply was recoverable and every recovered reply agreed with the frozen reading,
-so no conclusion here turns on it — but in round 4 the contract number rested on
+so no conclusion here turns on it, but in round 4 the contract number rested on
 two of eight replies, and a run where the two readings disagreed would be a
 serious problem. Widening the parser was treated as a bar-lock decision, not an
 implementer's; the instrument died before it was taken.
@@ -706,7 +709,7 @@ per-document commit and sha256 provenance, and the OSF registration is now live
 (§13). But the registration was made on **2026-07-28**, after every round
 reported in this paper had run. For the four forced-choice rounds and the
 open-ended dev pilot, "pre-registered" therefore means **"committed to version
-control before the data was touched"** — the per-document git commits and
+control before the data was touched"**: the per-document git commits and
 sha256es in snapshot v4 are the before-data evidence, and the OSF deposit is an
 external timestamp added afterwards. That is weaker than a registration made in
 advance, and it is stated rather than blurred.
@@ -725,7 +728,7 @@ The whole programme reported in this paper, from
 | Round 3 | 0.1156 | $0.0999 | 239 priced API calls | 305 |
 | Round 4 | 0.1064 | $0.0447 | 137 priced API calls | 145 |
 | Open-ended dev pilot (OE-1) | 0.1053 | $0.3177 | 340 priced API calls | 425 |
-| Judge r2 round (re-judge + re-score) | — | $0.0459 | 36 priced API calls | 36 |
+| Judge r2 round (re-judge + re-score) | n/a | $0.0459 | 36 priced API calls | 36 |
 | **total** | **0.945** | **$0.508** | | **1,602** |
 
 **The two call columns differ on purpose, and here is exactly how.** The fourth
@@ -734,17 +737,17 @@ every dollar figure matches the ledger to the cent. The fifth column is the raw
 sum of `n_calls` for that run prefix in
 [`results/cost_log.jsonl`](../cost_log.jsonl). Four rows differ:
 
-- **Round 1** — 639 is prediction (170) plus classifier (469). The ledger's 661
+- **Round 1**: 639 is prediction (170) plus classifier (469). The ledger's 661
   adds a **22-call smoke slice** that produced no scientific output. Note the
   asymmetry in that row: the smoke slice carries 0.2280 of the 0.3544
   node-hours, so the compute column *does* include it while the scored-call
   column does not.
-- **Round 3** — 239 is the priced flash-lite work (build 175, budget probe 15,
+- **Round 3**: 239 is the priced flash-lite work (build 175, budget probe 15,
   controls 49). The ledger's 305 adds the **51-call abandoned Pro generator
   line** (superseded, unpriced) and the **15 cluster gate calls** (no API cost).
-- **Round 4** — 137 is the priced flash-lite build. The ledger's 145 adds the
+- **Round 4**: 137 is the priced flash-lite build. The ledger's 145 adds the
   **8 cluster gate calls** (no API cost).
-- **OE-1** — 340 is the four priced API runs (flash-lite generation, and three
+- **OE-1**: 340 is the four priced API runs (flash-lite generation, and three
   judge passes at 85 calls each). The ledger's 425 adds the **85 cluster
   generation calls** for the primary model, which are billed in node-hours, not
   dollars.
@@ -752,7 +755,7 @@ sum of `n_calls` for that run prefix in
 Round 2 and the r2 round have no such gap; their two columns agree.
 
 Three notes the ledger insists on. GPU time is billed from the scheduler's own
-accounting, never from the in-process wall clock — a node is billed whole from
+accounting, never from the in-process wall clock: a node is billed whole from
 allocation, so a failed attempt costs what a successful one of the same length
 costs (round 2 wasted 0.0558 node-hours to a node fault, and it is billed). One
 abandoned generator line carries a **null** cost because the price table has no
@@ -771,12 +774,12 @@ dollar. The expensive resource in this project is owner review time.
 
 | what | document | regenerated by |
 |---|---|---|
-| Round 1 — other-people distractors | [`stage2_pilot/PILOT_REPORT.md`](../stage2_pilot/PILOT_REPORT.md) | [`experiments/stage2_pilot.py`](../../experiments/stage2_pilot.py) |
-| Round 2 — same-subject distractors, decomposition | [`stage2_pilot2/PILOT_REPORT_2.md`](../stage2_pilot2/PILOT_REPORT_2.md) | [`experiments/stage2_pilot2.py`](../../experiments/stage2_pilot2.py) |
-| Round 3 — generated counterfactuals | [`stage2_pilot3/PILOT_REPORT_3.md`](../stage2_pilot3/PILOT_REPORT_3.md) | [`experiments/stage2_pilot3.py`](../../experiments/stage2_pilot3.py) |
-| Round 4 — fixes + kill rule | [`stage2_pilot4/PILOT_REPORT_4.md`](../stage2_pilot4/PILOT_REPORT_4.md) | [`experiments/stage2_pilot4.py`](../../experiments/stage2_pilot4.py) |
+| Round 1: other-people distractors | [`stage2_pilot/PILOT_REPORT.md`](../stage2_pilot/PILOT_REPORT.md) | [`experiments/stage2_pilot.py`](../../experiments/stage2_pilot.py) |
+| Round 2: same-subject distractors, decomposition | [`stage2_pilot2/PILOT_REPORT_2.md`](../stage2_pilot2/PILOT_REPORT_2.md) | [`experiments/stage2_pilot2.py`](../../experiments/stage2_pilot2.py) |
+| Round 3: generated counterfactuals | [`stage2_pilot3/PILOT_REPORT_3.md`](../stage2_pilot3/PILOT_REPORT_3.md) | [`experiments/stage2_pilot3.py`](../../experiments/stage2_pilot3.py) |
+| Round 4: fixes + kill rule | [`stage2_pilot4/PILOT_REPORT_4.md`](../stage2_pilot4/PILOT_REPORT_4.md) | [`experiments/stage2_pilot4.py`](../../experiments/stage2_pilot4.py) |
 | Round 4 design contract | [`stage2_pilot4/SPEC_v1.10.md`](../stage2_pilot4/SPEC_v1.10.md) | frozen snapshot |
-| Frontier-rater detectability line (pre-gate) | [`stage2_pilot4/DETECTABILITY_RATER_LINE.md`](../stage2_pilot4/DETECTABILITY_RATER_LINE.md) | — |
+| Frontier-rater detectability line (pre-gate) | [`stage2_pilot4/DETECTABILITY_RATER_LINE.md`](../stage2_pilot4/DETECTABILITY_RATER_LINE.md) | n/a |
 | Open-ended dev pilot (OE-1) | [`stage2_openended/OE1_PILOT_REPORT.md`](../stage2_openended/OE1_PILOT_REPORT.md) | [`experiments/stage2_oe1.py`](../../experiments/stage2_oe1.py) |
 | Judge audit, trust bar, FAIL → PASS | [`stage2_openended/AUDIT_LINES_2026-07-28.md`](../stage2_openended/AUDIT_LINES_2026-07-28.md) | [`oe1_param5_score.py`](../../experiments/oe1_param5_score.py), [`oe1_r2_judge.py`](../../experiments/oe1_r2_judge.py), [`oe1_r2_score.py`](../../experiments/oe1_r2_score.py) |
 | Judge rubric r2 (pinned) | [`stage2_openended/rubric_r2_draft.txt`](../stage2_openended/rubric_r2_draft.txt) | frozen, sha256 `ad050d1a…102464` |
@@ -796,14 +799,14 @@ used throughout the pre-registration, the results record and the `src/doppler`
 package. They are the same project.
 
 **What the deposit covers, stated from the repository record.** The registration
-**postdates** Stage 1, Stage 1E and the Stage 2 H1/H7 confirmatory run — for
+**postdates** Stage 1, Stage 1E and the Stage 2 H1/H7 confirmatory run; for
 those it is **retrospective**, and the before-data evidence remains snapshot
 v4's per-document git commits and sha256es. It **predates** the H6
-confirmatory-subject scoring, the H5 substituted analysis and the D_min = 3 arm
-— for those it is **prospective**. Everything in *this* paper falls in the first
+confirmatory-subject scoring, the H5 substituted analysis and the D_min = 3
+arm; for those it is **prospective**. Everything in *this* paper falls in the first
 group.
 
-*[registration summary, verbatim: pending — the registration is inside OSF's
+*[registration summary, verbatim: pending; the registration is inside OSF's
 approval window and not yet publicly readable; to be pasted by the owner]*
 
 ---
@@ -822,30 +825,30 @@ given; the amendment names them only by short description.
   arXiv:2508.21184. https://arxiv.org/abs/2508.21184
 - Wang, J., Zollo, T., Zemel, R., & Namkoong, H. (2025). *Adaptive Elicitation of
   Latent Information Using Natural Language.* International Conference on Machine
-  Learning (ICML) 2025. arXiv:2504.04204. https://arxiv.org/abs/2504.04204 —
-  evaluated on the Twenty Questions game, adaptive student assessment, and
+  Learning (ICML) 2025. arXiv:2504.04204. https://arxiv.org/abs/2504.04204.
+  Evaluated on the Twenty Questions game, adaptive student assessment, and
   dynamic opinion polling on **OpinionQA** (Santurkar et al., 2023), which is the
   evaluation B9 refers to.
 - Su, R., Liu, Y., & Hu, J. (2026). *Adaptive Interviewing for Persona Simulation
   in LLMs: Evidence-Grounded Reasoning Improves Decision Alignment.* Preprint,
-  submitted 28 May 2026. arXiv:2605.29458. https://arxiv.org/abs/2605.29458 —
-  not peer-reviewed at time of writing.
+  submitted 28 May 2026. arXiv:2605.29458. https://arxiv.org/abs/2605.29458.
+  Not peer-reviewed at time of writing.
 
 Two further works are cited in the text and are not part of B9's list:
 
 - Park, J. S., Zou, C. Q., Shaw, A., Hill, B. M., Cai, C., Morris, M. R.,
   Willer, R., Liang, P., & Bernstein, M. S. (2024). *Generative Agent
   Simulations of 1,000 People.* arXiv:2411.10109.
-  https://arxiv.org/abs/2411.10109 — the design target named in
+  https://arxiv.org/abs/2411.10109. The design target named in
   [PREREGISTRATION.md §1](../../PREREGISTRATION.md), commercialised by Simile.
   Verified against the arXiv listing 2026-07-28.
 - Santurkar, S., Durmus, E., Ladhak, F., Lee, C., Liang, P., & Hashimoto, T.
   (2023). *Whose Opinions Do Language Models Reflect?* ICML 2023.
-  arXiv:2303.17548. https://arxiv.org/abs/2303.17548 — the origin of OpinionQA,
+  arXiv:2303.17548. https://arxiv.org/abs/2303.17548. The origin of OpinionQA,
   already on the project's record in
   [`results/lit_check.md`](../lit_check.md).
 
 ---
 
-*Draft. Not submitted, not published. All pilot numbers are development-subject
+*All pilot numbers are development-subject
 measurements; no confirmatory subject was touched by any round reported here.*
